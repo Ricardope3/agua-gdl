@@ -14,7 +14,7 @@ const msgWelcome = `¡Hola! 👋 Soy *Agua GDL*.
 Te aviso por WhatsApp la noche antes de cada corte de agua en tu zona por la rotación del SIAPA 💧
 
 Para empezar, mándame una de estas:
-📍 Tu *ubicación* (📎 › Ubicación)
+📍 Tu *ubicación* (📎 o + › Ubicación)
 🏘️ El *nombre de tu colonia*, por ejemplo: _Las Juntas_
 🔢 Tu zona, por ejemplo: *ZONA 4*
 
@@ -25,6 +25,7 @@ func msgHelp(base string) string {
 
 📍 Manda tu *ubicación* o el *nombre de tu colonia* para saber tu zona
 🔢 *ZONA 1* a *ZONA 7*: suscribirte o cambiar de zona
+📝 *REPORTAR*: contar cómo regresó el agua después del último corte
 🛑 *BAJA*: dejar de recibir avisos y borrar tus datos
 
 🗺️ Mapa oficial del SIAPA: ` + MapURL + `
@@ -105,6 +106,6 @@ func msgSubscribed(i subscribedInfo) string {
 	} else {
 		b.WriteString("🔔 Por ahora no hay más cortes programados en tu zona.\n")
 	}
-	fmt.Fprintf(&b, "\nEscribe *ZONA 1* a *ZONA 7* para cambiar de zona o *BAJA* para dejar de recibir avisos.\n🔒 Solo guardamos tu identificador de WhatsApp y tu zona: %s/privacidad", i.base)
+	fmt.Fprintf(&b, "\n📝 Después de cada corte escribe *REPORTAR* para contar cómo regresó el agua.\nEscribe *ZONA 1* a *ZONA 7* para cambiar de zona o *BAJA* para dejar de recibir avisos.\n🔒 Solo guardamos tu número de WhatsApp y tu zona: %s/privacidad", i.base)
 	return b.String()
 }

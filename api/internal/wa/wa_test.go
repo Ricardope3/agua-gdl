@@ -22,18 +22,21 @@ func TestValidSignature(t *testing.T) {
 	}
 }
 
-func TestTemplateUsesBSUID(t *testing.T) {
+func TestTemplateRecipient(t *testing.T) {
 	m := NewTemplate(Recipient{UserID: "MX.123", Phone: "5213300000000"}, "aviso_corte", "es_MX",
-		BodyParams("jueves 15 de octubre", "2"), QuickReply(0, "REPORT:none"), QuickReply(1, "BAJA"))
+		BodyParams("jueves 15 de octubre", "2"), QuickReply(0, "BAJA"))
 	b, _ := json.Marshal(m)
 	s := string(b)
-	for _, want := range []string{`"recipient":"MX.123"`, `"index":"1"`, `"payload":"BAJA"`, `"code":"es_MX"`} {
+	for _, want := range []string{`"to":"5213300000000"`, `"index":"0"`, `"payload":"BAJA"`, `"code":"es_MX"`} {
 		if !strings.Contains(s, want) {
 			t.Errorf("missing %s in %s", want, s)
 		}
 	}
-	if strings.Contains(s, `"to"`) {
-		t.Error("phone must not be sent when a BSUID is known")
+	if strings.Contains(s, `"recipient"`) {
+		t.Error("send to the phone number while BSUID sending is unconfirmed")
+	}
+	if b, _ := json.Marshal(NewText(Recipient{UserID: "MX.9"}, "x")); !strings.Contains(string(b), `"recipient":"MX.9"`) {
+		t.Error("fall back to the BSUID when there is no phone")
 	}
 }
 

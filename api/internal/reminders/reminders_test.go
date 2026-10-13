@@ -28,7 +28,7 @@ func runner(t *testing.T, now string, st *fake.Store, snd *fake.Sender) *Runner 
 func TestSendsToZonesCutTomorrow(t *testing.T) {
 	st, snd := fake.NewStore(), &fake.Sender{}
 	for i, z := range []int{2, 4, 6, 2} {
-		st.Subscribe(context.Background(), string(rune('a'+i)), z)
+		st.Subscribe(context.Background(), string(rune('a'+i)), "52133000000"+string(rune('0'+i)), z)
 	}
 	r := runner(t, "2026-10-18 20:00", st, snd)
 	if err := r.SendTonight(context.Background()); err != nil {
@@ -41,8 +41,8 @@ func TestSendsToZonesCutTomorrow(t *testing.T) {
 	if tpl.Name != "aviso_corte" || tpl.Components[0].Parameters[0].Text != "lunes 19 de octubre" || tpl.Components[0].Parameters[1].Text != "4" {
 		t.Errorf("unexpected template: %+v", tpl)
 	}
-	if p := tpl.Components[1].Parameters[0].Payload; p != "REPORT:2026-10-15" {
-		t.Errorf("report payload = %s", p)
+	if p := tpl.Components[1].Parameters[0].Payload; p != "BAJA" || snd.Sent[0].To == "" {
+		t.Errorf("payload %s, to %q", p, snd.Sent[0].To)
 	}
 	if err := r.SendTonight(context.Background()); err != nil || len(snd.Sent) != 2 {
 		t.Error("a second run must not resend")
@@ -52,7 +52,7 @@ func TestSendsToZonesCutTomorrow(t *testing.T) {
 func TestDailyCap(t *testing.T) {
 	st, snd := fake.NewStore(), &fake.Sender{}
 	for i := range 5 {
-		st.Subscribe(context.Background(), string(rune('a'+i)), 4)
+		st.Subscribe(context.Background(), string(rune('a'+i)), "", 4)
 	}
 	r := runner(t, "2026-10-18 20:00", st, snd)
 	r.DailyCap = 3

@@ -22,6 +22,7 @@ var migrations embed.FS
 type Subscriber struct {
 	ID     int64
 	UserID string
+	Phone  string
 	Zone   int
 }
 
@@ -38,7 +39,15 @@ type Result struct {
 type DB struct{ pool *pgxpool.Pool }
 
 func Open(ctx context.Context, url string) (*DB, error) {
-	pool, err := pgxpool.New(ctx, url)
+	cfg, err := pgxpool.ParseConfig(url)
+	if err != nil {
+		return nil, err
+	}
+	// Neon suspends compute after 5 idle minutes; drop idle connections before that.
+	cfg.MaxConnIdleTime = 4 * time.Minute
+	cfg.MaxConnLifetime = 30 * time.Minute
+	cfg.MaxConns = 5
+	pool, err := pgxpool.NewWithConfig(ctx, cfg)
 	if err != nil {
 		return nil, err
 	}
@@ -112,9 +121,10 @@ func (db *DB) Subscriber(ctx context.Context, userID string) (Subscriber, bool, 
 	return s, err == nil, err
 }
 
-func (db *DB) Subscribe(ctx context.Context, userID string, zone int) error {
-	_, err := db.pool.Exec(ctx, `insert into subscriber (wa_user_id, zone) values ($1, $2)
-		on conflict (wa_user_id) do update set zone = excluded.zone, updated_at = now()`, userID, zone)
+func (db *DB) Subscribe(ctx context.Context, userID, phone string, zone int) error {
+	_, err := db.pool.Exec(ctx, `insert into subscriber (wa_user_id, phone, zone) values ($1, nullif($2, ''), $3)
+		on conflict (wa_user_id) do update set zone = excluded.zone,
+			phone = coalesce(excluded.phone, subscriber.phone), updated_at = now()`, userID, phone, zone)
 	return err
 }
 
@@ -138,7 +148,7 @@ func (db *DB) UpdateStatus(ctx context.Context, wamid, status string) error {
 
 // DueSubscribers lists subscribers in zones that haven't been reminded about cutDate yet.
 func (db *DB) DueSubscribers(ctx context.Context, zones []int, cutDate time.Time) ([]Subscriber, error) {
-	rows, err := db.pool.Query(ctx, `select s.id, s.wa_user_id, s.zone from subscriber s
+	rows, err := db.pool.Query(ctx, `select s.id, s.wa_user_id, coalesce(s.phone, ''), s.zone from subscriber s
 		where s.zone = any($1::int[]) and not exists (
 			select 1 from reminder r where r.subscriber_id = s.id and r.cut_date = $2::date)
 		order by s.id`, zones, cutDate.Format(dateLayout))
@@ -147,7 +157,7 @@ func (db *DB) DueSubscribers(ctx context.Context, zones []int, cutDate time.Time
 	}
 	return pgx.CollectRows(rows, func(r pgx.CollectableRow) (Subscriber, error) {
 		var s Subscriber
-		err := r.Scan(&s.ID, &s.UserID, &s.Zone)
+		err := r.Scan(&s.ID, &s.UserID, &s.Phone, &s.Zone)
 		return s, err
 	})
 }

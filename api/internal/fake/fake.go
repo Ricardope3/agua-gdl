@@ -45,11 +45,14 @@ func (s *Store) Subscriber(_ context.Context, userID string) (store.Subscriber, 
 	return sub, ok, nil
 }
 
-func (s *Store) Subscribe(_ context.Context, userID string, zone int) error {
+func (s *Store) Subscribe(_ context.Context, userID, phone string, zone int) error {
 	sub, ok := s.Subs[userID]
 	if !ok {
 		s.nextID++
 		sub = store.Subscriber{ID: s.nextID, UserID: userID}
+	}
+	if phone != "" {
+		sub.Phone = phone
 	}
 	sub.Zone = zone
 	s.Subs[userID] = sub

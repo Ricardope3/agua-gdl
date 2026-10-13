@@ -23,7 +23,7 @@ type Store interface {
 	Seen(ctx context.Context, wamid string) (bool, error)
 	MarkSeen(ctx context.Context, wamid string) error
 	Subscriber(ctx context.Context, userID string) (store.Subscriber, bool, error)
-	Subscribe(ctx context.Context, userID string, zone int) error
+	Subscribe(ctx context.Context, userID, phone string, zone int) error
 	Unsubscribe(ctx context.Context, userID string) (bool, error)
 	SaveReport(ctx context.Context, subscriberID int64, zone int, cutDate time.Time, answer string) error
 	UpdateStatus(ctx context.Context, wamid, status string) error
@@ -46,11 +46,12 @@ type Bot struct {
 }
 
 var (
-	zoneRe     = regexp.MustCompile(`^(?:ZONA ?)?([1-7])$`)
-	badZoneRe  = regexp.MustCompile(`^ZONA ?\d*$`)
-	stopWords  = []string{"BAJA", "ALTO", "STOP", "CANCELAR", "DARME DE BAJA", "YA NO"}
-	helpWords  = []string{"AYUDA", "MENU", "INFO", "OPCIONES"}
-	greetWords = []string{"HOLA", "BUENAS", "BUENOS DIAS", "BUENAS TARDES", "BUENAS NOCHES", "AVISOS", "INICIO", "EMPEZAR"}
+	zoneRe      = regexp.MustCompile(`^(?:ZONA ?)?([1-7])$`)
+	badZoneRe   = regexp.MustCompile(`^ZONA ?\d*$`)
+	stopWords   = []string{"BAJA", "ALTO", "STOP", "CANCELAR", "DARME DE BAJA", "YA NO"}
+	helpWords   = []string{"AYUDA", "MENU", "INFO", "OPCIONES"}
+	reportWords = []string{"REPORTAR", "REPORTE", "REPORTAR CORTE"}
+	greetWords  = []string{"HOLA", "BUENAS", "BUENOS DIAS", "BUENAS TARDES", "BUENAS NOCHES", "AVISOS", "INICIO", "EMPEZAR"}
 )
 
 // Handle processes one webhook payload. Returning an error makes Meta retry it later.
@@ -118,6 +119,8 @@ func (b *Bot) onText(ctx context.Context, r wa.Recipient, body string) error {
 		return b.text(ctx, r, msgHelp(b.BaseURL))
 	case slices.Contains(stopWords, n):
 		return b.unsubscribe(ctx, r)
+	case slices.Contains(reportWords, n):
+		return b.reportLastCut(ctx, r)
 	case zoneRe.MatchString(n):
 		zone, _ := strconv.Atoi(zoneRe.FindStringSubmatch(n)[1])
 		return b.subscribe(ctx, r, zone)
@@ -208,7 +211,7 @@ func (b *Bot) subscribe(ctx context.Context, r wa.Recipient, zone int) error {
 		b.Log.Warn("message without business-scoped user ID")
 		return b.text(ctx, r, msgNoUserID)
 	}
-	if err := b.Store.Subscribe(ctx, r.UserID, zone); err != nil {
+	if err := b.Store.Subscribe(ctx, r.UserID, r.Phone, zone); err != nil {
 		return err
 	}
 	return b.text(ctx, r, b.subscribedText(zone, true))
@@ -251,6 +254,26 @@ func (b *Bot) unsubscribe(ctx context.Context, r wa.Recipient) error {
 		return b.text(ctx, r, msgNotSubscribed)
 	}
 	return b.text(ctx, r, msgUnsubscribed)
+}
+
+// reportLastCut asks about the subscriber's most recent cut, today included.
+func (b *Bot) reportLastCut(ctx context.Context, r wa.Recipient) error {
+	if r.UserID == "" {
+		return b.text(ctx, r, msgWelcome)
+	}
+	s, ok, err := b.Store.Subscriber(ctx, r.UserID)
+	if err != nil {
+		return err
+	}
+	if !ok {
+		return b.text(ctx, r, msgWelcome)
+	}
+	tomorrow := b.Schedule.Day(b.Now()).AddDate(0, 0, 1)
+	prev, ok := b.Schedule.PrevCut(s.Zone, tomorrow)
+	if !ok {
+		return b.text(ctx, r, msgNoReportYet)
+	}
+	return b.askReport(ctx, r, prev.Format(rotation.DateLayout))
 }
 
 func (b *Bot) askReport(ctx context.Context, r wa.Recipient, date string) error {

@@ -1,7 +1,8 @@
 // Package wa talks to the WhatsApp Cloud API: outgoing messages, webhook payloads and signatures.
 package wa
 
-// Recipient prefers the business-scoped user ID (BSUID) and falls back to the phone number.
+// Recipient sends to the phone number when known. Meta still marks sending to a
+// business-scoped user ID (BSUID) as "coming soon", so the BSUID is only a fallback.
 type Recipient struct {
 	UserID string
 	Phone  string
@@ -74,10 +75,10 @@ type Row struct {
 
 func newMessage(r Recipient, typ string) Message {
 	m := Message{MessagingProduct: "whatsapp", RecipientType: "individual", Type: typ}
-	if r.UserID != "" {
-		m.Recipient = r.UserID
-	} else {
+	if r.Phone != "" {
 		m.To = r.Phone
+	} else {
+		m.Recipient = r.UserID
 	}
 	return m
 }

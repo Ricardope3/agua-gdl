@@ -106,6 +106,12 @@ func TestLocation(t *testing.T) {
 func TestReportAndUnsubscribe(t *testing.T) {
 	h := newHarness(t, "2026-10-18 20:30")
 	h.send(t, text("zona 4"))
+	if h.store.Subs["MX.42"].Phone != "5213300000000" {
+		t.Error("phone not stored")
+	}
+	if got := h.send(t, text("reportar")); !strings.Contains(got, "jueves 15 de octubre") {
+		t.Errorf("REPORTAR should ask about the last cut:\n%s", got)
+	}
 	if got := h.send(t, wa.Inbound{Type: "button", Button: &wa.Button{Payload: "REPORT:2026-10-15"}}); !strings.Contains(got, "jueves 15 de octubre") {
 		t.Errorf("unexpected:\n%s", got)
 	}

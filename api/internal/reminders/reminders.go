@@ -108,7 +108,7 @@ func (r *Runner) SendTonight(ctx context.Context) error {
 			case <-time.After(r.Interval):
 			}
 		}
-		id, err := r.Sender.Send(ctx, r.reminder(s, tomorrow, date))
+		id, err := r.Sender.Send(ctx, r.reminder(s, date))
 		var apiErr *wa.APIError
 		if errors.As(err, &apiErr) && apiErr.Permanent() {
 			r.Log.Warn("reminder rejected for this subscriber", "subscriber", s.ID, "err", err)
@@ -132,13 +132,8 @@ func (r *Runner) SendTonight(ctx context.Context) error {
 	return nil
 }
 
-func (r *Runner) reminder(s store.Subscriber, tomorrow time.Time, date string) wa.Message {
-	report := "REPORT:none"
-	if prev, ok := r.Schedule.PrevCut(s.Zone, tomorrow); ok {
-		report = "REPORT:" + prev.Format(rotation.DateLayout)
-	}
-	return wa.NewTemplate(wa.Recipient{UserID: s.UserID}, r.Template, r.Language,
+func (r *Runner) reminder(s store.Subscriber, date string) wa.Message {
+	return wa.NewTemplate(wa.Recipient{UserID: s.UserID, Phone: s.Phone}, r.Template, r.Language,
 		wa.BodyParams(date, strconv.Itoa(s.Zone)),
-		wa.QuickReply(0, report),
-		wa.QuickReply(1, "BAJA"))
+		wa.QuickReply(0, "BAJA"))
 }
