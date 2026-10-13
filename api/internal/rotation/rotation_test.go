@@ -1,0 +1,85 @@
+package rotation
+
+import (
+	"slices"
+	"testing"
+	"time"
+
+	"aguagdl/api/data"
+)
+
+func load(t *testing.T, raw []byte) *Schedule {
+	t.Helper()
+	loc, err := time.LoadLocation("America/Mexico_City")
+	if err != nil {
+		t.Fatal(err)
+	}
+	s, err := Load(raw, loc)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return s
+}
+
+func day(s *Schedule, v string) time.Time {
+	d, err := s.ParseDate(v)
+	if err != nil {
+		panic(err)
+	}
+	return d
+}
+
+func TestZonesOn(t *testing.T) {
+	s := load(t, data.Rotation)
+	cases := map[string][]int{
+		"2026-10-14": nil,
+		"2026-10-15": {2, 4},
+		"2026-10-18": {1, 2, 7},
+		"2026-10-19": {4, 6},
+		"2026-10-24": {3, 5, 7},
+		"2027-04-01": nil,
+	}
+	for d, want := range cases {
+		if got := s.ZonesOn(day(s, d)); !slices.Equal(got, want) {
+			t.Errorf("%s: got %v, want %v", d, got, want)
+		}
+	}
+}
+
+func TestNextAndPrevCut(t *testing.T) {
+	s := load(t, data.Rotation)
+	got := s.NextCuts(4, day(s, "2026-10-13"), 3)
+	want := []string{"2026-10-15", "2026-10-19", "2026-10-22"}
+	for i, d := range got {
+		if d.Format(DateLayout) != want[i] {
+			t.Errorf("next[%d] = %s, want %s", i, d.Format(DateLayout), want[i])
+		}
+	}
+	if p, ok := s.PrevCut(4, day(s, "2026-10-19")); !ok || p.Format(DateLayout) != "2026-10-15" {
+		t.Errorf("prev = %v %v", p, ok)
+	}
+	if _, ok := s.PrevCut(4, day(s, "2026-10-15")); ok {
+		t.Error("no cut before the rotation starts")
+	}
+}
+
+func TestOverrides(t *testing.T) {
+	s := load(t, []byte(`{"start":"2026-10-15","zones":{"2":["thu"]},
+		"skip":[{"date":"2026-10-15","zone":2}],"extra":[{"date":"2026-10-16","zone":2}]}`))
+	if s.IsCut(2, day(s, "2026-10-15")) || !s.IsCut(2, day(s, "2026-10-16")) {
+		t.Error("overrides not applied")
+	}
+}
+
+func TestSpanish(t *testing.T) {
+	s := load(t, data.Rotation)
+	if got := DateES(day(s, "2026-10-15")); got != "jueves 15 de octubre" {
+		t.Error(got)
+	}
+	if got := DaysES(s.Weekdays(2)); got != "martes, jueves y domingo" {
+		t.Error(got)
+	}
+	if got := HourES(20); got != "8 p. m." {
+		t.Error(got)
+	}
+}

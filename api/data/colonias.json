@@ -1,0 +1,4806 @@
+[
+ {
+  "name": "18 DE MARZO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   1
+  ],
+  "multi": false
+ },
+ {
+  "name": "ABASTOS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "ACADEMIAS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "AGUA AZUL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2,
+   3
+  ],
+  "multi": true
+ },
+ {
+  "name": "AGUSTIN YAÑEZ",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "ALAMO INDUSTRIAL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3,
+   7
+  ],
+  "multi": true
+ },
+ {
+  "name": "ALCALDE BARRANQUITAS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "AMERICANA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   1,
+   5,
+   6
+  ],
+  "multi": true
+ },
+ {
+  "name": "AMPLIACIÓN DEL SUR",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   1
+  ],
+  "multi": false
+ },
+ {
+  "name": "AMPLIACION PROVIDENCIA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "ANALCO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "ANTIGUA PENAL DE OBLATOS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "ARANDAS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "ARBOLEDAS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   7
+  ],
+  "multi": true
+ },
+ {
+  "name": "ARBOLEDAS DEL SUR",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "ARCOS SUR",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "ARCOS VALLARTA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5,
+   6
+  ],
+  "multi": true
+ },
+ {
+  "name": "ATLAS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "BALCONES DE OBLATOS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "BALCONES DEL CUATRO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "BARAJAS VILLASEÑOR",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "BARRAGAN Y HERNANDEZ",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "BARRERA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "BATALLON DE SAN PATRICIO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "BEATRIZ HERNANDEZ",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "BELISARIO DOMINGUEZ",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "BLANCO Y CUELLAR",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "BOSQUE DE LA CANTERA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "BOSQUES DEL BOULEVARD",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "CAMPESINA SUR",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "CAMPESINA ZONA 4",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "CAPILLA DE JESUS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "CENTRO BARRANQUITAS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "CENTRO COMERCIAL LA PLACITA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   7
+  ],
+  "multi": false
+ },
+ {
+  "name": "CENTRO GUADALAJARA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   1,
+   6,
+   7
+  ],
+  "multi": true
+ },
+ {
+  "name": "CHAPALITA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": true
+ },
+ {
+  "name": "CHAPULTEPEC COUNTRY",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "CINCO DE MAYO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "CIRCUNVALACION BELISARIO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "CIRCUNVALACION METRO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "CIRCUNVALACION OBLATOS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "CIRCUNVALACION VALLARTA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "COLINAS DE SAN JAVIER",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "COLON",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   1
+  ],
+  "multi": false
+ },
+ {
+  "name": "COLON INDUSTRIAL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   1
+  ],
+  "multi": false
+ },
+ {
+  "name": "CUAUHTEMOC",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "DEL PERIODISTA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "DEL SUR",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   1
+  ],
+  "multi": false
+ },
+ {
+  "name": "DEL TRABAJO CTM",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "ECHEVERRIA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5,
+   7
+  ],
+  "multi": true
+ },
+ {
+  "name": "ECHEVERRIA 3RA SECC",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL CAMPAMENTO Y LAS CASETAS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   7
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL CARMEN",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL DEAN",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   7
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL EMBARCADERO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   7
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL FRESNO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL HORMIGUERO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL MANANTIAL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5,
+   7
+  ],
+  "multi": true
+ },
+ {
+  "name": "EL MIRADOR",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL REAL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL RETIRO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL ROCIO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL ROSARIO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": true
+ },
+ {
+  "name": "EL ROSARITO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL ZALATE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "ELECTRICISTAS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "EMILIANO ZAPATA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EXHACIENDA OBLATOS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "FEDERALISMO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "FERROCARRIL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   7
+  ],
+  "multi": false
+ },
+ {
+  "name": "FERROCARRILERA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   7
+  ],
+  "multi": false
+ },
+ {
+  "name": "FRACCIONAMIENTO EL CERRO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "FRACCIONAMIENTO INDEPENDENCIA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "FRACCIONAMIENTO JARDINES DEL SAUZ",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": true
+ },
+ {
+  "name": "FRACCIONAMIENTO PARQUES COLON",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "FRANCISCO VILLA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "GENERAL REAL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2,
+   3
+  ],
+  "multi": true
+ },
+ {
+  "name": "GOMEZ FARIAS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "GONZALES GALLO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "GUADALAJARA ORIENTE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "HERMOSA PROVINCIA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "HIGUERILLAS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   7
+  ],
+  "multi": false
+ },
+ {
+  "name": "HUENTITAN EL ALTO ZONA 4",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "INDEPENDENCIA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "INDEPENDENCIA ORIENTE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "INDUSTRIA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDIN DE LOS ESCRITORES",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDIN DE LOS POETAS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDÍN DE SAN FRANCISCO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DE ATEMAJAC",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DE GUADALUPE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3,
+   6
+  ],
+  "multi": true
+ },
+ {
+  "name": "JARDINES DE LA CRUZ",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   1,
+   5
+  ],
+  "multi": true
+ },
+ {
+  "name": "JARDINES DE LA CRUZ 2A SECCION",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   1
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DE LA PAZ",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DE LA VICTORIA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DE LOS ARCOS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5,
+   6
+  ],
+  "multi": true
+ },
+ {
+  "name": "JARDINES DE PLAZA DEL SOL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DE SANTA ISABEL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DEL BOSQUE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DEL COUNTRY",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DEL NILO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DEL ROSARIO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DEL SAUZ",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DEL SUR",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "JESUS GARCIA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "JOSE CLEMENTE OROZCO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "JUAN DIEGO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA AURORA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3,
+   5,
+   7
+  ],
+  "multi": true
+ },
+ {
+  "name": "LA CANTERIA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA DIVINA PROVIDENCIA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA DURAZNERA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   7
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA ESPERANZA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA ESPERANZA ZONA 3",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA JOYA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA LOMA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA MEZQUITERA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA NATIVIDAD",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA NOGALERA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   7
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA NORMAL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA PAZ",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA PERLA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA PERLA ZONA 5",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "LADRON DE GUEVARA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LAFAYETTE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   1,
+   5,
+   6
+  ],
+  "multi": true
+ },
+ {
+  "name": "LAGOS DE ORIENTE PRIMERA SECCIÓN",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "LAS CONCHAS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2,
+   6
+  ],
+  "multi": true
+ },
+ {
+  "name": "LAS JUNTAS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "LAS TORRES",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "LAZARO CARDENAS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LIBERTAD",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMA LINDA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5,
+   6
+  ],
+  "multi": true
+ },
+ {
+  "name": "LOMAS DE OBLATOS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMAS DE POLANCO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMAS DE SAN EUGENIO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2,
+   3
+  ],
+  "multi": true
+ },
+ {
+  "name": "LOMAS DEL GALLO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMAS DEL PARADERO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMAS INDEPENDENCIA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOPEZ DE LEGAZPI",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOPEZ PORTILLO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOS ARRAYANES",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOS COLORINES",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOS TULIPANES",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "MAGAÑA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "MANUEL AVILA CAMACHO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "MARGARITA MAZA DE JUAREZ",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "MEDRANO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": true
+ },
+ {
+  "name": "MEXICALTZINGO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   1,
+   5
+  ],
+  "multi": true
+ },
+ {
+  "name": "MEZQUITAN",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "MEZQUITAN COUNTRY",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "MIGUEL HIDALGO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "MIRADOR EL ALAMO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "MIRAFLORES",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "MIRAVALLE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5,
+   7
+  ],
+  "multi": true
+ },
+ {
+  "name": "MODERNA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   1,
+   5
+  ],
+  "multi": true
+ },
+ {
+  "name": "MORELOS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "NUEVA ESPAÑA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "NUEVO FRACCIONAMIENTO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "OBLATOS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "OBRERA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "OBRERA ZONA 5",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "OBSERVATORIO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "OCHO DE JULIO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "OLIMPICA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "PARQUES COLON",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "PARQUES DEL NILO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "PARQUES SAN PEDRO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "PATRIA NUEVA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "PLAZA DEL SOL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "PLUTARCO ELIAS CALLES",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "POLANCO ORIENTE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "POLANQUITO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5,
+   6
+  ],
+  "multi": true
+ },
+ {
+  "name": "POPULAR HORNOS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "POTRERO ALTO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "PRADOS DEL NILO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "PRIMERO DE MAYO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "PROGRESO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "PROVIDENCIA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "QUINTA VELARDE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "RAMON LOPEZ VELARDE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "RANCHO BLANCO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "RANCHO BLANCO ALAMO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "REFORMA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "RESIDENCIAL DE LA CRUZ",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "RESIDENCIAL DEL PARQUE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3,
+   6
+  ],
+  "multi": true
+ },
+ {
+  "name": "RESIDENCIAL LA CRUZ",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "RESIDENCIAL SAN RAFAEL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "RESIDENCIAL VICTORIA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "REVOLUCION",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2,
+   3
+  ],
+  "multi": true
+ },
+ {
+  "name": "REVOLUCIONARIA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "RINCONADA DE LA ARBOLEDA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "RINCONADA DE LA VICTORIA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "RINCONADA DE LAS ARBOLEDAS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "RINCONADA DEL BOSQUE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "RINCONADA DEL VALLE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "ROJAS LADRON DE GUEVARA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAGRADA FAMILIA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAGRADO CORAZON",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN ANDRES",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN ANTONIO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   1
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN BERNARDO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN CARLOS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2,
+   3
+  ],
+  "multi": true
+ },
+ {
+  "name": "SAN FELIPE 2 SECCIÓN",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN FELIPE PRIMERA SECCION",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN FELIPE SEGUNDA SECCION",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN JOAQUIN",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN JOSE DEL SAUZ",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN JUAN DE DIOS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN MARCOS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN MIGUEL DE HUENTITAN PRIMERA SECCION",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN MIGUEL DE HUENTITAN SEGUNDA SECCION",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN MIGUEL DE MEZQUITAN",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN RAFAEL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN RAFAEL INFONAVIT",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN RAMÓN",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN RODOLFO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN VICENTE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "SANTA CECILIA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "SANTA MARIA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "SANTA MARIA DEL SILO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "SANTA MONICA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "SANTA ROSA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "SANTA TERESITA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "SUTAJ",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "TALPITA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "TEPOPOTE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "TEPOPOTE OESTE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "TETLAN RIO VERDE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "TLAQUEPAQUE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   7
+  ],
+  "multi": false
+ },
+ {
+  "name": "U. HABITACIONAL PABLO VALDEZ",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "U. HABITACIONAL VICENTE GUERRERO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "UNIDAD MODELO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ],
+  "multi": false
+ },
+ {
+  "name": "UNIVERSITARIA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2,
+   3
+  ],
+  "multi": true
+ },
+ {
+  "name": "VALENTIN GOMEZ FARIAS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": true
+ },
+ {
+  "name": "VALLARTA CUAUHTEMOC",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VALLARTA SUR",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VALLE DEL ALAMO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   7
+  ],
+  "multi": false
+ },
+ {
+  "name": "VERDE VALLE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "VICENTE GUERRERO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3,
+   5
+  ],
+  "multi": true
+ },
+ {
+  "name": "VILLA HERMOSA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "VILLA VICENTE GUERRERO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": true
+ },
+ {
+  "name": "VILLAS DE LA CANTERA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "VILLAS DE LA CRUZ",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   1
+  ],
+  "multi": false
+ },
+ {
+  "name": "VILLAS DEL NILO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "VILLASEÑOR",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VISTAS DEL SUR",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "ZONA FEDERAL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "ZONA INDUSTRIAL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   7
+  ],
+  "multi": false
+ },
+ {
+  "name": "ALAMO HABITACIONAL/RESIDENCIAL",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "ALAMO INDUSTRIAL",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": true
+ },
+ {
+  "name": "ALAMO ORIENTE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "ALAMO SUPER MANZANA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "ALTOSUR",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "ALVARO OBREGON",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "ARBOLEDAS DE SAN MARTIN",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "ARROYO DE LAS FLORES",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5,
+   6
+  ],
+  "multi": true
+ },
+ {
+  "name": "BALCONES DE SANTA MARIA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "BARRIO DE SAN FRANCISO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "BARRIO DE SAN JUAN",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "BARRIO DE SANTA MARIA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "BARRIO DE SANTIAGO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "BRISAS DE CHAPALA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "BUENOS AIRES",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "CENTRO COMERCIAL CAMICHINES",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "CERRO DEL CUATRO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "CERRO DEL TESORO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5,
+   6
+  ],
+  "multi": true
+ },
+ {
+  "name": "CIUDAD DEL SOL",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": true
+ },
+ {
+  "name": "COLONIAL TLAQUEPAQUE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "COTO EL CARMEN",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL ALAMO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL CAMPESINO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL CANELO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL CERRITO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL MORITO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL ORGANO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL PUENTE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL REFUGIO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL SAUZ",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL TAPATIO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL VERGEL",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "FRACCIONAMIENTO INFONAVIT REVOLUCION",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "FRACCIONAMIENTO LAS TERRAZAS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "FRACCIONAMIENTO MERIDIANO/HOGARES DEL ALAMO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "FRACCIONAMIENTO RESIDENCIAL ARRAYANES",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "FRACCIONAMIENTO REVOLUCION",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "FRANCISCO I MADERO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "FRANCISCO SILVA ROMERO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4,
+   6
+  ],
+  "multi": true
+ },
+ {
+  "name": "GUADALUPE EJIDAL",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "GUAYABITOS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "HACIENDA DE TLAQUEPAQUE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "HACIENDAS DE SAN MARTIN",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "HACIENDAS SAN PEDRO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "HORIZONTE EL TAPATIO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "HUERTA DE PEÑA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "INDIGENA DE SAN SEBASTIANITO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "INFONAVIT MIRAVALLE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DE SANTA MARIA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DEL ALAMO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DEL ORGANO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES TOLUQUILLA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA ARENA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA CAPACHA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA FLORESTA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA HUERTA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "LAS JUNTAS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "LAS JUNTITAS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "LAS VEGAS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "LINDA VISTA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMAS DE CURIEL",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMAS DE LA VICTORIA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMAS DE SANTA MARIA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMAS DE TLAQUEPAQUE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMAS DEL ALAMO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMAS DEL CUATRO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMAS DEL TAPATIO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMAS DEL TEPEYAC",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOPEZ MATEOS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOS MESEROS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOS PUESTOS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "MIRADOR DEL TESORO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "NUEVA LAZARO CARDENAS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "NUEVA SANTA MARIA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5,
+   6
+  ],
+  "multi": true
+ },
+ {
+  "name": "PAISAJES DEL TESORO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "PARQUES DE SANTA MARIA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "PARQUES SANTA CRUZ DEL VALLE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "PEDREGAL DEL BOSQUE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "PLAN DE LAS FLORES",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "PLAN DE ORIENTE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "PLAN DEL RIO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "PORTALES DE TLAQUEPAQUE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "PRADOS TLAQUEPAQUE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "PUERTA DEL PRADO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "QUINTERO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "RANCHO BLANCO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "RESIDENCIAL EL TAPATIO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "RINCONADA DE LOS ENCINOS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN JUAN",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN MARTIN DE LAS FLORES DE ABAJO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN MARTIN DE LAS FLORES DE ARRIBA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN PEDRITO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN SEBASTIANITO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "TATEPOSCO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "TERRALTA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "TLAQUEPAQUE PUEBLITO CONDOMINIO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "TRES PINOS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VALLE BALCONES SANTA MARIA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VALLE DE LA MISERICORDIA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "VALLE DE LAS HERAS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VALLE DE SAN SEBASTIANITO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VALLE DEL PARAISO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "VILLA DEL PRADO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "VILLA FONTANA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "VILLAS EL TAPATIO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
+  "name": "VISTAS DEL CUATRO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "ZIMALTA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "ADOBERA CHICA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "AGUA BLANCA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": true
+ },
+ {
+  "name": "AGUA ESCONDIDA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "ALAMEDA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "ALTOS TONALA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "ARROYO DE ENMEDIO",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "BALCONES DEL ROSARIO",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "CIUDAD AZTLAN",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "COLINAS DE TONALA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL DORADITO",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL MORAL",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL OCOTILLO",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL PEDREGAL DE SANTA MARTHA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL ROSARIO",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": true
+ },
+ {
+  "name": "EL VADO",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "FRACCIONAMIENTO CAÑADA REAL",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "FRACCIONAMIENTO LAS PALMAS",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "FRACCIONAMIENTO SAN MIGUEL LA PUNTA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "FUENTES DEL NILO",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "HACIENDA REAL",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "HACIENDA SAN FRANCISCO",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "HIPODROMO",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "JAUJA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "JOSE VASCONCELOS",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA ARTESANA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA GIGANTERA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA GUADALUPANA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "LAS HUERTAS",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMAS DEL CAMICHIN",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOS CAMICHINES II",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOS POCITOS",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "LSA PILITAS",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "NUEVA AURORA RESIDENCIAL",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "PASEO DE LA CAÑADA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "PASEO PUENTE VIEJO",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "PUERTAS DEL ROSARIO",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "PUESTA DEL SOL",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "QUINTA CATALINA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "RINCONADA DE LOS NARANJOS",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "RINCONADA DEL ARBOL",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN FRANCISCO DE LA SOLEDAD",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "SANTA CRUZ DE LAS HUERTAS",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "SANTA ISABEL",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "SANTA PAULA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "VALLE DE LOS LEONES",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "VISTAS DEL PEDREGAL",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "AGUA BLANCA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": true
+ },
+ {
+  "name": "AGUA BLANCA INDUSTRIAL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "AGUA BLANCA SUR",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "ALTABRISA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "ALTAVISTA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "ALTO HORIZONTE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "ALTUS QUINTAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "ARCOS DE GUADALUPE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "ARENALES TAPATIOS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "ARRAYANES HABITAT",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "AZALEAS BUGAMBILIAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "BALCONES DEL CAMINO REAL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "BALCONES DEL SOL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "BOSQUE DE LOS LAGOS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "BOSQUE REAL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "BOSQUES DE LAS LOMAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "BUGAMBILIAS COUNTRY",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "CAMICHINES VALLARTA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "CAMINO REAL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "CAÑADAS DEL REY",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "CARLOS RIVERA ACEVES",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "CHAPALITA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": true
+ },
+ {
+  "name": "CHAPALITA LAS FUENTES",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "CHAPALITA OCCIDENTE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "CHAPALITA SUR",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "CIUDAD DE LOS NIÑOS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "CIUDAD DEL SOL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": true
+ },
+ {
+  "name": "CIUDAD DEL TEPEYAC",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "CIUDAD GRANJA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "COLINAS DE LA ABADIA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "COLINAS DE LA PRIMAVERA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "COLLI",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "COLLI EJIDAL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "COLLI POBLADO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "COLLI SITIO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "COLLI URBANO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "CONDOMINIO CRISTAL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "CONDOMINIO SAN JORGE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "CONJUNTO HABITACIONAL EBANO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "CONJUNTO NACIONES UNIDAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "CORDILLERAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "DON BOSCO VALLARTA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL ALCAZAR ORIENTE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL ARROYO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL BAJIO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL BOSQUE RESIDENCIAL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL CAMBIO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL CAMICHIN",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL CAMPANARIO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL CARMEN HABITAT",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL COLLI - CTM",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL FORTIN",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL GUAYABO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL MANTE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL REHILETE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL TIZATE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL TULE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EL ZAPOTE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "ESTANCIA BOSQUES OTERO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EUCALIPTO VALLARTA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "EXITMEX",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "FRACCIONAMIENTO CAMINO REAL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "FRACCIONAMIENTO GUADALUPE INN",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "FRACCIONAMIENTO TERRANOVA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "FRACCIONAMIENTO VILLA VERONA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "GUADALUPE INN",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "GUADALUPE JARDIN",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "GUADALUPE SUR",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "GUSTAVO DIAZ ORDAZ",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "HACIENDA JACARANDAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "HACIENDA SAN ANTONIO DEL VALLE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "HACIENDAS DEL REAL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "HACIENDAS TEPEYAC",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "INDUSTRIAL EL COLLI",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "ITALIA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DE CHAPALITA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DE LA PATRIA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DE LA PRIMAVERA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DE SAN IGNACIO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DE SANTA ANA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DEL IXTEPETE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DEL TULE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES TAPATIOS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES TEPEYAC",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES UNIVERSIDAD",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "JOCOTAN",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA CALMA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   5,
+   6
+  ],
+  "multi": true
+ },
+ {
+  "name": "LA FLORESTA DEL COLLI",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA FLORIDA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA GIRALDA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA GLORIA DEL COLLI",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA GRANJA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA HACIENDITA DE SANTA ANA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA JOYA DE BUGAMBILIAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA NORIA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA NUEVA ESPAÑA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA NUEVA PRIMAVERA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LAS AGUILAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   5,
+   6
+  ],
+  "multi": true
+ },
+ {
+  "name": "LAS ALAMEDAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LAS AMERICAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LAS CEIBAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LAS LOMAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMA BONITA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMA BONITA EJIDAL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMA BONITA SUR",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMA VERDE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMAS DE GUADALUPE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMAS DE LA PRIMAVERA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMAS DEL COLLI",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMAS DEL PEDREGAL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMAS DEL SEMINARIO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOMAS DEL SUR",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOS AGAVES",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOS ARCOS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOS CAJETES",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOS PATOS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "LOS PINOS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "MARIANO OTERO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "MIRADOR DEL SOL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "MIRAMAR",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "NUEVA PRIMAVERA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "OYAMEL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "PALMIRA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "PARAISOS DEL COLLI",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "PARQUE GUADALUPE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "PARQUES DEL TEPEYAC",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "PASEOS DEL PARQUE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "PASEOS DEL SOL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "PATRIA UNIVERSIDAD",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "PINAR DE LA CALMA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "PLAZA GUADALUPE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "PRADERAS DE LA PRIMAVERA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "PRADOS GUADALUPE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "PRADOS TEPEYAC",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "PRADOS VALLARTA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "PREDIO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "PUERTA AQUA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "PUERTA DE PLATA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "PUERTA DE ROBLE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "PUERTA DEL BOSQUE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "PUERTA DEL SOL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "PUERTA PLATA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "PUNTA DE OTERO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "REAL GUADALUPE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "REAL SAN BERNARDO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "REAL TULIPANES",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "REAL VALLARTA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "RESIDENCIAL CHAPALITA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "RESIDENCIAL CORDILLERAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "RESIDENCIAL CUMBRES",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "RESIDENCIAL EL COTO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "RESIDENCIAL GUADALUPE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "RESIDENCIAL LA CAÑADA BUGAMBILIAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "RESIDENCIAL LA CASTILLA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "RESIDENCIAL LA ESTANCIA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "RESIDENCIAL LA FLORIDA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "RESIDENCIAL LA PEÑA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "RESIDENCIAL LOMA BONITA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   5,
+   6
+  ],
+  "multi": true
+ },
+ {
+  "name": "RESIDENCIAL MOCTEZUMA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "RESIDENCIAL NUEVA GALICIA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "RESIDENCIAL TEPEYAC DEL SOL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "RINCON DE BUGAMBILIAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "RINCONADA DE GUADALUPE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "RINCONADA DEL IRIS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "RINCONADA DEL PARQUE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "RINCONADA DEL SOL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "RINCONADA GUADALUPE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "RINCONADA LA CALMA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "RINCONADA LA JOYA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "ROYAL COUNTRY",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "SAN JUAN DE OCOTAN",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "SANTA ANA TEPETITLAN",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "SANTA MARIA DEL PUEBLITO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "SOFIA HABITAT",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "TEPEYAC CASINO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "TRENTO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "U. HABITACIONAL LA PRIMAVERA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "U. HABITACIONAL PRIMAVERA NORTE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VALLARTA PATRIA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VALLARTA UNIVERSIDAD",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VALLE DE SAN NICOLAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VILLA PUERTA DEL SOL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VILLA SERENA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VILLA UNIVERSITARIA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VILLA VERONA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VILLAS DE GUADALUPE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VILLAS DE LA PRIMAVERA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VILLAS DE OTERO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VILLAS DEL TEPEYAC",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VIRREYES RESIDENCIAL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VISTA DEL PINAR",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VISTAS DEL TULE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VIVANTE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VOLCAN DEL COLLI",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "WEST POINT",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "ZENITH",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ }
+]

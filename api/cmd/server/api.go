@@ -1,0 +1,149 @@
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"io"
+	"log/slog"
+	"net/http"
+	"strconv"
+	"strings"
+	"time"
+
+	"aguagdl/api/internal/bot"
+	"aguagdl/api/internal/colonias"
+	"aguagdl/api/internal/geo"
+	"aguagdl/api/internal/rotation"
+	"aguagdl/api/internal/store"
+	"aguagdl/api/internal/wa"
+)
+
+type api struct {
+	bot         *bot.Bot
+	db          *store.DB
+	sched       *rotation.Schedule
+	zones       *geo.Zones
+	cols        *colonias.Index
+	appSecret   []byte
+	verifyToken string
+	minShown    int
+	log         *slog.Logger
+}
+
+type zoneInfo struct {
+	Zone int      `json:"zone"`
+	Days []string `json:"days"`
+	Next []string `json:"next"`
+}
+
+func (a *api) routes() http.Handler {
+	mux := http.NewServeMux()
+	mux.HandleFunc("GET /healthz", func(w http.ResponseWriter, _ *http.Request) { io.WriteString(w, "ok") })
+	mux.HandleFunc("GET /v1/zones", a.zonesList)
+	mux.HandleFunc("GET /v1/zone", a.zoneAt)
+	mux.HandleFunc("GET /v1/colonias", a.coloniaSearch)
+	mux.HandleFunc("GET /v1/results", a.results)
+	mux.HandleFunc("GET /wa/webhook", a.verify)
+	mux.HandleFunc("POST /wa/webhook", a.webhook)
+	return mux
+}
+
+func (a *api) info(zone int) zoneInfo {
+	z := zoneInfo{Zone: zone, Days: []string{}, Next: []string{}}
+	for _, d := range a.sched.Weekdays(zone) {
+		z.Days = append(z.Days, rotation.WeekdayES(d))
+	}
+	for _, d := range a.sched.NextCuts(zone, time.Now(), 6) {
+		z.Next = append(z.Next, d.Format(rotation.DateLayout))
+	}
+	return z
+}
+
+func (a *api) zonesList(w http.ResponseWriter, _ *http.Request) {
+	var out []zoneInfo
+	for _, z := range a.sched.Zones() {
+		out = append(out, a.info(z))
+	}
+	writeJSON(w, out)
+}
+
+func (a *api) zoneAt(w http.ResponseWriter, r *http.Request) {
+	lat, err1 := strconv.ParseFloat(r.URL.Query().Get("lat"), 64)
+	lon, err2 := strconv.ParseFloat(r.URL.Query().Get("lon"), 64)
+	if err1 != nil || err2 != nil || lat < -90 || lat > 90 || lon < -180 || lon > 180 {
+		http.Error(w, "lat and lon required", http.StatusBadRequest)
+		return
+	}
+	out := []zoneInfo{}
+	for _, z := range a.zones.Lookup(lat, lon) {
+		out = append(out, a.info(z))
+	}
+	writeJSON(w, map[string]any{"zones": out})
+}
+
+func (a *api) coloniaSearch(w http.ResponseWriter, r *http.Request) {
+	q := strings.TrimSpace(r.URL.Query().Get("q"))
+	if len([]rune(q)) < 3 {
+		http.Error(w, "q must have at least 3 characters", http.StatusBadRequest)
+		return
+	}
+	matches, exact := a.cols.Search(q, 10)
+	if matches == nil {
+		matches = []colonias.Colonia{}
+	}
+	writeJSON(w, map[string]any{"exact": exact, "colonias": matches})
+}
+
+func (a *api) results(w http.ResponseWriter, r *http.Request) {
+	rows, err := a.db.Results(r.Context(), a.sched.Day(time.Now()).AddDate(0, 0, -60), a.minShown)
+	if err != nil {
+		a.log.Error("results", "err", err)
+		http.Error(w, "error", http.StatusInternalServerError)
+		return
+	}
+	if rows == nil {
+		rows = []store.Result{}
+	}
+	writeJSON(w, rows)
+}
+
+func (a *api) verify(w http.ResponseWriter, r *http.Request) {
+	q := r.URL.Query()
+	if q.Get("hub.mode") == "subscribe" && q.Get("hub.verify_token") == a.verifyToken {
+		io.WriteString(w, q.Get("hub.challenge"))
+		return
+	}
+	http.Error(w, "forbidden", http.StatusForbidden)
+}
+
+func (a *api) webhook(w http.ResponseWriter, r *http.Request) {
+	body, err := io.ReadAll(io.LimitReader(r.Body, 1<<20))
+	if err != nil {
+		http.Error(w, "bad request", http.StatusBadRequest)
+		return
+	}
+	if !wa.ValidSignature(a.appSecret, body, r.Header.Get("X-Hub-Signature-256")) {
+		http.Error(w, "forbidden", http.StatusForbidden)
+		return
+	}
+	var p wa.Payload
+	if err := json.Unmarshal(body, &p); err != nil {
+		http.Error(w, "bad request", http.StatusBadRequest)
+		return
+	}
+	ctx, cancel := context.WithTimeout(r.Context(), 20*time.Second)
+	defer cancel()
+	if err := a.bot.Handle(ctx, p); err != nil {
+		a.log.Error("webhook", "err", err)
+		http.Error(w, "retry", http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+}
+
+func writeJSON(w http.ResponseWriter, v any) {
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Cache-Control", "public, max-age=300")
+	json.NewEncoder(w).Encode(v)
+}
