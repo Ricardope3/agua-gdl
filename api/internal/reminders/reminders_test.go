@@ -56,9 +56,14 @@ func TestDailyCap(t *testing.T) {
 	}
 	r := runner(t, "2026-10-18 20:00", st, snd)
 	r.DailyCap = 3
-	r.SendTonight(context.Background())
+	var beat []bool
+	r.Heartbeat = func(_ context.Context, ok bool, _ string) { beat = append(beat, ok) }
+	r.runOnce(context.Background())
 	if len(snd.Sent) != 3 {
 		t.Errorf("sent %d, want cap of 3", len(snd.Sent))
+	}
+	if len(beat) != 1 || beat[0] {
+		t.Errorf("hitting the cap must report a failed heartbeat, got %v", beat)
 	}
 }
 

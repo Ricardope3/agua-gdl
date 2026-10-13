@@ -35,6 +35,7 @@ type Runner struct {
 	DailyCap     int
 	MonthlyCap   int
 	Interval     time.Duration
+	Heartbeat    func(ctx context.Context, ok bool, msg string) // optional dead-man's switch
 	Now          func() time.Time
 	Log          *slog.Logger
 }
@@ -65,12 +66,23 @@ func (r *Runner) nextRun(now time.Time) time.Time {
 }
 
 func (r *Runner) runOnce(ctx context.Context) {
-	if err := r.SendTonight(ctx); err != nil {
+	err := r.SendTonight(ctx)
+	if err != nil {
 		r.Log.Error("reminders failed", "err", err)
+	}
+	if r.Heartbeat != nil {
+		msg := "ok"
+		if err != nil {
+			msg = err.Error()
+		}
+		r.Heartbeat(ctx, err == nil, msg)
 	}
 }
 
-func (r *Runner) SendTonight(ctx context.Context) error {
+// ErrCapped means some subscribers were skipped because a send cap was reached.
+var ErrCapped = errors.New("send cap reached")
+
+func (r *Runner) SendTonight(ctx context.Context) (err error) {
 	now := r.Now()
 	if err := r.Store.PurgeSeen(ctx, now.Add(-7*24*time.Hour)); err != nil {
 		r.Log.Warn("purge seen messages", "err", err)
@@ -97,6 +109,11 @@ func (r *Runner) SendTonight(ctx context.Context) error {
 		r.Log.Error("send cap reached; some subscribers will not get tonight's reminder",
 			"due", len(subs), "allowed", max(allowed, 0), "sent_24h", day, "sent_month", month)
 		subs = subs[:max(allowed, 0)]
+		defer func() {
+			if err == nil {
+				err = ErrCapped
+			}
+		}()
 	}
 	date := rotation.DateES(tomorrow)
 	sent, failures := 0, 0

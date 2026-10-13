@@ -34,6 +34,7 @@ type Result struct {
 	Baja      int    `json:"baja"`
 	NoRegreso int    `json:"no_regreso"`
 	Turbia    int    `json:"turbia"`
+	LastAt    string `json:"last_report_at"`
 }
 
 type DB struct{ pool *pgxpool.Pool }
@@ -178,7 +179,8 @@ func (db *DB) SentSince(ctx context.Context, since time.Time) (int, error) {
 func (db *DB) Results(ctx context.Context, since time.Time, minReports int) ([]Result, error) {
 	rows, err := db.pool.Query(ctx, `select zone, cut_date::text, count(*),
 			count(*) filter (where answer = 'normal'), count(*) filter (where answer = 'baja'),
-			count(*) filter (where answer = 'no_regreso'), count(*) filter (where answer = 'turbia')
+			count(*) filter (where answer = 'no_regreso'), count(*) filter (where answer = 'turbia'),
+			to_char(max(created_at) at time zone 'America/Mexico_City', 'YYYY-MM-DD"T"HH24:MI')
 		from cut_report where cut_date >= $1::date
 		group by zone, cut_date having count(*) >= $2
 		order by cut_date desc, zone`, since.Format(dateLayout), minReports)
@@ -187,7 +189,7 @@ func (db *DB) Results(ctx context.Context, since time.Time, minReports int) ([]R
 	}
 	return pgx.CollectRows(rows, func(r pgx.CollectableRow) (Result, error) {
 		var x Result
-		err := r.Scan(&x.Zone, &x.Date, &x.Total, &x.Normal, &x.Baja, &x.NoRegreso, &x.Turbia)
+		err := r.Scan(&x.Zone, &x.Date, &x.Total, &x.Normal, &x.Baja, &x.NoRegreso, &x.Turbia, &x.LastAt)
 		return x, err
 	})
 }

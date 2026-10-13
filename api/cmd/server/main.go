@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/signal"
 	"strconv"
+	"strings"
 	"syscall"
 	"time"
 	_ "time/tzdata"
@@ -24,7 +25,7 @@ import (
 )
 
 type config struct {
-	Port, DatabaseURL, BaseURL                                 string
+	Port, DatabaseURL, BaseURL, HeartbeatURL                   string
 	WAToken, WAPhoneNumberID, WAAppSecret, WAVerifyToken       string
 	WAGraphVersion, WATemplate, WALanguage                     string
 	RemindersEnabled                                           bool
@@ -37,6 +38,7 @@ func loadConfig() (config, error) {
 		WAGraphVersion: env("WA_GRAPH_VERSION", "v24.0"),
 		WATemplate:     env("WA_TEMPLATE", "aviso_corte"),
 		WALanguage:     env("WA_LANGUAGE", "es_MX"),
+		HeartbeatURL:   os.Getenv("HEARTBEAT_URL"),
 	}
 	var missing []string
 	for name, dst := range map[string]*string{
@@ -133,6 +135,9 @@ func run(log *slog.Logger) error {
 			Hour: cfg.ReminderHour, CatchUpUntil: cfg.CatchUpUntil,
 			DailyCap: cfg.DailyCap, MonthlyCap: cfg.MonthlyCap,
 			Interval: 100 * time.Millisecond, Now: time.Now, Log: log}
+		if cfg.HeartbeatURL != "" {
+			r.Heartbeat = heartbeat(cfg.HeartbeatURL, log)
+		}
 		go r.Run(ctx)
 	} else {
 		log.Warn("reminders disabled; set REMINDERS_ENABLED=true to send them")
@@ -152,4 +157,27 @@ func run(log *slog.Logger) error {
 		return err
 	}
 	return nil
+}
+
+// heartbeat pings a dead-man's-switch URL (e.g. healthchecks.io) after each nightly run,
+// using its "/fail" endpoint when the run failed or hit a cap.
+func heartbeat(url string, log *slog.Logger) func(context.Context, bool, string) {
+	client := &http.Client{Timeout: 10 * time.Second}
+	return func(ctx context.Context, ok bool, msg string) {
+		target := url
+		if !ok {
+			target += "/fail"
+		}
+		req, err := http.NewRequestWithContext(ctx, http.MethodPost, target, strings.NewReader(msg))
+		if err != nil {
+			log.Error("heartbeat", "err", err)
+			return
+		}
+		resp, err := client.Do(req)
+		if err != nil {
+			log.Error("heartbeat", "err", err)
+			return
+		}
+		resp.Body.Close()
+	}
 }

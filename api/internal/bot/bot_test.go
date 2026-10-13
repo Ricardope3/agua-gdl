@@ -175,3 +175,16 @@ func TestTemplateButtonByText(t *testing.T) {
 		t.Error("button text should unsubscribe too")
 	}
 }
+
+func TestResubscribeAfterBaja(t *testing.T) {
+	h := newHarness(t, "2026-10-14 10:00")
+	h.send(t, text("zona 3"))
+	h.send(t, text("baja"))
+	if got := h.send(t, text("hola")); got != msgWelcome {
+		t.Errorf("after BAJA, HOLA should start over:\n%s", got)
+	}
+	h.send(t, text("zona 5"))
+	if h.store.Subs["MX.42"].Zone != 5 {
+		t.Error("could not resubscribe")
+	}
+}
