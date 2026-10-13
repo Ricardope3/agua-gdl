@@ -48,7 +48,7 @@ type Bot struct {
 var (
 	zoneRe      = regexp.MustCompile(`^(?:ZONA ?)?([1-7])$`)
 	badZoneRe   = regexp.MustCompile(`^ZONA ?\d*$`)
-	stopWords   = []string{"BAJA", "ALTO", "STOP", "CANCELAR", "DARME DE BAJA", "YA NO"}
+	stopWords   = []string{"BAJA", "ALTO", "STOP", "CANCELAR", "DARME DE BAJA", "YA NO", "DEJAR DE RECIBIR AVISOS"}
 	helpWords   = []string{"AYUDA", "MENU", "INFO", "OPCIONES"}
 	reportWords = []string{"REPORTAR", "REPORTE", "REPORTAR CORTE"}
 	greetWords  = []string{"HOLA", "BUENAS", "BUENOS DIAS", "BUENAS TARDES", "BUENAS NOCHES", "AVISOS", "INICIO", "EMPEZAR"}

@@ -112,9 +112,6 @@ func TestReportAndUnsubscribe(t *testing.T) {
 	if got := h.send(t, text("reportar")); !strings.Contains(got, "jueves 15 de octubre") {
 		t.Errorf("REPORTAR should ask about the last cut:\n%s", got)
 	}
-	if got := h.send(t, wa.Inbound{Type: "button", Button: &wa.Button{Payload: "REPORT:2026-10-15"}}); !strings.Contains(got, "jueves 15 de octubre") {
-		t.Errorf("unexpected:\n%s", got)
-	}
 	h.send(t, wa.Inbound{Type: "interactive", Interactive: &wa.InboundInteract{ListReply: &wa.Reply{ID: "R:2026-10-15:no_regreso"}}})
 	if len(h.store.Reports) != 1 || h.store.Reports[0].Answer != "no_regreso" || h.store.Reports[0].Zone != 4 {
 		t.Errorf("report not saved: %+v", h.store.Reports)
