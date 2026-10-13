@@ -102,8 +102,10 @@ func (b *Bot) route(ctx context.Context, r wa.Recipient, m wa.Inbound) error {
 		return b.onText(ctx, r, m.Text.Body)
 	case m.Type == "location" && m.Location != nil:
 		return b.onLocation(ctx, r, m.Location.Latitude, m.Location.Longitude)
+	case m.Type == "button" && m.Button != nil && m.Button.Payload == "BAJA":
+		return b.unsubscribe(ctx, r)
 	case m.Type == "button" && m.Button != nil:
-		return b.onPayload(ctx, r, m.Button.Payload)
+		return b.onText(ctx, r, m.Button.Text)
 	case m.Type == "interactive" && m.Interactive != nil && m.Interactive.ListReply != nil:
 		return b.onPayload(ctx, r, m.Interactive.ListReply.ID)
 	case m.Type == "interactive" && m.Interactive != nil && m.Interactive.ButtonReply != nil:

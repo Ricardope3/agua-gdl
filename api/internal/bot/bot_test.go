@@ -169,3 +169,12 @@ func TestPermanentSendErrorIsNotRetried(t *testing.T) {
 		t.Error("server error should make Meta retry")
 	}
 }
+
+func TestTemplateButtonByText(t *testing.T) {
+	h := newHarness(t, "2026-10-14 10:00")
+	h.send(t, text("zona 2"))
+	h.send(t, wa.Inbound{Type: "button", Button: &wa.Button{Payload: "Dejar de recibir avisos", Text: "Dejar de recibir avisos"}})
+	if len(h.store.Subs) != 0 {
+		t.Error("button text should unsubscribe too")
+	}
+}
