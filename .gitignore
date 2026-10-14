@@ -2,3 +2,4 @@
 pipelines/.venv/
 *.pdf
 .DS_Store
+*.kml

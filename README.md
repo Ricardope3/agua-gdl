@@ -4,7 +4,7 @@ Avisos gratuitos por WhatsApp la noche antes de cada corte de la rotación de ag
 
 - `api/` servicio en Go: webhook de WhatsApp, avisos de las 20:00, búsqueda de zona y colonia, resultados.
 - `api/data/` zonas (KML público del SIAPA), 621 colonias (PDF del SIAPA del 12 oct 2026) y calendario semanal.
-- `pipelines/` scripts que regeneran `api/data` desde las fuentes del SIAPA.
+- `pipelines/` scripts que regeneran `api/data` desde las fuentes del SIAPA y avisan si cambian.
 
 ## Desarrollo
 
@@ -86,5 +86,20 @@ Para regenerar colonias:
 python3 -m venv pipelines/.venv && pipelines/.venv/bin/pip install pdfplumber==0.11.4
 pipelines/.venv/bin/python pipelines/siapa_colonias.py colonias_siapa.pdf api/data/colonias.json
 ```
+
+Para regenerar las zonas desde el KML del mapa del SIAPA (solo biblioteca estándar):
+
+```sh
+curl -sL 'https://www.google.com/maps/d/kml?mid=1AJ1jEcf4YzgRPw5r9yBXkZOoFMfoB6Y&forcekml=1' -o zonas.kml
+python3 pipelines/siapa_zonas.py zonas.kml api/data/zonas.geojson
+```
+
+Cada 6 horas, `.github/workflows/siapa-watch.yml` corre `pipelines/siapa_watch.py`: descarga la página, el calendario, el PDF y el KML del SIAPA y compara su SHA-256 con `pipelines/siapa_sources.json`. Si algo cambió, abre el issue «SIAPA cambió sus fuentes» (o comenta en el que siga abierto) con el reporte. Revisa el cambio, actualiza `api/data` si hace falta y luego la línea base:
+
+```sh
+python3 pipelines/siapa_watch.py --update && git commit -m 'Update the SIAPA baseline' pipelines/siapa_sources.json
+```
+
+El CDN del SIAPA guarda cada archivo hasta un día, así que un cambio puede tardar ese tiempo en detectarse.
 
 Código bajo MIT. Datos del SIAPA / Gobierno de Jalisco.
