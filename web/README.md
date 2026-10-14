@@ -4,4 +4,4 @@ Publicado en https://aguagdl.com con Cloudflare Pages (sin comando de build, car
 
 `avisos.html` es la página para suscribirse; `privacidad.html` y `terminos.html` son el aviso de privacidad y los términos de uso (borradores: falta llenar los recuadros naranjas y una revisión legal).
 
-Pendiente: /llego, /resultados.
+`llego.html` («¿Qué zona me toca?») busca la zona por ubicación o colonia y `resultados.html` muestra los reportes de `/v1/results`. Las dos usan `https://api.aguagdl.com`; para probarlas con la API local, agrega `?api=http://localhost:8080` (solo acepta localhost).
