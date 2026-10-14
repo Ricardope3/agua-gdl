@@ -29,6 +29,7 @@ func msgHelp(base string) string {
 📍 Manda tu *ubicación* o el *nombre de tu colonia* para saber tu zona
 🔢 *ZONA 1* a *ZONA 7*: suscribirte o cambiar de zona
 📝 *REPORTAR*: contar cómo regresó el agua después del último corte
+🚚 *PIPA*: cómo pedir una pipa al SIAPA
 🛑 *BAJA*: dejar de recibir avisos y borrar tus datos
 
 🗺️ Mapa oficial del SIAPA: ` + MapURL + `
@@ -62,6 +63,14 @@ Mándame tu 📍 *ubicación* para saber cuál te toca, o elige tu zona si ya la
 }
 
 const msgPickZoneAtPoint = "Tu ubicación queda en el límite entre zonas 🤔 Elige la tuya o revisa el mapa del SIAPA 👇"
+
+// Contacts as published on rotaciondeserviciosiapa.jalisco.gob.mx (checked 14 Oct 2026).
+const msgPipa = `🚚 Para pedir una *pipa* o reportar que no te llega el agua, contacta al SIAPA:
+
+💬 WhatsApp SIAPABOT: 33 51 64 44 40
+☎️ SIAPATEL: 073
+
+Agua GDL no es del SIAPA y no puede mandar pipas.`
 
 const msgUnsubscribed = "👋 Listo, ya no recibirás avisos y borramos tus datos. Si quieres volver, escribe *HOLA*."
 

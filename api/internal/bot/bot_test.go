@@ -154,6 +154,9 @@ func TestEdgeTexts(t *testing.T) {
 	if got := h.send(t, text("zapopan")); got != msgMunicipio("Zapopan") {
 		t.Errorf("unexpected:\n%s", got)
 	}
+	if got := h.send(t, text("Pipa")); got != msgPipa {
+		t.Errorf("unexpected:\n%s", got)
+	}
 }
 
 type failingSender struct{ err error }

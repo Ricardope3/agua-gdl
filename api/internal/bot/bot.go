@@ -45,6 +45,7 @@ var (
 	stopWords   = []string{"BAJA", "ALTO", "STOP", "CANCELAR", "DARME DE BAJA", "YA NO", "DEJAR DE RECIBIR AVISOS"}
 	helpWords   = []string{"AYUDA", "MENU", "INFO", "OPCIONES"}
 	reportWords = []string{"REPORTAR", "REPORTE", "REPORTAR CORTE"}
+	pipaWords   = []string{"PIPA", "PIPAS", "PEDIR PIPA", "SIAPA", "SIAPATEL"}
 	greetWords  = []string{"HOLA", "BUENAS", "BUENOS DIAS", "BUENAS TARDES", "BUENAS NOCHES", "AVISOS", "INICIO", "EMPEZAR"}
 	// Municipios span several zones; "TLAQUEPAQUE" is also a colonia in Guadalajara's zone 7.
 	municipios = map[string]string{"GUADALAJARA": "Guadalajara", "ZAPOPAN": "Zapopan", "TLAQUEPAQUE": "Tlaquepaque", "SAN PEDRO TLAQUEPAQUE": "San Pedro Tlaquepaque", "TONALA": "Tonalá"}
@@ -145,6 +146,8 @@ func (b *Bot) onText(ctx context.Context, r wa.Recipient, body string) error {
 		return b.unsubscribe(ctx, r)
 	case slices.Contains(reportWords, n):
 		return b.reportLastCut(ctx, r)
+	case slices.Contains(pipaWords, n):
+		return b.text(ctx, r, msgPipa)
 	case zoneRe.MatchString(n):
 		zone, _ := strconv.Atoi(zoneRe.FindStringSubmatch(n)[1])
 		return b.subscribe(ctx, r, zone)
