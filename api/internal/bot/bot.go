@@ -169,7 +169,8 @@ func (b *Bot) onText(ctx context.Context, r wa.Recipient, body string) error {
 	}
 	rows := make([]wa.Row, len(matches))
 	for i, c := range matches {
-		rows[i] = wa.Row{ID: "C:" + c.Key(), Title: c.Name, Description: c.Municipio + " · " + zoneList(c.Zones)}
+		label := zoneLabel(c.Zones)
+		rows[i] = wa.Row{ID: "C:" + c.Key(), Title: c.Name, Description: municipioName(c.Municipio) + " · " + strings.ToUpper(label[:1]) + label[1:]}
 	}
 	return b.send(ctx, wa.NewList(r, msgPickColonia, "Ver colonias", rows))
 }
@@ -224,7 +225,7 @@ func (b *Bot) onPayload(ctx context.Context, r wa.Recipient, p string) error {
 
 func (b *Bot) onColonia(ctx context.Context, r wa.Recipient, c colonias.Colonia) error {
 	if c.Multi || len(c.Zones) > 1 {
-		return b.pickZone(ctx, r, msgPickZone(c.Name, zoneList(c.Zones)), c.Zones)
+		return b.pickZone(ctx, r, msgPickZone(c.Name, c.Zones), c.Zones)
 	}
 	return b.subscribe(ctx, r, c.Zones[0])
 }
@@ -410,6 +411,21 @@ func (b *Bot) send(ctx context.Context, m wa.Message) error {
 		return nil
 	}
 	return err
+}
+
+// zoneLabel is "zona 3" or "zonas 1, 5 y 6".
+func zoneLabel(zones []int) string {
+	if len(zones) == 1 {
+		return "zona " + zoneList(zones)
+	}
+	return "zonas " + zoneList(zones)
+}
+
+func municipioName(m string) string {
+	if name := municipios[colonias.Normalize(m)]; name != "" {
+		return name
+	}
+	return m
 }
 
 func zoneList(zones []int) string {

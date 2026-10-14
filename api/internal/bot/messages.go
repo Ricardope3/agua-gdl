@@ -56,10 +56,14 @@ Mándame tu 📍 *ubicación* o el *nombre de tu colonia*, por ejemplo: _Las Jun
 
 const msgPickColonia = "Encontré varias colonias parecidas. ¿Cuál es la tuya? 👇"
 
-func msgPickZone(colonia string, zones string) string {
-	return fmt.Sprintf(`*%s* recibe agua de varios acueductos, así que está repartida en la rotación (zonas %s) 🤔
+func msgPickZone(colonia string, zones []int) string {
+	where := "así que está repartida en la rotación (" + zoneLabel(zones) + ")"
+	if len(zones) == 1 {
+		where = "y el SIAPA la marca como repartida, aunque solo la lista en la " + zoneLabel(zones)
+	}
+	return fmt.Sprintf(`*%s* recibe agua de varios acueductos, %s 🤔
 
-Mándame tu 📍 *ubicación* para saber cuál te toca, o elige tu zona si ya la sabes 👇`, colonia, zones)
+Mándame tu 📍 *ubicación* para saber cuál te toca, o elige tu zona si ya la sabes 👇`, colonia, where)
 }
 
 const msgPickZoneAtPoint = "Tu ubicación queda en el límite entre zonas 🤔 Elige la tuya o revisa el mapa del SIAPA 👇"

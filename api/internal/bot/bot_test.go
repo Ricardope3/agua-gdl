@@ -330,3 +330,18 @@ func TestRefusesSubscriptionsPastTheNightlyCap(t *testing.T) {
 		t.Fatalf("moving from zone 4 to 6 doesn't add anyone to Monday:\n%s", got)
 	}
 }
+
+func TestZoneLabels(t *testing.T) {
+	if got := msgPickZone("MEDRANO", []int{3}); !strings.Contains(got, "solo la lista en la zona 3") {
+		t.Errorf("one zone:\n%s", got)
+	}
+	if got := msgPickZone("AMERICANA", []int{1, 5, 6}); !strings.Contains(got, "(zonas 1, 5 y 6)") {
+		t.Errorf("several zones:\n%s", got)
+	}
+	h := newHarness(t, "2026-10-14 10:00")
+	h.send(t, text("chapalit"))
+	m := h.sender.Sent[len(h.sender.Sent)-1]
+	if m.Interactive == nil || !strings.Contains(m.Interactive.Action.Sections[0].Rows[0].Description, " · Zona") {
+		t.Fatalf("list rows should read like «Guadalajara · Zona 5»: %+v", m.Interactive)
+	}
+}
