@@ -212,3 +212,20 @@ func TestReplyFailureCannotReplaySubscriptionAfterBaja(t *testing.T) {
 		t.Fatal("retried command must not reactivate subscription or send a stale confirmation")
 	}
 }
+
+func TestTwinColoniaListPicksTheRightZone(t *testing.T) {
+	h := newHarness(t, "2026-10-14 10:00")
+	if got := h.send(t, text("Jardines del Sauz")); got != msgPickColonia {
+		t.Fatalf("two colonias share the name, got:\n%s", got)
+	}
+	var id string
+	for _, row := range h.sender.Sent[len(h.sender.Sent)-1].Interactive.Action.Sections[0].Rows {
+		if row.Title == "JARDINES DEL SAUZ" {
+			id = row.ID
+		}
+	}
+	h.send(t, wa.Inbound{Type: "interactive", Interactive: &wa.InboundInteract{ListReply: &wa.Reply{ID: id}}})
+	if h.store.Subs["MX.42"].Zone != 6 {
+		t.Errorf("Jardines del Sauz is zone 6, got %+v", h.store.Subs["MX.42"])
+	}
+}

@@ -48,3 +48,23 @@ func TestSearch(t *testing.T) {
 		t.Fatalf("nonsense matched %v", m)
 	}
 }
+
+func TestKeysAreUnique(t *testing.T) {
+	ix, _ := Load(data.Colonias)
+	seen := map[string]bool{}
+	for _, c := range ix.all {
+		if seen[c.Key()] {
+			t.Errorf("duplicate key %s", c.Key())
+		}
+		seen[c.Key()] = true
+	}
+	m, _ := ix.Search("Jardines del Sauz", 5)
+	zones := map[int]bool{}
+	for _, c := range m {
+		got, _ := ix.ByKey(c.Key())
+		zones[got.Zones[0]] = true
+	}
+	if !zones[5] || !zones[6] {
+		t.Errorf("Fracc. Jardines del Sauz (zone 5) and Jardines del Sauz (zone 6) must stay apart: %v", m)
+	}
+}

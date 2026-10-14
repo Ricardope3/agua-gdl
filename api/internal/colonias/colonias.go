@@ -14,13 +14,15 @@ type Colonia struct {
 	Municipio string `json:"municipio"`
 	Zones     []int  `json:"zones"`
 	Multi     bool   `json:"multi"`
+	key       string
 	norm      string
 	munNorm   string
 	grams     map[string]bool
 }
 
-// Key identifies a colonia across messages, e.g. in WhatsApp list replies.
-func (c Colonia) Key() string { return c.norm + "|" + c.munNorm }
+// Key identifies a colonia across messages, e.g. in WhatsApp list replies. It keeps
+// prefixes: SIAPA lists "Fracc. Jardines del Sauz" and "Jardines del Sauz" in different zones.
+func (c Colonia) Key() string { return c.key }
 
 type Index struct{ all []Colonia }
 
@@ -32,6 +34,7 @@ func Load(raw []byte) (*Index, error) {
 	for i := range all {
 		all[i].norm = Normalize(all[i].Name)
 		all[i].munNorm = Normalize(all[i].Municipio)
+		all[i].key = fold(all[i].Name) + "|" + all[i].munNorm
 		all[i].grams = trigrams(all[i].norm)
 	}
 	return &Index{all: all}, nil
@@ -52,6 +55,16 @@ var municipios = []struct{ alias, norm string }{
 
 // Normalize uppercases, strips accents and punctuation, and drops "Col."/"Fracc." prefixes.
 func Normalize(s string) string {
+	s = fold(s)
+	for _, p := range prefixes {
+		if rest, ok := strings.CutPrefix(s, p); ok {
+			return rest
+		}
+	}
+	return s
+}
+
+func fold(s string) string {
 	s = accents.Replace(strings.ToUpper(s))
 	var b strings.Builder
 	for _, r := range s {
@@ -61,13 +74,7 @@ func Normalize(s string) string {
 			b.WriteByte(' ')
 		}
 	}
-	s = strings.Join(strings.Fields(b.String()), " ")
-	for _, p := range prefixes {
-		if rest, ok := strings.CutPrefix(s, p); ok {
-			return rest
-		}
-	}
-	return s
+	return strings.Join(strings.Fields(b.String()), " ")
 }
 
 func (ix *Index) ByKey(key string) (Colonia, bool) {
