@@ -1,0 +1,8 @@
+.git
+.github
+web
+pipelines
+**/.venv
+**/.env
+*.png
+aguagdl_favicon

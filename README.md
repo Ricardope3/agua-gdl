@@ -22,7 +22,7 @@ CI las ejecuta con PostgreSQL 17. Sin `TEST_DATABASE_URL`, esas pruebas se omite
 
 ## Despliegue
 
-`fly launch --copy-config --no-deploy`, luego `fly secrets set DATABASE_URL=… PUBLIC_BASE_URL=… WA_TOKEN=… WA_PHONE_NUMBER_ID=… WA_APP_SECRET=… WA_VERIFY_TOKEN=…` y `fly deploy`. Los avisos solo salen con `REMINDERS_ENABLED=true`.
+`fly launch --copy-config --no-deploy`, luego `fly secrets set DATABASE_URL='…' PUBLIC_BASE_URL=https://aguagdl.com WA_TOKEN='…' WA_PHONE_NUMBER_ID=… WA_APP_SECRET='…' WA_VERIFY_TOKEN='…' HEARTBEAT_URL='…'` (con comillas simples: el `?` y el `&` de la URL de Neon rompen el comando en zsh) y `fly deploy --ha=false`. Sin `--ha=false`, el primer despliegue crea dos máquinas: no duplican avisos, pero la que termina primero cuenta como `sending` el envío en curso de la otra y manda una falsa alarma al heartbeat. Despliega desde `main` limpio: `fly deploy` sube la carpeta local. Los avisos solo salen con `REMINDERS_ENABLED=true`.
 
 Cada comando y el hash de su identificador de WhatsApp se guardan en una sola
 transacción. Los identificadores (`wamid`) contienen el número de teléfono, así que
