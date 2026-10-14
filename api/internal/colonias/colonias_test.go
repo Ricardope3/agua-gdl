@@ -77,3 +77,18 @@ func TestKeysAreUnique(t *testing.T) {
 		t.Errorf("Fracc. Jardines del Sauz (zone 5) and Jardines del Sauz (zone 6) must stay apart: %v", m)
 	}
 }
+
+func TestLastRowOfPDFPage(t *testing.T) {
+	ix, err := Load(data.Colonias)
+	if err != nil {
+		t.Fatal(err)
+	}
+	m, exact := ix.Search("Niños Héroes", 5)
+	if !exact || len(m) != 1 || len(m[0].Zones) != 1 || m[0].Zones[0] != 6 {
+		t.Fatalf("Niños Héroes is the last row of a PDF page: %v %v", m, exact)
+	}
+	m, _ = ix.Search("Medrano", 5)
+	if len(m) == 0 || len(m[0].Zones) != 2 {
+		t.Fatalf("Medrano is in zones 2 and 3: %v", m)
+	}
+}

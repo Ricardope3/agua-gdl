@@ -3,7 +3,7 @@
 Avisos gratuitos por WhatsApp la noche antes de cada corte de la rotación de agua del SIAPA (Guadalajara, oct 2026 – mar 2027). Servicio ciudadano, no oficial y sin partido.
 
 - `api/` servicio en Go: webhook de WhatsApp, avisos de las 20:00, búsqueda de zona y colonia, resultados.
-- `api/data/` zonas (KML público del SIAPA), 596 colonias (PDF del SIAPA) y calendario semanal.
+- `api/data/` zonas (KML público del SIAPA), 621 colonias (PDF del SIAPA del 12 oct 2026) y calendario semanal.
 - `pipelines/` scripts que regeneran `api/data` desde las fuentes del SIAPA.
 
 ## Desarrollo

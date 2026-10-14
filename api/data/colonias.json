@@ -481,6 +481,14 @@
   "multi": false
  },
  {
+  "name": "EL PORVENIR",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
   "name": "EL REAL",
   "municipio": "GUADALAJARA",
   "zones": [
@@ -596,7 +604,8 @@
   "name": "FRACCIONAMIENTO JARDINES DEL SAUZ",
   "municipio": "GUADALAJARA",
   "zones": [
-   5
+   5,
+   6
   ],
   "multi": true
  },
@@ -789,6 +798,14 @@
   "multi": false
  },
  {
+  "name": "JARDINES DE SAN JOSE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
   "name": "JARDINES DE SANTA ISABEL",
   "municipio": "GUADALAJARA",
   "zones": [
@@ -877,6 +894,14 @@
    7
   ],
   "multi": true
+ },
+ {
+  "name": "LA CANTERA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
  },
  {
   "name": "LA CANTERIA",
@@ -1183,6 +1208,7 @@
   "name": "MEDRANO",
   "municipio": "GUADALAJARA",
   "zones": [
+   2,
    3
   ],
   "multi": true
@@ -1255,10 +1281,26 @@
   "multi": true
  },
  {
+  "name": "MONUMENTAL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
   "name": "MORELOS",
   "municipio": "GUADALAJARA",
   "zones": [
    5
+  ],
+  "multi": false
+ },
+ {
+  "name": "NIÑOS HEROES",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
   ],
   "multi": false
  },
@@ -1347,6 +1389,14 @@
   "municipio": "GUADALAJARA",
   "zones": [
    3
+  ],
+  "multi": false
+ },
+ {
+  "name": "PATRIA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
   ],
   "multi": false
  },
@@ -1675,6 +1725,14 @@
   "multi": false
  },
  {
+  "name": "SAN JOSE RIO VERDE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
   "name": "SAN JUAN DE DIOS",
   "municipio": "GUADALAJARA",
   "zones": [
@@ -1887,6 +1945,7 @@
   "name": "VALENTIN GOMEZ FARIAS",
   "municipio": "GUADALAJARA",
   "zones": [
+   2,
    5
   ],
   "multi": true
@@ -1944,6 +2003,7 @@
   "name": "VILLA VICENTE GUERRERO",
   "municipio": "GUADALAJARA",
   "zones": [
+   5,
    6
   ],
   "multi": true
@@ -1985,6 +2045,14 @@
   "municipio": "GUADALAJARA",
   "zones": [
    5
+  ],
+  "multi": false
+ },
+ {
+  "name": "ZONA DE INDUSTRIAS 1",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
   ],
   "multi": false
  },
@@ -2051,6 +2119,14 @@
    4
   ],
   "multi": false
+ },
+ {
+  "name": "ARBOLEDAS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ],
+  "multi": true
  },
  {
   "name": "ARBOLEDAS DE SAN MARTIN",
@@ -2392,6 +2468,14 @@
   "multi": false
  },
  {
+  "name": "JARDINES DE LA PAZ",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ],
+  "multi": false
+ },
+ {
   "name": "JARDINES DE SANTA MARIA",
   "municipio": "TLAQUEPAQUE",
   "zones": [
@@ -2576,10 +2660,26 @@
   "multi": false
  },
  {
+  "name": "LOS SANTIBAÑEZ",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
   "name": "MIRADOR DEL TESORO",
   "municipio": "TLAQUEPAQUE",
   "zones": [
    6
+  ],
+  "multi": false
+ },
+ {
+  "name": "MIRAVALLE FOVISSSTE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
   ],
   "multi": false
  },
@@ -2929,6 +3029,14 @@
   "multi": false
  },
  {
+  "name": "COLINAS DE SANTA CRUZ",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
   "name": "COLINAS DE TONALA",
   "municipio": "TONALÁ",
   "zones": [
@@ -3074,6 +3182,14 @@
  },
  {
   "name": "LA GUADALUPANA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ],
+  "multi": false
+ },
+ {
+  "name": "LA PUERTA",
   "municipio": "TONALÁ",
   "zones": [
    4
@@ -3257,6 +3373,14 @@
   "multi": false
  },
  {
+  "name": "ALMATERRA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
   "name": "ALTABRISA",
   "municipio": "ZAPOPAN",
   "zones": [
@@ -3409,6 +3533,14 @@
   "multi": true
  },
  {
+  "name": "CHAPALITA INN",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
   "name": "CHAPALITA LAS FUENTES",
   "municipio": "ZAPOPAN",
   "zones": [
@@ -3554,6 +3686,14 @@
  },
  {
   "name": "CORDILLERAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "DOCE DE DICIEMBRE",
   "municipio": "ZAPOPAN",
   "zones": [
    6
@@ -3721,6 +3861,14 @@
   "multi": false
  },
  {
+  "name": "FORET RESIDENCIAL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
   "name": "FRACCIONAMIENTO CAMINO REAL",
   "municipio": "ZAPOPAN",
   "zones": [
@@ -3874,6 +4022,14 @@
  },
  {
   "name": "JARDINES DEL IXTEPETE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "JARDINES DEL SOL",
   "municipio": "ZAPOPAN",
   "zones": [
    6
@@ -4043,6 +4199,14 @@
   "multi": false
  },
  {
+  "name": "LAS CUMBRES",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
   "name": "LAS LOMAS",
   "municipio": "ZAPOPAN",
   "zones": [
@@ -4188,6 +4352,14 @@
  },
  {
   "name": "MIRAMAR",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "MISION SANTA ANA",
   "municipio": "ZAPOPAN",
   "zones": [
    6
@@ -4348,6 +4520,14 @@
  },
  {
   "name": "PUERTA DEL BOSQUE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "PUERTA DEL ROBLE",
   "municipio": "ZAPOPAN",
   "zones": [
    6
@@ -4516,6 +4696,14 @@
   "multi": false
  },
  {
+  "name": "RESIDENCIAL PLAZA GUADALUPE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
   "name": "RESIDENCIAL TEPEYAC DEL SOL",
   "municipio": "ZAPOPAN",
   "zones": [
@@ -4677,6 +4865,22 @@
  },
  {
   "name": "VALLE DE SAN NICOLAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ],
+  "multi": false
+ },
+ {
+  "name": "VICTORIA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   5
+  ],
+  "multi": false
+ },
+ {
+  "name": "VILLA LA CIMA",
   "municipio": "ZAPOPAN",
   "zones": [
    6
