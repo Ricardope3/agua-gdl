@@ -1,0 +1,32 @@
+name: siapa-watch
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+concurrency: siapa-watch
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: watch
+        shell: bash
+        run: python3 pipelines/siapa_watch.py | tee "$RUNNER_TEMP/report.md" "$GITHUB_STEP_SUMMARY"
+      - if: ${{ !cancelled() && steps.watch.outputs.changed == 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          TITLE: SIAPA cambió sus fuentes
+          FINGERPRINT: ${{ steps.watch.outputs.fingerprint }}
+        run: |
+          n=$(gh issue list --state open --limit 500 --json number,title --jq "[.[] | select(.title == \"$TITLE\")][0].number // empty")
+          if [ -z "$n" ]; then
+            gh issue create --title "$TITLE" --body-file "$RUNNER_TEMP/report.md"
+          elif gh issue view "$n" --json body,comments --jq '[.body, .comments[].body] | join("\n")' | grep -qF "siapa-watch $FINGERPRINT"; then
+            echo "Issue #$n already reports this state"
+          else
+            gh issue comment "$n" --body-file "$RUNNER_TEMP/report.md"
+          fi
