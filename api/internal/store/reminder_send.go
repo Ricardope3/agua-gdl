@@ -54,7 +54,7 @@ func (db *DB) SendReminder(ctx context.Context, s Subscriber, cutDate time.Time,
 		case sendErr != nil:
 			status = "uncertain"
 		}
-		_, err = tx.Exec(ctx, `update reminder set wamid = nullif($2, ''), status = $3 where id = $1`, reminderID, wamid, status)
+		_, err = tx.Exec(ctx, `update reminder set wamid_hash = nullif($2, ''), status = $3 where id = $1`, reminderID, hashID(wamid), status)
 		return err
 	})
 	return attempted, errors.Join(err, sendErr)

@@ -23,7 +23,7 @@ func (db *DB) ProcessInbound(ctx context.Context, wamid string, process func(Bot
 		return errors.New("missing inbound message ID")
 	}
 	return pgx.BeginFunc(ctx, db.pool, func(tx pgx.Tx) error {
-		tag, err := tx.Exec(ctx, `insert into inbound_seen (wamid) values ($1) on conflict do nothing`, wamid)
+		tag, err := tx.Exec(ctx, `insert into inbound_seen (wamid_hash) values ($1) on conflict do nothing`, hashID(wamid))
 		if err != nil || tag.RowsAffected() == 0 {
 			return err
 		}

@@ -290,3 +290,24 @@ func TestUpdateStatusReportsReminders(t *testing.T) {
 		}
 	}
 }
+
+func TestStoresOnlyHashesOfMessageIDs(t *testing.T) {
+	db := testDB(t)
+	s := testSubscriber(t, db)
+	ctx := context.Background()
+	const reminderID, inboundID = "wamid.HBgLMTY1MDM4Nzk0MzkVAgARGBI", "wamid.HBgLMTY1MDM4Nzk0MzkVAgASGBQ"
+	if _, err := db.SendReminder(ctx, s, time.Now(), func(Subscriber) (string, error) { return reminderID, nil }); err != nil {
+		t.Fatal(err)
+	}
+	if err := db.ProcessInbound(ctx, inboundID, func(BotStore) error { return nil }); err != nil {
+		t.Fatal(err)
+	}
+	var raw int
+	if err := db.pool.QueryRow(ctx, `select (select count(*) from reminder where wamid_hash like 'wamid%') +
+		(select count(*) from inbound_seen where wamid_hash like 'wamid%')`).Scan(&raw); err != nil || raw != 0 {
+		t.Fatalf("message IDs embed the phone number and must not be stored: %d %v", raw, err)
+	}
+	if ok, err := db.UpdateStatus(ctx, reminderID, "delivered"); err != nil || !ok {
+		t.Fatalf("status by message ID: %v %v", ok, err)
+	}
+}

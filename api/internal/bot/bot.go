@@ -62,7 +62,7 @@ func (b *Bot) Handle(ctx context.Context, p wa.Payload) error {
 				if st.Status != "failed" {
 					continue
 				}
-				b.Log.Warn("delivery failed", "wamid", st.ID, "reminder", reminder, "errors", st.Errors)
+				b.Log.Warn("delivery failed", "reminder", reminder, "errors", st.Errors)
 				if reminder && b.Alert != nil {
 					b.Alert(ctx, fmt.Sprintf("a reminder was not delivered: %v", st.Errors))
 				}

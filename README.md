@@ -24,7 +24,9 @@ CI las ejecuta con PostgreSQL 17. Sin `TEST_DATABASE_URL`, esas pruebas se omite
 
 `fly launch --no-deploy`, luego `fly secrets set DATABASE_URL=… PUBLIC_BASE_URL=… WA_TOKEN=… WA_PHONE_NUMBER_ID=… WA_APP_SECRET=… WA_VERIFY_TOKEN=…` y `fly deploy`. Los avisos solo salen con `REMINDERS_ENABLED=true`.
 
-Cada comando y su identificador de WhatsApp se guardan en una sola transacción.
+Cada comando y el hash de su identificador de WhatsApp se guardan en una sola
+transacción. Los identificadores (`wamid`) contienen el número de teléfono, así que
+la base solo guarda su hash SHA-256 y nunca se escriben en los logs.
 Si falla la respuesta de confirmación, el comando queda aplicado y un reintento del
 webhook no lo repite. La confirmación puede perderse; la persona puede escribir de
 nuevo para consultar su estado.
@@ -54,14 +56,14 @@ los de hoy.
 Para revisar los intentos pendientes:
 
 ```sql
-select id, cut_date, zone, status, wamid from reminder
+select id, cut_date, zone, status from reminder
 where status in ('sending', 'uncertain', 'rejected', 'failed')
 order by cut_date desc, id;
 ```
 
 No borres estas reservas para reintentar automáticamente: podrías duplicar un
 mensaje que WhatsApp ya aceptó. Confirma el resultado en WhatsApp Manager; marca
-como `sent` los aceptados (con su `wamid`), o `failed` los rechazados. Si no puedes
+como `sent` los aceptados, o `failed` los rechazados. Si no puedes
 confirmarlo, conserva `uncertain` y publica el aviso manualmente en el Canal.
 
 ## Datos

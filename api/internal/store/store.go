@@ -3,7 +3,9 @@ package store
 
 import (
 	"context"
+	"crypto/sha256"
 	"embed"
+	"encoding/hex"
 	"errors"
 	"fmt"
 	"io/fs"
@@ -16,6 +18,15 @@ import (
 )
 
 const dateLayout = "2006-01-02"
+
+// hashID keeps WhatsApp message IDs out of the database: a wamid embeds the phone number.
+func hashID(wamid string) string {
+	if wamid == "" {
+		return ""
+	}
+	sum := sha256.Sum256([]byte(wamid))
+	return hex.EncodeToString(sum[:])
+}
 
 //go:embed migrations/*.sql
 var migrations embed.FS
@@ -142,8 +153,8 @@ func (db *DB) SaveReport(ctx context.Context, subscriberID int64, zone int, cutD
 
 // UpdateStatus records a delivery status and reports whether it changed a reminder.
 func (db *DB) UpdateStatus(ctx context.Context, wamid, status string) (bool, error) {
-	tag, err := db.q.Exec(ctx, `update reminder set status = $2 where wamid = $1
-		and array_position(array['sent','delivered','read','failed'], status) < array_position(array['sent','delivered','read','failed'], $2)`, wamid, status)
+	tag, err := db.q.Exec(ctx, `update reminder set status = $2 where wamid_hash = $1
+		and array_position(array['sent','delivered','read','failed'], status) < array_position(array['sent','delivered','read','failed'], $2)`, hashID(wamid), status)
 	return tag.RowsAffected() > 0, err
 }
 
