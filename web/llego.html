@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Qué zona me toca? · Agua GDL</title>
+<meta name="description" content="Encuentra tu zona de la rotación de agua del SIAPA en Guadalajara y tus próximos días de racionamiento, con tu ubicación o el nombre de tu colonia.">
+<link rel="canonical" href="https://aguagdl.com/llego">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aguagdl.com/llego">
+<meta property="og:title" content="¿Qué zona me toca? Rotación de agua del SIAPA">
+<meta property="og:description" content="Tu zona y tus próximos días de racionamiento, con tu ubicación o tu colonia.">
+<meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b1b2b" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<style>
+:root {
+  --bg: #f4f9fd; --surface: #ffffff; --fg: #10263a; --muted: #4d6375; --line: #d5e4ef;
+  --brand: #017cdc; --brand-deep: #015198; --link: #015198; --on-brand: #ffffff;
+  --warn: #8a5a00; --warn-bg: #fff3d6;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1b2b; --surface: #112739; --fg: #e8f1f8; --muted: #a3b8c8; --line: #23415a;
+    --link: #7cc1f7; --warn: #ffd27a; --warn-bg: #3a2c10;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 var(--font) }
+a { color: var(--link) }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; border-radius: 4px }
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 20px }
+header.top { padding: 20px 0 }
+.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; font-weight: 800; font-size: 1.25rem; letter-spacing: -.01em }
+.brand img { width: 30px; height: auto }
+h1 { font-size: clamp(2rem, 6vw, 3rem); line-height: 1.08; letter-spacing: -.02em; margin: 20px 0 16px; text-wrap: balance }
+.lede { font-size: 1.15rem; color: var(--muted); margin: 0 0 28px; max-width: 60ch }
+.finder { background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--brand); border-radius: 10px; padding: 20px }
+.button { display: inline-block; background: var(--brand-deep); color: var(--on-brand); font: inherit; font-weight: 700; font-size: 1.1rem; text-decoration: none; padding: 12px 20px; border: 0; border-radius: 8px; cursor: pointer }
+.button:hover { background: var(--brand) }
+.button:disabled { opacity: .6; cursor: progress }
+.note { margin: 10px 0 0; font-size: .95rem; color: var(--muted) }
+.or { display: flex; align-items: center; gap: 12px; margin: 20px 0; color: var(--muted); font-size: .95rem }
+.or::before, .or::after { content: ""; flex: 1; border-top: 1px solid var(--line) }
+label { display: block; font-weight: 700; margin: 0 0 6px }
+.search { display: flex; flex-wrap: wrap; gap: 10px }
+.search input { flex: 1 1 200px; min-width: 0; font: inherit; color: var(--fg); background: var(--surface); border: 2px solid var(--muted); border-radius: 8px; padding: 10px 12px }
+#resultado { margin-top: 24px; scroll-margin-top: 16px }
+#resultado:empty { display: none }
+#resultado > p { margin: 0 0 14px; max-width: 65ch }
+.msg { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px }
+.warn { background: var(--warn-bg); border-left: 5px solid var(--warn); border-radius: 8px; padding: 12px 14px }
+.linklike { font: inherit; color: var(--link); background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer }
+.zones { display: grid; gap: 12px; margin: 0 0 14px }
+.zone { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px }
+.zone h3 { margin: 0 0 4px; font-size: 1.5rem; line-height: 1.2 }
+.zone p { margin: 0 0 6px }
+.zone ul { margin: 0; padding-left: 1.2em }
+.zone li { margin: 0 0 2px }
+.choices { list-style: none; margin: 0 0 14px; padding: 0; display: grid; gap: 8px }
+.choice { width: 100%; text-align: left; font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; cursor: pointer }
+.choice:hover { border-color: var(--brand) }
+.choice span { display: block; color: var(--muted); font-size: .95rem }
+section { padding: 36px 0 8px }
+h2 { font-size: 1.5rem; line-height: 1.2; margin: 0 0 14px; letter-spacing: -.01em }
+section p { margin: 0 0 14px; max-width: 65ch }
+ul.plain { padding-left: 1.3em; margin: 0 0 14px }
+ul.plain li { margin: 0 0 8px }
+footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .9rem }
+footer p { margin: 0 0 8px; max-width: 70ch }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
+  </header>
+
+  <main>
+    <h1>¿Qué zona me toca?</h1>
+    <p class="lede">Encuentra tu zona de la rotación de agua del SIAPA y tus próximos días de racionamiento.</p>
+
+    <div class="finder">
+      <button class="button" type="button" id="ubicacion"><span aria-hidden="true">📍 </span>Usar mi ubicación</button>
+      <p class="note">Tu ubicación solo se usa para encontrar tu zona. No la guardamos.</p>
+      <p class="or">o</p>
+      <form id="buscar" role="search">
+        <label for="colonia">Escribe el nombre de tu colonia</label>
+        <div class="search">
+          <input id="colonia" name="q" type="search" autocomplete="off" placeholder="Por ejemplo: Las Juntas">
+          <button class="button" type="submit">Buscar</button>
+        </div>
+      </form>
+      <noscript><p class="note">Esta página necesita JavaScript. Consulta tu zona en el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa oficial del SIAPA</a>.</p></noscript>
+    </div>
+
+    <div id="resultado" aria-live="polite" tabindex="-1"></div>
+
+    <section aria-labelledby="avisos">
+      <h2 id="avisos">Que no te tome por sorpresa</h2>
+      <p>Te mandamos un WhatsApp gratis a las 8 de la noche antes de cada día de racionamiento en tu zona, para que llenes tu tinaco a tiempo.</p>
+      <a class="button" href="/avisos">Recibe el aviso por WhatsApp</a>
+    </section>
+
+    <section aria-labelledby="ojo">
+      <h2 id="ojo">Ten en cuenta</h2>
+      <ul class="plain">
+        <li>Las zonas y los días vienen del mapa y de la lista de colonias que publica el SIAPA. El mapa y la lista no siempre coinciden; si tienes dudas, revisa el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa oficial del SIAPA</a>.</li>
+        <li>Según el SIAPA, cada racionamiento dura máximo un día y no es un corte total: baja la presión del agua. La Silla Rota publicó que empieza a las 12 de la noche del día programado.</li>
+        <li>Agua GDL es una iniciativa ciudadana: no es del SIAPA ni del gobierno y no tiene partido.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con el Gobierno de Jalisco.</p>
+    <p><a href="/">Inicio</a> · <a href="/resultados">Resultados</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
+  </footer>
+</div>
+<script>
+(() => {
+  "use strict";
+  const MAP = "https://rotaciondeserviciosiapa.jalisco.gob.mx/";
+  const API = (() => {
+    const o = new URLSearchParams(location.search).get("api");
+    try {
+      const u = new URL(o);
+      if (u.hostname === "localhost" || u.hostname === "127.0.0.1") return u.origin;
+    } catch {}
+    return "https://api.aguagdl.com";
+  })();
+  const DAYS = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+  const MONTHS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+  const MUNICIPIOS = { GUADALAJARA: "Guadalajara", ZAPOPAN: "Zapopan", TLAQUEPAQUE: "Tlaquepaque", "SAN PEDRO TLAQUEPAQUE": "San Pedro Tlaquepaque", TONALA: "Tonalá" };
+
+  const out = document.getElementById("resultado");
+  const locBtn = document.getElementById("ubicacion");
+  const form = document.getElementById("buscar");
+  const input = document.getElementById("colonia");
+  let zonesReq = null;
+  let lastChoices = null;
+
+  function el(tag, attrs, ...kids) {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs || {})) n.setAttribute(k, v);
+    n.append(...kids.filter((k) => k != null));
+    return n;
+  }
+  const mapLink = (text) => el("a", { href: MAP, rel: "noopener" }, text || "mapa oficial del SIAPA");
+  const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase().replace(/\s+/g, " ").trim();
+  const municipio = (m) => MUNICIPIOS[norm(m)] || m;
+  const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+
+  function joinES(items) {
+    return items.length < 2 ? items.join("") : items.slice(0, -1).join(", ") + " y " + items[items.length - 1];
+  }
+  function isoToday(offset) {
+    const t = new Date(Intl.DateTimeFormat("en-CA", { timeZone: "America/Mexico_City" }).format(new Date()) + "T00:00:00Z");
+    t.setUTCDate(t.getUTCDate() + (offset || 0));
+    return t.toISOString().slice(0, 10);
+  }
+  function dateES(iso) {
+    const t = new Date(iso + "T00:00:00Z");
+    const s = `${DAYS[t.getUTCDay()]} ${t.getUTCDate()} de ${MONTHS[t.getUTCMonth()]}`;
+    if (iso === isoToday(0)) return "Hoy, " + s;
+    if (iso === isoToday(1)) return "Mañana, " + s;
+    return cap(s);
+  }
+
+  async function get(path) {
+    const opts = typeof AbortSignal.timeout === "function" ? { signal: AbortSignal.timeout(15000) } : {};
+    const res = await fetch(API + path, opts);
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    return res.json();
+  }
+  function zoneTable() {
+    if (!zonesReq) {
+      zonesReq = get("/v1/zones").then((list) => new Map(list.map((z) => [z.zone, z])));
+      zonesReq.catch(() => { zonesReq = null; });
+    }
+    return zonesReq;
+  }
+
+  function show(...nodes) {
+    out.replaceChildren(...nodes.filter((n) => n != null));
+    const r = out.getBoundingClientRect();
+    if (r.top < 0 || r.top > window.innerHeight * 0.6) out.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  const msg = (...kids) => el("p", { class: "msg" }, ...kids);
+  const warn = (...kids) => el("p", { class: "warn" }, ...kids);
+  const locateLink = (text) => {
+    const b = el("button", { type: "button", class: "linklike" }, text);
+    b.addEventListener("click", locate);
+    return b;
+  };
+  const searchLink = (text) => {
+    const b = el("button", { type: "button", class: "linklike" }, text);
+    b.addEventListener("click", () => { input.focus(); input.scrollIntoView({ block: "center" }); });
+    return b;
+  };
+  function unreachable() {
+    show(msg("No pudimos conectar con Agua GDL. Intenta de nuevo en unos minutos o consulta tu zona en el ", mapLink(), "."));
+  }
+
+  function zoneCard(z) {
+    const today = isoToday(0);
+    const next = z.next.filter((d) => d >= today).slice(0, 2);
+    return el("article", { class: "zone" },
+      el("h3", {}, `Zona ${z.zone}`),
+      el("p", {}, "Días de racionamiento: ", el("strong", {}, joinES(z.days))),
+      next.length
+        ? el("div", {}, el("p", {}, "Próximos:"), el("ul", {}, ...next.map((d) => el("li", {}, dateES(d)))))
+        : el("p", {}, "No hay más días en el calendario que publicó el SIAPA."));
+  }
+  const cards = (zones) => el("div", { class: "zones" }, ...zones.map(zoneCard));
+
+  function locate() {
+    if (!("geolocation" in navigator)) {
+      show(msg("Tu navegador no permite compartir tu ubicación. ", searchLink("Busca tu colonia"), " en su lugar."));
+      return;
+    }
+    locBtn.disabled = true;
+    show(msg("Buscando tu ubicación…"));
+    navigator.geolocation.getCurrentPosition(async (pos) => {
+      try {
+        const { latitude: lat, longitude: lon } = pos.coords;
+        const r = await get(`/v1/zone?lat=${lat.toFixed(4)}&lon=${lon.toFixed(4)}`);
+        if (r.zones.length === 0) {
+          show(msg("Tu ubicación no cae en ninguna zona del mapa del SIAPA. Puede que no te toque la rotación, pero el mapa y la lista de colonias del SIAPA no siempre coinciden. Para revisarlo, ", searchLink("busca el nombre de tu colonia"), "."));
+        } else if (r.zones.length === 1) {
+          show(el("p", {}, "Tu ubicación está en la ", el("strong", {}, `zona ${r.zones[0].zone}`), "."), cards(r.zones));
+        } else {
+          show(warn(`Tu ubicación queda en el límite entre las zonas ${joinES(r.zones.map((z) => z.zone))}. Revisa el `, mapLink(), " para saber cuál te toca."), cards(r.zones));
+        }
+      } catch {
+        unreachable();
+      } finally {
+        locBtn.disabled = false;
+      }
+    }, (err) => {
+      locBtn.disabled = false;
+      const why = err.code === 1 ? "No diste permiso para usar tu ubicación. " : "No pudimos obtener tu ubicación. ";
+      show(msg(why, searchLink("Busca tu colonia"), " o revisa los permisos de ubicación de tu navegador."));
+    }, { enableHighAccuracy: true, timeout: 20000, maximumAge: 60000 });
+  }
+
+  function showColonia(c, zones) {
+    const name = el("strong", {}, c.name);
+    const where = el("p", {}, name, `, ${municipio(c.municipio)}`);
+    let note;
+    if (c.zones.length > 1) {
+      note = warn(`Esta colonia recibe agua de varios acueductos, así que aparece en las zonas ${joinES(c.zones)}. Para saber cuál te toca, `, locateLink("usa tu ubicación"), " o revisa el ", mapLink(), ".");
+    } else if (c.multi) {
+      note = warn("El SIAPA marca esta colonia como abastecida por varios acueductos, así que una parte podría tener otro calendario. Para confirmarlo, ", locateLink("usa tu ubicación"), " o revisa el ", mapLink(), ".");
+    } else {
+      where.append(": ", el("strong", {}, `zona ${c.zones[0]}`), ".");
+    }
+    const back = lastChoices && lastChoices.length > 1 ? el("p", {}, el("button", { type: "button", class: "linklike" }, "← Ver las otras colonias")) : null;
+    if (back) back.firstChild.addEventListener("click", () => showChoices(lastChoices, zones));
+    show(where, note, cards(c.zones.map((z) => zones.get(z)).filter(Boolean)), back);
+  }
+
+  function showChoices(list, zones) {
+    const items = list.map((c) => {
+      const b = el("button", { type: "button", class: "choice" }, el("strong", {}, c.name),
+        el("span", {}, `${municipio(c.municipio)} · ${c.zones.length > 1 ? "Zonas" : "Zona"} ${joinES(c.zones)}`));
+      b.addEventListener("click", () => showColonia(c, zones));
+      return el("li", {}, b);
+    });
+    show(el("p", {}, "Encontramos varias colonias parecidas. ¿Cuál es la tuya?"), el("ul", { class: "choices" }, ...items));
+  }
+
+  async function search(q) {
+    if (MUNICIPIOS[norm(q)]) {
+      show(msg(`${MUNICIPIOS[norm(q)]} tiene colonias en varias zonas de la rotación. Escribe el nombre de tu colonia o `, locateLink("usa tu ubicación"), "."));
+      return;
+    }
+    show(msg("Buscando…"));
+    try {
+      const [r, zones] = await Promise.all([get("/v1/colonias?q=" + encodeURIComponent(q)), zoneTable()]);
+      lastChoices = r.colonias;
+      if (r.colonias.length === 0) {
+        show(msg(`No encontramos «${q}» en la lista de colonias del SIAPA. Revisa cómo se escribe, prueba con solo una parte del nombre o `, locateLink("usa tu ubicación"), ". También puedes buscarla en el ", mapLink(), "."));
+      } else if (r.exact && r.colonias.length === 1) {
+        showColonia(r.colonias[0], zones);
+      } else {
+        showChoices(r.colonias, zones);
+      }
+    } catch {
+      unreachable();
+    }
+  }
+
+  locBtn.addEventListener("click", locate);
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const q = input.value.trim();
+    if ([...q].length < 3) {
+      show(msg("Escribe al menos 3 letras del nombre de tu colonia."));
+      return;
+    }
+    search(q);
+  });
+})();
+</script>
+</body>
+</html>
