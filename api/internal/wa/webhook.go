@@ -30,9 +30,14 @@ type Change struct {
 }
 
 type Value struct {
+	Metadata Metadata  `json:"metadata"`
 	Contacts []Contact `json:"contacts"`
 	Messages []Inbound `json:"messages"`
 	Statuses []Status  `json:"statuses"`
+}
+
+type Metadata struct {
+	PhoneNumberID string `json:"phone_number_id"`
 }
 
 type Contact struct {

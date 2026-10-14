@@ -258,3 +258,18 @@ func TestReactionGetsNoReply(t *testing.T) {
 		t.Fatalf("a reaction to a reminder must not get a reply: %+v", h.sender.Sent)
 	}
 }
+
+func TestIgnoresOtherPhoneNumbers(t *testing.T) {
+	h := newHarness(t, "2026-10-14 10:00")
+	h.bot.PhoneNumberID = "1318161744724814"
+	m := text("zona 4")
+	m.ID, m.From, m.FromUserID = "wamid.test", "5213300000000", "MX.42"
+	p := wa.Payload{Entry: []wa.Entry{{Changes: []wa.Change{{Field: "messages", Value: wa.Value{
+		Metadata: wa.Metadata{PhoneNumberID: "1451624204690902"}, Messages: []wa.Inbound{m}}}}}}}
+	if err := h.bot.Handle(context.Background(), p); err != nil {
+		t.Fatal(err)
+	}
+	if len(h.sender.Sent) != 0 || len(h.store.Subs) != 0 {
+		t.Fatal("a message to Meta's test number must not be answered from the production number")
+	}
+}

@@ -26,16 +26,17 @@ type Sender interface {
 }
 
 type Bot struct {
-	Store        Store
-	Sender       Sender
-	Schedule     *rotation.Schedule
-	Zones        *geo.Zones
-	Colonias     *colonias.Index
-	BaseURL      string
-	ReminderHour int
-	Alert        func(ctx context.Context, msg string) // optional, e.g. a failed heartbeat
-	Now          func() time.Time
-	Log          *slog.Logger
+	Store         Store
+	Sender        Sender
+	Schedule      *rotation.Schedule
+	Zones         *geo.Zones
+	Colonias      *colonias.Index
+	BaseURL       string
+	PhoneNumberID string // ignore webhooks for other numbers on the same app, e.g. Meta's test number
+	ReminderHour  int
+	Alert         func(ctx context.Context, msg string) // optional, e.g. a failed heartbeat
+	Now           func() time.Time
+	Log           *slog.Logger
 }
 
 var (
@@ -53,7 +54,7 @@ var (
 func (b *Bot) Handle(ctx context.Context, p wa.Payload) error {
 	for _, e := range p.Entry {
 		for _, c := range e.Changes {
-			if c.Field != "messages" {
+			if c.Field != "messages" || (b.PhoneNumberID != "" && c.Value.Metadata.PhoneNumberID != "" && c.Value.Metadata.PhoneNumberID != b.PhoneNumberID) {
 				continue
 			}
 			for _, st := range c.Value.Statuses {
