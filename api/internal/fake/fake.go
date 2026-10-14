@@ -52,8 +52,6 @@ func (s *Store) ProcessInbound(ctx context.Context, id string, process func(stor
 	return nil
 }
 
-func (s *Store) PurgeSeen(context.Context, time.Time) error { return nil }
-
 func (s *Store) Subscriber(_ context.Context, userID string) (store.Subscriber, bool, error) {
 	sub, ok := s.Subs[userID]
 	return sub, ok, nil

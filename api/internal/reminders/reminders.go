@@ -19,7 +19,6 @@ type Store interface {
 	SendReminder(ctx context.Context, s store.Subscriber, cutDate time.Time, send func(store.Subscriber) (string, error)) (bool, error)
 	UnresolvedReminders(ctx context.Context, cutDate time.Time) (int, error)
 	SentSince(ctx context.Context, since time.Time) (int, error)
-	PurgeSeen(ctx context.Context, before time.Time) error
 }
 
 type Sender interface {
@@ -86,9 +85,6 @@ var ErrCapped = errors.New("send cap reached")
 
 func (r *Runner) SendTonight(ctx context.Context) (err error) {
 	now := r.Now()
-	if err := r.Store.PurgeSeen(ctx, now.Add(-7*24*time.Hour)); err != nil {
-		r.Log.Warn("purge seen messages", "err", err)
-	}
 	tomorrow := r.Schedule.Day(now).AddDate(0, 0, 1)
 	defer func() {
 		n, checkErr := r.Store.UnresolvedReminders(ctx, tomorrow)
