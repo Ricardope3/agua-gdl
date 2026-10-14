@@ -1,3 +1,4 @@
 .env
 pipelines/.venv/
 *.pdf
+.DS_Store
