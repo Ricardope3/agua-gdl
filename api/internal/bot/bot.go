@@ -219,7 +219,7 @@ func (b *Bot) greet(ctx context.Context, r wa.Recipient) error {
 			return b.text(ctx, r, b.subscribedText(s.Zone, false))
 		}
 	}
-	return b.text(ctx, r, msgWelcome)
+	return b.text(ctx, r, msgWelcome(b.BaseURL))
 }
 
 func (b *Bot) subscribe(ctx context.Context, r wa.Recipient, zone int) error {
@@ -275,14 +275,14 @@ func (b *Bot) unsubscribe(ctx context.Context, r wa.Recipient) error {
 // reportLastCut asks about the subscriber's most recent cut, today included.
 func (b *Bot) reportLastCut(ctx context.Context, r wa.Recipient) error {
 	if r.UserID == "" {
-		return b.text(ctx, r, msgWelcome)
+		return b.text(ctx, r, msgWelcome(b.BaseURL))
 	}
 	s, ok, err := b.Store.Subscriber(ctx, r.UserID)
 	if err != nil {
 		return err
 	}
 	if !ok {
-		return b.text(ctx, r, msgWelcome)
+		return b.text(ctx, r, msgWelcome(b.BaseURL))
 	}
 	tomorrow := b.Schedule.Day(b.Now()).AddDate(0, 0, 1)
 	prev, ok := b.Schedule.PrevCut(s.Zone, tomorrow)
@@ -309,14 +309,14 @@ func (b *Bot) saveReport(ctx context.Context, r wa.Recipient, date, answer strin
 		return b.text(ctx, r, msgHelp(b.BaseURL))
 	}
 	if r.UserID == "" {
-		return b.text(ctx, r, msgWelcome)
+		return b.text(ctx, r, msgWelcome(b.BaseURL))
 	}
 	s, ok, err := b.Store.Subscriber(ctx, r.UserID)
 	if err != nil {
 		return err
 	}
 	if !ok {
-		return b.text(ctx, r, msgWelcome)
+		return b.text(ctx, r, msgWelcome(b.BaseURL))
 	}
 	d, err := b.Schedule.ParseDate(date)
 	today := b.Schedule.Day(b.Now())

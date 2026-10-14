@@ -9,7 +9,8 @@ import (
 
 const MapURL = "https://rotaciondeserviciosiapa.jalisco.gob.mx/"
 
-const msgWelcome = `¡Hola! 👋 Soy *Agua GDL*.
+func msgWelcome(base string) string {
+	return `¡Hola! 👋 Soy *Agua GDL*.
 
 Te aviso por WhatsApp la noche antes de cada corte de agua en tu zona por la rotación del SIAPA 💧
 
@@ -18,7 +19,9 @@ Para empezar, mándame una de estas:
 🏘️ El *nombre de tu colonia*, por ejemplo: _Las Juntas_
 🔢 Tu zona, por ejemplo: *ZONA 4*
 
-Servicio ciudadano, gratuito, no oficial y sin partido.`
+Servicio ciudadano, gratuito, no oficial y sin partido.
+🔒 Aviso de privacidad: ` + base + `/privacidad`
+}
 
 func msgHelp(base string) string {
 	return `Esto es lo que puedo hacer 💧
