@@ -128,13 +128,13 @@ func TestAcceptedReminderIsNotResentAfterRecordingFails(t *testing.T) {
 	}
 	calls := 0
 	send := func(Subscriber) (string, error) { calls++; return "accepted-wamid", nil }
-	if attempted, err := db.SendReminder(ctx, s, date, send); !attempted || err == nil {
+	if attempted, err := db.SendReminder(ctx, s, date, []int{4}, send); !attempted || err == nil {
 		t.Fatalf("expected accepted send followed by recording failure: %v %v", attempted, err)
 	}
 	if _, err := db.pool.Exec(ctx, `drop trigger reject_recording on reminder`); err != nil {
 		t.Fatal(err)
 	}
-	if attempted, err := db.SendReminder(ctx, s, date, send); attempted || err != nil {
+	if attempted, err := db.SendReminder(ctx, s, date, []int{4}, send); attempted || err != nil {
 		t.Fatalf("retry: %v %v", attempted, err)
 	}
 	if calls != 1 {
@@ -158,11 +158,30 @@ func TestQueuedReminderRechecksSubscriber(t *testing.T) {
 			} else if err := db.Subscribe(ctx, s.UserID, "521111", 6); err != nil {
 				t.Fatal(err)
 			}
-			attempted, err := db.SendReminder(ctx, s, date, func(Subscriber) (string, error) { t.Error("stale reminder sent"); return "id", nil })
+			attempted, err := db.SendReminder(ctx, s, date, []int{4}, func(Subscriber) (string, error) { t.Error("stale reminder sent"); return "id", nil })
 			if err != nil || attempted {
 				t.Fatalf("stale candidate: %v %v", attempted, err)
 			}
 		})
+	}
+}
+
+func TestZoneChangeBetweenZonesCutTheSameDay(t *testing.T) {
+	db := testDB(t)
+	s := testSubscriber(t, db)
+	ctx, date := context.Background(), time.Now()
+	// Listed for zone 4, then moved to zone 6 before the send; both are cut tomorrow.
+	if err := db.Subscribe(ctx, s.UserID, "521111", 6); err != nil {
+		t.Fatal(err)
+	}
+	var got Subscriber
+	attempted, err := db.SendReminder(ctx, s, date, []int{4, 6}, func(current Subscriber) (string, error) { got = current; return "wamid.z6", nil })
+	if err != nil || !attempted || got.Zone != 6 {
+		t.Fatalf("the reminder must go out for the new zone: %v %v %+v", attempted, err, got)
+	}
+	var zone int
+	if err := db.pool.QueryRow(ctx, `select zone from reminder where subscriber_id = $1`, s.ID).Scan(&zone); err != nil || zone != 6 {
+		t.Fatalf("recorded zone %d %v", zone, err)
 	}
 }
 
@@ -180,7 +199,7 @@ func TestReminderSerializesWithUnsubscribeAndOtherSenders(t *testing.T) {
 	}()
 	sent := make(chan error, 1)
 	go func() {
-		_, err := db.SendReminder(ctx, s, date, func(Subscriber) (string, error) { close(entered); <-release; return "accepted", nil })
+		_, err := db.SendReminder(ctx, s, date, []int{4}, func(Subscriber) (string, error) { close(entered); <-release; return "accepted", nil })
 		sent <- err
 	}()
 	select {
@@ -190,7 +209,7 @@ func TestReminderSerializesWithUnsubscribeAndOtherSenders(t *testing.T) {
 	case <-time.After(3 * time.Second):
 		t.Fatal("send timed out")
 	}
-	if attempted, err := db.SendReminder(ctx, s, date, func(Subscriber) (string, error) { t.Error("concurrent duplicate"); return "duplicate", nil }); attempted || err != nil {
+	if attempted, err := db.SendReminder(ctx, s, date, []int{4}, func(Subscriber) (string, error) { t.Error("concurrent duplicate"); return "duplicate", nil }); attempted || err != nil {
 		t.Fatalf("duplicate: %v %v", attempted, err)
 	}
 	conn, err := db.pool.Acquire(ctx)
@@ -222,7 +241,7 @@ func TestReminderSerializesWithUnsubscribeAndOtherSenders(t *testing.T) {
 	if !blocked {
 		t.Fatal("BAJA did not serialize with the in-flight send")
 	}
-	if attempted, err := db.SendReminder(ctx, s, date, func(Subscriber) (string, error) { t.Error("send after BAJA"); return "late", nil }); attempted || err != nil {
+	if attempted, err := db.SendReminder(ctx, s, date, []int{4}, func(Subscriber) (string, error) { t.Error("send after BAJA"); return "late", nil }); attempted || err != nil {
 		t.Fatalf("after BAJA: %v %v", attempted, err)
 	}
 }
@@ -232,7 +251,7 @@ func TestSendErrorPersistsUncertainty(t *testing.T) {
 	s := testSubscriber(t, db)
 	ctx, date := context.Background(), time.Now()
 	failure := errors.New("HTTP response lost")
-	if attempted, err := db.SendReminder(ctx, s, date, func(Subscriber) (string, error) { return "", failure }); !attempted || !errors.Is(err, failure) {
+	if attempted, err := db.SendReminder(ctx, s, date, []int{4}, func(Subscriber) (string, error) { return "", failure }); !attempted || !errors.Is(err, failure) {
 		t.Fatalf("send: %v %v", attempted, err)
 	}
 	if n, err := db.UnresolvedReminders(ctx, date); err != nil || n != 1 {
@@ -248,7 +267,7 @@ func TestRejectedReminderIsRetried(t *testing.T) {
 	s := testSubscriber(t, db)
 	ctx, date := context.Background(), time.Now()
 	rejected := &wa.APIError{Status: 400, Code: 132015, Message: "Template is paused"}
-	if attempted, err := db.SendReminder(ctx, s, date, func(Subscriber) (string, error) { return "", rejected }); !attempted || !errors.Is(err, rejected) {
+	if attempted, err := db.SendReminder(ctx, s, date, []int{4}, func(Subscriber) (string, error) { return "", rejected }); !attempted || !errors.Is(err, rejected) {
 		t.Fatalf("send: %v %v", attempted, err)
 	}
 	if n, err := db.UnresolvedReminders(ctx, date); err != nil || n != 1 {
@@ -260,7 +279,7 @@ func TestRejectedReminderIsRetried(t *testing.T) {
 	if due, err := db.DueSubscribers(ctx, []int{4}, date); err != nil || len(due) != 1 {
 		t.Fatalf("due=%v %v", due, err)
 	}
-	if attempted, err := db.SendReminder(ctx, s, date, func(Subscriber) (string, error) { return "wamid.ok", nil }); !attempted || err != nil {
+	if attempted, err := db.SendReminder(ctx, s, date, []int{4}, func(Subscriber) (string, error) { return "wamid.ok", nil }); !attempted || err != nil {
 		t.Fatalf("retry: %v %v", attempted, err)
 	}
 	if n, err := db.UnresolvedReminders(ctx, date); err != nil || n != 0 {
@@ -269,7 +288,7 @@ func TestRejectedReminderIsRetried(t *testing.T) {
 	if n, err := db.SentSince(ctx, date.Add(-time.Hour)); err != nil || n != 1 {
 		t.Fatalf("sent=%d %v", n, err)
 	}
-	if attempted, err := db.SendReminder(ctx, s, date, func(Subscriber) (string, error) { t.Error("resent after success"); return "", nil }); attempted || err != nil {
+	if attempted, err := db.SendReminder(ctx, s, date, []int{4}, func(Subscriber) (string, error) { t.Error("resent after success"); return "", nil }); attempted || err != nil {
 		t.Fatalf("after success: %v %v", attempted, err)
 	}
 }
@@ -278,7 +297,7 @@ func TestUpdateStatusReportsReminders(t *testing.T) {
 	db := testDB(t)
 	s := testSubscriber(t, db)
 	ctx := context.Background()
-	if _, err := db.SendReminder(ctx, s, time.Now(), func(Subscriber) (string, error) { return "wamid.ok", nil }); err != nil {
+	if _, err := db.SendReminder(ctx, s, time.Now(), []int{4}, func(Subscriber) (string, error) { return "wamid.ok", nil }); err != nil {
 		t.Fatal(err)
 	}
 	for _, c := range []struct {
@@ -296,7 +315,7 @@ func TestStoresOnlyHashesOfMessageIDs(t *testing.T) {
 	s := testSubscriber(t, db)
 	ctx := context.Background()
 	const reminderID, inboundID = "wamid.HBgLMTY1MDM4Nzk0MzkVAgARGBI", "wamid.HBgLMTY1MDM4Nzk0MzkVAgASGBQ"
-	if _, err := db.SendReminder(ctx, s, time.Now(), func(Subscriber) (string, error) { return reminderID, nil }); err != nil {
+	if _, err := db.SendReminder(ctx, s, time.Now(), []int{4}, func(Subscriber) (string, error) { return reminderID, nil }); err != nil {
 		t.Fatal(err)
 	}
 	if err := db.ProcessInbound(ctx, inboundID, func(BotStore) error { return nil }); err != nil {
@@ -318,7 +337,7 @@ func TestRecipientsSinceCountsPeopleNotMessages(t *testing.T) {
 	ctx, today := context.Background(), time.Now()
 	ok := func(Subscriber) (string, error) { return "wamid." + fmt.Sprint(time.Now().UnixNano()), nil }
 	for _, d := range []time.Time{today, today.AddDate(0, 0, 1)} {
-		if attempted, err := db.SendReminder(ctx, s, d, ok); !attempted || err != nil {
+		if attempted, err := db.SendReminder(ctx, s, d, []int{4}, ok); !attempted || err != nil {
 			t.Fatalf("send: %v %v", attempted, err)
 		}
 	}

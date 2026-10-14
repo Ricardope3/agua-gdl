@@ -3,6 +3,7 @@ package store
 import (
 	"context"
 	"errors"
+	"slices"
 	"time"
 
 	"github.com/jackc/pgx/v5"
@@ -14,13 +15,15 @@ import (
 // A crash or an ambiguous HTTP failure leaves a visible unresolved attempt;
 // it must not be retried automatically, since WhatsApp may have accepted it.
 // Only attempts Meta explicitly rejected are retried by a later run.
-func (db *DB) SendReminder(ctx context.Context, s Subscriber, cutDate time.Time, send func(Subscriber) (string, error)) (attempted bool, err error) {
+// zones are the zones cut on cutDate: a subscriber who moved between two of them
+// mid-batch still gets the reminder, for the zone they're in now.
+func (db *DB) SendReminder(ctx context.Context, s Subscriber, cutDate time.Time, zones []int, send func(Subscriber) (string, error)) (attempted bool, err error) {
 	var reminderID int64
 	err = db.pool.QueryRow(ctx, `insert into reminder (subscriber_id, zone, cut_date, status)
-		select id, zone, $3::date, 'sending' from subscriber where id = $1 and zone = $2
+		select id, zone, $3::date, 'sending' from subscriber where id = $1 and zone = any($2::int[])
 		on conflict (subscriber_id, cut_date) do update set status = 'sending', zone = excluded.zone, sent_at = now()
 			where reminder.status = 'rejected'
-		returning id`, s.ID, s.Zone, cutDate.Format(dateLayout)).Scan(&reminderID)
+		returning id`, s.ID, zones, cutDate.Format(dateLayout)).Scan(&reminderID)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return false, nil
 	}
@@ -35,7 +38,7 @@ func (db *DB) SendReminder(ctx context.Context, s Subscriber, cutDate time.Time,
 		err := tx.QueryRow(ctx, `select id, wa_user_id, coalesce(phone, ''), zone
 			from subscriber where id = $1 for update`, s.ID).
 			Scan(&current.ID, &current.UserID, &current.Phone, &current.Zone)
-		if errors.Is(err, pgx.ErrNoRows) || (err == nil && current.Zone != s.Zone) {
+		if errors.Is(err, pgx.ErrNoRows) || (err == nil && !slices.Contains(zones, current.Zone)) {
 			// No HTTP request was made, so removing this reservation is safe.
 			_, err = tx.Exec(ctx, `delete from reminder where id = $1`, reminderID)
 			return err
@@ -54,7 +57,7 @@ func (db *DB) SendReminder(ctx context.Context, s Subscriber, cutDate time.Time,
 		case sendErr != nil:
 			status = "uncertain"
 		}
-		_, err = tx.Exec(ctx, `update reminder set wamid_hash = nullif($2, ''), status = $3 where id = $1`, reminderID, hashID(wamid), status)
+		_, err = tx.Exec(ctx, `update reminder set wamid_hash = nullif($2, ''), status = $3, zone = $4 where id = $1`, reminderID, hashID(wamid), status, current.Zone)
 		return err
 	})
 	return attempted, errors.Join(err, sendErr)

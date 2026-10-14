@@ -16,7 +16,7 @@ import (
 
 type Store interface {
 	DueSubscribers(ctx context.Context, zones []int, cutDate time.Time) ([]store.Subscriber, error)
-	SendReminder(ctx context.Context, s store.Subscriber, cutDate time.Time, send func(store.Subscriber) (string, error)) (bool, error)
+	SendReminder(ctx context.Context, s store.Subscriber, cutDate time.Time, zones []int, send func(store.Subscriber) (string, error)) (bool, error)
 	UnresolvedReminders(ctx context.Context, cutDate time.Time) (int, error)
 	SentSince(ctx context.Context, since time.Time) (int, error)
 	RecipientsSince(ctx context.Context, since time.Time) (int, error)
@@ -140,7 +140,7 @@ func (r *Runner) SendTonight(ctx context.Context) (err error) {
 			}
 			return errors.Join(err, capErr)
 		}
-		attempted, sendErr := r.Store.SendReminder(ctx, s, tomorrow, func(current store.Subscriber) (string, error) {
+		attempted, sendErr := r.Store.SendReminder(ctx, s, tomorrow, zones, func(current store.Subscriber) (string, error) {
 			return r.Sender.Send(ctx, r.reminder(current, date))
 		})
 		if sendErr != nil && !attempted {

@@ -256,3 +256,23 @@ func TestTransientDatabaseErrorIsRetriedUntilDeadline(t *testing.T) {
 		t.Fatalf("an outage must give up before the deadline and fail the heartbeat: %v at %v", beats, clock)
 	}
 }
+
+func TestZoneChangeMidBatchToAnotherZoneCutTomorrow(t *testing.T) {
+	ctx := context.Background()
+	st, snd := fake.NewStore(), &fake.Sender{}
+	st.Subscribe(ctx, "a", "a", 4)
+	st.Subscribe(ctx, "b", "b", 4)
+	r := runner(t, "2026-10-18 20:00", st, snd)
+	r.Sender = senderFunc(func(ctx context.Context, m wa.Message) (string, error) {
+		if m.To == "a" {
+			st.Subscribe(ctx, "b", "b", 6)
+		}
+		return snd.Send(ctx, m)
+	})
+	if err := r.SendTonight(ctx); err != nil {
+		t.Fatal(err)
+	}
+	if len(snd.Sent) != 2 || snd.Sent[1].Template.Components[0].Parameters[1].Text != "6" {
+		t.Fatalf("b moved from zone 4 to zone 6, both cut Monday, and must get the zone 6 reminder: %+v", snd.Sent)
+	}
+}

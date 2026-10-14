@@ -103,10 +103,10 @@ func (s *Store) DueSubscribers(_ context.Context, zones []int, d time.Time) ([]s
 	return out, nil
 }
 
-func (s *Store) SendReminder(ctx context.Context, sub store.Subscriber, d time.Time, send func(store.Subscriber) (string, error)) (bool, error) {
+func (s *Store) SendReminder(ctx context.Context, sub store.Subscriber, d time.Time, zones []int, send func(store.Subscriber) (string, error)) (bool, error) {
 	current, ok := s.Subs[sub.UserID]
 	k := key(sub.ID, d)
-	if !ok || current.ID != sub.ID || current.Zone != sub.Zone || s.Reminders[k] {
+	if !ok || current.ID != sub.ID || !slices.Contains(zones, current.Zone) || s.Reminders[k] {
 		return false, nil
 	}
 	s.Reminders[k], s.SentAt[k] = true, s.Now()
