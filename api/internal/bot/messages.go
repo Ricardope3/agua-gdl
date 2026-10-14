@@ -41,9 +41,11 @@ func msgNotFound(q string) string {
 Puede que tu colonia no esté en la rotación. Para revisarlo, mándame tu 📍 *ubicación* o consulta el mapa oficial: %s`, q, MapURL)
 }
 
-const msgOutside = `Tu ubicación no está dentro de ninguna zona de la rotación 🙌
+const msgOutside = `Tu ubicación no cae en ninguna zona del mapa del SIAPA.
 
-Si crees que es un error, revisa el mapa oficial: ` + MapURL
+Puede que no te toque la rotación, pero el mapa y la lista de colonias del SIAPA no siempre coinciden. Para revisarlo, mándame el *nombre de tu colonia* o, si ya sabes tu zona, escribe por ejemplo *ZONA 4*.
+
+🗺️ Mapa oficial: ` + MapURL
 
 func msgMunicipio(name string) string {
 	return fmt.Sprintf(`*%s* tiene colonias en varias zonas de la rotación 🤔
