@@ -187,8 +187,11 @@ func (db *DB) SaveReport(ctx context.Context, subscriberID int64, zone int, cutD
 
 // UpdateStatus records a delivery status and reports whether it changed a reminder.
 func (db *DB) UpdateStatus(ctx context.Context, wamid, status string) (bool, error) {
-	tag, err := db.q.Exec(ctx, `update reminder set status = $2 where wamid_hash = $1
-		and array_position(array['sent','delivered','read','failed'], status) < array_position(array['sent','delivered','read','failed'], $2)`, hashID(wamid), status)
+	const progress = `array_position(array['sent','delivered','read','failed'], status) < array_position(array['sent','delivered','read','failed'], $2)`
+	if _, err := db.q.Exec(ctx, `update notice set status = $2 where wamid_hash = $1 and `+progress, hashID(wamid), status); err != nil {
+		return false, err
+	}
+	tag, err := db.q.Exec(ctx, `update reminder set status = $2 where wamid_hash = $1 and `+progress, hashID(wamid), status)
 	return tag.RowsAffected() > 0, err
 }
 
@@ -213,14 +216,17 @@ func (db *DB) DueSubscribers(ctx context.Context, zones []int, cutDate time.Time
 // which is what Meta's messaging limit counts.
 func (db *DB) RecipientsSince(ctx context.Context, since time.Time) (int, error) {
 	var n int
-	err := db.q.QueryRow(ctx, `select count(distinct coalesce(subscriber_id, -id)) from reminder
-		where sent_at >= $1 and status <> 'rejected'`, since).Scan(&n)
+	err := db.q.QueryRow(ctx, `select count(distinct coalesce(subscriber_id::text, t || id)) from (
+			select subscriber_id, id, 'r' t from reminder where sent_at >= $1 and status <> 'rejected'
+			union all
+			select subscriber_id, id, 'n' from notice where sent_at >= $1 and status <> 'rejected') m`, since).Scan(&n)
 	return n, err
 }
 
 func (db *DB) SentSince(ctx context.Context, since time.Time) (int, error) {
 	var n int
-	err := db.q.QueryRow(ctx, `select count(*) from reminder where sent_at >= $1 and status <> 'rejected'`, since).Scan(&n)
+	err := db.q.QueryRow(ctx, `select (select count(*) from reminder where sent_at >= $1 and status <> 'rejected')
+		+ (select count(*) from notice where sent_at >= $1 and status <> 'rejected')`, since).Scan(&n)
 	return n, err
 }
 

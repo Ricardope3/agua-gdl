@@ -393,3 +393,39 @@ func TestZoneCounts(t *testing.T) {
 		t.Fatalf("%v %v", counts, err)
 	}
 }
+
+func TestNoticeIsSentOnceAndCountsTowardTheLimit(t *testing.T) {
+	db := testDB(t)
+	s := testSubscriber(t, db)
+	ctx := context.Background()
+	key := "cambio_rotacion/4/2026-11-02"
+	if due, err := db.NoticeRecipients(ctx, 4, key); err != nil || len(due) != 1 {
+		t.Fatalf("due=%v %v", due, err)
+	}
+	if attempted, err := db.SendNotice(ctx, s, key, func(Subscriber) (string, error) { return "wamid.n1", nil }); !attempted || err != nil {
+		t.Fatalf("send: %v %v", attempted, err)
+	}
+	if attempted, err := db.SendNotice(ctx, s, key, func(Subscriber) (string, error) { t.Error("resent"); return "", nil }); attempted || err != nil {
+		t.Fatalf("resend: %v %v", attempted, err)
+	}
+	if due, err := db.NoticeRecipients(ctx, 4, key); err != nil || len(due) != 0 {
+		t.Fatalf("due after send=%v %v", due, err)
+	}
+	if _, err := db.SendReminder(ctx, s, time.Now(), []int{4}, func(Subscriber) (string, error) { return "wamid.r1", nil }); err != nil {
+		t.Fatal(err)
+	}
+	since := time.Now().Add(-time.Hour)
+	if n, err := db.RecipientsSince(ctx, since); err != nil || n != 1 {
+		t.Fatalf("one person got a notice and a reminder: recipients=%d %v", n, err)
+	}
+	if n, err := db.SentSince(ctx, since); err != nil || n != 2 {
+		t.Fatalf("sent=%d %v", n, err)
+	}
+	if _, err := db.UpdateStatus(ctx, "wamid.n1", "delivered"); err != nil {
+		t.Fatal(err)
+	}
+	var status string
+	if err := db.pool.QueryRow(ctx, `select status from notice`).Scan(&status); err != nil || status != "delivered" {
+		t.Fatalf("status=%s %v", status, err)
+	}
+}

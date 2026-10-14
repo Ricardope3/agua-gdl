@@ -31,12 +31,13 @@ type Store struct {
 	Wamids     map[string]bool
 	Now        func() time.Time // stamps reminder attempts
 	FailDue    int              // DueSubscribers fails this many times, like a database waking up
+	Notices    map[string]bool
 	nextID     int64
 }
 
 func NewStore() *Store {
 	return &Store{Subs: map[string]store.Subscriber{}, SeenIDs: map[string]bool{}, Reminders: map[string]bool{},
-		SentAt: map[string]time.Time{}, Unresolved: map[string]string{}, Wamids: map[string]bool{}, Now: time.Now}
+		SentAt: map[string]time.Time{}, Unresolved: map[string]string{}, Wamids: map[string]bool{}, Notices: map[string]bool{}, Now: time.Now}
 }
 
 func (s *Store) ProcessInbound(ctx context.Context, id string, process func(store.BotStore) error) error {
@@ -177,6 +178,33 @@ func (s *Store) RecipientsSince(_ context.Context, since time.Time) (int, error)
 		}
 	}
 	return len(ids), nil
+}
+
+func (s *Store) NoticeRecipients(_ context.Context, zone int, k string) ([]store.Subscriber, error) {
+	var out []store.Subscriber
+	for _, sub := range s.Subs {
+		if sub.Zone == zone && !s.Notices[fmt.Sprintf("%d/%s", sub.ID, k)] {
+			out = append(out, sub)
+		}
+	}
+	slices.SortFunc(out, func(a, b store.Subscriber) int { return int(a.ID - b.ID) })
+	return out, nil
+}
+
+func (s *Store) SendNotice(_ context.Context, sub store.Subscriber, k string, send func(store.Subscriber) (string, error)) (bool, error) {
+	nk := fmt.Sprintf("%d/%s", sub.ID, k)
+	current, ok := s.Subs[sub.UserID]
+	if !ok || current.Zone != sub.Zone || s.Notices[nk] {
+		return false, nil
+	}
+	s.Notices[nk], s.SentAt[fmt.Sprintf("%d/notice/%s", sub.ID, k)] = true, s.Now()
+	_, err := send(current)
+	var apiErr *wa.APIError
+	if errors.As(err, &apiErr) && apiErr.Rejected() {
+		delete(s.Notices, nk)
+		delete(s.SentAt, fmt.Sprintf("%d/notice/%s", sub.ID, k))
+	}
+	return true, err
 }
 
 func key(id int64, d time.Time) string { return fmt.Sprintf("%d/%s", id, d.Format("2006-01-02")) }

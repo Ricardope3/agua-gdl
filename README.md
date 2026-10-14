@@ -70,7 +70,17 @@ confirmarlo, conserva `uncertain` y publica el aviso manualmente en el Canal.
 
 ## Datos
 
-Si el SIAPA cambia los días, edita `api/data/rotation.json` (`skip`/`extra` para fechas sueltas). Para regenerar colonias:
+Si el SIAPA cambia los días, edita `api/data/rotation.json` (`skip`/`extra` para fechas sueltas) y despliega. Luego avisa a los suscriptores de cada zona que cambió con la plantilla `cambio_rotacion` (los días salen de `rotation.json`):
+
+```sh
+cd api
+DATABASE_URL='…' go run ./cmd/notify -zone 4 -from 2026-11-02          # solo muestra a cuántos y qué dice
+DATABASE_URL='…' WA_TOKEN='…' WA_PHONE_NUMBER_ID=… go run ./cmd/notify -zone 4 -from 2026-11-02 -send
+```
+
+Cuenta para el tope diario igual que los avisos; si el tope lo detiene, vuelve a correr el mismo comando más tarde: no repite a quien ya lo recibió.
+
+Para regenerar colonias:
 
 ```sh
 python3 -m venv pipelines/.venv && pipelines/.venv/bin/pip install pdfplumber==0.11.4
