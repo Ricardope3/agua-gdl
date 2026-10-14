@@ -118,6 +118,8 @@ func (b *Bot) route(ctx context.Context, r wa.Recipient, m wa.Inbound) error {
 	case m.Type == "reaction":
 		// A 👍 on a reminder needs no answer.
 		return nil
+	case m.Type == "system" && m.System != nil:
+		return b.onUserChanged(ctx, r, m.System)
 	case m.Type == "text" && m.Text != nil:
 		return b.onText(ctx, r, m.Text.Body)
 	case m.Type == "location" && m.Location != nil:
@@ -165,6 +167,19 @@ func (b *Bot) onText(ctx context.Context, r wa.Recipient, body string) error {
 		rows[i] = wa.Row{ID: "C:" + c.Key(), Title: c.Name, Description: c.Municipio + " · " + zoneList(c.Zones)}
 	}
 	return b.send(ctx, wa.NewList(r, msgPickColonia, "Ver colonias", rows))
+}
+
+// onUserChanged follows a subscriber to a new number or business-scoped user ID,
+// so reminders stop going to a number that may now belong to someone else.
+func (b *Bot) onUserChanged(ctx context.Context, r wa.Recipient, sys *wa.System) error {
+	if sys.Type != "user_changed_number" && sys.Type != "user_changed_user_id" {
+		return nil
+	}
+	old := sys.PreviousUserID
+	if old == "" {
+		old = r.UserID
+	}
+	return b.Store.ChangeUser(ctx, old, r.Phone, sys.UserID, sys.WaID)
 }
 
 func (b *Bot) onLocation(ctx context.Context, r wa.Recipient, lat, lon float64) error {

@@ -139,6 +139,25 @@ func (db *DB) Subscribe(ctx context.Context, userID, phone string, zone int) err
 	return err
 }
 
+// ChangeUser moves a subscription to the user's new WhatsApp ID and number. The old
+// number is never kept: it may be reassigned to someone else. Without a new ID the
+// subscription is dropped.
+func (db *DB) ChangeUser(ctx context.Context, oldUserID, oldPhone, newUserID, newPhone string) error {
+	const old = `(wa_user_id = $1 or (phone = nullif($2, '')))`
+	if newUserID == "" {
+		_, err := db.q.Exec(ctx, `delete from subscriber where `+old, oldUserID, oldPhone)
+		return err
+	}
+	tag, err := db.q.Exec(ctx, `delete from subscriber where `+old+` and wa_user_id <> $3
+		and exists (select 1 from subscriber where wa_user_id = $3)`, oldUserID, oldPhone, newUserID)
+	if err != nil || tag.RowsAffected() > 0 {
+		return err
+	}
+	_, err = db.q.Exec(ctx, `update subscriber set wa_user_id = $3, phone = nullif($4, ''), updated_at = now()
+		where `+old, oldUserID, oldPhone, newUserID, newPhone)
+	return err
+}
+
 func (db *DB) Unsubscribe(ctx context.Context, userID string) (bool, error) {
 	tag, err := db.q.Exec(ctx, `delete from subscriber where wa_user_id = $1`, userID)
 	return tag.RowsAffected() > 0, err

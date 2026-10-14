@@ -355,3 +355,27 @@ func TestRecipientsSinceCountsPeopleNotMessages(t *testing.T) {
 		t.Fatalf("after BAJA the rows can't be linked, so count each: %d %v", n, err)
 	}
 }
+
+func TestChangeUserNeverKeepsTheOldNumber(t *testing.T) {
+	db := testDB(t)
+	s := testSubscriber(t, db)
+	ctx := context.Background()
+	if err := db.ChangeUser(ctx, s.UserID, "", "MX.new", ""); err != nil {
+		t.Fatal(err)
+	}
+	var phone *string
+	var zone int
+	if err := db.pool.QueryRow(ctx, `select phone, zone from subscriber where wa_user_id = 'MX.new'`).Scan(&phone, &zone); err != nil || phone != nil || zone != 4 {
+		t.Fatalf("phone=%v zone=%d %v", phone, zone, err)
+	}
+	if err := db.Subscribe(ctx, "MX.other", "522222", 2); err != nil {
+		t.Fatal(err)
+	}
+	if err := db.ChangeUser(ctx, "MX.new", "", "MX.other", "522222"); err != nil {
+		t.Fatal(err)
+	}
+	var n int
+	if err := db.pool.QueryRow(ctx, `select count(*) from subscriber`).Scan(&n); err != nil || n != 1 {
+		t.Fatalf("an existing subscription for the new ID wins: %d %v", n, err)
+	}
+}

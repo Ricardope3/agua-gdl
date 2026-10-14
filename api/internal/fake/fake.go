@@ -73,6 +73,20 @@ func (s *Store) Subscribe(_ context.Context, userID, phone string, zone int) err
 	return nil
 }
 
+func (s *Store) ChangeUser(_ context.Context, oldUserID, oldPhone, newUserID, newPhone string) error {
+	for k, sub := range s.Subs {
+		if sub.UserID != oldUserID && (oldPhone == "" || sub.Phone != oldPhone) {
+			continue
+		}
+		delete(s.Subs, k)
+		if _, taken := s.Subs[newUserID]; newUserID != "" && !taken {
+			sub.UserID, sub.Phone = newUserID, newPhone
+			s.Subs[newUserID] = sub
+		}
+	}
+	return nil
+}
+
 func (s *Store) Unsubscribe(_ context.Context, userID string) (bool, error) {
 	_, ok := s.Subs[userID]
 	delete(s.Subs, userID)

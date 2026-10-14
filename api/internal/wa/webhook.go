@@ -54,6 +54,15 @@ type Inbound struct {
 	Location    *Location        `json:"location,omitempty"`
 	Button      *Button          `json:"button,omitempty"`
 	Interactive *InboundInteract `json:"interactive,omitempty"`
+	System      *System          `json:"system,omitempty"`
+}
+
+// System reports a user's new phone number or business-scoped user ID.
+type System struct {
+	Type           string `json:"type"`  // user_changed_number or user_changed_user_id
+	WaID           string `json:"wa_id"` // the new phone number, omitted when Meta can't share it
+	UserID         string `json:"user_id"`
+	PreviousUserID string `json:"previous_user_id"`
 }
 
 type InboundText struct {

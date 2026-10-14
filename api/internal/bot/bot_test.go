@@ -273,3 +273,28 @@ func TestIgnoresOtherPhoneNumbers(t *testing.T) {
 		t.Fatal("a message to Meta's test number must not be answered from the production number")
 	}
 }
+
+func TestFollowsANumberChange(t *testing.T) {
+	h := newHarness(t, "2026-10-14 10:00")
+	h.send(t, text("zona 4"))
+	sent := len(h.sender.Sent)
+	system := func(id string, sys wa.System) {
+		m := wa.Inbound{ID: id, From: "5213300000000", Type: "system", System: &sys}
+		p := wa.Payload{Entry: []wa.Entry{{Changes: []wa.Change{{Field: "messages", Value: wa.Value{Messages: []wa.Inbound{m}}}}}}}
+		if err := h.bot.Handle(context.Background(), p); err != nil {
+			t.Fatal(err)
+		}
+	}
+	system("wamid.sys1", wa.System{Type: "user_changed_number", WaID: "5213311111111", UserID: "MX.99", PreviousUserID: "MX.42"})
+	s, ok := h.store.Subs["MX.99"]
+	if _, old := h.store.Subs["MX.42"]; old || !ok || s.Zone != 4 || s.Phone != "5213311111111" {
+		t.Fatalf("the subscription must follow the new number: %+v", h.store.Subs)
+	}
+	system("wamid.sys2", wa.System{Type: "user_changed_user_id", UserID: "MX.100", PreviousUserID: "MX.99"})
+	if s := h.store.Subs["MX.100"]; s.Zone != 4 || s.Phone != "" || len(h.store.Subs) != 1 {
+		t.Fatalf("without a shareable number the old one must not be kept: %+v", h.store.Subs)
+	}
+	if len(h.sender.Sent) != sent {
+		t.Error("system messages get no reply")
+	}
+}
