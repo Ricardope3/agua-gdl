@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agua GDL · Avisos de la rotación de agua en Guadalajara</title>
+<meta name="description" content="Iniciativa ciudadana que prepara avisos gratuitos por WhatsApp la noche antes de cada corte de la rotación de agua del SIAPA en tu zona. En construcción.">
+<link rel="canonical" href="https://aguagdl.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aguagdl.com/">
+<meta property="og:title" content="Agua GDL · Avisos de la rotación de agua">
+<meta property="og:description" content="Avisos gratuitos por WhatsApp la noche antes de cada corte del SIAPA en tu zona. En construcción.">
+<meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b1b2b" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<style>
+:root {
+  --bg: #f4f9fd; --surface: #ffffff; --fg: #10263a; --muted: #4d6375; --line: #d5e4ef;
+  --brand: #017cdc; --brand-deep: #015198; --link: #015198; --on-brand: #ffffff;
+  --soon: #8a5a00; --soon-bg: #fff3d6;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1b2b; --surface: #112739; --fg: #e8f1f8; --muted: #a3b8c8; --line: #23415a;
+    --link: #7cc1f7; --soon: #ffd27a; --soon-bg: #3a2c10;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 var(--font) }
+a { color: var(--link) }
+a:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; border-radius: 4px }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 20px }
+header.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 20px 0 }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; font-weight: 800; font-size: 1.25rem; letter-spacing: -.01em }
+.brand img { width: 30px; height: auto }
+.pill { display: inline-flex; align-items: center; gap: 8px; font-size: .85rem; font-weight: 700; color: var(--soon); background: var(--soon-bg); padding: 4px 12px; border-radius: 999px; white-space: nowrap }
+.pill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor }
+.hero { display: grid; grid-template-columns: 1fr; gap: 28px; align-items: center; padding: 28px 0 44px }
+.hero img { width: 140px; height: auto; justify-self: center }
+h1 { font-size: clamp(2.1rem, 6vw, 3.4rem); line-height: 1.05; letter-spacing: -.02em; margin: 0 0 16px; text-wrap: balance }
+.lede { font-size: 1.15rem; color: var(--muted); margin: 0; max-width: 60ch }
+.notice { margin-top: 24px; background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--brand); border-radius: 10px; padding: 16px 18px }
+.notice p { margin: 0 0 12px }
+.button { display: inline-block; background: var(--brand-deep); color: var(--on-brand); font-weight: 700; text-decoration: none; padding: 11px 18px; border-radius: 8px }
+.button:hover { background: var(--brand) }
+section { padding: 40px 0; border-top: 1px solid var(--line) }
+h2 { font-size: 1.6rem; line-height: 1.2; margin: 0 0 18px; letter-spacing: -.01em }
+.cards { display: grid; grid-template-columns: 1fr; gap: 14px; list-style: none; margin: 0; padding: 0 }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px }
+.card h3 { margin: 0 0 6px; font-size: 1.1rem }
+.card p { margin: 0 0 12px; color: var(--muted) }
+.status { font-size: .8rem; font-weight: 700; color: var(--soon) }
+.why p { max-width: 65ch; margin: 0 0 14px }
+.values { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 18px 0 0 }
+.values li { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 5px 14px; font-size: .92rem; font-weight: 600 }
+.contact p { margin: 0 0 16px; max-width: 60ch }
+.email { font-size: 1.2rem; font-weight: 700; overflow-wrap: anywhere }
+footer { border-top: 1px solid var(--line); padding: 28px 0 48px; color: var(--muted); font-size: .9rem }
+footer p { margin: 0 0 8px; max-width: 70ch }
+@media (min-width: 720px) {
+  .hero { grid-template-columns: 1fr 200px }
+  .hero img { width: 180px; grid-column: 2; grid-row: 1 }
+  .cards { grid-template-columns: repeat(3, 1fr) }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
+    <span class="pill">En construcción</span>
+  </header>
+
+  <main>
+    <div class="hero">
+      <img src="/logo.svg" alt="Logo de Agua GDL: una gota de agua" width="180" height="261">
+      <div>
+        <h1>Avisos de agua para Guadalajara</h1>
+        <p class="lede">Del 15 de octubre de 2026 a marzo de 2027, el SIAPA rota el servicio de agua en casi 600 colonias de la zona metropolitana. Estamos preparando un servicio gratuito por WhatsApp que te avise la noche antes de cada corte en tu zona, para que llenes tu tinaco a tiempo.</p>
+        <div class="notice">
+          <p><strong>Todavía no puedes suscribirte.</strong> Mientras tanto, consulta tu colonia y tus días de corte en el mapa oficial del SIAPA.</p>
+          <a class="button" href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">Ver el mapa del SIAPA ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <section aria-labelledby="que">
+      <h2 id="que">Lo que estamos haciendo</h2>
+      <ul class="cards">
+        <li class="card">
+          <h3>Aviso la noche anterior</h3>
+          <p>A las 8 de la noche te llega un WhatsApp: mañana hay corte en tu zona. Te suscribes con tu ubicación, tu colonia o tu número de zona.</p>
+          <span class="status">En preparación</span>
+        </li>
+        <li class="card">
+          <h3>¿Llegó el agua?</h3>
+          <p>Después de cada corte podrás contar cómo regresó el agua: normal, con baja presión, turbia o si no regresó. Publicaremos los resultados por zona.</p>
+          <span class="status">En preparación</span>
+        </li>
+        <li class="card">
+          <h3>Calendario de la semana</h3>
+          <p>Un canal de WhatsApp con los días de corte de cada zona, cada domingo, y las novedades de la rotación.</p>
+          <span class="status">Próximamente</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="why" aria-labelledby="por-que">
+      <h2 id="por-que">Por qué</h2>
+      <p>Queremos que la información sobre el agua en Guadalajara sea fácil de consultar y de comprobar: cuándo hay corte, si el calendario se cumple y qué datos públicos existen.</p>
+      <p>Empezamos con los avisos de la rotación. Después vendrán más herramientas hechas con datos abiertos.</p>
+      <ul class="values">
+        <li>Gratuito</li>
+        <li>Sin anuncios</li>
+        <li>No oficial</li>
+        <li>Sin partido</li>
+        <li>Solo guardaremos tu número y tu zona</li>
+        <li>Código abierto</li>
+      </ul>
+    </section>
+
+    <section class="contact" aria-labelledby="contacto">
+      <h2 id="contacto">Contacto</h2>
+      <p>¿Tienes dudas o datos sobre el agua en tu colonia, o quieres ayudar? Si eres de una organización vecinal o civil que trabaja por el agua, también nos encantaría hablar.</p>
+      <a class="email" href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con el Gobierno de Jalisco.</p>
+    <p>La información oficial de la rotación está en <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">rotaciondeserviciosiapa.jalisco.gob.mx</a>.</p>
+  </footer>
+</div>
+</body>
+</html>
