@@ -69,8 +69,18 @@ func (r *Runner) nextRun(now time.Time) time.Time {
 	return at
 }
 
+// runOnce retries a run that failed before contacting WhatsApp, e.g. the database
+// waking up, until the catch-up deadline; sends themselves are never retried here.
 func (r *Runner) runOnce(ctx context.Context) {
+	deadline := r.Schedule.Day(r.Now()).Add(time.Duration(r.CatchUpUntil) * time.Hour)
 	err := r.SendTonight(ctx)
+	for wait := time.Minute; errors.Is(err, errTransient) && r.Now().Add(wait).Before(deadline); wait = min(2*wait, 10*time.Minute) {
+		r.Log.Warn("reminders failed before sending; retrying", "err", err, "in", wait)
+		if r.sleep(ctx, wait) != nil {
+			break
+		}
+		err = r.SendTonight(ctx)
+	}
 	if err != nil {
 		r.Log.Error("reminders failed", "err", err)
 	}
@@ -86,12 +96,21 @@ func (r *Runner) runOnce(ctx context.Context) {
 // ErrCapped means some subscribers were skipped because a send cap was reached.
 var ErrCapped = errors.New("send cap reached")
 
+var errTransient = errors.New("failed before sending")
+
+func transient(err error) error {
+	if err == nil {
+		return nil
+	}
+	return fmt.Errorf("%w: %w", errTransient, err)
+}
+
 func (r *Runner) SendTonight(ctx context.Context) (err error) {
 	now := r.Now()
 	tomorrow := r.Schedule.Day(now).AddDate(0, 0, 1)
 	defer func() {
 		n, checkErr := r.Store.UnresolvedReminders(ctx, tomorrow)
-		err = errors.Join(err, checkErr)
+		err = errors.Join(err, transient(checkErr))
 		if n > 0 {
 			err = errors.Join(err, fmt.Errorf("%d failed or uncertain reminder attempts require review", n))
 		}
@@ -102,7 +121,7 @@ func (r *Runner) SendTonight(ctx context.Context) (err error) {
 	}
 	subs, err := r.Store.DueSubscribers(ctx, zones, tomorrow)
 	if err != nil || len(subs) == 0 {
-		return err
+		return transient(err)
 	}
 	y, m, _ := now.In(r.Schedule.Location()).Date()
 	monthStart := time.Date(y, m, 1, 0, 0, 0, 0, r.Schedule.Location())
@@ -116,11 +135,18 @@ func (r *Runner) SendTonight(ctx context.Context) (err error) {
 			}
 		}
 		if capErr := r.waitForCap(ctx, monthStart, deadline, len(subs), sent); capErr != nil {
+			if !errors.Is(capErr, ErrCapped) {
+				capErr = transient(capErr)
+			}
 			return errors.Join(err, capErr)
 		}
 		attempted, sendErr := r.Store.SendReminder(ctx, s, tomorrow, func(current store.Subscriber) (string, error) {
 			return r.Sender.Send(ctx, r.reminder(current, date))
 		})
+		if sendErr != nil && !attempted {
+			// The reservation failed before any request to WhatsApp: retry the run later.
+			return errors.Join(err, transient(fmt.Errorf("subscriber %d: %w", s.ID, sendErr)))
+		}
 		if sendErr != nil {
 			err = errors.Join(err, fmt.Errorf("subscriber %d: %w", s.ID, sendErr))
 			r.Log.Error("reminder attempt failed", "subscriber", s.ID, "err", sendErr)

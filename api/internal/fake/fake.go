@@ -30,6 +30,7 @@ type Store struct {
 	Unresolved map[string]string
 	Wamids     map[string]bool
 	Now        func() time.Time // stamps reminder attempts
+	FailDue    int              // DueSubscribers fails this many times, like a database waking up
 	nextID     int64
 }
 
@@ -88,6 +89,10 @@ func (s *Store) UpdateStatus(_ context.Context, wamid, _ string) (bool, error) {
 }
 
 func (s *Store) DueSubscribers(_ context.Context, zones []int, d time.Time) ([]store.Subscriber, error) {
+	if s.FailDue > 0 {
+		s.FailDue--
+		return nil, errors.New("connection refused")
+	}
 	var out []store.Subscriber
 	for _, sub := range s.Subs {
 		if slices.Contains(zones, sub.Zone) && !s.Reminders[key(sub.ID, d)] {

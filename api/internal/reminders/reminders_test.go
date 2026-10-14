@@ -230,3 +230,29 @@ func TestDailyCapIsAMovingWindow(t *testing.T) {
 		t.Fatalf("Monday: last night's reminders expire as tonight's go out; sent %d in total, err %v", len(snd.Sent), err)
 	}
 }
+
+func TestTransientDatabaseErrorIsRetriedUntilDeadline(t *testing.T) {
+	st, snd := fake.NewStore(), &fake.Sender{}
+	st.Subscribe(context.Background(), "a", "a", 4)
+	r := runner(t, "2026-10-18 20:00", st, snd)
+	tick(r, st, r.Now())
+	st.FailDue = 2
+	var beats []bool
+	r.Heartbeat = func(_ context.Context, ok bool, _ string) { beats = append(beats, ok) }
+	r.runOnce(context.Background())
+	if len(snd.Sent) != 1 || len(beats) != 1 || !beats[0] {
+		t.Fatalf("a database hiccup must not lose the night: sent %d, heartbeats %v", len(snd.Sent), beats)
+	}
+
+	st, snd = fake.NewStore(), &fake.Sender{}
+	st.Subscribe(context.Background(), "a", "a", 4)
+	r = runner(t, "2026-10-18 20:00", st, snd)
+	clock := tick(r, st, r.Now())
+	st.FailDue = 1000
+	beats = nil
+	r.Heartbeat = func(_ context.Context, ok bool, _ string) { beats = append(beats, ok) }
+	r.runOnce(context.Background())
+	if len(snd.Sent) != 0 || len(beats) != 1 || beats[0] || clock.Hour() >= 22 {
+		t.Fatalf("an outage must give up before the deadline and fail the heartbeat: %v at %v", beats, clock)
+	}
+}
