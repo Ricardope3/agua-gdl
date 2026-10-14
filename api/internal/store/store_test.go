@@ -11,6 +11,8 @@ import (
 
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
+
+	"aguagdl/api/internal/wa"
 )
 
 var schemaSequence atomic.Int64
@@ -238,5 +240,36 @@ func TestSendErrorPersistsUncertainty(t *testing.T) {
 	}
 	if n, err := db.SentSince(ctx, date.Add(-time.Hour)); err != nil || n != 1 {
 		t.Fatalf("uncertain attempt must count against cap: %d %v", n, err)
+	}
+}
+
+func TestRejectedReminderIsRetried(t *testing.T) {
+	db := testDB(t)
+	s := testSubscriber(t, db)
+	ctx, date := context.Background(), time.Now()
+	rejected := &wa.APIError{Status: 400, Code: 132015, Message: "Template is paused"}
+	if attempted, err := db.SendReminder(ctx, s, date, func(Subscriber) (string, error) { return "", rejected }); !attempted || !errors.Is(err, rejected) {
+		t.Fatalf("send: %v %v", attempted, err)
+	}
+	if n, err := db.UnresolvedReminders(ctx, date); err != nil || n != 1 {
+		t.Fatalf("a rejection must fail the heartbeat: unresolved=%d %v", n, err)
+	}
+	if n, err := db.SentSince(ctx, date.Add(-time.Hour)); err != nil || n != 0 {
+		t.Fatalf("a rejected message was never sent, so it must not count against the cap: %d %v", n, err)
+	}
+	if due, err := db.DueSubscribers(ctx, []int{4}, date); err != nil || len(due) != 1 {
+		t.Fatalf("due=%v %v", due, err)
+	}
+	if attempted, err := db.SendReminder(ctx, s, date, func(Subscriber) (string, error) { return "wamid.ok", nil }); !attempted || err != nil {
+		t.Fatalf("retry: %v %v", attempted, err)
+	}
+	if n, err := db.UnresolvedReminders(ctx, date); err != nil || n != 0 {
+		t.Fatalf("unresolved=%d %v", n, err)
+	}
+	if n, err := db.SentSince(ctx, date.Add(-time.Hour)); err != nil || n != 1 {
+		t.Fatalf("sent=%d %v", n, err)
+	}
+	if attempted, err := db.SendReminder(ctx, s, date, func(Subscriber) (string, error) { t.Error("resent after success"); return "", nil }); attempted || err != nil {
+		t.Fatalf("after success: %v %v", attempted, err)
 	}
 }

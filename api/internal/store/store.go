@@ -146,11 +146,12 @@ func (db *DB) UpdateStatus(ctx context.Context, wamid, status string) error {
 	return err
 }
 
-// DueSubscribers lists subscribers in zones that haven't been reminded about cutDate yet.
+// DueSubscribers lists subscribers in zones that haven't been reminded about cutDate yet,
+// including those whose earlier attempt Meta rejected.
 func (db *DB) DueSubscribers(ctx context.Context, zones []int, cutDate time.Time) ([]Subscriber, error) {
 	rows, err := db.q.Query(ctx, `select s.id, s.wa_user_id, coalesce(s.phone, ''), s.zone from subscriber s
 		where s.zone = any($1::int[]) and not exists (
-			select 1 from reminder r where r.subscriber_id = s.id and r.cut_date = $2::date)
+			select 1 from reminder r where r.subscriber_id = s.id and r.cut_date = $2::date and r.status <> 'rejected')
 		order by s.id`, zones, cutDate.Format(dateLayout))
 	if err != nil {
 		return nil, err
@@ -164,7 +165,7 @@ func (db *DB) DueSubscribers(ctx context.Context, zones []int, cutDate time.Time
 
 func (db *DB) SentSince(ctx context.Context, since time.Time) (int, error) {
 	var n int
-	err := db.q.QueryRow(ctx, `select count(*) from reminder where sent_at >= $1`, since).Scan(&n)
+	err := db.q.QueryRow(ctx, `select count(*) from reminder where sent_at >= $1 and status <> 'rejected'`, since).Scan(&n)
 	return n, err
 }
 

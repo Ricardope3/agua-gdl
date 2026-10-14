@@ -40,11 +40,17 @@ el proceso se detiene entre la reserva y el registro final, el aviso queda como
 el heartbeat avisa de la incertidumbre al revisar el lote de esa noche. Cualquier
 error de envío hace fallar el heartbeat, aunque otros avisos salgan bien.
 
+Si Meta rechaza el envío con un error 4xx (plantilla pausada, token inválido, sin
+método de pago…), el aviso queda como `rejected`: no salió, no cuenta contra los
+topes y se reintenta si el servidor vuelve a correr esa noche. Tras 5 errores
+seguidos el lote se detiene: corrige la causa y reinicia con `fly machine restart`
+antes de las 22:00.
+
 Para revisar los intentos pendientes:
 
 ```sql
 select id, cut_date, zone, status, wamid from reminder
-where status in ('sending', 'uncertain', 'failed')
+where status in ('sending', 'uncertain', 'rejected', 'failed')
 order by cut_date desc, id;
 ```
 

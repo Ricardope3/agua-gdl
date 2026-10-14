@@ -22,9 +22,12 @@ type APIError struct {
 	Message string
 }
 
+// Rejected reports that Meta refused the request, so the message was not sent.
+func (e *APIError) Rejected() bool { return e.Status >= 400 && e.Status < 500 }
+
 // Permanent reports errors that retrying won't fix, like a recipient who can't receive messages.
 func (e *APIError) Permanent() bool {
-	return e.Status >= 400 && e.Status < 500 && e.Status != 401 && e.Status != 429
+	return e.Rejected() && e.Status != 401 && e.Status != 429
 }
 
 func (e *APIError) Error() string {

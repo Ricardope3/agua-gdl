@@ -3,6 +3,7 @@ package fake
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"maps"
 	"slices"
@@ -102,8 +103,16 @@ func (s *Store) SendReminder(ctx context.Context, sub store.Subscriber, d time.T
 	s.Reminders[k] = true
 	s.SentCount++
 	_, err := send(current)
-	if err != nil {
+	var apiErr *wa.APIError
+	switch {
+	case errors.As(err, &apiErr) && apiErr.Rejected():
+		delete(s.Reminders, k)
+		s.SentCount--
 		s.Unresolved[k] = d.Format("2006-01-02")
+	case err != nil:
+		s.Unresolved[k] = d.Format("2006-01-02")
+	default:
+		delete(s.Unresolved, k)
 	}
 	return true, err
 }

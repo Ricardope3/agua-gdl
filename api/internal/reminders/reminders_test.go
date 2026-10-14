@@ -86,7 +86,10 @@ type senderFunc func(context.Context, wa.Message) (string, error)
 func (f senderFunc) Send(ctx context.Context, m wa.Message) (string, error) { return f(ctx, m) }
 
 func TestAnyFailedSendFailsHeartbeatIncludingAfterRestart(t *testing.T) {
-	for _, sendErr := range []error{errors.New("network timeout"), &wa.APIError{Status: 400, Code: 131026}} {
+	for sendErr, wantCalls := range map[error]int{
+		errors.New("network timeout"):           1, // WhatsApp may have accepted it: never resend
+		&wa.APIError{Status: 400, Code: 131026}: 2, // Meta rejected it: nothing was sent, so a re-run retries
+	} {
 		t.Run(sendErr.Error(), func(t *testing.T) {
 			st, snd := fake.NewStore(), &fake.Sender{}
 			st.Subscribe(context.Background(), "a", "521111", 4)
@@ -97,8 +100,8 @@ func TestAnyFailedSendFailsHeartbeatIncludingAfterRestart(t *testing.T) {
 			r.Heartbeat = func(_ context.Context, ok bool, _ string) { beats = append(beats, ok) }
 			r.runOnce(context.Background())
 			r.runOnce(context.Background())
-			if calls != 1 || len(beats) != 2 || beats[0] || beats[1] {
-				t.Fatalf("calls=%d heartbeats=%v: failed/uncertain attempts must stay visible without resending", calls, beats)
+			if calls != wantCalls || len(beats) != 2 || beats[0] || beats[1] {
+				t.Fatalf("calls=%d heartbeats=%v: failed attempts must stay visible", calls, beats)
 			}
 		})
 	}
@@ -143,5 +146,26 @@ func TestPartialFailureStillFailsHeartbeat(t *testing.T) {
 	}
 	if len(snd.Sent) != 1 || snd.Sent[0].To != "b" {
 		t.Fatal("remaining recipients should still be attempted")
+	}
+}
+
+func TestSystemicRejectionAbortsAndRetries(t *testing.T) {
+	ctx := context.Background()
+	st, snd := fake.NewStore(), &fake.Sender{}
+	for i := range 10 {
+		st.Subscribe(ctx, string(rune('a'+i)), string(rune('a'+i)), 4)
+	}
+	r := runner(t, "2026-10-18 20:00", st, snd)
+	calls := 0
+	r.Sender = senderFunc(func(context.Context, wa.Message) (string, error) {
+		calls++
+		return "", &wa.APIError{Status: 400, Code: 132015, Message: "Template is paused"}
+	})
+	if err := r.SendTonight(ctx); err == nil || calls != maxConsecutiveFailures {
+		t.Fatalf("a paused template must abort after %d attempts, got %d (err %v)", maxConsecutiveFailures, calls, err)
+	}
+	r.Sender = snd
+	if err := r.SendTonight(ctx); err != nil || len(snd.Sent) != 10 {
+		t.Fatalf("after the fix a re-run must reach everyone: sent %d, err %v", len(snd.Sent), err)
 	}
 }

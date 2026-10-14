@@ -138,12 +138,7 @@ func (r *Runner) SendTonight(ctx context.Context) (err error) {
 		if sendErr != nil {
 			err = errors.Join(err, fmt.Errorf("subscriber %d: %w", s.ID, sendErr))
 			r.Log.Error("reminder attempt failed", "subscriber", s.ID, "err", sendErr)
-			var apiErr *wa.APIError
-			if errors.As(sendErr, &apiErr) && apiErr.Permanent() {
-				continue
-			}
-			failures++
-			if failures >= maxConsecutiveFailures {
+			if failures++; failures >= maxConsecutiveFailures {
 				return err
 			}
 			continue

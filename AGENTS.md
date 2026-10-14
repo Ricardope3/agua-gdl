@@ -34,7 +34,7 @@ CI (`.github/workflows/ci.yml`) runs vet and race tests against Postgres 17. Run
 ## Rules
 
 - Never send real WhatsApp messages from tests or local runs. `REMINDERS_ENABLED` stays false unless the maintainer turns it on in production.
-- Don't relax the safety rails: idempotent sends per (subscriber, cut date), daily and monthly caps, the heartbeat, permanent-error handling, and the webhook signature check. A duplicate or missed reminder is the worst bug here.
+- Don't relax the safety rails: idempotent sends per (subscriber, cut date), daily and monthly caps, the heartbeat, never resending an attempt WhatsApp may have accepted (only `rejected` attempts are retried), and the webhook signature check. A duplicate or missed reminder is the worst bug here.
 - Privacy: store only the phone number, zone and consent time. BAJA must delete the subscriber; reports stay anonymous. Never log phone numbers. No secrets in the repo; config comes from env vars (see `.env.example`).
 - WhatsApp templates are approved by Meta. If you change the parameters or buttons the code sends, the template in WhatsApp Manager must change too.
 - Keep code comments sparse and match the surrounding style. Commit messages in English. User-facing copy in plain Mexican Spanish.
