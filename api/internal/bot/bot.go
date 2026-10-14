@@ -114,6 +114,9 @@ func (q *replyBuffer) Send(_ context.Context, m wa.Message) (string, error) {
 
 func (b *Bot) route(ctx context.Context, r wa.Recipient, m wa.Inbound) error {
 	switch {
+	case m.Type == "reaction":
+		// A 👍 on a reminder needs no answer.
+		return nil
 	case m.Type == "text" && m.Text != nil:
 		return b.onText(ctx, r, m.Text.Body)
 	case m.Type == "location" && m.Location != nil:

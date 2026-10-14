@@ -250,3 +250,11 @@ func TestReminderDeliveryFailureAlerts(t *testing.T) {
 		t.Errorf("only the failed reminder should alert, got %v", alerts)
 	}
 }
+
+func TestReactionGetsNoReply(t *testing.T) {
+	h := newHarness(t, "2026-10-14 10:00")
+	h.send(t, wa.Inbound{Type: "reaction"})
+	if len(h.sender.Sent) != 0 {
+		t.Fatalf("a reaction to a reminder must not get a reply: %+v", h.sender.Sent)
+	}
+}
