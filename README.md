@@ -22,7 +22,7 @@ CI las ejecuta con PostgreSQL 17. Sin `TEST_DATABASE_URL`, esas pruebas se omite
 
 ## Despliegue
 
-`fly launch --no-deploy`, luego `fly secrets set DATABASE_URL=… PUBLIC_BASE_URL=… WA_TOKEN=… WA_PHONE_NUMBER_ID=… WA_APP_SECRET=… WA_VERIFY_TOKEN=…` y `fly deploy`. Los avisos solo salen con `REMINDERS_ENABLED=true`.
+`fly launch --copy-config --no-deploy`, luego `fly secrets set DATABASE_URL=… PUBLIC_BASE_URL=… WA_TOKEN=… WA_PHONE_NUMBER_ID=… WA_APP_SECRET=… WA_VERIFY_TOKEN=…` y `fly deploy`. Los avisos solo salen con `REMINDERS_ENABLED=true`.
 
 Cada comando y el hash de su identificador de WhatsApp se guardan en una sola
 transacción. Los identificadores (`wamid`) contienen el número de teléfono, así que
