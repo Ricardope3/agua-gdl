@@ -45,6 +45,12 @@ const msgOutside = `Tu ubicación no está dentro de ninguna zona de la rotació
 
 Si crees que es un error, revisa el mapa oficial: ` + MapURL
 
+func msgMunicipio(name string) string {
+	return fmt.Sprintf(`*%s* tiene colonias en varias zonas de la rotación 🤔
+
+Mándame tu 📍 *ubicación* o el *nombre de tu colonia*, por ejemplo: _Las Juntas_`, name)
+}
+
 const msgPickColonia = "Encontré varias colonias parecidas. ¿Cuál es la tuya? 👇"
 
 func msgPickZone(colonia string, zones string) string {

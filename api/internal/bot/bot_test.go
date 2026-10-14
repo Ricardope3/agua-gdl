@@ -148,6 +148,12 @@ func TestEdgeTexts(t *testing.T) {
 	if got := h.send(t, text("Hola, quiero recibir avisos de agua")); got != msgWelcome(h.bot.BaseURL) {
 		t.Errorf("prefilled wa.me text should get the welcome, got:\n%s", got)
 	}
+	if got := h.send(t, text("Tlaquepaque")); got != msgMunicipio("Tlaquepaque") || len(h.store.Subs) != 0 {
+		t.Errorf("a municipio spans zones and must not subscribe, got:\n%s", got)
+	}
+	if got := h.send(t, text("zapopan")); got != msgMunicipio("Zapopan") {
+		t.Errorf("unexpected:\n%s", got)
+	}
 }
 
 type failingSender struct{ err error }

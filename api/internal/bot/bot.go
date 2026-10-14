@@ -45,6 +45,8 @@ var (
 	helpWords   = []string{"AYUDA", "MENU", "INFO", "OPCIONES"}
 	reportWords = []string{"REPORTAR", "REPORTE", "REPORTAR CORTE"}
 	greetWords  = []string{"HOLA", "BUENAS", "BUENOS DIAS", "BUENAS TARDES", "BUENAS NOCHES", "AVISOS", "INICIO", "EMPEZAR"}
+	// Municipios span several zones; "TLAQUEPAQUE" is also a colonia in Guadalajara's zone 7.
+	municipios = map[string]string{"GUADALAJARA": "Guadalajara", "ZAPOPAN": "Zapopan", "TLAQUEPAQUE": "Tlaquepaque", "SAN PEDRO TLAQUEPAQUE": "San Pedro Tlaquepaque", "TONALA": "Tonalá"}
 )
 
 // Handle processes one webhook payload. Returning an error makes Meta retry it later.
@@ -142,6 +144,8 @@ func (b *Bot) onText(ctx context.Context, r wa.Recipient, body string) error {
 		return b.subscribe(ctx, r, zone)
 	case strings.HasPrefix(n, "HOLA ") || slices.Contains(greetWords, n):
 		return b.greet(ctx, r)
+	case municipios[n] != "":
+		return b.text(ctx, r, msgMunicipio(municipios[n]))
 	case badZoneRe.MatchString(n) || len([]rune(n)) < 3:
 		return b.text(ctx, r, msgHelp(b.BaseURL))
 	}
