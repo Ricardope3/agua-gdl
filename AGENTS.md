@@ -40,7 +40,7 @@ CI (`.github/workflows/ci.yml`) runs vet and race tests against Postgres 17. Run
 
 - Never send real WhatsApp messages from tests or local runs. `REMINDERS_ENABLED` stays false unless the maintainer turns it on in production.
 - Don't relax the safety rails: idempotent sends per (subscriber, cut date), daily and monthly caps, the heartbeat, never resending an attempt WhatsApp may have accepted (only `rejected` attempts are retried), and the webhook signature check. A duplicate or missed reminder is the worst bug here.
-- Privacy: store only the phone number, zone and consent time. BAJA must delete the subscriber; reports stay anonymous. Never log phone numbers or WhatsApp message IDs: a wamid embeds the phone number, so the database stores only its SHA-256. No secrets in the repo; config comes from env vars (see `.env.example`).
+- Privacy: store only the phone number, zone and consent time. BAJA must delete the subscriber; reports stay anonymous. Thirty days after `end` in `rotation.json` the server deletes every subscriber (`rotation.Expired`), as the privacy notice promises: move `end` if SIAPA extends the rotation. Never log phone numbers or WhatsApp message IDs: a wamid embeds the phone number, so the database stores only its SHA-256. No secrets in the repo; config comes from env vars (see `.env.example`).
 - WhatsApp templates are approved by Meta. If you change the parameters or buttons the code sends, the template in WhatsApp Manager must change too.
 - Keep code comments sparse and match the surrounding style. Commit messages in English. User-facing copy in plain Mexican Spanish.
 - Don't force-push. The maintainer may be editing in parallel: check `git status` before you edit or commit.

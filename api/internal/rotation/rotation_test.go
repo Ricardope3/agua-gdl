@@ -83,3 +83,14 @@ func TestSpanish(t *testing.T) {
 		t.Error(got)
 	}
 }
+
+func TestExpired(t *testing.T) {
+	s := load(t, data.Rotation)
+	if s.Expired(day(s, "2027-04-30")) || !s.Expired(day(s, "2027-05-01")) {
+		t.Error("subscribers are kept 30 days after the rotation's end (31 Mar 2027)")
+	}
+	open := load(t, []byte(`{"start": "2026-10-15", "zones": {"1": ["fri"]}}`))
+	if open.Expired(day(open, "2030-01-01")) {
+		t.Error("without an end date nothing expires")
+	}
+}

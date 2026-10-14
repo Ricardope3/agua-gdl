@@ -118,6 +118,12 @@ func (db *DB) Migrate(ctx context.Context) error {
 	return nil
 }
 
+// DeleteSubscribers removes every subscription; reports and reminders stay, unlinked.
+func (db *DB) DeleteSubscribers(ctx context.Context) (int64, error) {
+	tag, err := db.q.Exec(ctx, `delete from subscriber`)
+	return tag.RowsAffected(), err
+}
+
 func (db *DB) PurgeSeen(ctx context.Context, before time.Time) error {
 	_, err := db.q.Exec(ctx, `delete from inbound_seen where seen_at < $1`, before)
 	return err

@@ -429,3 +429,18 @@ func TestNoticeIsSentOnceAndCountsTowardTheLimit(t *testing.T) {
 		t.Fatalf("status=%s %v", status, err)
 	}
 }
+
+func TestDeleteSubscribers(t *testing.T) {
+	db := testDB(t)
+	s := testSubscriber(t, db)
+	ctx := context.Background()
+	if _, err := db.SendReminder(ctx, s, time.Now(), []int{4}, func(Subscriber) (string, error) { return "wamid.d", nil }); err != nil {
+		t.Fatal(err)
+	}
+	if n, err := db.DeleteSubscribers(ctx); err != nil || n != 1 {
+		t.Fatalf("deleted %d %v", n, err)
+	}
+	if n, err := db.SentSince(ctx, time.Now().Add(-time.Hour)); err != nil || n != 1 {
+		t.Fatalf("reminders stay for the statistics: %d %v", n, err)
+	}
+}

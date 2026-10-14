@@ -134,7 +134,7 @@ func run(log *slog.Logger) error {
 		beat = heartbeat(cfg.HeartbeatURL, log)
 		b.Alert = func(ctx context.Context, msg string) { beat(ctx, false, msg) }
 	}
-	go purgeSeen(ctx, db, log)
+	go purge(ctx, db, sched, log)
 
 	if cfg.RemindersEnabled {
 		r := &reminders.Runner{Store: db, Sender: client, Schedule: sched,
@@ -163,11 +163,20 @@ func run(log *slog.Logger) error {
 	return nil
 }
 
-// purgeSeen forgets inbound message IDs after a week, whether or not reminders are on.
-func purgeSeen(ctx context.Context, db *store.DB, log *slog.Logger) {
+// purge forgets inbound message IDs after a week, and every subscriber once the
+// rotation has been over for RetentionDays, whether or not reminders are on.
+func purge(ctx context.Context, db *store.DB, sched *rotation.Schedule, log *slog.Logger) {
 	for {
 		if err := db.PurgeSeen(ctx, time.Now().Add(-7*24*time.Hour)); err != nil {
 			log.Warn("purge seen messages", "err", err)
+		}
+		if sched.Expired(time.Now()) {
+			n, err := db.DeleteSubscribers(ctx)
+			if err != nil {
+				log.Error("delete subscribers after the rotation", "err", err)
+			} else if n > 0 {
+				log.Warn("rotation over; deleted all subscribers", "count", n)
+			}
 		}
 		select {
 		case <-ctx.Done():
