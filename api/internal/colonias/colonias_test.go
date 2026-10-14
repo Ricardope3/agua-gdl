@@ -49,6 +49,15 @@ func TestSearch(t *testing.T) {
 	}
 }
 
+func TestNamesEndingInMunicipio(t *testing.T) {
+	ix, _ := Load(data.Colonias)
+	for _, q := range []string{"Lomas de Tlaquepaque", "Centro Guadalajara", "Altos Tonalá", "Lomas de Tlaquepaque, Tlaquepaque"} {
+		if m, exact := ix.Search(q, 5); !exact || len(m) != 1 {
+			t.Errorf("%q: exact=%v %v", q, exact, m)
+		}
+	}
+}
+
 func TestKeysAreUnique(t *testing.T) {
 	ix, _ := Load(data.Colonias)
 	seen := map[string]bool{}

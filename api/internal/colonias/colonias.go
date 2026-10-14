@@ -89,22 +89,23 @@ func (ix *Index) ByKey(key string) (Colonia, bool) {
 // Search returns exact name matches if any (exact = true), otherwise the closest names.
 func (ix *Index) Search(q string, limit int) (matches []Colonia, exact bool) {
 	nq, mun := Normalize(q), ""
+	if nq == "" {
+		return nil, false
+	}
+	// Try the whole query first: names like "Lomas de Tlaquepaque" end in a municipio.
+	if matches = ix.exact(nq, ""); len(matches) > 0 {
+		return matches, true
+	}
 	for _, m := range municipios {
 		if rest, ok := strings.CutSuffix(nq, " "+m.alias); ok {
 			nq, mun = rest, m.norm
 			break
 		}
 	}
-	if nq == "" {
-		return nil, false
-	}
-	for _, c := range ix.all {
-		if c.norm == nq && (mun == "" || c.munNorm == mun) {
-			matches = append(matches, c)
+	if mun != "" {
+		if matches = ix.exact(nq, mun); len(matches) > 0 {
+			return matches, true
 		}
-	}
-	if len(matches) > 0 {
-		return matches, true
 	}
 	type scored struct {
 		c Colonia
@@ -129,6 +130,16 @@ func (ix *Index) Search(q string, limit int) (matches []Colonia, exact bool) {
 		matches = append(matches, cands[i].c)
 	}
 	return matches, false
+}
+
+func (ix *Index) exact(nq, mun string) []Colonia {
+	var out []Colonia
+	for _, c := range ix.all {
+		if c.norm == nq && (mun == "" || c.munNorm == mun) {
+			out = append(out, c)
+		}
+	}
+	return out
 }
 
 func trigrams(s string) map[string]bool {
