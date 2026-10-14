@@ -15,7 +15,7 @@ type BotStore interface {
 	Subscribe(context.Context, string, string, int) error
 	Unsubscribe(context.Context, string) (bool, error)
 	SaveReport(context.Context, int64, int, time.Time, string) error
-	UpdateStatus(context.Context, string, string) error
+	UpdateStatus(context.Context, string, string) (bool, error)
 }
 
 func (db *DB) ProcessInbound(ctx context.Context, wamid string, process func(BotStore) error) error {

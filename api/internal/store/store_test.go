@@ -273,3 +273,20 @@ func TestRejectedReminderIsRetried(t *testing.T) {
 		t.Fatalf("after success: %v %v", attempted, err)
 	}
 }
+
+func TestUpdateStatusReportsReminders(t *testing.T) {
+	db := testDB(t)
+	s := testSubscriber(t, db)
+	ctx := context.Background()
+	if _, err := db.SendReminder(ctx, s, time.Now(), func(Subscriber) (string, error) { return "wamid.ok", nil }); err != nil {
+		t.Fatal(err)
+	}
+	for _, c := range []struct {
+		wamid, status string
+		want          bool
+	}{{"wamid.ok", "failed", true}, {"wamid.ok", "failed", false}, {"wamid.reply", "failed", false}} {
+		if got, err := db.UpdateStatus(ctx, c.wamid, c.status); err != nil || got != c.want {
+			t.Errorf("UpdateStatus(%s, %s) = %v %v, want %v", c.wamid, c.status, got, err, c.want)
+		}
+	}
+}

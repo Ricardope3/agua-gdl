@@ -44,7 +44,8 @@ Si Meta rechaza el envío con un error 4xx (plantilla pausada, token inválido, 
 método de pago…), el aviso queda como `rejected`: no salió, no cuenta contra los
 topes y se reintenta si el servidor vuelve a correr esa noche. Tras 5 errores
 seguidos el lote se detiene: corrige la causa y reinicia con `fly machine restart`
-antes de las 22:00.
+antes de las 22:00. Si Meta reporta después que un aviso no se entregó (`failed`),
+el servidor manda el heartbeat a `/fail` en ese momento.
 
 Los topes se revisan antes de cada envío. El diario es una ventana móvil de 24
 horas, como el límite de Meta: los avisos de anoche dejan de contar mientras salen

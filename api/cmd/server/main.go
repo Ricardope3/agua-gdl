@@ -128,16 +128,18 @@ func run(log *slog.Logger) error {
 	}
 	b := &bot.Bot{Store: db, Sender: client, Schedule: sched, Zones: zones, Colonias: cols,
 		BaseURL: cfg.BaseURL, ReminderHour: cfg.ReminderHour, Now: time.Now, Log: log}
+	var beat func(context.Context, bool, string)
+	if cfg.HeartbeatURL != "" {
+		beat = heartbeat(cfg.HeartbeatURL, log)
+		b.Alert = func(ctx context.Context, msg string) { beat(ctx, false, msg) }
+	}
 
 	if cfg.RemindersEnabled {
 		r := &reminders.Runner{Store: db, Sender: client, Schedule: sched,
 			Template: cfg.WATemplate, Language: cfg.WALanguage,
 			Hour: cfg.ReminderHour, CatchUpUntil: cfg.CatchUpUntil,
 			DailyCap: cfg.DailyCap, MonthlyCap: cfg.MonthlyCap,
-			Interval: 100 * time.Millisecond, Now: time.Now, Log: log}
-		if cfg.HeartbeatURL != "" {
-			r.Heartbeat = heartbeat(cfg.HeartbeatURL, log)
-		}
+			Interval: 100 * time.Millisecond, Heartbeat: beat, Now: time.Now, Log: log}
 		go r.Run(ctx)
 	} else {
 		log.Warn("reminders disabled; set REMINDERS_ENABLED=true to send them")
@@ -160,7 +162,7 @@ func run(log *slog.Logger) error {
 }
 
 // heartbeat pings a dead-man's-switch URL (e.g. healthchecks.io) after each nightly run,
-// using its "/fail" endpoint when the run failed or hit a cap.
+// using its "/fail" endpoint when the run failed, hit a cap, or a reminder later went undelivered.
 func heartbeat(url string, log *slog.Logger) func(context.Context, bool, string) {
 	client := &http.Client{Timeout: 10 * time.Second}
 	return func(ctx context.Context, ok bool, msg string) {

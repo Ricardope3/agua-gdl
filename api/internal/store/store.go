@@ -140,10 +140,11 @@ func (db *DB) SaveReport(ctx context.Context, subscriberID int64, zone int, cutD
 	return err
 }
 
-func (db *DB) UpdateStatus(ctx context.Context, wamid, status string) error {
-	_, err := db.q.Exec(ctx, `update reminder set status = $2 where wamid = $1
+// UpdateStatus records a delivery status and reports whether it changed a reminder.
+func (db *DB) UpdateStatus(ctx context.Context, wamid, status string) (bool, error) {
+	tag, err := db.q.Exec(ctx, `update reminder set status = $2 where wamid = $1
 		and array_position(array['sent','delivered','read','failed'], status) < array_position(array['sent','delivered','read','failed'], $2)`, wamid, status)
-	return err
+	return tag.RowsAffected() > 0, err
 }
 
 // DueSubscribers lists subscribers in zones that haven't been reminded about cutDate yet,

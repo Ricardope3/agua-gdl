@@ -229,3 +229,18 @@ func TestTwinColoniaListPicksTheRightZone(t *testing.T) {
 		t.Errorf("Jardines del Sauz is zone 6, got %+v", h.store.Subs["MX.42"])
 	}
 }
+
+func TestReminderDeliveryFailureAlerts(t *testing.T) {
+	h := newHarness(t, "2026-10-14 10:00")
+	var alerts []string
+	h.bot.Alert = func(_ context.Context, msg string) { alerts = append(alerts, msg) }
+	h.store.Wamids["wamid.reminder"] = true
+	statuses := []wa.Status{{ID: "wamid.reminder", Status: "failed"}, {ID: "wamid.reply", Status: "failed"}, {ID: "wamid.reminder", Status: "read"}}
+	p := wa.Payload{Entry: []wa.Entry{{Changes: []wa.Change{{Field: "messages", Value: wa.Value{Statuses: statuses}}}}}}
+	if err := h.bot.Handle(context.Background(), p); err != nil {
+		t.Fatal(err)
+	}
+	if len(alerts) != 1 {
+		t.Errorf("only the failed reminder should alert, got %v", alerts)
+	}
+}

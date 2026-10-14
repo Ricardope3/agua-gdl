@@ -27,13 +27,14 @@ type Store struct {
 	Reminders  map[string]bool
 	SentAt     map[string]time.Time
 	Unresolved map[string]string
+	Wamids     map[string]bool
 	Now        func() time.Time // stamps reminder attempts
 	nextID     int64
 }
 
 func NewStore() *Store {
 	return &Store{Subs: map[string]store.Subscriber{}, SeenIDs: map[string]bool{}, Reminders: map[string]bool{},
-		SentAt: map[string]time.Time{}, Unresolved: map[string]string{}, Now: time.Now}
+		SentAt: map[string]time.Time{}, Unresolved: map[string]string{}, Wamids: map[string]bool{}, Now: time.Now}
 }
 
 func (s *Store) ProcessInbound(ctx context.Context, id string, process func(store.BotStore) error) error {
@@ -83,7 +84,9 @@ func (s *Store) SaveReport(_ context.Context, id int64, zone int, d time.Time, a
 	return nil
 }
 
-func (s *Store) UpdateStatus(context.Context, string, string) error { return nil }
+func (s *Store) UpdateStatus(_ context.Context, wamid, _ string) (bool, error) {
+	return s.Wamids[wamid], nil
+}
 
 func (s *Store) DueSubscribers(_ context.Context, zones []int, d time.Time) ([]store.Subscriber, error) {
 	var out []store.Subscriber
@@ -103,7 +106,7 @@ func (s *Store) SendReminder(ctx context.Context, sub store.Subscriber, d time.T
 		return false, nil
 	}
 	s.Reminders[k], s.SentAt[k] = true, s.Now()
-	_, err := send(current)
+	wamid, err := send(current)
 	var apiErr *wa.APIError
 	switch {
 	case errors.As(err, &apiErr) && apiErr.Rejected():
@@ -114,6 +117,7 @@ func (s *Store) SendReminder(ctx context.Context, sub store.Subscriber, d time.T
 		s.Unresolved[k] = d.Format("2006-01-02")
 	default:
 		delete(s.Unresolved, k)
+		s.Wamids[wamid] = true
 	}
 	return true, err
 }

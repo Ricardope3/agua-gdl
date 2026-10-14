@@ -33,6 +33,7 @@ type Bot struct {
 	Colonias     *colonias.Index
 	BaseURL      string
 	ReminderHour int
+	Alert        func(ctx context.Context, msg string) // optional, e.g. a failed heartbeat
 	Now          func() time.Time
 	Log          *slog.Logger
 }
@@ -54,11 +55,16 @@ func (b *Bot) Handle(ctx context.Context, p wa.Payload) error {
 				continue
 			}
 			for _, st := range c.Value.Statuses {
-				if st.Status == "failed" {
-					b.Log.Warn("delivery failed", "wamid", st.ID, "errors", st.Errors)
-				}
-				if err := b.Store.UpdateStatus(ctx, st.ID, st.Status); err != nil {
+				reminder, err := b.Store.UpdateStatus(ctx, st.ID, st.Status)
+				if err != nil {
 					return err
+				}
+				if st.Status != "failed" {
+					continue
+				}
+				b.Log.Warn("delivery failed", "wamid", st.ID, "reminder", reminder, "errors", st.Errors)
+				if reminder && b.Alert != nil {
+					b.Alert(ctx, fmt.Sprintf("a reminder was not delivered: %v", st.Errors))
 				}
 			}
 			for _, m := range c.Value.Messages {
