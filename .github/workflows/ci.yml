@@ -29,3 +29,8 @@ jobs:
           go-version-file: api/go.mod
       - run: go vet ./...
       - run: go test -race ./...
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -f infra/Dockerfile .
