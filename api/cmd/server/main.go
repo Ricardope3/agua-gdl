@@ -128,7 +128,7 @@ func run(log *slog.Logger) error {
 	}
 	b := &bot.Bot{Store: db, Sender: client, Schedule: sched, Zones: zones, Colonias: cols,
 		BaseURL: cfg.BaseURL, PhoneNumberID: cfg.WAPhoneNumberID, ReminderHour: cfg.ReminderHour,
-		RemindersOn: cfg.RemindersEnabled, Now: time.Now, Log: log}
+		RemindersOn: cfg.RemindersEnabled, NightCap: cfg.DailyCap, Now: time.Now, Log: log}
 	var beat func(context.Context, bool, string)
 	if cfg.HeartbeatURL != "" {
 		beat = heartbeat(cfg.HeartbeatURL, log)

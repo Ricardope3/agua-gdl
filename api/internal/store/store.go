@@ -158,6 +158,21 @@ func (db *DB) ChangeUser(ctx context.Context, oldUserID, oldPhone, newUserID, ne
 	return err
 }
 
+// ZoneCounts returns the number of subscribers in each zone.
+func (db *DB) ZoneCounts(ctx context.Context) (map[int]int, error) {
+	rows, err := db.q.Query(ctx, `select zone, count(*) from subscriber group by zone`)
+	if err != nil {
+		return nil, err
+	}
+	counts := map[int]int{}
+	var zone, n int
+	_, err = pgx.ForEachRow(rows, []any{&zone, &n}, func() error {
+		counts[zone] = n
+		return nil
+	})
+	return counts, err
+}
+
 func (db *DB) Unsubscribe(ctx context.Context, userID string) (bool, error) {
 	tag, err := db.q.Exec(ctx, `delete from subscriber where wa_user_id = $1`, userID)
 	return tag.RowsAffected() > 0, err

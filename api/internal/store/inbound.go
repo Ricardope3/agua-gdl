@@ -15,6 +15,7 @@ type BotStore interface {
 	Subscribe(context.Context, string, string, int) error
 	Unsubscribe(context.Context, string) (bool, error)
 	ChangeUser(ctx context.Context, oldUserID, oldPhone, newUserID, newPhone string) error
+	ZoneCounts(context.Context) (map[int]int, error)
 	SaveReport(context.Context, int64, int, time.Time, string) error
 	UpdateStatus(context.Context, string, string) (bool, error)
 }

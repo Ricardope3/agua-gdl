@@ -87,6 +87,14 @@ func (s *Store) ChangeUser(_ context.Context, oldUserID, oldPhone, newUserID, ne
 	return nil
 }
 
+func (s *Store) ZoneCounts(context.Context) (map[int]int, error) {
+	counts := map[int]int{}
+	for _, sub := range s.Subs {
+		counts[sub.Zone]++
+	}
+	return counts, nil
+}
+
 func (s *Store) Unsubscribe(_ context.Context, userID string) (bool, error) {
 	_, ok := s.Subs[userID]
 	delete(s.Subs, userID)

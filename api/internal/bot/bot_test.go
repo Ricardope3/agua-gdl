@@ -310,3 +310,23 @@ func TestNoReminderPromisedWhileTheyAreOff(t *testing.T) {
 		t.Errorf("with reminders off, warn about tomorrow's cut and promise no reminder:\n%s", got)
 	}
 }
+
+func TestRefusesSubscriptionsPastTheNightlyCap(t *testing.T) {
+	ctx := context.Background()
+	h := newHarness(t, "2026-10-14 10:00")
+	h.bot.NightCap = 2
+	h.store.Subscribe(ctx, "MX.1", "1", 4)
+	h.store.Subscribe(ctx, "MX.2", "2", 4)
+	if got := h.send(t, text("zona 6")); got != msgFull(h.bot.BaseURL) || len(h.store.Subs) != 2 {
+		t.Fatalf("Monday night already reminds 2 people in zone 4; zone 6 is cut Monday too:\n%s", got)
+	}
+	if got := h.send(t, text("zona 3")); !strings.Contains(got, "¡Listo!") {
+		t.Fatalf("zone 3 (Wednesday, Saturday) still has room:\n%s", got)
+	}
+	h.store.Unsubscribe(ctx, "MX.42")
+	h.store.Unsubscribe(ctx, "MX.2")
+	h.store.Subscribe(ctx, "MX.42", "5213300000000", 4)
+	if got := h.send(t, text("zona 6")); !strings.Contains(got, "¡Listo!") {
+		t.Fatalf("moving from zone 4 to 6 doesn't add anyone to Monday:\n%s", got)
+	}
+}

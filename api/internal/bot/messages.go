@@ -72,6 +72,14 @@ const msgPipa = `🚚 Para pedir una *pipa* o reportar que no te llega el agua, 
 
 Agua GDL no es del SIAPA y no puede mandar pipas.`
 
+func msgFull(base string) string {
+	return `😔 Por ahora llegamos al máximo de avisos que WhatsApp nos deja enviar cada noche. Estamos trabajando para ampliarlo.
+
+Vuelve a escribir *HOLA* en unos días. Mientras tanto, revisa tus días de corte en el mapa del SIAPA: ` + MapURL + `
+
+Novedades: ` + base
+}
+
 const msgUnsubscribed = "👋 Listo, ya no recibirás avisos y borramos tus datos. Si quieres volver, escribe *HOLA*."
 
 const msgNotSubscribed = "No tienes avisos activos. Escribe *HOLA* para empezar."

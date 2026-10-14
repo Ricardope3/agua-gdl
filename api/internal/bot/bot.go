@@ -35,6 +35,7 @@ type Bot struct {
 	PhoneNumberID string // ignore webhooks for other numbers on the same app, e.g. Meta's test number
 	ReminderHour  int
 	RemindersOn   bool
+	NightCap      int                                   // refuse subscriptions that would push a night's reminders past this; 0 = no limit
 	Alert         func(ctx context.Context, msg string) // optional, e.g. a failed heartbeat
 	Now           func() time.Time
 	Log           *slog.Logger
@@ -254,10 +255,50 @@ func (b *Bot) subscribe(ctx context.Context, r wa.Recipient, zone int) error {
 		b.Log.Warn("message without business-scoped user ID")
 		return b.text(ctx, r, msgNoUserID)
 	}
+	full, err := b.nightFull(ctx, r.UserID, zone)
+	if err != nil {
+		return err
+	}
+	if full {
+		b.Log.Warn("subscription refused: a night would exceed the send cap", "zone", zone, "cap", b.NightCap)
+		return b.text(ctx, r, msgFull(b.BaseURL))
+	}
 	if err := b.Store.Subscribe(ctx, r.UserID, r.Phone, zone); err != nil {
 		return err
 	}
 	return b.text(ctx, r, b.subscribedText(zone, true))
+}
+
+// nightFull reports whether putting userID in zone would make some night's reminders
+// exceed what WhatsApp lets us send in 24 hours. Past that, the newest subscribers
+// would silently miss reminders, so it's better to say so up front.
+func (b *Bot) nightFull(ctx context.Context, userID string, zone int) (bool, error) {
+	if b.NightCap <= 0 {
+		return false, nil
+	}
+	current, subscribed, err := b.Store.Subscriber(ctx, userID)
+	if err != nil || (subscribed && current.Zone == zone) {
+		return false, err
+	}
+	counts, err := b.Store.ZoneCounts(ctx)
+	if err != nil {
+		return false, err
+	}
+	for _, day := range b.Schedule.Weekdays(zone) {
+		load := 1
+		for z, n := range counts {
+			if slices.Contains(b.Schedule.Weekdays(z), day) {
+				load += n
+			}
+		}
+		if subscribed && slices.Contains(b.Schedule.Weekdays(current.Zone), day) {
+			load-- // already counted on that night
+		}
+		if load > b.NightCap {
+			return true, nil
+		}
+	}
+	return false, nil
 }
 
 func (b *Bot) subscribedText(zone int, fresh bool) string {

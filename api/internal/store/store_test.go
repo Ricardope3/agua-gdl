@@ -379,3 +379,17 @@ func TestChangeUserNeverKeepsTheOldNumber(t *testing.T) {
 		t.Fatalf("an existing subscription for the new ID wins: %d %v", n, err)
 	}
 }
+
+func TestZoneCounts(t *testing.T) {
+	db := testDB(t)
+	ctx := context.Background()
+	for user, zone := range map[string]int{"MX.a": 4, "MX.b": 4, "MX.c": 6} {
+		if err := db.Subscribe(ctx, user, "", zone); err != nil {
+			t.Fatal(err)
+		}
+	}
+	counts, err := db.ZoneCounts(ctx)
+	if err != nil || len(counts) != 2 || counts[4] != 2 || counts[6] != 1 {
+		t.Fatalf("%v %v", counts, err)
+	}
+}
