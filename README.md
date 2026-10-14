@@ -46,6 +46,10 @@ topes y se reintenta si el servidor vuelve a correr esa noche. Tras 5 errores
 seguidos el lote se detiene: corrige la causa y reinicia con `fly machine restart`
 antes de las 22:00.
 
+Los topes se revisan antes de cada envío. El diario es una ventana móvil de 24
+horas, como el límite de Meta: los avisos de anoche dejan de contar mientras salen
+los de hoy.
+
 Para revisar los intentos pendientes:
 
 ```sql

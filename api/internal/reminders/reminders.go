@@ -105,23 +105,8 @@ func (r *Runner) SendTonight(ctx context.Context) (err error) {
 	if err != nil || len(subs) == 0 {
 		return err
 	}
-	day, err := r.Store.SentSince(ctx, now.Add(-24*time.Hour))
-	if err != nil {
-		return err
-	}
 	y, m, _ := now.In(r.Schedule.Location()).Date()
-	month, err := r.Store.SentSince(ctx, time.Date(y, m, 1, 0, 0, 0, 0, r.Schedule.Location()))
-	if err != nil {
-		return err
-	}
-	if allowed := min(r.DailyCap-day, r.MonthlyCap-month); allowed < len(subs) {
-		r.Log.Error("send cap reached; some subscribers will not get tonight's reminder",
-			"due", len(subs), "allowed", max(allowed, 0), "sent_24h", day, "sent_month", month)
-		subs = subs[:max(allowed, 0)]
-		defer func() {
-			err = errors.Join(err, ErrCapped)
-		}()
-	}
+	monthStart := time.Date(y, m, 1, 0, 0, 0, 0, r.Schedule.Location())
 	date := rotation.DateES(tomorrow)
 	sent, failures := 0, 0
 	for i, s := range subs {
@@ -131,6 +116,14 @@ func (r *Runner) SendTonight(ctx context.Context) (err error) {
 				return ctx.Err()
 			case <-time.After(r.Interval):
 			}
+		}
+		capped, capErr := r.capReached(ctx, monthStart)
+		if capErr != nil {
+			return errors.Join(err, capErr)
+		}
+		if capped {
+			r.Log.Error("send cap reached; the rest will not get tonight's reminder", "due", len(subs), "sent", sent)
+			return errors.Join(err, ErrCapped)
 		}
 		attempted, sendErr := r.Store.SendReminder(ctx, s, tomorrow, func(current store.Subscriber) (string, error) {
 			return r.Sender.Send(ctx, r.reminder(current, date))
@@ -151,6 +144,20 @@ func (r *Runner) SendTonight(ctx context.Context) (err error) {
 	}
 	r.Log.Info("reminders sent", "date", tomorrow.Format(rotation.DateLayout), "zones", zones, "sent", sent, "due", len(subs))
 	return err
+}
+
+// capReached checks the caps before every send: Meta's limit is a moving 24-hour
+// window, so last night's reminders expire while tonight's go out.
+func (r *Runner) capReached(ctx context.Context, monthStart time.Time) (bool, error) {
+	day, err := r.Store.SentSince(ctx, r.Now().Add(-24*time.Hour))
+	if err != nil {
+		return false, err
+	}
+	month, err := r.Store.SentSince(ctx, monthStart)
+	if err != nil {
+		return false, err
+	}
+	return day >= r.DailyCap || month >= r.MonthlyCap, nil
 }
 
 func (r *Runner) reminder(s store.Subscriber, date string) wa.Message {

@@ -25,13 +25,15 @@ type Store struct {
 	SeenIDs    map[string]bool
 	Reports    []Report
 	Reminders  map[string]bool
-	SentCount  int
+	SentAt     map[string]time.Time
 	Unresolved map[string]string
+	Now        func() time.Time // stamps reminder attempts
 	nextID     int64
 }
 
 func NewStore() *Store {
-	return &Store{Subs: map[string]store.Subscriber{}, SeenIDs: map[string]bool{}, Reminders: map[string]bool{}, Unresolved: map[string]string{}}
+	return &Store{Subs: map[string]store.Subscriber{}, SeenIDs: map[string]bool{}, Reminders: map[string]bool{},
+		SentAt: map[string]time.Time{}, Unresolved: map[string]string{}, Now: time.Now}
 }
 
 func (s *Store) ProcessInbound(ctx context.Context, id string, process func(store.BotStore) error) error {
@@ -100,14 +102,13 @@ func (s *Store) SendReminder(ctx context.Context, sub store.Subscriber, d time.T
 	if !ok || current.ID != sub.ID || current.Zone != sub.Zone || s.Reminders[k] {
 		return false, nil
 	}
-	s.Reminders[k] = true
-	s.SentCount++
+	s.Reminders[k], s.SentAt[k] = true, s.Now()
 	_, err := send(current)
 	var apiErr *wa.APIError
 	switch {
 	case errors.As(err, &apiErr) && apiErr.Rejected():
 		delete(s.Reminders, k)
-		s.SentCount--
+		delete(s.SentAt, k)
 		s.Unresolved[k] = d.Format("2006-01-02")
 	case err != nil:
 		s.Unresolved[k] = d.Format("2006-01-02")
@@ -127,7 +128,15 @@ func (s *Store) UnresolvedReminders(_ context.Context, d time.Time) (int, error)
 	return n, nil
 }
 
-func (s *Store) SentSince(context.Context, time.Time) (int, error) { return s.SentCount, nil }
+func (s *Store) SentSince(_ context.Context, since time.Time) (int, error) {
+	n := 0
+	for _, at := range s.SentAt {
+		if !at.Before(since) {
+			n++
+		}
+	}
+	return n, nil
+}
 
 func key(id int64, d time.Time) string { return fmt.Sprintf("%d/%s", id, d.Format("2006-01-02")) }
 

@@ -22,9 +22,10 @@ func runner(t *testing.T, now string, st *fake.Store, snd *fake.Sender) *Runner 
 		t.Fatal(err)
 	}
 	at, _ := time.ParseInLocation("2006-01-02 15:04", now, loc)
+	st.Now = func() time.Time { return at }
 	return &Runner{Store: st, Sender: snd, Schedule: sched, Template: "aviso_corte", Language: "es_MX",
 		Hour: 20, CatchUpUntil: 22, DailyCap: 250, MonthlyCap: 10000,
-		Now: func() time.Time { return at }, Log: slog.New(slog.NewTextHandler(io.Discard, nil))}
+		Now: st.Now, Log: slog.New(slog.NewTextHandler(io.Discard, nil))}
 }
 
 func TestSendsToZonesCutTomorrow(t *testing.T) {
@@ -167,5 +168,29 @@ func TestSystemicRejectionAbortsAndRetries(t *testing.T) {
 	r.Sender = snd
 	if err := r.SendTonight(ctx); err != nil || len(snd.Sent) != 10 {
 		t.Fatalf("after the fix a re-run must reach everyone: sent %d, err %v", len(snd.Sent), err)
+	}
+}
+
+func TestDailyCapIsAMovingWindow(t *testing.T) {
+	ctx := context.Background()
+	loc, _ := time.LoadLocation("America/Mexico_City")
+	st, snd := fake.NewStore(), &fake.Sender{}
+	for user, zone := range map[string]int{"a": 4, "b": 6, "c": 2, "d": 5, "e": 2} {
+		st.Subscribe(ctx, user, user, zone)
+	}
+	r := runner(t, "2026-10-18 20:00", st, snd)
+	clock := time.Date(2026, 10, 18, 20, 0, 0, 0, loc)
+	r.Now, st.Now = func() time.Time { return clock }, func() time.Time { return clock }
+	r.Sender = senderFunc(func(ctx context.Context, m wa.Message) (string, error) {
+		clock = clock.Add(time.Second)
+		return snd.Send(ctx, m)
+	})
+	r.DailyCap = 3
+	if err := r.SendTonight(ctx); err != nil || len(snd.Sent) != 2 {
+		t.Fatalf("Sunday: sent %d, err %v", len(snd.Sent), err)
+	}
+	clock = time.Date(2026, 10, 19, 20, 0, 0, 0, loc)
+	if err := r.SendTonight(ctx); err != nil || len(snd.Sent) != 5 {
+		t.Fatalf("Monday: last night's reminders expire as tonight's go out; sent %d in total, err %v", len(snd.Sent), err)
 	}
 }
