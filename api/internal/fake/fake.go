@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"maps"
 	"slices"
+	"strings"
 	"time"
 
 	"aguagdl/api/internal/store"
@@ -138,6 +139,17 @@ func (s *Store) SentSince(_ context.Context, since time.Time) (int, error) {
 		}
 	}
 	return n, nil
+}
+
+func (s *Store) RecipientsSince(_ context.Context, since time.Time) (int, error) {
+	ids := map[string]bool{}
+	for k, at := range s.SentAt {
+		if !at.Before(since) {
+			id, _, _ := strings.Cut(k, "/")
+			ids[id] = true
+		}
+	}
+	return len(ids), nil
 }
 
 func key(id int64, d time.Time) string { return fmt.Sprintf("%d/%s", id, d.Format("2006-01-02")) }

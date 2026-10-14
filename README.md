@@ -49,9 +49,11 @@ seguidos el lote se detiene: corrige la causa y reinicia con `fly machine restar
 antes de las 22:00. Si Meta reporta después que un aviso no se entregó (`failed`),
 el servidor manda el heartbeat a `/fail` en ese momento.
 
-Los topes se revisan antes de cada envío. El diario es una ventana móvil de 24
-horas, como el límite de Meta: los avisos de anoche dejan de contar mientras salen
-los de hoy.
+Los topes se revisan antes de cada envío. El diario (`DAILY_CAP`) cuenta personas
+distintas en una ventana móvil de 24 horas, como el límite de Meta. Si los avisos de
+anoche todavía la llenan, el lote espera a que salgan de la ventana en vez de saltarse
+a nadie; solo se rinde a las 22:00 o al llegar al tope mensual (`MONTHLY_CAP`, que
+cuenta mensajes).
 
 Para revisar los intentos pendientes:
 

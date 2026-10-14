@@ -175,6 +175,15 @@ func (db *DB) DueSubscribers(ctx context.Context, zones []int, cutDate time.Time
 	})
 }
 
+// RecipientsSince counts the distinct people sent a template since the given time,
+// which is what Meta's messaging limit counts.
+func (db *DB) RecipientsSince(ctx context.Context, since time.Time) (int, error) {
+	var n int
+	err := db.q.QueryRow(ctx, `select count(distinct coalesce(subscriber_id, -id)) from reminder
+		where sent_at >= $1 and status <> 'rejected'`, since).Scan(&n)
+	return n, err
+}
+
 func (db *DB) SentSince(ctx context.Context, since time.Time) (int, error) {
 	var n int
 	err := db.q.QueryRow(ctx, `select count(*) from reminder where sent_at >= $1 and status <> 'rejected'`, since).Scan(&n)

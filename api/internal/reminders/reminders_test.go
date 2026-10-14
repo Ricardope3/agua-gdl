@@ -52,12 +52,21 @@ func TestSendsToZonesCutTomorrow(t *testing.T) {
 	}
 }
 
+// tick makes the runner's clock advance only when it sleeps or sends.
+func tick(r *Runner, st *fake.Store, start time.Time) *time.Time {
+	clock := start
+	r.Now, st.Now = func() time.Time { return clock }, func() time.Time { return clock }
+	r.Sleep = func(_ context.Context, d time.Duration) error { clock = clock.Add(d); return nil }
+	return &clock
+}
+
 func TestDailyCap(t *testing.T) {
 	st, snd := fake.NewStore(), &fake.Sender{}
 	for i := range 5 {
 		st.Subscribe(context.Background(), string(rune('a'+i)), "", 4)
 	}
 	r := runner(t, "2026-10-18 20:00", st, snd)
+	clock := tick(r, st, r.Now())
 	r.DailyCap = 3
 	var beat []bool
 	r.Heartbeat = func(_ context.Context, ok bool, _ string) { beat = append(beat, ok) }
@@ -67,6 +76,33 @@ func TestDailyCap(t *testing.T) {
 	}
 	if len(beat) != 1 || beat[0] {
 		t.Errorf("hitting the cap must report a failed heartbeat, got %v", beat)
+	}
+	if clock.Hour() != 22 {
+		t.Errorf("should wait for the window until the catch-up deadline, stopped at %v", clock)
+	}
+}
+
+func TestDailyCapWaitsForLastNightToExpire(t *testing.T) {
+	ctx := context.Background()
+	loc, _ := time.LoadLocation("America/Mexico_City")
+	st, snd := fake.NewStore(), &fake.Sender{}
+	// Friday night reminds Saturday's zones 3, 5 and 7; Saturday night reminds Sunday's 1, 2 and 7.
+	for user, zone := range map[string]int{"a": 3, "b": 5, "c": 7, "d": 1, "e": 2} {
+		st.Subscribe(ctx, user, user, zone)
+	}
+	r := runner(t, "2026-10-16 20:00", st, snd)
+	clock := tick(r, st, time.Date(2026, 10, 16, 20, 0, 5, 0, loc))
+	r.Sender = senderFunc(func(ctx context.Context, m wa.Message) (string, error) {
+		*clock = clock.Add(time.Second)
+		return snd.Send(ctx, m)
+	})
+	r.DailyCap = 3
+	if err := r.SendTonight(ctx); err != nil || len(snd.Sent) != 3 {
+		t.Fatalf("Friday: sent %d, err %v", len(snd.Sent), err)
+	}
+	*clock = time.Date(2026, 10, 17, 20, 0, 0, 0, loc)
+	if err := r.SendTonight(ctx); err != nil || len(snd.Sent) != 6 {
+		t.Fatalf("Saturday started before Friday's sends left the window and must wait, not skip: sent %d in total, err %v", len(snd.Sent), err)
 	}
 }
 

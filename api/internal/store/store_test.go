@@ -311,3 +311,28 @@ func TestStoresOnlyHashesOfMessageIDs(t *testing.T) {
 		t.Fatalf("status by message ID: %v %v", ok, err)
 	}
 }
+
+func TestRecipientsSinceCountsPeopleNotMessages(t *testing.T) {
+	db := testDB(t)
+	s := testSubscriber(t, db)
+	ctx, today := context.Background(), time.Now()
+	ok := func(Subscriber) (string, error) { return "wamid." + fmt.Sprint(time.Now().UnixNano()), nil }
+	for _, d := range []time.Time{today, today.AddDate(0, 0, 1)} {
+		if attempted, err := db.SendReminder(ctx, s, d, ok); !attempted || err != nil {
+			t.Fatalf("send: %v %v", attempted, err)
+		}
+	}
+	since := today.Add(-time.Hour)
+	if n, err := db.SentSince(ctx, since); err != nil || n != 2 {
+		t.Fatalf("sent=%d %v", n, err)
+	}
+	if n, err := db.RecipientsSince(ctx, since); err != nil || n != 1 {
+		t.Fatalf("Meta's limit counts one person once: recipients=%d %v", n, err)
+	}
+	if _, err := db.Unsubscribe(ctx, s.UserID); err != nil {
+		t.Fatal(err)
+	}
+	if n, err := db.RecipientsSince(ctx, since); err != nil || n != 2 {
+		t.Fatalf("after BAJA the rows can't be linked, so count each: %d %v", n, err)
+	}
+}

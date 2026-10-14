@@ -19,6 +19,7 @@ type Store interface {
 	SendReminder(ctx context.Context, s store.Subscriber, cutDate time.Time, send func(store.Subscriber) (string, error)) (bool, error)
 	UnresolvedReminders(ctx context.Context, cutDate time.Time) (int, error)
 	SentSince(ctx context.Context, since time.Time) (int, error)
+	RecipientsSince(ctx context.Context, since time.Time) (int, error)
 }
 
 type Sender interface {
@@ -33,11 +34,13 @@ type Runner struct {
 	Language     string
 	Hour         int // local hour to send, e.g. 20
 	CatchUpUntil int // after a restart, still send until this hour
-	DailyCap     int
+	DailyCap     int // distinct recipients in a moving 24 hours, like Meta's messaging limit
 	MonthlyCap   int
 	Interval     time.Duration
+	CapPoll      time.Duration                                  // how often to recheck a reached daily cap; default 1 minute
 	Heartbeat    func(ctx context.Context, ok bool, msg string) // optional dead-man's switch
 	Now          func() time.Time
+	Sleep        func(ctx context.Context, d time.Duration) error // tests replace it
 	Log          *slog.Logger
 }
 
@@ -103,23 +106,17 @@ func (r *Runner) SendTonight(ctx context.Context) (err error) {
 	}
 	y, m, _ := now.In(r.Schedule.Location()).Date()
 	monthStart := time.Date(y, m, 1, 0, 0, 0, 0, r.Schedule.Location())
+	deadline := r.Schedule.Day(now).Add(time.Duration(r.CatchUpUntil) * time.Hour)
 	date := rotation.DateES(tomorrow)
 	sent, failures := 0, 0
 	for i, s := range subs {
 		if i > 0 {
-			select {
-			case <-ctx.Done():
-				return ctx.Err()
-			case <-time.After(r.Interval):
+			if sleepErr := r.sleep(ctx, r.Interval); sleepErr != nil {
+				return errors.Join(err, sleepErr)
 			}
 		}
-		capped, capErr := r.capReached(ctx, monthStart)
-		if capErr != nil {
+		if capErr := r.waitForCap(ctx, monthStart, deadline, len(subs), sent); capErr != nil {
 			return errors.Join(err, capErr)
-		}
-		if capped {
-			r.Log.Error("send cap reached; the rest will not get tonight's reminder", "due", len(subs), "sent", sent)
-			return errors.Join(err, ErrCapped)
 		}
 		attempted, sendErr := r.Store.SendReminder(ctx, s, tomorrow, func(current store.Subscriber) (string, error) {
 			return r.Sender.Send(ctx, r.reminder(current, date))
@@ -142,18 +139,56 @@ func (r *Runner) SendTonight(ctx context.Context) (err error) {
 	return err
 }
 
-// capReached checks the caps before every send: Meta's limit is a moving 24-hour
-// window, so last night's reminders expire while tonight's go out.
-func (r *Runner) capReached(ctx context.Context, monthStart time.Time) (bool, error) {
-	day, err := r.Store.SentSince(ctx, r.Now().Add(-24*time.Hour))
-	if err != nil {
-		return false, err
+// waitForCap checks the caps before every send. Meta's limit is a moving 24-hour
+// window, so when last night's reminders still fill it, wait for them to expire
+// instead of skipping the rest of tonight's batch. Only the monthly cap, or
+// reaching the catch-up deadline, gives up.
+func (r *Runner) waitForCap(ctx context.Context, monthStart, deadline time.Time, due, sent int) error {
+	waiting := false
+	for {
+		month, err := r.Store.SentSince(ctx, monthStart)
+		if err != nil {
+			return err
+		}
+		if month >= r.MonthlyCap {
+			r.Log.Error("monthly cap reached; the rest will not get tonight's reminder", "due", due, "sent", sent)
+			return ErrCapped
+		}
+		day, err := r.Store.RecipientsSince(ctx, r.Now().Add(-24*time.Hour))
+		if err != nil {
+			return err
+		}
+		if day < r.DailyCap {
+			return nil
+		}
+		if !r.Now().Before(deadline) {
+			r.Log.Error("daily cap reached; the rest will not get tonight's reminder", "due", due, "sent", sent)
+			return ErrCapped
+		}
+		if !waiting {
+			r.Log.Warn("daily cap reached; waiting for the 24-hour window to free up", "due", due, "sent", sent)
+			waiting = true
+		}
+		poll := r.CapPoll
+		if poll <= 0 {
+			poll = time.Minute
+		}
+		if err := r.sleep(ctx, poll); err != nil {
+			return err
+		}
 	}
-	month, err := r.Store.SentSince(ctx, monthStart)
-	if err != nil {
-		return false, err
+}
+
+func (r *Runner) sleep(ctx context.Context, d time.Duration) error {
+	if r.Sleep != nil {
+		return r.Sleep(ctx, d)
 	}
-	return day >= r.DailyCap || month >= r.MonthlyCap, nil
+	select {
+	case <-ctx.Done():
+		return ctx.Err()
+	case <-time.After(d):
+		return nil
+	}
 }
 
 func (r *Runner) reminder(s store.Subscriber, date string) wa.Message {
