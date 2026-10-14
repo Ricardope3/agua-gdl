@@ -104,6 +104,7 @@ type subscribedInfo struct {
 	days         string
 	fresh        bool
 	cutTomorrow  string // non-empty when tomorrow's cut is too close for a reminder
+	off          bool   // reminders are switched off on the server
 	nextReminder string
 	nextCut      string
 	hour         string
@@ -121,9 +122,12 @@ func msgSubscribed(i subscribedInfo) string {
 	if i.cutTomorrow != "" {
 		fmt.Fprintf(&b, "⚠️ ¡Ojo! *Mañana %s* hay corte. Llena hoy tu tinaco.\n", i.cutTomorrow)
 	}
-	if i.nextReminder != "" {
+	switch {
+	case i.off:
+		b.WriteString("🔔 Los avisos automáticos empiezan en unos días.\n")
+	case i.nextReminder != "":
 		fmt.Fprintf(&b, "🔔 Próximo aviso: *%s, %s* (corte del %s)\n", i.nextReminder, i.hour, i.nextCut)
-	} else {
+	default:
 		b.WriteString("🔔 Por ahora no hay más cortes programados en tu zona.\n")
 	}
 	fmt.Fprintf(&b, "\n📝 Después de cada corte escribe *REPORTAR* para contar cómo regresó el agua.\nEscribe *ZONA 1* a *ZONA 7* para cambiar de zona o *BAJA* para dejar de recibir avisos.\n🔒 Solo guardamos tu número de WhatsApp y tu zona: %s/privacidad", i.base)

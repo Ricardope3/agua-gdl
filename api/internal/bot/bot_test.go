@@ -36,7 +36,7 @@ func newHarness(t *testing.T, now string) *harness {
 	at, _ := time.ParseInLocation("2006-01-02 15:04", now, loc)
 	h := &harness{store: fake.NewStore(), sender: &fake.Sender{}}
 	h.bot = &Bot{Store: h.store, Sender: h.sender, Schedule: sched, Zones: zones, Colonias: cols,
-		BaseURL: "https://aguagdl.test", ReminderHour: 20, Now: func() time.Time { return at },
+		BaseURL: "https://aguagdl.test", ReminderHour: 20, RemindersOn: true, Now: func() time.Time { return at },
 		Log: slog.New(slog.NewTextHandler(io.Discard, nil))}
 	return h
 }
@@ -299,5 +299,14 @@ func TestFollowsANumberChange(t *testing.T) {
 	}
 	if len(h.sender.Sent) != sent {
 		t.Error("system messages get no reply")
+	}
+}
+
+func TestNoReminderPromisedWhileTheyAreOff(t *testing.T) {
+	h := newHarness(t, "2026-10-14 10:00")
+	h.bot.RemindersOn = false
+	got := h.send(t, text("zona 4"))
+	if strings.Contains(got, "Próximo aviso") || !strings.Contains(got, "empiezan en unos días") || !strings.Contains(got, "Mañana jueves 15 de octubre") {
+		t.Errorf("with reminders off, warn about tomorrow's cut and promise no reminder:\n%s", got)
 	}
 }

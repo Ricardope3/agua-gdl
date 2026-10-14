@@ -34,6 +34,7 @@ type Bot struct {
 	BaseURL       string
 	PhoneNumberID string // ignore webhooks for other numbers on the same app, e.g. Meta's test number
 	ReminderHour  int
+	RemindersOn   bool
 	Alert         func(ctx context.Context, msg string) // optional, e.g. a failed heartbeat
 	Now           func() time.Time
 	Log           *slog.Logger
@@ -264,12 +265,12 @@ func (b *Bot) subscribedText(zone int, fresh bool) string {
 	today := b.Schedule.Day(now)
 	tomorrow := today.AddDate(0, 0, 1)
 	info := subscribedInfo{
-		zone: zone, fresh: fresh, base: b.BaseURL,
+		zone: zone, fresh: fresh, base: b.BaseURL, off: !b.RemindersOn,
 		days: rotation.DaysES(b.Schedule.Weekdays(zone)),
 		hour: rotation.HourES(b.ReminderHour),
 	}
 	next := b.Schedule.NextCuts(zone, tomorrow, 2)
-	if len(next) > 0 && next[0].Equal(tomorrow) && now.In(b.Schedule.Location()).Hour() >= b.ReminderHour {
+	if len(next) > 0 && next[0].Equal(tomorrow) && (!b.RemindersOn || now.In(b.Schedule.Location()).Hour() >= b.ReminderHour) {
 		info.cutTomorrow = rotation.DateES(tomorrow)
 		next = next[1:]
 	}
