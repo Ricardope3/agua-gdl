@@ -45,7 +45,12 @@ func (a *api) routes() http.Handler {
 	mux.HandleFunc("GET /v1/results", a.results)
 	mux.HandleFunc("GET /wa/webhook", a.verify)
 	mux.HandleFunc("POST /wa/webhook", a.webhook)
-	return mux
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if strings.HasPrefix(r.URL.Path, "/v1/") {
+			w.Header().Set("Access-Control-Allow-Origin", "*")
+		}
+		mux.ServeHTTP(w, r)
+	})
 }
 
 func (a *api) info(zone int) zoneInfo {
@@ -143,7 +148,6 @@ func (a *api) webhook(w http.ResponseWriter, r *http.Request) {
 
 func writeJSON(w http.ResponseWriter, v any) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Cache-Control", "public, max-age=300")
 	json.NewEncoder(w).Encode(v)
 }

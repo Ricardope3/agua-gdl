@@ -237,11 +237,12 @@ func (db *DB) SentSince(ctx context.Context, since time.Time) (int, error) {
 }
 
 // Results counts reports per zone and cut day, hiding any day with fewer than minReports.
+// The last report time is truncated to the hour so it can't single out a reporter.
 func (db *DB) Results(ctx context.Context, since time.Time, minReports int) ([]Result, error) {
 	rows, err := db.q.Query(ctx, `select zone, cut_date::text, count(*),
 			count(*) filter (where answer = 'normal'), count(*) filter (where answer = 'baja'),
 			count(*) filter (where answer = 'no_regreso'), count(*) filter (where answer = 'turbia'),
-			to_char(max(created_at) at time zone 'America/Mexico_City', 'YYYY-MM-DD"T"HH24:MI')
+			to_char(date_trunc('hour', max(created_at) at time zone 'America/Mexico_City'), 'YYYY-MM-DD"T"HH24:MI')
 		from cut_report where cut_date >= $1::date
 		group by zone, cut_date having count(*) >= $2
 		order by cut_date desc, zone`, since.Format(dateLayout), minReports)
