@@ -2,6 +2,7 @@ package reminders
 
 import (
 	"context"
+	"errors"
 	"io"
 	"log/slog"
 	"testing"
@@ -10,6 +11,7 @@ import (
 	"aguagdl/api/data"
 	"aguagdl/api/internal/fake"
 	"aguagdl/api/internal/rotation"
+	"aguagdl/api/internal/wa"
 )
 
 func runner(t *testing.T, now string, st *fake.Store, snd *fake.Sender) *Runner {
@@ -76,5 +78,70 @@ func TestNextRun(t *testing.T) {
 	}
 	if got := r.nextRun(at("2026-10-18 20:00")); !got.Equal(at("2026-10-19 20:00")) {
 		t.Error(got)
+	}
+}
+
+type senderFunc func(context.Context, wa.Message) (string, error)
+
+func (f senderFunc) Send(ctx context.Context, m wa.Message) (string, error) { return f(ctx, m) }
+
+func TestAnyFailedSendFailsHeartbeatIncludingAfterRestart(t *testing.T) {
+	for _, sendErr := range []error{errors.New("network timeout"), &wa.APIError{Status: 400, Code: 131026}} {
+		t.Run(sendErr.Error(), func(t *testing.T) {
+			st, snd := fake.NewStore(), &fake.Sender{}
+			st.Subscribe(context.Background(), "a", "521111", 4)
+			r := runner(t, "2026-10-18 20:00", st, snd)
+			calls := 0
+			r.Sender = senderFunc(func(context.Context, wa.Message) (string, error) { calls++; return "", sendErr })
+			var beats []bool
+			r.Heartbeat = func(_ context.Context, ok bool, _ string) { beats = append(beats, ok) }
+			r.runOnce(context.Background())
+			r.runOnce(context.Background())
+			if calls != 1 || len(beats) != 2 || beats[0] || beats[1] {
+				t.Fatalf("calls=%d heartbeats=%v: failed/uncertain attempts must stay visible without resending", calls, beats)
+			}
+		})
+	}
+}
+
+func TestUnsubscribeDuringBatchSkipsQueuedRecipient(t *testing.T) {
+	ctx := context.Background()
+	st, snd := fake.NewStore(), &fake.Sender{}
+	for _, user := range []string{"a", "b", "c"} {
+		st.Subscribe(ctx, user, user, 4)
+	}
+	r := runner(t, "2026-10-18 20:00", st, snd)
+	r.Sender = senderFunc(func(ctx context.Context, m wa.Message) (string, error) {
+		if m.To == "a" {
+			st.Unsubscribe(ctx, "b")
+		}
+		return snd.Send(ctx, m)
+	})
+	if err := r.SendTonight(ctx); err != nil {
+		t.Fatal(err)
+	}
+	if len(snd.Sent) != 2 || snd.Sent[0].To != "a" || snd.Sent[1].To != "c" {
+		t.Fatalf("BAJA must skip b and allow the remaining batch: %+v", snd.Sent)
+	}
+}
+
+func TestPartialFailureStillFailsHeartbeat(t *testing.T) {
+	ctx := context.Background()
+	st, snd := fake.NewStore(), &fake.Sender{}
+	for _, user := range []string{"a", "b"} {
+		st.Subscribe(ctx, user, user, 4)
+	}
+	r := runner(t, "2026-10-18 20:00", st, snd)
+	r.Sender = senderFunc(func(ctx context.Context, m wa.Message) (string, error) {
+		if m.To == "a" {
+			return "", errors.New("timeout")
+		}
+		return snd.Send(ctx, m)
+	})
+	if err := r.SendTonight(ctx); err == nil {
+		t.Fatal("a later success must not erase an earlier failure")
+	}
+	if len(snd.Sent) != 1 || snd.Sent[0].To != "b" {
+		t.Fatal("remaining recipients should still be attempted")
 	}
 }

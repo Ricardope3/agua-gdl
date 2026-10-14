@@ -4,6 +4,7 @@ package fake
 import (
 	"context"
 	"fmt"
+	"maps"
 	"slices"
 	"time"
 
@@ -19,22 +20,31 @@ type Report struct {
 }
 
 type Store struct {
-	Subs      map[string]store.Subscriber
-	SeenIDs   map[string]bool
-	Reports   []Report
-	Reminders map[string]bool
-	SentCount int
-	nextID    int64
+	Subs       map[string]store.Subscriber
+	SeenIDs    map[string]bool
+	Reports    []Report
+	Reminders  map[string]bool
+	SentCount  int
+	Unresolved map[string]string
+	nextID     int64
 }
 
 func NewStore() *Store {
-	return &Store{Subs: map[string]store.Subscriber{}, SeenIDs: map[string]bool{}, Reminders: map[string]bool{}}
+	return &Store{Subs: map[string]store.Subscriber{}, SeenIDs: map[string]bool{}, Reminders: map[string]bool{}, Unresolved: map[string]string{}}
 }
 
-func (s *Store) Seen(_ context.Context, id string) (bool, error) { return s.SeenIDs[id], nil }
-
-func (s *Store) MarkSeen(_ context.Context, id string) error {
+func (s *Store) ProcessInbound(ctx context.Context, id string, process func(store.BotStore) error) error {
+	if s.SeenIDs[id] {
+		return nil
+	}
+	before := *s
+	before.Subs, before.SeenIDs = maps.Clone(s.Subs), maps.Clone(s.SeenIDs)
+	before.Reports = append([]Report(nil), s.Reports...)
 	s.SeenIDs[id] = true
+	if err := process(s); err != nil {
+		*s = before
+		return err
+	}
 	return nil
 }
 
@@ -83,10 +93,29 @@ func (s *Store) DueSubscribers(_ context.Context, zones []int, d time.Time) ([]s
 	return out, nil
 }
 
-func (s *Store) RecordReminder(_ context.Context, sub store.Subscriber, d time.Time, _ string) error {
-	s.Reminders[key(sub.ID, d)] = true
+func (s *Store) SendReminder(ctx context.Context, sub store.Subscriber, d time.Time, send func(store.Subscriber) (string, error)) (bool, error) {
+	current, ok := s.Subs[sub.UserID]
+	k := key(sub.ID, d)
+	if !ok || current.ID != sub.ID || current.Zone != sub.Zone || s.Reminders[k] {
+		return false, nil
+	}
+	s.Reminders[k] = true
 	s.SentCount++
-	return nil
+	_, err := send(current)
+	if err != nil {
+		s.Unresolved[k] = d.Format("2006-01-02")
+	}
+	return true, err
+}
+
+func (s *Store) UnresolvedReminders(_ context.Context, d time.Time) (int, error) {
+	n := 0
+	for _, date := range s.Unresolved {
+		if date == d.Format("2006-01-02") {
+			n++
+		}
+	}
+	return n, nil
 }
 
 func (s *Store) SentSince(context.Context, time.Time) (int, error) { return s.SentCount, nil }

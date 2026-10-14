@@ -19,15 +19,7 @@ import (
 	"aguagdl/api/internal/wa"
 )
 
-type Store interface {
-	Seen(ctx context.Context, wamid string) (bool, error)
-	MarkSeen(ctx context.Context, wamid string) error
-	Subscriber(ctx context.Context, userID string) (store.Subscriber, bool, error)
-	Subscribe(ctx context.Context, userID, phone string, zone int) error
-	Unsubscribe(ctx context.Context, userID string) (bool, error)
-	SaveReport(ctx context.Context, subscriberID int64, zone int, cutDate time.Time, answer string) error
-	UpdateStatus(ctx context.Context, wamid, status string) error
-}
+type Store = store.BotStore
 
 type Sender interface {
 	Send(ctx context.Context, m wa.Message) (string, error)
@@ -80,20 +72,36 @@ func (b *Bot) Handle(ctx context.Context, p wa.Payload) error {
 }
 
 func (b *Bot) handleMessage(ctx context.Context, m wa.Inbound, contacts []wa.Contact) error {
-	seen, err := b.Store.Seen(ctx, m.ID)
-	if err != nil || seen {
-		return err
-	}
 	r := wa.Recipient{UserID: m.FromUserID, Phone: m.From}
 	for _, c := range contacts {
 		if r.UserID == "" && c.WaID == m.From {
 			r.UserID = c.UserID
 		}
 	}
-	if err := b.route(ctx, r, m); err != nil {
+	// Commit the command and its deduplication marker together before any HTTP call.
+	// A failed reply must never cause Meta's retry to replay a completed command.
+	replies := &replyBuffer{}
+	err := b.Store.ProcessInbound(ctx, m.ID, func(tx Store) error {
+		worker := *b
+		worker.Store, worker.Sender = tx, replies
+		return worker.route(ctx, r, m)
+	})
+	if err != nil {
 		return err
 	}
-	return b.Store.MarkSeen(ctx, m.ID)
+	for _, reply := range replies.messages {
+		if err := b.send(ctx, reply); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+type replyBuffer struct{ messages []wa.Message }
+
+func (q *replyBuffer) Send(_ context.Context, m wa.Message) (string, error) {
+	q.messages = append(q.messages, m)
+	return "", nil
 }
 
 func (b *Bot) route(ctx context.Context, r wa.Recipient, m wa.Inbound) error {

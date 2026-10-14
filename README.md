@@ -16,9 +16,42 @@ cd api && go test ./... && set -a && . ../.env && go run ./cmd/server
 
 Endpoints: `GET /v1/zones`, `GET /v1/zone?lat=&lon=`, `GET /v1/colonias?q=`, `GET /v1/results`, `GET|POST /wa/webhook`.
 
+Las pruebas de integración crean y borran esquemas aislados en una base de pruebas:
+`cd api && TEST_DATABASE_URL=postgres://postgres:dev@localhost:55432/aguagdl?sslmode=disable go test -race ./...`.
+CI las ejecuta con PostgreSQL 17. Sin `TEST_DATABASE_URL`, esas pruebas se omiten.
+
 ## Despliegue
 
 `fly launch --no-deploy`, luego `fly secrets set DATABASE_URL=… PUBLIC_BASE_URL=… WA_TOKEN=… WA_PHONE_NUMBER_ID=… WA_APP_SECRET=… WA_VERIFY_TOKEN=…` y `fly deploy`. Los avisos solo salen con `REMINDERS_ENABLED=true`.
+
+Cada comando y su identificador de WhatsApp se guardan en una sola transacción.
+Si falla la respuesta de confirmación, el comando queda aplicado y un reintento del
+webhook no lo repite. La confirmación puede perderse; la persona puede escribir de
+nuevo para consultar su estado.
+
+Antes de enviar un aviso se guarda una reserva duradera y se vuelve a comprobar la
+suscripción bajo bloqueo. BAJA y los cambios de zona se serializan con el envío:
+después de confirmarse BAJA no empieza otro envío para esa suscripción. Un mensaje
+ya aceptado por WhatsApp puede llegar después.
+
+Un reinicio no reenvía intentos reservados. Si se pierde la respuesta de WhatsApp o
+el proceso se detiene entre la reserva y el registro final, el aviso queda como
+`sending` o `uncertain`: podría haberse enviado o no. Se cuenta contra los topes y
+el heartbeat avisa de la incertidumbre al revisar el lote de esa noche. Cualquier
+error de envío hace fallar el heartbeat, aunque otros avisos salgan bien.
+
+Para revisar los intentos pendientes:
+
+```sql
+select id, cut_date, zone, status, wamid from reminder
+where status in ('sending', 'uncertain', 'failed')
+order by cut_date desc, id;
+```
+
+No borres estas reservas para reintentar automáticamente: podrías duplicar un
+mensaje que WhatsApp ya aceptó. Confirma el resultado en WhatsApp Manager; marca
+como `sent` los aceptados (con su `wamid`), o `failed` los rechazados. Si no puedes
+confirmarlo, conserva `uncertain` y publica el aviso manualmente en el Canal.
 
 ## Datos
 

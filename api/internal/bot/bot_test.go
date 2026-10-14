@@ -2,6 +2,7 @@ package bot
 
 import (
 	"context"
+	"errors"
 	"io"
 	"log/slog"
 	"strings"
@@ -186,5 +187,28 @@ func TestResubscribeAfterBaja(t *testing.T) {
 	h.send(t, text("zona 5"))
 	if h.store.Subs["MX.42"].Zone != 5 {
 		t.Error("could not resubscribe")
+	}
+}
+
+func TestReplyFailureCannotReplaySubscriptionAfterBaja(t *testing.T) {
+	h := newHarness(t, "2026-10-18 20:00")
+	m := text("ZONA 4")
+	m.ID, m.From, m.FromUserID = "original-zone-message", "5213300000000", "MX.42"
+	p := wa.Payload{Entry: []wa.Entry{{Changes: []wa.Change{{Field: "messages", Value: wa.Value{Messages: []wa.Inbound{m}}}}}}}
+	h.bot.Sender = failingSender{errors.New("reply timeout")}
+	if err := h.bot.Handle(context.Background(), p); err == nil {
+		t.Fatal("expected reply failure")
+	}
+	if len(h.store.Subs) != 1 || !h.store.SeenIDs[m.ID] {
+		t.Fatal("command and processed marker must be committed before replying")
+	}
+	h.bot.Sender = h.sender
+	h.send(t, text("BAJA"))
+	before := len(h.sender.Sent)
+	if err := h.bot.Handle(context.Background(), p); err != nil {
+		t.Fatal(err)
+	}
+	if len(h.store.Subs) != 0 || len(h.sender.Sent) != before {
+		t.Fatal("retried command must not reactivate subscription or send a stale confirmation")
 	}
 }

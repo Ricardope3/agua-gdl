@@ -4,6 +4,7 @@ package reminders
 import (
 	"context"
 	"errors"
+	"fmt"
 	"log/slog"
 	"strconv"
 	"time"
@@ -15,7 +16,8 @@ import (
 
 type Store interface {
 	DueSubscribers(ctx context.Context, zones []int, cutDate time.Time) ([]store.Subscriber, error)
-	RecordReminder(ctx context.Context, s store.Subscriber, cutDate time.Time, wamid string) error
+	SendReminder(ctx context.Context, s store.Subscriber, cutDate time.Time, send func(store.Subscriber) (string, error)) (bool, error)
+	UnresolvedReminders(ctx context.Context, cutDate time.Time) (int, error)
 	SentSince(ctx context.Context, since time.Time) (int, error)
 	PurgeSeen(ctx context.Context, before time.Time) error
 }
@@ -42,7 +44,7 @@ type Runner struct {
 
 const maxConsecutiveFailures = 5
 
-// Run sends tonight's reminders every day at Hour. Sends are idempotent, so a restart is safe.
+// Run sends tonight's reminders every day at Hour. Persisted attempts are never automatically resent.
 func (r *Runner) Run(ctx context.Context) {
 	if h := r.Now().In(r.Schedule.Location()).Hour(); h >= r.Hour && h < r.CatchUpUntil {
 		r.runOnce(ctx)
@@ -88,6 +90,13 @@ func (r *Runner) SendTonight(ctx context.Context) (err error) {
 		r.Log.Warn("purge seen messages", "err", err)
 	}
 	tomorrow := r.Schedule.Day(now).AddDate(0, 0, 1)
+	defer func() {
+		n, checkErr := r.Store.UnresolvedReminders(ctx, tomorrow)
+		err = errors.Join(err, checkErr)
+		if n > 0 {
+			err = errors.Join(err, fmt.Errorf("%d failed or uncertain reminder attempts require review", n))
+		}
+	}()
 	zones := r.Schedule.ZonesOn(tomorrow)
 	if len(zones) == 0 {
 		return nil
@@ -110,9 +119,7 @@ func (r *Runner) SendTonight(ctx context.Context) (err error) {
 			"due", len(subs), "allowed", max(allowed, 0), "sent_24h", day, "sent_month", month)
 		subs = subs[:max(allowed, 0)]
 		defer func() {
-			if err == nil {
-				err = ErrCapped
-			}
+			err = errors.Join(err, ErrCapped)
 		}()
 	}
 	date := rotation.DateES(tomorrow)
@@ -125,28 +132,30 @@ func (r *Runner) SendTonight(ctx context.Context) (err error) {
 			case <-time.After(r.Interval):
 			}
 		}
-		id, err := r.Sender.Send(ctx, r.reminder(s, date))
-		var apiErr *wa.APIError
-		if errors.As(err, &apiErr) && apiErr.Permanent() {
-			r.Log.Warn("reminder rejected for this subscriber", "subscriber", s.ID, "err", err)
-			continue
-		}
-		if err != nil {
+		attempted, sendErr := r.Store.SendReminder(ctx, s, tomorrow, func(current store.Subscriber) (string, error) {
+			return r.Sender.Send(ctx, r.reminder(current, date))
+		})
+		if sendErr != nil {
+			err = errors.Join(err, fmt.Errorf("subscriber %d: %w", s.ID, sendErr))
+			r.Log.Error("reminder attempt failed", "subscriber", s.ID, "err", sendErr)
+			var apiErr *wa.APIError
+			if errors.As(sendErr, &apiErr) && apiErr.Permanent() {
+				continue
+			}
 			failures++
-			r.Log.Error("reminder not sent", "subscriber", s.ID, "err", err)
 			if failures >= maxConsecutiveFailures {
-				return errors.New("too many consecutive send failures; stopping tonight's batch")
+				return err
 			}
 			continue
 		}
-		failures = 0
-		if err := r.Store.RecordReminder(ctx, s, tomorrow, id); err != nil {
-			return err
+		if !attempted {
+			continue
 		}
+		failures = 0
 		sent++
 	}
 	r.Log.Info("reminders sent", "date", tomorrow.Format(rotation.DateLayout), "zones", zones, "sent", sent, "due", len(subs))
-	return nil
+	return err
 }
 
 func (r *Runner) reminder(s store.Subscriber, date string) wa.Message {
