@@ -94,6 +94,10 @@ h2 { font-weight: 600; letter-spacing: -.02em }
 .search input, .filter select { border: 1px solid var(--line); box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s }
 .search input:focus-visible, .filter select:focus-visible { border-color: var(--brand) }
 footer { font-size: .85rem }
+.i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
+h2.ih, h3.ih { display: flex; align-items: center; gap: 10px }
+.ih .i-badge { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--subtle); color: var(--brand); flex-shrink: 0 }
+h3.ih .i-badge { width: 28px; height: 28px }
 </style>
 </head>
 <body>
@@ -127,10 +131,10 @@ footer { font-size: .85rem }
     <noscript><p>Esta página necesita JavaScript para mostrar los resultados.</p></noscript>
 
     <section aria-labelledby="como">
-      <h2 id="como">Cómo reportar</h2>
+      <h2 id="como" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg#message-circle"/></svg></span>Cómo reportar</h2>
       <p>Si recibes los avisos, el día de racionamiento o después escribe <strong>REPORTAR</strong> en el chat de Agua GDL en Telegram y elige cómo regresó el agua: normal, con baja presión, si no ha regresado o si llegó turbia o con olor.</p>
       <p>Cuenta tu último día de racionamiento, durante los 14 días siguientes. Si cambias de respuesta, se queda la más reciente. Los reportes no llevan tu nombre ni tu número.</p>
-      <a class="button" href="/avisos">Recibe el aviso</a>
+      <a class="button" href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg#bell"/></svg>Recibe el aviso</a>
     </section>
   </main>
 
@@ -160,6 +164,16 @@ footer { font-size: .85rem }
   const updated = document.getElementById("actualizado");
   let rows = [];
 
+  const icon = (name) => {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("class", "i");
+    svg.setAttribute("aria-hidden", "true");
+    const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    use.setAttribute("href", `/icons.svg#${name}`);
+    svg.append(use);
+    return svg;
+  };
+  const badge = (name) => el("span", { class: "i-badge" }, icon(name));
   function el(tag, attrs, ...kids) {
     const n = document.createElement(tag);
     for (const [k, v] of Object.entries(attrs || {})) n.setAttribute(k, v);
@@ -189,7 +203,7 @@ footer { font-size: .85rem }
         el("div", { class: "track", "aria-hidden": "true" }, el("span", { class: "fill", style: `width:${(100 * n) / (r.total || 1)}%` })));
     });
     return el("article", { class: "card" },
-      el("div", { class: "card-head" }, el("h3", {}, `Zona ${r.zone}`), el("span", {}, `${r.total} reportes`)),
+      el("div", { class: "card-head" }, el("h3", { class: "ih" }, badge("map-pin"), `Zona ${r.zone}`), el("span", {}, `${r.total} reportes`)),
       el("ul", { class: "answers", "aria-label": `Respuestas de la zona ${r.zone}` }, ...items));
   }
 

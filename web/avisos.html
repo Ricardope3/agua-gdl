@@ -79,6 +79,11 @@ h2 { font-weight: 600; letter-spacing: -.02em }
 .search input, .filter select { border: 1px solid var(--line); box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s }
 .search input:focus-visible, .filter select:focus-visible { border-color: var(--brand) }
 footer { font-size: .85rem }
+.i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
+h2.ih, h3.ih { display: flex; align-items: center; gap: 10px }
+.ih .i-badge { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--subtle); color: var(--brand); flex-shrink: 0 }
+h3.ih .i-badge { width: 28px; height: 28px }
+.steps li .i { color: var(--brand); margin-right: 4px }
 </style>
 </head>
 <body>
@@ -93,24 +98,24 @@ footer { font-size: .85rem }
 
     <div class="signup">
       <div class="buttons">
-        <a class="button" href="https://t.me/AvisoAguaGDLbot?start=hola" rel="noopener">Recibir avisos por Telegram</a>
+        <a class="button" href="https://t.me/AvisoAguaGDLbot?start=hola" rel="noopener"><svg class="i" aria-hidden="true"><use href="/icons.svg#send"/></svg>Recibir avisos por Telegram</a>
       </div>
       <p class="consent">Al tocar «Iniciar» en Telegram aceptas recibir de <strong>Agua GDL</strong> un aviso la noche antes de cada corte de agua en tu zona (2 o 3 por semana) y las respuestas a lo que escribas. Para dejar de recibirlos, escribe <strong>BAJA</strong> cuando quieras. Solo guardamos el identificador de tu chat de Telegram y tu zona; lee el <a href="/privacidad">aviso de privacidad</a>.</p>
       <p class="alt">¿No tienes Telegram? Es gratis: descárgalo en la tienda de apps de tu celular y vuelve a esta página. También puedes buscar <span class="number">@AvisoAguaGDLbot</span> en Telegram.</p>
     </div>
 
     <section aria-labelledby="como">
-      <h2 id="como">Cómo funciona</h2>
-      <ol>
-        <li>Toca el botón y, en Telegram, toca «Iniciar».</li>
-        <li>Dile dónde vives: manda tu ubicación, el nombre de tu colonia o tu zona (por ejemplo, <strong>ZONA 4</strong>).</li>
-        <li>Te confirmamos tu zona, tus días de corte y cuándo te llega el próximo aviso.</li>
+      <h2 id="como" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg#info"/></svg></span>Cómo funciona</h2>
+      <ol class="steps">
+        <li><svg class="i" aria-hidden="true"><use href="/icons.svg#send"/></svg>Toca el botón y, en Telegram, toca «Iniciar».</li>
+        <li><svg class="i" aria-hidden="true"><use href="/icons.svg#map-pin"/></svg>Dile dónde vives: manda tu ubicación, el nombre de tu colonia o tu zona (por ejemplo, <strong>ZONA 4</strong>).</li>
+        <li><svg class="i" aria-hidden="true"><use href="/icons.svg#bell"/></svg>Te confirmamos tu zona, tus días de corte y cuándo te llega el próximo aviso.</li>
       </ol>
       <p>¿Ya sabes tu zona? Búscala en <a href="/llego">¿Qué zona me toca?</a> y suscríbete desde ahí con un toque.</p>
     </section>
 
     <section aria-labelledby="comandos">
-      <h2 id="comandos">Lo que puedes escribir</h2>
+      <h2 id="comandos" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg#terminal"/></svg></span>Lo que puedes escribir</h2>
       <dl>
         <dt>ZONA 1–7</dt><dd>Suscribirte o cambiar de zona.</dd>
         <dt>REPORTAR</dt><dd>Contar cómo regresó el agua después del último corte. Publicaremos los resultados por zona, sin nombres.</dd>
@@ -120,7 +125,7 @@ footer { font-size: .85rem }
     </section>
 
     <section aria-labelledby="ojo">
-      <h2 id="ojo">Ten en cuenta</h2>
+      <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg#info"/></svg></span>Ten en cuenta</h2>
       <ul>
         <li>Los avisos se basan en el calendario que publica el SIAPA. Si cambia, actualizamos los avisos, pero la información oficial está en su mapa.</li>
         <li>El SIAPA anunció la rotación del 15 de octubre de 2026 a marzo de 2027.</li>

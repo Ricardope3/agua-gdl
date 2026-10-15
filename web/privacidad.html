@@ -69,6 +69,10 @@ h2 { font-weight: 600; letter-spacing: -.02em }
 .search input, .filter select { border: 1px solid var(--line); box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s }
 .search input:focus-visible, .filter select:focus-visible { border-color: var(--brand) }
 footer { font-size: .85rem }
+.i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
+h2.ih, h3.ih { display: flex; align-items: center; gap: 10px }
+.ih .i-badge { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--subtle); color: var(--brand); flex-shrink: 0 }
+h3.ih .i-badge { width: 28px; height: 28px }
 </style>
 </head>
 <body>
@@ -82,7 +86,7 @@ footer { font-size: .85rem }
     <p class="updated">Última actualización: 15 de octubre de 2026. Conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (DOF, 20 de marzo de 2025).</p>
 
     <div class="summary" id="simplificado">
-      <h2>Aviso de privacidad simplificado</h2>
+      <h2 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg#shield-check"/></svg></span>Aviso de privacidad simplificado</h2>
       <p>Luis Ricardo Espinoza Rodríguez, con domicilio en Blvd. Jardín Real #430, C.P. 45136, Zapopan, Jalisco, México, es responsable de la iniciativa ciudadana <strong>Agua GDL</strong> y del tratamiento de tus datos: el identificador de tu chat de Telegram, la zona de la rotación del SIAPA que eliges y tus reportes sobre cómo regresó el agua. No pedimos datos sensibles.</p>
       <p>Los usamos solo para enviarte un aviso la noche antes de cada corte de agua en tu zona, contestar tus mensajes y registrar tus reportes. No tenemos otros fines: no vendemos ni compartimos tus datos y no los usamos para publicidad ni propaganda política o electoral.</p>
       <p>Para dejar de recibir avisos y borrar tus datos, escribe <strong>BAJA</strong> en el chat cuando quieras (también puedes bloquear el bot). Consulta el <a href="#integral">aviso integral</a> abajo o escríbenos a <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>.</p>

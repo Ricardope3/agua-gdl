@@ -98,6 +98,10 @@ h2 { font-weight: 600; letter-spacing: -.02em }
 .search input, .filter select { border: 1px solid var(--line); box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s }
 .search input:focus-visible, .filter select:focus-visible { border-color: var(--brand) }
 footer { font-size: .85rem }
+.i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
+h2.ih, h3.ih { display: flex; align-items: center; gap: 10px }
+.ih .i-badge { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--subtle); color: var(--brand); flex-shrink: 0 }
+h3.ih .i-badge { width: 28px; height: 28px }
 </style>
 </head>
 <body>
@@ -111,14 +115,14 @@ footer { font-size: .85rem }
     <p class="lede">Encuentra tu zona de la rotación de agua del SIAPA y tus próximos días de racionamiento.</p>
 
     <div class="finder">
-      <button class="button" type="button" id="ubicacion"><span aria-hidden="true">📍 </span>Usar mi ubicación</button>
+      <button class="button" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg#map-pin"/></svg>Usar mi ubicación</button>
       <p class="note">Tu ubicación solo se usa para encontrar tu zona. No la guardamos.</p>
       <p class="or">o</p>
       <form id="buscar" role="search">
         <label for="colonia">Escribe el nombre de tu colonia</label>
         <div class="search">
           <input id="colonia" name="q" type="search" autocomplete="off" placeholder="Por ejemplo: Las Juntas">
-          <button class="button" type="submit">Buscar</button>
+          <button class="button" type="submit"><svg class="i" aria-hidden="true"><use href="/icons.svg#search"/></svg>Buscar</button>
         </div>
       </form>
       <noscript><p class="note">Esta página necesita JavaScript. Consulta tu zona en el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa oficial del SIAPA</a>.</p></noscript>
@@ -127,7 +131,7 @@ footer { font-size: .85rem }
     <div id="resultado" aria-live="polite" tabindex="-1"></div>
 
     <section aria-labelledby="ojo">
-      <h2 id="ojo">Ten en cuenta</h2>
+      <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg#info"/></svg></span>Ten en cuenta</h2>
       <ul class="plain">
         <li>Las zonas y los días vienen del mapa y de la lista de colonias que publica el SIAPA. El mapa y la lista no siempre coinciden; si tienes dudas, revisa el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa oficial del SIAPA</a>.</li>
         <li>Según el SIAPA, cada racionamiento dura máximo un día y no es un corte total: baja la presión del agua. La Silla Rota publicó que empieza a las 12 de la noche del día programado.</li>
@@ -164,6 +168,16 @@ footer { font-size: .85rem }
   let zonesReq = null;
   let lastChoices = null;
 
+  const icon = (name) => {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("class", "i");
+    svg.setAttribute("aria-hidden", "true");
+    const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    use.setAttribute("href", `/icons.svg#${name}`);
+    svg.append(use);
+    return svg;
+  };
+  const badge = (name) => el("span", { class: "i-badge" }, icon(name));
   function el(tag, attrs, ...kids) {
     const n = document.createElement(tag);
     for (const [k, v] of Object.entries(attrs || {})) n.setAttribute(k, v);
@@ -232,13 +246,13 @@ footer { font-size: .85rem }
     const today = isoToday(0);
     const next = z.next.filter((d) => d >= today).slice(0, 2);
     return el("article", { class: "zone" },
-      el("h3", {}, `Zona ${z.zone}`),
+      el("h3", { class: "ih" }, badge("map-pin"), `Zona ${z.zone}`),
       el("p", {}, "Días de racionamiento: ", el("strong", {}, joinES(z.days))),
       next.length
-        ? el("div", {}, el("p", {}, "Próximos:"), el("ul", {}, ...next.map((d) => el("li", {}, dateES(d)))))
+        ? el("div", {}, el("p", {}, icon("calendar"), " Próximos:"), el("ul", {}, ...next.map((d) => el("li", {}, dateES(d)))))
         : el("p", {}, "No hay más días en el calendario que publicó el SIAPA."),
       el("div", { class: "subscribe" },
-        el("a", { class: "button", href: `${TELEGRAM}?start=z${z.zone}`, rel: "noopener" }, "Recibir el aviso por Telegram")),
+        el("a", { class: "button", href: `${TELEGRAM}?start=z${z.zone}`, rel: "noopener" }, icon("bell"), "Recibir el aviso por Telegram")),
       el("p", { class: "note" }, `Gratis, la noche antes de cada corte de la zona ${z.zone}. Al tocar «Iniciar» en Telegram aceptas los avisos; `, el("a", { href: "/privacidad" }, "aviso de privacidad"), "."));
   }
   const cards = (zones) => el("div", { class: "zones" }, ...zones.map(zoneCard));
