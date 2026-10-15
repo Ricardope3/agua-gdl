@@ -151,7 +151,7 @@ func TestEdgeTexts(t *testing.T) {
 	if got := h.send(t, text("zona 8")); !strings.Contains(got, "ZONA 1* a *ZONA 7") {
 		t.Errorf("zona 8 should get help, got:\n%s", got)
 	}
-	if got := h.send(t, text("Hola, quiero recibir avisos de agua")); got != msgWelcome(h.bot.BaseURL) {
+	if got := h.send(t, text("Hola, quiero recibir avisos de agua")); got != msgWelcome(h.bot.BaseURL, store.WhatsApp) {
 		t.Errorf("prefilled wa.me text should get the welcome, got:\n%s", got)
 	}
 	if got := h.send(t, text("Tlaquepaque")); got != msgMunicipio("Tlaquepaque") || len(h.store.Subs) != 0 {
@@ -196,7 +196,7 @@ func TestResubscribeAfterBaja(t *testing.T) {
 	h := newHarness(t, "2026-10-14 10:00")
 	h.send(t, text("zona 3"))
 	h.send(t, text("baja"))
-	if got := h.send(t, text("hola")); got != msgWelcome(h.bot.BaseURL) {
+	if got := h.send(t, text("hola")); got != msgWelcome(h.bot.BaseURL, store.WhatsApp) {
 		t.Errorf("after BAJA, HOLA should start over:\n%s", got)
 	}
 	h.send(t, text("zona 5"))

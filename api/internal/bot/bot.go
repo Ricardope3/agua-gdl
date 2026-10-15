@@ -16,6 +16,7 @@ import (
 	"aguagdl/api/internal/geo"
 	"aguagdl/api/internal/rotation"
 	"aguagdl/api/internal/store"
+	"aguagdl/api/internal/tg"
 	"aguagdl/api/internal/wa"
 )
 
@@ -23,6 +24,11 @@ type Store = store.BotStore
 
 type Sender interface {
 	Send(ctx context.Context, m wa.Message) (string, error)
+}
+
+type TelegramSender interface {
+	Send(ctx context.Context, m tg.Message) (int64, error)
+	AnswerCallback(ctx context.Context, id string) error
 }
 
 // User is who a message came from: a WhatsApp user (business-scoped ID and phone)
@@ -35,9 +41,11 @@ type User struct {
 
 // Reply is one outgoing message; each channel renders it its own way.
 type Reply struct {
-	Text    string
-	Choices []Choice // a list on WhatsApp
-	Button  string   // the list's button label
+	Text          string
+	Choices       []Choice // a list on WhatsApp, buttons on Telegram
+	Button        string   // the WhatsApp list's button label
+	AskLocation   bool     // Telegram: show a button that shares the location
+	CloseKeyboard bool     // Telegram: hide that button again
 }
 
 type Choice struct{ ID, Title, Description string }
@@ -51,7 +59,9 @@ type Bot struct {
 	BaseURL       string
 	PhoneNumberID string // ignore webhooks for other numbers on the same app, e.g. Meta's test number
 	ReminderHour  int
-	RemindersOn   bool
+	RemindersOn   bool // WhatsApp reminders
+	Telegram      TelegramSender
+	TelegramOn    bool                                  // Telegram reminders
 	NightCap      int                                   // refuse subscriptions that would push a night's reminders past this; 0 = no limit
 	Alert         func(ctx context.Context, msg string) // optional, e.g. a failed heartbeat
 	Now           func() time.Time
@@ -268,10 +278,10 @@ func (b *Bot) greet(ctx context.Context, r User) error {
 			return err
 		}
 		if ok {
-			return b.text(ctx, r, b.subscribedText(s.Zone, false))
+			return b.reply(ctx, r, Reply{Text: b.subscribedText(r.Channel, s.Zone, false), CloseKeyboard: true})
 		}
 	}
-	return b.text(ctx, r, msgWelcome(b.BaseURL))
+	return b.welcome(ctx, r)
 }
 
 func (b *Bot) subscribe(ctx context.Context, r User, zone int) error {
@@ -290,14 +300,14 @@ func (b *Bot) subscribe(ctx context.Context, r User, zone int) error {
 	if err := b.Store.Subscribe(ctx, r.Channel, r.ID, r.Phone, zone); err != nil {
 		return err
 	}
-	return b.text(ctx, r, b.subscribedText(zone, true))
+	return b.reply(ctx, r, Reply{Text: b.subscribedText(r.Channel, zone, true), CloseKeyboard: true})
 }
 
 // nightFull reports whether putting r in zone would make some night's reminders
 // exceed what WhatsApp lets us send in 24 hours. Past that, the newest subscribers
 // would silently miss reminders, so it's better to say so up front.
 func (b *Bot) nightFull(ctx context.Context, r User, zone int) (bool, error) {
-	if b.NightCap <= 0 {
+	if b.NightCap <= 0 || r.Channel != store.WhatsApp {
 		return false, nil
 	}
 	current, subscribed, err := b.Store.Subscriber(ctx, r.Channel, r.ID)
@@ -325,17 +335,28 @@ func (b *Bot) nightFull(ctx context.Context, r User, zone int) (bool, error) {
 	return false, nil
 }
 
-func (b *Bot) subscribedText(zone int, fresh bool) string {
+func (b *Bot) welcome(ctx context.Context, r User) error {
+	return b.reply(ctx, r, Reply{Text: msgWelcome(b.BaseURL, r.Channel), AskLocation: true})
+}
+
+func (b *Bot) remindersOn(channel string) bool {
+	if channel == store.Telegram {
+		return b.TelegramOn
+	}
+	return b.RemindersOn
+}
+
+func (b *Bot) subscribedText(channel string, zone int, fresh bool) string {
 	now := b.Now()
 	today := b.Schedule.Day(now)
 	tomorrow := today.AddDate(0, 0, 1)
 	info := subscribedInfo{
-		zone: zone, fresh: fresh, base: b.BaseURL, off: !b.RemindersOn,
+		zone: zone, fresh: fresh, base: b.BaseURL, off: !b.remindersOn(channel), channel: channel,
 		days: rotation.DaysES(b.Schedule.Weekdays(zone)),
 		hour: rotation.HourES(b.ReminderHour),
 	}
 	next := b.Schedule.NextCuts(zone, tomorrow, 2)
-	if len(next) > 0 && next[0].Equal(tomorrow) && (!b.RemindersOn || now.In(b.Schedule.Location()).Hour() >= b.ReminderHour) {
+	if len(next) > 0 && next[0].Equal(tomorrow) && (!b.remindersOn(channel) || now.In(b.Schedule.Location()).Hour() >= b.ReminderHour) {
 		info.cutTomorrow = rotation.DateES(tomorrow)
 		next = next[1:]
 	}
@@ -367,14 +388,14 @@ func (b *Bot) unsubscribe(ctx context.Context, r User) error {
 // reportLastCut asks about the subscriber's most recent cut, today included.
 func (b *Bot) reportLastCut(ctx context.Context, r User) error {
 	if r.ID == "" {
-		return b.text(ctx, r, msgWelcome(b.BaseURL))
+		return b.welcome(ctx, r)
 	}
 	s, ok, err := b.Store.Subscriber(ctx, r.Channel, r.ID)
 	if err != nil {
 		return err
 	}
 	if !ok {
-		return b.text(ctx, r, msgWelcome(b.BaseURL))
+		return b.welcome(ctx, r)
 	}
 	tomorrow := b.Schedule.Day(b.Now()).AddDate(0, 0, 1)
 	prev, ok := b.Schedule.PrevCut(s.Zone, tomorrow)
@@ -401,14 +422,14 @@ func (b *Bot) saveReport(ctx context.Context, r User, date, answer string) error
 		return b.text(ctx, r, msgHelp(b.BaseURL))
 	}
 	if r.ID == "" {
-		return b.text(ctx, r, msgWelcome(b.BaseURL))
+		return b.welcome(ctx, r)
 	}
 	s, ok, err := b.Store.Subscriber(ctx, r.Channel, r.ID)
 	if err != nil {
 		return err
 	}
 	if !ok {
-		return b.text(ctx, r, msgWelcome(b.BaseURL))
+		return b.welcome(ctx, r)
 	}
 	d, err := b.Schedule.ParseDate(date)
 	today := b.Schedule.Day(b.Now())
@@ -436,7 +457,15 @@ func (b *Bot) reply(ctx context.Context, to User, r Reply) error {
 
 // deliver drops permanent API errors so the webhook isn't retried for a reply we can never send.
 func (b *Bot) deliver(ctx context.Context, to User, r Reply) error {
-	_, err := b.Sender.Send(ctx, whatsAppMessage(to, r))
+	var err error
+	if to.Channel == store.Telegram {
+		var m tg.Message
+		if m, err = TelegramMessage(to.ID, r); err == nil {
+			_, err = b.Telegram.Send(ctx, m)
+		}
+	} else {
+		_, err = b.Sender.Send(ctx, whatsAppMessage(to, r))
+	}
 	var permanent interface{ Permanent() bool }
 	if errors.As(err, &permanent) && permanent.Permanent() {
 		b.Log.Warn("reply not delivered", "err", err)

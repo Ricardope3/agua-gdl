@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"aguagdl/api/internal/store"
+	"aguagdl/api/internal/tg"
 	"aguagdl/api/internal/wa"
 )
 
@@ -289,4 +290,31 @@ func (s *Sender) Last() string {
 		return m.Interactive.Body.Text
 	}
 	return m.Type
+}
+
+type Telegram struct {
+	Sent     []tg.Message
+	Answered []string
+	Err      error // returned by every Send
+}
+
+func (t *Telegram) Send(_ context.Context, m tg.Message) (int64, error) {
+	if t.Err != nil {
+		return 0, t.Err
+	}
+	t.Sent = append(t.Sent, m)
+	return int64(len(t.Sent)), nil
+}
+
+func (t *Telegram) AnswerCallback(_ context.Context, id string) error {
+	t.Answered = append(t.Answered, id)
+	return nil
+}
+
+// Last returns the text of the last Telegram message sent.
+func (t *Telegram) Last() string {
+	if len(t.Sent) == 0 {
+		return ""
+	}
+	return t.Sent[len(t.Sent)-1].Text
 }

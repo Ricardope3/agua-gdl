@@ -3,19 +3,33 @@ package bot
 import (
 	"fmt"
 	"strings"
+
+	"aguagdl/api/internal/store"
 )
 
 // All Spanish copy lives here so it can be edited without touching the logic.
 
 const MapURL = "https://rotaciondeserviciosiapa.jalisco.gob.mx/"
 
-func msgWelcome(base string) string {
+// appName is the messaging app a subscriber uses.
+func appName(channel string) string {
+	if channel == store.Telegram {
+		return "Telegram"
+	}
+	return "WhatsApp"
+}
+
+func msgWelcome(base, channel string) string {
+	how := "📎 o + › Ubicación"
+	if channel == store.Telegram {
+		how = "con el botón de abajo o 📎 › Ubicación"
+	}
 	return `¡Hola! 👋 Soy *Agua GDL*.
 
-Te aviso por WhatsApp la noche antes de cada corte de agua en tu zona por la rotación del SIAPA 💧
+Te aviso por ` + appName(channel) + ` la noche antes de cada corte de agua en tu zona por la rotación del SIAPA 💧
 
 Para empezar, mándame una de estas:
-📍 Tu *ubicación* (📎 o + › Ubicación)
+📍 Tu *ubicación* (` + how + `)
 🏘️ El *nombre de tu colonia*, por ejemplo: _Las Juntas_
 🔢 Tu zona, por ejemplo: *ZONA 4*
 
@@ -121,6 +135,7 @@ type subscribedInfo struct {
 	nextCut      string
 	hour         string
 	base         string
+	channel      string
 }
 
 func msgSubscribed(i subscribedInfo) string {
@@ -142,9 +157,18 @@ func msgSubscribed(i subscribedInfo) string {
 	default:
 		b.WriteString("🔔 Por ahora no hay más cortes programados en tu zona.\n")
 	}
-	fmt.Fprintf(&b, "\n📝 Después de cada corte escribe *REPORTAR* para contar cómo regresó el agua.\nEscribe *ZONA 1* a *ZONA 7* para cambiar de zona o *BAJA* para dejar de recibir avisos.\n🔒 Solo guardamos tu número de WhatsApp y tu zona: %s/privacidad", i.base)
+	fmt.Fprintf(&b, "\n📝 Después de cada corte escribe *REPORTAR* para contar cómo regresó el agua.\nEscribe *ZONA 1* a *ZONA 7* para cambiar de zona o *BAJA* para dejar de recibir avisos.\n🔒 Solo guardamos %s y tu zona: %s/privacidad", storedID(i.channel), i.base)
 	return b.String()
 }
+
+func storedID(channel string) string {
+	if channel == store.Telegram {
+		return "tu ID de chat de Telegram"
+	}
+	return "tu número de WhatsApp"
+}
+
+const msgAskPlace = "Para elegir tu zona, mándame tu 📍 *ubicación*, el *nombre de tu colonia* o tu zona, por ejemplo: *ZONA 4*"
 
 // ManualReminder is the aviso_corte template as a normal text, for nights the template
 // can't be used (cmd/notify -tomorrow). A normal text can't carry the template's buttons.
