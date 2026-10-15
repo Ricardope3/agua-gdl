@@ -14,61 +14,79 @@
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0b1b2b" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#06141d" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <style>
 :root {
-  --bg: #f4f9fd; --surface: #ffffff; --fg: #10263a; --muted: #4d6375; --line: #d5e4ef;
-  --brand: #017cdc; --brand-deep: #015198; --link: #015198; --on-brand: #ffffff;
-  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
+  --brand: #0284c7; --brand-deep: #0369a1; --link: #0369a1; --on-brand: #ffffff;
+  --primary: #0284c7; --on-primary: #ffffff; --ring: #0284c766;
+  --warn: #dc2626; --warn-bg: #fffbeb;
+  --shadow: 0 1px 2px rgb(3 105 161 / .08);
+  --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0b1b2b; --surface: #112739; --fg: #e8f1f8; --muted: #a3b8c8; --line: #23415a;
-    --link: #7cc1f7;
+    --bg: #06141d; --surface: #0a1c28; --subtle: #0c3149; --fg: #f0f9ff; --muted: #9bb8ca; --line: #18384d;
+    --link: #7dd3fc; --primary: #0ea5e9; --on-primary: #ffffff; --ring: #38bdf866; --brand: #0ea5e9; --brand-deep: #0284c7;
+    --warn: #f87171; --warn-bg: #1c1608;
     color-scheme: dark;
   }
 }
 * { box-sizing: border-box }
 html { -webkit-text-size-adjust: 100% }
-body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 var(--font) }
-a { color: var(--link) }
-a:focus-visible, button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; border-radius: 4px }
-.wrap { max-width: 760px; margin: 0 auto; padding: 0 20px }
-header.top { padding: 20px 0 }
-.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; font-weight: 800; font-size: 1.25rem; letter-spacing: -.01em }
-.brand img { width: 30px; height: auto }
-h1 { font-size: clamp(2rem, 6vw, 3rem); line-height: 1.08; letter-spacing: -.02em; margin: 20px 0 16px; text-wrap: balance }
-.lede { font-size: 1.15rem; color: var(--muted); margin: 0 0 24px; max-width: 60ch }
-.box { background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--brand); border-radius: 10px; padding: 20px }
-label { display: block; font-weight: 700; margin: 0 0 6px }
-input, textarea { width: 100%; font: inherit; font-size: 1rem; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px }
-textarea { min-height: 22em; resize: vertical; line-height: 1.5 }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased }
+a { color: var(--link); text-underline-offset: 3px }
+a:focus-visible, button:focus-visible, textarea:focus-visible, input:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); border-color: var(--brand) }
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 16px }
+header.top { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); margin: 0 -16px; padding: 12px 16px }
+.brand { display: inline-flex; align-items: center; gap: 8px; color: var(--fg); text-decoration: none; font-weight: 600; font-size: 1rem; letter-spacing: -.01em }
+.brand img { width: 20px; height: auto }
+h1 { font-size: clamp(1.9rem, 5.5vw, 2.6rem); line-height: 1.1; letter-spacing: -.03em; font-weight: 700; margin: 40px 0 12px; text-wrap: balance }
+.lede { font-size: 1.05rem; color: var(--muted); margin: 0 0 28px; max-width: 62ch }
+.box, section { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; padding: 24px; box-shadow: var(--shadow) }
+section { margin: 20px 0 0 }
+label { display: block; font-weight: 500; font-size: .875rem; margin: 0 0 6px }
+input, textarea { width: 100%; font: inherit; font-size: .95rem; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s }
+input::placeholder, textarea::placeholder { color: var(--muted) }
+textarea { min-height: 22em; resize: vertical; line-height: 1.6 }
+#texto { min-height: 34em; field-sizing: content }
 textarea.post { min-height: 7em }
-.people .links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px 14px; flex-shrink: 0; max-width: 55% }
-.field { margin: 0 0 16px }
-.actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 4px 0 0 }
-.button { display: inline-block; background: var(--brand-deep); color: var(--on-brand); font: inherit; font-weight: 700; text-decoration: none; padding: 12px 18px; border: 0; border-radius: 8px; cursor: pointer }
-.button:hover { background: var(--brand) }
-.button.alt { background: transparent; color: var(--link); border: 1px solid var(--line) }
-.via { border: 0; padding: 0; margin: 12px 0 0; display: flex; gap: 18px; align-items: center; font-size: .95rem }
-.via legend { float: left; margin-right: 6px; color: var(--muted) }
-.via label { display: inline-flex; gap: 6px; align-items: center; font-weight: 400; margin: 0 }
-.via input { width: auto }
-.people .done { color: var(--muted); font-weight: 400 }
-.note { margin: 12px 0 0; font-size: .95rem; color: var(--muted) }
-section { padding: 36px 0 8px }
-h2 { font-size: 1.5rem; line-height: 1.2; margin: 0 0 14px; letter-spacing: -.01em }
-section p { margin: 0 0 14px; max-width: 65ch }
-.people { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px }
-.people li { display: flex; justify-content: space-between; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px }
-.people small { display: block; color: var(--muted); overflow-wrap: anywhere }
+.firma { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 0 12px }
+@media (max-width: 560px) { .firma { grid-template-columns: 1fr } }
+.firma input:enabled:placeholder-shown { background: var(--warn-bg); border-color: var(--brand) }
+.firma input.falta { border-color: var(--warn); box-shadow: 0 0 0 3px color-mix(in srgb, var(--warn) 25%, transparent) }
+.firma input:disabled { opacity: .5; cursor: not-allowed }
+.check { display: inline-flex; gap: 8px; align-items: center; font-weight: 400; font-size: .9rem; margin: 0; cursor: pointer }
+.check input, .via input { width: 16px; height: 16px; margin: 0; box-shadow: none; accent-color: var(--primary) }
+#estado.falta { color: var(--warn); font-weight: 500 }
+.field { margin: 0 0 20px }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 0 }
+.button { display: inline-flex; align-items: center; gap: 6px; height: 40px; background: var(--primary); color: var(--on-primary); font: inherit; font-size: .9rem; font-weight: 500; text-decoration: none; padding: 0 16px; border: 1px solid transparent; border-radius: 8px; cursor: pointer; box-shadow: var(--shadow); transition: opacity .15s, background .15s }
+.button:hover { background: var(--brand-deep); opacity: 1 }
+.button.alt { background: var(--surface); color: var(--link); border-color: var(--line) }
+.button.alt:hover { background: var(--subtle); opacity: 1 }
+.via { border: 0; padding: 0; margin: 16px 0 0; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; font-size: .9rem }
+.via legend { float: left; margin-right: 4px; color: var(--muted) }
+.via label { display: inline-flex; gap: 6px; align-items: center; font-weight: 400; font-size: .9rem; margin: 0 }
+.note { margin: 12px 0 0; font-size: .875rem; color: var(--muted) }
+h2 { font-size: 1.2rem; line-height: 1.3; font-weight: 600; margin: 0 0 8px; letter-spacing: -.02em }
+section p { margin: 0 0 14px; max-width: 65ch; color: var(--muted); font-size: .95rem }
+section ul:not(.people) { margin: 0; padding-left: 20px; color: var(--muted); font-size: .95rem }
+.people { list-style: none; padding: 0; margin: 0; border: 1px solid var(--line); border-radius: 8px; overflow: hidden }
+.people li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 14px; font-size: .95rem; font-weight: 500 }
+.people li + li { border-top: 1px solid var(--line) }
+.people li:hover { background: var(--subtle) }
+.people small { display: block; color: var(--muted); font-weight: 400; font-size: .8rem; overflow-wrap: anywhere }
 .people li, .people span { min-width: 0 }
-.people a { white-space: nowrap; font-weight: 700 }
-footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .9rem }
+.people .links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 12px; flex-shrink: 0; max-width: 55% }
+.people a { white-space: nowrap; font-weight: 500; font-size: .875rem; text-decoration: none }
+.people a:hover { text-decoration: underline }
+.people .done { color: var(--muted); font-weight: 400 }
+footer { border-top: 1px solid var(--line); margin-top: 48px; padding: 24px 0 48px; color: var(--muted); font-size: .85rem }
 footer p { margin: 0 0 8px; max-width: 70ch }
 </style>
 </head>
@@ -88,6 +106,20 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         <input id="asunto" value="Petición ciudadana: no aprueben la APP del acueducto Chapala–Guadalajara sin estudios ni transparencia">
       </div>
       <div class="field">
+        <div class="firma">
+          <div>
+            <label for="nombre">Tu nombre</label>
+            <input id="nombre" autocomplete="name" placeholder="Escribe tu nombre">
+          </div>
+          <div>
+            <label for="colonia">Tu colonia y municipio</label>
+            <input id="colonia" placeholder="Ej. Analco, Guadalajara">
+          </div>
+        </div>
+        <label class="check"><input type="checkbox" id="anonimo"> Enviar sin mi nombre ni mi colonia</label>
+        <p class="note" style="margin:6px 0 0">Van al final del correo, como firma. Con tu nombre y tu colonia el correo pesa más.</p>
+      </div>
+      <div class="field">
         <label for="texto">Mensaje</label>
         <p class="note" style="margin:0 0 8px">El saludo se pone solo: «Diputadas y diputados del Congreso del Estado de Jalisco:» o, si le escribes a una persona, su nombre.</p>
         <textarea id="texto">Como habitante de Jalisco, le pido que no apruebe el contrato de asociación público-privada (APP) que el Ejecutivo propone para que la Comisión Estatal del Agua construya y opere el acueducto sustituto Chapala–Guadalajara, mientras no se cumpla lo siguiente:
@@ -98,9 +130,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
 
 El agua es un derecho humano y su gestión debe ser pública y transparente. Daré seguimiento al sentido del voto de cada integrante del Congreso en este tema y lo compartiré con mi comunidad.
 
-Atentamente,
-[Tu nombre]
-[Tu colonia y municipio]</textarea>
+Atentamente,</textarea>
       </div>
       <div class="actions">
         <a class="button" id="siguiente" href="#" rel="noopener" target="_blank">✉️ Escribir a la siguiente diputación</a>
@@ -113,7 +143,7 @@ Atentamente,
         <label><input type="radio" name="via" value="gmail" checked> Gmail</label>
         <label><input type="radio" name="via" value="app"> Mi app de correo</label>
       </fieldset>
-      <p class="note" id="estado" aria-live="polite">Cada correo sale por separado y con el nombre de la persona: toca el botón, envía el correo y vuelve aquí para el siguiente. No olvides poner tu nombre y tu colonia. Un correo personal pesa más que uno copiado: cambia lo que quieras.</p>
+      <p class="note" id="estado" aria-live="polite">Cada correo sale por separado y con el nombre de la persona: toca el botón, envía el correo y vuelve aquí para el siguiente. Un correo personal pesa más que uno copiado: cambia lo que quieras.</p>
     </div>
 
     <section aria-labelledby="firma">
@@ -207,7 +237,20 @@ Atentamente,
   const all = DIPUTADOS.map((d) => d[1]);
   const subject = () => $("asunto").value;
   const ALL = "Diputadas y diputados del Congreso del Estado de Jalisco:";
-  const body = (greeting = ALL) => `${greeting}\n\n${$("texto").value}`;
+  const anon = () => $("anonimo").checked;
+  const signature = () => anon() ? "" : ["nombre", "colonia"].map((id) => $(id).value.trim()).filter(Boolean).join("\n");
+  const body = (greeting = ALL) => [`${greeting}\n\n${$("texto").value.trimEnd()}`, signature()].filter(Boolean).join("\n");
+  // Stop a send until the signature is filled in or the person chose to go without it.
+  function ready() {
+    const missing = anon() ? [] : ["nombre", "colonia"].filter((id) => !$(id).value.trim());
+    ["nombre", "colonia"].forEach((id) => $(id).classList.toggle("falta", missing.includes(id)));
+    $("estado").classList.toggle("falta", missing.length > 0);
+    if (missing.length) {
+      $("estado").textContent = "Falta tu nombre o tu colonia y municipio. Escríbelos arriba o marca «Enviar sin mi nombre ni mi colonia».";
+      $(missing[0]).focus();
+    }
+    return !missing.length;
+  }
   const q = encodeURIComponent;
   const gmail = (to, greeting) => `https://mail.google.com/mail/?view=cm&fs=1&to=${q(to.join(","))}&su=${q(subject())}&body=${q(body(greeting))}`;
   const mailto = (to) => `mailto:${to.join(",")}?subject=${q(subject())}&body=${q(body())}`;
@@ -254,7 +297,7 @@ Atentamente,
 
   // Mark after the browser has followed the link, so it opens the current person.
   const mark = (email) => setTimeout(() => { sent.add(email); save(); refresh(); }, 0);
-  $("siguiente").addEventListener("click", () => { const next = nextOne(); if (next) mark(next[1]); });
+  $("siguiente").addEventListener("click", (e) => { if (!ready()) return e.preventDefault(); const next = nextOne(); if (next) mark(next[1]); });
   document.querySelectorAll('input[name="via"]').forEach((r) => r.addEventListener("change", refresh));
 
   // The same one-by-one stepping for X posts and Messenger chats, each with its own progress.
@@ -309,7 +352,7 @@ Atentamente,
     a.dataset.name = name;
     a.rel = "noopener";
     a.target = "_blank";
-    a.addEventListener("click", () => mark(email));
+    a.addEventListener("click", (e) => { if (!ready()) return e.preventDefault(); mark(email); });
     const links = document.createElement("span");
     links.className = "links";
     links.append(a);
@@ -347,10 +390,16 @@ Atentamente,
     }
   }
   $("copiar-correos").addEventListener("click", () => copy(all.join(", "), `Copiamos los ${all.length} correos.`));
-  $("copiar-texto").addEventListener("click", () => copy(`${subject()}\n\n${body()}`, "Copiamos el asunto y el mensaje."));
+  $("copiar-texto").addEventListener("click", () => ready() && copy(`${subject()}\n\n${body()}`, "Copiamos el asunto y el mensaje."));
   $("asunto").addEventListener("input", refresh);
   $("post").addEventListener("input", refresh);
   $("texto").addEventListener("input", refresh);
+  ["nombre", "colonia"].forEach((id) => $(id).addEventListener("input", () => { $(id).classList.remove("falta"); refresh(); }));
+  $("anonimo").addEventListener("change", () => {
+    ["nombre", "colonia"].forEach((id) => { $(id).disabled = anon(); $(id).classList.remove("falta"); });
+    $("estado").classList.remove("falta");
+    refresh();
+  });
   refresh();
 })();
 </script>
