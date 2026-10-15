@@ -92,7 +92,7 @@ const msgPipa = `🚚 Para pedir una *pipa* o reportar que no te llega el agua, 
 Agua GDL no es del SIAPA y no puede mandar pipas.`
 
 func msgWrite(base string) string {
-	return `✉️ Pídeles a las y los 38 diputados del Congreso de Jalisco que voten en contra de privatizar el agua, con un correo desde tu propia cuenta. Ya tiene un texto que puedes cambiar:
+	return `✉️ Pídeles a las y los 38 diputados del Congreso de Jalisco que no aprueben a ciegas el contrato APP del acueducto Chapala–Guadalajara, por correo, X o Messenger desde tu propia cuenta. Ahí también puedes firmar la solicitud de Contraloría Social en el IEPC:
 
 ` + base + `/escribe
 

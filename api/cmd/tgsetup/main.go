@@ -38,7 +38,7 @@ var commands = []command{
 	{"zona", "Elegir o cambiar tu zona"},
 	{"reportar", "Contar cómo regresó el agua"},
 	{"pipa", "Cómo pedir una pipa al SIAPA"},
-	{"escribe", "Pedir al Congreso que no privatice el agua"},
+	{"escribe", "Escribirle al Congreso sobre el contrato del agua"},
 	{"baja", "Dejar de recibir avisos y borrar tus datos"},
 	{"ayuda", "Ver lo que puedo hacer"},
 }
