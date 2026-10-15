@@ -25,6 +25,23 @@ type Sender interface {
 	Send(ctx context.Context, m wa.Message) (string, error)
 }
 
+// User is who a message came from: a WhatsApp user (business-scoped ID and phone)
+// or a Telegram chat.
+type User struct {
+	Channel string
+	ID      string
+	Phone   string
+}
+
+// Reply is one outgoing message; each channel renders it its own way.
+type Reply struct {
+	Text    string
+	Choices []Choice // a list on WhatsApp
+	Button  string   // the list's button label
+}
+
+type Choice struct{ ID, Title, Description string }
+
 type Bot struct {
 	Store         Store
 	Sender        Sender
@@ -39,6 +56,13 @@ type Bot struct {
 	Alert         func(ctx context.Context, msg string) // optional, e.g. a failed heartbeat
 	Now           func() time.Time
 	Log           *slog.Logger
+
+	queue *[]queued // replies held until the inbound message's transaction commits
+}
+
+type queued struct {
+	to    User
+	reply Reply
 }
 
 var (
@@ -85,39 +109,37 @@ func (b *Bot) Handle(ctx context.Context, p wa.Payload) error {
 }
 
 func (b *Bot) handleMessage(ctx context.Context, m wa.Inbound, contacts []wa.Contact) error {
-	r := wa.Recipient{UserID: m.FromUserID, Phone: m.From}
+	r := User{Channel: store.WhatsApp, ID: m.FromUserID, Phone: m.From}
 	for _, c := range contacts {
-		if r.UserID == "" && c.WaID == m.From {
-			r.UserID = c.UserID
+		if r.ID == "" && c.WaID == m.From {
+			r.ID = c.UserID
 		}
 	}
-	// Commit the command and its deduplication marker together before any HTTP call.
-	// A failed reply must never cause Meta's retry to replay a completed command.
-	replies := &replyBuffer{}
-	err := b.Store.ProcessInbound(ctx, m.ID, func(tx Store) error {
+	return b.process(ctx, m.ID, func(w *Bot) error { return w.route(ctx, r, m) })
+}
+
+// process runs one inbound message. The command and its deduplication marker commit
+// together before any HTTP call: a failed reply must never let a retried delivery
+// replay a completed command.
+func (b *Bot) process(ctx context.Context, id string, handle func(*Bot) error) error {
+	var replies []queued
+	err := b.Store.ProcessInbound(ctx, id, func(tx Store) error {
 		worker := *b
-		worker.Store, worker.Sender = tx, replies
-		return worker.route(ctx, r, m)
+		worker.Store, worker.queue = tx, &replies
+		return handle(&worker)
 	})
 	if err != nil {
 		return err
 	}
-	for _, reply := range replies.messages {
-		if err := b.send(ctx, reply); err != nil {
+	for _, q := range replies {
+		if err := b.deliver(ctx, q.to, q.reply); err != nil {
 			return err
 		}
 	}
 	return nil
 }
 
-type replyBuffer struct{ messages []wa.Message }
-
-func (q *replyBuffer) Send(_ context.Context, m wa.Message) (string, error) {
-	q.messages = append(q.messages, m)
-	return "", nil
-}
-
-func (b *Bot) route(ctx context.Context, r wa.Recipient, m wa.Inbound) error {
+func (b *Bot) route(ctx context.Context, r User, m wa.Inbound) error {
 	switch {
 	case m.Type == "reaction":
 		// A 👍 on a reminder needs no answer.
@@ -140,7 +162,7 @@ func (b *Bot) route(ctx context.Context, r wa.Recipient, m wa.Inbound) error {
 	return b.text(ctx, r, msgUnsupported)
 }
 
-func (b *Bot) onText(ctx context.Context, r wa.Recipient, body string) error {
+func (b *Bot) onText(ctx context.Context, r User, body string) error {
 	n := colonias.Normalize(body)
 	switch {
 	case n == "" || slices.Contains(helpWords, n):
@@ -168,28 +190,28 @@ func (b *Bot) onText(ctx context.Context, r wa.Recipient, body string) error {
 	case exact && len(matches) == 1:
 		return b.onColonia(ctx, r, matches[0])
 	}
-	rows := make([]wa.Row, len(matches))
+	choices := make([]Choice, len(matches))
 	for i, c := range matches {
 		label := zoneLabel(c.Zones)
-		rows[i] = wa.Row{ID: "C:" + c.Key(), Title: c.Name, Description: municipioName(c.Municipio) + " · " + strings.ToUpper(label[:1]) + label[1:]}
+		choices[i] = Choice{ID: "C:" + c.Key(), Title: c.Name, Description: municipioName(c.Municipio) + " · " + strings.ToUpper(label[:1]) + label[1:]}
 	}
-	return b.send(ctx, wa.NewList(r, msgPickColonia, "Ver colonias", rows))
+	return b.reply(ctx, r, Reply{Text: msgPickColonia, Button: "Ver colonias", Choices: choices})
 }
 
 // onUserChanged follows a subscriber to a new number or business-scoped user ID,
 // so reminders stop going to a number that may now belong to someone else.
-func (b *Bot) onUserChanged(ctx context.Context, r wa.Recipient, sys *wa.System) error {
+func (b *Bot) onUserChanged(ctx context.Context, r User, sys *wa.System) error {
 	if sys.Type != "user_changed_number" && sys.Type != "user_changed_user_id" {
 		return nil
 	}
 	old := sys.PreviousUserID
 	if old == "" {
-		old = r.UserID
+		old = r.ID
 	}
 	return b.Store.ChangeUser(ctx, old, r.Phone, sys.UserID, sys.WaID)
 }
 
-func (b *Bot) onLocation(ctx context.Context, r wa.Recipient, lat, lon float64) error {
+func (b *Bot) onLocation(ctx context.Context, r User, lat, lon float64) error {
 	zones := b.Zones.Lookup(lat, lon)
 	switch len(zones) {
 	case 0:
@@ -200,7 +222,7 @@ func (b *Bot) onLocation(ctx context.Context, r wa.Recipient, lat, lon float64) 
 	return b.pickZone(ctx, r, msgPickZoneAtPoint, zones)
 }
 
-func (b *Bot) onPayload(ctx context.Context, r wa.Recipient, p string) error {
+func (b *Bot) onPayload(ctx context.Context, r User, p string) error {
 	kind, rest, _ := strings.Cut(p, ":")
 	switch kind {
 	case "BAJA":
@@ -224,24 +246,24 @@ func (b *Bot) onPayload(ctx context.Context, r wa.Recipient, p string) error {
 	return b.text(ctx, r, msgHelp(b.BaseURL))
 }
 
-func (b *Bot) onColonia(ctx context.Context, r wa.Recipient, c colonias.Colonia) error {
+func (b *Bot) onColonia(ctx context.Context, r User, c colonias.Colonia) error {
 	if c.Multi || len(c.Zones) > 1 {
 		return b.pickZone(ctx, r, msgPickZone(c.Name, c.Zones), c.Zones)
 	}
 	return b.subscribe(ctx, r, c.Zones[0])
 }
 
-func (b *Bot) pickZone(ctx context.Context, r wa.Recipient, body string, zones []int) error {
-	rows := make([]wa.Row, len(zones))
+func (b *Bot) pickZone(ctx context.Context, r User, body string, zones []int) error {
+	choices := make([]Choice, len(zones))
 	for i, z := range zones {
-		rows[i] = wa.Row{ID: fmt.Sprintf("Z:%d", z), Title: fmt.Sprintf("Zona %d", z), Description: "Cortes: " + rotation.DaysES(b.Schedule.Weekdays(z))}
+		choices[i] = Choice{ID: fmt.Sprintf("Z:%d", z), Title: fmt.Sprintf("Zona %d", z), Description: "Cortes: " + rotation.DaysES(b.Schedule.Weekdays(z))}
 	}
-	return b.send(ctx, wa.NewList(r, body, "Elegir zona", rows))
+	return b.reply(ctx, r, Reply{Text: body, Button: "Elegir zona", Choices: choices})
 }
 
-func (b *Bot) greet(ctx context.Context, r wa.Recipient) error {
-	if r.UserID != "" {
-		s, ok, err := b.Store.Subscriber(ctx, store.WhatsApp, r.UserID)
+func (b *Bot) greet(ctx context.Context, r User) error {
+	if r.ID != "" {
+		s, ok, err := b.Store.Subscriber(ctx, r.Channel, r.ID)
 		if err != nil {
 			return err
 		}
@@ -252,12 +274,12 @@ func (b *Bot) greet(ctx context.Context, r wa.Recipient) error {
 	return b.text(ctx, r, msgWelcome(b.BaseURL))
 }
 
-func (b *Bot) subscribe(ctx context.Context, r wa.Recipient, zone int) error {
-	if r.UserID == "" {
+func (b *Bot) subscribe(ctx context.Context, r User, zone int) error {
+	if r.ID == "" {
 		b.Log.Warn("message without business-scoped user ID")
 		return b.text(ctx, r, msgNoUserID)
 	}
-	full, err := b.nightFull(ctx, r.UserID, zone)
+	full, err := b.nightFull(ctx, r, zone)
 	if err != nil {
 		return err
 	}
@@ -265,20 +287,20 @@ func (b *Bot) subscribe(ctx context.Context, r wa.Recipient, zone int) error {
 		b.Log.Warn("subscription refused: a night would exceed the send cap", "zone", zone, "cap", b.NightCap)
 		return b.text(ctx, r, msgFull(b.BaseURL))
 	}
-	if err := b.Store.Subscribe(ctx, store.WhatsApp, r.UserID, r.Phone, zone); err != nil {
+	if err := b.Store.Subscribe(ctx, r.Channel, r.ID, r.Phone, zone); err != nil {
 		return err
 	}
 	return b.text(ctx, r, b.subscribedText(zone, true))
 }
 
-// nightFull reports whether putting userID in zone would make some night's reminders
+// nightFull reports whether putting r in zone would make some night's reminders
 // exceed what WhatsApp lets us send in 24 hours. Past that, the newest subscribers
 // would silently miss reminders, so it's better to say so up front.
-func (b *Bot) nightFull(ctx context.Context, userID string, zone int) (bool, error) {
+func (b *Bot) nightFull(ctx context.Context, r User, zone int) (bool, error) {
 	if b.NightCap <= 0 {
 		return false, nil
 	}
-	current, subscribed, err := b.Store.Subscriber(ctx, store.WhatsApp, userID)
+	current, subscribed, err := b.Store.Subscriber(ctx, r.Channel, r.ID)
 	if err != nil || (subscribed && current.Zone == zone) {
 		return false, err
 	}
@@ -328,11 +350,11 @@ func (b *Bot) subscribedText(zone int, fresh bool) string {
 	return msgSubscribed(info)
 }
 
-func (b *Bot) unsubscribe(ctx context.Context, r wa.Recipient) error {
-	if r.UserID == "" && r.Phone == "" {
+func (b *Bot) unsubscribe(ctx context.Context, r User) error {
+	if r.ID == "" && r.Phone == "" {
 		return b.text(ctx, r, msgNotSubscribed)
 	}
-	removed, err := b.Store.Unsubscribe(ctx, store.WhatsApp, r.UserID, r.Phone)
+	removed, err := b.Store.Unsubscribe(ctx, r.Channel, r.ID, r.Phone)
 	if err != nil {
 		return err
 	}
@@ -343,11 +365,11 @@ func (b *Bot) unsubscribe(ctx context.Context, r wa.Recipient) error {
 }
 
 // reportLastCut asks about the subscriber's most recent cut, today included.
-func (b *Bot) reportLastCut(ctx context.Context, r wa.Recipient) error {
-	if r.UserID == "" {
+func (b *Bot) reportLastCut(ctx context.Context, r User) error {
+	if r.ID == "" {
 		return b.text(ctx, r, msgWelcome(b.BaseURL))
 	}
-	s, ok, err := b.Store.Subscriber(ctx, store.WhatsApp, r.UserID)
+	s, ok, err := b.Store.Subscriber(ctx, r.Channel, r.ID)
 	if err != nil {
 		return err
 	}
@@ -362,26 +384,26 @@ func (b *Bot) reportLastCut(ctx context.Context, r wa.Recipient) error {
 	return b.askReport(ctx, r, prev.Format(rotation.DateLayout))
 }
 
-func (b *Bot) askReport(ctx context.Context, r wa.Recipient, date string) error {
+func (b *Bot) askReport(ctx context.Context, r User, date string) error {
 	d, err := b.Schedule.ParseDate(date)
 	if err != nil {
 		return b.text(ctx, r, msgNoReportYet)
 	}
-	rows := make([]wa.Row, len(reportAnswers))
+	choices := make([]Choice, len(reportAnswers))
 	for i, a := range reportAnswers {
-		rows[i] = wa.Row{ID: "R:" + date + ":" + a.key, Title: a.title}
+		choices[i] = Choice{ID: "R:" + date + ":" + a.key, Title: a.title}
 	}
-	return b.send(ctx, wa.NewList(r, msgAskReport(rotation.DateES(d)), "Elegir respuesta", rows))
+	return b.reply(ctx, r, Reply{Text: msgAskReport(rotation.DateES(d)), Button: "Elegir respuesta", Choices: choices})
 }
 
-func (b *Bot) saveReport(ctx context.Context, r wa.Recipient, date, answer string) error {
+func (b *Bot) saveReport(ctx context.Context, r User, date, answer string) error {
 	if !slices.ContainsFunc(reportAnswers, func(a struct{ key, title string }) bool { return a.key == answer }) {
 		return b.text(ctx, r, msgHelp(b.BaseURL))
 	}
-	if r.UserID == "" {
+	if r.ID == "" {
 		return b.text(ctx, r, msgWelcome(b.BaseURL))
 	}
-	s, ok, err := b.Store.Subscriber(ctx, store.WhatsApp, r.UserID)
+	s, ok, err := b.Store.Subscriber(ctx, r.Channel, r.ID)
 	if err != nil {
 		return err
 	}
@@ -399,19 +421,40 @@ func (b *Bot) saveReport(ctx context.Context, r wa.Recipient, date, answer strin
 	return b.text(ctx, r, msgThanks(b.BaseURL))
 }
 
-func (b *Bot) text(ctx context.Context, r wa.Recipient, body string) error {
-	return b.send(ctx, wa.NewText(r, body))
+func (b *Bot) text(ctx context.Context, r User, body string) error {
+	return b.reply(ctx, r, Reply{Text: body})
 }
 
-// send drops permanent API errors so Meta doesn't retry a webhook we can never answer.
-func (b *Bot) send(ctx context.Context, m wa.Message) error {
-	_, err := b.Sender.Send(ctx, m)
-	var apiErr *wa.APIError
-	if errors.As(err, &apiErr) && apiErr.Permanent() {
+// reply queues a reply while an inbound message is processed, else sends it.
+func (b *Bot) reply(ctx context.Context, to User, r Reply) error {
+	if b.queue != nil {
+		*b.queue = append(*b.queue, queued{to, r})
+		return nil
+	}
+	return b.deliver(ctx, to, r)
+}
+
+// deliver drops permanent API errors so the webhook isn't retried for a reply we can never send.
+func (b *Bot) deliver(ctx context.Context, to User, r Reply) error {
+	_, err := b.Sender.Send(ctx, whatsAppMessage(to, r))
+	var permanent interface{ Permanent() bool }
+	if errors.As(err, &permanent) && permanent.Permanent() {
 		b.Log.Warn("reply not delivered", "err", err)
 		return nil
 	}
 	return err
+}
+
+func whatsAppMessage(to User, r Reply) wa.Message {
+	rec := wa.Recipient{UserID: to.ID, Phone: to.Phone}
+	if len(r.Choices) == 0 {
+		return wa.NewText(rec, r.Text)
+	}
+	rows := make([]wa.Row, len(r.Choices))
+	for i, c := range r.Choices {
+		rows[i] = wa.Row(c)
+	}
+	return wa.NewList(rec, r.Text, r.Button, rows)
 }
 
 // zoneLabel is "zona 3" or "zonas 1, 5 y 6".
