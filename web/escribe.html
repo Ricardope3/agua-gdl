@@ -71,26 +71,20 @@ footer p { margin: 0 0 8px; max-width: 70ch }
   </header>
 
   <main>
-    <h1>Escríbele al Congreso sobre el agua</h1>
-    <p class="lede">Un correo a las y los 38 diputados del Congreso de Jalisco, desde tu propia cuenta. Revisa el texto, cámbialo si quieres y envíalo. Agua GDL no ve ni guarda nada.</p>
+    <h1>Pide al Congreso que no privatice el agua</h1>
+    <p class="lede">Un correo a las y los 38 diputados del Congreso de Jalisco, desde tu propia cuenta, para pedirles que voten en contra de privatizar o concesionar el agua. Revisa el texto, cámbialo si quieres y envíalo. Agua GDL no ve ni guarda nada.</p>
 
     <div class="box">
       <div class="field">
         <label for="asunto">Asunto</label>
-        <input id="asunto" value="Agua limpia y transparencia en la rotación del SIAPA">
+        <input id="asunto" value="Petición ciudadana apartidista: voto EN CONTRA de la privatización del agua">
       </div>
       <div class="field">
         <label for="texto">Mensaje</label>
-        <textarea id="texto">Diputadas y diputados del Congreso del Estado de Jalisco:
+        <p class="note" style="margin:0 0 8px">El saludo se pone solo: «Diputadas y diputados del Congreso del Estado de Jalisco:» o, si le escribes a una persona, su nombre.</p>
+        <textarea id="texto">Le escribo para solicitarle respetuosamente que defienda el agua como un derecho humano fundamental y vote EN CONTRA de cualquier iniciativa para privatizar o concesionar el servicio de agua en Jalisco.
 
-Vivo en la zona metropolitana de Guadalajara y me afecta la rotación del servicio de agua del SIAPA. Les pido que, dentro de sus facultades:
-
-1. Pidan al SIAPA que publique por colonia los resultados de los análisis de calidad del agua, con fecha y laboratorio.
-2. Pidan que se informe cuándo terminará la rotación y qué obras la resolverán, con su presupuesto y avance.
-3. Vigilen que las colonias afectadas reciban agua potable a tiempo.
-4. Citen al director del SIAPA a explicar públicamente la situación ante el Congreso.
-
-Les agradeceré su respuesta.
+Confío en que su decisión legislativa priorizará el bien común y el acceso equitativo al agua para las familias jaliscienses. Como parte de esta iniciativa ciudadana, al concluir el proceso legislativo se dará difusión pública al sentido del voto de cada integrante del Congreso, en aras de la transparencia con la ciudadanía.
 
 Atentamente,
 [Tu nombre]
@@ -173,15 +167,16 @@ Atentamente,
   const $ = (id) => document.getElementById(id);
   const all = DIPUTADOS.map((d) => d[1]);
   const subject = () => $("asunto").value;
-  const body = () => $("texto").value;
+  const ALL = "Diputadas y diputados del Congreso del Estado de Jalisco:";
+  const body = (greeting = ALL) => `${greeting}\n\n${$("texto").value}`;
   const q = encodeURIComponent;
-  const gmail = (to) => `https://mail.google.com/mail/?view=cm&fs=1&to=${q(to.join(","))}&su=${q(subject())}&body=${q(body())}`;
+  const gmail = (to, greeting) => `https://mail.google.com/mail/?view=cm&fs=1&to=${q(to.join(","))}&su=${q(subject())}&body=${q(body(greeting))}`;
   const mailto = (to) => `mailto:${to.join(",")}?subject=${q(subject())}&body=${q(body())}`;
 
   function refresh() {
     $("gmail").href = gmail(all);
     $("mailto").href = mailto(all);
-    document.querySelectorAll("[data-to]").forEach((a) => { a.href = gmail([a.dataset.to]); });
+    document.querySelectorAll("[data-to]").forEach((a) => { a.href = gmail([a.dataset.to], `Dip. ${a.dataset.name}:`); });
   }
 
   const list = $("personas");
@@ -195,6 +190,7 @@ Atentamente,
     const a = document.createElement("a");
     a.textContent = "✉️ Escribir";
     a.dataset.to = email;
+    a.dataset.name = name;
     a.rel = "noopener";
     a.target = "_blank";
     li.append(who, a);
