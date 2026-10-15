@@ -22,6 +22,7 @@ import (
 	"aguagdl/api/internal/reminders"
 	"aguagdl/api/internal/rotation"
 	"aguagdl/api/internal/store"
+	"aguagdl/api/internal/tg"
 	"aguagdl/api/internal/wa"
 )
 
@@ -29,7 +30,8 @@ type config struct {
 	Port, DatabaseURL, BaseURL, HeartbeatURL                   string
 	WAToken, WAPhoneNumberID, WAAppSecret, WAVerifyToken       string
 	WAGraphVersion, WATemplate, WALanguage                     string
-	RemindersEnabled                                           bool
+	TGToken, TGWebhookSecret                                   string
+	RemindersEnabled, TGRemindersEnabled                       bool
 	ReminderHour, CatchUpUntil, DailyCap, MonthlyCap, MinShown int
 }
 
@@ -55,6 +57,12 @@ func loadConfig() (config, error) {
 		return c, fmt.Errorf("missing env vars: %v", missing)
 	}
 	c.RemindersEnabled = os.Getenv("REMINDERS_ENABLED") == "true"
+	// Telegram is optional: off unless TG_TOKEN is set.
+	c.TGToken, c.TGWebhookSecret = os.Getenv("TG_TOKEN"), os.Getenv("TG_WEBHOOK_SECRET")
+	if c.TGToken != "" && c.TGWebhookSecret == "" {
+		return c, fmt.Errorf("TG_TOKEN needs TG_WEBHOOK_SECRET")
+	}
+	c.TGRemindersEnabled = c.TGToken != "" && os.Getenv("TG_REMINDERS_ENABLED") == "true"
 	var err error
 	for name, dst := range map[string]struct {
 		v   *int
@@ -130,6 +138,11 @@ func run(log *slog.Logger) error {
 	b := &bot.Bot{Store: db, Sender: client, Schedule: sched, Zones: zones, Colonias: cols,
 		BaseURL: cfg.BaseURL, PhoneNumberID: cfg.WAPhoneNumberID, ReminderHour: cfg.ReminderHour,
 		RemindersOn: cfg.RemindersEnabled, NightCap: cfg.DailyCap, Now: time.Now, Log: log}
+	var telegram *tg.Client
+	if cfg.TGToken != "" {
+		telegram = &tg.Client{BaseURL: "https://api.telegram.org", Token: cfg.TGToken, HTTP: &http.Client{Timeout: 15 * time.Second}}
+		b.Telegram, b.TelegramOn = telegram, cfg.TGRemindersEnabled
+	}
 	var beat func(context.Context, bool, string)
 	if cfg.HeartbeatURL != "" {
 		beat = heartbeat(cfg.HeartbeatURL, log)
@@ -137,19 +150,26 @@ func run(log *slog.Logger) error {
 	}
 	go purge(ctx, db, sched, log)
 
-	if cfg.RemindersEnabled {
-		r := &reminders.Runner{Store: db, Sender: client, Schedule: sched,
+	if cfg.RemindersEnabled || cfg.TGRemindersEnabled {
+		r := &reminders.Runner{Store: db, Schedule: sched,
 			Template: cfg.WATemplate, Language: cfg.WALanguage,
 			Hour: cfg.ReminderHour, CatchUpUntil: cfg.CatchUpUntil,
 			DailyCap: cfg.DailyCap, MonthlyCap: cfg.MonthlyCap,
 			Interval: 100 * time.Millisecond, Heartbeat: beat, Now: time.Now, Log: log}
+		if cfg.RemindersEnabled {
+			r.Sender = client
+		}
+		if cfg.TGRemindersEnabled {
+			r.Telegram = telegram
+		}
 		go r.Run(ctx)
 	} else {
-		log.Warn("reminders disabled; set REMINDERS_ENABLED=true to send them")
+		log.Warn("reminders disabled; set REMINDERS_ENABLED=true (WhatsApp) or TG_REMINDERS_ENABLED=true (Telegram) to send them")
 	}
 
 	a := &api{bot: b, db: db, sched: sched, zones: zones, cols: cols,
-		appSecret: []byte(cfg.WAAppSecret), verifyToken: cfg.WAVerifyToken, minShown: cfg.MinShown, log: log}
+		appSecret: []byte(cfg.WAAppSecret), verifyToken: cfg.WAVerifyToken, tgSecret: cfg.TGWebhookSecret,
+		minShown: cfg.MinShown, log: log}
 	srv := &http.Server{Addr: ":" + cfg.Port, Handler: a.routes(), ReadHeaderTimeout: 10 * time.Second}
 	go func() {
 		<-ctx.Done()
@@ -157,7 +177,7 @@ func run(log *slog.Logger) error {
 		defer cancel()
 		srv.Shutdown(shutdown)
 	}()
-	log.Info("listening", "port", cfg.Port, "reminders", cfg.RemindersEnabled)
+	log.Info("listening", "port", cfg.Port, "reminders", cfg.RemindersEnabled, "telegram", cfg.TGToken != "", "telegram_reminders", cfg.TGRemindersEnabled)
 	if err := srv.ListenAndServe(); !errors.Is(err, http.ErrServerClosed) {
 		return err
 	}

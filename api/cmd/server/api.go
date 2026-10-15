@@ -18,6 +18,7 @@ import (
 	"aguagdl/api/internal/geo"
 	"aguagdl/api/internal/rotation"
 	"aguagdl/api/internal/store"
+	"aguagdl/api/internal/tg"
 	"aguagdl/api/internal/wa"
 )
 
@@ -29,6 +30,7 @@ type api struct {
 	cols        *colonias.Index
 	appSecret   []byte
 	verifyToken string
+	tgSecret    string // empty = Telegram off
 	minShown    int
 	log         *slog.Logger
 
@@ -60,6 +62,9 @@ func (a *api) routes() http.Handler {
 	mux.HandleFunc("GET /v1/results", a.results)
 	mux.HandleFunc("GET /wa/webhook", a.verify)
 	mux.HandleFunc("POST /wa/webhook", a.webhook)
+	if a.tgSecret != "" {
+		mux.HandleFunc("POST /tg/webhook", a.telegram)
+	}
 	limit := &limiter{max: v1PerMinute, counts: map[string]int{}}
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if strings.HasPrefix(r.URL.Path, "/v1/") {
@@ -221,6 +226,27 @@ func (a *api) webhook(w http.ResponseWriter, r *http.Request) {
 	defer cancel()
 	if err := a.bot.Handle(ctx, p); err != nil {
 		a.log.Error("webhook", "err", err)
+		http.Error(w, "retry", http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+}
+
+// telegram receives the updates Telegram sends after setWebhook with our secret token.
+func (a *api) telegram(w http.ResponseWriter, r *http.Request) {
+	if !tg.ValidSecret(a.tgSecret, r.Header.Get("X-Telegram-Bot-Api-Secret-Token")) {
+		http.Error(w, "forbidden", http.StatusForbidden)
+		return
+	}
+	var u tg.Update
+	if err := json.NewDecoder(io.LimitReader(r.Body, 1<<20)).Decode(&u); err != nil {
+		http.Error(w, "bad request", http.StatusBadRequest)
+		return
+	}
+	ctx, cancel := context.WithTimeout(r.Context(), 20*time.Second)
+	defer cancel()
+	if err := a.bot.HandleTelegram(ctx, u); err != nil {
+		a.log.Error("telegram webhook", "err", err)
 		http.Error(w, "retry", http.StatusInternalServerError)
 		return
 	}

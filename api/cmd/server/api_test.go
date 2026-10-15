@@ -13,6 +13,8 @@ import (
 	"time"
 
 	"aguagdl/api/data"
+	"aguagdl/api/internal/bot"
+	"aguagdl/api/internal/fake"
 	"aguagdl/api/internal/geo"
 	"aguagdl/api/internal/rotation"
 	"aguagdl/api/internal/store"
@@ -162,5 +164,35 @@ func TestLimiterWindowAndMemoryCap(t *testing.T) {
 	}
 	if l.allow("new", now.Add(time.Minute)) {
 		t.Fatal("past maxTracked addresses, new ones wait for the next window")
+	}
+}
+
+func TestTelegramWebhookChecksTheSecret(t *testing.T) {
+	st, tel := fake.NewStore(), &fake.Telegram{}
+	b := &bot.Bot{Store: st, Telegram: tel, Schedule: testSchedule(t), Now: time.Now, Log: slog.New(slog.NewTextHandler(io.Discard, nil))}
+	update := `{"update_id":1,"message":{"message_id":1,"chat":{"id":777,"type":"private"},"text":"zona 4"}}`
+	post := func(h http.Handler, secret string) int {
+		req := httptest.NewRequest(http.MethodPost, "/tg/webhook", strings.NewReader(update))
+		if secret != "" {
+			req.Header.Set("X-Telegram-Bot-Api-Secret-Token", secret)
+		}
+		rec := httptest.NewRecorder()
+		h.ServeHTTP(rec, req)
+		return rec.Code
+	}
+	if code := post((&api{bot: b}).routes(), "s3cret"); code != http.StatusMethodNotAllowed && code != http.StatusNotFound {
+		t.Errorf("without TG_WEBHOOK_SECRET the route must not exist: %d", code)
+	}
+	h := (&api{bot: b, tgSecret: "s3cret", log: b.Log}).routes()
+	for _, secret := range []string{"", "wrong"} {
+		if code := post(h, secret); code != http.StatusForbidden {
+			t.Errorf("secret %q: %d", secret, code)
+		}
+	}
+	if len(st.Subs) != 0 {
+		t.Fatal("a rejected update was processed")
+	}
+	if code := post(h, "s3cret"); code != http.StatusOK || len(st.Subs) != 1 || len(tel.Sent) != 1 {
+		t.Fatalf("code %d, subs %d, replies %d", code, len(st.Subs), len(tel.Sent))
 	}
 }
