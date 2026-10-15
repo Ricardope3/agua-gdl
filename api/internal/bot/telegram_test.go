@@ -180,3 +180,13 @@ func TestTelegramHTML(t *testing.T) {
 		t.Errorf("got  %s\nwant %s", got, want)
 	}
 }
+
+func TestWriteToCongressLinksThePage(t *testing.T) {
+	h := newTGHarness(t, "2026-10-14 10:00")
+	if m := h.say(t, "/escribe"); !strings.Contains(m.Text, "https://aguagdl.test/escribe") {
+		t.Errorf("/escribe: %s", m.Text)
+	}
+	if got := h.send(t, text("congreso")); !strings.Contains(got, "https://aguagdl.test/escribe") {
+		t.Errorf("WhatsApp CONGRESO: %s", got)
+	}
+}

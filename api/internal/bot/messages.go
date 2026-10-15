@@ -44,6 +44,7 @@ func msgHelp(base string) string {
 🔢 *ZONA 1* a *ZONA 7*: suscribirte o cambiar de zona
 📝 *REPORTAR*: contar cómo regresó el agua después del último corte
 🚚 *PIPA*: cómo pedir una pipa al SIAPA
+✉️ *ESCRIBIR*: escribirle al Congreso de Jalisco sobre el agua
 🛑 *BAJA*: dejar de recibir avisos y borrar tus datos
 
 🗺️ Mapa oficial del SIAPA: ` + MapURL + `
@@ -89,6 +90,14 @@ const msgPipa = `🚚 Para pedir una *pipa* o reportar que no te llega el agua, 
 ☎️ SIAPATEL: 073
 
 Agua GDL no es del SIAPA y no puede mandar pipas.`
+
+func msgWrite(base string) string {
+	return `✉️ Escríbeles a las y los 38 diputados del Congreso de Jalisco sobre el agua, desde tu propio correo. Ya tiene un texto que puedes cambiar:
+
+` + base + `/escribe
+
+Agua GDL no envía el correo ni guarda tus datos, y escribimos a todas las diputaciones por igual.`
+}
 
 func msgFull(base string) string {
 	return `😔 Por ahora llegamos al máximo de avisos que WhatsApp nos deja enviar cada noche. Estamos trabajando para ampliarlo.

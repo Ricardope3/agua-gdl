@@ -84,6 +84,8 @@ func (b *Bot) onCommand(ctx context.Context, r User, text string) error {
 		return b.reportLastCut(ctx, r)
 	case "pipa":
 		return b.text(ctx, r, msgPipa)
+	case "escribe":
+		return b.text(ctx, r, msgWrite(b.BaseURL))
 	case "baja":
 		return b.unsubscribe(ctx, r)
 	}
