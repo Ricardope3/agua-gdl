@@ -286,8 +286,19 @@ h3.ih .i-badge { width: 28px; height: 28px }
       return;
     }
     locBtn.disabled = true;
-    show(msg("Buscando tu ubicación…"));
+    show(msg("Buscando tu ubicación… Si tu navegador te pide permiso, toca «Permitir»."));
+    // Browsers can stay silent while the permission prompt is ignored or the system blocks location, so give up on our own.
+    let settled = false;
+    const giveUp = setTimeout(() => {
+      if (settled) return;
+      settled = true;
+      locBtn.disabled = false;
+      show(msg("No pudimos obtener tu ubicación. Revisa que tu navegador y tu celular o computadora tengan la ubicación activada, o ", searchLink("busca tu colonia"), "."));
+    }, 25000);
     navigator.geolocation.getCurrentPosition(async (pos) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(giveUp);
       try {
         const { latitude: lat, longitude: lon } = pos.coords;
         const r = await get(`/v1/zone?lat=${lat.toFixed(4)}&lon=${lon.toFixed(4)}`);
@@ -304,10 +315,13 @@ h3.ih .i-badge { width: 28px; height: 28px }
         locBtn.disabled = false;
       }
     }, (err) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(giveUp);
       locBtn.disabled = false;
       const why = err.code === 1 ? "No diste permiso para usar tu ubicación. " : "No pudimos obtener tu ubicación. ";
       show(msg(why, searchLink("Busca tu colonia"), " o revisa los permisos de ubicación de tu navegador."));
-    }, { enableHighAccuracy: true, timeout: 20000, maximumAge: 60000 });
+    }, { enableHighAccuracy: false, timeout: 20000, maximumAge: 60000 });
   }
 
   function showColonia(c, zones) {
