@@ -227,7 +227,6 @@ footer { font-size: .85rem }
   }
 
   const TELEGRAM = "https://t.me/AvisoAguaGDLbot";
-  const WHATSAPP = "https://wa.me/523310758180";
 
   function zoneCard(z) {
     const today = isoToday(0);
@@ -239,9 +238,8 @@ footer { font-size: .85rem }
         ? el("div", {}, el("p", {}, "Próximos:"), el("ul", {}, ...next.map((d) => el("li", {}, dateES(d)))))
         : el("p", {}, "No hay más días en el calendario que publicó el SIAPA."),
       el("div", { class: "subscribe" },
-        el("a", { class: "button", href: `${WHATSAPP}?text=${encodeURIComponent(`ZONA ${z.zone}`)}`, rel: "noopener" }, "Recibir el aviso por WhatsApp"),
         el("a", { class: "button", href: `${TELEGRAM}?start=z${z.zone}`, rel: "noopener" }, "Recibir el aviso por Telegram")),
-      el("p", { class: "note" }, `Gratis, la noche antes de cada corte de la zona ${z.zone}. Al enviar el mensaje en WhatsApp, o al tocar «Iniciar» en Telegram, aceptas los avisos; `, el("a", { href: "/privacidad" }, "aviso de privacidad"), "."));
+      el("p", { class: "note" }, `Gratis, la noche antes de cada corte de la zona ${z.zone}. Al tocar «Iniciar» en Telegram aceptas los avisos; `, el("a", { href: "/privacidad" }, "aviso de privacidad"), "."));
   }
   const cards = (zones) => el("div", { class: "zones" }, ...zones.map(zoneCard));
 
