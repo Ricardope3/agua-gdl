@@ -9,7 +9,9 @@ import (
 	"log/slog"
 	"time"
 
+	"aguagdl/api/internal/bot"
 	"aguagdl/api/internal/store"
+	"aguagdl/api/internal/tg"
 	"aguagdl/api/internal/wa"
 )
 
@@ -21,6 +23,10 @@ type Store interface {
 
 type Sender interface {
 	Send(ctx context.Context, m wa.Message) (string, error)
+}
+
+type TelegramSender interface {
+	Send(ctx context.Context, m tg.Message) (int64, error)
 }
 
 // Notice is one template for one zone. Key makes it idempotent: a re-run with the
@@ -38,9 +44,37 @@ var ErrCapped = errors.New("daily cap reached")
 
 const maxConsecutiveFailures = 5
 
-// Send reaches every pending subscriber of n.Zone and returns how many were sent.
+// Send reaches every pending WhatsApp subscriber of n.Zone with the template and returns
+// how many were sent.
 func Send(ctx context.Context, st Store, snd Sender, n Notice, dailyCap int, interval time.Duration, now func() time.Time, log *slog.Logger) (sent int, err error) {
-	subs, err := st.NoticeRecipients(ctx, store.WhatsApp, n.Zone, n.Key)
+	capped := func() error {
+		day, err := st.RecipientsSince(ctx, now().Add(-24*time.Hour))
+		if err == nil && day >= dailyCap {
+			err = ErrCapped
+		}
+		return err
+	}
+	return send(ctx, st, store.WhatsApp, n, interval, capped, log, func(current store.Subscriber) (string, error) {
+		return snd.Send(ctx, wa.NewTemplate(wa.Recipient{UserID: current.UserID, Phone: current.Phone}, n.Template, n.Language, wa.BodyParams(n.Params...)))
+	})
+}
+
+// SendTelegram reaches every pending Telegram subscriber of n.Zone with text, which may use
+// WhatsApp-style *bold*, and a button to SIAPA's map. Telegram has no daily cap.
+func SendTelegram(ctx context.Context, st Store, tel TelegramSender, n Notice, text string, interval time.Duration, log *slog.Logger) (int, error) {
+	return send(ctx, st, store.Telegram, n, interval, func() error { return nil }, log, func(current store.Subscriber) (string, error) {
+		m, err := bot.TelegramMessage(current.UserID, bot.Reply{Text: text})
+		if err != nil {
+			return "", err
+		}
+		m.ReplyMarkup = tg.InlineKeyboard{InlineKeyboard: [][]tg.InlineButton{{{Text: "🗺️ Mapa del SIAPA", URL: bot.MapURL}}}}
+		_, err = tel.Send(ctx, m)
+		return "", err
+	})
+}
+
+func send(ctx context.Context, st Store, channel string, n Notice, interval time.Duration, capped func() error, log *slog.Logger, deliver func(store.Subscriber) (string, error)) (sent int, err error) {
+	subs, err := st.NoticeRecipients(ctx, channel, n.Zone, n.Key)
 	if err != nil {
 		return 0, err
 	}
@@ -53,17 +87,13 @@ func Send(ctx context.Context, st Store, snd Sender, n Notice, dailyCap int, int
 			case <-time.After(interval):
 			}
 		}
-		day, capErr := st.RecipientsSince(ctx, now().Add(-24*time.Hour))
-		if capErr != nil {
+		if capErr := capped(); capErr != nil {
+			if errors.Is(capErr, ErrCapped) {
+				log.Warn("daily cap reached; run again later for the rest", "pending", len(subs)-i)
+			}
 			return sent, errors.Join(err, capErr)
 		}
-		if day >= dailyCap {
-			log.Warn("daily cap reached; run again later for the rest", "pending", len(subs)-i)
-			return sent, errors.Join(err, ErrCapped)
-		}
-		attempted, sendErr := st.SendNotice(ctx, s, n.Key, func(current store.Subscriber) (string, error) {
-			return snd.Send(ctx, wa.NewTemplate(wa.Recipient{UserID: current.UserID, Phone: current.Phone}, n.Template, n.Language, wa.BodyParams(n.Params...)))
-		})
+		attempted, sendErr := st.SendNotice(ctx, s, n.Key, deliver)
 		if sendErr != nil {
 			err = errors.Join(err, fmt.Errorf("subscriber %d: %w", s.ID, sendErr))
 			log.Error("notice attempt failed", "subscriber", s.ID, "err", sendErr)

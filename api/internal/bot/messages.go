@@ -170,6 +170,17 @@ func storedID(channel string) string {
 
 const msgAskPlace = "Para elegir tu zona, mándame tu 📍 *ubicación*, el *nombre de tu colonia* o tu zona, por ejemplo: *ZONA 4*"
 
+// ScheduleChange is cambio_rotacion's wording, for channels without templates.
+func ScheduleChange(zone int, days, from string) string {
+	return fmt.Sprintf(`⚠️ *Cambio en la rotación de la Zona %d*
+
+El SIAPA cambió los días de racionamiento. Ahora son: *%s*, a partir del %s.
+
+Te seguiré avisando la noche anterior 💧
+
+ℹ️ Aviso ciudadano, no oficial. Confirma en el mapa del SIAPA.`, zone, days, from)
+}
+
 // ManualReminder is the aviso_corte template as a normal text, for nights the template
 // can't be used (cmd/notify -tomorrow). A normal text can't carry the template's buttons.
 func ManualReminder(date string, zone int) string {

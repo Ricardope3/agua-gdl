@@ -34,3 +34,21 @@ func TestSendIsIdempotentAndCapped(t *testing.T) {
 		t.Errorf("unexpected template: %+v", tpl)
 	}
 }
+
+func TestSendTelegramReachesOnlyTelegramOnce(t *testing.T) {
+	ctx := context.Background()
+	st, tel := fake.NewStore(), &fake.Telegram{}
+	st.Subscribe(ctx, store.WhatsApp, "MX.a", "5211", 4)
+	st.Subscribe(ctx, store.Telegram, "777", "", 4)
+	st.Subscribe(ctx, store.Telegram, "778", "", 6)
+	n := Notice{Zone: 4, Key: "cambio_rotacion/4/2026-11-02"}
+	log := slog.New(slog.NewTextHandler(io.Discard, nil))
+	for range 2 {
+		if _, err := SendTelegram(ctx, st, tel, n, "⚠️ *Cambio*", 0, log); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if len(tel.Sent) != 1 || tel.Sent[0].ChatID != 777 || tel.Sent[0].Text != "⚠️ <b>Cambio</b>" {
+		t.Fatalf("sent %+v", tel.Sent)
+	}
+}

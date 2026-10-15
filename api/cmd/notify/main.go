@@ -17,6 +17,11 @@
 //
 //	DATABASE_URL='…' go run ./cmd/notify -zone 6 -tomorrow
 //	DATABASE_URL='…' WA_TOKEN='…' WA_PHONE_NUMBER_ID=… go run ./cmd/notify -zone 6 -tomorrow -send
+//
+// With -channel tg the schedule change goes to Telegram subscribers as a normal message
+// (Telegram has no templates, no 24-hour window and no daily cap):
+//
+//	DATABASE_URL='…' TG_TOKEN='…' go run ./cmd/notify -channel tg -zone 4 -from 2026-11-02 -send
 package main
 
 import (
@@ -37,6 +42,7 @@ import (
 	"aguagdl/api/internal/reminders"
 	"aguagdl/api/internal/rotation"
 	"aguagdl/api/internal/store"
+	"aguagdl/api/internal/tg"
 	"aguagdl/api/internal/wa"
 )
 
@@ -45,12 +51,18 @@ func main() {
 	from := flag.String("from", "", "cambio_rotacion: first day of the new schedule, YYYY-MM-DD")
 	tomorrow := flag.Bool("tomorrow", false, "send tomorrow's reminder for -zone as a normal text instead of cambio_rotacion")
 	send := flag.Bool("send", false, "send the messages; without it, only report")
+	channel := flag.String("channel", store.WhatsApp, "wa (WhatsApp) or tg (Telegram)")
 	flag.Parse()
 	var err error
-	if *tomorrow {
+	switch {
+	case *channel != store.WhatsApp && *channel != store.Telegram:
+		err = fmt.Errorf("-channel must be %s or %s", store.WhatsApp, store.Telegram)
+	case *tomorrow && *channel == store.Telegram:
+		err = errors.New("-tomorrow is for WhatsApp only: Telegram reminders need no fallback")
+	case *tomorrow:
 		err = runTomorrow(*zone, *send)
-	} else {
-		err = run(*zone, *from, *send)
+	default:
+		err = run(*channel, *zone, *from, *send)
 	}
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
@@ -58,7 +70,7 @@ func main() {
 	}
 }
 
-func run(zone int, from string, send bool) error {
+func run(channel string, zone int, from string, send bool) error {
 	loc, err := time.LoadLocation("America/Mexico_City")
 	if err != nil {
 		return err
@@ -92,11 +104,27 @@ func run(zone int, from string, send bool) error {
 	if err := db.Migrate(ctx); err != nil {
 		return err
 	}
-	due, err := db.NoticeRecipients(ctx, store.WhatsApp, zone, n.Key)
+	due, err := db.NoticeRecipients(ctx, channel, zone, n.Key)
 	if err != nil {
 		return err
 	}
-	fmt.Printf("%s to %d subscribers of zone %d: {{1}}=%s {{2}}=%s {{3}}=%s\n", n.Template, len(due), zone, n.Params[0], n.Params[1], n.Params[2])
+	fmt.Printf("%s to %d %s subscribers of zone %d: {{1}}=%s {{2}}=%s {{3}}=%s\n", n.Template, len(due), channel, zone, n.Params[0], n.Params[1], n.Params[2])
+	if channel == store.Telegram {
+		text := bot.ScheduleChange(zone, n.Params[1], n.Params[2])
+		fmt.Printf("\n%s\n\n", text)
+		if !send {
+			fmt.Println("Dry run. Check the days against SIAPA's calendar, then add -send.")
+			return nil
+		}
+		token := os.Getenv("TG_TOKEN")
+		if token == "" {
+			return errors.New("set TG_TOKEN to send")
+		}
+		client := &tg.Client{BaseURL: "https://api.telegram.org", Token: token, HTTP: &http.Client{Timeout: 15 * time.Second}}
+		sent, err := notices.SendTelegram(ctx, db, client, n, text, 100*time.Millisecond, slog.New(slog.NewTextHandler(os.Stderr, nil)))
+		fmt.Printf("sent %d\n", sent)
+		return err
+	}
 	if !send {
 		fmt.Println("Dry run. Check the days against SIAPA's calendar, then add -send.")
 		return nil
