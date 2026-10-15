@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
+	"net/url"
 	"os"
 	"os/signal"
 	"strconv"
@@ -188,21 +189,29 @@ func purge(ctx context.Context, db *store.DB, sched *rotation.Schedule, log *slo
 
 // heartbeat pings a dead-man's-switch URL (e.g. healthchecks.io) after each nightly run,
 // using its "/fail" endpoint when the run failed, hit a cap, or a reminder later went undelivered.
-func heartbeat(url string, log *slog.Logger) func(context.Context, bool, string) {
+func heartbeat(ping string, log *slog.Logger) func(context.Context, bool, string) {
 	client := &http.Client{Timeout: 10 * time.Second}
+	logErr := func(err error) {
+		// The ping URL works as a credential, so log only the cause.
+		var ue *url.Error
+		if errors.As(err, &ue) {
+			err = ue.Err
+		}
+		log.Error("heartbeat", "err", err)
+	}
 	return func(ctx context.Context, ok bool, msg string) {
-		target := url
+		target := ping
 		if !ok {
 			target += "/fail"
 		}
 		req, err := http.NewRequestWithContext(ctx, http.MethodPost, target, strings.NewReader(fmt.Sprintf("%.1000s", msg)))
 		if err != nil {
-			log.Error("heartbeat", "err", err)
+			logErr(err)
 			return
 		}
 		resp, err := client.Do(req)
 		if err != nil {
-			log.Error("heartbeat", "err", err)
+			logErr(err)
 			return
 		}
 		resp.Body.Close()

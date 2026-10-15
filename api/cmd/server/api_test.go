@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"io"
 	"log/slog"
@@ -46,5 +47,13 @@ func TestHeartbeatCapsTheBody(t *testing.T) {
 	heartbeat(srv.URL+"/ping", slog.New(slog.NewTextHandler(io.Discard, nil)))(context.Background(), false, strings.Repeat("é", 5000))
 	if path != "/ping/fail" || len([]rune(string(body))) != 1000 {
 		t.Fatalf("path %q, %d characters", path, len([]rune(string(body))))
+	}
+}
+
+func TestHeartbeatErrorsDontLogTheURL(t *testing.T) {
+	var logs bytes.Buffer
+	heartbeat("http://127.0.0.1:1/secret-check-id", slog.New(slog.NewTextHandler(&logs, nil)))(context.Background(), true, "ok")
+	if !strings.Contains(logs.String(), "heartbeat") || strings.Contains(logs.String(), "secret-check-id") {
+		t.Fatalf("the ping URL must stay out of the logs: %s", logs.String())
 	}
 }
