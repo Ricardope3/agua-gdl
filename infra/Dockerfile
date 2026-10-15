@@ -1,4 +1,4 @@
-FROM golang:1.25 AS build
+FROM golang:1.27 AS build
 WORKDIR /src
 COPY api/go.mod api/go.sum ./
 RUN go mod download
