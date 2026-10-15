@@ -122,14 +122,14 @@ h3.ih .i-badge { width: 28px; height: 28px }
     <p class="lede">Encuentra tu zona de la rotación de agua del SIAPA y tus próximos días de racionamiento.</p>
 
     <div class="finder">
-      <button class="button" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg#map-pin"/></svg>Usar mi ubicación</button>
+      <button class="button" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#map-pin"/></svg>Usar mi ubicación</button>
       <p class="note">Tu ubicación solo se usa para encontrar tu zona. No la guardamos.</p>
       <p class="or">o</p>
       <form id="buscar" role="search">
         <label for="colonia">Escribe el nombre de tu colonia</label>
         <div class="search">
           <input id="colonia" name="q" type="search" autocomplete="off" placeholder="Por ejemplo: Las Juntas">
-          <button class="button" type="submit"><svg class="i" aria-hidden="true"><use href="/icons.svg#search"/></svg>Buscar</button>
+          <button class="button" type="submit"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#search"/></svg>Buscar</button>
         </div>
       </form>
       <noscript><p class="note">Esta página necesita JavaScript. Consulta tu zona en el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa oficial del SIAPA</a>.</p></noscript>
@@ -138,7 +138,7 @@ h3.ih .i-badge { width: 28px; height: 28px }
     <div id="resultado" aria-live="polite" tabindex="-1"></div>
 
     <section aria-labelledby="ojo">
-      <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg#info"/></svg></span>Ten en cuenta</h2>
+      <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#info"/></svg></span>Ten en cuenta</h2>
       <ul class="plain">
         <li>Las zonas y los días vienen del mapa y de la lista de colonias que publica el SIAPA. El mapa y la lista no siempre coinciden; si tienes dudas, revisa el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa oficial del SIAPA</a>.</li>
         <li>Según el SIAPA, cada racionamiento dura máximo un día y no es un corte total: baja la presión del agua. La Silla Rota publicó que empieza a las 12 de la noche del día programado.</li>
@@ -180,7 +180,7 @@ h3.ih .i-badge { width: 28px; height: 28px }
     svg.setAttribute("class", "i");
     svg.setAttribute("aria-hidden", "true");
     const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-    use.setAttribute("href", `/icons.svg#${name}`);
+    use.setAttribute("href", `/icons.svg?v=2#${name}`);
     svg.append(use);
     return svg;
   };

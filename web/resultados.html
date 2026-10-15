@@ -131,10 +131,10 @@ h3.ih .i-badge { width: 28px; height: 28px }
     <noscript><p>Esta página necesita JavaScript para mostrar los resultados.</p></noscript>
 
     <section aria-labelledby="como">
-      <h2 id="como" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg#message-circle"/></svg></span>Cómo reportar</h2>
+      <h2 id="como" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#message-circle"/></svg></span>Cómo reportar</h2>
       <p>Si recibes los avisos, el día de racionamiento o después escribe <strong>REPORTAR</strong> en el chat de Agua GDL en Telegram y elige cómo regresó el agua: normal, con baja presión, si no ha regresado o si llegó turbia o con olor.</p>
       <p>Cuenta tu último día de racionamiento, durante los 14 días siguientes. Si cambias de respuesta, se queda la más reciente. Los reportes no llevan tu nombre ni tu número.</p>
-      <a class="button" href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg#bell"/></svg>Recibe el aviso</a>
+      <a class="button" href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#bell"/></svg>Recibe el aviso</a>
     </section>
   </main>
 
@@ -169,7 +169,7 @@ h3.ih .i-badge { width: 28px; height: 28px }
     svg.setAttribute("class", "i");
     svg.setAttribute("aria-hidden", "true");
     const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-    use.setAttribute("href", `/icons.svg#${name}`);
+    use.setAttribute("href", `/icons.svg?v=2#${name}`);
     svg.append(use);
     return svg;
   };
