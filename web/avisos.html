@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Recibir avisos · Agua GDL</title>
-<meta name="description" content="Recibe por Telegram un aviso gratuito la noche antes de cada corte de agua en tu zona por la rotación del SIAPA en Guadalajara.">
+<meta name="description" content="Recibe por Telegram o en tu calendario un aviso gratuito la noche antes de cada corte de agua en tu zona por la rotación del SIAPA en Guadalajara.">
 <link rel="canonical" href="https://aguagdl.com/avisos">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aguagdl.com/avisos">
-<meta property="og:title" content="Recibe el aviso de corte de agua en Telegram">
+<meta property="og:title" content="Recibe el aviso de corte de agua en Telegram o en tu calendario">
 <meta property="og:description" content="Un mensaje gratuito la noche antes de cada corte de la rotación del SIAPA en tu zona.">
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
 <meta property="og:locale" content="es_MX">
@@ -48,6 +48,9 @@ h1 { font-size: clamp(2rem, 6vw, 3rem); line-height: 1.08; letter-spacing: -.02e
 .button { display: inline-block; background: var(--brand-deep); color: var(--on-brand); font-weight: 700; font-size: 1.1rem; text-decoration: none; padding: 13px 22px; border-radius: 8px }
 .button:hover { background: var(--brand) }
 .consent { margin: 16px 0 0; font-size: .95rem }
+.options { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; align-items: start }
+.signup h2 { font-size: 1.25rem; margin: 0 0 8px }
+.signup > p:not(.consent):not(.alt) { margin: 0 0 16px; color: var(--muted) }
 .buttons { display: flex; flex-wrap: wrap; gap: 10px }
 .number { font-weight: 700; color: var(--fg); white-space: nowrap }
 .alt { margin: 12px 0 0; font-size: .95rem; color: var(--muted) }
@@ -93,20 +96,27 @@ h3.ih .i-badge { width: 28px; height: 28px }
   </header>
 
   <main>
-    <h1>Recibe el aviso de corte en Telegram</h1>
-    <p class="lede">La noche antes de cada corte de agua en tu zona, a las 8 p. m., te llega un mensaje para que llenes tu tinaco a tiempo. Es gratis.</p>
+    <h1>Recibe el aviso de corte de agua</h1>
+    <p class="lede">La noche antes de cada corte de agua en tu zona te avisamos para que llenes tu tinaco a tiempo. Es gratis. Elige cómo:</p>
 
-    <div class="signup">
-      <div class="buttons">
+    <div class="options">
+      <div class="signup">
+        <h2 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg#send"/></svg></span>Por Telegram</h2>
+        <p>Un mensaje a las 8 p. m. la noche anterior. Desde el chat también puedes cambiar de zona y contar cómo regresó el agua.</p>
         <a class="button" href="https://t.me/AvisoAguaGDLbot?start=hola" rel="noopener"><svg class="i" aria-hidden="true"><use href="/icons.svg#send"/></svg>Recibir avisos por Telegram</a>
+        <p class="consent">Al tocar «Iniciar» en Telegram aceptas recibir de <strong>Agua GDL</strong> un aviso la noche antes de cada corte de agua en tu zona (2 o 3 por semana) y las respuestas a lo que escribas. Para dejar de recibirlos, escribe <strong>BAJA</strong> cuando quieras. Solo guardamos el identificador de tu chat de Telegram y tu zona; lee el <a href="/privacidad">aviso de privacidad</a>.</p>
+        <p class="alt">¿No tienes Telegram? Es gratis: descárgalo en la tienda de apps de tu celular y vuelve a esta página. También puedes buscar <span class="number">@AvisoAguaGDLbot</span> en Telegram.</p>
       </div>
-      <p class="consent">Al tocar «Iniciar» en Telegram aceptas recibir de <strong>Agua GDL</strong> un aviso la noche antes de cada corte de agua en tu zona (2 o 3 por semana) y las respuestas a lo que escribas. Para dejar de recibirlos, escribe <strong>BAJA</strong> cuando quieras. Solo guardamos el identificador de tu chat de Telegram y tu zona; lee el <a href="/privacidad">aviso de privacidad</a>.</p>
-      <p class="alt">¿Prefieres tu calendario? En <a href="/llego">¿Qué zona me toca?</a> puedes agregar los días de tu zona a tu calendario del celular, con una alerta la noche anterior.</p>
-      <p class="alt">¿No tienes Telegram? Es gratis: descárgalo en la tienda de apps de tu celular y vuelve a esta página. También puedes buscar <span class="number">@AvisoAguaGDLbot</span> en Telegram.</p>
+      <div class="signup">
+        <h2 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg#calendar"/></svg></span>En tu calendario</h2>
+        <p>Los días de racionamiento de tu zona en el calendario de tu celular, con una alerta a las 8 p. m. la noche anterior. Sin apps nuevas y sin registrarte.</p>
+        <a class="button" href="/llego"><svg class="i" aria-hidden="true"><use href="/icons.svg#calendar"/></svg>Buscar mi zona y agregarla</a>
+        <p class="consent">Busca tu zona por ubicación o colonia y toca «Agregar los días de la zona a mi calendario». Funciona con el calendario del iPhone y con Google Calendar. No guardamos ningún dato tuyo.</p>
+      </div>
     </div>
 
     <section aria-labelledby="como">
-      <h2 id="como" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg#info"/></svg></span>Cómo funciona</h2>
+      <h2 id="como" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg#info"/></svg></span>Cómo funciona en Telegram</h2>
       <ol class="steps">
         <li><svg class="i" aria-hidden="true"><use href="/icons.svg#send"/></svg>Toca el botón y, en Telegram, toca «Iniciar».</li>
         <li><svg class="i" aria-hidden="true"><use href="/icons.svg#map-pin"/></svg>Dile dónde vives: manda tu ubicación, el nombre de tu colonia o tu zona (por ejemplo, <strong>ZONA 4</strong>).</li>
