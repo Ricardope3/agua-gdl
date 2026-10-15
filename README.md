@@ -1,8 +1,8 @@
 # Agua GDL
 
-Avisos gratuitos por WhatsApp la noche antes de cada corte de la rotación de agua del SIAPA (Guadalajara, oct 2026 – mar 2027). Servicio ciudadano, no oficial y sin partido.
+Avisos gratuitos por WhatsApp y Telegram la noche antes de cada corte de la rotación de agua del SIAPA (Guadalajara, oct 2026 – mar 2027). Servicio ciudadano, no oficial y sin partido.
 
-- `api/` servicio en Go: webhook de WhatsApp, avisos de las 20:00, búsqueda de zona y colonia, resultados.
+- `api/` servicio en Go: webhooks de WhatsApp y Telegram, avisos de las 20:00, búsqueda de zona y colonia, resultados.
 - `api/data/` zonas (KML público del SIAPA), 621 colonias (PDF del SIAPA del 12 oct 2026) y calendario semanal.
 - `pipelines/` scripts que regeneran `api/data` desde las fuentes del SIAPA y avisan si cambian.
 
@@ -14,7 +14,7 @@ cp .env.example .env   # llena los valores
 cd api && go test ./... && set -a && . ../.env && go run ./cmd/server
 ```
 
-Endpoints: `GET /v1/zones`, `GET /v1/zone?lat=&lon=`, `GET /v1/colonias?q=`, `GET /v1/results`, `GET|POST /wa/webhook`.
+Endpoints: `GET /v1/zones`, `GET /v1/zone?lat=&lon=`, `GET /v1/colonias?q=`, `GET /v1/results`, `GET|POST /wa/webhook`, `POST /tg/webhook` (solo con `TG_WEBHOOK_SECRET`).
 
 Las pruebas de integración crean y borran esquemas aislados en una base de pruebas:
 `cd api && TEST_DATABASE_URL=postgres://postgres:dev@localhost:55432/aguagdl?sslmode=disable go test -race ./...`.
@@ -22,7 +22,9 @@ CI las ejecuta con PostgreSQL 17. Sin `TEST_DATABASE_URL`, esas pruebas se omite
 
 ## Despliegue
 
-`fly launch --copy-config --no-deploy`, luego `fly secrets set DATABASE_URL='…' PUBLIC_BASE_URL=https://aguagdl.com WA_TOKEN='…' WA_PHONE_NUMBER_ID=… WA_APP_SECRET='…' WA_VERIFY_TOKEN='…' HEARTBEAT_URL='…'` (con comillas simples: el `?` y el `&` de la URL de Neon rompen el comando en zsh) y `fly deploy --ha=false`. Sin `--ha=false`, el primer despliegue crea dos máquinas: no duplican avisos, pero la que termina primero cuenta como `sending` el envío en curso de la otra y manda una falsa alarma al heartbeat. Despliega desde `main` limpio: `fly deploy` sube la carpeta local. Los avisos solo salen con `REMINDERS_ENABLED=true`.
+`fly launch --copy-config --no-deploy`, luego `fly secrets set DATABASE_URL='…' PUBLIC_BASE_URL=https://aguagdl.com WA_TOKEN='…' WA_PHONE_NUMBER_ID=… WA_APP_SECRET='…' WA_VERIFY_TOKEN='…' HEARTBEAT_URL='…'` (con comillas simples: el `?` y el `&` de la URL de Neon rompen el comando en zsh) y `fly deploy --ha=false`. Sin `--ha=false`, el primer despliegue crea dos máquinas: no duplican avisos, pero la que termina primero cuenta como `sending` el envío en curso de la otra y manda una falsa alarma al heartbeat. Despliega desde `main` limpio: `fly deploy` sube la carpeta local. Los avisos solo salen con `REMINDERS_ENABLED=true` (WhatsApp) o `TG_REMINDERS_ENABLED=true` (Telegram); cada canal se envía aparte y la falla de uno no detiene al otro.
+
+Telegram: crea el bot con @BotFather, guarda `TG_TOKEN` y `TG_WEBHOOK_SECRET` (`openssl rand -hex 32`) con `fly secrets import`, despliega y corre una vez `cd api && TG_TOKEN='…' TG_WEBHOOK_SECRET='…' go run ./cmd/tgsetup`: registra el webhook, el nombre, las descripciones y el menú de comandos. Telegram no tiene plantillas, ventana de 24 horas ni tope diario; guardamos el ID del chat, no el número. Si alguien bloquea el bot, se borra su suscripción. El enlace `https://t.me/<bot>?start=z4` suscribe directo a la zona 4.
 
 Antes de desplegar la migración `005_phone_unique.sql` sobre una base que ya tenga suscriptores, revisa si algún número está en más de una suscripción; la migración conserva solo la más reciente de cada número:
 

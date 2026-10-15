@@ -4,7 +4,7 @@ Instructions for AI coding agents working in this repo. Humans: see README.md (S
 
 ## What this is
 
-Agua GDL sends free WhatsApp reminders the evening before each cut of SIAPA's water rotation in Guadalajara (Oct 2026 – Mar 2027), and collects "how did the water come back" reports. It's a civic project: no official affiliation, nonpartisan.
+Agua GDL sends free WhatsApp and Telegram reminders the evening before each cut of SIAPA's water rotation in Guadalajara (Oct 2026 – Mar 2027), and collects "how did the water come back" reports. It's a civic project: no official affiliation, nonpartisan.
 
 ## Layout
 
@@ -13,7 +13,9 @@ Agua GDL sends free WhatsApp reminders the evening before each cut of SIAPA's wa
   - `internal/geo`: zone lookup by point (SIAPA polygons).
   - `internal/colonias`: name normalization and fuzzy search.
   - `internal/wa`: WhatsApp Cloud API client, webhook types, signature check.
-  - `internal/bot`: inbound message routing. **All user-facing Spanish copy lives in `internal/bot/messages.go`.**
+  - `internal/tg`: Telegram Bot API client, update types, webhook secret check. The token is in every request URL, so errors never include the URL.
+  - `internal/bot`: inbound message routing for both channels: `Handle` (WhatsApp) and `HandleTelegram` feed the same handlers, which reply with channel-neutral `Reply` values rendered per channel. **All user-facing Spanish copy lives in `internal/bot/messages.go`** (WhatsApp-style `*bold*`; Telegram gets it as HTML).
+  - `cmd/tgsetup`: one-off; sets the Telegram webhook (with `TG_WEBHOOK_SECRET`), name, descriptions and command menu.
   - `internal/reminders`: the nightly 20:00 sender, caps and heartbeat.
   - `internal/notices`: one-off templates to a zone (`cambio_rotacion`), reserved in the `notice` table with the same guarantees as reminders.
   - `internal/store`: Postgres, with embedded SQL migrations in `internal/store/migrations` (add new numbered files; never edit applied ones). `Migrate` holds a Postgres advisory lock so two machines starting at once don't race; that needs a direct connection, so `DATABASE_URL` must be Neon's non-pooler URL.
@@ -40,7 +42,8 @@ CI (`.github/workflows/ci.yml`) runs vet and race tests against Postgres 17 and 
 
 ## Rules
 
-- Never send real WhatsApp messages from tests or local runs. `REMINDERS_ENABLED` stays false unless the maintainer turns it on in production.
+- Never send real WhatsApp or Telegram messages from tests or local runs. `REMINDERS_ENABLED` and `TG_REMINDERS_ENABLED` stay false unless the maintainer turns them on in production.
+- Channels: `subscriber.channel` is `wa` or `tg` (one subscription per channel and user ID); `reminder` and `notice` rows carry the channel too. Meta's caps and `NightCap` count WhatsApp only. The runner sends each enabled channel independently. A Telegram 403 (bot blocked) deletes the subscription and marks the attempt `blocked`; a 429 is waited out (nothing was sent).
 - Don't relax the safety rails: idempotent sends per (subscriber, cut date), daily and monthly caps, the heartbeat, never resending an attempt WhatsApp may have accepted (only `rejected` attempts are retried), and the webhook signature check. A duplicate or missed reminder is the worst bug here.
 - Caps: `DAILY_CAP` counts distinct recipients in a moving 24 hours, like Meta's messaging limit (250 for a new portfolio), across reminders and notices; when it's full the runner waits for the window instead of skipping anyone, and gives up only at `CATCH_UP_UNTIL_HOUR`. The bot refuses a subscription or zone change that would push any night over `DAILY_CAP` (`msgFull`). Raise `DAILY_CAP` only after Meta raises the portfolio's limit. `MONTHLY_CAP` counts messages (cost).
 - Privacy: store only the phone number, zone and consent time. BAJA must delete the subscriber; reports stay anonymous. A phone number belongs to at most one subscription, the one Meta most recently tied to it (partial unique index, migration 005): `Subscribe` and `ChangeUser` drop any other row holding it, and BAJA deletes every row with the sender's ID or number. Thirty days after `end` in `rotation.json` the server deletes every subscriber (`rotation.Expired`), as the privacy notice promises: move `end` if SIAPA extends the rotation. Never log phone numbers or WhatsApp message IDs: a wamid embeds the phone number, so the database stores only its SHA-256. No secrets in the repo; config comes from env vars (see `.env.example`).
