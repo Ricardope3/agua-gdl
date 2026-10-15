@@ -59,6 +59,7 @@ section p { margin: 0 0 14px; max-width: 65ch }
 .people { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px }
 .people li { display: flex; justify-content: space-between; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px }
 .people small { display: block; color: var(--muted); overflow-wrap: anywhere }
+.people li, .people span { min-width: 0 }
 .people a { white-space: nowrap; font-weight: 700 }
 footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .9rem }
 footer p { margin: 0 0 8px; max-width: 70ch }
@@ -93,8 +94,8 @@ Atentamente,
 [Tu colonia y municipio]</textarea>
       </div>
       <div class="actions">
-        <a class="button" id="gmail" href="#" rel="noopener" target="_blank">Abrir en Gmail</a>
-        <a class="button" id="mailto" href="#">Abrir en mi app de correo</a>
+        <a class="button" id="gmail" href="#" rel="noopener" target="_blank">✉️ Enviar a los 38 con Gmail</a>
+        <a class="button" id="mailto" href="#">✉️ Enviar a los 38 con mi app de correo</a>
         <button class="button alt" type="button" id="copiar-correos">Copiar correos</button>
         <button class="button alt" type="button" id="copiar-texto">Copiar texto</button>
       </div>
