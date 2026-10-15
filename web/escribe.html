@@ -119,7 +119,13 @@ Atentamente,
       <p>Un post para cada diputación que tiene cuenta en X. Cada botón abre X con «Dip. @cuenta,» y este texto, que puedes cambiar:</p>
       <textarea id="post" class="post" maxlength="250">le pido que vote EN CONTRA de privatizar o concesionar el agua en Jalisco. El agua es un derecho humano, no un negocio. Daré seguimiento a su voto. #ElAguaEsUnDerecho #NoALaPrivatizacionDelAgua #Jalisco</textarea>
       <p class="note" id="post-cuenta"></p>
-      <p class="note">Usamos solo las cuentas que cada diputación publica en su perfil del Congreso (6 no tienen X). En la lista de abajo, «💬 Messenger» copia el mensaje y abre su chat de Facebook: solo pégalo y envíalo.</p>
+      <div class="actions">
+        <a class="button" id="siguiente-x" href="#" rel="noopener" target="_blank">𝕏 Publicar</a>
+        <a class="button" id="siguiente-fb" href="#" rel="noopener" target="_blank">💬 Messenger</a>
+      </div>
+      <p class="note" id="progreso-x"></p>
+      <p class="note" id="progreso-fb"></p>
+      <p class="note">Usamos solo las cuentas que cada diputación publica en su perfil del Congreso: 32 tienen X y 35 tienen Facebook. Messenger no deja poner el texto por adelantado, así que el botón lo copia y abre el chat: solo pégalo y envíalo.</p>
     </section>
 
     <section aria-labelledby="uno">
@@ -220,9 +226,8 @@ Atentamente,
       $("progreso").replaceChildren(`¡Listo! Ya les escribiste a las ${DIPUTADOS.length} diputaciones. Gracias. `, reset);
     }
     const post = $("post").value.trim();
-    document.querySelectorAll("[data-x]").forEach((a) => {
-      a.href = `https://x.com/intent/tweet?text=${q(`Dip. @${a.dataset.x}, ${post}`)}`;
-    });
+    document.querySelectorAll("[data-x]").forEach((a) => { a.href = xUrl(a.dataset.x); });
+    socials.forEach((st) => st.refresh());
     const longest = Math.max(...DIPUTADOS.map((d) => (d[2] || "").length));
     $("post-cuenta").textContent = `${post.length + longest + 8} de 280 caracteres con la mención más larga.`;
     document.querySelectorAll("[data-to]").forEach((a) => {
@@ -242,6 +247,44 @@ Atentamente,
   const mark = (email) => setTimeout(() => { sent.add(email); save(); refresh(); }, 0);
   $("siguiente").addEventListener("click", () => { const next = nextOne(); if (next) mark(next[1]); });
   document.querySelectorAll('input[name="via"]').forEach((r) => r.addEventListener("change", refresh));
+
+  // The same one-by-one stepping for X posts and Messenger chats, each with its own progress.
+  const xUrl = (handle) => `https://x.com/intent/tweet?text=${q(`Dip. @${handle}, ${$("post").value.trim()}`)}`;
+  const copyChat = (name) => copy(`Dip. ${name}, ${$("post").value.replace(/\s*#\S+/g, "").trim()}`,
+    `Copiamos el mensaje para ${name}: pégalo en el chat de Messenger.`);
+  function stepper(key, field, btnId, progressId, verb, url, onOpen, attr) {
+    const people = DIPUTADOS.filter((d) => d[field]);
+    let done = new Set();
+    try { done = new Set(JSON.parse(localStorage.getItem(key) || "[]")); } catch {}
+    const store = () => { try { localStorage.setItem(key, JSON.stringify([...done])); } catch {} };
+    const next = () => people.find((d) => !done.has(d[field]));
+    const restart = document.createElement("a");
+    restart.href = "#";
+    restart.textContent = "Empezar de nuevo";
+    restart.addEventListener("click", (e) => { e.preventDefault(); done.clear(); store(); self.refresh(); });
+    const self = {
+      mark: (id) => setTimeout(() => { done.add(id); store(); self.refresh(); }, 0),
+      refresh() {
+        const n = next();
+        const btn = $(btnId);
+        btn.hidden = !n;
+        if (n) {
+          btn.href = url(n);
+          btn.textContent = `${verb} ${n[0]} (${done.size + 1} de ${people.length})`;
+          $(progressId).textContent = done.size ? `Llevas ${done.size} de ${people.length}.` : "";
+        } else {
+          $(progressId).replaceChildren(`¡Listo! ${people.length} de ${people.length}. `, restart);
+        }
+        document.querySelectorAll(`[data-${attr}]`).forEach((a) => a.classList.toggle("done", done.has(a.dataset[attr])));
+      },
+    };
+    $(btnId).addEventListener("click", () => { const n = next(); if (n) { onOpen(n); self.mark(n[field]); } });
+    return self;
+  }
+  const socials = [
+    stepper("escribe-x", 2, "siguiente-x", "progreso-x", "𝕏 Publicar para", (d) => xUrl(d[2]), () => {}, "x"),
+    stepper("escribe-messenger", 3, "siguiente-fb", "progreso-fb", "💬 Messenger a", (d) => `https://m.me/${d[3]}`, (d) => copyChat(d[0]), "fb"),
+  ];
 
   const list = $("personas");
   for (const [name, email, x, fb] of DIPUTADOS) {
@@ -265,6 +308,8 @@ Atentamente,
       const post = document.createElement("a");
       post.textContent = "𝕏 Publicar";
       post.dataset.x = x;
+      post.dataset.name = name;
+      post.addEventListener("click", () => socials[0].mark(x));
       post.rel = "noopener";
       post.target = "_blank";
       links.append(post);
@@ -276,10 +321,8 @@ Atentamente,
       chat.href = `https://m.me/${fb}`;
       chat.rel = "noopener";
       chat.target = "_blank";
-      chat.addEventListener("click", () => {
-        const text = `Dip. ${name}, ${$("post").value.replace(/\s*#\S+/g, "").trim()}`;
-        copy(text, `Copiamos el mensaje para ${name}: pégalo en el chat de Messenger.`);
-      });
+      chat.dataset.fb = fb;
+      chat.addEventListener("click", () => { copyChat(name); socials[1].mark(fb); });
       links.append(chat);
     }
     li.append(who, links);
