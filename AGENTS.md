@@ -8,7 +8,7 @@ Agua GDL sends free WhatsApp reminders the evening before each cut of SIAPA's wa
 
 ## Layout
 
-- `api/`: Go module `aguagdl/api` (Go 1.27, pgx v5). Entry points `cmd/server` (API, webhook, nightly reminders, daily purge) and `cmd/notify` (sends `cambio_rotacion` to one zone; dry run unless `-send`; run by the maintainer, see README).
+- `api/`: Go module `aguagdl/api` (Go 1.27, pgx v5). Entry points `cmd/server` (API, webhook, nightly reminders, daily purge) and `cmd/notify` (sends `cambio_rotacion` to one zone, or with `-tomorrow` tomorrow's reminder as a normal text to the zone's subscribers inside WhatsApp's 24-hour window, reserved in `reminder` so the nightly run won't repeat it; dry run unless `-send`; run by the maintainer, see README).
   - `internal/rotation`: schedule math and Spanish date formatting. Times are always `America/Mexico_City` (UTC−6, no DST); binaries embed `time/tzdata`.
   - `internal/geo`: zone lookup by point (SIAPA polygons).
   - `internal/colonias`: name normalization and fuzzy search.

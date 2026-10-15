@@ -86,6 +86,16 @@ DATABASE_URL='…' WA_TOKEN='…' WA_PHONE_NUMBER_ID=… go run ./cmd/notify -zo
 
 Cuenta para el tope diario igual que los avisos; si el tope lo detiene, vuelve a correr el mismo comando más tarde: no repite a quien ya lo recibió.
 
+Si la plantilla `aviso_corte` todavía no está aprobada (o Meta la pausó), puedes mandar el aviso de mañana como mensaje normal. WhatsApp solo entrega mensajes normales a quien escribió en las últimas 24 horas, así que llega solo a quien se suscribió o cambió de zona en las últimas 23. Queda registrado como el aviso de esa noche: la corrida de las 20:00 no se lo repite. En zsh, `read -s` pide cada valor sin mostrarlo ni guardarlo en el historial:
+
+```sh
+cd api
+read -s 'DATABASE_URL?URL de Neon: '; export DATABASE_URL
+go run ./cmd/notify -zone 6 -tomorrow          # solo muestra a cuántos y el texto
+read -s 'WA_TOKEN?Token: '; export WA_TOKEN
+WA_PHONE_NUMBER_ID=… WA_GRAPH_VERSION=… go run ./cmd/notify -zone 6 -tomorrow -send
+```
+
 Para regenerar colonias:
 
 ```sh
