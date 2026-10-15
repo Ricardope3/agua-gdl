@@ -15,6 +15,7 @@ Agua GDL sends free WhatsApp and Telegram reminders the evening before each cut 
   - `internal/wa`: WhatsApp Cloud API client, webhook types, signature check.
   - `internal/tg`: Telegram Bot API client, update types, webhook secret check. The token is in every request URL, so errors never include the URL.
   - `internal/bot`: inbound message routing for both channels: `Handle` (WhatsApp) and `HandleTelegram` feed the same handlers, which reply with channel-neutral `Reply` values rendered per channel. **All user-facing Spanish copy lives in `internal/bot/messages.go`** (WhatsApp-style `*bold*`; Telegram gets it as HTML).
+  - `cmd/calendars`: writes `web/calendario/zona-N.ics` (subscribable calendars linked from /llego) from `rotation.json`; run it from `api/` whenever the rotation changes. `internal/calendar`'s test fails if the published files are stale.
   - `cmd/tgsetup`: one-off; sets the Telegram webhook (with `TG_WEBHOOK_SECRET`), name, descriptions and command menu.
   - `internal/reminders`: the nightly 20:00 sender, caps and heartbeat.
   - `internal/notices`: one-off templates to a zone (`cambio_rotacion`), reserved in the `notice` table with the same guarantees as reminders.

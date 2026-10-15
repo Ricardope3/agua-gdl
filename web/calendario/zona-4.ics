@@ -1,0 +1,876 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Agua GDL//Rotación del SIAPA//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Agua GDL · Zona 4
+X-WR-CALDESC:Días de racionamiento de la zona 4 según el calendario del S
+ IAPA. Agua GDL es una iniciativa ciudadana\, no oficial.
+X-WR-TIMEZONE:America/Mexico_City
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VEVENT
+UID:zona-4-20261015@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261015
+DTEND;VALUE=DATE:20261016
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20261019@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261019
+DTEND;VALUE=DATE:20261020
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20261022@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261022
+DTEND;VALUE=DATE:20261023
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20261026@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261026
+DTEND;VALUE=DATE:20261027
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20261029@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261029
+DTEND;VALUE=DATE:20261030
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20261102@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261102
+DTEND;VALUE=DATE:20261103
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20261105@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261105
+DTEND;VALUE=DATE:20261106
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20261109@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261109
+DTEND;VALUE=DATE:20261110
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20261112@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261112
+DTEND;VALUE=DATE:20261113
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20261116@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261116
+DTEND;VALUE=DATE:20261117
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20261119@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261119
+DTEND;VALUE=DATE:20261120
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20261123@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261123
+DTEND;VALUE=DATE:20261124
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20261126@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261126
+DTEND;VALUE=DATE:20261127
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20261130@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261130
+DTEND;VALUE=DATE:20261201
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20261203@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261203
+DTEND;VALUE=DATE:20261204
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20261207@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261207
+DTEND;VALUE=DATE:20261208
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20261210@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261210
+DTEND;VALUE=DATE:20261211
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20261214@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261214
+DTEND;VALUE=DATE:20261215
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20261217@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261217
+DTEND;VALUE=DATE:20261218
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20261221@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261221
+DTEND;VALUE=DATE:20261222
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20261224@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261224
+DTEND;VALUE=DATE:20261225
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20261228@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261228
+DTEND;VALUE=DATE:20261229
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20261231@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261231
+DTEND;VALUE=DATE:20270101
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270104@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270104
+DTEND;VALUE=DATE:20270105
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270107@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270107
+DTEND;VALUE=DATE:20270108
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270111@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270111
+DTEND;VALUE=DATE:20270112
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270114@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270114
+DTEND;VALUE=DATE:20270115
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270118@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270118
+DTEND;VALUE=DATE:20270119
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270121@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270121
+DTEND;VALUE=DATE:20270122
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270125@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270125
+DTEND;VALUE=DATE:20270126
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270128@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270128
+DTEND;VALUE=DATE:20270129
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270201@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270201
+DTEND;VALUE=DATE:20270202
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270204@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270204
+DTEND;VALUE=DATE:20270205
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270208@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270208
+DTEND;VALUE=DATE:20270209
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270211@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270211
+DTEND;VALUE=DATE:20270212
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270215@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270215
+DTEND;VALUE=DATE:20270216
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270218@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270218
+DTEND;VALUE=DATE:20270219
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270222@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270222
+DTEND;VALUE=DATE:20270223
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270225@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270225
+DTEND;VALUE=DATE:20270226
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270301@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270301
+DTEND;VALUE=DATE:20270302
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270304@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270304
+DTEND;VALUE=DATE:20270305
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270308@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270308
+DTEND;VALUE=DATE:20270309
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270311@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270311
+DTEND;VALUE=DATE:20270312
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270315@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270315
+DTEND;VALUE=DATE:20270316
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270318@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270318
+DTEND;VALUE=DATE:20270319
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270322@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270322
+DTEND;VALUE=DATE:20270323
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270325@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270325
+DTEND;VALUE=DATE:20270326
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-4-20270329@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270329
+DTEND;VALUE=DATE:20270330
+SUMMARY:💧 Racionamiento de agua · Zona 4
+DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
+ ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
+ ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
+ al): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana hay racionamiento de agua en la zona 4
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+END:VCALENDAR

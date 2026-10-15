@@ -85,6 +85,9 @@ func isoDay(w time.Weekday) int { return (int(w) + 6) % 7 }
 
 func (s *Schedule) Location() *time.Location { return s.loc }
 
+// Span returns the rotation's first and last day; end is zero when the rotation has no end date.
+func (s *Schedule) Span() (start, end time.Time) { return s.start, s.end }
+
 // Day returns midnight of t's calendar day in Guadalajara.
 func (s *Schedule) Day(t time.Time) time.Time {
 	y, m, d := t.In(s.loc).Date()

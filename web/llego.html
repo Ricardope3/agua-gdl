@@ -69,6 +69,9 @@ label { display: block; font-weight: 700; margin: 0 0 6px }
 .zone p { margin: 0 0 6px }
 .zone ul { margin: 0; padding-left: 1.2em }
 .zone li { margin: 0 0 2px }
+.cal { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 10px }
+.cal summary { cursor: pointer; font-weight: 600; color: var(--link) }
+.button.alt { background: var(--surface); color: var(--link); border-color: var(--line) }
 .zone .subscribe { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px }
 .choices { list-style: none; margin: 0 0 14px; padding: 0; display: grid; gap: 8px }
 .choice { width: 100%; text-align: left; font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; cursor: pointer }
@@ -241,6 +244,21 @@ h3.ih .i-badge { width: 28px; height: 28px }
   }
 
   const TELEGRAM = "https://t.me/AvisoAguaGDLbot";
+  const calendarURL = (zone) => `aguagdl.com/calendario/zona-${zone}.ics`;
+  function calendarLinks(zone) {
+    const copy = el("button", { type: "button", class: "button alt" }, icon("copy"), "Copiar enlace");
+    copy.addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(`https://${calendarURL(zone)}`); copy.replaceChildren(icon("check"), "Copiado"); }
+      catch { copy.replaceChildren(`https://${calendarURL(zone)}`); }
+    });
+    return el("details", { class: "cal" },
+      el("summary", {}, icon("calendar"), " Agregar los días de la zona a mi calendario"),
+      el("div", { class: "subscribe" },
+        el("a", { class: "button alt", href: `webcal://${calendarURL(zone)}` }, "iPhone o Mac"),
+        el("a", { class: "button alt", href: `https://calendar.google.com/calendar/render?cid=${encodeURIComponent(`webcal://${calendarURL(zone)}`)}`, rel: "noopener" }, "Android o Google Calendar"),
+        copy),
+      el("p", { class: "note" }, "Te suscribes a un calendario con los días de racionamiento de la zona y una alerta a las 8 p. m. de la noche anterior. Se actualiza solo si el SIAPA cambia el calendario. Si no te llega la alerta, actívala en los ajustes del calendario para eventos de todo el día. No guardamos ningún dato tuyo."));
+  }
 
   function zoneCard(z) {
     const today = isoToday(0);
@@ -253,7 +271,8 @@ h3.ih .i-badge { width: 28px; height: 28px }
         : el("p", {}, "No hay más días en el calendario que publicó el SIAPA."),
       el("div", { class: "subscribe" },
         el("a", { class: "button", href: `${TELEGRAM}?start=z${z.zone}`, rel: "noopener" }, icon("bell"), "Recibir el aviso por Telegram")),
-      el("p", { class: "note" }, `Gratis, la noche antes de cada corte de la zona ${z.zone}. Al tocar «Iniciar» en Telegram aceptas los avisos; `, el("a", { href: "/privacidad" }, "aviso de privacidad"), "."));
+      el("p", { class: "note" }, `Gratis, la noche antes de cada corte de la zona ${z.zone}. Al tocar «Iniciar» en Telegram aceptas los avisos; `, el("a", { href: "/privacidad" }, "aviso de privacidad"), "."),
+      calendarLinks(z.zone));
   }
   const cards = (zones) => el("div", { class: "zones" }, ...zones.map(zoneCard));
 

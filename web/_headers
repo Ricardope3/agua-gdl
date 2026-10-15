@@ -14,3 +14,6 @@
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 /site.webmanifest
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/calendario/*
+  Content-Type: text/calendar; charset=utf-8
+  Cache-Control: public, max-age=3600
