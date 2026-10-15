@@ -91,6 +91,15 @@ h2 { font-weight: 600; letter-spacing: -.02em }
 .search input, .filter select { border: 1px solid var(--line); box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s }
 .search input:focus-visible, .filter select:focus-visible { border-color: var(--brand) }
 footer { font-size: .85rem }
+.congreso { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; box-shadow: var(--shadow); padding: 28px 24px; margin: 0 0 40px }
+.congreso p { max-width: 65ch; color: var(--muted); margin: 0 0 16px }
+.facts { list-style: none; padding: 0; margin: 0 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px }
+.facts li { background: var(--subtle); border-radius: 10px; padding: 14px 16px }
+.facts strong { display: block; font-size: 1.35rem; line-height: 1.2; letter-spacing: -.02em; color: var(--fg) }
+.facts span { color: var(--muted); font-size: .9rem }
+.buttons { display: flex; flex-wrap: wrap; gap: 10px }
+.button.alt { background: var(--surface); color: var(--link); border-color: var(--line) }
+.button.alt:hover { background: var(--subtle) }
 </style>
 </head>
 <body>
@@ -113,6 +122,21 @@ footer { font-size: .85rem }
       </div>
     </div>
 
+    <section class="congreso" aria-labelledby="congreso">
+      <h2 id="congreso">Escríbele al Congreso sobre el contrato del agua</h2>
+      <p>El Gobierno de Jalisco pidió al Congreso aprobar un contrato de asociación público-privada (APP) para que la Comisión Estatal del Agua construya y opere el acueducto sustituto Chapala–Guadalajara. Pide a las y los diputados que no lo aprueben sin estudios actualizados, matriz de riesgos y desglose de pagos.</p>
+      <ul class="facts">
+        <li><strong>$11,922 millones</strong><span>cuesta la obra</span></li>
+        <li><strong>hasta $48,296 millones</strong><span>pagaría el Estado en 25 años</span></li>
+        <li><strong>26 de 38</strong><span>votos necesita para aprobarse</span></li>
+      </ul>
+      <p>Desde tu propia cuenta, en unos minutos: un correo a cada diputación, un post en X o un mensaje por Messenger. Agua GDL no ve ni guarda nada.</p>
+      <div class="buttons">
+        <a class="button" href="/escribe">✉️ Escribir al Congreso</a>
+        <a class="button alt" href="https://firmale.iepcjalisco.mx/mecanismo/comision-estatal-del-vej21bkjvl" rel="noopener" target="_blank">Firmar la solicitud en el IEPC</a>
+      </div>
+    </section>
+
     <section aria-labelledby="que">
       <h2 id="que">Lo que estamos haciendo</h2>
       <ul class="cards">
@@ -124,11 +148,6 @@ footer { font-size: .85rem }
         <li class="card">
           <h3>¿Llegó el agua?</h3>
           <p>Después de cada corte puedes contar cómo regresó el agua: normal, con baja presión, turbia o si no regresó. Publicamos los resultados por zona.</p>
-          <span class="status">Disponible</span>
-        </li>
-        <li class="card">
-          <h3>Pide al Congreso transparencia en el contrato del agua</h3>
-          <p>Escríbeles a las y los 38 diputados de Jalisco, por correo, X o Messenger, para que no aprueben a ciegas el contrato APP del acueducto Chapala–Guadalajara. Y firma la solicitud de Contraloría Social en el IEPC. <a href="/escribe">Escribir al Congreso</a></p>
           <span class="status">Disponible</span>
         </li>
       </ul>
