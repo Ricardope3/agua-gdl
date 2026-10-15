@@ -63,7 +63,8 @@ label { display: block; font-weight: 700; margin: 0 0 6px }
 .msg { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--brand); border-radius: 10px; padding: 16px 18px; font-size: 1.02rem }
 .result { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; padding: 20px; box-shadow: var(--shadow) }
 .result h3 { margin: 0 0 10px; font-size: 1.2rem; line-height: 1.3 }
-.result p { margin: 0 0 14px; color: var(--muted) }
+.result p { margin: 0 0 16px; color: var(--muted) }
+.result .subscribe { display: flex; flex-wrap: wrap; gap: 10px }
 .warn { background: var(--warn-bg); border-left: 5px solid var(--warn); border-radius: 8px; padding: 12px 14px }
 .linklike { font: inherit; color: var(--link); background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer }
 .zones { display: grid; gap: 12px; margin: 0 0 14px }
@@ -315,7 +316,7 @@ h3.ih .i-badge { width: 28px; height: 28px }
         if (r.zones.length === 0) {
           show(result("map-pin", "Tu ubicación no está en ninguna zona del mapa del SIAPA",
             el("p", {}, "Puede que no te toque la rotación. Pero el mapa y la lista de colonias del SIAPA no siempre coinciden, así que revisa también con el nombre de tu colonia."),
-            el("div", { class: "subscribe" }, searchButton("Buscar mi colonia"), el("a", { class: "button alt", href: MAP, rel: "noopener" }, icon("map-pin"), "Ver el mapa del SIAPA"))));
+            el("div", { class: "subscribe" }, searchButton("Buscar mi colonia"), el("a", { class: "button alt", href: MAP, rel: "noopener", target: "_blank" }, icon("map-pin"), "Ver el mapa del SIAPA", icon("external-link")))));
         } else if (r.zones.length === 1) {
           show(el("p", {}, "Tu ubicación está en la ", el("strong", {}, `zona ${r.zones[0].zone}`), "."), cards(r.zones));
         } else {
