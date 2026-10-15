@@ -87,6 +87,7 @@ section ul:not(.people) { margin: 0; padding-left: 20px; color: var(--muted); fo
 .people li, .people span { min-width: 0 }
 .people .links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 12px; flex-shrink: 0; max-width: 55% }
 .people a { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; font-weight: 500; font-size: .875rem; text-decoration: none }
+@media (max-width: 640px) { .people li { flex-direction: column; align-items: stretch } .people .links { max-width: none; justify-content: flex-start } }
 .people a.who { white-space: normal; color: var(--fg); font-size: .95rem }
 .people a:hover { text-decoration: underline }
 .people .done { color: var(--muted); font-weight: 400 }
@@ -385,8 +386,10 @@ Atentamente,</textarea>
     const small = document.createElement("small");
     small.textContent = `${where(info)} · ${info.p}${info.j ? " · Junta de Coordinación Política" : ""}`;
     const contact = document.createElement("small");
-    contact.textContent = `${email} · ${phoneText(info)}`;
-    who.append(prof, small, contact);
+    contact.textContent = email;
+    const tel = document.createElement("small");
+    tel.textContent = `Tel. ${phoneText(info)}`;
+    who.append(prof, small, contact, tel);
     const a = document.createElement("a");
     a.append(icon("mail"), "Escribir");
     a.dataset.to = email;
