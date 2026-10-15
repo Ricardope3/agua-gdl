@@ -256,6 +256,12 @@ h3.ih .i-badge { width: 28px; height: 28px }
 
   const TELEGRAM = "https://t.me/AvisoAguaGDLbot";
   const calendarURL = (zone) => `aguagdl.com/calendario/zona-${zone}.ics`;
+  const googleCalendar = (zone) => `https://calendar.google.com/calendar/render?cid=${encodeURIComponent(`webcal://${calendarURL(zone)}`)}`;
+  const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  // iPhones import the file with its alert kept; everyone else gets Google Calendar, the default on Android.
+  const calendarButton = (zone) => isIOS
+    ? el("a", { class: "button", href: `https://${calendarURL(zone)}` }, icon("calendar"), "Agregar a mi calendario")
+    : el("a", { class: "button", href: googleCalendar(zone), rel: "noopener", target: "_blank" }, icon("calendar"), "Agregar a Google Calendar");
   function calendarLinks(zone) {
     const copy = el("button", { type: "button", class: "button alt" }, icon("copy"), "Copiar enlace");
     copy.addEventListener("click", async () => {
@@ -263,11 +269,11 @@ h3.ih .i-badge { width: 28px; height: 28px }
       catch { copy.replaceChildren(`https://${calendarURL(zone)}`); }
     });
     return el("details", { class: "cal" },
-      el("summary", {}, icon("calendar"), " Agregar los días de la zona a mi calendario"),
+      el("summary", {}, "Otras formas de agregarlo y cómo activar la alerta"),
       el("div", { class: "subscribe" },
         el("a", { class: "button alt", href: `https://${calendarURL(zone)}` }, icon("bell"), "iPhone: agregar con alerta"),
         el("a", { class: "button alt", href: `webcal://${calendarURL(zone)}` }, "iPhone o Mac: suscribirme"),
-        el("a", { class: "button alt", href: `https://calendar.google.com/calendar/render?cid=${encodeURIComponent(`webcal://${calendarURL(zone)}`)}`, rel: "noopener" }, "Android o Google Calendar"),
+        el("a", { class: "button alt", href: googleCalendar(zone), rel: "noopener", target: "_blank" }, "Android o Google Calendar"),
         copy),
       el("p", { class: "note" }, "Cada día de racionamiento de la zona, con una alerta a las 8 p. m. de la noche anterior. No guardamos ningún dato tuyo."),
       el("p", { class: "note" }, el("strong", {}, "En iPhone, «agregar con alerta» "), "copia los días a tu calendario con la alerta incluida (ábrelo en Safari y toca «Agregar todo»). No se actualiza: si el SIAPA cambia el calendario lo avisaremos aquí y en el bot, y tendrás que borrarlos y agregarlos otra vez."),
@@ -285,8 +291,9 @@ h3.ih .i-badge { width: 28px; height: 28px }
         ? el("div", {}, el("p", {}, icon("calendar"), " Próximos:"), el("ul", {}, ...next.map((d) => el("li", {}, dateES(d)))))
         : el("p", {}, "No hay más días en el calendario que publicó el SIAPA."),
       el("div", { class: "subscribe" },
-        el("a", { class: "button", href: `${TELEGRAM}?start=z${z.zone}`, rel: "noopener" }, icon("bell"), "Recibir el aviso por Telegram")),
-      el("p", { class: "note" }, `Gratis, la noche antes de cada corte de la zona ${z.zone}. Al tocar «Iniciar» en Telegram aceptas los avisos; `, el("a", { href: "/privacidad" }, "aviso de privacidad"), "."),
+        calendarButton(z.zone),
+        el("a", { class: "button alt", href: `${TELEGRAM}?start=z${z.zone}`, rel: "noopener" }, icon("send"), "Recibir el aviso por Telegram")),
+      el("p", { class: "note" }, `Gratis. El calendario trae cada corte de la zona ${z.zone} con una alerta a las 8 p. m. la noche anterior (abajo te decimos cómo asegurarte de que suene) y no guarda ningún dato tuyo. En Telegram, al tocar «Iniciar» aceptas los avisos; `, el("a", { href: "/privacidad" }, "aviso de privacidad"), "."),
       calendarLinks(z.zone));
   }
   const cards = (zones) => el("div", { class: "zones" }, ...zones.map(zoneCard));
