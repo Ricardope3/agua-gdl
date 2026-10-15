@@ -17,7 +17,8 @@ import (
 
 var schemaSequence atomic.Int64
 
-func testDB(t *testing.T) *DB {
+// emptyDB returns a store on a fresh, unmigrated schema.
+func emptyDB(t *testing.T) *DB {
 	t.Helper()
 	url := os.Getenv("TEST_DATABASE_URL")
 	if url == "" {
@@ -52,10 +53,29 @@ func testDB(t *testing.T) *DB {
 	}
 	db := &DB{pool: pool, q: pool}
 	t.Cleanup(db.Close)
-	if err := db.Migrate(ctx); err != nil {
+	return db
+}
+
+func testDB(t *testing.T) *DB {
+	t.Helper()
+	db := emptyDB(t)
+	if err := db.Migrate(context.Background()); err != nil {
 		t.Fatal(err)
 	}
 	return db
+}
+
+func TestConcurrentMigrations(t *testing.T) {
+	db := emptyDB(t)
+	errs := make(chan error, 3)
+	for range 3 {
+		go func() { errs <- db.Migrate(context.Background()) }()
+	}
+	for range 3 {
+		if err := <-errs; err != nil {
+			t.Fatalf("two machines starting at once must not fail: %v", err)
+		}
+	}
 }
 
 func testSubscriber(t *testing.T, db *DB) Subscriber {

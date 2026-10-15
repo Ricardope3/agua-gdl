@@ -82,8 +82,21 @@ func Open(ctx context.Context, url string) (*DB, error) {
 
 func (db *DB) Close() { db.pool.Close() }
 
+// migrateLock is the advisory lock key that serializes migrations across machines.
+const migrateLock = 7_103_115_241_817
+
 func (db *DB) Migrate(ctx context.Context) error {
-	if _, err := db.q.Exec(ctx, `create table if not exists schema_migrations (
+	// A session-level lock, so it needs a direct connection, not a transaction pooler.
+	conn, err := db.pool.Acquire(ctx)
+	if err != nil {
+		return err
+	}
+	defer conn.Release()
+	if _, err := conn.Exec(ctx, `select pg_advisory_lock($1)`, migrateLock); err != nil {
+		return err
+	}
+	defer conn.Exec(context.WithoutCancel(ctx), `select pg_advisory_unlock($1)`, migrateLock)
+	if _, err := conn.Exec(ctx, `create table if not exists schema_migrations (
 		version text primary key, applied_at timestamptz not null default now())`); err != nil {
 		return err
 	}
@@ -94,7 +107,7 @@ func (db *DB) Migrate(ctx context.Context) error {
 	sort.Strings(names)
 	for _, name := range names {
 		var done bool
-		if err := db.q.QueryRow(ctx, `select exists(select 1 from schema_migrations where version = $1)`, name).Scan(&done); err != nil {
+		if err := conn.QueryRow(ctx, `select exists(select 1 from schema_migrations where version = $1)`, name).Scan(&done); err != nil {
 			return err
 		}
 		if done {
@@ -104,7 +117,7 @@ func (db *DB) Migrate(ctx context.Context) error {
 		if err != nil {
 			return err
 		}
-		err = pgx.BeginFunc(ctx, db.pool, func(tx pgx.Tx) error {
+		err = pgx.BeginFunc(ctx, conn, func(tx pgx.Tx) error {
 			if _, err := tx.Exec(ctx, string(sql)); err != nil {
 				return err
 			}
