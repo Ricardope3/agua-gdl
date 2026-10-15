@@ -177,14 +177,14 @@ func (b *Bot) onText(ctx context.Context, r User, body string) error {
 	n := colonias.Normalize(body)
 	switch {
 	case n == "" || slices.Contains(helpWords, n):
-		return b.text(ctx, r, msgHelp(b.BaseURL))
+		return b.text(ctx, r, msgHelp(b.BaseURL, r.Channel))
 	case slices.Contains(stopWords, n):
 		return b.unsubscribe(ctx, r)
 	case slices.Contains(reportWords, n):
 		return b.reportLastCut(ctx, r)
 	case slices.Contains(pipaWords, n):
 		return b.text(ctx, r, msgPipa)
-	case slices.Contains(writeWords, n):
+	case slices.Contains(writeWords, n) && r.Channel == store.Telegram:
 		return b.text(ctx, r, msgWrite(b.BaseURL))
 	case zoneRe.MatchString(n):
 		zone, _ := strconv.Atoi(zoneRe.FindStringSubmatch(n)[1])
@@ -194,7 +194,7 @@ func (b *Bot) onText(ctx context.Context, r User, body string) error {
 	case municipios[n] != "":
 		return b.text(ctx, r, msgMunicipio(municipios[n]))
 	case badZoneRe.MatchString(n) || len([]rune(n)) < 3:
-		return b.text(ctx, r, msgHelp(b.BaseURL))
+		return b.text(ctx, r, msgHelp(b.BaseURL, r.Channel))
 	}
 	matches, exact := b.Colonias.Search(body, 10)
 	switch {
@@ -243,7 +243,7 @@ func (b *Bot) onPayload(ctx context.Context, r User, p string) error {
 	case "Z":
 		zone, err := strconv.Atoi(rest)
 		if err != nil || !b.Schedule.HasZone(zone) {
-			return b.text(ctx, r, msgHelp(b.BaseURL))
+			return b.text(ctx, r, msgHelp(b.BaseURL, r.Channel))
 		}
 		return b.subscribe(ctx, r, zone)
 	case "C":
@@ -256,7 +256,7 @@ func (b *Bot) onPayload(ctx context.Context, r User, p string) error {
 		date, answer, _ := strings.Cut(rest, ":")
 		return b.saveReport(ctx, r, date, answer)
 	}
-	return b.text(ctx, r, msgHelp(b.BaseURL))
+	return b.text(ctx, r, msgHelp(b.BaseURL, r.Channel))
 }
 
 func (b *Bot) onColonia(ctx context.Context, r User, c colonias.Colonia) error {
@@ -422,7 +422,7 @@ func (b *Bot) askReport(ctx context.Context, r User, date string) error {
 
 func (b *Bot) saveReport(ctx context.Context, r User, date, answer string) error {
 	if !slices.ContainsFunc(reportAnswers, func(a struct{ key, title string }) bool { return a.key == answer }) {
-		return b.text(ctx, r, msgHelp(b.BaseURL))
+		return b.text(ctx, r, msgHelp(b.BaseURL, r.Channel))
 	}
 	if r.ID == "" {
 		return b.welcome(ctx, r)

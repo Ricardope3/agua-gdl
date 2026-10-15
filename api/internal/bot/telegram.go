@@ -89,7 +89,7 @@ func (b *Bot) onCommand(ctx context.Context, r User, text string) error {
 	case "baja":
 		return b.unsubscribe(ctx, r)
 	}
-	return b.text(ctx, r, msgHelp(b.BaseURL))
+	return b.text(ctx, r, msgHelp(b.BaseURL, r.Channel))
 }
 
 // TelegramMessage renders a reply for a Telegram chat: WhatsApp-style *bold* and _italic_

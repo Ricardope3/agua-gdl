@@ -37,15 +37,18 @@ Servicio ciudadano, gratuito, no oficial y sin partido.
 🔒 Aviso de privacidad: ` + base + `/privacidad`
 }
 
-func msgHelp(base string) string {
+func msgHelp(base, channel string) string {
+	write := ""
+	if channel == store.Telegram {
+		write = "✉️ *ESCRIBIR*: escribirle al Congreso de Jalisco sobre el agua\n"
+	}
 	return `Esto es lo que puedo hacer 💧
 
 📍 Manda tu *ubicación* o el *nombre de tu colonia* para saber tu zona
 🔢 *ZONA 1* a *ZONA 7*: suscribirte o cambiar de zona
 📝 *REPORTAR*: contar cómo regresó el agua después del último corte
 🚚 *PIPA*: cómo pedir una pipa al SIAPA
-✉️ *ESCRIBIR*: escribirle al Congreso de Jalisco sobre el agua
-🛑 *BAJA*: dejar de recibir avisos y borrar tus datos
+` + write + `🛑 *BAJA*: dejar de recibir avisos y borrar tus datos
 
 🗺️ Mapa oficial del SIAPA: ` + MapURL + `
 🔒 Aviso de privacidad: ` + base + `/privacidad`

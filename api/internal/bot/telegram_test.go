@@ -181,12 +181,21 @@ func TestTelegramHTML(t *testing.T) {
 	}
 }
 
-func TestWriteToCongressLinksThePage(t *testing.T) {
+func TestWriteToCongressIsTelegramOnly(t *testing.T) {
 	h := newTGHarness(t, "2026-10-14 10:00")
 	if m := h.say(t, "/escribe"); !strings.Contains(m.Text, "https://aguagdl.test/escribe") {
 		t.Errorf("/escribe: %s", m.Text)
 	}
-	if got := h.send(t, text("congreso")); !strings.Contains(got, "https://aguagdl.test/escribe") {
-		t.Errorf("WhatsApp CONGRESO: %s", got)
+	if m := h.say(t, "congreso"); !strings.Contains(m.Text, "https://aguagdl.test/escribe") {
+		t.Errorf("Telegram CONGRESO: %s", m.Text)
+	}
+	if got := h.send(t, text("congreso")); strings.Contains(got, "/escribe") {
+		t.Errorf("WhatsApp must not link /escribe: %s", got)
+	}
+	if got := h.send(t, text("ayuda")); strings.Contains(got, "ESCRIBIR") {
+		t.Errorf("WhatsApp help must not offer ESCRIBIR: %s", got)
+	}
+	if m := h.say(t, "ayuda"); !strings.Contains(m.Text, "ESCRIBIR") {
+		t.Errorf("Telegram help: %s", m.Text)
 	}
 }
