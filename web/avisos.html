@@ -14,21 +14,23 @@
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0b1b2b" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#06141d" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <style>
 :root {
-  --bg: #f4f9fd; --surface: #ffffff; --fg: #10263a; --muted: #4d6375; --line: #d5e4ef;
-  --brand: #017cdc; --brand-deep: #015198; --link: #015198; --on-brand: #ffffff;
-  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
+  --brand: #0284c7; --brand-deep: #0369a1; --link: #0369a1; --on-brand: #ffffff;
+  --primary: #0284c7; --on-primary: #ffffff; --ring: #0284c766;
+  --shadow: 0 1px 2px rgb(3 105 161 / .08);
+  --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0b1b2b; --surface: #112739; --fg: #e8f1f8; --muted: #a3b8c8; --line: #23415a;
-    --link: #7cc1f7;
+    --bg: #06141d; --surface: #0a1c28; --subtle: #0c3149; --fg: #f0f9ff; --muted: #9bb8ca; --line: #18384d;
+    --link: #7dd3fc; --primary: #0ea5e9; --on-primary: #ffffff; --ring: #38bdf866; --brand: #0ea5e9; --brand-deep: #0284c7;
     color-scheme: dark;
   }
 }
@@ -60,6 +62,23 @@ dt { font-weight: 800; font-family: ui-monospace, SFMono-Regular, Menlo, monospa
 dd { margin: 0 }
 footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .9rem }
 footer p { margin: 0 0 8px; max-width: 70ch }
+body { font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased }
+a { text-underline-offset: 3px }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); border-radius: 6px }
+.wrap { padding: 0 16px }
+header.top { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); margin: 0 -16px 20px; padding: 12px 16px }
+.brand { gap: 8px; font-weight: 600; font-size: 1rem }
+.brand img { width: 20px }
+h1 { letter-spacing: -.03em; font-weight: 700 }
+h2 { font-weight: 600; letter-spacing: -.02em }
+.lede { font-size: 1.05rem }
+.button { display: inline-flex; align-items: center; gap: 6px; background: var(--primary); color: var(--on-primary); font-weight: 500; font-size: .95rem; padding: 10px 18px; border: 1px solid transparent; border-radius: 8px; box-shadow: var(--shadow); transition: background .15s }
+.button:hover { background: var(--brand-deep) }
+.signup, .finder, .notice, .summary { border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; box-shadow: var(--shadow) }
+.card, .zone, .msg, .empty, .choice, .values li { box-shadow: var(--shadow) }
+.search input, .filter select { border: 1px solid var(--line); box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s }
+.search input:focus-visible, .filter select:focus-visible { border-color: var(--brand) }
+footer { font-size: .85rem }
 </style>
 </head>
 <body>
