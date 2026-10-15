@@ -254,11 +254,13 @@ h3.ih .i-badge { width: 28px; height: 28px }
     return el("details", { class: "cal" },
       el("summary", {}, icon("calendar"), " Agregar los días de la zona a mi calendario"),
       el("div", { class: "subscribe" },
-        el("a", { class: "button alt", href: `webcal://${calendarURL(zone)}` }, "iPhone o Mac"),
+        el("a", { class: "button alt", href: `https://${calendarURL(zone)}` }, icon("bell"), "iPhone: agregar con alerta"),
+        el("a", { class: "button alt", href: `webcal://${calendarURL(zone)}` }, "iPhone o Mac: suscribirme"),
         el("a", { class: "button alt", href: `https://calendar.google.com/calendar/render?cid=${encodeURIComponent(`webcal://${calendarURL(zone)}`)}`, rel: "noopener" }, "Android o Google Calendar"),
         copy),
-      el("p", { class: "note" }, "Te suscribes a un calendario con los días de racionamiento de la zona y una alerta a las 8 p. m. de la noche anterior. Se actualiza solo si el SIAPA cambia el calendario. No guardamos ningún dato tuyo."),
-      el("p", { class: "note" }, el("strong", {}, "En iPhone: "), "al suscribirte, desactiva «Eliminar alertas» o no te llegará el aviso. Si ya te suscribiste: Ajustes › Apps › Calendario › Cuentas › Calendarios suscritos › Agua GDL › desactiva «Eliminar alertas»."),
+      el("p", { class: "note" }, "Cada día de racionamiento de la zona, con una alerta a las 8 p. m. de la noche anterior. No guardamos ningún dato tuyo."),
+      el("p", { class: "note" }, el("strong", {}, "En iPhone, «agregar con alerta» "), "copia los días a tu calendario con la alerta incluida (ábrelo en Safari y toca «Agregar todo»). No se actualiza: si el SIAPA cambia el calendario lo avisaremos aquí y en el bot, y tendrás que borrarlos y agregarlos otra vez."),
+      el("p", { class: "note" }, el("strong", {}, "«Suscribirme» "), "se actualiza solo, pero al suscribirte desactiva «Eliminar alertas» o no te llegará el aviso. Si ya te suscribiste: Ajustes › Apps › Calendario › Cuentas › Calendarios suscritos › Agua GDL › desactiva «Eliminar alertas»."),
       el("p", { class: "note" }, el("strong", {}, "En Android: "), "Google Calendar no usa las alertas de los calendarios suscritos. En la app, abre Configuración › Agua GDL › Notificaciones de eventos de todo el día y agrega una el día anterior a las 8 p. m."));
   }
 
