@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"io"
 	"log/slog"
+	"net"
 	"net/http"
 	"strconv"
 	"strings"
@@ -59,12 +60,59 @@ func (a *api) routes() http.Handler {
 	mux.HandleFunc("GET /v1/results", a.results)
 	mux.HandleFunc("GET /wa/webhook", a.verify)
 	mux.HandleFunc("POST /wa/webhook", a.webhook)
+	limit := &limiter{max: v1PerMinute, counts: map[string]int{}}
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if strings.HasPrefix(r.URL.Path, "/v1/") {
 			w.Header().Set("Access-Control-Allow-Origin", "*")
+			if !limit.allow(clientIP(r), time.Now()) {
+				w.Header().Set("Retry-After", "60")
+				http.Error(w, "too many requests", http.StatusTooManyRequests)
+				return
+			}
 		}
 		mux.ServeHTTP(w, r)
 	})
+}
+
+// v1PerMinute is generous because mobile carriers put many phones behind one IP.
+const v1PerMinute = 120
+
+// maxTracked bounds the limiter's memory if requests come from many addresses at once.
+const maxTracked = 10_000
+
+// limiter allows max requests per client IP in each one-minute window.
+type limiter struct {
+	mu     sync.Mutex
+	max    int
+	start  time.Time
+	counts map[string]int
+}
+
+func (l *limiter) allow(ip string, now time.Time) bool {
+	l.mu.Lock()
+	defer l.mu.Unlock()
+	if now.Sub(l.start) >= time.Minute {
+		l.start = now
+		clear(l.counts)
+	}
+	n, seen := l.counts[ip]
+	if !seen && len(l.counts) >= maxTracked {
+		return false
+	}
+	l.counts[ip] = n + 1
+	return n < l.max
+}
+
+// clientIP is the address Fly's proxy saw; without the proxy (local runs) it's the connection's.
+func clientIP(r *http.Request) string {
+	if ip := r.Header.Get("Fly-Client-IP"); ip != "" {
+		return ip
+	}
+	host, _, err := net.SplitHostPort(r.RemoteAddr)
+	if err != nil {
+		return r.RemoteAddr
+	}
+	return host
 }
 
 func (a *api) info(zone int) zoneInfo {

@@ -7,6 +7,7 @@ import (
 	"log/slog"
 	"net/http"
 	"net/http/httptest"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -118,5 +119,48 @@ func TestResultsQueryTheDatabaseOncePerFiveMinutes(t *testing.T) {
 	get()
 	if db.calls != 2 {
 		t.Fatalf("after 5 minutes the next visit must query again: %d queries", db.calls)
+	}
+}
+
+func TestV1IsRateLimitedPerClient(t *testing.T) {
+	h := (&api{}).routes()
+	get := func(path, ip string) *httptest.ResponseRecorder {
+		req := httptest.NewRequest(http.MethodGet, path, nil)
+		req.Header.Set("Fly-Client-IP", ip)
+		rec := httptest.NewRecorder()
+		h.ServeHTTP(rec, req)
+		return rec
+	}
+	for range v1PerMinute {
+		if get("/v1/nope", "1.1.1.1").Code == http.StatusTooManyRequests {
+			t.Fatal("limited too early")
+		}
+	}
+	rec := get("/v1/nope", "1.1.1.1")
+	if rec.Code != http.StatusTooManyRequests || rec.Header().Get("Retry-After") != "60" || rec.Header().Get("Access-Control-Allow-Origin") != "*" {
+		t.Fatalf("status %d, headers %v", rec.Code, rec.Header())
+	}
+	if get("/v1/nope", "2.2.2.2").Code == http.StatusTooManyRequests {
+		t.Fatal("another client must not be limited")
+	}
+	if get("/healthz", "1.1.1.1").Code != http.StatusOK {
+		t.Fatal("only /v1 is limited")
+	}
+}
+
+func TestLimiterWindowAndMemoryCap(t *testing.T) {
+	l := &limiter{max: 1, counts: map[string]int{}}
+	now := time.Now()
+	if !l.allow("a", now) || l.allow("a", now) {
+		t.Fatal("one request per window")
+	}
+	if !l.allow("a", now.Add(time.Minute)) {
+		t.Fatal("a new window starts over")
+	}
+	for i := range maxTracked {
+		l.allow(strconv.Itoa(i), now.Add(time.Minute))
+	}
+	if l.allow("new", now.Add(time.Minute)) {
+		t.Fatal("past maxTracked addresses, new ones wait for the next window")
 	}
 }
