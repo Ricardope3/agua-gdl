@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Escribe al Congreso · Agua GDL</title>
+<meta name="description" content="Escríbeles a las y los diputados del Congreso de Jalisco sobre el agua, desde tu propio correo.">
+<link rel="canonical" href="https://aguagdl.com/escribe">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aguagdl.com/escribe">
+<meta property="og:title" content="Escribe al Congreso de Jalisco sobre el agua">
+<meta property="og:description" content="Un correo a las 38 diputaciones, desde tu cuenta. Agua GDL no ve ni guarda nada.">
+<meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b1b2b" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<style>
+:root {
+  --bg: #f4f9fd; --surface: #ffffff; --fg: #10263a; --muted: #4d6375; --line: #d5e4ef;
+  --brand: #017cdc; --brand-deep: #015198; --link: #015198; --on-brand: #ffffff;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1b2b; --surface: #112739; --fg: #e8f1f8; --muted: #a3b8c8; --line: #23415a;
+    --link: #7cc1f7;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 var(--font) }
+a { color: var(--link) }
+a:focus-visible, button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; border-radius: 4px }
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 20px }
+header.top { padding: 20px 0 }
+.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; font-weight: 800; font-size: 1.25rem; letter-spacing: -.01em }
+.brand img { width: 30px; height: auto }
+h1 { font-size: clamp(2rem, 6vw, 3rem); line-height: 1.08; letter-spacing: -.02em; margin: 20px 0 16px; text-wrap: balance }
+.lede { font-size: 1.15rem; color: var(--muted); margin: 0 0 24px; max-width: 60ch }
+.box { background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--brand); border-radius: 10px; padding: 20px }
+label { display: block; font-weight: 700; margin: 0 0 6px }
+input, textarea { width: 100%; font: inherit; font-size: 1rem; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px }
+textarea { min-height: 22em; resize: vertical; line-height: 1.5 }
+.field { margin: 0 0 16px }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 4px 0 0 }
+.button { display: inline-block; background: var(--brand-deep); color: var(--on-brand); font: inherit; font-weight: 700; text-decoration: none; padding: 12px 18px; border: 0; border-radius: 8px; cursor: pointer }
+.button:hover { background: var(--brand) }
+.button.alt { background: transparent; color: var(--link); border: 1px solid var(--line) }
+.note { margin: 12px 0 0; font-size: .95rem; color: var(--muted) }
+section { padding: 36px 0 8px }
+h2 { font-size: 1.5rem; line-height: 1.2; margin: 0 0 14px; letter-spacing: -.01em }
+section p { margin: 0 0 14px; max-width: 65ch }
+.people { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px }
+.people li { display: flex; justify-content: space-between; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px }
+.people small { display: block; color: var(--muted); overflow-wrap: anywhere }
+.people a { white-space: nowrap; font-weight: 700 }
+footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .9rem }
+footer p { margin: 0 0 8px; max-width: 70ch }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
+  </header>
+
+  <main>
+    <h1>Escríbele al Congreso sobre el agua</h1>
+    <p class="lede">Un correo a las y los 38 diputados del Congreso de Jalisco, desde tu propia cuenta. Revisa el texto, cámbialo si quieres y envíalo. Agua GDL no ve ni guarda nada.</p>
+
+    <div class="box">
+      <div class="field">
+        <label for="asunto">Asunto</label>
+        <input id="asunto" value="Agua limpia y transparencia en la rotación del SIAPA">
+      </div>
+      <div class="field">
+        <label for="texto">Mensaje</label>
+        <textarea id="texto">Diputadas y diputados del Congreso del Estado de Jalisco:
+
+Vivo en la zona metropolitana de Guadalajara y me afecta la rotación del servicio de agua del SIAPA. Les pido que, dentro de sus facultades:
+
+1. Pidan al SIAPA que publique por colonia los resultados de los análisis de calidad del agua, con fecha y laboratorio.
+2. Pidan que se informe cuándo terminará la rotación y qué obras la resolverán, con su presupuesto y avance.
+3. Vigilen que las colonias afectadas reciban agua potable a tiempo.
+4. Citen al director del SIAPA a explicar públicamente la situación ante el Congreso.
+
+Les agradeceré su respuesta.
+
+Atentamente,
+[Tu nombre]
+[Tu colonia y municipio]</textarea>
+      </div>
+      <div class="actions">
+        <a class="button" id="gmail" href="#" rel="noopener" target="_blank">Abrir en Gmail</a>
+        <a class="button" id="mailto" href="#">Abrir en mi app de correo</a>
+        <button class="button alt" type="button" id="copiar-correos">Copiar correos</button>
+        <button class="button alt" type="button" id="copiar-texto">Copiar texto</button>
+      </div>
+      <p class="note" id="estado" aria-live="polite">No olvides poner tu nombre y tu colonia. Un correo personal pesa más que uno copiado: cambia lo que quieras.</p>
+    </div>
+
+    <section aria-labelledby="uno">
+      <h2 id="uno">O escríbele a una persona</h2>
+      <p>Mismo texto, a una sola diputación.</p>
+      <ul class="people" id="personas"></ul>
+      <p class="note">Correos institucionales publicados por el Congreso del Estado de Jalisco (revisados el 15 de octubre de 2026). Si alguno rebota, avísanos a <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>.</p>
+    </section>
+
+    <section aria-labelledby="ojo">
+      <h2 id="ojo">Ten en cuenta</h2>
+      <ul>
+        <li>El correo sale de tu cuenta y con tu nombre. Agua GDL no lo envía, no lo ve y no guarda tus datos.</li>
+        <li>Escribimos a todas las diputaciones por igual. Agua GDL es una iniciativa ciudadana sin partido.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA, con el Gobierno de Jalisco ni con el Congreso.</p>
+    <p><a href="/">Inicio</a> · <a href="/avisos">Recibir avisos</a> · <a href="/llego">¿Qué zona me toca?</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
+  </footer>
+</div>
+<script>
+(() => {
+  "use strict";
+  // [nombre, correo institucional]
+  const DIPUTADOS = [
+    ["Adriana Gabriela Medina Ortiz", "adriana.medina@congresojal.gob.mx"],
+    ["Alberto Alfaro García", "alberto.alfaro@congresojal.gob.mx"],
+    ["Alejandra Margarita Giadans Valenzuela", "alejandra.giadans@congresojal.gob.mx"],
+    ["Alejandro Barragán Sánchez", "alejandro.barragan@congresojal.gob.mx"],
+    ["Alondra Getsemany Fausto de León", "alondra.fausto@congresojal.gob.mx"],
+    ["Ana Fernanda Hernández Sanmiguel", "anafer.hernandez@congresojal.gob.mx"],
+    ["Brenda Guadalupe Carrera García", "brenda.carrera@congresojal.gob.mx"],
+    ["Claudia Murguía Torres", "claudia.murguia@congresojal.gob.mx"],
+    ["César Octavio Madrigal Díaz", "cesar.madrigal@congresojal.gob.mx"],
+    ["Edgar Enrique Velázquez González", "enrique.velazquez@congresojal.gob.mx"],
+    ["Emmanuel Alejandro Puerto Covarrubias", "alejandro.puerto@congresojal.gob.mx"],
+    ["Isaías Cortés Berumen", "isaias.cortes@congresojal.gob.mx"],
+    ["Itzcoatl Tonatiuh Bravo Padilla", "tonatiuh.bravo@congresojal.gob.mx"],
+    ["Itzul Barrera Rodríguez", "itzul.barrera@congresojal.gob.mx"],
+    ["José Aurelio Fonseca Olivares", "aurelio.fonseca@congresojal.gob.mx"],
+    ["José Guadalupe Buenrostro Martínez", "jose.buenrostro@congresojal.gob.mx"],
+    ["José Luis Tostado Bastidas", "joseluis.tostado@congresojal.gob.mx"],
+    ["Julio César Hurtado Luna", "julio.hurtado@congresojal.gob.mx"],
+    ["Laura Gabriela Cárdenas Rodríguez", "gaby.cardenas@congresojal.gob.mx"],
+    ["Leonardo Almaguer Castañeda", "leonardo.almaguer@congresojal.gob.mx"],
+    ["Luis Octavio Vidrio Martínez", "luis.vidrio@congresojal.gob.mx"],
+    ["Marco Tulio Moya Díaz", "marco.moya@congresojal.gob.mx"],
+    ["Mariana Casillas Guerrero", "mariana.casillas@congresojal.gob.mx"],
+    ["Marta Estela Arizmendi Fombona", "marta.arizmendi@congresojal.gob.mx"],
+    ["Martín Franco Cuevas", "martin.franco@congresojal.gob.mx"],
+    ["María Candelaria Ochoa Ávalos", "candelaria.ochoa@congresojal.gob.mx"],
+    ["María Elisa Bravo Navarro", "maria.bravo@congresojal.gob.mx"],
+    ["María del Refugio Camarena Jáuregui", "cuquis.camarena@congresojal.gob.mx"],
+    ["Miguel De La Rosa Figueroa", "miguel.delarosa@congresojal.gob.mx"],
+    ["Montserrat Pérez Cisneros", "montserrat.perez@congresojal.gob.mx"],
+    ["Mónica Paola Magaña Mendoza", "monica.magana@congresojal.gob.mx"],
+    ["Norma López Ramírez", "norma.lopez@congresojal.gob.mx"],
+    ["Omar Enrique Cervantes Rivera", "omar.cervantes@congresojal.gob.mx"],
+    ["Sergio Miguel Martín Castellanos", "sergio.martin@congresojal.gob.mx"],
+    ["Tonantzin Elusay Cárdenas Méndez", "tonantzin.cardenas@congresojal.gob.mx"],
+    ["Valeria Guadalupe Ávila Gutiérrez", "valeria.avila@congresojal.gob.mx"],
+    ["Verónica Magdalena Jiménez Vázquez", "veronica.jimenez@congresojal.gob.mx"],
+    ["Yussara Elizabeth Canales González", "yussara.canales@congresojal.gob.mx"],
+  ];
+  const $ = (id) => document.getElementById(id);
+  const all = DIPUTADOS.map((d) => d[1]);
+  const subject = () => $("asunto").value;
+  const body = () => $("texto").value;
+  const q = encodeURIComponent;
+  const gmail = (to) => `https://mail.google.com/mail/?view=cm&fs=1&to=${q(to.join(","))}&su=${q(subject())}&body=${q(body())}`;
+  const mailto = (to) => `mailto:${to.join(",")}?subject=${q(subject())}&body=${q(body())}`;
+
+  function refresh() {
+    $("gmail").href = gmail(all);
+    $("mailto").href = mailto(all);
+    document.querySelectorAll("[data-to]").forEach((a) => { a.href = gmail([a.dataset.to]); });
+  }
+
+  const list = $("personas");
+  for (const [name, email] of DIPUTADOS) {
+    const li = document.createElement("li");
+    const who = document.createElement("span");
+    who.textContent = name;
+    const small = document.createElement("small");
+    small.textContent = email;
+    who.append(small);
+    const a = document.createElement("a");
+    a.textContent = "✉️ Escribir";
+    a.dataset.to = email;
+    a.rel = "noopener";
+    a.target = "_blank";
+    li.append(who, a);
+    list.append(li);
+  }
+
+  async function copy(text, done) {
+    try {
+      await navigator.clipboard.writeText(text);
+      $("estado").textContent = done;
+    } catch {
+      $("estado").textContent = "No se pudo copiar. Selecciona el texto y cópialo a mano.";
+    }
+  }
+  $("copiar-correos").addEventListener("click", () => copy(all.join(", "), `Copiamos los ${all.length} correos.`));
+  $("copiar-texto").addEventListener("click", () => copy(`${subject()}\n\n${body()}`, "Copiamos el asunto y el mensaje."));
+  $("asunto").addEventListener("input", refresh);
+  $("texto").addEventListener("input", refresh);
+  refresh();
+})();
+</script>
+</body>
+</html>
