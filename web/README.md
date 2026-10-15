@@ -2,6 +2,6 @@ Sitio estático de aguagdl.com, sin paso de build. `index.html` es la página de
 
 Publicado en https://aguagdl.com con Cloudflare Pages (sin comando de build, carpeta de salida `web`); cada push a `main` lo vuelve a publicar. `www.aguagdl.com` redirige a `aguagdl.com` con una regla de Cloudflare.
 
-`avisos.html` es la página para suscribirse (desde el 15 de octubre de 2026 solo dice que los avisos están en pausa, porque Meta deshabilitó la cuenta de WhatsApp); `privacidad.html` y `terminos.html` son el aviso de privacidad y los términos de uso, publicados el 14 de octubre de 2026 (la app de Meta enlaza a ellos, así que no cambies sus URL).
+`avisos.html` es la página para suscribirse por WhatsApp o Telegram; `privacidad.html` y `terminos.html` son el aviso de privacidad y los términos de uso, publicados el 14 de octubre de 2026 (la app de Meta enlaza a ellos, así que no cambies sus URL).
 
 `llego.html` («¿Qué zona me toca?») busca la zona por ubicación o colonia y `resultados.html` muestra los reportes de `/v1/results`. Las dos usan `https://api.aguagdl.com`; para probarlas con la API local, agrega `?api=http://localhost:8080` (solo acepta localhost).

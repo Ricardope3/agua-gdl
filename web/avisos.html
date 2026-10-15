@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Recibir avisos · Agua GDL</title>
-<meta name="description" content="Recibe por Telegram un aviso gratuito la noche antes de cada corte de agua en tu zona por la rotación del SIAPA en Guadalajara.">
+<meta name="description" content="Recibe por WhatsApp o Telegram un aviso gratuito la noche antes de cada corte de agua en tu zona por la rotación del SIAPA en Guadalajara.">
 <link rel="canonical" href="https://aguagdl.com/avisos">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aguagdl.com/avisos">
-<meta property="og:title" content="Recibe el aviso de corte de agua en Telegram">
+<meta property="og:title" content="Recibe el aviso de corte de agua en WhatsApp o Telegram">
 <meta property="og:description" content="Un mensaje gratuito la noche antes de cada corte de la rotación del SIAPA en tu zona.">
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
 <meta property="og:locale" content="es_MX">
@@ -46,6 +46,8 @@ h1 { font-size: clamp(2rem, 6vw, 3rem); line-height: 1.08; letter-spacing: -.02e
 .button { display: inline-block; background: var(--brand-deep); color: var(--on-brand); font-weight: 700; font-size: 1.1rem; text-decoration: none; padding: 13px 22px; border-radius: 8px }
 .button:hover { background: var(--brand) }
 .consent { margin: 16px 0 0; font-size: .95rem }
+.buttons { display: flex; flex-wrap: wrap; gap: 10px }
+.number { font-weight: 700; color: var(--fg); white-space: nowrap }
 .alt { margin: 12px 0 0; font-size: .95rem; color: var(--muted) }
 .lede { font-size: 1.15rem; color: var(--muted); margin: 0 0 28px; max-width: 60ch }
 section { padding: 36px 0 8px }
@@ -67,19 +69,22 @@ footer p { margin: 0 0 8px; max-width: 70ch }
   </header>
 
   <main>
-    <h1>Recibe el aviso de corte en Telegram</h1>
+    <h1>Recibe el aviso de corte en WhatsApp o Telegram</h1>
     <p class="lede">La noche antes de cada corte de agua en tu zona, a las 8 p. m., te llega un mensaje para que llenes tu tinaco a tiempo. Es gratis.</p>
 
     <div class="signup">
-      <a class="button" href="https://t.me/AvisoAguaGDLbot?start=hola" rel="noopener">Recibir avisos por Telegram</a>
-      <p class="consent">Al tocar «Iniciar» en el chat aceptas recibir de <strong>Agua GDL</strong>, por Telegram, un aviso la noche antes de cada corte de agua en tu zona (2 o 3 por semana) y las respuestas a lo que escribas. Para dejar de recibirlos, escribe <strong>BAJA</strong> o bloquea el bot cuando quieras. Solo guardamos el identificador de tu chat y tu zona; lee el <a href="/privacidad">aviso de privacidad</a>.</p>
-      <p class="alt">¿No tienes Telegram? Descárgalo gratis en tu celular. Los avisos por WhatsApp están en pausa por ahora.</p>
+      <div class="buttons">
+        <a class="button" href="https://wa.me/523310758180?text=Hola%2C%20quiero%20recibir%20avisos%20de%20agua" rel="noopener">Recibir avisos por WhatsApp</a>
+        <a class="button" href="https://t.me/AvisoAguaGDLbot?start=hola" rel="noopener">Recibir avisos por Telegram</a>
+      </div>
+      <p class="consent">Al enviar el mensaje en WhatsApp, o al tocar «Iniciar» en Telegram, aceptas recibir de <strong>Agua GDL</strong> un aviso la noche antes de cada corte de agua en tu zona (2 o 3 por semana) y las respuestas a lo que escribas. Para dejar de recibirlos, escribe <strong>BAJA</strong> cuando quieras. Solo guardamos tu número de WhatsApp o el identificador de tu chat de Telegram, y tu zona; lee el <a href="/privacidad">aviso de privacidad</a>.</p>
+      <p class="alt">¿Estás en una computadora? Guarda el número <span class="number">+52 33 1075 8180</span> en tus contactos y escríbele «Hola» por WhatsApp desde tu celular.</p>
     </div>
 
     <section aria-labelledby="como">
       <h2 id="como">Cómo funciona</h2>
       <ol>
-        <li>Toca el botón. Se abre el chat de Agua GDL en Telegram; toca «Iniciar».</li>
+        <li>Toca un botón. En WhatsApp se abre el chat con el mensaje «Hola, quiero recibir avisos de agua»: envíalo. En Telegram toca «Iniciar».</li>
         <li>Dile dónde vives: manda tu ubicación, el nombre de tu colonia o tu zona (por ejemplo, <strong>ZONA 4</strong>).</li>
         <li>Te confirmamos tu zona, tus días de corte y cuándo te llega el próximo aviso.</li>
       </ol>
