@@ -74,7 +74,7 @@ func (s *Store) Subscribe(_ context.Context, userID, phone string, zone int) err
 	if phone != "" {
 		sub.Phone = phone
 	}
-	sub.Zone = zone
+	sub.Zone, sub.UpdatedAt = zone, s.Now()
 	s.Subs[userID] = sub
 	return nil
 }
@@ -108,7 +108,7 @@ func (s *Store) ChangeUser(_ context.Context, oldUserID, oldPhone, newUserID, ne
 	}
 	if found {
 		delete(s.Subs, keep.UserID)
-		keep.UserID, keep.Phone = newUserID, newPhone
+		keep.UserID, keep.Phone, keep.UpdatedAt = newUserID, newPhone, s.Now()
 		s.Subs[newUserID] = keep
 	}
 	return nil

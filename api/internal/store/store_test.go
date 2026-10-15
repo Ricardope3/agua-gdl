@@ -642,3 +642,19 @@ func TestBajaByPhoneRemovesEveryRowWithIt(t *testing.T) {
 		t.Fatalf("rows left: %+v", subs)
 	}
 }
+
+func TestDueSubscribersCarryTheLastChange(t *testing.T) {
+	db := testDB(t)
+	s := testSubscriber(t, db)
+	ctx := context.Background()
+	if _, err := db.pool.Exec(ctx, `update subscriber set updated_at = now() - interval '30 hours' where id = $1`, s.ID); err != nil {
+		t.Fatal(err)
+	}
+	due, err := db.DueSubscribers(ctx, []int{4}, time.Now())
+	if err != nil || len(due) != 1 {
+		t.Fatalf("due=%v %v", due, err)
+	}
+	if age := time.Since(due[0].UpdatedAt); age < 29*time.Hour || age > 31*time.Hour {
+		t.Fatalf("updated_at is %v old, want about 30h", age)
+	}
+}

@@ -32,10 +32,11 @@ func hashID(wamid string) string {
 var migrations embed.FS
 
 type Subscriber struct {
-	ID     int64
-	UserID string
-	Phone  string
-	Zone   int
+	ID        int64
+	UserID    string
+	Phone     string
+	Zone      int
+	UpdatedAt time.Time // last subscription or zone change; set by DueSubscribers only
 }
 
 type Result struct {
@@ -234,7 +235,7 @@ func (db *DB) UpdateStatus(ctx context.Context, wamid, status string) (bool, err
 // DueSubscribers lists subscribers in zones that haven't been reminded about cutDate yet,
 // including those whose earlier attempt Meta rejected.
 func (db *DB) DueSubscribers(ctx context.Context, zones []int, cutDate time.Time) ([]Subscriber, error) {
-	rows, err := db.q.Query(ctx, `select s.id, s.wa_user_id, coalesce(s.phone, ''), s.zone from subscriber s
+	rows, err := db.q.Query(ctx, `select s.id, s.wa_user_id, coalesce(s.phone, ''), s.zone, s.updated_at from subscriber s
 		where s.zone = any($1::int[]) and not exists (
 			select 1 from reminder r where r.subscriber_id = s.id and r.cut_date = $2::date and r.status <> 'rejected')
 		order by s.id`, zones, cutDate.Format(dateLayout))
@@ -243,7 +244,7 @@ func (db *DB) DueSubscribers(ctx context.Context, zones []int, cutDate time.Time
 	}
 	return pgx.CollectRows(rows, func(r pgx.CollectableRow) (Subscriber, error) {
 		var s Subscriber
-		err := r.Scan(&s.ID, &s.UserID, &s.Phone, &s.Zone)
+		err := r.Scan(&s.ID, &s.UserID, &s.Phone, &s.Zone, &s.UpdatedAt)
 		return s, err
 	})
 }
