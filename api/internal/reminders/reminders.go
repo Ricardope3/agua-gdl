@@ -1,4 +1,5 @@
-// Package reminders sends the evening-before WhatsApp reminder to every subscriber whose zone is cut tomorrow.
+// Package reminders sends the evening-before reminder, on WhatsApp and Telegram, to every
+// subscriber whose zone is cut tomorrow.
 package reminders
 
 import (
@@ -9,8 +10,10 @@ import (
 	"strconv"
 	"time"
 
+	"aguagdl/api/internal/bot"
 	"aguagdl/api/internal/rotation"
 	"aguagdl/api/internal/store"
+	"aguagdl/api/internal/tg"
 	"aguagdl/api/internal/wa"
 )
 
@@ -26,9 +29,16 @@ type Sender interface {
 	Send(ctx context.Context, m wa.Message) (string, error)
 }
 
+type TelegramSender interface {
+	Send(ctx context.Context, m tg.Message) (int64, error)
+}
+
+// Runner sends each channel whose sender is set. The channels are independent: one
+// failing doesn't stop the other, and Meta's caps only apply to WhatsApp.
 type Runner struct {
 	Store        Store
-	Sender       Sender
+	Sender       Sender // WhatsApp; nil = off
+	Telegram     TelegramSender
 	Schedule     *rotation.Schedule
 	Template     string
 	Language     string
@@ -105,21 +115,32 @@ func transient(err error) error {
 	return fmt.Errorf("%w: %w", errTransient, err)
 }
 
-func (r *Runner) SendTonight(ctx context.Context) (err error) {
+func (r *Runner) SendTonight(ctx context.Context) error {
+	var err error
+	if r.Sender != nil {
+		err = r.sendChannel(ctx, store.WhatsApp)
+	}
+	if r.Telegram != nil {
+		err = errors.Join(err, r.sendChannel(ctx, store.Telegram))
+	}
+	return err
+}
+
+func (r *Runner) sendChannel(ctx context.Context, channel string) (err error) {
 	now := r.Now()
 	tomorrow := r.Schedule.Day(now).AddDate(0, 0, 1)
 	defer func() {
-		n, checkErr := r.Store.UnresolvedReminders(ctx, store.WhatsApp, tomorrow)
+		n, checkErr := r.Store.UnresolvedReminders(ctx, channel, tomorrow)
 		err = errors.Join(err, transient(checkErr))
 		if n > 0 {
-			err = errors.Join(err, fmt.Errorf("%d failed or uncertain reminder attempts require review", n))
+			err = errors.Join(err, fmt.Errorf("%s: %d failed or uncertain reminder attempts require review", channel, n))
 		}
 	}()
 	zones := r.Schedule.ZonesOn(tomorrow)
 	if len(zones) == 0 {
 		return nil
 	}
-	subs, err := r.Store.DueSubscribers(ctx, store.WhatsApp, zones, tomorrow)
+	subs, err := r.Store.DueSubscribers(ctx, channel, zones, tomorrow)
 	if err != nil || len(subs) == 0 {
 		return transient(err)
 	}
@@ -134,15 +155,25 @@ func (r *Runner) SendTonight(ctx context.Context) (err error) {
 				return errors.Join(err, sleepErr)
 			}
 		}
-		if capErr := r.waitForCap(ctx, monthStart, deadline, len(subs), sent); capErr != nil {
-			if !errors.Is(capErr, ErrCapped) {
-				capErr = transient(capErr)
+		if channel == store.WhatsApp {
+			if capErr := r.waitForCap(ctx, monthStart, deadline, len(subs), sent); capErr != nil {
+				if !errors.Is(capErr, ErrCapped) {
+					capErr = transient(capErr)
+				}
+				return errors.Join(err, capErr)
 			}
-			return errors.Join(err, capErr)
 		}
 		attempted, sendErr := r.Store.SendReminder(ctx, s, tomorrow, zones, func(current store.Subscriber) (string, error) {
+			if current.Channel == store.Telegram {
+				return "", r.sendTelegram(ctx, current, date)
+			}
 			return r.Sender.Send(ctx, r.reminder(current, date))
 		})
+		var unreachable interface{ Gone() bool }
+		if errors.As(sendErr, &unreachable) && unreachable.Gone() {
+			r.Log.Info("subscriber blocked the bot; subscription deleted", "subscriber", s.ID)
+			continue
+		}
 		if sendErr != nil && !attempted {
 			// The reservation failed before any request to WhatsApp: retry the run later.
 			return errors.Join(err, transient(fmt.Errorf("subscriber %d: %w", s.ID, sendErr)))
@@ -161,7 +192,7 @@ func (r *Runner) SendTonight(ctx context.Context) (err error) {
 		failures = 0
 		sent++
 	}
-	r.Log.Info("reminders sent", "date", tomorrow.Format(rotation.DateLayout), "zones", zones, "sent", sent, "due", len(subs))
+	r.Log.Info("reminders sent", "channel", channel, "date", tomorrow.Format(rotation.DateLayout), "zones", zones, "sent", sent, "due", len(subs))
 	return err
 }
 
@@ -214,6 +245,25 @@ func (r *Runner) sleep(ctx context.Context, d time.Duration) error {
 		return ctx.Err()
 	case <-time.After(d):
 		return nil
+	}
+}
+
+// sendTelegram waits out Telegram's "too many requests" a few times: a 429 means
+// the message wasn't sent, so trying again can't duplicate it.
+func (r *Runner) sendTelegram(ctx context.Context, s store.Subscriber, date string) error {
+	m, err := bot.TelegramReminder(s.UserID, date, s.Zone)
+	if err != nil {
+		return err
+	}
+	for attempt := 0; ; attempt++ {
+		_, err = r.Telegram.Send(ctx, m)
+		var apiErr *tg.APIError
+		if attempt == 3 || !errors.As(err, &apiErr) || apiErr.Status != 429 {
+			return err
+		}
+		if sleepErr := r.sleep(ctx, time.Duration(min(max(apiErr.RetryAfter, 1), 30))*time.Second); sleepErr != nil {
+			return errors.Join(err, sleepErr)
+		}
 	}
 }
 

@@ -173,12 +173,21 @@ const msgAskPlace = "Para elegir tu zona, mándame tu 📍 *ubicación*, el *nom
 // ManualReminder is the aviso_corte template as a normal text, for nights the template
 // can't be used (cmd/notify -tomorrow). A normal text can't carry the template's buttons.
 func ManualReminder(date string, zone int) string {
+	return reminderBody(date, zone) + `
+
+ℹ️ Aviso ciudadano, no oficial. Confirma tu colonia en el mapa del SIAPA: ` + MapURL + `
+
+Agua GDL · Escribe *BAJA* para no recibir avisos`
+}
+
+// msgTelegramReminder goes with buttons for the map and for BAJA.
+func msgTelegramReminder(date string, zone int) string {
+	return reminderBody(date, zone) + "\n\nℹ️ Aviso ciudadano, no oficial. Confirma tu colonia en el mapa del SIAPA 👇"
+}
+
+func reminderBody(date string, zone int) string {
 	return fmt.Sprintf(`💧 *Mañana %s* hay racionamiento de agua en la *Zona %d* por la rotación del SIAPA: puede bajar la presión o faltar el agua hasta por un día.
 
 🪣 Llena hoy tu tinaco, cubetas y garrafones.
-🔒 Tapa bien los recipientes para que el agua no se ensucie.
-
-ℹ️ Aviso ciudadano, no oficial. Confirma tu colonia en el mapa del SIAPA: %s
-
-Agua GDL · Escribe *BAJA* para no recibir avisos`, date, zone, MapURL)
+🔒 Tapa bien los recipientes para que el agua no se ensucie.`, date, zone)
 }

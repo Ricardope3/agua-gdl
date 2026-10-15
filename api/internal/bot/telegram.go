@@ -137,3 +137,14 @@ func truncate(s string, n int) string {
 	}
 	return string(r[:n-1]) + "…"
 }
+
+// TelegramReminder is tomorrow's reminder for a Telegram chat, with buttons for SIAPA's map
+// and for BAJA.
+func TelegramReminder(chatID, date string, zone int) (tg.Message, error) {
+	m, err := TelegramMessage(chatID, Reply{Text: msgTelegramReminder(date, zone)})
+	m.ReplyMarkup = tg.InlineKeyboard{InlineKeyboard: [][]tg.InlineButton{
+		{{Text: "🗺️ Mapa del SIAPA", URL: MapURL}},
+		{{Text: "Dejar de recibir avisos", CallbackData: "BAJA"}},
+	}}
+	return m, err
+}
