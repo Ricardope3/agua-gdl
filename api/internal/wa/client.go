@@ -31,7 +31,7 @@ func (e *APIError) Permanent() bool {
 }
 
 func (e *APIError) Error() string {
-	return fmt.Sprintf("wa: %d (code %d): %s", e.Status, e.Code, e.Message)
+	return fmt.Sprintf("wa: %d (code %d): %.200s", e.Status, e.Code, e.Message)
 }
 
 // Send posts a message and returns its WhatsApp message ID (wamid).

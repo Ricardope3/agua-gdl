@@ -195,7 +195,7 @@ func heartbeat(url string, log *slog.Logger) func(context.Context, bool, string)
 		if !ok {
 			target += "/fail"
 		}
-		req, err := http.NewRequestWithContext(ctx, http.MethodPost, target, strings.NewReader(msg))
+		req, err := http.NewRequestWithContext(ctx, http.MethodPost, target, strings.NewReader(fmt.Sprintf("%.1000s", msg)))
 		if err != nil {
 			log.Error("heartbeat", "err", err)
 			return

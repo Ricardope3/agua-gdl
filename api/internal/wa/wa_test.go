@@ -49,3 +49,10 @@ func TestListTruncates(t *testing.T) {
 		t.Errorf("button not truncated: %d", len(got))
 	}
 }
+
+func TestAPIErrorTruncatesMetaMessage(t *testing.T) {
+	err := &APIError{Status: 400, Code: 100, Message: strings.Repeat("x", 5000)}
+	if n := len(err.Error()); n > 250 {
+		t.Errorf("error is %d bytes; Meta's message must be cut before it reaches the logs", n)
+	}
+}

@@ -1,6 +1,9 @@
 package main
 
 import (
+	"context"
+	"io"
+	"log/slog"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -29,5 +32,19 @@ func TestWebhookVerifyEchoesChallengeAsPlainText(t *testing.T) {
 	h.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/wa/webhook?hub.mode=subscribe&hub.verify_token=tokx&hub.challenge=1", nil))
 	if rec.Code != http.StatusForbidden {
 		t.Fatalf("a wrong token must be refused: status %d", rec.Code)
+	}
+}
+
+func TestHeartbeatCapsTheBody(t *testing.T) {
+	var path string
+	var body []byte
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		path = r.URL.Path
+		body, _ = io.ReadAll(r.Body)
+	}))
+	defer srv.Close()
+	heartbeat(srv.URL+"/ping", slog.New(slog.NewTextHandler(io.Discard, nil)))(context.Background(), false, strings.Repeat("é", 5000))
+	if path != "/ping/fail" || len([]rune(string(body))) != 1000 {
+		t.Fatalf("path %q, %d characters", path, len([]rune(string(body))))
 	}
 }
