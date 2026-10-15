@@ -70,7 +70,7 @@ func (a *api) zonesList(w http.ResponseWriter, _ *http.Request) {
 	for _, z := range a.sched.Zones() {
 		out = append(out, a.info(z))
 	}
-	writeJSON(w, out)
+	writeJSON(w, out, publicFiveMinutes)
 }
 
 func (a *api) zoneAt(w http.ResponseWriter, r *http.Request) {
@@ -84,7 +84,8 @@ func (a *api) zoneAt(w http.ResponseWriter, r *http.Request) {
 	for _, z := range a.zones.Lookup(lat, lon) {
 		out = append(out, a.info(z))
 	}
-	writeJSON(w, map[string]any{"zones": out})
+	// The request carries the visitor's coordinates: keep it out of every cache.
+	writeJSON(w, map[string]any{"zones": out}, "no-store")
 }
 
 func (a *api) coloniaSearch(w http.ResponseWriter, r *http.Request) {
@@ -97,7 +98,7 @@ func (a *api) coloniaSearch(w http.ResponseWriter, r *http.Request) {
 	if matches == nil {
 		matches = []colonias.Colonia{}
 	}
-	writeJSON(w, map[string]any{"exact": exact, "colonias": matches})
+	writeJSON(w, map[string]any{"exact": exact, "colonias": matches}, publicFiveMinutes)
 }
 
 func (a *api) results(w http.ResponseWriter, r *http.Request) {
@@ -110,7 +111,7 @@ func (a *api) results(w http.ResponseWriter, r *http.Request) {
 	if rows == nil {
 		rows = []store.Result{}
 	}
-	writeJSON(w, rows)
+	writeJSON(w, rows, publicFiveMinutes)
 }
 
 func (a *api) verify(w http.ResponseWriter, r *http.Request) {
@@ -149,8 +150,10 @@ func (a *api) webhook(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-func writeJSON(w http.ResponseWriter, v any) {
+const publicFiveMinutes = "public, max-age=300"
+
+func writeJSON(w http.ResponseWriter, v any, cacheControl string) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	w.Header().Set("Cache-Control", "public, max-age=300")
+	w.Header().Set("Cache-Control", cacheControl)
 	json.NewEncoder(w).Encode(v)
 }

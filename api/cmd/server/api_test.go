@@ -9,6 +9,11 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
+	"time"
+
+	"aguagdl/api/data"
+	"aguagdl/api/internal/geo"
+	"aguagdl/api/internal/rotation"
 )
 
 func TestV1ErrorsAllowAnyOrigin(t *testing.T) {
@@ -55,5 +60,31 @@ func TestHeartbeatErrorsDontLogTheURL(t *testing.T) {
 	heartbeat("http://127.0.0.1:1/secret-check-id", slog.New(slog.NewTextHandler(&logs, nil)))(context.Background(), true, "ok")
 	if !strings.Contains(logs.String(), "heartbeat") || strings.Contains(logs.String(), "secret-check-id") {
 		t.Fatalf("the ping URL must stay out of the logs: %s", logs.String())
+	}
+}
+
+func testSchedule(t *testing.T) *rotation.Schedule {
+	t.Helper()
+	loc, err := time.LoadLocation("America/Mexico_City")
+	if err != nil {
+		t.Fatal(err)
+	}
+	sched, err := rotation.Load(data.Rotation, loc)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return sched
+}
+
+func TestZoneLookupIsNotCached(t *testing.T) {
+	zones, err := geo.Load(data.Zonas)
+	if err != nil {
+		t.Fatal(err)
+	}
+	h := (&api{zones: zones, sched: testSchedule(t)}).routes()
+	rec := httptest.NewRecorder()
+	h.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/v1/zone?lat=20.6767&lon=-103.3475", nil))
+	if rec.Code != http.StatusOK || !strings.Contains(rec.Body.String(), `"zone":6`) || rec.Header().Get("Cache-Control") != "no-store" {
+		t.Fatalf("status %d, cache %q, body %s", rec.Code, rec.Header().Get("Cache-Control"), rec.Body.String())
 	}
 }
