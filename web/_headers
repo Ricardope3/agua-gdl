@@ -5,3 +5,12 @@
   Permissions-Policy: geolocation=(self), camera=(), microphone=(), payment=(), usb=()
   Content-Security-Policy: frame-ancestors 'none'
   X-Frame-Options: DENY
+
+/*.svg
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/*.png
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/favicon.ico
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/site.webmanifest
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
