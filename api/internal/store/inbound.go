@@ -11,9 +11,9 @@ import (
 // BotStore scopes command processing to the same transaction as deduplication.
 type BotStore interface {
 	ProcessInbound(context.Context, string, func(BotStore) error) error
-	Subscriber(context.Context, string) (Subscriber, bool, error)
-	Subscribe(context.Context, string, string, int) error
-	Unsubscribe(ctx context.Context, userID, phone string) (bool, error)
+	Subscriber(ctx context.Context, channel, userID string) (Subscriber, bool, error)
+	Subscribe(ctx context.Context, channel, userID, phone string, zone int) error
+	Unsubscribe(ctx context.Context, channel, userID, phone string) (bool, error)
 	ChangeUser(ctx context.Context, oldUserID, oldPhone, newUserID, newPhone string) error
 	ZoneCounts(context.Context) (map[int]int, error)
 	SaveReport(context.Context, int64, int, time.Time, string) error

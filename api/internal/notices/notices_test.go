@@ -9,13 +9,14 @@ import (
 	"time"
 
 	"aguagdl/api/internal/fake"
+	"aguagdl/api/internal/store"
 )
 
 func TestSendIsIdempotentAndCapped(t *testing.T) {
 	ctx := context.Background()
 	st, snd := fake.NewStore(), &fake.Sender{}
 	for user, zone := range map[string]int{"a": 4, "b": 4, "c": 4, "d": 6} {
-		st.Subscribe(ctx, user, user, zone)
+		st.Subscribe(ctx, store.WhatsApp, user, user, zone)
 	}
 	n := Notice{Zone: 4, Key: "cambio_rotacion/4/2026-11-02", Template: "cambio_rotacion", Language: "es_MX",
 		Params: []string{"4", "lunes y jueves", "lunes 2 de noviembre"}}

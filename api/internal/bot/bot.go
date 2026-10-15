@@ -241,7 +241,7 @@ func (b *Bot) pickZone(ctx context.Context, r wa.Recipient, body string, zones [
 
 func (b *Bot) greet(ctx context.Context, r wa.Recipient) error {
 	if r.UserID != "" {
-		s, ok, err := b.Store.Subscriber(ctx, r.UserID)
+		s, ok, err := b.Store.Subscriber(ctx, store.WhatsApp, r.UserID)
 		if err != nil {
 			return err
 		}
@@ -265,7 +265,7 @@ func (b *Bot) subscribe(ctx context.Context, r wa.Recipient, zone int) error {
 		b.Log.Warn("subscription refused: a night would exceed the send cap", "zone", zone, "cap", b.NightCap)
 		return b.text(ctx, r, msgFull(b.BaseURL))
 	}
-	if err := b.Store.Subscribe(ctx, r.UserID, r.Phone, zone); err != nil {
+	if err := b.Store.Subscribe(ctx, store.WhatsApp, r.UserID, r.Phone, zone); err != nil {
 		return err
 	}
 	return b.text(ctx, r, b.subscribedText(zone, true))
@@ -278,7 +278,7 @@ func (b *Bot) nightFull(ctx context.Context, userID string, zone int) (bool, err
 	if b.NightCap <= 0 {
 		return false, nil
 	}
-	current, subscribed, err := b.Store.Subscriber(ctx, userID)
+	current, subscribed, err := b.Store.Subscriber(ctx, store.WhatsApp, userID)
 	if err != nil || (subscribed && current.Zone == zone) {
 		return false, err
 	}
@@ -332,7 +332,7 @@ func (b *Bot) unsubscribe(ctx context.Context, r wa.Recipient) error {
 	if r.UserID == "" && r.Phone == "" {
 		return b.text(ctx, r, msgNotSubscribed)
 	}
-	removed, err := b.Store.Unsubscribe(ctx, r.UserID, r.Phone)
+	removed, err := b.Store.Unsubscribe(ctx, store.WhatsApp, r.UserID, r.Phone)
 	if err != nil {
 		return err
 	}
@@ -347,7 +347,7 @@ func (b *Bot) reportLastCut(ctx context.Context, r wa.Recipient) error {
 	if r.UserID == "" {
 		return b.text(ctx, r, msgWelcome(b.BaseURL))
 	}
-	s, ok, err := b.Store.Subscriber(ctx, r.UserID)
+	s, ok, err := b.Store.Subscriber(ctx, store.WhatsApp, r.UserID)
 	if err != nil {
 		return err
 	}
@@ -381,7 +381,7 @@ func (b *Bot) saveReport(ctx context.Context, r wa.Recipient, date, answer strin
 	if r.UserID == "" {
 		return b.text(ctx, r, msgWelcome(b.BaseURL))
 	}
-	s, ok, err := b.Store.Subscriber(ctx, r.UserID)
+	s, ok, err := b.Store.Subscriber(ctx, store.WhatsApp, r.UserID)
 	if err != nil {
 		return err
 	}

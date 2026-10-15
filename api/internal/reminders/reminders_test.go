@@ -11,6 +11,7 @@ import (
 	"aguagdl/api/data"
 	"aguagdl/api/internal/fake"
 	"aguagdl/api/internal/rotation"
+	"aguagdl/api/internal/store"
 	"aguagdl/api/internal/wa"
 )
 
@@ -31,7 +32,7 @@ func runner(t *testing.T, now string, st *fake.Store, snd *fake.Sender) *Runner 
 func TestSendsToZonesCutTomorrow(t *testing.T) {
 	st, snd := fake.NewStore(), &fake.Sender{}
 	for i, z := range []int{2, 4, 6, 2} {
-		st.Subscribe(context.Background(), string(rune('a'+i)), "52133000000"+string(rune('0'+i)), z)
+		st.Subscribe(context.Background(), store.WhatsApp, string(rune('a'+i)), "52133000000"+string(rune('0'+i)), z)
 	}
 	r := runner(t, "2026-10-18 20:00", st, snd)
 	if err := r.SendTonight(context.Background()); err != nil {
@@ -63,7 +64,7 @@ func tick(r *Runner, st *fake.Store, start time.Time) *time.Time {
 func TestDailyCap(t *testing.T) {
 	st, snd := fake.NewStore(), &fake.Sender{}
 	for i := range 5 {
-		st.Subscribe(context.Background(), string(rune('a'+i)), "", 4)
+		st.Subscribe(context.Background(), store.WhatsApp, string(rune('a'+i)), "", 4)
 	}
 	r := runner(t, "2026-10-18 20:00", st, snd)
 	clock := tick(r, st, r.Now())
@@ -88,7 +89,7 @@ func TestDailyCapWaitsForLastNightToExpire(t *testing.T) {
 	st, snd := fake.NewStore(), &fake.Sender{}
 	// Friday night reminds Saturday's zones 3, 5 and 7; Saturday night reminds Sunday's 1, 2 and 7.
 	for user, zone := range map[string]int{"a": 3, "b": 5, "c": 7, "d": 1, "e": 2} {
-		st.Subscribe(ctx, user, user, zone)
+		st.Subscribe(ctx, store.WhatsApp, user, user, zone)
 	}
 	r := runner(t, "2026-10-16 20:00", st, snd)
 	clock := tick(r, st, time.Date(2026, 10, 16, 20, 0, 5, 0, loc))
@@ -129,7 +130,7 @@ func TestAnyFailedSendFailsHeartbeatIncludingAfterRestart(t *testing.T) {
 	} {
 		t.Run(sendErr.Error(), func(t *testing.T) {
 			st, snd := fake.NewStore(), &fake.Sender{}
-			st.Subscribe(context.Background(), "a", "521111", 4)
+			st.Subscribe(context.Background(), store.WhatsApp, "a", "521111", 4)
 			r := runner(t, "2026-10-18 20:00", st, snd)
 			calls := 0
 			r.Sender = senderFunc(func(context.Context, wa.Message) (string, error) { calls++; return "", sendErr })
@@ -148,12 +149,12 @@ func TestUnsubscribeDuringBatchSkipsQueuedRecipient(t *testing.T) {
 	ctx := context.Background()
 	st, snd := fake.NewStore(), &fake.Sender{}
 	for _, user := range []string{"a", "b", "c"} {
-		st.Subscribe(ctx, user, user, 4)
+		st.Subscribe(ctx, store.WhatsApp, user, user, 4)
 	}
 	r := runner(t, "2026-10-18 20:00", st, snd)
 	r.Sender = senderFunc(func(ctx context.Context, m wa.Message) (string, error) {
 		if m.To == "a" {
-			st.Unsubscribe(ctx, "b", "")
+			st.Unsubscribe(ctx, store.WhatsApp, "b", "")
 		}
 		return snd.Send(ctx, m)
 	})
@@ -169,7 +170,7 @@ func TestPartialFailureStillFailsHeartbeat(t *testing.T) {
 	ctx := context.Background()
 	st, snd := fake.NewStore(), &fake.Sender{}
 	for _, user := range []string{"a", "b"} {
-		st.Subscribe(ctx, user, user, 4)
+		st.Subscribe(ctx, store.WhatsApp, user, user, 4)
 	}
 	r := runner(t, "2026-10-18 20:00", st, snd)
 	r.Sender = senderFunc(func(ctx context.Context, m wa.Message) (string, error) {
@@ -190,7 +191,7 @@ func TestSystemicRejectionAbortsAndRetries(t *testing.T) {
 	ctx := context.Background()
 	st, snd := fake.NewStore(), &fake.Sender{}
 	for i := range 10 {
-		st.Subscribe(ctx, string(rune('a'+i)), string(rune('a'+i)), 4)
+		st.Subscribe(ctx, store.WhatsApp, string(rune('a'+i)), string(rune('a'+i)), 4)
 	}
 	r := runner(t, "2026-10-18 20:00", st, snd)
 	calls := 0
@@ -212,7 +213,7 @@ func TestDailyCapIsAMovingWindow(t *testing.T) {
 	loc, _ := time.LoadLocation("America/Mexico_City")
 	st, snd := fake.NewStore(), &fake.Sender{}
 	for user, zone := range map[string]int{"a": 4, "b": 6, "c": 2, "d": 5, "e": 2} {
-		st.Subscribe(ctx, user, user, zone)
+		st.Subscribe(ctx, store.WhatsApp, user, user, zone)
 	}
 	r := runner(t, "2026-10-18 20:00", st, snd)
 	clock := time.Date(2026, 10, 18, 20, 0, 0, 0, loc)
@@ -233,7 +234,7 @@ func TestDailyCapIsAMovingWindow(t *testing.T) {
 
 func TestTransientDatabaseErrorIsRetriedUntilDeadline(t *testing.T) {
 	st, snd := fake.NewStore(), &fake.Sender{}
-	st.Subscribe(context.Background(), "a", "a", 4)
+	st.Subscribe(context.Background(), store.WhatsApp, "a", "a", 4)
 	r := runner(t, "2026-10-18 20:00", st, snd)
 	tick(r, st, r.Now())
 	st.FailDue = 2
@@ -245,7 +246,7 @@ func TestTransientDatabaseErrorIsRetriedUntilDeadline(t *testing.T) {
 	}
 
 	st, snd = fake.NewStore(), &fake.Sender{}
-	st.Subscribe(context.Background(), "a", "a", 4)
+	st.Subscribe(context.Background(), store.WhatsApp, "a", "a", 4)
 	r = runner(t, "2026-10-18 20:00", st, snd)
 	clock := tick(r, st, r.Now())
 	st.FailDue = 1000
@@ -260,12 +261,12 @@ func TestTransientDatabaseErrorIsRetriedUntilDeadline(t *testing.T) {
 func TestZoneChangeMidBatchToAnotherZoneCutTomorrow(t *testing.T) {
 	ctx := context.Background()
 	st, snd := fake.NewStore(), &fake.Sender{}
-	st.Subscribe(ctx, "a", "a", 4)
-	st.Subscribe(ctx, "b", "b", 4)
+	st.Subscribe(ctx, store.WhatsApp, "a", "a", 4)
+	st.Subscribe(ctx, store.WhatsApp, "b", "b", 4)
 	r := runner(t, "2026-10-18 20:00", st, snd)
 	r.Sender = senderFunc(func(ctx context.Context, m wa.Message) (string, error) {
 		if m.To == "a" {
-			st.Subscribe(ctx, "b", "b", 6)
+			st.Subscribe(ctx, store.WhatsApp, "b", "b", 6)
 		}
 		return snd.Send(ctx, m)
 	})
@@ -280,8 +281,8 @@ func TestZoneChangeMidBatchToAnotherZoneCutTomorrow(t *testing.T) {
 func TestOnePhoneGetsOneReminder(t *testing.T) {
 	ctx := context.Background()
 	st, snd := fake.NewStore(), &fake.Sender{}
-	st.Subscribe(ctx, "old-owner", "5213300000000", 4)
-	st.Subscribe(ctx, "new-owner", "5213300000000", 6)
+	st.Subscribe(ctx, store.WhatsApp, "old-owner", "5213300000000", 4)
+	st.Subscribe(ctx, store.WhatsApp, "new-owner", "5213300000000", 6)
 	r := runner(t, "2026-10-18 20:00", st, snd)
 	if err := r.SendTonight(ctx); err != nil {
 		t.Fatal(err)
@@ -295,9 +296,9 @@ func TestManualReminderReachesTheWindowOnceAndTheNightlyRunSkipsIt(t *testing.T)
 	ctx := context.Background()
 	st, snd := fake.NewStore(), &fake.Sender{}
 	r := runner(t, "2026-10-15 19:00", st, snd)
-	st.Subscribe(ctx, "a", "521", 6)
-	st.Subscribe(ctx, "b", "522", 6)
-	st.Subscribe(ctx, "c", "523", 4)
+	st.Subscribe(ctx, store.WhatsApp, "a", "521", 6)
+	st.Subscribe(ctx, store.WhatsApp, "b", "522", 6)
+	st.Subscribe(ctx, store.WhatsApp, "c", "523", 4)
 	old := st.Subs["b"]
 	old.UpdatedAt = old.UpdatedAt.Add(-30 * time.Hour)
 	st.Subs["b"] = old

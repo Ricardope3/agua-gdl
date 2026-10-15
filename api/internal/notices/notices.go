@@ -14,7 +14,7 @@ import (
 )
 
 type Store interface {
-	NoticeRecipients(ctx context.Context, zone int, key string) ([]store.Subscriber, error)
+	NoticeRecipients(ctx context.Context, channel string, zone int, key string) ([]store.Subscriber, error)
 	SendNotice(ctx context.Context, s store.Subscriber, key string, send func(store.Subscriber) (string, error)) (bool, error)
 	RecipientsSince(ctx context.Context, since time.Time) (int, error)
 }
@@ -40,7 +40,7 @@ const maxConsecutiveFailures = 5
 
 // Send reaches every pending subscriber of n.Zone and returns how many were sent.
 func Send(ctx context.Context, st Store, snd Sender, n Notice, dailyCap int, interval time.Duration, now func() time.Time, log *slog.Logger) (sent int, err error) {
-	subs, err := st.NoticeRecipients(ctx, n.Zone, n.Key)
+	subs, err := st.NoticeRecipients(ctx, store.WhatsApp, n.Zone, n.Key)
 	if err != nil {
 		return 0, err
 	}

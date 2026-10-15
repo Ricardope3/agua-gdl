@@ -92,7 +92,7 @@ func run(zone int, from string, send bool) error {
 	if err := db.Migrate(ctx); err != nil {
 		return err
 	}
-	due, err := db.NoticeRecipients(ctx, zone, n.Key)
+	due, err := db.NoticeRecipients(ctx, store.WhatsApp, zone, n.Key)
 	if err != nil {
 		return err
 	}

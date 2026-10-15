@@ -22,7 +22,7 @@ type Report struct {
 }
 
 type Store struct {
-	Subs       map[string]store.Subscriber
+	Subs       map[string]store.Subscriber // keyed by Key(channel, user ID)
 	SeenIDs    map[string]bool
 	Reports    []Report
 	Reminders  map[string]bool
@@ -55,27 +55,36 @@ func (s *Store) ProcessInbound(ctx context.Context, id string, process func(stor
 	return nil
 }
 
-func (s *Store) Subscriber(_ context.Context, userID string) (store.Subscriber, bool, error) {
-	sub, ok := s.Subs[userID]
+// Key is a WhatsApp user ID as is, and "tg:<chat ID>" for Telegram.
+func Key(channel, userID string) string {
+	if channel == store.WhatsApp {
+		return userID
+	}
+	return channel + ":" + userID
+}
+
+func (s *Store) Subscriber(_ context.Context, channel, userID string) (store.Subscriber, bool, error) {
+	sub, ok := s.Subs[Key(channel, userID)]
 	return sub, ok, nil
 }
 
-func (s *Store) Subscribe(_ context.Context, userID, phone string, zone int) error {
+func (s *Store) Subscribe(_ context.Context, channel, userID, phone string, zone int) error {
+	id := Key(channel, userID)
 	for k, other := range s.Subs {
-		if phone != "" && other.Phone == phone && k != userID {
+		if phone != "" && other.Phone == phone && k != id {
 			delete(s.Subs, k)
 		}
 	}
-	sub, ok := s.Subs[userID]
+	sub, ok := s.Subs[id]
 	if !ok {
 		s.nextID++
-		sub = store.Subscriber{ID: s.nextID, UserID: userID}
+		sub = store.Subscriber{ID: s.nextID, Channel: channel, UserID: userID}
 	}
 	if phone != "" {
 		sub.Phone = phone
 	}
 	sub.Zone, sub.UpdatedAt = zone, s.Now()
-	s.Subs[userID] = sub
+	s.Subs[id] = sub
 	return nil
 }
 
@@ -83,7 +92,7 @@ func (s *Store) Subscribe(_ context.Context, userID, phone string, zone int) err
 // old ID's, else the newest with the old phone) and every other match is deleted.
 func (s *Store) ChangeUser(_ context.Context, oldUserID, oldPhone, newUserID, newPhone string) error {
 	old := func(sub store.Subscriber) bool {
-		return sub.UserID == oldUserID || (oldPhone != "" && sub.Phone == oldPhone)
+		return (sub.Channel == store.WhatsApp && sub.UserID == oldUserID) || (oldPhone != "" && sub.Phone == oldPhone)
 	}
 	keep, found := s.Subs[newUserID]
 	found = found && newUserID != ""
@@ -102,7 +111,7 @@ func (s *Store) ChangeUser(_ context.Context, oldUserID, oldPhone, newUserID, ne
 		if found && sub.ID == keep.ID {
 			continue
 		}
-		if old(sub) || (newUserID != "" && (sub.UserID == newUserID || (newPhone != "" && sub.Phone == newPhone))) {
+		if old(sub) || (newUserID != "" && ((sub.Channel == store.WhatsApp && sub.UserID == newUserID) || (newPhone != "" && sub.Phone == newPhone))) {
 			delete(s.Subs, k)
 		}
 	}
@@ -117,15 +126,17 @@ func (s *Store) ChangeUser(_ context.Context, oldUserID, oldPhone, newUserID, ne
 func (s *Store) ZoneCounts(context.Context) (map[int]int, error) {
 	counts := map[int]int{}
 	for _, sub := range s.Subs {
-		counts[sub.Zone]++
+		if sub.Channel == store.WhatsApp {
+			counts[sub.Zone]++
+		}
 	}
 	return counts, nil
 }
 
-func (s *Store) Unsubscribe(_ context.Context, userID, phone string) (bool, error) {
+func (s *Store) Unsubscribe(_ context.Context, channel, userID, phone string) (bool, error) {
 	removed := false
 	for k, sub := range s.Subs {
-		if (userID != "" && sub.UserID == userID) || (phone != "" && sub.Phone == phone) {
+		if (userID != "" && sub.Channel == channel && sub.UserID == userID) || (phone != "" && sub.Phone == phone) {
 			delete(s.Subs, k)
 			removed = true
 		}
@@ -142,14 +153,14 @@ func (s *Store) UpdateStatus(_ context.Context, wamid, _ string) (bool, error) {
 	return s.Wamids[wamid], nil
 }
 
-func (s *Store) DueSubscribers(_ context.Context, zones []int, d time.Time) ([]store.Subscriber, error) {
+func (s *Store) DueSubscribers(_ context.Context, channel string, zones []int, d time.Time) ([]store.Subscriber, error) {
 	if s.FailDue > 0 {
 		s.FailDue--
 		return nil, errors.New("connection refused")
 	}
 	var out []store.Subscriber
 	for _, sub := range s.Subs {
-		if slices.Contains(zones, sub.Zone) && !s.Reminders[key(sub.ID, d)] {
+		if sub.Channel == channel && slices.Contains(zones, sub.Zone) && !s.Reminders[key(sub.ID, d)] {
 			out = append(out, sub)
 		}
 	}
@@ -158,21 +169,27 @@ func (s *Store) DueSubscribers(_ context.Context, zones []int, d time.Time) ([]s
 }
 
 func (s *Store) SendReminder(ctx context.Context, sub store.Subscriber, d time.Time, zones []int, send func(store.Subscriber) (string, error)) (bool, error) {
-	current, ok := s.Subs[sub.UserID]
+	current, ok := s.Subs[Key(sub.Channel, sub.UserID)]
 	k := key(sub.ID, d)
 	if !ok || current.ID != sub.ID || !slices.Contains(zones, current.Zone) || s.Reminders[k] {
 		return false, nil
 	}
 	s.Reminders[k], s.SentAt[k] = true, s.Now()
 	wamid, err := send(current)
-	var apiErr *wa.APIError
+	var rejected interface{ Rejected() bool }
+	var gone interface{ Gone() bool }
 	switch {
-	case errors.As(err, &apiErr) && apiErr.Rejected():
+	case errors.As(err, &gone) && gone.Gone():
+		delete(s.Subs, Key(current.Channel, current.UserID))
+	case errors.As(err, &rejected) && rejected.Rejected():
 		delete(s.Reminders, k)
 		delete(s.SentAt, k)
 		s.Unresolved[k] = d.Format("2006-01-02")
 	case err != nil:
 		s.Unresolved[k] = d.Format("2006-01-02")
+	case current.Channel != store.WhatsApp:
+		delete(s.Unresolved, k)
+		delete(s.SentAt, k) // only WhatsApp sends count against the caps
 	default:
 		delete(s.Unresolved, k)
 		s.Wamids[wamid] = true
@@ -180,10 +197,10 @@ func (s *Store) SendReminder(ctx context.Context, sub store.Subscriber, d time.T
 	return true, err
 }
 
-func (s *Store) UnresolvedReminders(_ context.Context, d time.Time) (int, error) {
+func (s *Store) UnresolvedReminders(_ context.Context, channel string, d time.Time) (int, error) {
 	n := 0
-	for _, date := range s.Unresolved {
-		if date == d.Format("2006-01-02") {
+	for k, date := range s.Unresolved {
+		if date == d.Format("2006-01-02") && s.channelOf(k) == channel {
 			n++
 		}
 	}
@@ -211,10 +228,10 @@ func (s *Store) RecipientsSince(_ context.Context, since time.Time) (int, error)
 	return len(ids), nil
 }
 
-func (s *Store) NoticeRecipients(_ context.Context, zone int, k string) ([]store.Subscriber, error) {
+func (s *Store) NoticeRecipients(_ context.Context, channel string, zone int, k string) ([]store.Subscriber, error) {
 	var out []store.Subscriber
 	for _, sub := range s.Subs {
-		if sub.Zone == zone && !s.Notices[fmt.Sprintf("%d/%s", sub.ID, k)] {
+		if sub.Channel == channel && sub.Zone == zone && !s.Notices[fmt.Sprintf("%d/%s", sub.ID, k)] {
 			out = append(out, sub)
 		}
 	}
@@ -224,18 +241,30 @@ func (s *Store) NoticeRecipients(_ context.Context, zone int, k string) ([]store
 
 func (s *Store) SendNotice(_ context.Context, sub store.Subscriber, k string, send func(store.Subscriber) (string, error)) (bool, error) {
 	nk := fmt.Sprintf("%d/%s", sub.ID, k)
-	current, ok := s.Subs[sub.UserID]
+	current, ok := s.Subs[Key(sub.Channel, sub.UserID)]
 	if !ok || current.Zone != sub.Zone || s.Notices[nk] {
 		return false, nil
 	}
 	s.Notices[nk], s.SentAt[fmt.Sprintf("%d/notice/%s", sub.ID, k)] = true, s.Now()
 	_, err := send(current)
-	var apiErr *wa.APIError
-	if errors.As(err, &apiErr) && apiErr.Rejected() {
+	var rejected interface{ Rejected() bool }
+	if errors.As(err, &rejected) && rejected.Rejected() {
 		delete(s.Notices, nk)
 		delete(s.SentAt, fmt.Sprintf("%d/notice/%s", sub.ID, k))
 	}
 	return true, err
+}
+
+// channelOf finds the channel of the subscriber in a reminder key; a deleted subscriber's
+// attempts count as WhatsApp's.
+func (s *Store) channelOf(k string) string {
+	id, _, _ := strings.Cut(k, "/")
+	for _, sub := range s.Subs {
+		if fmt.Sprint(sub.ID) == id {
+			return sub.Channel
+		}
+	}
+	return store.WhatsApp
 }
 
 func key(id int64, d time.Time) string { return fmt.Sprintf("%d/%s", id, d.Format("2006-01-02")) }

@@ -81,10 +81,10 @@ func TestConcurrentMigrations(t *testing.T) {
 func testSubscriber(t *testing.T, db *DB) Subscriber {
 	t.Helper()
 	ctx := context.Background()
-	if err := db.Subscribe(ctx, "MX.test", "521111", 4); err != nil {
+	if err := db.Subscribe(ctx, WhatsApp, "MX.test", "521111", 4); err != nil {
 		t.Fatal(err)
 	}
-	s, ok, err := db.Subscriber(ctx, "MX.test")
+	s, ok, err := db.Subscriber(ctx, WhatsApp, "MX.test")
 	if err != nil || !ok {
 		t.Fatalf("subscriber: %+v %v", s, err)
 	}
@@ -96,7 +96,7 @@ func TestInboundRollbackAndConcurrentDeduplication(t *testing.T) {
 	ctx := context.Background()
 	failure := errors.New("abort command")
 	err := db.ProcessInbound(ctx, "message", func(tx BotStore) error {
-		if err := tx.Subscribe(ctx, "MX.test", "521111", 4); err != nil {
+		if err := tx.Subscribe(ctx, WhatsApp, "MX.test", "521111", 4); err != nil {
 			return err
 		}
 		return failure
@@ -104,7 +104,7 @@ func TestInboundRollbackAndConcurrentDeduplication(t *testing.T) {
 	if !errors.Is(err, failure) {
 		t.Fatal(err)
 	}
-	if _, ok, err := db.Subscriber(ctx, "MX.test"); err != nil || ok {
+	if _, ok, err := db.Subscriber(ctx, WhatsApp, "MX.test"); err != nil || ok {
 		t.Fatalf("rolled-back subscription exists: %v", err)
 	}
 	var calls atomic.Int32
@@ -113,7 +113,7 @@ func TestInboundRollbackAndConcurrentDeduplication(t *testing.T) {
 		go func() {
 			done <- db.ProcessInbound(ctx, "message", func(tx BotStore) error {
 				calls.Add(1)
-				return tx.Subscribe(ctx, "MX.test", "521111", 4)
+				return tx.Subscribe(ctx, WhatsApp, "MX.test", "521111", 4)
 			})
 		}()
 	}
@@ -125,12 +125,12 @@ func TestInboundRollbackAndConcurrentDeduplication(t *testing.T) {
 	if calls.Load() != 1 {
 		t.Fatalf("processed command %d times", calls.Load())
 	}
-	if _, err := db.Unsubscribe(ctx, "MX.test", ""); err != nil {
+	if _, err := db.Unsubscribe(ctx, WhatsApp, "MX.test", ""); err != nil {
 		t.Fatal(err)
 	}
 	if err := db.ProcessInbound(ctx, "message", func(tx BotStore) error {
 		t.Error("duplicate command ran after BAJA")
-		return tx.Subscribe(ctx, "MX.test", "521111", 4)
+		return tx.Subscribe(ctx, WhatsApp, "MX.test", "521111", 4)
 	}); err != nil {
 		t.Fatal(err)
 	}
@@ -160,7 +160,7 @@ func TestAcceptedReminderIsNotResentAfterRecordingFails(t *testing.T) {
 	if calls != 1 {
 		t.Fatalf("sent %d times", calls)
 	}
-	if n, err := db.UnresolvedReminders(ctx, date); err != nil || n != 1 {
+	if n, err := db.UnresolvedReminders(ctx, WhatsApp, date); err != nil || n != 1 {
 		t.Fatalf("unresolved=%d %v", n, err)
 	}
 }
@@ -172,10 +172,10 @@ func TestQueuedReminderRechecksSubscriber(t *testing.T) {
 			s := testSubscriber(t, db)
 			ctx, date := context.Background(), time.Now()
 			if change == "unsubscribe" {
-				if _, err := db.Unsubscribe(ctx, s.UserID, ""); err != nil {
+				if _, err := db.Unsubscribe(ctx, WhatsApp, s.UserID, ""); err != nil {
 					t.Fatal(err)
 				}
-			} else if err := db.Subscribe(ctx, s.UserID, "521111", 6); err != nil {
+			} else if err := db.Subscribe(ctx, WhatsApp, s.UserID, "521111", 6); err != nil {
 				t.Fatal(err)
 			}
 			attempted, err := db.SendReminder(ctx, s, date, []int{4}, func(Subscriber) (string, error) { t.Error("stale reminder sent"); return "id", nil })
@@ -191,7 +191,7 @@ func TestZoneChangeBetweenZonesCutTheSameDay(t *testing.T) {
 	s := testSubscriber(t, db)
 	ctx, date := context.Background(), time.Now()
 	// Listed for zone 4, then moved to zone 6 before the send; both are cut tomorrow.
-	if err := db.Subscribe(ctx, s.UserID, "521111", 6); err != nil {
+	if err := db.Subscribe(ctx, WhatsApp, s.UserID, "521111", 6); err != nil {
 		t.Fatal(err)
 	}
 	var got Subscriber
@@ -239,7 +239,7 @@ func TestReminderSerializesWithUnsubscribeAndOtherSenders(t *testing.T) {
 	defer conn.Release()
 	pid := conn.Conn().PgConn().PID()
 	unsubscribed := make(chan error, 1)
-	go func() { _, err := (&DB{q: conn}).Unsubscribe(ctx, s.UserID, ""); unsubscribed <- err }()
+	go func() { _, err := (&DB{q: conn}).Unsubscribe(ctx, WhatsApp, s.UserID, ""); unsubscribed <- err }()
 	blocked := false
 	deadline := time.Now().Add(2 * time.Second)
 	for time.Now().Before(deadline) {
@@ -274,7 +274,7 @@ func TestSendErrorPersistsUncertainty(t *testing.T) {
 	if attempted, err := db.SendReminder(ctx, s, date, []int{4}, func(Subscriber) (string, error) { return "", failure }); !attempted || !errors.Is(err, failure) {
 		t.Fatalf("send: %v %v", attempted, err)
 	}
-	if n, err := db.UnresolvedReminders(ctx, date); err != nil || n != 1 {
+	if n, err := db.UnresolvedReminders(ctx, WhatsApp, date); err != nil || n != 1 {
 		t.Fatalf("unresolved=%d %v", n, err)
 	}
 	if n, err := db.SentSince(ctx, date.Add(-time.Hour)); err != nil || n != 1 {
@@ -290,19 +290,19 @@ func TestRejectedReminderIsRetried(t *testing.T) {
 	if attempted, err := db.SendReminder(ctx, s, date, []int{4}, func(Subscriber) (string, error) { return "", rejected }); !attempted || !errors.Is(err, rejected) {
 		t.Fatalf("send: %v %v", attempted, err)
 	}
-	if n, err := db.UnresolvedReminders(ctx, date); err != nil || n != 1 {
+	if n, err := db.UnresolvedReminders(ctx, WhatsApp, date); err != nil || n != 1 {
 		t.Fatalf("a rejection must fail the heartbeat: unresolved=%d %v", n, err)
 	}
 	if n, err := db.SentSince(ctx, date.Add(-time.Hour)); err != nil || n != 0 {
 		t.Fatalf("a rejected message was never sent, so it must not count against the cap: %d %v", n, err)
 	}
-	if due, err := db.DueSubscribers(ctx, []int{4}, date); err != nil || len(due) != 1 {
+	if due, err := db.DueSubscribers(ctx, WhatsApp, []int{4}, date); err != nil || len(due) != 1 {
 		t.Fatalf("due=%v %v", due, err)
 	}
 	if attempted, err := db.SendReminder(ctx, s, date, []int{4}, func(Subscriber) (string, error) { return "wamid.ok", nil }); !attempted || err != nil {
 		t.Fatalf("retry: %v %v", attempted, err)
 	}
-	if n, err := db.UnresolvedReminders(ctx, date); err != nil || n != 0 {
+	if n, err := db.UnresolvedReminders(ctx, WhatsApp, date); err != nil || n != 0 {
 		t.Fatalf("unresolved=%d %v", n, err)
 	}
 	if n, err := db.SentSince(ctx, date.Add(-time.Hour)); err != nil || n != 1 {
@@ -368,7 +368,7 @@ func TestRecipientsSinceCountsPeopleNotMessages(t *testing.T) {
 	if n, err := db.RecipientsSince(ctx, since); err != nil || n != 1 {
 		t.Fatalf("Meta's limit counts one person once: recipients=%d %v", n, err)
 	}
-	if _, err := db.Unsubscribe(ctx, s.UserID, ""); err != nil {
+	if _, err := db.Unsubscribe(ctx, WhatsApp, s.UserID, ""); err != nil {
 		t.Fatal(err)
 	}
 	if n, err := db.RecipientsSince(ctx, since); err != nil || n != 2 {
@@ -385,10 +385,10 @@ func TestChangeUserNeverKeepsTheOldNumber(t *testing.T) {
 	}
 	var phone *string
 	var zone int
-	if err := db.pool.QueryRow(ctx, `select phone, zone from subscriber where wa_user_id = 'MX.new'`).Scan(&phone, &zone); err != nil || phone != nil || zone != 4 {
+	if err := db.pool.QueryRow(ctx, `select phone, zone from subscriber where user_id = 'MX.new'`).Scan(&phone, &zone); err != nil || phone != nil || zone != 4 {
 		t.Fatalf("phone=%v zone=%d %v", phone, zone, err)
 	}
-	if err := db.Subscribe(ctx, "MX.other", "522222", 2); err != nil {
+	if err := db.Subscribe(ctx, WhatsApp, "MX.other", "522222", 2); err != nil {
 		t.Fatal(err)
 	}
 	if err := db.ChangeUser(ctx, "MX.new", "", "MX.other", "522222"); err != nil {
@@ -404,7 +404,7 @@ func TestZoneCounts(t *testing.T) {
 	db := testDB(t)
 	ctx := context.Background()
 	for user, zone := range map[string]int{"MX.a": 4, "MX.b": 4, "MX.c": 6} {
-		if err := db.Subscribe(ctx, user, "", zone); err != nil {
+		if err := db.Subscribe(ctx, WhatsApp, user, "", zone); err != nil {
 			t.Fatal(err)
 		}
 	}
@@ -419,7 +419,7 @@ func TestNoticeIsSentOnceAndCountsTowardTheLimit(t *testing.T) {
 	s := testSubscriber(t, db)
 	ctx := context.Background()
 	key := "cambio_rotacion/4/2026-11-02"
-	if due, err := db.NoticeRecipients(ctx, 4, key); err != nil || len(due) != 1 {
+	if due, err := db.NoticeRecipients(ctx, WhatsApp, 4, key); err != nil || len(due) != 1 {
 		t.Fatalf("due=%v %v", due, err)
 	}
 	if attempted, err := db.SendNotice(ctx, s, key, func(Subscriber) (string, error) { return "wamid.n1", nil }); !attempted || err != nil {
@@ -428,7 +428,7 @@ func TestNoticeIsSentOnceAndCountsTowardTheLimit(t *testing.T) {
 	if attempted, err := db.SendNotice(ctx, s, key, func(Subscriber) (string, error) { t.Error("resent"); return "", nil }); attempted || err != nil {
 		t.Fatalf("resend: %v %v", attempted, err)
 	}
-	if due, err := db.NoticeRecipients(ctx, 4, key); err != nil || len(due) != 0 {
+	if due, err := db.NoticeRecipients(ctx, WhatsApp, 4, key); err != nil || len(due) != 0 {
 		t.Fatalf("due after send=%v %v", due, err)
 	}
 	if _, err := db.SendReminder(ctx, s, time.Now(), []int{4}, func(Subscriber) (string, error) { return "wamid.r1", nil }); err != nil {
@@ -482,7 +482,7 @@ func TestResultsHideSmallDaysAndTruncateLastReport(t *testing.T) {
 
 func phoneHolders(t *testing.T, db *DB, phone string) []Subscriber {
 	t.Helper()
-	rows, err := db.pool.Query(context.Background(), `select id, wa_user_id, coalesce(phone, ''), zone from subscriber where phone = $1`, phone)
+	rows, err := db.pool.Query(context.Background(), `select id, user_id, coalesce(phone, ''), zone from subscriber where phone = $1`, phone)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -504,14 +504,14 @@ func TestSecondIDClaimingAPhoneReplacesTheFirst(t *testing.T) {
 		user string
 		zone int
 	}{{"MX.a", 4}, {"MX.b", 6}} {
-		if err := db.Subscribe(ctx, sub.user, "521111", sub.zone); err != nil {
+		if err := db.Subscribe(ctx, WhatsApp, sub.user, "521111", sub.zone); err != nil {
 			t.Fatal(err)
 		}
 	}
 	if subs := phoneHolders(t, db, "521111"); len(subs) != 1 || subs[0].UserID != "MX.b" || subs[0].Zone != 6 {
 		t.Fatalf("the number belongs to its latest subscriber only: %+v", subs)
 	}
-	due, err := db.DueSubscribers(ctx, []int{4, 6}, date)
+	due, err := db.DueSubscribers(ctx, WhatsApp, []int{4, 6}, date)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -529,10 +529,10 @@ func TestSecondIDClaimingAPhoneReplacesTheFirst(t *testing.T) {
 func TestChangeUserIntoAPhoneAnotherRowHolds(t *testing.T) {
 	db := testDB(t)
 	ctx := context.Background()
-	if err := db.Subscribe(ctx, "MX.a", "521111", 4); err != nil {
+	if err := db.Subscribe(ctx, WhatsApp, "MX.a", "521111", 4); err != nil {
 		t.Fatal(err)
 	}
-	if err := db.Subscribe(ctx, "MX.b", "522222", 6); err != nil {
+	if err := db.Subscribe(ctx, WhatsApp, "MX.b", "522222", 6); err != nil {
 		t.Fatal(err)
 	}
 	if err := db.ChangeUser(ctx, "MX.a", "521111", "MX.c", "522222"); err != nil {
@@ -550,10 +550,10 @@ func TestChangeUserIntoAPhoneAnotherRowHolds(t *testing.T) {
 func TestChangeUserMatchingTwoRows(t *testing.T) {
 	db := testDB(t)
 	ctx := context.Background()
-	if err := db.Subscribe(ctx, "MX.a", "521111", 4); err != nil {
+	if err := db.Subscribe(ctx, WhatsApp, "MX.a", "521111", 4); err != nil {
 		t.Fatal(err)
 	}
-	if err := db.Subscribe(ctx, "MX.b", "523333", 6); err != nil {
+	if err := db.Subscribe(ctx, WhatsApp, "MX.b", "523333", 6); err != nil {
 		t.Fatal(err)
 	}
 	// The old ID matches MX.a and the old phone matches MX.b.
@@ -572,7 +572,7 @@ func TestChangeUserMatchingTwoRows(t *testing.T) {
 func TestChangeUserToAnUnsubscribedUserFreesTheNumber(t *testing.T) {
 	db := testDB(t)
 	ctx := context.Background()
-	if err := db.Subscribe(ctx, "MX.b", "522222", 6); err != nil {
+	if err := db.Subscribe(ctx, WhatsApp, "MX.b", "522222", 6); err != nil {
 		t.Fatal(err)
 	}
 	if err := db.ChangeUser(ctx, "MX.x", "529999", "MX.y", "522222"); err != nil {
@@ -610,7 +610,7 @@ func TestPhoneMigrationKeepsTheNewestRow(t *testing.T) {
 	if err := db.Migrate(ctx); err != nil {
 		t.Fatal(err)
 	}
-	rows, err := db.pool.Query(ctx, `select wa_user_id from subscriber order by id`)
+	rows, err := db.pool.Query(ctx, `select user_id from subscriber order by id`)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -618,7 +618,11 @@ func TestPhoneMigrationKeepsTheNewestRow(t *testing.T) {
 	if err != nil || fmt.Sprint(users) != "[MX.new MX.solo MX.none1 MX.none2]" {
 		t.Fatalf("users=%v %v", users, err)
 	}
-	if _, err := db.pool.Exec(ctx, `insert into subscriber (wa_user_id, phone, zone) values ('MX.dup', '522222', 1)`); err == nil {
+	var other int
+	if err := db.pool.QueryRow(ctx, `select count(*) from subscriber where channel <> 'wa'`).Scan(&other); err != nil || other != 0 {
+		t.Fatalf("existing subscribers must stay on WhatsApp: %d %v", other, err)
+	}
+	if _, err := db.pool.Exec(ctx, `insert into subscriber (user_id, phone, zone) values ('MX.dup', '522222', 1)`); err == nil {
 		t.Fatal("a second row with the same phone must be refused")
 	}
 }
@@ -626,16 +630,16 @@ func TestPhoneMigrationKeepsTheNewestRow(t *testing.T) {
 func TestBajaByPhoneRemovesEveryRowWithIt(t *testing.T) {
 	db := testDB(t)
 	ctx := context.Background()
-	if err := db.Subscribe(ctx, "MX.a", "521111", 4); err != nil {
+	if err := db.Subscribe(ctx, WhatsApp, "MX.a", "521111", 4); err != nil {
 		t.Fatal(err)
 	}
-	if removed, err := db.Unsubscribe(ctx, "MX.other", "521111"); err != nil || !removed {
+	if removed, err := db.Unsubscribe(ctx, WhatsApp, "MX.other", "521111"); err != nil || !removed {
 		t.Fatalf("BAJA from the number must remove its subscription: %v %v", removed, err)
 	}
-	if err := db.Subscribe(ctx, "MX.a", "521111", 4); err != nil {
+	if err := db.Subscribe(ctx, WhatsApp, "MX.a", "521111", 4); err != nil {
 		t.Fatal(err)
 	}
-	if removed, err := db.Unsubscribe(ctx, "", "521111"); err != nil || !removed {
+	if removed, err := db.Unsubscribe(ctx, WhatsApp, "", "521111"); err != nil || !removed {
 		t.Fatalf("BAJA without a WhatsApp ID works by phone: %v %v", removed, err)
 	}
 	if subs := phoneHolders(t, db, "521111"); len(subs) != 0 {
@@ -650,11 +654,98 @@ func TestDueSubscribersCarryTheLastChange(t *testing.T) {
 	if _, err := db.pool.Exec(ctx, `update subscriber set updated_at = now() - interval '30 hours' where id = $1`, s.ID); err != nil {
 		t.Fatal(err)
 	}
-	due, err := db.DueSubscribers(ctx, []int{4}, time.Now())
+	due, err := db.DueSubscribers(ctx, WhatsApp, []int{4}, time.Now())
 	if err != nil || len(due) != 1 {
 		t.Fatalf("due=%v %v", due, err)
 	}
 	if age := time.Since(due[0].UpdatedAt); age < 29*time.Hour || age > 31*time.Hour {
 		t.Fatalf("updated_at is %v old, want about 30h", age)
+	}
+}
+
+type blockedErr struct{}
+
+func (blockedErr) Error() string  { return "tg: 403 Forbidden: bot was blocked by the user" }
+func (blockedErr) Rejected() bool { return true }
+func (blockedErr) Gone() bool     { return true }
+
+func TestTelegramSubscribersAreSeparateAndUncapped(t *testing.T) {
+	db := testDB(t)
+	ctx, date := context.Background(), time.Now()
+	if err := db.Subscribe(ctx, WhatsApp, "MX.a", "521111", 4); err != nil {
+		t.Fatal(err)
+	}
+	// A Telegram chat ID equal to a WhatsApp user ID is a different person.
+	for _, id := range []string{"MX.a", "777"} {
+		if err := db.Subscribe(ctx, Telegram, id, "", 4); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if s, ok, err := db.Subscriber(ctx, WhatsApp, "MX.a"); err != nil || !ok || s.Zone != 4 {
+		t.Fatalf("whatsapp subscriber lost: %v %v %v", s, ok, err)
+	}
+	if counts, err := db.ZoneCounts(ctx); err != nil || counts[4] != 1 {
+		t.Fatalf("ZoneCounts must count WhatsApp only: %v %v", counts, err)
+	}
+	tg, err := db.DueSubscribers(ctx, Telegram, []int{4}, date)
+	if err != nil || len(tg) != 2 || tg[0].Channel != Telegram || tg[0].Phone != "" {
+		t.Fatalf("telegram due=%+v %v", tg, err)
+	}
+	if wa, err := db.DueSubscribers(ctx, WhatsApp, []int{4}, date); err != nil || len(wa) != 1 || wa[0].Phone != "521111" {
+		t.Fatalf("whatsapp due=%+v %v", wa, err)
+	}
+	for _, s := range tg {
+		if _, err := db.SendReminder(ctx, s, date, []int{4}, func(current Subscriber) (string, error) {
+			if current.Channel != Telegram {
+				t.Errorf("sent on %q", current.Channel)
+			}
+			return "", nil
+		}); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if n, err := db.RecipientsSince(ctx, date.Add(-time.Hour)); err != nil || n != 0 {
+		t.Fatalf("Telegram sends must not count against Meta's limit: %d %v", n, err)
+	}
+	if n, err := db.SentSince(ctx, date.Add(-time.Hour)); err != nil || n != 0 {
+		t.Fatalf("Telegram sends must not count against the monthly cap: %d %v", n, err)
+	}
+	if removed, err := db.Unsubscribe(ctx, Telegram, "MX.a", ""); err != nil || !removed {
+		t.Fatalf("unsubscribe: %v %v", removed, err)
+	}
+	if _, ok, _ := db.Subscriber(ctx, WhatsApp, "MX.a"); !ok {
+		t.Fatal("a Telegram BAJA removed the WhatsApp subscription")
+	}
+}
+
+func TestBlockedBotDeletesTheSubscriber(t *testing.T) {
+	db := testDB(t)
+	ctx, date := context.Background(), time.Now()
+	if err := db.Subscribe(ctx, Telegram, "777", "", 4); err != nil {
+		t.Fatal(err)
+	}
+	s, _, _ := db.Subscriber(ctx, Telegram, "777")
+	if attempted, err := db.SendReminder(ctx, s, date, []int{4}, func(Subscriber) (string, error) { return "", blockedErr{} }); !attempted || err == nil {
+		t.Fatalf("send: %v %v", attempted, err)
+	}
+	if _, ok, err := db.Subscriber(ctx, Telegram, "777"); err != nil || ok {
+		t.Fatalf("blocking the bot must delete the subscription: %v %v", ok, err)
+	}
+	if n, err := db.UnresolvedReminders(ctx, Telegram, date); err != nil || n != 0 {
+		t.Fatalf("a blocked bot needs no review: unresolved=%d %v", n, err)
+	}
+	var status string
+	if err := db.pool.QueryRow(ctx, `select status from reminder where channel = 'tg'`).Scan(&status); err != nil || status != "blocked" {
+		t.Fatalf("status=%q %v", status, err)
+	}
+}
+
+func TestUnresolvedRemindersArePerChannel(t *testing.T) {
+	db := testDB(t)
+	s := testSubscriber(t, db)
+	ctx, date := context.Background(), time.Now()
+	db.SendReminder(ctx, s, date, []int{4}, func(Subscriber) (string, error) { return "", errors.New("lost") })
+	if n, err := db.UnresolvedReminders(ctx, Telegram, date); err != nil || n != 0 {
+		t.Fatalf("a WhatsApp failure must not fail the Telegram run: %d %v", n, err)
 	}
 }

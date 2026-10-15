@@ -31,9 +31,16 @@ func hashID(wamid string) string {
 //go:embed migrations/*.sql
 var migrations embed.FS
 
+// Channels a subscriber can receive reminders on.
+const (
+	WhatsApp = "wa"
+	Telegram = "tg"
+)
+
 type Subscriber struct {
 	ID        int64
-	UserID    string
+	Channel   string
+	UserID    string // WhatsApp's business-scoped user ID, or the Telegram chat ID
 	Phone     string
 	Zone      int
 	UpdatedAt time.Time // last subscription or zone change; set by DueSubscribers only
@@ -143,59 +150,61 @@ func (db *DB) PurgeSeen(ctx context.Context, before time.Time) error {
 	return err
 }
 
-func (db *DB) Subscriber(ctx context.Context, userID string) (Subscriber, bool, error) {
-	s := Subscriber{UserID: userID}
-	err := db.q.QueryRow(ctx, `select id, zone from subscriber where wa_user_id = $1`, userID).Scan(&s.ID, &s.Zone)
+func (db *DB) Subscriber(ctx context.Context, channel, userID string) (Subscriber, bool, error) {
+	s := Subscriber{Channel: channel, UserID: userID}
+	err := db.q.QueryRow(ctx, `select id, zone from subscriber where channel = $1 and user_id = $2`, channel, userID).Scan(&s.ID, &s.Zone)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return Subscriber{}, false, nil
 	}
 	return s, err == nil, err
 }
 
-// Subscribe stores userID's zone. Reminders go to the phone, so whoever writes from a
-// number now owns it: any other subscription holding that number is dropped.
-func (db *DB) Subscribe(ctx context.Context, userID, phone string, zone int) error {
-	if _, err := db.q.Exec(ctx, `delete from subscriber where phone = nullif($2, '') and wa_user_id <> $1`, userID, phone); err != nil {
+// Subscribe stores userID's zone. WhatsApp reminders go to the phone, so whoever writes
+// from a number now owns it: any other subscription holding that number is dropped.
+func (db *DB) Subscribe(ctx context.Context, channel, userID, phone string, zone int) error {
+	if _, err := db.q.Exec(ctx, `delete from subscriber where phone = nullif($3, '')
+		and not (channel = $1 and user_id = $2)`, channel, userID, phone); err != nil {
 		return err
 	}
-	_, err := db.q.Exec(ctx, `insert into subscriber (wa_user_id, phone, zone) values ($1, nullif($2, ''), $3)
-		on conflict (wa_user_id) do update set zone = excluded.zone,
-			phone = coalesce(excluded.phone, subscriber.phone), updated_at = now()`, userID, phone, zone)
+	_, err := db.q.Exec(ctx, `insert into subscriber (channel, user_id, phone, zone) values ($1, $2, nullif($3, ''), $4)
+		on conflict (channel, user_id) do update set zone = excluded.zone,
+			phone = coalesce(excluded.phone, subscriber.phone), updated_at = now()`, channel, userID, phone, zone)
 	return err
 }
 
-// ChangeUser moves a subscription to the user's new WhatsApp ID and number. The old
+// ChangeUser moves a WhatsApp subscription to the user's new WhatsApp ID and number. The old
 // number is never kept: it may be reassigned to someone else. Without a new ID the
 // subscription is dropped. One row survives: an existing subscription for newUserID,
 // else the one for oldUserID, else the newest holding oldPhone. Every other row with
 // the old ID or phone, the new ID or the new phone is deleted, even when none survives.
 func (db *DB) ChangeUser(ctx context.Context, oldUserID, oldPhone, newUserID, newPhone string) error {
-	const old = `(wa_user_id = $1 or phone = nullif($2, ''))`
+	const old = `((channel = 'wa' and user_id = $1) or phone = nullif($2, ''))`
 	if newUserID == "" {
 		_, err := db.q.Exec(ctx, `delete from subscriber where `+old, oldUserID, oldPhone)
 		return err
 	}
 	var keep int64
-	err := db.q.QueryRow(ctx, `select id from subscriber where wa_user_id = $3 or `+old+`
-		order by wa_user_id = $3 desc, wa_user_id = $1 desc, id desc limit 1`, oldUserID, oldPhone, newUserID).Scan(&keep)
+	err := db.q.QueryRow(ctx, `select id from subscriber where (channel = 'wa' and user_id = $3) or `+old+`
+		order by user_id = $3 desc, user_id = $1 desc, id desc limit 1`, oldUserID, oldPhone, newUserID).Scan(&keep)
 	if err != nil && !errors.Is(err, pgx.ErrNoRows) {
 		return err
 	}
 	if _, err := db.q.Exec(ctx, `delete from subscriber where id <> $5
-		and (wa_user_id = $3 or `+old+` or phone = nullif($4, ''))`, oldUserID, oldPhone, newUserID, newPhone, keep); err != nil {
+		and ((channel = 'wa' and user_id = $3) or `+old+` or phone = nullif($4, ''))`, oldUserID, oldPhone, newUserID, newPhone, keep); err != nil {
 		return err
 	}
 	if keep == 0 {
 		return nil
 	}
-	_, err = db.q.Exec(ctx, `update subscriber set wa_user_id = $2, phone = nullif($3, ''), updated_at = now() where id = $1`,
+	_, err = db.q.Exec(ctx, `update subscriber set user_id = $2, phone = nullif($3, ''), updated_at = now() where id = $1`,
 		keep, newUserID, newPhone)
 	return err
 }
 
-// ZoneCounts returns the number of subscribers in each zone.
+// ZoneCounts returns the number of WhatsApp subscribers in each zone, the ones Meta's
+// messaging limit applies to.
 func (db *DB) ZoneCounts(ctx context.Context) (map[int]int, error) {
-	rows, err := db.q.Query(ctx, `select zone, count(*) from subscriber group by zone`)
+	rows, err := db.q.Query(ctx, `select zone, count(*) from subscriber where channel = 'wa' group by zone`)
 	if err != nil {
 		return nil, err
 	}
@@ -210,8 +219,8 @@ func (db *DB) ZoneCounts(ctx context.Context) (map[int]int, error) {
 
 // Unsubscribe deletes userID's subscription and any holding phone, so BAJA stops
 // every reminder to that number.
-func (db *DB) Unsubscribe(ctx context.Context, userID, phone string) (bool, error) {
-	tag, err := db.q.Exec(ctx, `delete from subscriber where wa_user_id = $1 or phone = nullif($2, '')`, userID, phone)
+func (db *DB) Unsubscribe(ctx context.Context, channel, userID, phone string) (bool, error) {
+	tag, err := db.q.Exec(ctx, `delete from subscriber where (channel = $1 and user_id = $2) or phone = nullif($3, '')`, channel, userID, phone)
 	return tag.RowsAffected() > 0, err
 }
 
@@ -232,38 +241,39 @@ func (db *DB) UpdateStatus(ctx context.Context, wamid, status string) (bool, err
 	return tag.RowsAffected() > 0, err
 }
 
-// DueSubscribers lists subscribers in zones that haven't been reminded about cutDate yet,
-// including those whose earlier attempt Meta rejected.
-func (db *DB) DueSubscribers(ctx context.Context, zones []int, cutDate time.Time) ([]Subscriber, error) {
-	rows, err := db.q.Query(ctx, `select s.id, s.wa_user_id, coalesce(s.phone, ''), s.zone, s.updated_at from subscriber s
-		where s.zone = any($1::int[]) and not exists (
+// DueSubscribers lists a channel's subscribers in zones that haven't been reminded about
+// cutDate yet, including those whose earlier attempt was rejected.
+func (db *DB) DueSubscribers(ctx context.Context, channel string, zones []int, cutDate time.Time) ([]Subscriber, error) {
+	rows, err := db.q.Query(ctx, `select s.id, s.channel, s.user_id, coalesce(s.phone, ''), s.zone, s.updated_at from subscriber s
+		where s.channel = $3 and s.zone = any($1::int[]) and not exists (
 			select 1 from reminder r where r.subscriber_id = s.id and r.cut_date = $2::date and r.status <> 'rejected')
-		order by s.id`, zones, cutDate.Format(dateLayout))
+		order by s.id`, zones, cutDate.Format(dateLayout), channel)
 	if err != nil {
 		return nil, err
 	}
 	return pgx.CollectRows(rows, func(r pgx.CollectableRow) (Subscriber, error) {
 		var s Subscriber
-		err := r.Scan(&s.ID, &s.UserID, &s.Phone, &s.Zone, &s.UpdatedAt)
+		err := r.Scan(&s.ID, &s.Channel, &s.UserID, &s.Phone, &s.Zone, &s.UpdatedAt)
 		return s, err
 	})
 }
 
-// RecipientsSince counts the distinct people sent a template since the given time,
-// which is what Meta's messaging limit counts.
+// RecipientsSince counts the distinct people sent a WhatsApp template since the given
+// time, which is what Meta's messaging limit counts.
 func (db *DB) RecipientsSince(ctx context.Context, since time.Time) (int, error) {
 	var n int
 	err := db.q.QueryRow(ctx, `select count(distinct coalesce(subscriber_id::text, t || id)) from (
-			select subscriber_id, id, 'r' t from reminder where sent_at >= $1 and status <> 'rejected'
+			select subscriber_id, id, 'r' t from reminder where channel = 'wa' and sent_at >= $1 and status <> 'rejected'
 			union all
-			select subscriber_id, id, 'n' from notice where sent_at >= $1 and status <> 'rejected') m`, since).Scan(&n)
+			select subscriber_id, id, 'n' from notice where channel = 'wa' and sent_at >= $1 and status <> 'rejected') m`, since).Scan(&n)
 	return n, err
 }
 
+// SentSince counts the WhatsApp messages sent since the given time, which is what costs money.
 func (db *DB) SentSince(ctx context.Context, since time.Time) (int, error) {
 	var n int
-	err := db.q.QueryRow(ctx, `select (select count(*) from reminder where sent_at >= $1 and status <> 'rejected')
-		+ (select count(*) from notice where sent_at >= $1 and status <> 'rejected')`, since).Scan(&n)
+	err := db.q.QueryRow(ctx, `select (select count(*) from reminder where channel = 'wa' and sent_at >= $1 and status <> 'rejected')
+		+ (select count(*) from notice where channel = 'wa' and sent_at >= $1 and status <> 'rejected')`, since).Scan(&n)
 	return n, err
 }
 

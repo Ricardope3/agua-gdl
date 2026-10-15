@@ -15,9 +15,9 @@ import (
 )
 
 type Store interface {
-	DueSubscribers(ctx context.Context, zones []int, cutDate time.Time) ([]store.Subscriber, error)
+	DueSubscribers(ctx context.Context, channel string, zones []int, cutDate time.Time) ([]store.Subscriber, error)
 	SendReminder(ctx context.Context, s store.Subscriber, cutDate time.Time, zones []int, send func(store.Subscriber) (string, error)) (bool, error)
-	UnresolvedReminders(ctx context.Context, cutDate time.Time) (int, error)
+	UnresolvedReminders(ctx context.Context, channel string, cutDate time.Time) (int, error)
 	SentSince(ctx context.Context, since time.Time) (int, error)
 	RecipientsSince(ctx context.Context, since time.Time) (int, error)
 }
@@ -109,7 +109,7 @@ func (r *Runner) SendTonight(ctx context.Context) (err error) {
 	now := r.Now()
 	tomorrow := r.Schedule.Day(now).AddDate(0, 0, 1)
 	defer func() {
-		n, checkErr := r.Store.UnresolvedReminders(ctx, tomorrow)
+		n, checkErr := r.Store.UnresolvedReminders(ctx, store.WhatsApp, tomorrow)
 		err = errors.Join(err, transient(checkErr))
 		if n > 0 {
 			err = errors.Join(err, fmt.Errorf("%d failed or uncertain reminder attempts require review", n))
@@ -119,7 +119,7 @@ func (r *Runner) SendTonight(ctx context.Context) (err error) {
 	if len(zones) == 0 {
 		return nil
 	}
-	subs, err := r.Store.DueSubscribers(ctx, zones, tomorrow)
+	subs, err := r.Store.DueSubscribers(ctx, store.WhatsApp, zones, tomorrow)
 	if err != nil || len(subs) == 0 {
 		return transient(err)
 	}
@@ -239,7 +239,7 @@ func (r *Runner) ManualRecipients(ctx context.Context, m Manual) (inWindow []sto
 	if !r.Schedule.IsCut(m.Zone, tomorrow) {
 		return nil, 0, fmt.Errorf("zone %d has no cut on %s", m.Zone, tomorrow.Format(rotation.DateLayout))
 	}
-	subs, err := r.Store.DueSubscribers(ctx, []int{m.Zone}, tomorrow)
+	subs, err := r.Store.DueSubscribers(ctx, store.WhatsApp, []int{m.Zone}, tomorrow)
 	if err != nil {
 		return nil, 0, err
 	}
