@@ -14,6 +14,7 @@ import (
 	"aguagdl/api/data"
 	"aguagdl/api/internal/geo"
 	"aguagdl/api/internal/rotation"
+	"aguagdl/api/internal/store"
 )
 
 func TestV1ErrorsAllowAnyOrigin(t *testing.T) {
@@ -86,5 +87,36 @@ func TestZoneLookupIsNotCached(t *testing.T) {
 	h.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/v1/zone?lat=20.6767&lon=-103.3475", nil))
 	if rec.Code != http.StatusOK || !strings.Contains(rec.Body.String(), `"zone":6`) || rec.Header().Get("Cache-Control") != "no-store" {
 		t.Fatalf("status %d, cache %q, body %s", rec.Code, rec.Header().Get("Cache-Control"), rec.Body.String())
+	}
+}
+
+type countingResults struct{ calls int }
+
+func (c *countingResults) Results(context.Context, time.Time, int) ([]store.Result, error) {
+	c.calls++
+	return []store.Result{{Zone: 4, Date: "2026-10-19", Total: 12}}, nil
+}
+
+func TestResultsQueryTheDatabaseOncePerFiveMinutes(t *testing.T) {
+	db := &countingResults{}
+	a := &api{db: db, sched: testSchedule(t), minShown: 10, log: slog.New(slog.NewTextHandler(io.Discard, nil))}
+	h := a.routes()
+	get := func() {
+		rec := httptest.NewRecorder()
+		h.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/v1/results", nil))
+		if rec.Code != http.StatusOK || !strings.Contains(rec.Body.String(), `"total":12`) {
+			t.Fatalf("status %d, body %s", rec.Code, rec.Body.String())
+		}
+	}
+	for range 3 {
+		get()
+	}
+	if db.calls != 1 {
+		t.Fatalf("3 visits made %d queries, want 1", db.calls)
+	}
+	a.resultsAt = a.resultsAt.Add(-resultsTTL)
+	get()
+	if db.calls != 2 {
+		t.Fatalf("after 5 minutes the next visit must query again: %d queries", db.calls)
 	}
 }

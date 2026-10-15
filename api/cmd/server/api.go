@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 
 	"aguagdl/api/internal/bot"
@@ -21,7 +22,7 @@ import (
 
 type api struct {
 	bot         *bot.Bot
-	db          *store.DB
+	db          resultsStore
 	sched       *rotation.Schedule
 	zones       *geo.Zones
 	cols        *colonias.Index
@@ -29,7 +30,19 @@ type api struct {
 	verifyToken string
 	minShown    int
 	log         *slog.Logger
+
+	resultsMu   sync.Mutex
+	resultsAt   time.Time
+	resultsRows []store.Result
 }
+
+type resultsStore interface {
+	Results(ctx context.Context, since time.Time, minReports int) ([]store.Result, error)
+}
+
+// resultsTTL is how long /v1/results reuses one query, so traffic to /resultados
+// can't keep Neon awake and use up its compute hours.
+const resultsTTL = 5 * time.Minute
 
 type zoneInfo struct {
 	Zone int      `json:"zone"`
@@ -102,16 +115,32 @@ func (a *api) coloniaSearch(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *api) results(w http.ResponseWriter, r *http.Request) {
-	rows, err := a.db.Results(r.Context(), a.sched.Day(time.Now()).AddDate(0, 0, -60), a.minShown)
+	rows, err := a.cachedResults(r.Context())
 	if err != nil {
 		a.log.Error("results", "err", err)
 		http.Error(w, "error", http.StatusInternalServerError)
 		return
 	}
+	writeJSON(w, rows, publicFiveMinutes)
+}
+
+// cachedResults queries Postgres at most once per resultsTTL; concurrent requests
+// wait for that one query.
+func (a *api) cachedResults(ctx context.Context) ([]store.Result, error) {
+	a.resultsMu.Lock()
+	defer a.resultsMu.Unlock()
+	if a.resultsRows != nil && time.Since(a.resultsAt) < resultsTTL {
+		return a.resultsRows, nil
+	}
+	rows, err := a.db.Results(ctx, a.sched.Day(time.Now()).AddDate(0, 0, -60), a.minShown)
+	if err != nil {
+		return nil, err
+	}
 	if rows == nil {
 		rows = []store.Result{}
 	}
-	writeJSON(w, rows, publicFiveMinutes)
+	a.resultsRows, a.resultsAt = rows, time.Now()
+	return rows, nil
 }
 
 func (a *api) verify(w http.ResponseWriter, r *http.Request) {
