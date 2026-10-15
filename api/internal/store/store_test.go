@@ -479,3 +479,146 @@ func TestResultsHideSmallDaysAndTruncateLastReport(t *testing.T) {
 		t.Errorf("Results = %+v %v, want [%+v]", got, err, want)
 	}
 }
+
+func phoneHolders(t *testing.T, db *DB, phone string) []Subscriber {
+	t.Helper()
+	rows, err := db.pool.Query(context.Background(), `select id, wa_user_id, coalesce(phone, ''), zone from subscriber where phone = $1`, phone)
+	if err != nil {
+		t.Fatal(err)
+	}
+	subs, err := pgx.CollectRows(rows, func(r pgx.CollectableRow) (Subscriber, error) {
+		var s Subscriber
+		err := r.Scan(&s.ID, &s.UserID, &s.Phone, &s.Zone)
+		return s, err
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	return subs
+}
+
+func TestSecondIDClaimingAPhoneReplacesTheFirst(t *testing.T) {
+	db := testDB(t)
+	ctx, date := context.Background(), time.Now()
+	for _, sub := range []struct {
+		user string
+		zone int
+	}{{"MX.a", 4}, {"MX.b", 6}} {
+		if err := db.Subscribe(ctx, sub.user, "521111", sub.zone); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if subs := phoneHolders(t, db, "521111"); len(subs) != 1 || subs[0].UserID != "MX.b" || subs[0].Zone != 6 {
+		t.Fatalf("the number belongs to its latest subscriber only: %+v", subs)
+	}
+	due, err := db.DueSubscribers(ctx, []int{4, 6}, date)
+	if err != nil {
+		t.Fatal(err)
+	}
+	sends := 0
+	for _, s := range due {
+		if _, err := db.SendReminder(ctx, s, date, []int{4, 6}, func(Subscriber) (string, error) { sends++; return fmt.Sprint("wamid.", sends), nil }); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if sends != 1 {
+		t.Fatalf("tonight's batch sent %d reminders to one number", sends)
+	}
+}
+
+func TestChangeUserIntoAPhoneAnotherRowHolds(t *testing.T) {
+	db := testDB(t)
+	ctx := context.Background()
+	if err := db.Subscribe(ctx, "MX.a", "521111", 4); err != nil {
+		t.Fatal(err)
+	}
+	if err := db.Subscribe(ctx, "MX.b", "522222", 6); err != nil {
+		t.Fatal(err)
+	}
+	if err := db.ChangeUser(ctx, "MX.a", "521111", "MX.c", "522222"); err != nil {
+		t.Fatal(err)
+	}
+	var n int
+	if err := db.pool.QueryRow(ctx, `select count(*) from subscriber`).Scan(&n); err != nil || n != 1 {
+		t.Fatalf("rows=%d %v", n, err)
+	}
+	if subs := phoneHolders(t, db, "522222"); len(subs) != 1 || subs[0].UserID != "MX.c" || subs[0].Zone != 4 {
+		t.Fatalf("the moved subscription must own the number: %+v", subs)
+	}
+}
+
+func TestChangeUserMatchingTwoRows(t *testing.T) {
+	db := testDB(t)
+	ctx := context.Background()
+	if err := db.Subscribe(ctx, "MX.a", "521111", 4); err != nil {
+		t.Fatal(err)
+	}
+	if err := db.Subscribe(ctx, "MX.b", "523333", 6); err != nil {
+		t.Fatal(err)
+	}
+	// The old ID matches MX.a and the old phone matches MX.b.
+	if err := db.ChangeUser(ctx, "MX.a", "523333", "MX.c", "524444"); err != nil {
+		t.Fatalf("used to fail with a duplicate wa_user_id: %v", err)
+	}
+	var n int
+	if err := db.pool.QueryRow(ctx, `select count(*) from subscriber`).Scan(&n); err != nil || n != 1 {
+		t.Fatalf("rows=%d %v", n, err)
+	}
+	if subs := phoneHolders(t, db, "524444"); len(subs) != 1 || subs[0].UserID != "MX.c" || subs[0].Zone != 4 {
+		t.Fatalf("the row with the old ID moves: %+v", subs)
+	}
+}
+
+func TestChangeUserToAnUnsubscribedUserFreesTheNumber(t *testing.T) {
+	db := testDB(t)
+	ctx := context.Background()
+	if err := db.Subscribe(ctx, "MX.b", "522222", 6); err != nil {
+		t.Fatal(err)
+	}
+	if err := db.ChangeUser(ctx, "MX.x", "529999", "MX.y", "522222"); err != nil {
+		t.Fatal(err)
+	}
+	if subs := phoneHolders(t, db, "522222"); len(subs) != 0 {
+		t.Fatalf("the number now belongs to someone who never subscribed: %+v", subs)
+	}
+}
+
+func TestPhoneMigrationKeepsTheNewestRow(t *testing.T) {
+	db := emptyDB(t)
+	ctx := context.Background()
+	// A database deployed before 005, holding one number twice.
+	if _, err := db.pool.Exec(ctx, `create table schema_migrations (
+		version text primary key, applied_at timestamptz not null default now())`); err != nil {
+		t.Fatal(err)
+	}
+	for _, name := range []string{"001_init.sql", "002_phone.sql", "003_hash_wamids.sql", "004_notice.sql"} {
+		sql, err := migrations.ReadFile("migrations/" + name)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if _, err := db.pool.Exec(ctx, string(sql)); err != nil {
+			t.Fatal(err)
+		}
+		if _, err := db.pool.Exec(ctx, `insert into schema_migrations (version) values ($1)`, "migrations/"+name); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if _, err := db.pool.Exec(ctx, `insert into subscriber (wa_user_id, phone, zone) values
+		('MX.old', '521111', 4), ('MX.new', '521111', 6), ('MX.solo', '522222', 2), ('MX.none1', null, 3), ('MX.none2', null, 3)`); err != nil {
+		t.Fatal(err)
+	}
+	if err := db.Migrate(ctx); err != nil {
+		t.Fatal(err)
+	}
+	rows, err := db.pool.Query(ctx, `select wa_user_id from subscriber order by id`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	users, err := pgx.CollectRows(rows, pgx.RowTo[string])
+	if err != nil || fmt.Sprint(users) != "[MX.new MX.solo MX.none1 MX.none2]" {
+		t.Fatalf("users=%v %v", users, err)
+	}
+	if _, err := db.pool.Exec(ctx, `insert into subscriber (wa_user_id, phone, zone) values ('MX.dup', '522222', 1)`); err == nil {
+		t.Fatal("a second row with the same phone must be refused")
+	}
+}

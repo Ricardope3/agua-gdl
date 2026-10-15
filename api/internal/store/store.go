@@ -151,7 +151,12 @@ func (db *DB) Subscriber(ctx context.Context, userID string) (Subscriber, bool, 
 	return s, err == nil, err
 }
 
+// Subscribe stores userID's zone. Reminders go to the phone, so whoever writes from a
+// number now owns it: any other subscription holding that number is dropped.
 func (db *DB) Subscribe(ctx context.Context, userID, phone string, zone int) error {
+	if _, err := db.q.Exec(ctx, `delete from subscriber where phone = nullif($2, '') and wa_user_id <> $1`, userID, phone); err != nil {
+		return err
+	}
 	_, err := db.q.Exec(ctx, `insert into subscriber (wa_user_id, phone, zone) values ($1, nullif($2, ''), $3)
 		on conflict (wa_user_id) do update set zone = excluded.zone,
 			phone = coalesce(excluded.phone, subscriber.phone), updated_at = now()`, userID, phone, zone)
@@ -160,20 +165,30 @@ func (db *DB) Subscribe(ctx context.Context, userID, phone string, zone int) err
 
 // ChangeUser moves a subscription to the user's new WhatsApp ID and number. The old
 // number is never kept: it may be reassigned to someone else. Without a new ID the
-// subscription is dropped.
+// subscription is dropped. One row survives: an existing subscription for newUserID,
+// else the one for oldUserID, else the newest holding oldPhone. Every other row with
+// the old ID or phone, the new ID or the new phone is deleted, even when none survives.
 func (db *DB) ChangeUser(ctx context.Context, oldUserID, oldPhone, newUserID, newPhone string) error {
-	const old = `(wa_user_id = $1 or (phone = nullif($2, '')))`
+	const old = `(wa_user_id = $1 or phone = nullif($2, ''))`
 	if newUserID == "" {
 		_, err := db.q.Exec(ctx, `delete from subscriber where `+old, oldUserID, oldPhone)
 		return err
 	}
-	tag, err := db.q.Exec(ctx, `delete from subscriber where `+old+` and wa_user_id <> $3
-		and exists (select 1 from subscriber where wa_user_id = $3)`, oldUserID, oldPhone, newUserID)
-	if err != nil || tag.RowsAffected() > 0 {
+	var keep int64
+	err := db.q.QueryRow(ctx, `select id from subscriber where wa_user_id = $3 or `+old+`
+		order by wa_user_id = $3 desc, wa_user_id = $1 desc, id desc limit 1`, oldUserID, oldPhone, newUserID).Scan(&keep)
+	if err != nil && !errors.Is(err, pgx.ErrNoRows) {
 		return err
 	}
-	_, err = db.q.Exec(ctx, `update subscriber set wa_user_id = $3, phone = nullif($4, ''), updated_at = now()
-		where `+old, oldUserID, oldPhone, newUserID, newPhone)
+	if _, err := db.q.Exec(ctx, `delete from subscriber where id <> $5
+		and (wa_user_id = $3 or `+old+` or phone = nullif($4, ''))`, oldUserID, oldPhone, newUserID, newPhone, keep); err != nil {
+		return err
+	}
+	if keep == 0 {
+		return nil
+	}
+	_, err = db.q.Exec(ctx, `update subscriber set wa_user_id = $2, phone = nullif($3, ''), updated_at = now() where id = $1`,
+		keep, newUserID, newPhone)
 	return err
 }
 
