@@ -74,7 +74,7 @@ order by cut_date desc, id;
 No borres estas reservas para reintentar automáticamente: podrías duplicar un
 mensaje que WhatsApp ya aceptó. Confirma el resultado en WhatsApp Manager; marca
 como `sent` los aceptados, o `failed` los rechazados. Si no puedes
-confirmarlo, conserva `uncertain` y publica el aviso manualmente en el Canal.
+confirmarlo, conserva `uncertain`.
 
 ## Datos
 
