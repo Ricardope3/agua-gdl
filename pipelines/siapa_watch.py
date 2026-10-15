@@ -30,6 +30,7 @@ GEOJSON = HERE.parent / "api" / "data" / "zonas.geojson"
 KML = "zonas.kml"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
 TIMEOUT = 60
+MAX_BYTES = 20 * 1024 * 1024
 RETRY_DELAY = 20
 GDL = timezone(timedelta(hours=-6))
 HINTS = {
@@ -45,12 +46,22 @@ def fetch(url):
     for attempt in (1, 2):
         try:
             with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
-                return r.read(), r.headers.get("Last-Modified")
+                body = r.read(MAX_BYTES + 1)
+                if len(body) > MAX_BYTES:
+                    raise ValueError(f"larger than {MAX_BYTES:,} bytes")
+                return body, r.headers.get("Last-Modified")
         except (OSError, http.client.HTTPException) as e:
             if attempt == 2:
                 raise
             print(f"{url}: {e}; retrying in {RETRY_DELAY}s", file=sys.stderr)
             time.sleep(RETRY_DELAY)
+
+
+def code(text, limit=80):
+    # Text from the network goes into a GitHub issue: as inline code it can't add
+    # Markdown, HTML or @mentions, and without "|" it can't break the table.
+    text = " ".join(str(text).split())[:limit].replace("`", "'").replace("|", "/")
+    return f"`{text}`"
 
 
 def short(sha):
@@ -61,7 +72,7 @@ def zones_report(kml):
     try:
         live = siapa_zonas.convert(kml)
     except Exception as e:
-        return f"**La conversión del KML falló:** {e}"
+        return f"**La conversión del KML falló:** {code(e, 200)}"
     with open(GEOJSON, encoding="utf-8") as f:
         repo = json.load(f)
 
@@ -93,14 +104,14 @@ def main(args):
             body, modified = fetch(s["url"])
         except Exception as e:
             errors.append(name)
-            rows.append(f"| {link} | **error:** {e} | | | {short(s.get('sha256'))} |")
+            rows.append(f"| {link} | **error:** {code(e, 200)} | | | {short(s.get('sha256'))} |")
             continue
         sha = hashlib.sha256(body).hexdigest()
         live[name] = {"sha256": sha, "bytes": len(body), "last_modified": modified}
         if name == KML:
             zones = zones_report(body)
         old_lm = s.get("last_modified")
-        lm = (modified or "—") if modified == old_lm else f"{old_lm or '—'} → {modified or '—'}"
+        lm = (code(modified) if modified else "—") if modified == old_lm else f"{code(old_lm) if old_lm else '—'} → {code(modified) if modified else '—'}"
         if sha == s.get("sha256"):
             rows.append(f"| {link} | sin cambios | {len(body):,} B | {lm} | {short(sha)} |")
             continue
