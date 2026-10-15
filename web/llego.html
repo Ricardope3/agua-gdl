@@ -257,7 +257,9 @@ h3.ih .i-badge { width: 28px; height: 28px }
         el("a", { class: "button alt", href: `webcal://${calendarURL(zone)}` }, "iPhone o Mac"),
         el("a", { class: "button alt", href: `https://calendar.google.com/calendar/render?cid=${encodeURIComponent(`webcal://${calendarURL(zone)}`)}`, rel: "noopener" }, "Android o Google Calendar"),
         copy),
-      el("p", { class: "note" }, "Te suscribes a un calendario con los días de racionamiento de la zona y una alerta a las 8 p. m. de la noche anterior. Se actualiza solo si el SIAPA cambia el calendario. Si no te llega la alerta, actívala en los ajustes del calendario para eventos de todo el día. No guardamos ningún dato tuyo."));
+      el("p", { class: "note" }, "Te suscribes a un calendario con los días de racionamiento de la zona y una alerta a las 8 p. m. de la noche anterior. Se actualiza solo si el SIAPA cambia el calendario. No guardamos ningún dato tuyo."),
+      el("p", { class: "note" }, el("strong", {}, "En iPhone: "), "al suscribirte, desactiva «Eliminar alertas» o no te llegará el aviso. Si ya te suscribiste: Ajustes › Apps › Calendario › Cuentas › Calendarios suscritos › Agua GDL › desactiva «Eliminar alertas»."),
+      el("p", { class: "note" }, el("strong", {}, "En Android: "), "Google Calendar no usa las alertas de los calendarios suscritos. En la app, abre Configuración › Agua GDL › Notificaciones de eventos de todo el día y agrega una el día anterior a las 8 p. m."));
   }
 
   function zoneCard(z) {
