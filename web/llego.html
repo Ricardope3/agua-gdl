@@ -60,7 +60,10 @@ label { display: block; font-weight: 700; margin: 0 0 6px }
 #resultado { margin-top: 24px; scroll-margin-top: 16px }
 #resultado:empty { display: none }
 #resultado > p { margin: 0 0 14px; max-width: 65ch }
-.msg { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px }
+.msg { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--brand); border-radius: 10px; padding: 16px 18px; font-size: 1.02rem }
+.result { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; padding: 20px; box-shadow: var(--shadow) }
+.result h3 { margin: 0 0 10px; font-size: 1.2rem; line-height: 1.3 }
+.result p { margin: 0 0 14px; color: var(--muted) }
 .warn { background: var(--warn-bg); border-left: 5px solid var(--warn); border-radius: 8px; padding: 12px 14px }
 .linklike { font: inherit; color: var(--link); background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer }
 .zones { display: grid; gap: 12px; margin: 0 0 14px }
@@ -229,6 +232,13 @@ h3.ih .i-badge { width: 28px; height: 28px }
   }
   const msg = (...kids) => el("p", { class: "msg" }, ...kids);
   const warn = (...kids) => el("p", { class: "warn" }, ...kids);
+  const result = (iconName, title, ...kids) => el("div", { class: "result" },
+    el("h3", { class: "ih" }, badge(iconName), title), ...kids);
+  const searchButton = (text) => {
+    const b = el("button", { type: "button", class: "button" }, icon("search"), text);
+    b.addEventListener("click", () => { input.focus(); input.scrollIntoView({ block: "center" }); });
+    return b;
+  };
   const locateLink = (text) => {
     const b = el("button", { type: "button", class: "linklike" }, text);
     b.addEventListener("click", locate);
@@ -303,7 +313,9 @@ h3.ih .i-badge { width: 28px; height: 28px }
         const { latitude: lat, longitude: lon } = pos.coords;
         const r = await get(`/v1/zone?lat=${lat.toFixed(4)}&lon=${lon.toFixed(4)}`);
         if (r.zones.length === 0) {
-          show(msg("Tu ubicación no cae en ninguna zona del mapa del SIAPA. Puede que no te toque la rotación, pero el mapa y la lista de colonias del SIAPA no siempre coinciden. Para revisarlo, ", searchLink("busca el nombre de tu colonia"), "."));
+          show(result("map-pin", "Tu ubicación no está en ninguna zona del mapa del SIAPA",
+            el("p", {}, "Puede que no te toque la rotación. Pero el mapa y la lista de colonias del SIAPA no siempre coinciden, así que revisa también con el nombre de tu colonia."),
+            el("div", { class: "subscribe" }, searchButton("Buscar mi colonia"), el("a", { class: "button alt", href: MAP, rel: "noopener" }, icon("map-pin"), "Ver el mapa del SIAPA"))));
         } else if (r.zones.length === 1) {
           show(el("p", {}, "Tu ubicación está en la ", el("strong", {}, `zona ${r.zones[0].zone}`), "."), cards(r.zones));
         } else {
