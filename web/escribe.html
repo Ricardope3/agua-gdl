@@ -47,6 +47,8 @@ h1 { font-size: clamp(2rem, 6vw, 3rem); line-height: 1.08; letter-spacing: -.02e
 label { display: block; font-weight: 700; margin: 0 0 6px }
 input, textarea { width: 100%; font: inherit; font-size: 1rem; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px }
 textarea { min-height: 22em; resize: vertical; line-height: 1.5 }
+textarea.post { min-height: 7em }
+.people .links { display: flex; gap: 14px; flex-shrink: 0 }
 .field { margin: 0 0 16px }
 .actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 4px 0 0 }
 .button { display: inline-block; background: var(--brand-deep); color: var(--on-brand); font: inherit; font-weight: 700; text-decoration: none; padding: 12px 18px; border: 0; border-radius: 8px; cursor: pointer }
@@ -112,6 +114,14 @@ Atentamente,
       <p class="note" id="estado" aria-live="polite">Cada correo sale por separado y con el nombre de la persona: toca el botón, envía el correo y vuelve aquí para el siguiente. No olvides poner tu nombre y tu colonia. Un correo personal pesa más que uno copiado: cambia lo que quieras.</p>
     </div>
 
+    <section aria-labelledby="x">
+      <h2 id="x">Publícalo también en X</h2>
+      <p>Un post para cada diputación que tiene cuenta en X. Cada botón abre X con «Dip. @cuenta,» y este texto, que puedes cambiar:</p>
+      <textarea id="post" class="post" maxlength="250">le pido que vote EN CONTRA de privatizar o concesionar el agua en Jalisco. El agua es un derecho humano, no un negocio. Daré seguimiento a su voto. #ElAguaEsUnDerecho #NoALaPrivatizacionDelAgua #Jalisco</textarea>
+      <p class="note" id="post-cuenta"></p>
+      <p class="note">Usamos solo las cuentas que cada diputación publica en su perfil del Congreso; 6 no tienen una, así que no aparece su botón.</p>
+    </section>
+
     <section aria-labelledby="uno">
       <h2 id="uno">Las 38 diputaciones</h2>
       <p>También puedes escribirle a cualquiera en el orden que quieras. Las que ya escribiste se marcan con ✓ en este dispositivo.</p>
@@ -137,46 +147,46 @@ Atentamente,
 <script>
 (() => {
   "use strict";
-  // [nombre, correo institucional]
+  // [nombre, correo institucional, cuenta de X según su perfil en congresojal.gob.mx]
   const DIPUTADOS = [
-    ["Adriana Gabriela Medina Ortiz", "adriana.medina@congresojal.gob.mx"],
-    ["Alberto Alfaro García", "alberto.alfaro@congresojal.gob.mx"],
-    ["Alejandra Margarita Giadans Valenzuela", "alejandra.giadans@congresojal.gob.mx"],
-    ["Alejandro Barragán Sánchez", "alejandro.barragan@congresojal.gob.mx"],
-    ["Alondra Getsemany Fausto de León", "alondra.fausto@congresojal.gob.mx"],
-    ["Ana Fernanda Hernández Sanmiguel", "anafer.hernandez@congresojal.gob.mx"],
-    ["Brenda Guadalupe Carrera García", "brenda.carrera@congresojal.gob.mx"],
-    ["Claudia Murguía Torres", "claudia.murguia@congresojal.gob.mx"],
-    ["César Octavio Madrigal Díaz", "cesar.madrigal@congresojal.gob.mx"],
-    ["Edgar Enrique Velázquez González", "enrique.velazquez@congresojal.gob.mx"],
-    ["Emmanuel Alejandro Puerto Covarrubias", "alejandro.puerto@congresojal.gob.mx"],
-    ["Isaías Cortés Berumen", "isaias.cortes@congresojal.gob.mx"],
-    ["Itzcoatl Tonatiuh Bravo Padilla", "tonatiuh.bravo@congresojal.gob.mx"],
-    ["Itzul Barrera Rodríguez", "itzul.barrera@congresojal.gob.mx"],
-    ["José Aurelio Fonseca Olivares", "aurelio.fonseca@congresojal.gob.mx"],
-    ["José Guadalupe Buenrostro Martínez", "jose.buenrostro@congresojal.gob.mx"],
-    ["José Luis Tostado Bastidas", "joseluis.tostado@congresojal.gob.mx"],
-    ["Julio César Hurtado Luna", "julio.hurtado@congresojal.gob.mx"],
-    ["Laura Gabriela Cárdenas Rodríguez", "gaby.cardenas@congresojal.gob.mx"],
-    ["Leonardo Almaguer Castañeda", "leonardo.almaguer@congresojal.gob.mx"],
-    ["Luis Octavio Vidrio Martínez", "luis.vidrio@congresojal.gob.mx"],
-    ["Marco Tulio Moya Díaz", "marco.moya@congresojal.gob.mx"],
-    ["Mariana Casillas Guerrero", "mariana.casillas@congresojal.gob.mx"],
-    ["Marta Estela Arizmendi Fombona", "marta.arizmendi@congresojal.gob.mx"],
-    ["Martín Franco Cuevas", "martin.franco@congresojal.gob.mx"],
-    ["María Candelaria Ochoa Ávalos", "candelaria.ochoa@congresojal.gob.mx"],
-    ["María Elisa Bravo Navarro", "maria.bravo@congresojal.gob.mx"],
-    ["María del Refugio Camarena Jáuregui", "cuquis.camarena@congresojal.gob.mx"],
-    ["Miguel De La Rosa Figueroa", "miguel.delarosa@congresojal.gob.mx"],
-    ["Montserrat Pérez Cisneros", "montserrat.perez@congresojal.gob.mx"],
-    ["Mónica Paola Magaña Mendoza", "monica.magana@congresojal.gob.mx"],
-    ["Norma López Ramírez", "norma.lopez@congresojal.gob.mx"],
-    ["Omar Enrique Cervantes Rivera", "omar.cervantes@congresojal.gob.mx"],
-    ["Sergio Miguel Martín Castellanos", "sergio.martin@congresojal.gob.mx"],
-    ["Tonantzin Elusay Cárdenas Méndez", "tonantzin.cardenas@congresojal.gob.mx"],
-    ["Valeria Guadalupe Ávila Gutiérrez", "valeria.avila@congresojal.gob.mx"],
-    ["Verónica Magdalena Jiménez Vázquez", "veronica.jimenez@congresojal.gob.mx"],
-    ["Yussara Elizabeth Canales González", "yussara.canales@congresojal.gob.mx"],
+    ["Adriana Gabriela Medina Ortiz", "adriana.medina@congresojal.gob.mx", "adrianamedinaMx"],
+    ["Alberto Alfaro García", "alberto.alfaro@congresojal.gob.mx", "albertoalfaromx"],
+    ["Alejandra Margarita Giadans Valenzuela", "alejandra.giadans@congresojal.gob.mx", "AleGiadans"],
+    ["Alejandro Barragán Sánchez", "alejandro.barragan@congresojal.gob.mx", null],
+    ["Alondra Getsemany Fausto de León", "alondra.fausto@congresojal.gob.mx", "alondra_fausto"],
+    ["Ana Fernanda Hernández Sanmiguel", "anafer.hernandez@congresojal.gob.mx", null],
+    ["Brenda Guadalupe Carrera García", "brenda.carrera@congresojal.gob.mx", null],
+    ["Claudia Murguía Torres", "claudia.murguia@congresojal.gob.mx", "ClaudiaMurguia_"],
+    ["César Octavio Madrigal Díaz", "cesar.madrigal@congresojal.gob.mx", "cesarmadrigaldi"],
+    ["Edgar Enrique Velázquez González", "enrique.velazquez@congresojal.gob.mx", "EnriqueV01"],
+    ["Emmanuel Alejandro Puerto Covarrubias", "alejandro.puerto@congresojal.gob.mx", "ea_puerto"],
+    ["Isaías Cortés Berumen", "isaias.cortes@congresojal.gob.mx", "isacorber"],
+    ["Itzcoatl Tonatiuh Bravo Padilla", "tonatiuh.bravo@congresojal.gob.mx", "tonatiuhbp"],
+    ["Itzul Barrera Rodríguez", "itzul.barrera@congresojal.gob.mx", "itzulBarrera"],
+    ["José Aurelio Fonseca Olivares", "aurelio.fonseca@congresojal.gob.mx", null],
+    ["José Guadalupe Buenrostro Martínez", "jose.buenrostro@congresojal.gob.mx", "LBuenrostroD17"],
+    ["José Luis Tostado Bastidas", "joseluis.tostado@congresojal.gob.mx", "jltostadob"],
+    ["Julio César Hurtado Luna", "julio.hurtado@congresojal.gob.mx", null],
+    ["Laura Gabriela Cárdenas Rodríguez", "gaby.cardenas@congresojal.gob.mx", "GabyCardenas"],
+    ["Leonardo Almaguer Castañeda", "leonardo.almaguer@congresojal.gob.mx", "LeonardAlmaguer"],
+    ["Luis Octavio Vidrio Martínez", "luis.vidrio@congresojal.gob.mx", "Luisvidrio2028"],
+    ["Marco Tulio Moya Díaz", "marco.moya@congresojal.gob.mx", "MarcoMoyaAc"],
+    ["Mariana Casillas Guerrero", "mariana.casillas@congresojal.gob.mx", "marianacasge"],
+    ["Marta Estela Arizmendi Fombona", "marta.arizmendi@congresojal.gob.mx", "fombonamarta"],
+    ["Martín Franco Cuevas", "martin.franco@congresojal.gob.mx", "DiputadoLocal3"],
+    ["María Candelaria Ochoa Ávalos", "candelaria.ochoa@congresojal.gob.mx", "CandeOchoaA"],
+    ["María Elisa Bravo Navarro", "maria.bravo@congresojal.gob.mx", "MariaElisaBravo"],
+    ["María del Refugio Camarena Jáuregui", "cuquis.camarena@congresojal.gob.mx", "cuquis_camarena"],
+    ["Miguel De La Rosa Figueroa", "miguel.delarosa@congresojal.gob.mx", "delarosa4t"],
+    ["Montserrat Pérez Cisneros", "montserrat.perez@congresojal.gob.mx", "montsepcisneros"],
+    ["Mónica Paola Magaña Mendoza", "monica.magana@congresojal.gob.mx", "MonicaMgn"],
+    ["Norma López Ramírez", "norma.lopez@congresojal.gob.mx", null],
+    ["Omar Enrique Cervantes Rivera", "omar.cervantes@congresojal.gob.mx", "omarcervantes_r"],
+    ["Sergio Miguel Martín Castellanos", "sergio.martin@congresojal.gob.mx", "SergioMart97360"],
+    ["Tonantzin Elusay Cárdenas Méndez", "tonantzin.cardenas@congresojal.gob.mx", "tonantzincarm"],
+    ["Valeria Guadalupe Ávila Gutiérrez", "valeria.avila@congresojal.gob.mx", "valeriaavila93_"],
+    ["Verónica Magdalena Jiménez Vázquez", "veronica.jimenez@congresojal.gob.mx", "verojimenezv"],
+    ["Yussara Elizabeth Canales González", "yussara.canales@congresojal.gob.mx", "YussaraCG"],
   ];
   const $ = (id) => document.getElementById(id);
   const all = DIPUTADOS.map((d) => d[1]);
@@ -209,6 +219,12 @@ Atentamente,
       btn.hidden = true;
       $("progreso").replaceChildren(`¡Listo! Ya les escribiste a las ${DIPUTADOS.length} diputaciones. Gracias. `, reset);
     }
+    const post = $("post").value.trim();
+    document.querySelectorAll("[data-x]").forEach((a) => {
+      a.href = `https://x.com/intent/tweet?text=${q(`Dip. @${a.dataset.x}, ${post}`)}`;
+    });
+    const longest = Math.max(...DIPUTADOS.map((d) => (d[2] || "").length));
+    $("post-cuenta").textContent = `${post.length + longest + 8} de 280 caracteres con la mención más larga.`;
     document.querySelectorAll("[data-to]").forEach((a) => {
       a.href = link(a.dataset.to, a.dataset.name);
       a.target = viaApp() ? "" : "_blank";
@@ -228,7 +244,7 @@ Atentamente,
   document.querySelectorAll('input[name="via"]').forEach((r) => r.addEventListener("change", refresh));
 
   const list = $("personas");
-  for (const [name, email] of DIPUTADOS) {
+  for (const [name, email, x] of DIPUTADOS) {
     const li = document.createElement("li");
     const who = document.createElement("span");
     who.textContent = name;
@@ -242,7 +258,18 @@ Atentamente,
     a.rel = "noopener";
     a.target = "_blank";
     a.addEventListener("click", () => mark(email));
-    li.append(who, a);
+    const links = document.createElement("span");
+    links.className = "links";
+    links.append(a);
+    if (x) {
+      const post = document.createElement("a");
+      post.textContent = "𝕏 Publicar";
+      post.dataset.x = x;
+      post.rel = "noopener";
+      post.target = "_blank";
+      links.append(post);
+    }
+    li.append(who, links);
     list.append(li);
   }
 
@@ -257,6 +284,7 @@ Atentamente,
   $("copiar-correos").addEventListener("click", () => copy(all.join(", "), `Copiamos los ${all.length} correos.`));
   $("copiar-texto").addEventListener("click", () => copy(`${subject()}\n\n${body()}`, "Copiamos el asunto y el mensaje."));
   $("asunto").addEventListener("input", refresh);
+  $("post").addEventListener("input", refresh);
   $("texto").addEventListener("input", refresh);
   refresh();
 })();
