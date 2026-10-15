@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"crypto/hmac"
 	"encoding/json"
 	"io"
 	"log/slog"
@@ -114,7 +115,9 @@ func (a *api) results(w http.ResponseWriter, r *http.Request) {
 
 func (a *api) verify(w http.ResponseWriter, r *http.Request) {
 	q := r.URL.Query()
-	if q.Get("hub.mode") == "subscribe" && q.Get("hub.verify_token") == a.verifyToken {
+	if q.Get("hub.mode") == "subscribe" && hmac.Equal([]byte(q.Get("hub.verify_token")), []byte(a.verifyToken)) {
+		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+		w.Header().Set("X-Content-Type-Options", "nosniff")
 		io.WriteString(w, q.Get("hub.challenge"))
 		return
 	}
