@@ -65,7 +65,8 @@ textarea.post { min-height: 7em }
 .firma input:disabled { opacity: .5; cursor: not-allowed }
 .check { display: inline-flex; gap: 8px; align-items: center; font-weight: 400; font-size: .9rem; margin: 0; cursor: pointer }
 .check input, .via input { width: 16px; height: 16px; margin: 0; box-shadow: none; accent-color: var(--primary) }
-#estado.falta { color: var(--warn); font-weight: 500 }
+.firma-tu { margin-top: 16px }
+#seccion-estado.falta, #estado.falta { color: var(--warn); font-weight: 500 }
 .field { margin: 0 0 20px }
 .actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 0 }
 .button { display: inline-flex; align-items: center; gap: 6px; height: 40px; background: var(--primary); color: var(--on-primary); font: inherit; font-size: .9rem; font-weight: 500; text-decoration: none; padding: 0 16px; border: 1px solid transparent; border-radius: 8px; cursor: pointer; box-shadow: var(--shadow); transition: opacity .15s, background .15s }
@@ -178,6 +179,18 @@ Atentamente,</textarea>
         <button class="button" type="submit"><svg class="i" aria-hidden="true"><use href="/icons.svg#search"/></svg>Buscar</button>
       </form>
       <p class="note" id="seccion-estado" aria-live="polite"></p>
+      <div class="firma firma-tu">
+        <div>
+          <label for="nombre-tu">Tu nombre</label>
+          <input id="nombre-tu" autocomplete="name" placeholder="Escribe tu nombre">
+        </div>
+        <div>
+          <label for="colonia-tu">Tu colonia y municipio</label>
+          <input id="colonia-tu" placeholder="Ej. Analco, Guadalajara">
+        </div>
+      </div>
+      <label class="check"><input type="checkbox" id="anonimo-tu"> Enviar sin mi nombre ni mi colonia</label>
+      <p class="note" style="margin:6px 0 0">Van al final del correo, como firma. Son los mismos de la pestaña Correo.</p>
       <ul class="people" id="mi-dip" hidden></ul>
       <p class="note">Además de la diputación de tu distrito, las 18 de representación proporcional representan a todo Jalisco.</p>
     </section>
@@ -296,12 +309,14 @@ Atentamente,</textarea>
   // Stop a send until the signature is filled in or the person chose to go without it.
   function ready() {
     const missing = anon() ? [] : ["nombre", "colonia"].filter((id) => !$(id).value.trim());
-    ["nombre", "colonia"].forEach((id) => $(id).classList.toggle("falta", missing.includes(id)));
-    $("estado").classList.toggle("falta", missing.length > 0);
+    ["nombre", "colonia"].forEach((id) => [id, `${id}-tu`].forEach((f) => $(f).classList.toggle("falta", missing.includes(id))));
+    const onTu = !$("p-tu").hidden;
+    const status = onTu ? $("seccion-estado") : $("estado");
+    status.classList.toggle("falta", missing.length > 0);
     if (missing.length) {
-      $("estado").textContent = "Falta tu nombre o tu colonia y municipio. Escríbelos arriba o marca «Enviar sin mi nombre ni mi colonia».";
-      showTab("correo");
-      $(missing[0]).focus();
+      status.textContent = "Falta tu nombre o tu colonia y municipio. Escríbelos o marca «Enviar sin mi nombre ni mi colonia».";
+      if (!onTu) showTab("correo");
+      $(onTu ? `${missing[0]}-tu` : missing[0]).focus();
     }
     return !missing.length;
   }
@@ -493,12 +508,20 @@ Atentamente,</textarea>
   $("asunto").addEventListener("input", refresh);
   $("post").addEventListener("input", refresh);
   $("texto").addEventListener("input", refresh);
-  ["nombre", "colonia"].forEach((id) => $(id).addEventListener("input", () => { $(id).classList.remove("falta"); refresh(); }));
-  $("anonimo").addEventListener("change", () => {
-    ["nombre", "colonia"].forEach((id) => { $(id).disabled = anon(); $(id).classList.remove("falta"); });
-    $("estado").classList.remove("falta");
-    refresh();
-  });
+  // The Tu diputación tab has its own copy of the signature fields, kept in sync with the Correo tab.
+  for (const id of ["nombre", "colonia"]) {
+    for (const [from, to] of [[id, `${id}-tu`], [`${id}-tu`, id]]) {
+      $(from).addEventListener("input", () => { $(to).value = $(from).value; [from, to].forEach((f) => $(f).classList.remove("falta")); refresh(); });
+    }
+  }
+  for (const [from, to] of [["anonimo", "anonimo-tu"], ["anonimo-tu", "anonimo"]]) {
+    $(from).addEventListener("change", () => {
+      $(to).checked = $(from).checked;
+      ["nombre", "colonia", "nombre-tu", "colonia-tu"].forEach((f) => { $(f).disabled = anon(); $(f).classList.remove("falta"); });
+      ["estado", "seccion-estado"].forEach((f) => $(f).classList.remove("falta"));
+      refresh();
+    });
+  }
   refresh();
 })();
 </script>
