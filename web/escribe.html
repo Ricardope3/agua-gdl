@@ -55,6 +55,9 @@ input::placeholder, textarea::placeholder { color: var(--muted) }
 textarea { min-height: 22em; resize: vertical; line-height: 1.6 }
 #texto { min-height: 34em; field-sizing: content }
 textarea.post { min-height: 7em }
+.search { display: flex; gap: 8px; max-width: 360px }
+.search input { flex: 1; min-width: 0 }
+#mi-dip { margin: 12px 0 0 }
 .firma { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 0 12px }
 @media (max-width: 560px) { .firma { grid-template-columns: 1fr } }
 .firma input:enabled:placeholder-shown { background: var(--warn-bg); border-color: var(--brand) }
@@ -84,6 +87,7 @@ section ul:not(.people) { margin: 0; padding-left: 20px; color: var(--muted); fo
 .people li, .people span { min-width: 0 }
 .people .links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 12px; flex-shrink: 0; max-width: 55% }
 .people a { white-space: nowrap; font-weight: 500; font-size: .875rem; text-decoration: none }
+.people a.who { white-space: normal; color: var(--fg); font-size: .95rem }
 .people a:hover { text-decoration: underline }
 .people .done { color: var(--muted); font-weight: 400 }
 footer { border-top: 1px solid var(--line); margin-top: 48px; padding: 24px 0 48px; color: var(--muted); font-size: .85rem }
@@ -146,6 +150,18 @@ Atentamente,</textarea>
       <p class="note" id="estado" aria-live="polite">Cada correo sale por separado y con el nombre de la persona: toca el botón, envía el correo y vuelve aquí para el siguiente. Un correo personal pesa más que uno copiado: cambia lo que quieras.</p>
     </div>
 
+    <section aria-labelledby="tu-dip">
+      <h2 id="tu-dip">¿Quién te representa en el Congreso?</h2>
+      <p>Escribe el número de sección de tu credencial del INE (viene en el frente, junto a «SECCIÓN») y te decimos quién es la diputada o el diputado de tu distrito. La búsqueda se hace en tu teléfono o computadora: el número no se envía ni se guarda.</p>
+      <form class="search" id="buscar-seccion">
+        <input id="seccion" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="Ej. 3082" aria-label="Número de sección de tu INE">
+        <button class="button" type="submit">Buscar</button>
+      </form>
+      <p class="note" id="seccion-estado" aria-live="polite"></p>
+      <ul class="people" id="mi-dip" hidden></ul>
+      <p class="note">Además de la diputación de tu distrito, las 18 de representación proporcional representan a todo Jalisco.</p>
+    </section>
+
     <section aria-labelledby="firma">
       <h2 id="firma">Firma la solicitud de Contraloría Social</h2>
       <p>En el Instituto Electoral y de Participación Ciudadana de Jalisco (IEPC) hay una solicitud ciudadana para vigilar este contrato de la Comisión Estatal del Agua. Necesita 4,175 firmas, que valida el INE. Para firmar necesitas tu credencial del INE de Jalisco: nombre, folio, clave de elector, sección y tu firma en pantalla.</p>
@@ -171,7 +187,7 @@ Atentamente,</textarea>
       <h2 id="uno">Las 38 diputaciones</h2>
       <p>También puedes escribirle a cualquiera en el orden que quieras. Las que ya escribiste se marcan con ✓ en este dispositivo.</p>
       <ul class="people" id="personas"></ul>
-      <p class="note">Correos institucionales publicados por el Congreso del Estado de Jalisco (revisados el 15 de octubre de 2026). Si alguno rebota, avísanos a <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>.</p>
+      <p class="note">Correos, teléfonos, distritos y cuentas publicados por el Congreso del Estado de Jalisco en el perfil de cada diputación (revisados el 15 de octubre de 2026). «Llamar» marca el conmutador y luego la extensión. Si alguno rebota, avísanos a <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>.</p>
     </section>
 
     <section aria-labelledby="ojo">
@@ -192,46 +208,46 @@ Atentamente,</textarea>
 <script>
 (() => {
   "use strict";
-  // [nombre, correo institucional, cuenta de X y de Facebook (para Messenger) según su perfil en congresojal.gob.mx]
+  // [nombre, correo institucional, cuenta de X y de Facebook (para Messenger), {id del perfil, distrito (0 = representación proporcional), partido, teléfono, extensión, j = Junta de Coordinación Política}] según su perfil en congresojal.gob.mx; el partido, según el grupo parlamentario
   const DIPUTADOS = [
-    ["Adriana Gabriela Medina Ortiz", "adriana.medina@congresojal.gob.mx", "adrianamedinaMx", "AdrianaMedinaMX"],
-    ["Alberto Alfaro García", "alberto.alfaro@congresojal.gob.mx", "albertoalfaromx", "AlbertoAlfaroTlaquepaque"],
-    ["Alejandra Margarita Giadans Valenzuela", "alejandra.giadans@congresojal.gob.mx", "AleGiadans", "AlejandraGiadansV"],
-    ["Alejandro Barragán Sánchez", "alejandro.barragan@congresojal.gob.mx", null, "alejandroZapotlan"],
-    ["Alondra Getsemany Fausto de León", "alondra.fausto@congresojal.gob.mx", "alondra_fausto", "100066471646953"],
-    ["Ana Fernanda Hernández Sanmiguel", "anafer.hernandez@congresojal.gob.mx", null, null],
-    ["Brenda Guadalupe Carrera García", "brenda.carrera@congresojal.gob.mx", null, "61558257928850"],
-    ["Claudia Murguía Torres", "claudia.murguia@congresojal.gob.mx", "ClaudiaMurguia_", "ClaudiaMurguiaTorres"],
-    ["César Octavio Madrigal Díaz", "cesar.madrigal@congresojal.gob.mx", "cesarmadrigaldi", "CesarMadrigalDi"],
-    ["Edgar Enrique Velázquez González", "enrique.velazquez@congresojal.gob.mx", "EnriqueV01", "EVelazquez01"],
-    ["Emmanuel Alejandro Puerto Covarrubias", "alejandro.puerto@congresojal.gob.mx", "ea_puerto", "ea.puerto"],
-    ["Isaías Cortés Berumen", "isaias.cortes@congresojal.gob.mx", "isacorber", "IsaiasCortesBerumen"],
-    ["Itzcoatl Tonatiuh Bravo Padilla", "tonatiuh.bravo@congresojal.gob.mx", "tonatiuhbp", "tonatiuhbravop"],
-    ["Itzul Barrera Rodríguez", "itzul.barrera@congresojal.gob.mx", "itzulBarrera", "itzulbarrerar"],
-    ["José Aurelio Fonseca Olivares", "aurelio.fonseca@congresojal.gob.mx", null, "AurelioFonsecaOlivares"],
-    ["José Guadalupe Buenrostro Martínez", "jose.buenrostro@congresojal.gob.mx", "LBuenrostroD17", "lbuenrostrod17"],
-    ["José Luis Tostado Bastidas", "joseluis.tostado@congresojal.gob.mx", "jltostadob", "JLTostadoB"],
-    ["Julio César Hurtado Luna", "julio.hurtado@congresojal.gob.mx", null, "JulioHurtadoLuna"],
-    ["Laura Gabriela Cárdenas Rodríguez", "gaby.cardenas@congresojal.gob.mx", "GabyCardenas", "GabyCardenas.Zap"],
-    ["Leonardo Almaguer Castañeda", "leonardo.almaguer@congresojal.gob.mx", "LeonardAlmaguer", "61568671947606"],
-    ["Luis Octavio Vidrio Martínez", "luis.vidrio@congresojal.gob.mx", "Luisvidrio2028", "LuisVidrioM"],
-    ["Marco Tulio Moya Díaz", "marco.moya@congresojal.gob.mx", "MarcoMoyaAc", "moyamarco"],
-    ["Mariana Casillas Guerrero", "mariana.casillas@congresojal.gob.mx", "marianacasge", "MarianaCasGe"],
-    ["Marta Estela Arizmendi Fombona", "marta.arizmendi@congresojal.gob.mx", "fombonamarta", "MartaArizmendiF"],
-    ["Martín Franco Cuevas", "martin.franco@congresojal.gob.mx", "DiputadoLocal3", null],
-    ["María Candelaria Ochoa Ávalos", "candelaria.ochoa@congresojal.gob.mx", "CandeOchoaA", "CandeOchoaA"],
-    ["María Elisa Bravo Navarro", "maria.bravo@congresojal.gob.mx", "MariaElisaBravo", "MariaBravoMC"],
-    ["María del Refugio Camarena Jáuregui", "cuquis.camarena@congresojal.gob.mx", "cuquis_camarena", "CuquisCamarena"],
-    ["Miguel De La Rosa Figueroa", "miguel.delarosa@congresojal.gob.mx", "delarosa4t", null],
-    ["Montserrat Pérez Cisneros", "montserrat.perez@congresojal.gob.mx", "montsepcisneros", "montsepcisneros"],
-    ["Mónica Paola Magaña Mendoza", "monica.magana@congresojal.gob.mx", "MonicaMgn", "MonicaMaganaM"],
-    ["Norma López Ramírez", "norma.lopez@congresojal.gob.mx", null, "Normaporsanmiguel"],
-    ["Omar Enrique Cervantes Rivera", "omar.cervantes@congresojal.gob.mx", "omarcervantes_r", "OmarCervantesRivera"],
-    ["Sergio Miguel Martín Castellanos", "sergio.martin@congresojal.gob.mx", "SergioMart97360", "61557121378804"],
-    ["Tonantzin Elusay Cárdenas Méndez", "tonantzin.cardenas@congresojal.gob.mx", "tonantzincarm", "Tonantzincarm"],
-    ["Valeria Guadalupe Ávila Gutiérrez", "valeria.avila@congresojal.gob.mx", "valeriaavila93_", "Valeriaavgu"],
-    ["Verónica Magdalena Jiménez Vázquez", "veronica.jimenez@congresojal.gob.mx", "verojimenezv", "VeroJimenezVqz"],
-    ["Yussara Elizabeth Canales González", "yussara.canales@congresojal.gob.mx", "YussaraCG", "YussaraCanalesG"],
+    ["Adriana Gabriela Medina Ortiz", "adriana.medina@congresojal.gob.mx", "adrianamedinaMx", "AdrianaMedinaMX", {"id": 737, "d": 12, "p": "MC", "tel": "3336791556", "ext": "1656"}],
+    ["Alberto Alfaro García", "alberto.alfaro@congresojal.gob.mx", "albertoalfaromx", "AlbertoAlfaroTlaquepaque", {"id": 741, "d": 16, "p": "PVEM", "tel": "3336791530", "ext": "1680"}],
+    ["Alejandra Margarita Giadans Valenzuela", "alejandra.giadans@congresojal.gob.mx", "AleGiadans", "AlejandraGiadansV", {"id": 607, "d": 0, "p": "MC", "tel": "3336791536", "ext": "1636"}],
+    ["Alejandro Barragán Sánchez", "alejandro.barragan@congresojal.gob.mx", null, "alejandroZapotlan", {"id": 743, "d": 19, "p": "Morena", "tel": "3336791532", "ext": "1575"}],
+    ["Alondra Getsemany Fausto de León", "alondra.fausto@congresojal.gob.mx", "alondra_fausto", "100066471646953", {"id": 764, "d": 0, "p": "PRI", "tel": "3336791577", "ext": "1506"}],
+    ["Ana Fernanda Hernández Sanmiguel", "anafer.hernandez@congresojal.gob.mx", null, null, {"id": 792, "d": 8, "p": "MC", "tel": "3336791561", "ext": "1574"}],
+    ["Brenda Guadalupe Carrera García", "brenda.carrera@congresojal.gob.mx", null, "61558257928850", {"id": 757, "d": 0, "p": "PVEM", "tel": "3336791537", "ext": "1637"}],
+    ["Claudia Murguía Torres", "claudia.murguia@congresojal.gob.mx", "ClaudiaMurguia_", "ClaudiaMurguiaTorres", {"id": 606, "d": 0, "p": "PAN", "tel": "3336791508", "ext": "1603"}],
+    ["César Octavio Madrigal Díaz", "cesar.madrigal@congresojal.gob.mx", "cesarmadrigaldi", "CesarMadrigalDi", {"id": 746, "d": 0, "p": "PAN", "tel": "3336791518", "ext": "5518"}],
+    ["Edgar Enrique Velázquez González", "enrique.velazquez@congresojal.gob.mx", "EnriqueV01", "EVelazquez01", {"id": 611, "d": 18, "p": "Hagamos", "tel": "3336791512", "ext": "1611"}],
+    ["Emmanuel Alejandro Puerto Covarrubias", "alejandro.puerto@congresojal.gob.mx", "ea_puerto", "ea.puerto", {"id": 756, "d": 0, "p": "Morena", "tel": "3336791557", "ext": "5557"}],
+    ["Isaías Cortés Berumen", "isaias.cortes@congresojal.gob.mx", "isacorber", "IsaiasCortesBerumen", {"id": 745, "d": 0, "p": "PAN", "tel": "3336791516", "ext": "1216"}],
+    ["Itzcoatl Tonatiuh Bravo Padilla", "tonatiuh.bravo@congresojal.gob.mx", "tonatiuhbp", "tonatiuhbravop", {"id": 736, "d": 11, "p": "Hagamos", "tel": "3336791527", "ext": "1627", "j": 1}],
+    ["Itzul Barrera Rodríguez", "itzul.barrera@congresojal.gob.mx", "itzulBarrera", "itzulbarrerar", {"id": 735, "d": 9, "p": "Morena", "tel": "3336791531", "ext": "1631"}],
+    ["José Aurelio Fonseca Olivares", "aurelio.fonseca@congresojal.gob.mx", null, "AurelioFonsecaOlivares", {"id": 740, "d": 15, "p": "PRI", "tel": "3336791505", "ext": "1605"}],
+    ["José Guadalupe Buenrostro Martínez", "jose.buenrostro@congresojal.gob.mx", "LBuenrostroD17", "lbuenrostrod17", {"id": 742, "d": 17, "p": "PVEM", "tel": "3336791535", "ext": "1576", "j": 1}],
+    ["José Luis Tostado Bastidas", "joseluis.tostado@congresojal.gob.mx", "jltostadob", "JLTostadoB", {"id": 751, "d": 0, "p": "MC", "tel": "3336791566", "ext": "1666", "j": 1}],
+    ["Julio César Hurtado Luna", "julio.hurtado@congresojal.gob.mx", null, "JulioHurtadoLuna", {"id": 620, "d": 2, "p": "PAN", "tel": "3336791504", "ext": "1503", "j": 1}],
+    ["Laura Gabriela Cárdenas Rodríguez", "gaby.cardenas@congresojal.gob.mx", "GabyCardenas", "GabyCardenas.Zap", {"id": 641, "d": 6, "p": "MC", "tel": "3336791542", "ext": "1570"}],
+    ["Leonardo Almaguer Castañeda", "leonardo.almaguer@congresojal.gob.mx", "LeonardAlmaguer", "61568671947606", {"id": 738, "d": 13, "p": "PT", "tel": "3336791509", "ext": "1673", "j": 1}],
+    ["Luis Octavio Vidrio Martínez", "luis.vidrio@congresojal.gob.mx", "Luisvidrio2028", "LuisVidrioM", {"id": 753, "d": 0, "p": "MC", "tel": "3336791510", "ext": "1210"}],
+    ["Marco Tulio Moya Díaz", "marco.moya@congresojal.gob.mx", "MarcoMoyaAc", "moyamarco", {"id": 731, "d": 3, "p": "PAN", "tel": "3336791507", "ext": "1607"}],
+    ["Mariana Casillas Guerrero", "mariana.casillas@congresojal.gob.mx", "marianacasge", "MarianaCasGe", {"id": 739, "d": 14, "p": "Futuro", "tel": "3336791517", "ext": "1617"}],
+    ["Marta Estela Arizmendi Fombona", "marta.arizmendi@congresojal.gob.mx", "fombonamarta", "MartaArizmendiF", {"id": 734, "d": 7, "p": "Morena", "tel": "3336791513", "ext": "1613"}],
+    ["Martín Franco Cuevas", "martin.franco@congresojal.gob.mx", "DiputadoLocal3", null, {"id": 760, "d": 0, "p": "Morena", "tel": "3336791521", "ext": "1621"}],
+    ["María Candelaria Ochoa Ávalos", "candelaria.ochoa@congresojal.gob.mx", "CandeOchoaA", "CandeOchoaA", {"id": 755, "d": 0, "p": "Morena", "tel": "3336791540", "ext": "1640"}],
+    ["María Elisa Bravo Navarro", "maria.bravo@congresojal.gob.mx", "MariaElisaBravo", "MariaBravoMC", {"id": 793, "d": 0, "p": "MC", "tel": "3336791500", "ext": "1609"}],
+    ["María del Refugio Camarena Jáuregui", "cuquis.camarena@congresojal.gob.mx", "cuquis_camarena", "CuquisCamarena", {"id": 747, "d": 0, "p": "PRI", "tel": "3336791529", "ext": "1629", "j": 1}],
+    ["Miguel De La Rosa Figueroa", "miguel.delarosa@congresojal.gob.mx", "delarosa4t", null, {"id": 759, "d": 0, "p": "Morena", "tel": "3336791534", "ext": "1006", "j": 1}],
+    ["Montserrat Pérez Cisneros", "montserrat.perez@congresojal.gob.mx", "montsepcisneros", "montsepcisneros", {"id": 752, "d": 0, "p": "MC", "tel": "3336791538", "ext": "1638"}],
+    ["Mónica Paola Magaña Mendoza", "monica.magana@congresojal.gob.mx", "MonicaMgn", "MonicaMaganaM", {"id": 627, "d": 10, "p": "MC", "tel": "3336791514", "ext": "1614"}],
+    ["Norma López Ramírez", "norma.lopez@congresojal.gob.mx", null, "Normaporsanmiguel", {"id": 758, "d": 0, "p": "Morena", "tel": "3336791533", "ext": "1632"}],
+    ["Omar Enrique Cervantes Rivera", "omar.cervantes@congresojal.gob.mx", "omarcervantes_r", "OmarCervantesRivera", {"id": 754, "d": 0, "p": "MC", "tel": "3336791539", "ext": "1672"}],
+    ["Sergio Miguel Martín Castellanos", "sergio.martin@congresojal.gob.mx", "SergioMart97360", "61557121378804", {"id": 730, "d": 1, "p": "PT", "tel": "3336791523", "ext": "1623"}],
+    ["Tonantzin Elusay Cárdenas Méndez", "tonantzin.cardenas@congresojal.gob.mx", "tonantzincarm", "Tonantzincarm", {"id": 732, "d": 4, "p": "Futuro", "tel": "3336791500", "ext": "5517", "j": 1}],
+    ["Valeria Guadalupe Ávila Gutiérrez", "valeria.avila@congresojal.gob.mx", "valeriaavila93_", "Valeriaavgu", {"id": 744, "d": 20, "p": "Hagamos", "tel": "3336791511", "ext": "5511"}],
+    ["Verónica Magdalena Jiménez Vázquez", "veronica.jimenez@congresojal.gob.mx", "verojimenezv", "VeroJimenezVqz", {"id": 749, "d": 0, "p": "MC", "tel": "3336791500", "ext": "1010"}],
+    ["Yussara Elizabeth Canales González", "yussara.canales@congresojal.gob.mx", "YussaraCG", "YussaraCanalesG", {"id": 640, "d": 5, "p": "PVEM", "tel": "3336791525", "ext": "1526"}],
   ];
   const $ = (id) => document.getElementById(id);
   const all = DIPUTADOS.map((d) => d[1]);
@@ -339,13 +355,24 @@ Atentamente,</textarea>
   ];
 
   const list = $("personas");
-  for (const [name, email, x, fb] of DIPUTADOS) {
+  const where = (info) => info.d ? `Distrito ${info.d}` : "Representación proporcional";
+  const profile = (info) => `https://www.congresojal.gob.mx/diputados/perfil?id_dip=${info.id}`;
+  const call = (info) => `tel:+52${info.tel},${info.ext}`;
+  const phoneText = (info) => `${info.tel.replace(/^(\d{2})(\d{4})(\d{4})$/, "($1) $2-$3")} ext. ${info.ext}`;
+  function card([name, email, x, fb, info]) {
     const li = document.createElement("li");
     const who = document.createElement("span");
-    who.textContent = name;
+    const prof = document.createElement("a");
+    prof.className = "who";
+    prof.textContent = name;
+    prof.href = profile(info);
+    prof.rel = "noopener";
+    prof.target = "_blank";
     const small = document.createElement("small");
-    small.textContent = email;
-    who.append(small);
+    small.textContent = `${where(info)} · ${info.p}${info.j ? " · Junta de Coordinación Política" : ""}`;
+    const contact = document.createElement("small");
+    contact.textContent = `${email} · ${phoneText(info)}`;
+    who.append(prof, small, contact);
     const a = document.createElement("a");
     a.textContent = "✉️ Escribir";
     a.dataset.to = email;
@@ -377,9 +404,29 @@ Atentamente,</textarea>
       chat.addEventListener("click", () => { copyChat(name); socials[1].mark(fb); });
       links.append(chat);
     }
+    const phone = document.createElement("a");
+    phone.textContent = "📞 Llamar";
+    phone.href = call(info);
+    links.append(phone);
     li.append(who, links);
-    list.append(li);
+    return li;
   }
+  for (const d of DIPUTADOS) list.append(card(d));
+
+  // District of each INE section (index = section − 1): 1–9 then a–k for 10–20, 0 if the section doesn't exist.
+  const SECCIONES = "333333330333hhhhhhhhhhh111111111111iiii11111111101111111111111111100111111111111110111111111111111111fffff0ffffffffffff3333fffffffffff33f311111iiiii555555550555fffffffff0fffffffffffffffffjjjjjjiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiffffffffff0fffffffffiiiiiiiiiiiiffffffffffffffffffffffffffffffffffff1101555555iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj0jjjjjjjjiiiiiiiiiiiiiiiiiiiiiiiiiii1111111111101111jjjjjiiiiiiiii5555333333333333hhhhhhhhhhhhhhhhhhh111iiiiffffffffffffffffii2222222222222200022222222222211111111111jjjjjjjjiiiiiiiiiiii55555550588888888888888888888888888888888888888888888888888888888888888899999999999999999999999999999999bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb9999999999999bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888ddddddddddddddddddddddddddddddd88dddddddddddddddddddddddddddddddddddddddbbbbb0bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb88888888bb88888888888888888888888888888888bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888889999990099999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999988888999999999999bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb88888888888888888888888111111011111111111111111iiiiiiiiiiiiiiiiii0hhh0h0hhhh33333333333ffffffffffffffffffffffffffffffffffffffffffffffffjj0jjjjjjjhhhh0hhhhhhhhhhhhh3333303iiiiii22222222222020222222222220222222022222222222220202222222222220222222202222iiiiii1111111111jjjjjjjjjj5555555555555jjjjjjjjj33333331111101105555hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh0hhhhhhhhh222222222222222jjjjjjjjjj0jjhhhhhhhhhhhhhhhhhhhh500555505555050555555555555555555055555555555555555555555555550505055iiiiiiiiijjjjjjjjjjjj0kkkkk0kkkk0kkkkkkk00kkkk0111110fff0fff0222022222222222222222222222222222fffffffff011011100iiiiiiiiiiiiiiiiiffffffff0ff0ffffff555555511111jjjjj0jjjjjjjjjjjjj111111111111111111111101111111155555505555jjjjjjjjjjjjjjjjjjj0jj0jjjj0jjjjjjjjjiiii0iiiijjjjjjjjjjjjjjjjiiiiiiiiiiiiihhhiiiiii22222222222222222222222jjjjjjjjjj333333333333333333330033333333333333033333333333333033331111011111111111111111111111jjjjjjjjjjjjjjccccce0000c0e0e0c0ccceee0ee0c0e0ce0ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg000gg0gggdddddddddddddd0g0ggggggdddddddddd0ddgggggg00d0d00dddddiiiiiii05555555555555555577777777770007777777777770007777770707777kkkk0k777777777777070kk77kkkkk00kkkk70kiiiiijjjjjjj11111133333333333333iiiiijjjjjjjjjjjjjjjjjjjjjjjjjjj2222222222iiiiiiiiiiii33333303jjjjjhhhhhhhhhh111101112222222233333333333333333033333330333hhhhhhhhhhhhhhhhaaaaaa444444444044444444444444444444444444444444444444444444444404444044444404444444444444444444444444444400444440404400066006066606006666666666666666aaaaaaaaa66666666a0aaaa4a44aaaaaaaaa00aaaaaaaaaaa0aaaaaaaaaaa0aa0a066caaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0c0aaaaaaaaaaaaaaaaadaaaaaaaaaaaaaaaaaaaaaaaaaadaddddaccccaaaac0cccccccccc066660666cccjjjjjjjjjjjjjjjjjjjjjiiiiii333333333333333333333333333333333333333333333gkdddddddddddddddddddddddddddddddddddddddddddd83222226666666666666666666666666ccccccccceeeeecceeeeeeeee0e00eeeeeeeeeeeeeeeeeeeeeeeeeeecccceeeee0eeeeeccccccccc0cc4444444444444444444444444666666666666666666666666666666664ccacacccaacccaaacccc5555555555566666666666666666cccccccccccccceeeeeeeeeeeccccccccccgggggggggg666666666666ccccccccccc2222222aacccceehh3111122223333450cccfhii0iijij111h22444455577777777777799999aaaaaaaaaaaccddgg11kkkkkk111111112222222222ff33333333444444455555555566666666667777777aaaacccceeeeeeeeeeeddddddfffhhhhhgggggggghhhhhhhhjjjjj777777777777711111122ffhhiikkkh55555555555555544444466666666666666666666666666666666677777777777777777777cccccceeeeeeedddddggggghhhhhkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk2222222333333333344444444444444445555555555555555556666666666666666666677777777777777777aaaaaaaaaaaaaaccccccccccccccccccddddddeeeeeeeeeeeeeeeeeeefffffffffgggggggggggggggggkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkee";
+  $("buscar-seccion").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const n = parseInt($("seccion").value.replace(/\D/g, ""), 10);
+    const d = n > 0 ? parseInt(SECCIONES[n - 1] || "0", 21) : 0;
+    const mine = DIPUTADOS.find((dip) => dip[4].d === d);
+    $("mi-dip").replaceChildren(...(d && mine ? [card(mine)] : []));
+    $("mi-dip").hidden = !(d && mine);
+    $("seccion-estado").textContent = !n ? "Escribe el número de sección de tu INE."
+      : d && mine ? `La sección ${n} está en el distrito local ${d}.`
+      : `No encontramos la sección ${n} en Jalisco. Revisa el número en tu INE.`;
+    refresh();
+  });
 
   async function copy(text, done) {
     try {
