@@ -385,3 +385,12 @@ func TestNumberChangeIntoAHeldNumberLeavesOneRow(t *testing.T) {
 		t.Fatalf("MX.1's subscription moves to the number and MX.2's stale row goes: %+v", h.store.Subs)
 	}
 }
+
+func TestManualReminderMatchesTheTemplate(t *testing.T) {
+	got := ManualReminder("viernes 16 de octubre", 6)
+	for _, want := range []string{"*Mañana viernes 16 de octubre*", "*Zona 6*", "puede bajar la presión o faltar el agua hasta por un día", MapURL, "*BAJA*"} {
+		if !strings.Contains(got, want) {
+			t.Errorf("missing %q in:\n%s", want, got)
+		}
+	}
+}

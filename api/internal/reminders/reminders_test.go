@@ -290,3 +290,35 @@ func TestOnePhoneGetsOneReminder(t *testing.T) {
 		t.Fatalf("Monday cuts zones 4 and 6; the number's current owner is in zone 6: %+v", snd.Sent)
 	}
 }
+
+func TestManualReminderReachesTheWindowOnceAndTheNightlyRunSkipsIt(t *testing.T) {
+	ctx := context.Background()
+	st, snd := fake.NewStore(), &fake.Sender{}
+	r := runner(t, "2026-10-15 19:00", st, snd)
+	st.Subscribe(ctx, "a", "521", 6)
+	st.Subscribe(ctx, "b", "522", 6)
+	st.Subscribe(ctx, "c", "523", 4)
+	old := st.Subs["b"]
+	old.UpdatedAt = old.UpdatedAt.Add(-30 * time.Hour)
+	st.Subs["b"] = old
+	m := Manual{Zone: 6, Text: "aviso", ActiveSince: r.Now().Add(-23 * time.Hour)}
+	if in, due, err := r.ManualRecipients(ctx, m); err != nil || len(in) != 1 || due != 2 {
+		t.Fatalf("Friday cuts zone 6: want a inside the window of 2 due, got %d of %d, err %v", len(in), due, err)
+	}
+	if sent, err := r.SendManual(ctx, m); err != nil || sent != 1 || snd.Sent[0].Type != "text" || snd.Sent[0].To != "521" {
+		t.Fatalf("sent %d, err %v, messages %+v", sent, err, snd.Sent)
+	}
+	if sent, err := r.SendManual(ctx, m); err != nil || sent != 0 {
+		t.Fatalf("a re-run must not resend: sent %d, err %v", sent, err)
+	}
+	if err := r.SendTonight(ctx); err != nil || len(snd.Sent) != 2 || snd.Sent[1].To != "522" || snd.Sent[1].Template == nil {
+		t.Fatalf("the nightly run must skip a and remind b with the template: %+v, err %v", snd.Sent, err)
+	}
+}
+
+func TestManualReminderNeedsACutTomorrow(t *testing.T) {
+	r := runner(t, "2026-10-15 19:00", fake.NewStore(), &fake.Sender{})
+	if _, err := r.SendManual(context.Background(), Manual{Zone: 4, Text: "aviso"}); err == nil {
+		t.Fatal("zone 4 has no cut on Friday 16")
+	}
+}

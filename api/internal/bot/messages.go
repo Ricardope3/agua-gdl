@@ -145,3 +145,16 @@ func msgSubscribed(i subscribedInfo) string {
 	fmt.Fprintf(&b, "\n📝 Después de cada corte escribe *REPORTAR* para contar cómo regresó el agua.\nEscribe *ZONA 1* a *ZONA 7* para cambiar de zona o *BAJA* para dejar de recibir avisos.\n🔒 Solo guardamos tu número de WhatsApp y tu zona: %s/privacidad", i.base)
 	return b.String()
 }
+
+// ManualReminder is the aviso_corte template as a normal text, for nights the template
+// can't be used (cmd/notify -tomorrow). A normal text can't carry the template's buttons.
+func ManualReminder(date string, zone int) string {
+	return fmt.Sprintf(`💧 *Mañana %s* hay racionamiento de agua en la *Zona %d* por la rotación del SIAPA: puede bajar la presión o faltar el agua hasta por un día.
+
+🪣 Llena hoy tu tinaco, cubetas y garrafones.
+🔒 Tapa bien los recipientes para que el agua no se ensucie.
+
+ℹ️ Aviso ciudadano, no oficial. Confirma tu colonia en el mapa del SIAPA: %s
+
+Agua GDL · Escribe *BAJA* para no recibir avisos`, date, zone, MapURL)
+}

@@ -222,3 +222,71 @@ func (r *Runner) reminder(s store.Subscriber, date string) wa.Message {
 		wa.BodyParams(date, strconv.Itoa(s.Zone)),
 		wa.QuickReply(0, "BAJA"))
 }
+
+// Manual is tomorrow's reminder sent by hand as a normal text, for nights the template
+// can't be used. WhatsApp delivers non-template messages only within 24 hours of the
+// person's last message, so it goes only to subscribers whose last change is after ActiveSince.
+type Manual struct {
+	Zone        int
+	Text        string
+	ActiveSince time.Time
+}
+
+// ManualRecipients returns the zone's subscribers still due for tomorrow's cut who are
+// inside the window, and how many are due in all.
+func (r *Runner) ManualRecipients(ctx context.Context, m Manual) (inWindow []store.Subscriber, due int, err error) {
+	tomorrow := r.Schedule.Day(r.Now()).AddDate(0, 0, 1)
+	if !r.Schedule.IsCut(m.Zone, tomorrow) {
+		return nil, 0, fmt.Errorf("zone %d has no cut on %s", m.Zone, tomorrow.Format(rotation.DateLayout))
+	}
+	subs, err := r.Store.DueSubscribers(ctx, []int{m.Zone}, tomorrow)
+	if err != nil {
+		return nil, 0, err
+	}
+	for _, s := range subs {
+		if !s.UpdatedAt.Before(m.ActiveSince) {
+			inWindow = append(inWindow, s)
+		}
+	}
+	return inWindow, len(subs), nil
+}
+
+// SendManual sends m to ManualRecipients through the same reservation as the nightly run,
+// so nobody gets it twice, nor again from the nightly run. A reached cap stops it instead
+// of waiting.
+func (r *Runner) SendManual(ctx context.Context, m Manual) (sent int, err error) {
+	subs, _, err := r.ManualRecipients(ctx, m)
+	if err != nil {
+		return 0, err
+	}
+	tomorrow := r.Schedule.Day(r.Now()).AddDate(0, 0, 1)
+	y, mo, _ := r.Now().In(r.Schedule.Location()).Date()
+	monthStart := time.Date(y, mo, 1, 0, 0, 0, 0, r.Schedule.Location())
+	failures := 0
+	for i, s := range subs {
+		if i > 0 {
+			if sleepErr := r.sleep(ctx, r.Interval); sleepErr != nil {
+				return sent, errors.Join(err, sleepErr)
+			}
+		}
+		if capErr := r.waitForCap(ctx, monthStart, r.Now(), len(subs), sent); capErr != nil {
+			return sent, errors.Join(err, capErr)
+		}
+		attempted, sendErr := r.Store.SendReminder(ctx, s, tomorrow, []int{m.Zone}, func(current store.Subscriber) (string, error) {
+			return r.Sender.Send(ctx, wa.NewText(wa.Recipient{UserID: current.UserID, Phone: current.Phone}, m.Text))
+		})
+		if sendErr != nil {
+			err = errors.Join(err, fmt.Errorf("subscriber %d: %w", s.ID, sendErr))
+			r.Log.Error("manual reminder failed", "subscriber", s.ID, "err", sendErr)
+			if failures++; failures >= maxConsecutiveFailures {
+				return sent, err
+			}
+			continue
+		}
+		if attempted {
+			failures = 0
+			sent++
+		}
+	}
+	return sent, err
+}
