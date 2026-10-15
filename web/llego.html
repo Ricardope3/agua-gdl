@@ -66,6 +66,7 @@ label { display: block; font-weight: 700; margin: 0 0 6px }
 .zone p { margin: 0 0 6px }
 .zone ul { margin: 0; padding-left: 1.2em }
 .zone li { margin: 0 0 2px }
+.zone .button { margin-top: 12px }
 .choices { list-style: none; margin: 0 0 14px; padding: 0; display: grid; gap: 8px }
 .choice { width: 100%; text-align: left; font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; cursor: pointer }
 .choice:hover { border-color: var(--brand) }
@@ -205,6 +206,8 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     show(msg("No pudimos conectar con Agua GDL. Intenta de nuevo en unos minutos o consulta tu zona en el ", mapLink(), "."));
   }
 
+  const TELEGRAM = "https://t.me/BOT_USERNAME";
+
   function zoneCard(z) {
     const today = isoToday(0);
     const next = z.next.filter((d) => d >= today).slice(0, 2);
@@ -213,7 +216,9 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       el("p", {}, "Días de racionamiento: ", el("strong", {}, joinES(z.days))),
       next.length
         ? el("div", {}, el("p", {}, "Próximos:"), el("ul", {}, ...next.map((d) => el("li", {}, dateES(d)))))
-        : el("p", {}, "No hay más días en el calendario que publicó el SIAPA."));
+        : el("p", {}, "No hay más días en el calendario que publicó el SIAPA."),
+      el("a", { class: "button", href: `${TELEGRAM}?start=z${z.zone}`, rel: "noopener" }, `Recibe el aviso de la zona ${z.zone} en Telegram`),
+      el("p", { class: "note" }, "Gratis, la noche antes de cada corte. Al tocar «Iniciar» en el chat aceptas los avisos; ", el("a", { href: "/privacidad" }, "aviso de privacidad"), "."));
   }
   const cards = (zones) => el("div", { class: "zones" }, ...zones.map(zoneCard));
 

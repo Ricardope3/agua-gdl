@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Recibir avisos · Agua GDL</title>
-<meta name="description" content="Recibe por WhatsApp un aviso gratuito la noche antes de cada corte de agua en tu zona por la rotación del SIAPA en Guadalajara.">
+<meta name="description" content="Recibe por Telegram un aviso gratuito la noche antes de cada corte de agua en tu zona por la rotación del SIAPA en Guadalajara.">
 <link rel="canonical" href="https://aguagdl.com/avisos">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aguagdl.com/avisos">
-<meta property="og:title" content="Recibe el aviso de corte de agua en tu WhatsApp">
+<meta property="og:title" content="Recibe el aviso de corte de agua en Telegram">
 <meta property="og:description" content="Un mensaje gratuito la noche antes de cada corte de la rotación del SIAPA en tu zona.">
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
 <meta property="og:locale" content="es_MX">
@@ -43,13 +43,19 @@ header.top { padding: 20px 0 }
 .brand img { width: 30px; height: auto }
 h1 { font-size: clamp(2rem, 6vw, 3rem); line-height: 1.08; letter-spacing: -.02em; margin: 20px 0 16px; text-wrap: balance }
 .signup { background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--brand); border-radius: 10px; padding: 20px }
-.paused { margin: 0; font-size: 1.05rem }
+.button { display: inline-block; background: var(--brand-deep); color: var(--on-brand); font-weight: 700; font-size: 1.1rem; text-decoration: none; padding: 13px 22px; border-radius: 8px }
+.button:hover { background: var(--brand) }
+.consent { margin: 16px 0 0; font-size: .95rem }
 .alt { margin: 12px 0 0; font-size: .95rem; color: var(--muted) }
+.lede { font-size: 1.15rem; color: var(--muted); margin: 0 0 28px; max-width: 60ch }
 section { padding: 36px 0 8px }
 h2 { font-size: 1.5rem; line-height: 1.2; margin: 0 0 14px; letter-spacing: -.01em }
-ul { padding-left: 1.3em; margin: 0 0 14px }
+ol, ul { padding-left: 1.3em; margin: 0 0 14px }
 li { margin: 0 0 8px }
 section p { margin: 0 0 14px; max-width: 65ch }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0 }
+dt { font-weight: 800; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .95rem; padding-top: 2px }
+dd { margin: 0 }
 footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .9rem }
 footer p { margin: 0 0 8px; max-width: 70ch }
 </style>
@@ -61,12 +67,34 @@ footer p { margin: 0 0 8px; max-width: 70ch }
   </header>
 
   <main>
-    <h1>Avisos de corte por WhatsApp</h1>
+    <h1>Recibe el aviso de corte en Telegram</h1>
+    <p class="lede">La noche antes de cada corte de agua en tu zona, a las 8 p. m., te llega un mensaje para que llenes tu tinaco a tiempo. Es gratis.</p>
 
     <div class="signup">
-      <p class="paused"><strong>Los avisos están en pausa.</strong> Por ahora no podemos enviar ni contestar mensajes de WhatsApp. Avisaremos en esta página cuando regresen.</p>
-      <p class="alt">Mientras tanto, consulta tu zona y tus próximos días de racionamiento en <a href="/llego">¿Qué zona me toca?</a> o en el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa oficial del SIAPA</a>.</p>
+      <a class="button" href="https://t.me/BOT_USERNAME?start=hola" rel="noopener">Recibir avisos por Telegram</a>
+      <p class="consent">Al tocar «Iniciar» en el chat aceptas recibir de <strong>Agua GDL</strong>, por Telegram, un aviso la noche antes de cada corte de agua en tu zona (2 o 3 por semana) y las respuestas a lo que escribas. Para dejar de recibirlos, escribe <strong>BAJA</strong> o bloquea el bot cuando quieras. Solo guardamos el identificador de tu chat y tu zona; lee el <a href="/privacidad">aviso de privacidad</a>.</p>
+      <p class="alt">¿No tienes Telegram? Descárgalo gratis en tu celular. Los avisos por WhatsApp están en pausa por ahora.</p>
     </div>
+
+    <section aria-labelledby="como">
+      <h2 id="como">Cómo funciona</h2>
+      <ol>
+        <li>Toca el botón. Se abre el chat de Agua GDL en Telegram; toca «Iniciar».</li>
+        <li>Dile dónde vives: manda tu ubicación, el nombre de tu colonia o tu zona (por ejemplo, <strong>ZONA 4</strong>).</li>
+        <li>Te confirmamos tu zona, tus días de corte y cuándo te llega el próximo aviso.</li>
+      </ol>
+      <p>¿Ya sabes tu zona? Búscala en <a href="/llego">¿Qué zona me toca?</a> y suscríbete desde ahí con un toque.</p>
+    </section>
+
+    <section aria-labelledby="comandos">
+      <h2 id="comandos">Lo que puedes escribir</h2>
+      <dl>
+        <dt>ZONA 1–7</dt><dd>Suscribirte o cambiar de zona.</dd>
+        <dt>REPORTAR</dt><dd>Contar cómo regresó el agua después del último corte. Publicaremos los resultados por zona, sin nombres.</dd>
+        <dt>BAJA</dt><dd>Dejar de recibir avisos. Borramos tu suscripción en ese momento.</dd>
+        <dt>AYUDA</dt><dd>Ver estas opciones.</dd>
+      </dl>
+    </section>
 
     <section aria-labelledby="ojo">
       <h2 id="ojo">Ten en cuenta</h2>
