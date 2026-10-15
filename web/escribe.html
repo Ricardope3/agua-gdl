@@ -88,6 +88,10 @@ section ul:not(.people) { margin: 0; padding-left: 20px; color: var(--muted); fo
 .people .links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 12px; flex-shrink: 0; max-width: 55% }
 .people a { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; font-weight: 500; font-size: .875rem; text-decoration: none }
 @media (max-width: 640px) { .people li { flex-direction: column; align-items: stretch } .people .links { max-width: none; justify-content: flex-start } }
+.tabs { display: flex; flex-wrap: wrap; gap: 4px; padding: 4px; margin: 0 0 20px; background: var(--subtle); border-radius: 10px }
+.tabs button { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; font: inherit; font-size: .9rem; font-weight: 500; color: var(--muted); background: transparent; border: 0; border-radius: 7px; padding: 8px 12px; cursor: pointer; white-space: nowrap }
+.tabs button[aria-selected="true"] { background: var(--surface); color: var(--fg); box-shadow: var(--shadow) }
+.panel > section { margin-top: 0 }
 .people a.who { white-space: normal; color: var(--fg); font-size: .95rem }
 .people a:hover { text-decoration: underline }
 .people .done { color: var(--muted); font-weight: 400 }
@@ -107,8 +111,17 @@ h3.ih .i-badge { width: 28px; height: 28px }
 
   <main>
     <h1>Pide al Congreso que no apruebe a ciegas el contrato del agua</h1>
-    <p class="lede">Un correo a las y los 38 diputados del Congreso de Jalisco, desde tu propia cuenta, para pedirles que no aprueben el contrato de asociación público-privada del acueducto sustituto Chapala–Guadalajara sin estudios actualizados ni transparencia. Necesita 26 de 38 votos y todavía no se discute en comisiones. Revisa el texto, cámbialo si quieres y envíalo. Agua GDL no ve ni guarda nada.</p>
+    <p class="lede">Pide a las y los 38 diputados del Congreso de Jalisco que no aprueben el contrato de asociación público-privada del acueducto sustituto Chapala–Guadalajara sin estudios actualizados ni transparencia. Necesita 26 de 38 votos y todavía no se discute en comisiones. Escríbeles por correo, X o Messenger desde tu propia cuenta, o llámales. Agua GDL no ve ni guarda nada.</p>
 
+    <nav class="tabs" role="tablist" aria-label="Formas de participar">
+      <button type="button" role="tab" id="t-correo" aria-controls="p-correo" data-tab="correo"><svg class="i" aria-hidden="true"><use href="/icons.svg#mail"/></svg>Correo</button>
+      <button type="button" role="tab" id="t-tu" aria-controls="p-tu" data-tab="tu"><svg class="i" aria-hidden="true"><use href="/icons.svg#user"/></svg>Tu diputación</button>
+      <button type="button" role="tab" id="t-redes" aria-controls="p-redes" data-tab="redes"><svg class="i" aria-hidden="true"><use href="/icons.svg#message-circle"/></svg>X y Messenger</button>
+      <button type="button" role="tab" id="t-lista" aria-controls="p-lista" data-tab="lista"><svg class="i" aria-hidden="true"><use href="/icons.svg#users"/></svg>Las 38</button>
+      <button type="button" role="tab" id="t-firma" aria-controls="p-firma" data-tab="firma"><svg class="i" aria-hidden="true"><use href="/icons.svg#pen-line"/></svg>Firma</button>
+    </nav>
+
+    <div class="panel" role="tabpanel" id="p-correo" aria-labelledby="t-correo">
     <div class="box">
       <div class="field">
         <label for="asunto">Asunto</label>
@@ -154,7 +167,9 @@ Atentamente,</textarea>
       </fieldset>
       <p class="note" id="estado" aria-live="polite">Cada correo sale por separado y con el nombre de la persona: toca el botón, envía el correo y vuelve aquí para el siguiente. Un correo personal pesa más que uno copiado: cambia lo que quieras.</p>
     </div>
+    </div>
 
+    <div class="panel" role="tabpanel" id="p-tu" aria-labelledby="t-tu">
     <section aria-labelledby="tu-dip">
       <h2 id="tu-dip" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg#user"/></svg></span>¿Quién te representa en el Congreso?</h2>
       <p>Escribe el número de sección de tu credencial del INE (viene en el frente, junto a «SECCIÓN») y te decimos quién es la diputada o el diputado de tu distrito. La búsqueda se hace en tu teléfono o computadora: el número no se envía ni se guarda.</p>
@@ -166,14 +181,9 @@ Atentamente,</textarea>
       <ul class="people" id="mi-dip" hidden></ul>
       <p class="note">Además de la diputación de tu distrito, las 18 de representación proporcional representan a todo Jalisco.</p>
     </section>
+    </div>
 
-    <section aria-labelledby="firma">
-      <h2 id="firma" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg#pen-line"/></svg></span>Firma la solicitud de Contraloría Social</h2>
-      <p>En el Instituto Electoral y de Participación Ciudadana de Jalisco (IEPC) hay una solicitud ciudadana para vigilar este contrato de la Comisión Estatal del Agua. Necesita 4,175 firmas, que valida el INE. Para firmar necesitas tu credencial del INE de Jalisco: nombre, folio, clave de elector, sección y tu firma en pantalla.</p>
-      <a class="button" href="https://firmale.iepcjalisco.mx/mecanismo/comision-estatal-del-vej21bkjvl" rel="noopener" target="_blank"><svg class="i" aria-hidden="true"><use href="/icons.svg#pen-line"/></svg>Firmar en el IEPC</a>
-      <p class="note">Es una plataforma oficial del IEPC. La exposición de motivos es responsabilidad de quienes la promueven; Agua GDL no la organiza.</p>
-    </section>
-
+    <div class="panel" role="tabpanel" id="p-redes" aria-labelledby="t-redes">
     <section aria-labelledby="x">
       <h2 id="x" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg#x"/></svg></span>Publícalo también en X</h2>
       <p>Un post para cada diputación que tiene cuenta en X. Cada botón abre X con «Dip. @cuenta,» y este texto, que puedes cambiar:</p>
@@ -187,13 +197,25 @@ Atentamente,</textarea>
       <p class="note" id="progreso-fb"></p>
       <p class="note">Usamos solo las cuentas que cada diputación publica en su perfil del Congreso: 32 tienen X y 35 tienen Facebook. Messenger no deja poner el texto por adelantado, así que el botón lo copia y abre el chat: solo pégalo y envíalo.</p>
     </section>
+    </div>
 
+    <div class="panel" role="tabpanel" id="p-lista" aria-labelledby="t-lista">
     <section aria-labelledby="uno">
       <h2 id="uno" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg#users"/></svg></span>Las 38 diputaciones</h2>
       <p>También puedes escribirle a cualquiera en el orden que quieras. Las que ya escribiste se marcan con <svg class="i" aria-hidden="true"><use href="/icons.svg#check"/></svg> en este dispositivo.</p>
       <ul class="people" id="personas"></ul>
       <p class="note">Correos, teléfonos, distritos y cuentas publicados por el Congreso del Estado de Jalisco en el perfil de cada diputación (revisados el 15 de octubre de 2026). «Llamar» marca el conmutador y luego la extensión. Si alguno rebota, avísanos a <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>.</p>
     </section>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-firma" aria-labelledby="t-firma">
+    <section aria-labelledby="firma">
+      <h2 id="firma" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg#pen-line"/></svg></span>Firma la solicitud de Contraloría Social</h2>
+      <p>En el Instituto Electoral y de Participación Ciudadana de Jalisco (IEPC) hay una solicitud ciudadana para vigilar este contrato de la Comisión Estatal del Agua. Necesita 4,175 firmas, que valida el INE. Para firmar necesitas tu credencial del INE de Jalisco: nombre, folio, clave de elector, sección y tu firma en pantalla.</p>
+      <a class="button" href="https://firmale.iepcjalisco.mx/mecanismo/comision-estatal-del-vej21bkjvl" rel="noopener" target="_blank"><svg class="i" aria-hidden="true"><use href="/icons.svg#pen-line"/></svg>Firmar en el IEPC</a>
+      <p class="note">Es una plataforma oficial del IEPC. La exposición de motivos es responsabilidad de quienes la promueven; Agua GDL no la organiza.</p>
+    </section>
+    </div>
 
     <section aria-labelledby="ojo">
       <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg#info"/></svg></span>Ten en cuenta</h2>
@@ -278,10 +300,23 @@ Atentamente,</textarea>
     $("estado").classList.toggle("falta", missing.length > 0);
     if (missing.length) {
       $("estado").textContent = "Falta tu nombre o tu colonia y municipio. Escríbelos arriba o marca «Enviar sin mi nombre ni mi colonia».";
+      showTab("correo");
       $(missing[0]).focus();
     }
     return !missing.length;
   }
+  // One panel at a time; the hash keeps the chosen tab on reload and in shared links.
+  const TABS = [...document.querySelectorAll("[data-tab]")].map((b) => b.dataset.tab);
+  function showTab(name) {
+    if (!TABS.includes(name)) name = TABS[0];
+    for (const t of TABS) {
+      $(`p-${t}`).hidden = t !== name;
+      $(`t-${t}`).setAttribute("aria-selected", String(t === name));
+    }
+    if (location.hash.slice(1) !== name) history.replaceState(null, "", `#${name}`);
+  }
+  document.querySelectorAll("[data-tab]").forEach((b) => b.addEventListener("click", () => showTab(b.dataset.tab)));
+  showTab(location.hash.slice(1));
   const q = encodeURIComponent;
   const gmail = (to, greeting) => `https://mail.google.com/mail/?view=cm&fs=1&to=${q(to.join(","))}&su=${q(subject())}&body=${q(body(greeting))}`;
   const mailto = (to) => `mailto:${to.join(",")}?subject=${q(subject())}&body=${q(body())}`;
