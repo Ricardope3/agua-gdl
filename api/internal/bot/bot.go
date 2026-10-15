@@ -329,10 +329,10 @@ func (b *Bot) subscribedText(zone int, fresh bool) string {
 }
 
 func (b *Bot) unsubscribe(ctx context.Context, r wa.Recipient) error {
-	if r.UserID == "" {
+	if r.UserID == "" && r.Phone == "" {
 		return b.text(ctx, r, msgNotSubscribed)
 	}
-	removed, err := b.Store.Unsubscribe(ctx, r.UserID)
+	removed, err := b.Store.Unsubscribe(ctx, r.UserID, r.Phone)
 	if err != nil {
 		return err
 	}

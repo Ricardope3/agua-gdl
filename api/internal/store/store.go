@@ -207,8 +207,10 @@ func (db *DB) ZoneCounts(ctx context.Context) (map[int]int, error) {
 	return counts, err
 }
 
-func (db *DB) Unsubscribe(ctx context.Context, userID string) (bool, error) {
-	tag, err := db.q.Exec(ctx, `delete from subscriber where wa_user_id = $1`, userID)
+// Unsubscribe deletes userID's subscription and any holding phone, so BAJA stops
+// every reminder to that number.
+func (db *DB) Unsubscribe(ctx context.Context, userID, phone string) (bool, error) {
+	tag, err := db.q.Exec(ctx, `delete from subscriber where wa_user_id = $1 or phone = nullif($2, '')`, userID, phone)
 	return tag.RowsAffected() > 0, err
 }
 

@@ -153,7 +153,7 @@ func TestUnsubscribeDuringBatchSkipsQueuedRecipient(t *testing.T) {
 	r := runner(t, "2026-10-18 20:00", st, snd)
 	r.Sender = senderFunc(func(ctx context.Context, m wa.Message) (string, error) {
 		if m.To == "a" {
-			st.Unsubscribe(ctx, "b")
+			st.Unsubscribe(ctx, "b", "")
 		}
 		return snd.Send(ctx, m)
 	})
@@ -274,5 +274,19 @@ func TestZoneChangeMidBatchToAnotherZoneCutTomorrow(t *testing.T) {
 	}
 	if len(snd.Sent) != 2 || snd.Sent[1].Template.Components[0].Parameters[1].Text != "6" {
 		t.Fatalf("b moved from zone 4 to zone 6, both cut Monday, and must get the zone 6 reminder: %+v", snd.Sent)
+	}
+}
+
+func TestOnePhoneGetsOneReminder(t *testing.T) {
+	ctx := context.Background()
+	st, snd := fake.NewStore(), &fake.Sender{}
+	st.Subscribe(ctx, "old-owner", "5213300000000", 4)
+	st.Subscribe(ctx, "new-owner", "5213300000000", 6)
+	r := runner(t, "2026-10-18 20:00", st, snd)
+	if err := r.SendTonight(ctx); err != nil {
+		t.Fatal(err)
+	}
+	if len(snd.Sent) != 1 || snd.Sent[0].Template.Components[0].Parameters[1].Text != "6" {
+		t.Fatalf("Monday cuts zones 4 and 6; the number's current owner is in zone 6: %+v", snd.Sent)
 	}
 }

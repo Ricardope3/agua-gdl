@@ -43,9 +43,14 @@ func newHarness(t *testing.T, now string) *harness {
 
 func (h *harness) send(t *testing.T, m wa.Inbound) string {
 	t.Helper()
+	return h.sendFrom(t, m, "MX.42", "5213300000000")
+}
+
+func (h *harness) sendFrom(t *testing.T, m wa.Inbound, userID, phone string) string {
+	t.Helper()
 	h.n++
 	m.ID = "wamid.in." + string(rune('a'+h.n))
-	m.From, m.FromUserID = "5213300000000", "MX.42"
+	m.From, m.FromUserID = phone, userID
 	p := wa.Payload{Entry: []wa.Entry{{Changes: []wa.Change{{Field: "messages", Value: wa.Value{Messages: []wa.Inbound{m}}}}}}}
 	if err := h.bot.Handle(context.Background(), p); err != nil {
 		t.Fatal(err)
@@ -323,8 +328,8 @@ func TestRefusesSubscriptionsPastTheNightlyCap(t *testing.T) {
 	if got := h.send(t, text("zona 3")); !strings.Contains(got, "¡Listo!") {
 		t.Fatalf("zone 3 (Wednesday, Saturday) still has room:\n%s", got)
 	}
-	h.store.Unsubscribe(ctx, "MX.42")
-	h.store.Unsubscribe(ctx, "MX.2")
+	h.store.Unsubscribe(ctx, "MX.42", "")
+	h.store.Unsubscribe(ctx, "MX.2", "")
 	h.store.Subscribe(ctx, "MX.42", "5213300000000", 4)
 	if got := h.send(t, text("zona 6")); !strings.Contains(got, "¡Listo!") {
 		t.Fatalf("moving from zone 4 to 6 doesn't add anyone to Monday:\n%s", got)
@@ -343,5 +348,40 @@ func TestZoneLabels(t *testing.T) {
 	m := h.sender.Sent[len(h.sender.Sent)-1]
 	if m.Interactive == nil || !strings.Contains(m.Interactive.Action.Sections[0].Rows[0].Description, " · Zona") {
 		t.Fatalf("list rows should read like «Guadalajara · Zona 5»: %+v", m.Interactive)
+	}
+}
+
+func TestANumberBelongsToItsLatestSubscriber(t *testing.T) {
+	h := newHarness(t, "2026-10-14 10:00")
+	h.sendFrom(t, text("zona 4"), "MX.1", "5213300000000")
+	h.sendFrom(t, text("zona 6"), "MX.2", "5213300000000")
+	if len(h.store.Subs) != 1 || h.store.Subs["MX.2"].Zone != 6 {
+		t.Fatalf("a recycled number moves to its new owner: %+v", h.store.Subs)
+	}
+	if got := h.sendFrom(t, text("baja"), "MX.2", "5213300000000"); got != msgUnsubscribed || len(h.store.Subs) != 0 {
+		t.Fatalf("BAJA must leave nothing sending to the number: %q %+v", got, h.store.Subs)
+	}
+}
+
+func TestBajaWithoutUserIDUsesThePhone(t *testing.T) {
+	h := newHarness(t, "2026-10-14 10:00")
+	h.send(t, text("zona 4"))
+	if got := h.sendFrom(t, text("baja"), "", "5213300000000"); got != msgUnsubscribed || len(h.store.Subs) != 0 {
+		t.Fatalf("got %q, subs %+v", got, h.store.Subs)
+	}
+}
+
+func TestNumberChangeIntoAHeldNumberLeavesOneRow(t *testing.T) {
+	h := newHarness(t, "2026-10-14 10:00")
+	h.sendFrom(t, text("zona 4"), "MX.1", "5213311111111")
+	h.sendFrom(t, text("zona 6"), "MX.2", "5213322222222")
+	m := wa.Inbound{ID: "wamid.sys", From: "5213311111111", FromUserID: "MX.1", Type: "system",
+		System: &wa.System{Type: "user_changed_user_id", UserID: "MX.3", WaID: "5213322222222"}}
+	p := wa.Payload{Entry: []wa.Entry{{Changes: []wa.Change{{Field: "messages", Value: wa.Value{Messages: []wa.Inbound{m}}}}}}}
+	if err := h.bot.Handle(context.Background(), p); err != nil {
+		t.Fatal(err)
+	}
+	if s, ok := h.store.Subs["MX.3"]; len(h.store.Subs) != 1 || !ok || s.Zone != 4 || s.Phone != "5213322222222" {
+		t.Fatalf("MX.1's subscription moves to the number and MX.2's stale row goes: %+v", h.store.Subs)
 	}
 }

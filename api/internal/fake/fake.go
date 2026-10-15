@@ -61,6 +61,11 @@ func (s *Store) Subscriber(_ context.Context, userID string) (store.Subscriber, 
 }
 
 func (s *Store) Subscribe(_ context.Context, userID, phone string, zone int) error {
+	for k, other := range s.Subs {
+		if phone != "" && other.Phone == phone && k != userID {
+			delete(s.Subs, k)
+		}
+	}
 	sub, ok := s.Subs[userID]
 	if !ok {
 		s.nextID++
@@ -74,16 +79,37 @@ func (s *Store) Subscribe(_ context.Context, userID, phone string, zone int) err
 	return nil
 }
 
+// ChangeUser mirrors store.DB.ChangeUser: one row survives (the new ID's, else the
+// old ID's, else the newest with the old phone) and every other match is deleted.
 func (s *Store) ChangeUser(_ context.Context, oldUserID, oldPhone, newUserID, newPhone string) error {
+	old := func(sub store.Subscriber) bool {
+		return sub.UserID == oldUserID || (oldPhone != "" && sub.Phone == oldPhone)
+	}
+	keep, found := s.Subs[newUserID]
+	found = found && newUserID != ""
+	if newUserID != "" && !found {
+		for _, sub := range s.Subs {
+			if !old(sub) {
+				continue
+			}
+			byID, keepByID := sub.UserID == oldUserID, keep.UserID == oldUserID
+			if !found || (byID && !keepByID) || (byID == keepByID && sub.ID > keep.ID) {
+				keep, found = sub, true
+			}
+		}
+	}
 	for k, sub := range s.Subs {
-		if sub.UserID != oldUserID && (oldPhone == "" || sub.Phone != oldPhone) {
+		if found && sub.ID == keep.ID {
 			continue
 		}
-		delete(s.Subs, k)
-		if _, taken := s.Subs[newUserID]; newUserID != "" && !taken {
-			sub.UserID, sub.Phone = newUserID, newPhone
-			s.Subs[newUserID] = sub
+		if old(sub) || (newUserID != "" && (sub.UserID == newUserID || (newPhone != "" && sub.Phone == newPhone))) {
+			delete(s.Subs, k)
 		}
+	}
+	if found {
+		delete(s.Subs, keep.UserID)
+		keep.UserID, keep.Phone = newUserID, newPhone
+		s.Subs[newUserID] = keep
 	}
 	return nil
 }
@@ -96,10 +122,15 @@ func (s *Store) ZoneCounts(context.Context) (map[int]int, error) {
 	return counts, nil
 }
 
-func (s *Store) Unsubscribe(_ context.Context, userID string) (bool, error) {
-	_, ok := s.Subs[userID]
-	delete(s.Subs, userID)
-	return ok, nil
+func (s *Store) Unsubscribe(_ context.Context, userID, phone string) (bool, error) {
+	removed := false
+	for k, sub := range s.Subs {
+		if (userID != "" && sub.UserID == userID) || (phone != "" && sub.Phone == phone) {
+			delete(s.Subs, k)
+			removed = true
+		}
+	}
+	return removed, nil
 }
 
 func (s *Store) SaveReport(_ context.Context, id int64, zone int, d time.Time, answer string) error {

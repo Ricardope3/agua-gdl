@@ -13,7 +13,7 @@ type BotStore interface {
 	ProcessInbound(context.Context, string, func(BotStore) error) error
 	Subscriber(context.Context, string) (Subscriber, bool, error)
 	Subscribe(context.Context, string, string, int) error
-	Unsubscribe(context.Context, string) (bool, error)
+	Unsubscribe(ctx context.Context, userID, phone string) (bool, error)
 	ChangeUser(ctx context.Context, oldUserID, oldPhone, newUserID, newPhone string) error
 	ZoneCounts(context.Context) (map[int]int, error)
 	SaveReport(context.Context, int64, int, time.Time, string) error

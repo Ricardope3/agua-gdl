@@ -125,7 +125,7 @@ func TestInboundRollbackAndConcurrentDeduplication(t *testing.T) {
 	if calls.Load() != 1 {
 		t.Fatalf("processed command %d times", calls.Load())
 	}
-	if _, err := db.Unsubscribe(ctx, "MX.test"); err != nil {
+	if _, err := db.Unsubscribe(ctx, "MX.test", ""); err != nil {
 		t.Fatal(err)
 	}
 	if err := db.ProcessInbound(ctx, "message", func(tx BotStore) error {
@@ -172,7 +172,7 @@ func TestQueuedReminderRechecksSubscriber(t *testing.T) {
 			s := testSubscriber(t, db)
 			ctx, date := context.Background(), time.Now()
 			if change == "unsubscribe" {
-				if _, err := db.Unsubscribe(ctx, s.UserID); err != nil {
+				if _, err := db.Unsubscribe(ctx, s.UserID, ""); err != nil {
 					t.Fatal(err)
 				}
 			} else if err := db.Subscribe(ctx, s.UserID, "521111", 6); err != nil {
@@ -239,7 +239,7 @@ func TestReminderSerializesWithUnsubscribeAndOtherSenders(t *testing.T) {
 	defer conn.Release()
 	pid := conn.Conn().PgConn().PID()
 	unsubscribed := make(chan error, 1)
-	go func() { _, err := (&DB{q: conn}).Unsubscribe(ctx, s.UserID); unsubscribed <- err }()
+	go func() { _, err := (&DB{q: conn}).Unsubscribe(ctx, s.UserID, ""); unsubscribed <- err }()
 	blocked := false
 	deadline := time.Now().Add(2 * time.Second)
 	for time.Now().Before(deadline) {
@@ -368,7 +368,7 @@ func TestRecipientsSinceCountsPeopleNotMessages(t *testing.T) {
 	if n, err := db.RecipientsSince(ctx, since); err != nil || n != 1 {
 		t.Fatalf("Meta's limit counts one person once: recipients=%d %v", n, err)
 	}
-	if _, err := db.Unsubscribe(ctx, s.UserID); err != nil {
+	if _, err := db.Unsubscribe(ctx, s.UserID, ""); err != nil {
 		t.Fatal(err)
 	}
 	if n, err := db.RecipientsSince(ctx, since); err != nil || n != 2 {
@@ -620,5 +620,25 @@ func TestPhoneMigrationKeepsTheNewestRow(t *testing.T) {
 	}
 	if _, err := db.pool.Exec(ctx, `insert into subscriber (wa_user_id, phone, zone) values ('MX.dup', '522222', 1)`); err == nil {
 		t.Fatal("a second row with the same phone must be refused")
+	}
+}
+
+func TestBajaByPhoneRemovesEveryRowWithIt(t *testing.T) {
+	db := testDB(t)
+	ctx := context.Background()
+	if err := db.Subscribe(ctx, "MX.a", "521111", 4); err != nil {
+		t.Fatal(err)
+	}
+	if removed, err := db.Unsubscribe(ctx, "MX.other", "521111"); err != nil || !removed {
+		t.Fatalf("BAJA from the number must remove its subscription: %v %v", removed, err)
+	}
+	if err := db.Subscribe(ctx, "MX.a", "521111", 4); err != nil {
+		t.Fatal(err)
+	}
+	if removed, err := db.Unsubscribe(ctx, "", "521111"); err != nil || !removed {
+		t.Fatalf("BAJA without a WhatsApp ID works by phone: %v %v", removed, err)
+	}
+	if subs := phoneHolders(t, db, "521111"); len(subs) != 0 {
+		t.Fatalf("rows left: %+v", subs)
 	}
 }
