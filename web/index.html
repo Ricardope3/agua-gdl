@@ -135,19 +135,19 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .ih .i-badge:has(use[href$="#calendar"]) { background: #4f46e5 }
 
 
-.hero-map { padding-bottom: 36px }
-.hero-map .cta { margin: 22px 0 10px }
-.aviso { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; padding: 14px 16px; color: var(--fg); text-decoration: none; box-shadow: var(--shadow) }
+.hero-map { padding: 12px 0 28px }
+.hero-map .cta { margin: 20px 0 0 }
+.aviso { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; padding: 10px 14px; color: var(--fg); text-decoration: none; box-shadow: var(--shadow) }
 .aviso:hover { border-color: var(--brand) }
-.aviso-head { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; font-weight: 600 }
-.aviso-head .i-badge { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 7px; background: #d97706; color: #fff }
-.aviso-time { font-size: 2.4rem; font-weight: 700; letter-spacing: -.04em; line-height: 1; color: var(--brand); white-space: nowrap }
-.aviso-text { color: var(--muted); font-size: .95rem; line-height: 1.45 }
-.aviso .button { grid-column: 1 / -1; justify-self: start; margin-top: 6px }
-.hero-side { display: grid; gap: 16px; align-content: start }
-.hero-fig { margin: 0; display: grid; gap: 8px }
-.hero-fig .note { margin: 0; color: var(--muted); font-size: .85rem }
-.hero-mapimg { display: block; background: var(--subtle); border: 1px solid var(--line); border-radius: 14px; padding: 14px; box-shadow: var(--shadow) }
+.aviso-head { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: .95rem; line-height: 1.3 }
+.aviso-head .i-badge { display: inline-grid; place-items: center; flex-shrink: 0; width: 24px; height: 24px; border-radius: 7px; background: #d97706; color: #fff }
+.aviso-time { grid-row: 2 / span 2; font-size: 1.9rem; font-weight: 700; letter-spacing: -.04em; line-height: 1; color: var(--brand); white-space: nowrap }
+.aviso-text { color: var(--muted); font-size: .88rem; line-height: 1.4 }
+.aviso .button { grid-column: 2; justify-self: start; margin-top: 4px; padding: 6px 14px; font-size: .88rem }
+.hero-side { display: grid; gap: 12px; align-content: start }
+.hero-fig { margin: 0; display: grid; gap: 6px }
+.hero-fig .note { margin: 0; color: var(--muted); font-size: .8rem }
+.hero-mapimg { display: block; background: var(--subtle); border: 1px solid var(--line); border-radius: 14px; padding: 8px; box-shadow: var(--shadow) }
 .hero-mapimg img { display: block; width: 100%; height: auto }
 @media (min-width: 720px) { .hero.hero-map { grid-template-columns: 1.05fr 1fr; gap: 36px } .hero-map h1 { font-size: clamp(2.1rem, 4.6vw, 3rem) } }
 </style>
@@ -177,7 +177,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       <div class="hero-side">
         <figure class="hero-fig">
           <a class="hero-mapimg" href="/llego" aria-label="Checa tu zona en el mapa"><img src="/zonas.svg" alt="Mapa de las 7 zonas de la rotación del SIAPA" width="800" height="454"></a>
-          <figcaption class="note">Fuente: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">rotaciondeserviciosiapa.jalisco.gob.mx</a>. Agua GDL no es del SIAPA.</figcaption>
+          <figcaption class="note">Fuente: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa de la rotación del SIAPA</a>. Agua GDL no es del SIAPA.</figcaption>
         </figure>
         <a class="aviso" href="/avisos">
           <span class="aviso-head"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#bell"/></svg></span>Te mandamos un mensaje antes de que te corten el agua</span>
