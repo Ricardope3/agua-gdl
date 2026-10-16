@@ -412,12 +412,12 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   }
   const coloniaKey = (name, mun) => norm(name) + "|" + norm(municipio(mun));
 
-  // mapBlock shows list's outlines over the SIAPA zones. With several colonias, tapping
-  // one picks it; with one, tapping a spot says which zone it's in.
-  function mapBlock(list, zones) {
+  // mapBlock shows list's outlines over the SIAPA zones. In a choice list (pick), tapping
+  // one picks it; otherwise tapping a spot says which zone it's in.
+  function mapBlock(list, zones, pick = list.length > 1) {
     const open = el("button", { type: "button", class: "button alt" }, icon("map-pin"), "Ver en el mapa");
     const box = el("div", { class: "mapbox" },
-      el("p", {}, list.length > 1 ? "¿No sabes cuál es? Míralas en el mapa." : "Esta colonia está en más de una zona. Mira en el mapa de qué lado queda tu casa."),
+      el("p", {}, !pick ? "Esta colonia está en más de una zona. Mira en el mapa de qué lado queda tu casa." : list.length > 1 ? "¿No sabes cuál es? Míralas en el mapa." : "Mírala en el mapa."),
       el("p", {}, open),
       el("p", { class: "note" }, "El mapa se carga desde OpenStreetMap. Los contornos de las colonias son aproximados y vienen de la cartografía electoral del INE (diciembre de 2025); las zonas son las del mapa del SIAPA."));
     open.addEventListener("click", async () => {
@@ -437,7 +437,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       }
       const div = el("div", { class: "map", role: "region", "aria-label": "Mapa de la colonia y las zonas" });
       const absent = list.filter((c) => !byKey.has(coloniaKey(c.name, c.municipio)));
-      const answer = el("p", { "aria-live": "polite" }, list.length > 1 ? "Toca tu colonia en el mapa." : "Toca el lugar de tu casa en el mapa.",
+      const answer = el("p", { "aria-live": "polite" }, pick ? "Toca tu colonia en el mapa." : "Toca el lugar de tu casa en el mapa.",
         absent.length ? ` No tenemos el contorno de ${joinES(absent.map((c) => `${c.name} (${municipio(c.municipio)})`))}.` : null);
       box.replaceChildren(div, answer, box.lastChild);
       const L = window.L;
@@ -496,7 +496,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       for (const [c, f] of found) {
         L.geoJSON(f, { interactive: false, style: { color: halo, weight: 8, fill: false } }).addTo(group);
         const line = L.geoJSON(f, { style: { color: ink, weight: 4, fill: true, fillOpacity: 0 } }).addTo(group);
-        if (list.length > 1) line.on("click", () => showColonia(c, zones));
+        if (pick) line.on("click", () => showColonia(c, zones));
         line.on("mouseover", (e) => { choiceHover(c, true); track(e); });
         line.on("mousemove", track);
         line.on("mouseout", () => { choiceHover(c, false); light(null); cursorTip.remove(); });
@@ -504,11 +504,11 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         // puts in several names the zones its outline overlaps on the map.
         const b = line.getBounds();
         const label = sameName(c) ? `${c.name} · ${municipio(c.municipio)}` : c.name;
-        const tip = L.tooltip({ permanent: true, interactive: list.length > 1, direction: "top", className: "map-label" })
+        const tip = L.tooltip({ permanent: true, interactive: pick, direction: "top", className: "map-label" })
           .setLatLng([b.getNorth(), b.getCenter().lng])
           .setContent(label)
           .addTo(map);
-        if (list.length > 1) tip.on("click", () => showColonia(c, zones));
+        if (pick) tip.on("click", () => showColonia(c, zones));
         const onMap = f.properties.zones;
         const hovered = c.zones.length > 1 && onMap.length ? `${label} · ${onMap.length > 1 ? "Zonas" : "Zona"} ${joinES(onMap)}` : label;
         drawn.set(coloniaKey(c.name, c.municipio), [f, tip, label, hovered]);
@@ -538,7 +538,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         hot = { key, overlay, tip, label };
       };
       map.on("mouseout", () => { unhover(); light(null); cursorTip.remove(); });
-      if (list.length > 1) return;
+      if (pick) return;
       let pin = null;
       map.on("click", async (e) => {
         const { lat, lng } = e.latlng;
@@ -598,7 +598,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   }
 
   function showChoices(list, zones) {
-    show(el("p", {}, "Encontramos varias colonias parecidas. ¿Cuál es la tuya?"), choiceList(list, zones), mapBlock(list, zones));
+    show(el("p", {}, "Encontramos varias colonias parecidas. ¿Cuál es la tuya?"), choiceList(list, zones), mapBlock(list, zones, true));
   }
 
   // others are colonias that exist but aren't on SIAPA's rotation list; similar names
@@ -609,7 +609,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         el("p", {}, "No está en la lista de colonias de la rotación del SIAPA y queda fuera de las zonas de su mapa, así que no le toca racionamiento."))
       : result("info", `${o.name} (${municipio(o.municipio)}) no está en la lista del SIAPA`,
         el("p", {}, `Pero queda dentro del mapa de la ${o.zones.length > 1 ? "zonas" : "zona"} ${joinES(o.zones)}. El mapa y la lista no siempre coinciden: `, locateLink("usa tu ubicación"), " para confirmarlo.")));
-    if (similar.length) nodes.push(el("p", {}, "¿O es alguna de estas?"), choiceList(similar, zones));
+    if (similar.length) nodes.push(el("p", {}, "¿O es alguna de estas?"), choiceList(similar, zones), mapBlock(similar, zones, true));
     show(...nodes);
   }
 
