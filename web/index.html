@@ -97,7 +97,7 @@ footer { font-size: .85rem }
 .buttons { display: flex; flex-wrap: wrap; gap: 10px }
 .button.alt { background: color-mix(in srgb, var(--brand) 12%, var(--surface)); color: var(--link); border: 1.5px solid var(--brand) }
 .button.alt:hover { background: color-mix(in srgb, var(--brand) 22%, var(--surface)) }
-.button.glow { border: 3px solid transparent; background: linear-gradient(var(--primary), var(--primary)) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100%; animation: glow 2s linear infinite; box-shadow: 0 0 10px 1px rgb(139 92 246 / .55), 0 0 22px 4px rgb(14 165 233 / .4) }
+.button.glow { border: 2px solid transparent; background: linear-gradient(var(--primary), var(--primary)) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100%; animation: glow 3s linear infinite; box-shadow: 0 0 8px rgb(139 92 246 / .3), 0 0 16px 2px rgb(14 165 233 / .22) }
 .button.glow:hover { background: linear-gradient(var(--brand-deep), var(--brand-deep)) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100% }
 @keyframes glow { from { background-position: 0 0, 0% 0 } to { background-position: 0 0, 150% 0 } }
 @media (prefers-reduced-motion: reduce) { .button.glow { animation: none } }
