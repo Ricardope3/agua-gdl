@@ -1,0 +1,6886 @@
+[
+ {
+  "name": "1 DE MAYO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "12 DE DICIEMBRE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "20 DE NOVIEMBRE",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "27 DE SEPTIEMBRE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "5 DE MAYO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "5 DE NOVIEMBRE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "8 DE JULIO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "AARON JOAQUIN",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ]
+ },
+ {
+  "name": "ABADIA SAN MARTIN",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "ACACIAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "AGRARIA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "AGRICOLA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "AGUA BLANCA INDUSTRIAL",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "AGUA BLANCA POBLADO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "AGUA CALIENTE TETLAN",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "AGUA FRIA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "AGUSTIN YAÑEZ (LA FLORIDA)",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "ALAMEDAS DE TESISTAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ALAMEDAS DE ZALATITAN",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "ALAMITOS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ALAMO LOMAS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "ALBATERRA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ALBORADA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "ALCAZAR ORIENTE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "ALCAZAR PONIENTE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "ALDAMA TETLAN",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "ALEIRA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ALFARERA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "ALFAREROS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "ALFREDO BARBA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "ALICANTE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ALMA TERRA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ALPINOS",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "ALTA LOMA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "ALTAGRACIA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ALTALUZ",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ALTAMIRA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "ALTAMIRA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ALTANZA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ALTEZZA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ALTOS NORTE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "ALTOS ORIENTE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "ALTUS BOSQUES",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "ALTUS PINAR",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "ALVIENTO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ALVIENTO II",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "AMANECERES",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "AMARANTO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "AMPLIACION DE COPALA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "AMPLIACION SANTA LUCIA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ANEXO 18 DE MARZO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   1
+  ]
+ },
+ {
+  "name": "ANTARES II",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "ARANDANOS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ARAUCA I",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ARAUCA II",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ARBOLEDA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ARBOLEDAS DE SAN GASPAR",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "ARBOLEDAS DE TESISTAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ARBOLEDAS SUR",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "ARBORETO RESIDENCIAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ARCOS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "ARCOS DE ZALATITAN",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "ARCOS DE ZALATITAN II",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "ARCOS DE ZAPOPAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ARGENTA PARQUE RESIDENCIAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ARMONIA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ARRAYANES",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "ARROYO HONDO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ARROYO HONDO 2A SECCION",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ARROYO SECO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "ARROYO SECO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "ARTESANOS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "ARTESANOS (SAGRADA FAMILIA Y/O JESUS)",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "ATEMAJAC DEL VALLE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ATLAS CHAPALITA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "ATLAS COLOMOS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ATORINO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "AUDITORIO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "AUREA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "AUTOCINEMA",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "AUTODROMO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "AYAMONTE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "AYUNTAMIENTO",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "AZALEAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "AZENT",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "BALCONES DE LA CANTERA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "BALCONES DE LA JOYA",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "BALCONES DE SANTA CRUZ",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "BALCONES DEL ROSARITO",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "BALCONES DEL SOL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "BALCONES Y/O PRADOS DE HUENTITAN",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "BARRAGAN HERNANDEZ",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ]
+ },
+ {
+  "name": "BARRIO NUEVO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "BARRIOS UNIDOS INTERCOLONIAS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "BASE AEREA MILITAR NO 5",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "BASILIO VADILLO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "BELCANTO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "BELCANTO II",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "BELENES NORTE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "BELLAVISTA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "BELLAVISTA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "BELLISSIMO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "BENITO JUAREZ",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "BENITO JUAREZ",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "BENITO JUAREZ NORTE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "BOREALES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "BOSQUE DE LAS LOMAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "BOSQUE DE LOS VIRREYES",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "BOSQUE DE VALDEPEÑAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "BOSQUE DEL CENTINELA II",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "BOSQUE ENCANTADO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "BOSQUE ESCONDIDO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "BOSQUES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "BOSQUES DE LA VICTORIA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "BOSQUES DE SAN GONZALO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "BOSQUES DE SAN ISIDRO (LAS CAÑADAS)",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "BOSQUES DE SAN MARTIN",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "BOSQUES DE TONALA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "BOSQUES DEL CENTINELA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "BOSQUES DEL ENCINO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "BOSQUES DEL SOL",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "BOSQUES VALLARTA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "BOSQUETTO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "BRISAS DE LA PRIMAVERA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "BRISAS DEL NILO",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "BUENA MIRADA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "BUENAVISTA I",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "BUENOS AIRES",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "BUENOS AIRES SEGUNDA SECCION",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "BUGAMBILIAS",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "CABAÑITAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CAJETES 100",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "CALLEJON DEL BOSQUE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CALLEJON DEL PARQUE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "CAMICHINES",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "CAMICHINES II",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "CAMICHINES III",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "CAMINO REAL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "CAMPO REAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CAÑADA DEL SOL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "CAÑADAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CAÑADAS DE SAN LORENZO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CANAL 58",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "CAÑON DE LAS FLORES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CANTARRANAS",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "CANTERA COLORADA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "CANTERA MORADA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CANTERAS DEL CENTINELA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CANTEROS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CANTO DE LUNA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "CARRARA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CASTAÑOS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CEIBAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "CENTINELA GARDEN LIFE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CENTRO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "CERRITO II",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "CERRO DEL JAGUEY",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "CERRO DEL TESORO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "CHAPALITA DE OCCIDENTE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "CHAPALITA ORIENTE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CIHUALPILLI",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "CIMA REAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CIRCUNVALACION AMERICAS",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "CITALA 3",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CITALA CD JARDIN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CIUDAD BUGAMBILIAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "CLUB DE GOLF ATLAS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "CLUB HIPICO INTERNACIONAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COL BOSQUE DEL CLUB",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "COLEGIO DEL AIRE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COLINA DE LOS BELENES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COLINAS DE ALTAMIRA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "COLINAS DE ATEMAJAC",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COLINAS DE CRISTO REY",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COLINAS DE HUENTITAN",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "COLINAS DE LA CRUZ",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "COLINAS DE LA NORMAL",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "COLINAS DE LAS AGUILAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   5,
+   6
+  ]
+ },
+ {
+  "name": "COLINAS DE LOS ROBLES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COLINAS DE SAN CARLOS",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "COLINAS DE SAN JAVIER",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COLINAS DE SAN MIGUEL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COLINAS DE TABACHINES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COLINAS DE TESISTAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COLINAS DEL REY",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COLINAS DEL RIO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COLINAS EL CENTINELA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COLINAS RESIDENCIAL",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "COLINAS VIRREYES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COLLI CTM",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "COLLI PRIMAVERA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "COLOMOS",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "COLOMOS PROVIDENCIA",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "COLONIA LAS BARRANQUITAS",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "COLONOS DE COYULA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "COLORADO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COLORINES",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "COMERCIAL ABASTOS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "COMOLEA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "COMUNIDAD INDIGENA DE TESISTAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CONCHITAS",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "CONDOMINIO DELICIAS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "CONDOMINIO REY XOLOTL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "CONDOMINIO VERONA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "CONJUNTO PATRIA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CONSTANCIO HDEZ ALVIRDE",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "CONSTITUCION",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CONSTITUYENTES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COPALA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COPALITA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CORRECCIONAL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "COTO ABIE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO ACCANTA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO ALTATERRA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO ALTATERRA II",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO ALVA 1",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO ALVA 2",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO ALVA 3",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO ALVA 4",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO ALVA 5",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO AMALFI",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO ANTARA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO CAÑADAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO CASA BLANCA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO CRETA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO DEL CARMEN",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "COTO DEL REY",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "COTO EL SECRETO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO F2 NORTE SIENNA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO F2 SUR SIVEC",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO FIRENZZE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO FLORENCIA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "COTO GALARZA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO GRAND",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO H1",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO H2",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO IMPERIO GRIEGO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO JUAN DIEGO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "COTO LAGO NORTE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO LAS VENTANAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO LIVORNO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "COTO MAPLE 4",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO MIRAFLORES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO MUNAH",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO NOGAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO RINCONADA DE LA PROVIDENCIA 2DA SECCION",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "COTO SAN ANTONIO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "COTO SAN FRANCISCO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO SANTA LUZA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO SOTOVENTO I",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO  TONALA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "COTO VITANA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO ZENIHT NORTE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COTO ZOI",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "COUNTRY CLUB",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "COYULA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "CRISTAL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "CRISTO REY",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CRUCERO CENTRAL",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "CRUCERO DE LA MESA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CRUZ DE LA LOMA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "CRUZ DEL BAJIO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "CRUZ VERDE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "CUMBRES DEL NILO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "CUMBRES DEL NILO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "CUMBRES DEL PRADO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "DE COYULA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "DE LA AZALEA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "DE LA PRESA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "DE LAS AZALEAS",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "DE LOS FRESNOS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "DE LOS NARANJOS",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "DE LOS NOVELISTAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "DE LOS PINOS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "DE LOS SAUCES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "DE SAN MARTIN",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "DE SANTIAGO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "DE SANTIAGO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "DEL BARRO",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "DEL BOSQUE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "DEL CARRIL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "DEL FRESNO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "DEL FRESNO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "DEL HUERTO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "DEL IRIS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "DEL MEZQUITE",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "DEL ORO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "DEL PARQUE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "DEL SOL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "DEL SOL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "DEL SUR",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "DEL VALLE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "DEMETRIO VALLEJO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "DESPERTARES",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "DIVISION DEL NORTE",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "DIVISION DEL NORTE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "DOCTORES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "DR ATL",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "ECOLOGICA EL SEATTLE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EDUCADORES JALISCIENSES",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EJIDO ZALATITAN",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EL ALAMO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "EL ALAMO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL AMIAL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EL ARENAL 1",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EL BAJO HABITAT 1",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL BAJO HABITAT 2",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL BATAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL BETHEL",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "EL BOSQUE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "EL BRISEÑO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL CAJON",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "EL CALABOZO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL CAMPESTRE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL CAPULLO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL CARACOL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EL CARRIL TAPATIO",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "EL CENTINELA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL CERRITO DE LA REYNA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EL COLLI URBANO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "EL DUQUE",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EL EDEN",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EL EJIDO COPALITA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL FORTIN 2DA SECC",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL HUIZACHE 1RO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL HUMEDO DE NEXTIPAC",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL JAGUEY",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "EL JORDAN",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EL LIMON",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "EL MANANTIAL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EL MANTE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "EL MIRADOR",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "EL MIRADOR",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EL MOLINO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EL MORAL II",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "EL MORAL III",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "EL OLIVO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL PANORAMICO I",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EL PANORAMICO II",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EL PARAISO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL PARDO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EL PEDREGAL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EL PEDREGAL DE MILPILLAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL PRADO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL QUEMADO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL RASTRO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "EL REAL",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "EL REAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL RECODO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EL REMOLINO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EL RINCON SECRETO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL ROBLE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "EL ROSARITO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EL SANCHE",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "EL SAUZ",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "EL SAUZ",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "EL SERENO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "EL SINAI",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EL TEPAME",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EL TIGRE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL TRIANGULO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL TRIGO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "EL VERDE ( PLANETARIO)",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "EL VIGIA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL ZAPOTE",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EL ZAPOTE I",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EL ZAPOTE II",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ELITE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "EMILIANO ZAPATA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "EMILIANO ZAPATA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "EMILIANO ZAPATA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ENCINOS",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "ENTRELOMAS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "ESENCIA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ESPAÑA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "ESPAÑA (PINTORES ESPAÑOLES)",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "ESTANCIA BOSQUES",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "ESTRADA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "FABRICA DE ATEMAJAC",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "FELIPE ANGELES",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "FIDEL VELAZQUEZ",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "FIDEL VELAZQUEZ",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "FLAMINGO",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "FLORES DEL VALLE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "FLORES MAGON",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "FONTEE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "FORET",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "FOVISSSTE ESTADIO",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "FOVISSSTE (ESTATUTO JURIDICO)",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "FOVISSSTE MIRAVALLE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "FRANCISCO I MADERO 2A SECCION",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "FRANCISCO SARABIA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "FRANCISCO VILLA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "FRENTE POPULAR TONALTECA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "FUENTE MAYOR",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "FUENTES NEXTIPAC",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "GEO VILLAS DEL REAL",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "GEO VILLAS LOS OLIVOS I",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "GEO VILLAS LOS OLIVOS II",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "GEO VILLAS LOS OLIVOS III",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "GIRASOLES ACUEDUCTO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "GIRASOLES ELITE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "GONZALEZ ORTEGA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "GUADALAJARITA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "GUADALUPE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "GUSA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "HACIENDA COPALA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "HACIENDA DE LA REYNA II",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "HACIENDA DE LAS LOMAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "HACIENDA DE SAN MARTIN",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "HACIENDA DE VIDRIO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "HACIENDA DEL CAMICHIN 8470",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "HACIENDA DEL SOL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "HACIENDA DEL TEPEYAC",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "HACIENDA DEL VALLE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "HACIENDA LAS PALOMAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "HACIENDA SAN ANTONIO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "HACIENDA SAN PEDRO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "HACIENDA SANTILLANA RESIDENCIAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "HACIENDAS DE LA REYNA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "HACIENDAS DE NUEVO MEXICO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "HACIENDAS DE SAN JOSE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "HACIENDAS DE ZAPOPAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "HACIENDAS DEL REAL",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "HACIENDAS GUADALUPE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "HACIENDAS LA CANDELARIA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "HACIENDAS SAN ACASIO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "HACIENDAS TONALA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "HELIODORO HERNANDEZ LOZA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "HERNANDEZ ROMO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2,
+   3
+  ]
+ },
+ {
+  "name": "HEROES NACIONALES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "HIDALGO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "HIDALGO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "HOGARES DE NUEVO MEXICO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "HOGARES DEL BATAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "HORIZONTES DE TLAQUEPAQUE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "HORMIGUERO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "HUAXTLA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "HUENTITAN EL ALTO",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "HUENTITAN EL BAJO",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "HUERTA BAEZA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "HUERTA LOS PINOS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "HUERTAS DE SAN GASPAR",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "HUERTAS DEL VALLE",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "INDIGENA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "INDIGENA DE MEZQUITAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "INDUSTRIAL LOS BELENES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "INDUSTRIAL ZAPOPAN NORTE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "INFONAVIT EL GARABATO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "INFONAVIT ESTADIO",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "INFONAVIT INDEPENDENCIA",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "INFONAVIT LA SOLEDAD",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "INFONAVIT TONALA (RIO NILO)",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "INSURGENTES",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "INSURGENTES DE LA PRESA",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "ITALIA PROVIDENCIA",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "IXCATAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JACARANDAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JALISCO I SECC",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "JALISCO II SECC",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "JALISCO III SECC",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "JALISCO IV SECC",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "JARDIN REAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JARDINES ALCALDE",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DE ELIZABETH",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DE GUADALUPE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "JARDINES DE LA BARRANCA",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DE LA CAÑADA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DE LA CRUZ ORIENTE",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DE LA ESPERANZA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DE LA MAGDALENA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DE LA REINA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DE LA SEATTLE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DE LAS FUENTES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DE LOS BELENES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DE LOS HISTORIADORES",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "JARDINES DE LOS PINOS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DE LOS POETAS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "JARDINES DE NUEVO MEXICO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DE SAN FRANCISCO",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DE SAN GONZALO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DE SAN MARTIN",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DE SAN RAFAEL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DE TABACHINES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DE TESISTAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DE TONALA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DEL AUDITORIO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DEL CAMICHIN 125",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DEL PORVERNIR",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DEL PRADO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DEL ROSARIO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DEL TAPATIO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "JARDINES DEL VALLE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DEL VERGEL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JARDINES DEL VIGIA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JARDINES PLAZA DEL SOL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "JARDINES SAN FRANCISCO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JARDINES SEATTLE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JARDINES VALLARTA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JAZMIN",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "JERICO",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "JOYAS DEL NILO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "JUAN DE LA BARRERA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "JUAN GIL PRECIADO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "JUAN MANUEL",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "JUAN MANUEL VALLARTA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA ALBERCA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LA ALHAMBRA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA ASUNCION",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "LA AURORA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA AZUCENA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA BELLA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "LA CALERILLA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LA CALMA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LA CAMPANA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LA CAMPESINA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ]
+ },
+ {
+  "name": "LA CAÑADA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA CANTERA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA CARIDAD",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "LA CASITA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA CASTELLANA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LA CASTILLA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LA CEIBA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LA CIMA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA COFRADIA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LA COFRADIA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LA CONCHA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LA CORONILLA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA COYOTERA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LA CRUZ",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "LA CUCHARA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LA CUSPIDE",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LA CUSPIDE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA DURAZNERA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "LA ESCONDIDA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA ESPERANZA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LA ESPERANZA (LA FEDERACHA)",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "LA ESTANCIA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LA ESTANCIA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LA EXPERIENCIA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA FLORESTA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LA FLORESTA SECCION II",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LA FORJA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LA GIGANTERA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LA GLORIA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LA GUADALUPANA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LA GUADALUPANA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "LA HACIENDITA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LA HIGUERA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA HORTALIZA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LA HUERTA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LA HUERTA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA JOYA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LA JOYITA",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "LA JOYITA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA JUNTA DE LOS OCOTES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA LADRILLERA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "LA LADRILLERA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LA LLAVE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "LA LOMA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LA LOMA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LA LOMA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LA LOMA ALTA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA MAGDALENA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA MARTINICA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA MESA COLORADA PONIENTE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA MESA DE LA CORONILLA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LA MESA DE LOS MUSICOS",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LA MESITA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA MEZQUITERA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "LA MICAILITA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "LA MOJONERA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA MORA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA MORALEJA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA NORIA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LA PALMITA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA PATRIA UNIVERSIDAD",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA PEÑA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LA PENAL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2,
+   3
+  ]
+ },
+ {
+  "name": "LA PERIQUERA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA PIEDRERA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LA PILA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LA PLANCHA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LA PRESITA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LA PRIMAVERA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA PROVIDENCIA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LA PUNTA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LA QUINTA CATALINA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LA RESERVA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA RUMOROSA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA SAUCEDA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA SEVERIANA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LA SILLITA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LA SOLEDAD",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "LA SOLEDAD",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA STRAVAGANZA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA TIJERA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "LA TOSCANA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA TUZANIA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA TUZANIA EJIDAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA VENTA DEL ASTILLERO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA VICTORIAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LA VINATERA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LADRILLERA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LAGO REAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LAGOS DE ORIENTE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "LAGOS DEL COUNTRY",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "LAGOS DEL COUNTRY",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LAGUNITAS TONALLAN",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LARGUERO",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LAS AGUILAS",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LAS AGUJAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LAS ARBOLEDAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LAS BOVEDAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LAS BRISAS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "LAS CUEVAS",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LAS FLORES",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "LAS FLORES",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LAS FUENTES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LAS GABRIELAS",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LAS GAMBOAS",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LAS GAVIOTAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LAS HUERTAS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "LAS HUERTAS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LAS LIEBRES",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "LAS LIEBRES 2DA SECCION",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "LAS LOMAS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "LAS LOMAS GOLF  HABITAT",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LAS MESAS",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LAS PALMAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LAS PALOMAS",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LAS PALOMAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LAS POMAS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "LAS PUERTAS",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LAS TORRES",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LAURELES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LAURELES DE TONALA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LAZARO CARDENAS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "LAZARO CARDENAS (BARRANQUITAS)",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LAZARO CARDENAS DEL RIO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LE PARC",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LEONES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LEYES DE REFORMA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LINDAVISTA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "LINDAVISTA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "LINDAVISTA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LINDAVISTA COUNTRY",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "LOMA BLANCA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOMA BONITA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOMA BONITA EJIDAL",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LOMA BONITA I",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOMA BONITA II",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOMA CHICA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOMA DE LOS PAJAROS",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOMA DEL BOSQUE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOMA DEL ZALATE (AHUATAN)",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOMA DORADA DELEGACION A",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOMA DORADA DELEGACION B",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOMA DORADA DELEGACION C",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOMA DORADA DELEGACION D",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOMA DORADA (EJIDAL)",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOMA EL PEDREGAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOMA IMPERIAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOMA REAL",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LOMA REAL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOMA REAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOMAS ALTAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DE ATEMAJAC",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DE AZTLAN",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DE GUEVARA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LOMAS DE INDEPENDENCIA",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DE LA SOLEDAD",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LOMAS DE LA VICTORIA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "LOMAS DE PROVIDENCIA",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DE RIO VERDE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "LOMAS DE SAN GONZALO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DE SAN MIGUEL",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LOMAS DE SAN MIGUEL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DE SAN MIGUEL III",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LOMAS DE SAN PEDRITO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DE SAN PEDRO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "LOMAS DE TABACHINES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DE TESISTAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DE TONALA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DE ZAPOPAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DEL BATAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DEL BOSQUE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DEL CAMICHIN I",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LOMAS DEL CENTINELA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DEL COUNTRY",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LOMAS DEL FORTIN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DEL LAUREL I",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DEL LAUREL II",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DEL MANANTIAL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DEL PARAISO I",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DEL PARAISO II",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DEL PARAISO III",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DEL PEDREGAL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LOMAS DEL REFUGIO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DEL TESORO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LOMAS DEL VALLE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOMAS DEL VERGEL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOMAS UNIVERSIDAD",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOPEZ COTILLA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "LOPEZ COTILLA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOPEZ DE LEGASPI",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   1
+  ]
+ },
+ {
+  "name": "LORETO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "LOS ALAMOS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOS ALAMOS (EL ALAMO)",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOS ALMENDROS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "LOS ALMENDROS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOS ALTOS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "LOS ALVAREZ",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOS AMIALES",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "LOS AMIALES",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOS ANGELES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOS CAJETES",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LOS CAMICHINES I",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOS CASTAÑOS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LOS CEREZOS",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOS CERRITOS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LOS CHIRIMOLLOS",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOS CIPRECES",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LOS CONEJOS",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOS FRAILES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOS GIRASOLES",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOS GIRASOLES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOS GUAYABOS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOS JALES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOS LIMONES",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOS MAESTROS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOS MAGUEYES",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "LOS MANDARINOS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOS MANGUITOS",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOS MANZANOS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOS MOLINOS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOS NARANJOS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LOS NARANJOS",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOS NARANJOS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOS NISPEROS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOS OLIVOS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "LOS PAJARITOS",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LOS PERIODISTAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOS PERONES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOS PINOS",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOS PORTALES",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "LOS PORTALES TLAQUEPAQUE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "LOS PRADOS",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LOS PUESTOS",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LOS ROBLES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOS SAUCES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOS TELARES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOS TREBOLES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOS TRES VAQUEROS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LOS TULIPANES",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOS VIÑEDOS II",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOS VIÑEDOS III",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LOS VIÑEDOS IV",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LUCERO DEL VALLE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "LUIS ALONSO",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "LUIS DONALDO COLOSIO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "LUNA BOSQUE RESIDENCIAL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "MADEIRAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MAESTRANZA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "MAGISTERIAL VALLE DE SAN ISIDRO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MANANTIAL",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "MAPLE COTO 1",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MAPLE COTO 2",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MAPLE COTO 3",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MARCELINO GARCIA BARRAGAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MARTELL DEL VALLE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MERIDIANO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "MESA COLORADA ORIENTE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MESA DE LOS OCOTES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MESON DE COPALA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MEXICO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MIGUEL DE LA MADRID",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MIGUEL HIDALGO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MIRADOR",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "MIRADOR ALAMO INDUSTRIAL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "MIRADOR DE LA REINA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "MIRADOR DE SAN ISIDRO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MIRADOR DEL BOSQUE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MIRADOR DEL REY",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "MIRADOR DEL SOL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "MIRADOR DEL SUR",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "MIRADOR ESCONDIDO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MIRADOR ORIENTE",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "MIRADOR SAN ISIDRO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MIRAFLORES",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "MIRAVALLE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "MISION  ACUEDUCTO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "MISION CAPISTRANO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MISION DE GUADALUPE",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "MISION DE LA CANTERA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "MISION DE LOS VIÑEDOS",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "MISION DEL BOSQUE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MISION DEL VALLE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MISION DEL VALLE II",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MISION EL CAMPANARIO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "MISION LA FLORESTA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MISION LA VALENCIANA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "MISION MAGNOLIA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "MISION SAN FRANCISCO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "MISION SAN FRANCISCO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "MISION SAN FRANCISCO I",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "MISION SAN FRANCISCO II",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "MISION SAN FRANCISCO III",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "MITICA RESIDENCIAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MOCTEZUMA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "MOCTEZUMA PTE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "MODELO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ]
+ },
+ {
+  "name": "MOLINO DEL SALVADOR",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MONARCA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MONRAZ",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "MONTES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MONTEVERDE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MONTEVERDE II",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MONTEVERDE III",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MONTICELLO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MURAAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "MURO VEKIO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "NATURA BOSQUE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "NEXTIPAC",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "NIÑOS HEROES",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "NORDIKA RESIDENCIAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "NOVA PORTALIA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "NOVATERRA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "NUEVA AURORA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "NUEVA CENTRAL CAMIONERA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "NUEVA ESPAÑA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "NUEVA ESPAÑA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "NUEVA GALICIA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "NUEVA GALICIA 2",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "NUEVA SANTA MARIA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "NUEVO AMANECER",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "NUEVO ISRAEL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "NUEVO MEXICO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "NUEVO VERGEL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "OBELISCOS",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "OBLATOS PTE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "OJO DE AGUA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "OLIVOS RESIDENCIAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "OSORIO COMUNAL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "OYAMEL II",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "OYAMEL III",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "PACHAGUILLO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PACIFICA HABITAT",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PAISAJES DEL TAPATIO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "PALERMO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PALMA REAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PANORAMICA DE HUENTITAN",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "PARAISO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PARAISO LOS PINOS",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "PARQUE ARRAYANES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PARQUE DE LA CASTELLANA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "PARQUE DE LAS AVES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PARQUE DE LAS AZALEAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PARQUE INDUSTRIAL EL ALAMO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "PARQUE LAS LOMAS",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PARQUE REAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PARQUE REGENCY",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "PARQUE SERENO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "PARQUE VIRREYES",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "PARQUES COLON",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "PARQUES DE LA VICTORIA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "PARQUES DE SAN PEDRO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "PARQUES DE SANTA CRUZ DEL VALLE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "PARQUES DE TESISTAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PARQUES DE TESISTAN III",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PARQUES DE TLAQUEPAQUE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "PARQUES DE TLAQUEPAQUE",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PARQUES DE ZAPOPAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PARQUES DEL BOSQUE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "PARQUES DEL CENTINELA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PARQUES DEL NILO 2A SECCION",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "PARQUES DEL NILO I",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "PARQUES DEL PALMAR",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "PARQUES TEPEYAC",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "PASEO DE LOS PARQUES",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "PASEO DEL BOSQUE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "PASEOS DE LA CAÑADA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "PASEOS DE SANTIAGO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PASEOS DE TONALA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PASEOS DEL BRISEÑO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PASEOS DEL CAMICHIN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PASEOS DEL LAGO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "PASEOS DEL PEDREGAL",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "PASEOS DEL PRADO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "PASEOS DEL VALLE",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "PASEOS UNIVERSIDAD",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PBLO SAN MARTIN DE LAS FLORES DE ABAJO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "PEDREGAL TONALA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PEDRO MORENO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PINAR DE LA VENTA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PINAR DE LAS PALOMAS",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PINAR DE LAS PALOMAS I",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PINARES DEL VERGEL",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "PINO SUAREZ",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PIRAMIDES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PLACITA DEL SOL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "POLANCO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "POLANQUITO PONIENTE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5,
+   6
+  ]
+ },
+ {
+  "name": "PONCIANO ARRIAGA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "PONIENTE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PONTEVEDRA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "POPULAR",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "POPULAR NO 9",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "PORTA REAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PORTALES DE SANTA ANA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PORTILLO LOPEZ (SALVADOR PORTILLO LOPEZ)",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "PORTOFINO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "POSTES CUATES",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "POTRERO DE LA CORONILLA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "POTRERO DE SAN FRANCISCO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "POTRERO EL ZALATE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "POTRERO LOS AMADOR",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "POTRERO SAN JOSE",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PRADERAS DE ORIENTE ( EL MIRADOR)",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PRADERAS DE SAN ANTONIO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PRADERAS DE TESISTAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PRADERAS DEL CENTINELA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PRADERAS DEL SOL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PRADERAS TONALLAN",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "PRADO ARBOLEDAS",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PRADO DE LA LUNA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "PRADOS COYULA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PRADOS DE EL VERDE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "PRADOS DE LA CAÑADA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PRADOS DE LA CRUZ",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PRADOS DE LA CRUZ II",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PRADOS DE LA CRUZ IV",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PRADOS DE LA HIGUERA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PRADOS DE LA SOLEDAD",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PRADOS DE NEXTIPAC 1A SECCION",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PRADOS DE NEXTIPAC 2A SECCION",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PRADOS DE SANTA LUCIA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PRADOS DE SANTA MARIA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "PRADOS DEL MAGUEY",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PRADOS DEL NILO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "PRADOS PROVIDENCIA",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "PRIMAVERA NORTE",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "PRIVADAS DE LA REYNA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PRIVANZA HABITAT",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PRIVANZA LA CEIBA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PROVIDENCIA 2A SECCION",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "PROVIDENCIA 3A SECCION",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "PROVIDENCIA 4A SECCION",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "PUEBLITO DEL SOL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PUENTE GRANDE",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PUERTA DE HIERRO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "PUERTA DEL LLANO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PUERTA DEL ROSARIO",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "PUERTA DEL TULE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PUERTA DEL VALLE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PUERTA LAS LOMAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PUERTA LAUREL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PUERTA REAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PUERTA SERENA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PUERTA SOL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PUERTA SOL AUTOPISTA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "PUERTA TESISTAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PUNTA FORESTA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PUNTA VALDEPEÑAS I",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "PUNTA VALDEPEÑAS II",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "QUINTANOVA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "QUINTAS DE LA SOBERANA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "QUINTAS DE TATEPOSCO",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "QUINTAS DEL BOSQUE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "QUINTAS DEL FEDERALISMO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "QUINTAS DEL PARAISO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "QUINTAS DEL VALLE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "QUINTAS EL ALAMO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "RANCHO CONTENTO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "RANCHO DE LA CRUZ",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "RANCHO NUEVO",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "RANCHO NUEVO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "RDA DEL AUDITORIO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "RDCIAL DELICIAS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "RDCIAL LOS OLIVOS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "REAL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ]
+ },
+ {
+  "name": "REAL CANTABRIA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "REAL DE LAS LOMAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "REAL DE TATEPOSCO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "REAL DE TESISTAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "REAL DE VALDEPEÑAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "REAL DEL BOSQUE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "REAL DEL CAMICHIN 8469",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "REAL DEL CARMEN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "REAL DEL CARMEN GRAND",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "REAL PATRIA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "REAL PATRIA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "REAL TONALA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "REAL TULIPANES",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "RECIENTE AMANECER",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "REPUBLICA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "RESERVA LAS MAGNOLIAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "RESERVA REAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "RESIDENCIAL ANTEA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "RESIDENCIAL CHAPALITA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "RESIDENCIAL COYULA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "RESIDENCIAL DE LA BARRANCA",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "RESIDENCIAL DEL VALLE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "RESIDENCIAL PUERTA VIEJA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "RESIDENCIAS  DEL PRADO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "REVOLUCION",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "REY XOLOTL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "RICARDO FLORES MAGON",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "RICARDO FLORES MAGON",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "RINCON DE LA AGUA AZUL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5,
+   7
+  ]
+ },
+ {
+  "name": "RINCON DE LA COFRADIA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "RINCON DEL BOSQUE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "RINCON DEL PARAISO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "RINCON DEL VALLE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "RINCON SAN JORGE",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "RINCONADAS DE LA PRIMAVERA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "RINCONADAS DE ZAPOPAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "RINCONADAS DEL AIRE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "RINCONADAS DEL BOSQUE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "RIO BLANCO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "RIO VERDE",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "RITZ AUTOCINEMA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "RIVERAS DE SAN SEBASTIANITO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "ROBERTO OROZCO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ROMITA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "ROSARIO",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "RUBEN JARAMILLO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "SALMIRA RESIDENCIAL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "SALVADOR ALLENDE",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "SAN ARTURO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "SAN BERNARDO",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "SAN CLEMENTE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "SAN ELIAS",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "SAN ELIAS",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "SAN ESTEBAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SAN EUGENIO",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "SAN FRANCISCO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "SAN FRANCISCO",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "SAN FRANCISCO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SAN GASPAR",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "SAN GERONIMO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SAN ISIDRO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "SAN ISIDRO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SAN ISIDRO EJIDAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SAN ISIDRO OBLATOS",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "SAN ISIDRO RESIDENCIAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SAN JORGE",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "SAN JOSE",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "SAN JOSE DEL BAJIO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SAN JOSE EJIDAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SAN JUAN BOSCO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "SAN JUAN DE DIOS II",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   2
+  ]
+ },
+ {
+  "name": "SAN LORENZO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "SAN MARINO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SAN MARTIN",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "SAN MATEO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "SAN MIGUEL DE HUENTITAN",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "SAN MIGUEL DE LA COLINA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SAN NICOLAS DE LA PRIMAVERA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "SAN PATRICIO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "SAN RAFAEL RESIDENCIAL",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "SAN RAFAEL TERCERO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SAN WENCESLAO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SANTA ANITA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "SANTA ANITA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "SANTA ANITA CAMINO REAL",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "SANTA CATALINA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "SANTA CRUZ",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "SANTA EDUWIGES",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "SANTA ELENA ALCALDE",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "SANTA ELENA DE LA CRUZ",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "SANTA ELENA ESTADIO",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "SANTA FE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SANTA ISABEL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "SANTA ISABEL II",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "SANTA LUCIA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SANTA MA DE SILO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "SANTA MARGARITA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SANTA MARGARITA RESIDENCIAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SANTA MARIA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "SANTA MARIA TEQUEPEXPAN",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "SANTA MONICA DE LOS CHORRITOS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SANTA PAULA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SANTA RITA",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "SANTA RITA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SANTA ROSA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "SANTILLANA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SANTOS DEGOLLADO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "SEATTLE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SENDA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SENDAS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SENDAS RESIDENCIAL G2",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SENDAS RESIDENCIAL G3",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SENDEROS DE TESISTAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SENDEROS DE TLAQUEPAQUE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "SENTIMIENTOS DE LA NACION",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "SENTIMIENTOS DE LA NACION",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "SEVILLA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "SIN NOMBRE",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "SIN NOMBRE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SOARE ACANTIA I",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SOARE II COTO2",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SOLARES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SOLARES ALTHEA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SOLARES ANTARA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SOLARES AVEIRA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SOLE REAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SOLIDARIDAD",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "SOMOS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SONEE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SOTO PARK",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "SUPER MANZANA EL ALAMO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "TABACHINES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "TATEPOSCO",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "TATEPOSCO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "TATEPOSCO (SAN JOSE DE TATEPOSCO)",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "TEMPISQUE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "TEPEYAC",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "TEPEYAC",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "TEPEYAC DEL SOL",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "TERCER MILENIO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "TERRA VISTA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "TERRANOVA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "TESISTAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "TETLAN",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "TETLAN II",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "TIERRA RESIDENCIAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "TINAJITAS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "TINAJITAS",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "TLAQUEPAQUE PUEBLITO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "TOLOLOTLAN",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "TOLUQUILLA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   5,
+   6
+  ]
+ },
+ {
+  "name": "TONALA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "TONALA CENTRO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "TONALTECAS I",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "TONALTECAS II",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "TORRES CASTILLA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "TORRES CIBELES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "TORRES ESPAÑA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "UAG",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "UNIDAD CADETE FCO MARQUEZ",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "UNIDAD HABITACIONAL LIC SATURNINO CORONADO ORGANISTA",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "UNIDAD HABITACIONAL MILITAR",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "UNIDAD JOSE LUIS LOPEZ PORTILLO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "URBIQUINTA MONTECARLO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "URBIVILLA DEL RIO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "VALDEPEÑAS II",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VALEIRA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VALENTIN CAMPA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "VALLARTA",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5,
+   6
+  ]
+ },
+ {
+  "name": "VALLARTA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "VALLARTA CUAUHTEMOC",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "VALLARTA LA PATRIA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "VALLARTA NORTE",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "VALLARTA PONIENTE",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "VALLARTA SAN JORGE",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "VALLE BALCONES DE SANTA MARIA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "VALLE DE ATEMAJAC",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VALLE DE LA PRIMAVERA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "VALLE DE LA PROVIDENCIA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VALLE DE LA REYNA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "VALLE DE LOS MOLINOS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VALLE DE LOS SAUCES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VALLE DE SAN ISIDRO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VALLE DE SAN NICOLAS 3RA SECC",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VALLE DE TONANTZIN",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "VALLE DE TONANTZIN III",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "VALLE DEL FORTIN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VALLE DEL SOL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "VALLE DEL SOL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VALLE DEL SUR",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "VALLE ESMERALDA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VALLE IMPERIAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VALLE NORTE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VALLE REAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VALLE VERDE",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "VALLES DE NUEVO MEXICO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VALTIERRA",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "VENTARA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VENUSTIANO CARRANZA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VERDE VALLE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "VIA NOVA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "VICENTE GUERRERO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VICTOR HUGO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VICTORIA",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "VIGUSA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLA BONITA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLA CORAL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLA DE GUADALUPE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLA FONTANA DIAMANTE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLA GUERRERO",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   5
+  ]
+ },
+ {
+  "name": "VILLA MAGNA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLAS ALCALDE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLAS BELENES",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLAS DE ASIS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLAS DE GUADALUPE",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "VILLAS DE GUADALUPE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "VILLAS DE LA CRUZ (EL ROBLE)",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "VILLAS DE LA LOMA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "VILLAS DE LA LOMA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLAS DE NUEVO MEXICO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLAS DE ORIENTE I",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "VILLAS DE SAN JAVIER",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLAS DE SAN JUAN",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "VILLAS DE SANTA LUCIA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLAS DE SANTIAGO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "VILLAS DE TESISTAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLAS DE ZALATITAN",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "VILLAS DEL BOSQUE",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "VILLAS DEL BOSQUE",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "VILLAS DEL IXTEPETE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLAS DEL MARQUEZ",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLAS DEL ORIENTE II",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "VILLAS DEL PALMAR",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLAS DEL PRADO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "VILLAS DEL TAPATIO",
+  "municipio": "TLAQUEPAQUE",
+  "zones": [
+   3
+  ]
+ },
+ {
+  "name": "VILLAS DEL VALLE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLAS ESMERALDA",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "VILLAS LOS CANTAROS",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "VILLAS MARTEL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLAS MIRADOR",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLAS OTERO DE GUADALUPE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLAS PERISUR",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLAS SAN IGNACIO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLAS SAN MIGUEL",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "VILLAS TORREMOLINOS",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLAS VALLARTA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VILLASEÑOR (SANTA TERESITA)",
+  "municipio": "GUADALAJARA",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "VIRREYES",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "VISTA DEL REY",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "VISTA HERMOSA",
+  "municipio": "TLAQUEPAQUE",
+  "zones": []
+ },
+ {
+  "name": "VISTA HERMOSA",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VISTA HERMOSA (LA PUNTA)",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "VISTA NORTE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VISTA REAL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "VISTA REINA",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "VISTA SUR",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VISTA ZAPOPAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VISTAS DE TESISTAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VISTAS DEL NILO",
+  "municipio": "GUADALAJARA",
+  "zones": []
+ },
+ {
+  "name": "VISTAS DEL PEDREGAL I",
+  "municipio": "TONALÁ",
+  "zones": [
+   4
+  ]
+ },
+ {
+  "name": "VISTAS DEL SOL",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VISTAS DEL TULE I",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "VISTAS DEL TULE II",
+  "municipio": "ZAPOPAN",
+  "zones": [
+   6
+  ]
+ },
+ {
+  "name": "VISTAS DEL VALLE",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "VISTAS  DEL VALLE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VISTAS DEL VALLE 1",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "VIVEROS DEL VALLE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "XICOXOCHITL",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "ZALATITAN CENTRO",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "ZALATITAN (EL AHUACATE)",
+  "municipio": "TONALÁ",
+  "zones": []
+ },
+ {
+  "name": "ZAPOPAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ZAPOPAN CENTRO",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ZOQUIPAN",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ },
+ {
+  "name": "ZOTOGRANDE",
+  "municipio": "ZAPOPAN",
+  "zones": []
+ }
+]
