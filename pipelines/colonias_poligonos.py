@@ -1,4 +1,5 @@
-"""Write web/colonias.geojson, the outline of each SIAPA colonia for the map on /llego, and
+"""Write web/colonias.geojson, the outline of each SIAPA colonia for the map on /llego with
+the zones whose map area it overlaps (SIAPA's list can name others), and
 api/data/otras_colonias.json, the colonias INE knows that aren't on SIAPA's rotation list,
 with the zones whose map area they overlap (none = not affected by the rotation).
 
@@ -100,6 +101,15 @@ def main(src):
             pieces.setdefault(key, []).extend(polygons(f["geometry"]))
             names.setdefault(key, (f["properties"]["NOMBRE"].strip(), mun))
 
+    zones = []
+    for f in json.loads(ZONAS.read_text())["features"]:
+        z = int(re.sub(r"\D", "", f["properties"]["zona"]))
+        zones.append((z, [ring for poly in polygons(f["geometry"]) for ring in poly]))
+
+    def overlapped(polys):
+        pts = probe_points(polys)
+        return sorted({z for z, rings in zones if any(inside(p, rings) for p in pts)})
+
     features, missing, listed = [], [], set()
     for c in json.loads(COLONIAS.read_text()):
         name, mun = norm(c["name"]), norm(c["municipio"])
@@ -108,23 +118,17 @@ def main(src):
         if not found:
             missing.append(f'{c["name"]} ({c["municipio"]})')
             continue
-        features.append({"type": "Feature", "properties": {"name": c["name"], "municipio": c["municipio"]},
+        features.append({"type": "Feature", "properties": {"name": c["name"], "municipio": c["municipio"], "zones": overlapped(found)},
                          "geometry": {"type": "MultiPolygon", "coordinates": rounded(found)}})
 
     OUT.write_text(json.dumps({"type": "FeatureCollection", "features": features}, ensure_ascii=False, separators=(",", ":")) + "\n")
     print(f"{len(features)} colonias written to {OUT.relative_to(ROOT)}, {len(missing)} without an outline")
 
-    zones = []
-    for f in json.loads(ZONAS.read_text())["features"]:
-        z = int(re.sub(r"\D", "", f["properties"]["zona"]))
-        zones.append((z, [ring for poly in polygons(f["geometry"]) for ring in poly]))
     others = []
     for (name, mun), polys in sorted(pieces.items()):
         if (search_norm(name), mun) in listed:
             continue
-        pts = probe_points(polys)
-        hits = sorted({z for z, rings in zones if any(inside(p, rings) for p in pts)})
-        others.append({"name": names[(name, mun)][0], "municipio": names[(name, mun)][1], "zones": hits})
+        others.append({"name": names[(name, mun)][0], "municipio": names[(name, mun)][1], "zones": overlapped(polys)})
     OTHERS.write_text(json.dumps(others, ensure_ascii=False, indent=1) + "\n")
     print(f"{len(others)} other colonias written to {OTHERS.relative_to(ROOT)}, {sum(1 for o in others if not o['zones'])} outside every zone")
 
