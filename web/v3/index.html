@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="facebook-domain-verification" content="li0vsm7edv0afccxodm5t0jvyiw0za">
+<title>Agua GDL · Avisos de la rotación de agua en Guadalajara</title>
+<meta name="description" content="Iniciativa ciudadana que te avisa gratis por Telegram o en tu calendario la noche antes de cada corte de la rotación de agua del SIAPA en tu zona.">
+<meta name="robots" content="noindex">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aguagdl.com/">
+<meta property="og:title" content="Agua GDL · Avisos de la rotación de agua">
+<meta property="og:description" content="Avisos gratuitos por Telegram o en tu calendario la noche antes de cada corte del SIAPA en tu zona.">
+<meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#06141d" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<style>
+:root {
+  --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
+  --brand: #0284c7; --brand-deep: #0369a1; --link: #0369a1; --on-brand: #ffffff;
+  --primary: #0284c7; --on-primary: #ffffff; --ring: #0284c766;
+  --shadow: 0 1px 2px rgb(3 105 161 / .08);
+  --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --soon: #8a5a00; --soon-bg: #fff3d6;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #06141d; --surface: #0a1c28; --subtle: #0c3149; --fg: #f0f9ff; --muted: #9bb8ca; --line: #18384d;
+    --link: #7dd3fc; --primary: #0ea5e9; --on-primary: #ffffff; --ring: #38bdf866; --brand: #0ea5e9; --brand-deep: #0284c7;
+    --soon: #ffd27a; --soon-bg: #3a2c10;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 var(--font) }
+a { color: var(--link) }
+a:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; border-radius: 4px }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 20px }
+header.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 20px 0 }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; font-weight: 800; font-size: 1.25rem; letter-spacing: -.01em }
+.brand img { width: 30px; height: auto }
+.pill { display: inline-flex; align-items: center; gap: 8px; font-size: .85rem; font-weight: 700; color: var(--soon); background: var(--soon-bg); padding: 4px 12px; border-radius: 999px; white-space: nowrap }
+.pill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor }
+.hero { display: grid; grid-template-columns: 1fr; gap: 28px; align-items: center; padding: 28px 0 44px }
+.hero img { width: 140px; height: auto; justify-self: center }
+h1 { font-size: clamp(2.1rem, 6vw, 3.4rem); line-height: 1.05; letter-spacing: -.02em; margin: 0 0 16px; text-wrap: balance }
+.lede { font-size: 1.15rem; color: var(--muted); margin: 0; max-width: 60ch }
+.notice { margin-top: 24px; background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--brand); border-radius: 10px; padding: 16px 18px }
+.notice p { margin: 0 0 12px }
+.button { display: inline-block; background: var(--brand-deep); color: var(--on-brand); font-weight: 700; text-decoration: none; padding: 11px 18px; border-radius: 8px }
+.button:hover { background: var(--brand) }
+section { padding: 40px 0; border-top: 1px solid var(--line) }
+h2 { font-size: 1.6rem; line-height: 1.2; margin: 0 0 18px; letter-spacing: -.01em }
+.cards { display: grid; grid-template-columns: 1fr; gap: 14px; list-style: none; margin: 0; padding: 0 }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px }
+.card h3 { margin: 0 0 6px; font-size: 1.1rem }
+.card p { margin: 0 0 12px; color: var(--muted) }
+.status { font-size: .8rem; font-weight: 700; color: var(--soon) }
+.why p { max-width: 65ch; margin: 0 0 14px }
+.values { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 18px 0 0 }
+.values li { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 5px 14px; font-size: .92rem; font-weight: 600 }
+.contact p { margin: 0 0 16px; max-width: 60ch }
+.email { font-size: 1.2rem; font-weight: 700; overflow-wrap: anywhere }
+footer { border-top: 1px solid var(--line); padding: 28px 0 48px; color: var(--muted); font-size: .9rem }
+footer p { margin: 0 0 8px; max-width: 70ch }
+@media (min-width: 720px) {
+  .hero { grid-template-columns: 1fr 200px }
+  .hero img { width: 180px; grid-column: 2; grid-row: 1 }
+  .cards { grid-template-columns: repeat(2, 1fr) }
+}
+body { font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased }
+a { text-underline-offset: 3px }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); border-radius: 6px }
+.wrap { padding: 0 16px }
+header.top { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); margin: 0 -16px 20px; padding: 12px 16px }
+.brand { gap: 8px; font-weight: 600; font-size: 1rem }
+.brand img { width: 20px }
+h1 { letter-spacing: -.03em; font-weight: 700 }
+h2 { font-weight: 600; letter-spacing: -.02em }
+.lede { font-size: 1.05rem }
+.button { display: inline-flex; align-items: center; gap: 6px; background: var(--primary); color: var(--on-primary); font-weight: 500; font-size: .95rem; padding: 10px 18px; border: 1px solid transparent; border-radius: 8px; box-shadow: var(--shadow); transition: background .15s }
+.button:hover { background: var(--brand-deep) }
+.signup, .finder, .notice, .summary { border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; box-shadow: var(--shadow) }
+.card, .zone, .msg, .empty, .choice, .values li { box-shadow: var(--shadow) }
+.search input, .filter select { border: 1px solid var(--line); box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s }
+.search input:focus-visible, .filter select:focus-visible { border-color: var(--brand) }
+footer { font-size: .85rem }
+.congreso { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; box-shadow: var(--shadow); padding: 28px 24px; margin: 0 0 40px }
+.congreso p { max-width: 65ch; color: var(--muted); margin: 0 0 16px }
+.facts { list-style: none; padding: 0; margin: 0 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px }
+.facts li { background: var(--subtle); border-radius: 10px; padding: 14px 16px }
+.facts strong { display: block; font-size: 1.35rem; line-height: 1.2; letter-spacing: -.02em; color: var(--fg) }
+.facts span { color: var(--muted); font-size: .9rem }
+.buttons { display: flex; flex-wrap: wrap; gap: 10px }
+.button.alt { background: var(--surface); color: var(--link); border-color: var(--line) }
+.button.alt:hover { background: var(--subtle) }
+.nw { white-space: nowrap }
+.tg { width: 1em; height: 1em; vertical-align: -.14em }
+.i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
+h2.ih, h3.ih { display: flex; align-items: center; gap: 10px }
+.mapa { border-top: 0; padding-top: 0 }
+.mapa p { max-width: 65ch; color: var(--muted) }
+.map-frame { position: relative; width: 100%; background: var(--subtle); border: 1px solid var(--line); border-radius: 12px; overflow: hidden }
+.map-frame img { display: block; width: 100%; height: clamp(170px, 42vw, 280px); object-fit: contain; padding: 12px 12px 0 }
+.map-cta { display: grid; justify-items: center; gap: 4px; padding: 8px 16px 14px; text-align: center }
+.map-cta .note { margin: 0 }
+.ih .i-badge { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--subtle); color: var(--brand); flex-shrink: 0 }
+h3.ih .i-badge { width: 28px; height: 28px }
+.values li { display: inline-flex; align-items: center; gap: 6px }
+header.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px }
+.site-nav { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; margin: 0 -6px }
+.site-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 8px; color: var(--muted); font-size: .9rem; font-weight: 500; text-decoration: none; white-space: nowrap }
+.site-nav a:hover { color: var(--fg); background: var(--subtle) }
+.site-nav a[aria-current="page"] { color: var(--link); background: var(--subtle) }
+@media (max-width: 560px) { .site-nav { width: calc(100% + 12px) } .site-nav { justify-content: space-between } .site-nav a { padding: 6px 5px; font-size: .78rem } .site-nav .i { display: none } }
+.ih .i-badge { background: var(--brand); color: var(--on-primary) }
+.site-nav .i { color: var(--brand) }
+.site-nav a[aria-current="page"] .i { color: inherit }
+li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
+.i { --ic: var(--brand) }
+.i:has(use[href$="#bell"]) { --ic: #d97706 }
+.i:has(use[href$="#map-pin"]) { --ic: #e11d48 }
+.i:has(use[href$="#landmark"]) { --ic: #7c3aed }
+.i:has(use[href$="#heart"]) { --ic: #dc2626 }
+.i:has(use[href$="#check"]) { --ic: #16a34a }
+.i:has(use[href$="#shield-check"]) { --ic: #16a34a }
+.i:has(use[href$="#mail"]) { --ic: #0d9488 }
+.i:has(use[href$="#pen-line"]) { --ic: #ea580c }
+.i:has(use[href$="#calendar"]) { --ic: #4f46e5 }
+@media (prefers-color-scheme: dark) { .i:has(use[href$="#bell"]) { --ic: #fbbf24 } .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#landmark"]) { --ic: #a78bfa } .i:has(use[href$="#heart"]) { --ic: #f87171 } .i:has(use[href$="#check"]) { --ic: #4ade80 } .i:has(use[href$="#shield-check"]) { --ic: #4ade80 } .i:has(use[href$="#mail"]) { --ic: #2dd4bf } .i:has(use[href$="#pen-line"]) { --ic: #fb923c } .i:has(use[href$="#calendar"]) { --ic: #818cf8 } }
+.site-nav .i, li > .i, p > .i, summary > .i, h3 > .i { color: var(--ic) }
+.ih .i-badge:has(use[href$="#bell"]) { background: #d97706 }
+.ih .i-badge:has(use[href$="#map-pin"]) { background: #e11d48 }
+.ih .i-badge:has(use[href$="#landmark"]) { background: #7c3aed }
+.ih .i-badge:has(use[href$="#heart"]) { background: #dc2626 }
+.ih .i-badge:has(use[href$="#check"]) { background: #16a34a }
+.ih .i-badge:has(use[href$="#shield-check"]) { background: #16a34a }
+.ih .i-badge:has(use[href$="#mail"]) { background: #0d9488 }
+.ih .i-badge:has(use[href$="#pen-line"]) { background: #ea580c }
+.ih .i-badge:has(use[href$="#calendar"]) { background: #4f46e5 }
+
+.vbar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 14px; margin: 10px 0 0; padding: 8px 12px; border-radius: 8px; background: var(--soon-bg); color: var(--soon); font-size: .85rem }
+.vbar span { display: flex; gap: 10px; flex-wrap: wrap }
+.vbar a { color: inherit; font-weight: 600 }
+.vbar a[aria-current] { text-decoration: none; background: var(--soon); color: var(--soon-bg); padding: 0 6px; border-radius: 4px }
+
+.hero-short { padding: 18px 0 24px }
+.hero-short .lede { max-width: 62ch }
+.actions { display: grid; gap: 16px; grid-template-columns: 1fr; margin: 0 0 8px }
+@media (min-width: 720px) { .actions { grid-template-columns: 1.3fr 1fr } }
+.action { display: grid; gap: 12px; align-content: start; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; padding: 20px; color: var(--fg); text-decoration: none; box-shadow: var(--shadow) }
+.action:hover { border-color: var(--brand) }
+.action > span:not(.ih):not(.button):not(.big) { color: var(--muted) }
+.action .ih { display: flex; align-items: center; gap: 10px; font-size: 1.15rem }
+.action img { display: block; width: 100%; height: auto; background: var(--subtle); border-radius: 8px; padding: 10px }
+.action .big { font-size: clamp(3rem, 9vw, 4.6rem); font-weight: 700; letter-spacing: -.04em; line-height: 1; color: var(--brand); padding: 18px 0 }
+.action .button { justify-self: start }
+.actions + .note { color: var(--muted); font-size: .85rem; margin: 0 0 40px }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="vbar"><strong>Versión de prueba v3: Dos acciones arriba</strong><span><a href="/v1/">v1</a> <a href="/v2/">v2</a> <a href="/v3/" aria-current="page">v3</a> <a href="/v4/">v4</a> <a href="/v5/">v5</a> <a href="/">actual</a></span></div>
+  <header class="top">
+    <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
+    <nav class="site-nav" aria-label="Secciones">
+      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#bell"/></svg>Avisos</a>
+      <a href="/llego"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#map-pin"/></svg>Mi zona</a>
+      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#landmark"/></svg>Congreso</a>
+      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#droplet"/></svg>Contaminación</a>
+      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#heart"/></svg>Antisionismo</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero hero-short">
+      <div>
+        <h1>Avisos de agua para Guadalajara</h1>
+        <p class="lede">Del 15 de octubre de 2026 a marzo de 2027, el SIAPA rota el servicio de agua en más de 600 colonias de la zona metropolitana. Agua GDL te avisa gratis por <span class="nw"><svg class="tg" aria-hidden="true"><use href="/icons.svg?v=3#telegram"/></svg> Telegram</span> o en tu calendario la noche antes de cada corte en tu zona, para que llenes tu tinaco a tiempo.</p>
+      </div>
+    </div>
+    <div class="actions">
+      <a class="action" href="/llego">
+        <span class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#map-pin"/></svg></span><strong>¿Qué zona me toca?</strong></span>
+        <img src="/zonas.svg" alt="Mapa de las 7 zonas de la rotación del SIAPA" width="800" height="454">
+        <span>Por ubicación o por colonia, con tus próximos días de racionamiento.</span>
+        <span class="button">Checa tu zona</span>
+      </a>
+      <a class="action" href="/avisos">
+        <span class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#bell"/></svg></span><strong>Aviso la noche anterior</strong></span>
+        <span class="big">8 p.&nbsp;m.</span>
+        <span>Un mensaje por <span class="nw"><svg class="tg" aria-hidden="true"><use href="/icons.svg?v=3#telegram"/></svg> Telegram</span> o una alerta en tu calendario la noche antes de cada corte en tu zona.</span>
+        <span class="button">Recibir avisos</span>
+      </a>
+    </div>
+    <p class="note">Fuente: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">rotaciondeserviciosiapa.jalisco.gob.mx</a>. Agua GDL no es del SIAPA.</p>
+    <section class="congreso" aria-labelledby="congreso">
+      <h2 id="congreso" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#landmark"/></svg></span>Escríbele al Congreso sobre el contrato del agua</h2>
+      <p>El Gobierno de Jalisco pidió al Congreso aprobar un contrato de asociación público-privada (APP) para que una empresa privada construya y opere, por contrato con la Comisión Estatal del Agua, el acueducto sustituto Chapala–Guadalajara. Pide a las y los diputados que no lo aprueben sin estudios actualizados, matriz de riesgos y desglose de pagos.</p>
+      <ul class="facts">
+        <li><strong>$11,922 millones</strong><span>cuesta la obra</span></li>
+        <li><strong>hasta $48,296 millones</strong><span>pagaría el Estado en 25 años</span></li>
+        <li><strong>2 de cada 3</strong><span>diputaciones presentes deben votar a favor (26 si están las 38)</span></li>
+      </ul>
+      <p>Desde tu propia cuenta, en unos minutos: un correo a cada diputación, un post en X o un mensaje por Messenger. Agua GDL no ve ni guarda nada.</p>
+      <div class="buttons">
+        <a class="button" href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#mail"/></svg>Escribir al Congreso</a>
+        <a class="button alt" href="https://firmale.iepcjalisco.mx/mecanismo/comision-estatal-del-vej21bkjvl" rel="noopener" target="_blank"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#pen-line"/></svg>Firmar la solicitud en el IEPC</a>
+      </div>
+    </section>
+    <section aria-labelledby="que">
+      <h2 id="que">Lo que estamos haciendo</h2>
+      <ul class="cards">
+        <li class="card">
+          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#bell"/></svg></span>Aviso la noche anterior</h3>
+          <p>A las 8 de la noche te llega un mensaje por <span class="nw"><svg class="tg" aria-hidden="true"><use href="/icons.svg?v=3#telegram"/></svg> Telegram</span> o una alerta de tu calendario: mañana hay corte en tu zona. Encuentra tu zona con tu ubicación, tu colonia o tu número de zona.</p>
+          <span class="status">Disponible</span>
+        </li>
+        <li class="card">
+          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#droplet"/></svg></span>¿Llegó el agua?</h3>
+          <p>Después de cada corte puedes contar cómo regresó el agua: normal, con baja presión, turbia o si no regresó.</p>
+          <span class="status">Disponible</span>
+        </li>
+        <li class="card">
+          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#landmark"/></svg></span>Votómetro del acueducto</h3>
+          <p>Qué postura ha tomado cada una de las 38 diputaciones sobre el contrato del acueducto Chapala–Guadalajara y cómo vota cuando llegue al pleno, con la fuente de cada dato.</p>
+          <span class="status">Próximamente</span>
+        </li>
+        <li class="card">
+          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#check"/></svg></span>Promesómetro del agua</h3>
+          <p>Las promesas del Gobierno de Jalisco y del SIAPA sobre el agua, con su fecha límite, cuánto llevan cumplido y la fuente de cada una.</p>
+          <span class="status">Próximamente</span>
+        </li>
+      </ul>
+    </section>
+    <section class="why" aria-labelledby="por-que">
+      <h2 id="por-que" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#heart"/></svg></span>Por qué</h2>
+      <p>Queremos que la información sobre el agua en Guadalajara sea fácil de consultar y de comprobar: cuándo hay corte, si el calendario se cumple y qué datos públicos existen.</p>
+      <p>Empezamos con los avisos de la rotación. Después vendrán más herramientas hechas con datos abiertos.</p>
+      <ul class="values">
+        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#check"/></svg>Gratuito</li>
+        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#check"/></svg>Sin anuncios</li>
+        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#check"/></svg>No oficial</li>
+        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#check"/></svg>Sin partido</li>
+        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#check"/></svg>No guardamos tu nombre ni tu teléfono</li>
+        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#check"/></svg>Código abierto</li>
+      </ul>
+    </section>
+    <section class="contact" aria-labelledby="contacto">
+      <h2 id="contacto" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#mail"/></svg></span>Contacto</h2>
+      <p>¿Tienes dudas o datos sobre el agua en tu colonia, o quieres ayudar? Si eres de una organización vecinal o civil que trabaja por el agua, también nos encantaría hablar.</p>
+      <a class="email" href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con el Gobierno de Jalisco.</p>
+    <p>La información oficial de la rotación está en <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">rotaciondeserviciosiapa.jalisco.gob.mx</a>.</p>
+    <p><a href="/llego">¿Qué zona me toca?</a> · <a href="/escribe">Escribe al Congreso</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a></p>
+  </footer>
+</div>
+</body>
+</html>
