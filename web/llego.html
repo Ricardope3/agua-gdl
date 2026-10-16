@@ -451,12 +451,21 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         maxZoom: 19,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       }).addTo(map);
-      L.geoJSON(zonas, {
+      const zoneNum = (f) => f.properties.zona.replace(/\D/g, "");
+      const zoneParts = new Map();
+      const zoneLayer = L.geoJSON(zonas, {
         style: (f) => {
-          const color = ZONE_COLORS[Number(f.properties.zona.replace(/\D/g, ""))] || "#888";
+          const color = ZONE_COLORS[Number(zoneNum(f))] || "#888";
           return { color, weight: 2, fillColor: color, fillOpacity: 0.28 };
         },
-        onEachFeature: (f, layer) => layer.bindTooltip(`Zona ${f.properties.zona.replace(/\D/g, "")}`, { sticky: true, className: "map-label" }),
+        onEachFeature: (f, layer) => {
+          const n = zoneNum(f);
+          zoneParts.set(n, [...(zoneParts.get(n) || []), layer]);
+          layer.bindTooltip(`Zona ${n}`, { sticky: true, className: "map-label" });
+          // A zone is several polygons, so all of them light up together.
+          layer.on("mouseover", () => zoneParts.get(n).forEach((p) => p.setStyle({ weight: 4, fillOpacity: 0.45 })));
+          layer.on("mouseout", () => zoneParts.get(n).forEach((p) => zoneLayer.resetStyle(p)));
+        },
       }).addTo(map);
       const ink = matchMedia("(prefers-color-scheme: dark)").matches ? "#f0f9ff" : "#0c1e2c";
       const halo = matchMedia("(prefers-color-scheme: dark)").matches ? "#06141d" : "#ffffff";
@@ -467,23 +476,27 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       for (const [c, f] of found) {
         const under = L.geoJSON(f, { interactive: false, style: { color: halo, weight: 8, fill: false } }).addTo(group);
         const line = L.geoJSON(f, { style: { color: ink, weight: 4, fill: list.length > 1, fillOpacity: 0 } }).addTo(group);
-        drawn.set(coloniaKey(c.name, c.municipio), [under, line]);
         if (list.length > 1) line.on("click", () => showColonia(c, zones));
-        // No zone in the label: the outline can cross several zones, and the colors show which.
+        line.on("mouseover", () => choiceHover(c, true));
+        line.on("mouseout", () => choiceHover(c, false));
+        // The zone joins the label only on hover, and only when the colonia is in several.
         const b = line.getBounds();
-        L.tooltip({ permanent: true, direction: "top", className: "map-label" })
+        const label = sameName(c) ? `${c.name} · ${municipio(c.municipio)}` : c.name;
+        const tip = L.tooltip({ permanent: true, direction: "top", className: "map-label" })
           .setLatLng([b.getNorth(), b.getCenter().lng])
-          .setContent(sameName(c) ? `${c.name} · ${municipio(c.municipio)}` : c.name)
+          .setContent(label)
           .addTo(map);
+        drawn.set(coloniaKey(c.name, c.municipio), [under, line, tip, label]);
       }
       map.fitBounds(group.getBounds(), { padding: [24, 24] });
       choiceHover = (c, on) => {
         const layers = drawn.get(coloniaKey(c.name, c.municipio));
         if (!layers) return;
-        const [under, line] = layers;
+        const [under, line, tip, label] = layers;
         under.setStyle({ color: on ? "#0c1e2c" : halo, weight: on ? 11 : 8 });
         line.setStyle({ color: on ? HIGHLIGHT : ink, weight: on ? 6 : 4 });
-        if (on) { under.bringToFront(); line.bringToFront(); }
+        tip.setContent(on && c.zones.length > 1 ? `${label} · Zonas ${joinES(c.zones)}` : label);
+        if (on) { under.bringToFront(); line.bringToFront(); tip.bringToFront(); }
       };
       if (list.length > 1) return;
       let pin = null;
