@@ -120,6 +120,8 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 .site-nav a:hover { color: var(--fg); background: var(--subtle) }
 .site-nav a[aria-current="page"] { color: var(--link); background: var(--subtle) }
 @media (max-width: 560px) { .site-nav { width: calc(100% + 12px) } .site-nav { justify-content: space-between } .site-nav a { padding: 6px 5px; font-size: .78rem } .site-nav .i { display: none } }
+.genocide { border: 1px solid var(--line); border-top: 4px solid #e34948; }
+.lead-claim { font-size: 1.12rem; line-height: 1.5; color: var(--fg) !important; margin: 0 0 12px }
 </style>
 </head>
 <body>
@@ -132,6 +134,7 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
       <a href="/resultados"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#bar-chart"/></svg>Resultados</a>
       <a href="/escribe" aria-current="page"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#landmark"/></svg>Congreso</a>
       <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#droplet"/></svg>Contaminación</a>
+      <a href="/palestina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#heart"/></svg>Palestina</a>
     </nav>
   </header>
 
@@ -146,7 +149,7 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
       <button type="button" role="tab" id="t-redes" aria-controls="p-redes" data-tab="redes"><span class="tab-icon"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#message-circle"/></svg></span><span class="tab-text"><strong>X y Messenger</strong><small>Un post o un mensaje</small></span></button>
       <button type="button" role="tab" id="t-lista" aria-controls="p-lista" data-tab="lista"><span class="tab-icon"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#users"/></svg></span><span class="tab-text"><strong>Las 38</strong><small>Correo, redes y teléfono</small></span></button>
       <button type="button" role="tab" id="t-firma" aria-controls="p-firma" data-tab="firma"><span class="tab-icon"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#pen-line"/></svg></span><span class="tab-text"><strong>Firma</strong><small>Solicitud en el IEPC</small></span></button>
-      <button type="button" role="tab" id="t-porque" aria-controls="p-porque" data-tab="porque"><span class="tab-icon"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#info"/></svg></span><span class="tab-text"><strong>Por qué</strong><small>Nuestras razones</small></span></button>
+      <button type="button" role="tab" id="t-porque" aria-controls="p-porque" data-tab="porque"><span class="tab-icon"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#info"/></svg></span><span class="tab-text"><strong>Por qué</strong><small>Genocidio, APP y agua</small></span></button>
     </nav>
 
     <div class="panel" role="tabpanel" id="p-correo" aria-labelledby="t-correo">
@@ -258,6 +261,30 @@ Atentamente,</textarea>
     </div>
 
     <div class="panel" role="tabpanel" id="p-porque" aria-labelledby="t-porque">
+    <section class="genocide" aria-labelledby="porque-palestina">
+      <h2 id="porque-palestina" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#heart"/></svg></span>Contra el genocidio, el colonialismo y el sionismo</h2>
+      <p class="lead-claim"><strong>Israel está cometiendo un genocidio contra el pueblo palestino en Gaza. Por eso nos oponemos a cualquier negocio con Israel y con sus empresas, empezando por el agua.</strong></p>
+      <p>No es sólo nuestra opinión. Lo concluyeron:</p>
+      <ul>
+        <li><strong>La Asociación Internacional de Investigadores del Genocidio</strong>, la principal organización académica del tema, en agosto de 2025 (<a href="https://genocidescholars.org/wp-content/uploads/2025/08/IAGS-Resolution-on-Gaza-FINAL.pdf" rel="noopener" target="_blank">resolución IAGS</a>).</li>
+        <li><strong>La Comisión de Investigación de la ONU</strong> sobre Palestina, en septiembre de 2025 (<a href="https://www.un.org/unispal/document/commission-of-inquiry-report-genocide-in-gaza-a-hrc-60-crp-3/" rel="noopener" target="_blank">ONU</a>).</li>
+        <li><strong>Amnistía Internacional</strong>, en diciembre de 2024 (<a href="https://www.amnesty.org.au/end-israels-genocide/" rel="noopener" target="_blank">Amnistía</a>), y <strong>Human Rights Watch</strong>, que habla de actos de genocidio por privar de agua a Gaza (<a href="https://www.hrw.org/report/2024/12/19/extermination-and-acts-genocide/israel-deliberately-depriving-palestinians-gaza" rel="noopener" target="_blank">HRW</a>).</li>
+        <li><strong>B'Tselem y Médicos por los Derechos Humanos–Israel</strong>, dos organizaciones israelíes, en julio de 2025 (<a href="https://www.aljazeera.com/news/2025/7/28/israeli-human-rights-group-israel-is-committing-genocide-in-gaza" rel="noopener" target="_blank">Al Jazeera</a>).</li>
+      </ul>
+      <p class="note">Israel rechaza estas conclusiones, y la demanda de Sudáfrica ante la Corte Internacional de Justicia sigue en curso; la Corte ya ordenó a Israel permitir el agua y los servicios básicos en Gaza (<a href="https://www.icj-cij.org/node/203854" rel="noopener" target="_blank">CIJ</a>).</p>
+      <p>En Agua GDL estamos contra el colonialismo y el sionismo. El agua de Jalisco no debe quedar en manos de empresas que lucran con la ocupación de Palestina, donde Israel usa el agua como arma.</p>
+      <p>Hoy ninguna empresa ha sido elegida para el acueducto y no hay pruebas públicas de que una empresa israelí participe; el gobernador dijo que «no se va a entregar el servicio de agua potable a ninguna empresa israelí» (<a href="https://www.informador.mx/jalisco/pablo-lemus-asegura-que-no-se-privatizara-el-agua-de-guadalajara-20261014-0023.html" rel="noopener" target="_blank">El Informador</a>). Pero México sí tiene acuerdos con Mekorot, la empresa nacional de agua de Israel, y queremos que eso quede cerrado por ley:</p>
+      <ul>
+        <li><strong>Mekorot y México.</strong> La Conagua firmó acuerdos con Mekorot en 2013 y amplió la colaboración en 2015 (<a href="https://www.gob.mx/conagua/prensa/firman-mexico-e-israel-acuerdo-para-la-remediacion-de-acuiferos" rel="noopener" target="_blank">Conagua, 2013</a>, <a href="https://www.cmic.org.mx/comisiones/Sectoriales/infraestructurahidraulica/normatividad/Boletines%20de%20CONAGUA/2015/NOVIEMBRE/Comunicado%20de%20prensa%20No%20%20753-15%20%282%29.pdf" rel="noopener" target="_blank">Conagua, 2015</a>); según el diario israelí Globes, un exasesor de Netanyahu podría cobrar millones por gestionarlos (<a href="https://en.globes.co.il/en/article-netanyahu-advisor-makes-millions-on-mekorot-mexico-deal-1000941278" rel="noopener" target="_blank">Globes</a>).</li>
+        <li><strong>La ONU la señala.</strong> Mekorot está en la base de datos de la ONU de empresas con actividades en los asentamientos israelíes en territorio palestino ocupado, por el uso del agua (<a href="https://www.ecoi.net/en/file/local/2024766/A_HRC_43_71_E.pdf" rel="noopener" target="_blank">ONU, A/HRC/43/71</a>).</li>
+        <li><strong>Agua desigual.</strong> Amnistía Internacional documentó que una persona palestina en Cisjordania apenas llega a 70 litros al día, contra más de 300 en Israel (<a href="https://www.amnesty.eu/news/troubled-waters-palestinians-denied-fair-access-to-water/" rel="noopener" target="_blank">Amnistía</a>); B'Tselem documentó en 2007 que Mekorot reducía el agua a comunidades palestinas en verano para abastecer a los asentamientos (<a href="https://www.btselem.org/water/20071028_hebron_area" rel="noopener" target="_blank">B'Tselem</a>).</li>
+        <li><strong>Gaza.</strong> Israel cortó el 9 de octubre de 2023 el agua que llegaba a Gaza por tubería desde Israel (<a href="https://www.hrw.org/report/2024/12/19/extermination-and-acts-genocide/israel-deliberately-depriving-palestinians-gaza" rel="noopener" target="_blank">HRW</a>). La Corte Internacional de Justicia ordenó a Israel permitir el agua y los servicios básicos (<a href="https://www.icj-cij.org/node/203854" rel="noopener" target="_blank">CIJ</a>).</li>
+        <li><strong>Otros ya rompieron.</strong> La empresa de agua neerlandesa Vitens terminó su cooperación con Mekorot en 2013 (<a href="https://www.alhaq.org/advocacy/6691.html" rel="noopener" target="_blank">Al-Haq</a>), y en Argentina, donde Mekorot tiene convenios con varias provincias, hay protestas contra su expansión (<a href="https://www.aljazeera.com/news/2023/11/24/amid-gaza-war-activists-in-argentina-aim-to-expel-israeli-water-company" rel="noopener" target="_blank">Al Jazeera</a>).</li>
+      </ul>
+      <p><strong>Lo que pedimos:</strong> que cualquier ley o contrato del acueducto publique los nombres de las empresas que presenten propuestas y prohíba contratar a empresas incluidas en la base de datos de la ONU de empresas en los asentamientos.</p>
+      <p class="note">Nuestra crítica es al Estado de Israel y a empresas concretas por hechos documentados, nunca al pueblo judío.</p>
+    </section>
+
     <section aria-labelledby="porque-app">
       <h2 id="porque-app" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#landmark"/></svg></span>Por qué nos oponemos a esta APP</h2>
       <p>El Gobierno de Jalisco pidió al Congreso, el 8 de octubre de 2026, aprobar una asociación público-privada para que una empresa construya y opere durante 20 o 25 años el acueducto sustituto Chapala–Guadalajara, y el Estado le pague cada año.</p>
@@ -274,25 +301,11 @@ Atentamente,</textarea>
       <p>El problema de hoy no es que falte un acueducto: es que el agua llega contaminada. El sistema que se cerró en octubre recibe descargas de aguas residuales a lo largo del canal Las Pintas, y el Río Santiago lleva décadas envenenado por descargas industriales. Lee <a href="/contamina">quién contamina el agua</a>.</p>
       <ul>
         <li><strong>El acueducto cuesta más que todo lo que se ha gastado en el Santiago.</strong> Jalisco reporta 7,333 millones de pesos en su estrategia para sanear el Río Santiago de 2019 a 2024 (<a href="https://riosantiago.jalisco.gob.mx/wp-content/uploads/2024/07/Presupuesto-Integral-de-la-Estrategia-Revivamos-el-Rio-Santiago-2024pdf.pdf" rel="noopener" target="_blank">Gobierno de Jalisco</a>), y la Semarnat prevé unos 7,000 millones para 2026–2030 (<a href="https://www.informador.mx/jalisco/Preven-7-mil-millones-de-pesos-para-sanear-el-Rio-Santiago-20250211-0126.html" rel="noopener" target="_blank">El Informador</a>). Sólo la inversión del acueducto es de 11,922 millones, y los pagos de la APP serían varias veces más.</li>
-        <li><strong>Hay obras más baratas para el agua sucia de hoy.</strong> El propio Plan Integral del Agua estima 1,197 millones para el sistema La Calera, que evita el canal Las Pintas (<a href="https://planintegraldelagua.jalisco.gob.mx/pdf/an-0014.pdf" rel="noopener" target="_blank">ficha oficial</a>).</li>
+        <li><strong>Hay obras más baratas para el agua sucia de hoy.</strong> El propio Plan Integral del Agua estima 1,197 millones para el sistema La Calera, que llevaría el agua de la presa La Calera a una nueva potabilizadora sin pasar por el canal Las Pintas (<a href="https://planintegraldelagua.jalisco.gob.mx/pdf/an-0014.pdf" rel="noopener" target="_blank">ficha oficial</a>).</li>
         <li><strong>Un tubo nuevo no limpia el lago.</strong> Chapala recibe la contaminación del río Lerma; sin detener las descargas, el acueducto llevaría a la ciudad la misma agua.</li>
       </ul>
     </section>
 
-    <section aria-labelledby="porque-palestina">
-      <h2 id="porque-palestina" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#heart"/></svg></span>Contra el colonialismo y el sionismo</h2>
-      <p>En Agua GDL estamos contra el colonialismo y el sionismo. El agua de Jalisco no debe quedar en manos de empresas que lucran con la ocupación de Palestina, donde Israel usa el agua como arma.</p>
-      <p>Hoy ninguna empresa ha sido elegida para el acueducto y no hay pruebas públicas de que una empresa israelí participe; el gobernador dijo que «no se va a entregar el servicio de agua potable a ninguna empresa israelí» (<a href="https://www.informador.mx/jalisco/pablo-lemus-asegura-que-no-se-privatizara-el-agua-de-guadalajara-20261014-0023.html" rel="noopener" target="_blank">El Informador</a>). Pero México sí tiene acuerdos con Mekorot, la empresa nacional de agua de Israel, y queremos que eso quede cerrado por ley:</p>
-      <ul>
-        <li><strong>Mekorot y México.</strong> La Conagua firmó acuerdos con Mekorot en 2013 y 2015 (<a href="https://www.gob.mx/conagua/prensa/firman-mexico-e-israel-acuerdo-para-la-remediacion-de-acuiferos" rel="noopener" target="_blank">Conagua</a>); según el diario israelí Globes, un exasesor de Netanyahu cobró por gestionarlos (<a href="https://en.globes.co.il/en/article-netanyahu-advisor-makes-millions-on-mekorot-mexico-deal-1000941278" rel="noopener" target="_blank">Globes</a>).</li>
-        <li><strong>La ONU la señala.</strong> Mekorot está en la base de datos de la ONU de empresas con actividades en los asentamientos israelíes en territorio palestino ocupado, por el uso del agua (<a href="https://www.ecoi.net/en/file/local/2024766/A_HRC_43_71_E.pdf" rel="noopener" target="_blank">ONU, A/HRC/43/71</a>).</li>
-        <li><strong>Agua desigual.</strong> Amnistía Internacional documentó que una persona palestina en Cisjordania apenas llega a 70 litros al día, contra más de 300 en Israel (<a href="https://www.amnesty.eu/news/troubled-waters-palestinians-denied-fair-access-to-water/" rel="noopener" target="_blank">Amnistía</a>); B'Tselem reporta que Mekorot reduce el agua a comunidades palestinas en verano para abastecer a los asentamientos (<a href="https://www.btselem.org/water/20071028_hebron_area" rel="noopener" target="_blank">B'Tselem</a>).</li>
-        <li><strong>Gaza.</strong> Human Rights Watch documentó que Israel cortó el 9 de octubre de 2023 las tres tuberías de Mekorot hacia Gaza y concluyó que la privación de agua constituye actos de genocidio (<a href="https://www.hrw.org/report/2024/12/19/extermination-and-acts-genocide/israel-deliberately-depriving-palestinians-gaza" rel="noopener" target="_blank">HRW</a>). La Corte Internacional de Justicia ordenó a Israel permitir el agua y los servicios básicos (<a href="https://www.icj-cij.org/node/203854" rel="noopener" target="_blank">CIJ</a>).</li>
-        <li><strong>Otros ya rompieron.</strong> La empresa de agua neerlandesa Vitens terminó su cooperación con Mekorot en 2013 (<a href="https://www.alhaq.org/advocacy/6691.html" rel="noopener" target="_blank">Al-Haq</a>), y en Argentina hay protestas contra sus convenios con varias provincias (<a href="https://www.aljazeera.com/news/2023/11/24/amid-gaza-war-activists-in-argentina-aim-to-expel-israeli-water-company" rel="noopener" target="_blank">Al Jazeera</a>).</li>
-      </ul>
-      <p><strong>Lo que pedimos:</strong> que cualquier ley o contrato del acueducto publique los nombres de las empresas que presenten propuestas y prohíba contratar a empresas incluidas en la base de datos de la ONU de empresas en los asentamientos.</p>
-      <p class="note">Nuestra crítica es al Estado de Israel y a empresas concretas por hechos documentados, nunca al pueblo judío.</p>
-    </section>
     </div>
 
     <section aria-labelledby="ojo">
