@@ -466,6 +466,12 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     veil.addEventListener("animationend", () => veil.remove());
   }
 
+  // scrollToTop brings el to the top of the screen, just under the sticky menu.
+  function scrollToTop(el) {
+    const header = document.querySelector("header.top");
+    scrollTo({ top: el.getBoundingClientRect().top + scrollY - (header ? header.offsetHeight : 0) - 12, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  }
+
   function mapBlock(list, zones, pick = list.length > 1) {
     const open = el("button", { type: "button", class: "button alt glow" }, icon("map-pin"), "Ver en el mapa");
     const box = el("div", { class: "mapbox" },
@@ -493,8 +499,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         absent.length ? ` No tenemos el contorno de ${joinES(absent.map((c) => `${c.name} (${municipio(c.municipio)})`))}: ` : null,
         absent.length ? el("a", { href: "#lista" }, "por qué") : null, absent.length ? "." : null);
       box.replaceChildren(div, answer, box.lastChild);
-      const header = document.querySelector("header.top");
-      scrollTo({ top: box.getBoundingClientRect().top + scrollY - (header ? header.offsetHeight : 0) - 12, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+      scrollToTop(box);
       const L = window.L;
       const map = L.map(div, { scrollWheelZoom: false });
       const missing = el("div", { class: "map-missing", role: "status" });
@@ -719,6 +724,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       show(msg("Escribe el nombre de tu colonia."));
       return;
     }
+    scrollToTop(form.closest(".finder"));
     search(q);
   });
 })();
