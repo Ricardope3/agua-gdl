@@ -1,4 +1,7 @@
-"""Draw web/zonas.svg, the static zone map behind the landing page's «Ver el mapa» button, from api/data/zonas.geojson."""
+"""Draw web/zonas.svg, the static zone map on the landing page, from api/data/zonas.geojson, with the
+municipio borders from pipelines/municipios_amg.geojson (INE BGD Jalisco, Dec 2025, layer MUNICIPIO,
+simplified to 50 m: ogr2ogr -f GeoJSON -t_srs EPSG:4326 -where "MUNICIPIO IN (41,120,99,102)"
+-simplify 50 -select nombre -lco COORDINATE_PRECISION=5 municipios_amg.geojson MUNICIPIO.shp)."""
 import json
 import math
 import pathlib
@@ -59,6 +62,11 @@ def label_point(ring):
     return max((p for p in candidates if inside(*p, ring)), key=lambda p: edge_distance(*p, ring))
 
 
+municipios = json.loads((root / "pipelines/municipios_amg.geojson").read_text())["features"]
+MUN_NAMES = {"GUADALAJARA": "Guadalajara", "ZAPOPAN": "Zapopan", "SAN PEDRO TLAQUEPAQUE": "Tlaquepaque", "TONALA": "Tonalá"}
+# Where each municipio's label sits, as a fraction of the map, chosen by eye to stay clear of the zone labels.
+MUN_LABEL = {"Guadalajara": (0.47, 0.22), "Zapopan": (0.13, 0.12), "Tlaquepaque": (0.43, 0.83), "Tonalá": (0.80, 0.30)}
+
 paths, labels = [], []
 for zone in sorted(zones):
     d, biggest = [], []
@@ -74,20 +82,35 @@ for zone in sorted(zones):
     x, y = x + dx, y + dy
     labels.append(f'<text x="{x}" y="{y}">Zona {zone}</text>')
 
+borders = []
+for f in municipios:
+    geom = f["geometry"]
+    polys = geom["coordinates"] if geom["type"] == "MultiPolygon" else [geom["coordinates"]]
+    d = "".join("M" + "L".join(f"{x:.1f},{y:.1f}" for x, y in map(xy, poly[0])) + "Z" for poly in polys)
+    borders.append(f'<path class="mun" d="{d}"/>')
+    name = MUN_NAMES[f["properties"]["nombre"]]
+    fx, fy = MUN_LABEL[name]
+    labels.append(f'<text class="munl" x="{fx * WIDTH:.0f}" y="{fy * height:.0f}">{name}</text>')
+
 fills = "\n".join(f".z{z}{{fill:{c}}}" for z, c in LIGHT.items())
 dark = "\n".join(f".z{z}{{fill:{c}}}" for z, c in DARK.items())
 svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {WIDTH} {height}" role="img" aria-label="Mapa de las 7 zonas de la rotación del SIAPA">
 <style>
 path{{stroke:#e0f2fe;stroke-width:2;stroke-linejoin:round;fill-rule:evenodd}}
 {fills}
+.mun{{fill:none;stroke:#0c1e2c;stroke-width:1.6;stroke-dasharray:6 4;opacity:.7}}
+.munl{{font:600 15px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;fill:#557083}}
 text{{font:600 22px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;fill:#0c1e2c;stroke:#ffffff;stroke-width:5px;paint-order:stroke;stroke-linejoin:round;text-anchor:middle;dominant-baseline:middle}}
 @media (prefers-color-scheme: dark){{
 path{{stroke:#0c3149}}
 {dark}
 text{{fill:#f0f9ff;stroke:#06141d}}
+.mun{{stroke:#f0f9ff;opacity:.8}}
+.munl{{fill:#c4dbe9}}
 }}
 </style>
 {"".join(paths)}
+{"".join(borders)}
 {"".join(labels)}
 </svg>
 """
