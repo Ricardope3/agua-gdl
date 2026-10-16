@@ -1,6 +1,9 @@
 package geo
 
 import (
+	"bytes"
+	"os"
+	"path/filepath"
 	"slices"
 	"testing"
 
@@ -17,5 +20,16 @@ func TestLookup(t *testing.T) {
 	}
 	if got := zs.Lookup(20.2950, -103.2560); got != nil {
 		t.Errorf("Chapala: got %v, want none", got)
+	}
+}
+
+// The site's map draws the zones from its own copy; it must match what the API looks up.
+func TestSiteZonesMatch(t *testing.T) {
+	site, err := os.ReadFile(filepath.Join("..", "..", "..", "web", "zonas.geojson"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(site, data.Zonas) {
+		t.Error("web/zonas.geojson differs from api/data/zonas.geojson: copy it over")
 	}
 }
