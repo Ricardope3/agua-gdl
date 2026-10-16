@@ -273,6 +273,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   }
 
   function show(...nodes) {
+    choiceHover = null;
     out.replaceChildren(...nodes.filter((n) => n != null));
     const r = out.getBoundingClientRect();
     if (r.top < 0 || r.top > window.innerHeight * 0.6) out.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -394,7 +395,9 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   const ZONE_COLORS = matchMedia("(prefers-color-scheme: dark)").matches
     ? { 1: "#008300", 2: "#3987e5", 3: "#c98500", 4: "#199e70", 5: "#9085e9", 6: "#d55181", 7: "#d94141" }
     : { 1: "#008300", 2: "#2a78d6", 3: "#eda100", 4: "#1baf7a", 5: "#6250d6", 6: "#e87ba4", 7: "#e34948" };
+  const HIGHLIGHT = "#facc15";
   let mapDeps = null;
+  let choiceHover = null; // set by the map, so hovering an option highlights its outline
   function loadMap() {
     if (!mapDeps) {
       const css = el("link", { rel: "stylesheet", href: "/vendor/leaflet-1.9.4/leaflet.css" });
@@ -458,18 +461,30 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       const ink = matchMedia("(prefers-color-scheme: dark)").matches ? "#f0f9ff" : "#0c1e2c";
       const halo = matchMedia("(prefers-color-scheme: dark)").matches ? "#06141d" : "#ffffff";
       const group = L.featureGroup().addTo(map);
+      const drawn = new Map();
+      // The municipio only tells apart colonias with the same name in different municipios.
+      const sameName = (c) => list.some((o) => norm(o.name) === norm(c.name) && norm(o.municipio) !== norm(c.municipio));
       for (const [c, f] of found) {
-        L.geoJSON(f, { interactive: false, style: { color: halo, weight: 8, fill: false } }).addTo(group);
+        const under = L.geoJSON(f, { interactive: false, style: { color: halo, weight: 8, fill: false } }).addTo(group);
         const line = L.geoJSON(f, { style: { color: ink, weight: 4, fill: list.length > 1, fillOpacity: 0 } }).addTo(group);
+        drawn.set(coloniaKey(c.name, c.municipio), [under, line]);
         if (list.length > 1) line.on("click", () => showColonia(c, zones));
-        // The name only: the outline can cross several zones, and the colors show which.
+        // No zone in the label: the outline can cross several zones, and the colors show which.
         const b = line.getBounds();
         L.tooltip({ permanent: true, direction: "top", className: "map-label" })
           .setLatLng([b.getNorth(), b.getCenter().lng])
-          .setContent(c.name)
+          .setContent(sameName(c) ? `${c.name} · ${municipio(c.municipio)}` : c.name)
           .addTo(map);
       }
       map.fitBounds(group.getBounds(), { padding: [24, 24] });
+      choiceHover = (c, on) => {
+        const layers = drawn.get(coloniaKey(c.name, c.municipio));
+        if (!layers) return;
+        const [under, line] = layers;
+        under.setStyle({ color: on ? "#0c1e2c" : halo, weight: on ? 11 : 8 });
+        line.setStyle({ color: on ? HIGHLIGHT : ink, weight: on ? 6 : 4 });
+        if (on) { under.bringToFront(); line.bringToFront(); }
+      };
       if (list.length > 1) return;
       let pin = null;
       map.on("click", async (e) => {
@@ -522,6 +537,9 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       const b = el("button", { type: "button", class: "choice" }, el("strong", {}, c.name),
         el("span", {}, `${municipio(c.municipio)} · ${c.zones.length > 1 ? "Zonas" : "Zona"} ${joinES(c.zones)}`));
       b.addEventListener("click", () => showColonia(c, zones));
+      for (const [type, on] of [["mouseenter", true], ["focus", true], ["mouseleave", false], ["blur", false]]) {
+        b.addEventListener(type, () => choiceHover && choiceHover(c, on));
+      }
       return el("li", {}, b);
     }));
   }
