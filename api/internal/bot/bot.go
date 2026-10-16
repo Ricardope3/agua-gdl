@@ -193,7 +193,7 @@ func (b *Bot) onText(ctx context.Context, r User, body string) error {
 		return b.greet(ctx, r)
 	case municipios[n] != "":
 		return b.text(ctx, r, msgMunicipio(municipios[n]))
-	case badZoneRe.MatchString(n) || len([]rune(n)) < 3:
+	case badZoneRe.MatchString(n) || len([]rune(n)) < 3 || len([]rune(body)) > colonias.MaxQuery:
 		return b.text(ctx, r, msgHelp(b.BaseURL, r.Channel))
 	}
 	matches, exact := b.Colonias.Search(body, 10)
