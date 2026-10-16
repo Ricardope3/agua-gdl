@@ -77,6 +77,10 @@ h2 { font-weight: 600; letter-spacing: -.02em }
 .lede { font-size: 1.05rem }
 .button { display: inline-flex; align-items: center; gap: 6px; background: var(--primary); color: var(--on-primary); font-weight: 500; font-size: .95rem; padding: 10px 18px; border: 1px solid transparent; border-radius: 8px; box-shadow: var(--shadow); transition: background .15s }
 .button:hover { background: var(--brand-deep) }
+.button.glow { border: 2px solid transparent; background: linear-gradient(var(--primary), var(--primary)) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100%; animation: glow 3s linear infinite; box-shadow: 0 0 8px rgb(139 92 246 / .3), 0 0 16px 2px rgb(14 165 233 / .22) }
+.button.glow:hover { background: linear-gradient(var(--brand-deep), var(--brand-deep)) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100% }
+@keyframes glow { from { background-position: 0 0, 0% 0 } to { background-position: 0 0, 150% 0 } }
+@media (prefers-reduced-motion: reduce) { .button.glow { animation: none } }
 .signup, .finder, .notice, .summary { border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; box-shadow: var(--shadow) }
 .card, .zone, .msg, .empty, .choice, .values li { box-shadow: var(--shadow) }
 .search input, .filter select { border: 1px solid var(--line); box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s }
@@ -143,7 +147,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       <div class="signup">
         <h2 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#send"/></svg></span>Por Telegram</h2>
         <p>Un mensaje a las 8 p. m. la noche anterior. Desde el chat también puedes cambiar de zona y contar cómo regresó el agua.</p>
-        <a class="button" href="https://t.me/AvisoAguaGDLbot?start=hola" rel="noopener"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#send"/></svg>Recibir avisos por Telegram</a>
+        <a class="button glow" href="https://t.me/AvisoAguaGDLbot?start=hola" rel="noopener"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#send"/></svg>Recibir avisos por Telegram</a>
         <p class="consent">Al tocar «Iniciar» en Telegram aceptas recibir de <strong>Agua GDL</strong> un aviso la noche antes de cada corte de agua en tu zona (2 o 3 por semana) y las respuestas a lo que escribas. Para dejar de recibirlos, escribe <strong>BAJA</strong> cuando quieras. Guardamos el identificador de tu chat de Telegram, tu zona, cuándo te suscribiste, tus reportes y el registro de los avisos enviados, nunca tu nombre ni tu teléfono; los detalles están en el <a href="/privacidad">aviso de privacidad</a>.</p>
         <p class="alt">¿No tienes Telegram? Es gratis: descárgalo en la tienda de apps de tu celular y vuelve a esta página. También puedes buscar <span class="number">@AvisoAguaGDLbot</span> en Telegram.</p>
       </div>
