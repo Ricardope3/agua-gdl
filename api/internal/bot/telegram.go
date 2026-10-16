@@ -76,8 +76,11 @@ func (b *Bot) onCommand(ctx context.Context, r User, text string) error {
 		}
 		return b.greet(ctx, r)
 	case "zona":
-		if arg != "" {
+		if _, err := strconv.Atoi(arg); err == nil {
 			return b.onText(ctx, r, "ZONA "+arg)
+		}
+		if arg != "" {
+			return b.onText(ctx, r, arg)
 		}
 		return b.reply(ctx, r, Reply{Text: msgAskPlace, AskLocation: true})
 	case "reportar":

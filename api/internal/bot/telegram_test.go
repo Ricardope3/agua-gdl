@@ -111,6 +111,17 @@ func TestTelegramColoniaButtonsAndLocation(t *testing.T) {
 	}
 }
 
+func TestTelegramZonaCommand(t *testing.T) {
+	h := newTGHarness(t, "2026-10-14 10:00")
+	if m := h.say(t, "/zona jardines del sauz"); strings.Contains(m.Text, "No encontré") {
+		t.Errorf("/zona <colonia> must search the colonia:\n%s", m.Text)
+	}
+	h.say(t, "/zona 3")
+	if s, _ := h.sub(t); s.Zone != 3 {
+		t.Errorf("zone %d, want 3", s.Zone)
+	}
+}
+
 func TestTelegramReportAndBaja(t *testing.T) {
 	h := newTGHarness(t, "2026-10-16 09:00")
 	h.say(t, "/start z6")
