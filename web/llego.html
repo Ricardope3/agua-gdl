@@ -493,6 +493,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         absent.length ? ` No tenemos el contorno de ${joinES(absent.map((c) => `${c.name} (${municipio(c.municipio)})`))}: ` : null,
         absent.length ? el("a", { href: "#lista" }, "por qué") : null, absent.length ? "." : null);
       box.replaceChildren(div, answer, box.lastChild);
+      const header = document.querySelector("header.top");
+      scrollTo({ top: box.getBoundingClientRect().top + scrollY - (header ? header.offsetHeight : 0) - 12, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
       const L = window.L;
       const map = L.map(div, { scrollWheelZoom: false });
       const missing = el("div", { class: "map-missing", role: "status" });
