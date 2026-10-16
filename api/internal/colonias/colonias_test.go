@@ -1,6 +1,7 @@
 package colonias
 
 import (
+	"strings"
 	"testing"
 
 	"aguagdl/api/data"
@@ -90,5 +91,12 @@ func TestLastRowOfPDFPage(t *testing.T) {
 	m, _ = ix.Search("Medrano", 5)
 	if len(m) == 0 || len(m[0].Zones) != 2 {
 		t.Fatalf("Medrano is in zones 2 and 3: %v", m)
+	}
+}
+
+func TestSearchIgnoresOverlongQueries(t *testing.T) {
+	ix, _ := Load(data.Colonias)
+	if m, _ := ix.Search(strings.Repeat("analco ", 20), 10); m != nil {
+		t.Errorf("a %d-character query must not be searched", len(strings.Repeat("analco ", 20)))
 	}
 }

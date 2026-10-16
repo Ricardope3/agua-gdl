@@ -86,8 +86,15 @@ func (ix *Index) ByKey(key string) (Colonia, bool) {
 	return Colonia{}, false
 }
 
+// MaxQuery bounds a search: the longest colonia name has 43 characters, and
+// trigram matching on long input costs CPU on every call.
+const MaxQuery = 80
+
 // Search returns exact name matches if any (exact = true), otherwise the closest names.
 func (ix *Index) Search(q string, limit int) (matches []Colonia, exact bool) {
+	if len([]rune(q)) > MaxQuery {
+		return nil, false
+	}
 	nq, mun := Normalize(q), ""
 	if nq == "" {
 		return nil, false

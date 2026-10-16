@@ -156,8 +156,8 @@ func (a *api) zoneAt(w http.ResponseWriter, r *http.Request) {
 
 func (a *api) coloniaSearch(w http.ResponseWriter, r *http.Request) {
 	q := strings.TrimSpace(r.URL.Query().Get("q"))
-	if len([]rune(q)) < 3 {
-		http.Error(w, "q must have at least 3 characters", http.StatusBadRequest)
+	if n := len([]rune(q)); n < 3 || n > colonias.MaxQuery {
+		http.Error(w, "q must have 3 to 80 characters", http.StatusBadRequest)
 		return
 	}
 	matches, exact := a.cols.Search(q, 10)
