@@ -89,9 +89,18 @@ section ul:not(.people) { margin: 0; padding-left: 20px; color: var(--muted); fo
 .people .links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 12px; flex-shrink: 0; max-width: 55% }
 .people a { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; font-weight: 500; font-size: .875rem; text-decoration: none }
 @media (max-width: 640px) { .people li { flex-direction: column; align-items: stretch } .people .links { max-width: none; justify-content: flex-start } }
-.tabs { display: flex; flex-wrap: wrap; gap: 4px; padding: 4px; margin: 0 0 20px; background: var(--subtle); border-radius: 10px }
-.tabs button { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; font: inherit; font-size: .9rem; font-weight: 500; color: var(--muted); background: transparent; border: 0; border-radius: 7px; padding: 8px 12px; cursor: pointer; white-space: nowrap }
-.tabs button[aria-selected="true"] { background: var(--surface); color: var(--fg); box-shadow: var(--shadow) }
+.tabs-label { margin: 0 0 8px; font-weight: 600 }
+.tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 0 0 20px }
+@media (max-width: 760px) { .tabs { grid-template-columns: repeat(2, 1fr) } }
+@media (min-width: 761px) { .tabs button { flex-direction: column; align-items: center; text-align: center; gap: 8px } }
+.tabs button { display: flex; align-items: center; gap: 10px; text-align: left; font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; cursor: pointer; box-shadow: var(--shadow); transition: border-color .15s, background .15s }
+.tabs button:hover { border-color: var(--brand) }
+.tab-icon { display: grid; place-items: center; width: 34px; height: 34px; flex-shrink: 0; border-radius: 50%; background: var(--brand); color: var(--on-primary) }
+.tab-text { display: grid; line-height: 1.25; min-width: 0 }
+.tab-text strong { font-size: .92rem; font-weight: 600 }
+.tab-text small { font-size: .78rem; color: var(--muted) }
+.tabs button[aria-selected="true"] { border: 2px solid var(--brand); padding: 9px 11px; background: color-mix(in srgb, var(--brand) 10%, var(--surface)) }
+.tabs button[aria-selected="true"] .tab-text strong { color: var(--link) }
 .panel > section { margin-top: 0 }
 .people a.who { white-space: normal; color: var(--fg); font-size: .95rem }
 .people a:hover { text-decoration: underline }
@@ -114,12 +123,13 @@ h3.ih .i-badge { width: 28px; height: 28px }
     <h1>Pide al Congreso que no apruebe a ciegas el contrato del agua</h1>
     <p class="lede">Pide a las y los 38 diputados del Congreso de Jalisco que no aprueben el contrato de asociación público-privada del acueducto sustituto Chapala–Guadalajara sin estudios actualizados ni transparencia. Necesita 26 de 38 votos y todavía no se discute en comisiones. Escríbeles por correo, X o Messenger desde tu propia cuenta, o llámales. Agua GDL no ve ni guarda nada.</p>
 
+    <p class="tabs-label">Elige cómo participar:</p>
     <nav class="tabs" role="tablist" aria-label="Formas de participar">
-      <button type="button" role="tab" id="t-correo" aria-controls="p-correo" data-tab="correo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#mail"/></svg>Correo</button>
-      <button type="button" role="tab" id="t-tu" aria-controls="p-tu" data-tab="tu"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#user"/></svg>Tu diputación</button>
-      <button type="button" role="tab" id="t-redes" aria-controls="p-redes" data-tab="redes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#message-circle"/></svg>X y Messenger</button>
-      <button type="button" role="tab" id="t-lista" aria-controls="p-lista" data-tab="lista"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#users"/></svg>Las 38</button>
-      <button type="button" role="tab" id="t-firma" aria-controls="p-firma" data-tab="firma"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#pen-line"/></svg>Firma</button>
+      <button type="button" role="tab" id="t-correo" aria-controls="p-correo" data-tab="correo"><span class="tab-icon"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#mail"/></svg></span><span class="tab-text"><strong>Correo</strong><small>Un correo a cada diputación</small></span></button>
+      <button type="button" role="tab" id="t-tu" aria-controls="p-tu" data-tab="tu"><span class="tab-icon"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#user"/></svg></span><span class="tab-text"><strong>Tu diputación</strong><small>Búscala con tu INE</small></span></button>
+      <button type="button" role="tab" id="t-redes" aria-controls="p-redes" data-tab="redes"><span class="tab-icon"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#message-circle"/></svg></span><span class="tab-text"><strong>X y Messenger</strong><small>Un post o un mensaje</small></span></button>
+      <button type="button" role="tab" id="t-lista" aria-controls="p-lista" data-tab="lista"><span class="tab-icon"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#users"/></svg></span><span class="tab-text"><strong>Las 38</strong><small>Correo, redes y teléfono</small></span></button>
+      <button type="button" role="tab" id="t-firma" aria-controls="p-firma" data-tab="firma"><span class="tab-icon"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#pen-line"/></svg></span><span class="tab-text"><strong>Firma</strong><small>Solicitud en el IEPC</small></span></button>
     </nav>
 
     <div class="panel" role="tabpanel" id="p-correo" aria-labelledby="t-correo">
