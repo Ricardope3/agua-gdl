@@ -445,8 +445,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   // mapBlock shows list's outlines over the SIAPA zones. In a choice list (pick), tapping
   // one picks it; otherwise tapping a spot says which zone it's in.
   function mapBlock(list, zones, pick = list.length > 1) {
-    // A split colonia needs the map to find the right zone, so its button draws the eye.
-    const open = el("button", { type: "button", class: pick ? "button alt" : "button alt glow" }, icon("map-pin"), "Ver en el mapa");
+    const open = el("button", { type: "button", class: "button alt glow" }, icon("map-pin"), "Ver en el mapa");
     const box = el("div", { class: "mapbox" },
       el("p", {}, !pick ? "Esta colonia está en más de una zona. Mira en el mapa de qué lado queda tu casa." : list.length > 1 ? "¿No sabes cuál es? Míralas en el mapa." : "Mírala en el mapa."),
       el("p", {}, open),
