@@ -1,8 +1,7 @@
-// Light/dark switch. Pages style dark mode with @media (prefers-color-scheme: dark); a saved
-// choice turns those rules on ("all") or off ("not all"), so pages need no other change.
+// Light/dark switch. Pages style dark mode with @media (prefers-color-scheme: dark); this turns
+// those rules on ("all") only when the visitor chose dark, so light is the default.
 (() => {
   const KEY = "tema";
-  const system = matchMedia("(prefers-color-scheme: dark)");
   const original = new WeakMap();
   let choice = null;
   try { choice = localStorage.getItem(KEY); } catch {}
@@ -17,7 +16,7 @@
     return out;
   };
 
-  window.aguaDark = () => (choice ? choice === "dark" : system.matches);
+  window.aguaDark = () => choice === "dark";
 
   const apply = () => {
     for (const sheet of document.styleSheets) {
@@ -25,7 +24,7 @@
       try { rules = sheet.cssRules; } catch { continue; }
       for (const r of darkRules(rules, [])) {
         if (!original.has(r)) original.set(r, r.media.mediaText);
-        r.media.mediaText = choice === "dark" ? "all" : choice === "light" ? "not all" : original.get(r);
+        r.media.mediaText = aguaDark() ? "all" : "not all";
       }
     }
     document.documentElement.style.colorScheme = aguaDark() ? "dark" : "light";
@@ -42,7 +41,6 @@
   const MOON = SVG('<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>');
 
   apply();
-  system.addEventListener("change", () => { if (!choice) apply(); });
 
   document.addEventListener("DOMContentLoaded", () => {
     const header = document.querySelector("header.top");
