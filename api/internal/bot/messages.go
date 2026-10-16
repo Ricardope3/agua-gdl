@@ -178,7 +178,7 @@ func msgSubscribed(i subscribedInfo) string {
 	default:
 		b.WriteString("🔔 Por ahora no hay más cortes programados en tu zona.\n")
 	}
-	fmt.Fprintf(&b, "\n📝 Después de cada corte escribe *REPORTAR* para contar cómo regresó el agua.\nEscribe *ZONA 1* a *ZONA 7* para cambiar de zona o *BAJA* para dejar de recibir avisos.\n🔒 Solo guardamos %s y tu zona: %s/privacidad", storedID(i.channel), i.base)
+	fmt.Fprintf(&b, "\n📝 Después de cada corte escribe *REPORTAR* para contar cómo regresó el agua.\nEscribe *ZONA 1* a *ZONA 7* para cambiar de zona o *BAJA* para dejar de recibir avisos.\n🔒 Guardamos %s, tu zona y tus reportes. Todo lo que guardamos: %s/privacidad", storedID(i.channel), i.base)
 	return b.String()
 }
 
