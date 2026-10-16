@@ -161,6 +161,15 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .map-open { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); white-space: nowrap; padding: 4px 10px; font-size: .78rem; gap: 4px; border-radius: 6px; box-shadow: 0 2px 8px rgb(0 0 0 / .3) }
 .map-open .i { color: inherit }
 @media (min-width: 720px) { .hero.hero-map { grid-template-columns: 1.05fr 1fr; gap: 36px } .hero-map h1 { font-size: clamp(2.1rem, 4.6vw, 3rem) } }
+html { overflow-x: clip }
+.hero.hero-map { position: relative; isolation: isolate; margin-top: -20px; padding: 44px 0 44px; color: #f0f9ff }
+.hero.hero-map::before { content: ""; position: absolute; z-index: -1; inset: 0 calc(50% - 50vw); background: radial-gradient(120% 90% at 85% 0%, #0ea5e9 0%, #0369a1 35%, #082f49 75%) }
+.hero-map h1 { color: #f0f9ff }
+.hero-map .lede { color: #cfe8f7 }
+.hero-map .lede a, .hero-map .hero-fig .note a { color: #bae6fd }
+.hero-map mark { background: #fde047 }
+.hero-map .hero-fig .note { color: #bae6fd }
+.hero-map + section, .hero-map + .congreso { margin-top: 40px }
 </style>
 <script src="/theme.js"></script>
 </head>
