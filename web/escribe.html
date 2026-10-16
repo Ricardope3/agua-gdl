@@ -53,7 +53,7 @@ label { display: block; font-weight: 500; font-size: .875rem; margin: 0 0 6px }
 input, textarea { width: 100%; font: inherit; font-size: .95rem; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s }
 input::placeholder, textarea::placeholder { color: var(--muted) }
 textarea { min-height: 22em; resize: vertical; line-height: 1.6 }
-#texto { min-height: 34em; field-sizing: content }
+#texto { min-height: 8em; overflow: hidden }
 textarea.post { min-height: 7em }
 .search { display: flex; gap: 8px; max-width: 360px }
 .search input { flex: 1; min-width: 0 }
@@ -329,6 +329,7 @@ Atentamente,</textarea>
       $(`t-${t}`).setAttribute("aria-selected", String(t === name));
     }
     if (location.hash.slice(1) !== name) history.replaceState(null, "", `#${name}`);
+    if (name === "correo") fit();
   }
   document.querySelectorAll("[data-tab]").forEach((b) => b.addEventListener("click", () => showTab(b.dataset.tab)));
   showTab(location.hash.slice(1));
@@ -507,7 +508,16 @@ Atentamente,</textarea>
   $("copiar-texto").addEventListener("click", () => ready() && copy(`${subject()}\n\n${body()}`, "Copiamos el asunto y el mensaje."));
   $("asunto").addEventListener("input", refresh);
   $("post").addEventListener("input", refresh);
-  $("texto").addEventListener("input", refresh);
+  // Grow the message box to fit its text, so nothing hides behind a scrollbar and there's no empty space.
+  function fit() {
+    const t = $("texto");
+    if (t.offsetParent === null) return;
+    t.style.height = "auto";
+    t.style.height = `${t.scrollHeight + 2}px`;
+  }
+  $("texto").addEventListener("input", () => { fit(); refresh(); });
+  addEventListener("resize", fit);
+  fit();
   // The Tu diputación tab has its own copy of the signature fields, kept in sync with the Correo tab.
   for (const id of ["nombre", "colonia"]) {
     for (const [from, to] of [[id, `${id}-tu`], [`${id}-tu`, id]]) {
