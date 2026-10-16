@@ -127,10 +127,10 @@ func TestTelegramReportAndBaja(t *testing.T) {
 	h.say(t, "/start z6")
 	m := h.say(t, "/reportar")
 	kb, ok := m.ReplyMarkup.(tg.InlineKeyboard)
-	if !ok || len(kb.InlineKeyboard) != 4 || kb.InlineKeyboard[1][0].CallbackData != "R:2026-10-16:baja" {
+	if !ok || len(kb.InlineKeyboard) != 4 || kb.InlineKeyboard[1][0].CallbackData != "R:6:2026-10-16:baja" {
 		t.Fatalf("report buttons: %+v", m)
 	}
-	h.press(t, "R:2026-10-16:baja")
+	h.press(t, "R:6:2026-10-16:baja")
 	if len(h.store.Reports) != 1 || h.store.Reports[0].Answer != "baja" {
 		t.Fatalf("reports: %+v", h.store.Reports)
 	}
@@ -150,6 +150,17 @@ func TestReportReachesTheFirstOfTwoCutDays(t *testing.T) {
 	h.say(t, "zona 5")
 	if m := h.say(t, "/reportar"); !strings.Contains(m.Text, "martes 20 de octubre") {
 		t.Errorf("on Wednesday zone 5 should report Tuesday's cut:\n%s", m.Text)
+	}
+}
+
+func TestReportKeepsTheZoneOfTheCut(t *testing.T) {
+	h := newTGHarness(t, "2026-10-18 09:00")
+	h.say(t, "zona 4")
+	h.say(t, "/reportar")
+	h.say(t, "zona 6")
+	h.press(t, "R:4:2026-10-15:normal")
+	if len(h.store.Reports) != 1 || h.store.Reports[0].Zone != 4 {
+		t.Fatalf("a report after a zone change must count for the old zone: %+v", h.store.Reports)
 	}
 }
 

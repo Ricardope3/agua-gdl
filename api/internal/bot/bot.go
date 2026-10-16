@@ -251,10 +251,20 @@ func (b *Bot) onPayload(ctx context.Context, r User, p string) error {
 			return b.onColonia(ctx, r, c)
 		}
 	case "REPORT":
-		return b.askReport(ctx, r, rest)
+		return b.askReport(ctx, r, 0, rest)
 	case "R":
-		date, answer, _ := strings.Cut(rest, ":")
-		return b.saveReport(ctx, r, date, answer)
+		// R:zone:date:answer; buttons sent before the zone was added are R:date:answer.
+		parts, zone := strings.Split(rest, ":"), 0
+		if len(parts) == 3 {
+			var err error
+			if zone, err = strconv.Atoi(parts[0]); err != nil {
+				break
+			}
+			parts = parts[1:]
+		}
+		if len(parts) == 2 {
+			return b.saveReport(ctx, r, zone, parts[0], parts[1])
+		}
 	}
 	return b.text(ctx, r, msgHelp(b.BaseURL, r.Channel))
 }
@@ -409,22 +419,27 @@ func (b *Bot) reportLastCut(ctx context.Context, r User) error {
 	if yesterday := today.AddDate(0, 0, -1); prev.Equal(today) && b.Schedule.IsCut(s.Zone, yesterday) {
 		prev = yesterday
 	}
-	return b.askReport(ctx, r, prev.Format(rotation.DateLayout))
+	return b.askReport(ctx, r, s.Zone, prev.Format(rotation.DateLayout))
 }
 
-func (b *Bot) askReport(ctx context.Context, r User, date string) error {
+// askReport offers the answers for zone's cut on date; zone 0 means the subscriber's zone when they answer.
+func (b *Bot) askReport(ctx context.Context, r User, zone int, date string) error {
 	d, err := b.Schedule.ParseDate(date)
 	if err != nil {
 		return b.text(ctx, r, msgNoReportYet)
 	}
+	prefix := "R:" + date + ":"
+	if zone > 0 {
+		prefix = fmt.Sprintf("R:%d:%s:", zone, date)
+	}
 	choices := make([]Choice, len(reportAnswers))
 	for i, a := range reportAnswers {
-		choices[i] = Choice{ID: "R:" + date + ":" + a.key, Title: a.title}
+		choices[i] = Choice{ID: prefix + a.key, Title: a.title}
 	}
 	return b.reply(ctx, r, Reply{Text: msgAskReport(rotation.DateES(d)), Button: "Elegir respuesta", Choices: choices})
 }
 
-func (b *Bot) saveReport(ctx context.Context, r User, date, answer string) error {
+func (b *Bot) saveReport(ctx context.Context, r User, zone int, date, answer string) error {
 	if !slices.ContainsFunc(reportAnswers, func(a struct{ key, title string }) bool { return a.key == answer }) {
 		return b.text(ctx, r, msgHelp(b.BaseURL, r.Channel))
 	}
@@ -438,12 +453,15 @@ func (b *Bot) saveReport(ctx context.Context, r User, date, answer string) error
 	if !ok {
 		return b.welcome(ctx, r)
 	}
+	if zone == 0 {
+		zone = s.Zone
+	}
 	d, err := b.Schedule.ParseDate(date)
 	today := b.Schedule.Day(b.Now())
-	if err != nil || !b.Schedule.IsCut(s.Zone, d) || d.After(today) || d.Before(today.AddDate(0, 0, -14)) {
+	if err != nil || !b.Schedule.IsCut(zone, d) || d.After(today) || d.Before(today.AddDate(0, 0, -14)) {
 		return b.text(ctx, r, msgReportClosed)
 	}
-	if err := b.Store.SaveReport(ctx, s.ID, s.Zone, d, answer); err != nil {
+	if err := b.Store.SaveReport(ctx, s.ID, zone, d, answer); err != nil {
 		return err
 	}
 	return b.text(ctx, r, msgThanks(b.BaseURL))

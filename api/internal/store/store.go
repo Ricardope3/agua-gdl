@@ -226,7 +226,7 @@ func (db *DB) Unsubscribe(ctx context.Context, channel, userID, phone string) (b
 
 func (db *DB) SaveReport(ctx context.Context, subscriberID int64, zone int, cutDate time.Time, answer string) error {
 	_, err := db.q.Exec(ctx, `insert into cut_report (subscriber_id, zone, cut_date, answer) values ($1, $2, $3::date, $4)
-		on conflict (subscriber_id, cut_date) do update set answer = excluded.answer, created_at = now()`,
+		on conflict (subscriber_id, cut_date) do update set answer = excluded.answer, zone = excluded.zone, created_at = now()`,
 		subscriberID, zone, cutDate.Format(dateLayout), answer)
 	return err
 }

@@ -749,3 +749,19 @@ func TestUnresolvedRemindersArePerChannel(t *testing.T) {
 		t.Fatalf("a WhatsApp failure must not fail the Telegram run: %d %v", n, err)
 	}
 }
+
+func TestUpdatedReportTakesTheNewZone(t *testing.T) {
+	db := testDB(t)
+	ctx := context.Background()
+	s := testSubscriber(t, db)
+	date := time.Date(2026, 10, 15, 0, 0, 0, 0, time.UTC)
+	for _, zone := range []int{6, 4} {
+		if err := db.SaveReport(ctx, s.ID, zone, date, "normal"); err != nil {
+			t.Fatal(err)
+		}
+	}
+	var zone int
+	if err := db.pool.QueryRow(ctx, `select zone from cut_report where subscriber_id = $1`, s.ID).Scan(&zone); err != nil || zone != 4 {
+		t.Fatalf("zone %d, err %v", zone, err)
+	}
+}
