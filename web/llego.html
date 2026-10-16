@@ -102,6 +102,9 @@ label { display: block; font-weight: 700; margin: 0 0 6px }
 .choice span { display: block; color: var(--muted); font-size: .85rem }
 .mapbox { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin: 0 0 14px; box-shadow: var(--shadow) }
 .mapbox > p { margin: 0 0 10px }
+.spotlight { position: fixed; inset: 0; z-index: 2000; pointer-events: none; animation: spot 2.2s ease-in-out forwards }
+@keyframes spot { 0% { opacity: 0 } 20% { opacity: 1 } 70% { opacity: 1 } 100% { opacity: 0 } }
+@media (prefers-reduced-motion: reduce) { .spotlight { animation-duration: 1.4s } }
 .mapbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: 0 0 10px }
 .mapbar p { margin: 0 }
 .mapbox .map { height: 380px; border-radius: 8px; margin: 0 0 10px; background: var(--subtle) }
@@ -446,6 +449,19 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 
   // mapBlock shows list's outlines over the SIAPA zones. In a choice list (pick), tapping
   // one picks it; otherwise tapping a spot says which zone it's in.
+  // spotlight briefly dims the screen around el, lit from where it is (or the nearest screen edge).
+  function spotlight(el) {
+    if (!el.isConnected) return;
+    const r = el.getBoundingClientRect();
+    const x = Math.min(Math.max(r.left + r.width / 2, 0), innerWidth);
+    const y = Math.min(Math.max(r.top + r.height / 2, 0), innerHeight);
+    const veil = document.createElement("div");
+    veil.className = "spotlight";
+    veil.style.background = `radial-gradient(circle at ${x}px ${y}px, transparent ${Math.max(r.width, 80) / 2 + 12}px, rgb(3 14 22 / .62) ${Math.max(r.width, 80) / 2 + 220}px)`;
+    document.body.append(veil);
+    veil.addEventListener("animationend", () => veil.remove());
+  }
+
   function mapBlock(list, zones, pick = list.length > 1) {
     const open = el("button", { type: "button", class: "button alt glow" }, icon("map-pin"), "Ver en el mapa");
     const box = el("div", { class: "mapbox" },
@@ -453,6 +469,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         el("p", {}, !pick ? "Esta colonia está en más de una zona. Mira en el mapa de qué lado queda tu casa." : list.length > 1 ? "¿No sabes cuál es? Míralas en el mapa." : "Mírala en el mapa."),
         open),
       el("p", { class: "note" }, "El mapa se carga desde OpenStreetMap. Los contornos de las colonias son aproximados y vienen de la cartografía electoral del INE (diciembre de 2025); las zonas son las del mapa del SIAPA."));
+    requestAnimationFrame(() => spotlight(open));
     open.addEventListener("click", async () => {
       open.disabled = true;
       let zonas, outlines;
