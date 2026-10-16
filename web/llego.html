@@ -485,13 +485,11 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       }
       const byKey = new Map(outlines.features.map((f) => [coloniaKey(f.properties.name, f.properties.municipio), f]));
       const found = list.map((c) => [c, byKey.get(coloniaKey(c.name, c.municipio))]).filter(([, f]) => f);
-      if (found.length === 0) {
-        box.replaceChildren(el("p", { class: "note" }, "No tenemos el contorno de esta colonia. Búscala en el ", mapLink(), "."));
-        return;
-      }
       const div = el("div", { class: "map", role: "region", "aria-label": "Mapa de la colonia y las zonas" });
       const absent = list.filter((c) => !byKey.has(coloniaKey(c.name, c.municipio)));
-      const answer = el("p", { "aria-live": "polite" }, pick ? "Toca tu colonia en el mapa." : "Toca el lugar de tu casa en el mapa.",
+      // Without any outline there's nothing to pick, so a tap says which zone that spot is in.
+      const tapPick = pick && found.length > 0;
+      const answer = el("p", { "aria-live": "polite" }, tapPick ? "Toca tu colonia en el mapa." : "Toca el lugar de tu casa en el mapa.",
         absent.length ? ` No tenemos el contorno de ${joinES(absent.map((c) => `${c.name} (${municipio(c.municipio)})`))}: ` : null,
         absent.length ? el("a", { href: "#lista" }, "por qué") : null, absent.length ? "." : null);
       box.replaceChildren(div, answer, box.lastChild);
@@ -571,7 +569,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         const hovered = c.zones.length > 1 && onMap.length ? `${label} · ${onMap.length > 1 ? "Zonas" : "Zona"} ${joinES(onMap)}` : label;
         drawn.set(coloniaKey(c.name, c.municipio), [f, tip, label, hovered]);
       }
-      map.fitBounds(group.getBounds(), { padding: [24, 24] });
+      const listed = [...new Set(list.flatMap((c) => c.zones.map(String)))].flatMap((n) => zoneParts.get(n) || []);
+      map.fitBounds(found.length ? group.getBounds() : L.featureGroup(listed.length ? listed : [zoneLayer]).getBounds(), { padding: [24, 24] });
       // The highlight is drawn as new layers that ignore the mouse: moving the hovered
       // outline to the front instead makes browsers drop its mouseout.
       let hot = null;
@@ -602,7 +601,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         hot = { key, overlay, tip, label };
       };
       map.on("mouseout", () => { unhover(); light(null); cursorTip.remove(); });
-      if (pick) return;
+      if (tapPick) return;
       let pin = null;
       map.on("click", async (e) => {
         const { lat, lng } = e.latlng;
