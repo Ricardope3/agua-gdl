@@ -460,7 +460,7 @@ func (b *Bot) saveReport(ctx context.Context, r User, zone int, date, answer str
 	if err := b.Store.SaveReport(ctx, s.ID, zone, d, answer); err != nil {
 		return err
 	}
-	return b.text(ctx, r, msgThanks(b.BaseURL))
+	return b.text(ctx, r, msgThanks)
 }
 
 func (b *Bot) text(ctx context.Context, r User, body string) error {

@@ -126,9 +126,7 @@ func msgAskReport(date string) string {
 	return fmt.Sprintf("¿Cómo regresó el agua después del corte del *%s*? 👇", date)
 }
 
-func msgThanks(base string) string {
-	return "🙏 ¡Gracias! Tu reporte ayuda a ver cómo está tu zona.\n\n📊 Resultados: " + base + "/resultados"
-}
+const msgThanks = "🙏 ¡Gracias! Tu reporte ayuda a ver cómo está tu zona."
 
 var reportAnswers = []struct{ key, title string }{
 	{"normal", "✅ Regresó normal"},
