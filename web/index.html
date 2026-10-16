@@ -28,12 +28,14 @@
   --shadow: 0 1px 2px rgb(3 105 161 / .08);
   --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --soon: #8a5a00; --soon-bg: #fff3d6;
+  --mark: #fde68a;
 }
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #06141d; --surface: #0a1c28; --subtle: #0c3149; --fg: #f0f9ff; --muted: #9bb8ca; --line: #18384d;
     --link: #7dd3fc; --primary: #0ea5e9; --on-primary: #ffffff; --ring: #38bdf866; --brand: #0ea5e9; --brand-deep: #0284c7;
     --soon: #ffd27a; --soon-bg: #3a2c10;
+    --mark: #a1620799;
     color-scheme: dark;
   }
 }
@@ -96,6 +98,7 @@ footer { font-size: .85rem }
 .button.alt { background: color-mix(in srgb, var(--brand) 12%, var(--surface)); color: var(--link); border: 1.5px solid var(--brand) }
 .button.alt:hover { background: color-mix(in srgb, var(--brand) 22%, var(--surface)) }
 .nw { white-space: nowrap }
+mark { color: var(--fg); font-weight: 600; background: linear-gradient(transparent 45%, var(--mark) 45%); padding: 0 2px; border-radius: 2px }
 .tg { width: 1em; height: 1em; vertical-align: -.14em }
 .i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
 h2.ih, h3.ih { display: flex; align-items: center; gap: 10px }
@@ -174,7 +177,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     <div class="hero hero-map">
       <div>
         <h1>La crisis del agua en Guadalajara</h1>
-        <p class="lede">Del 15 de octubre de 2026 a marzo de 2027, el SIAPA raciona el agua en más de 600 colonias de la zona metropolitana, y en muchas el agua llega turbia o con mal olor. Aquí puedes ver qué zona te toca, recibir un aviso antes de cada corte, saber <a href="/contamina">de dónde viene la contaminación</a> y <a href="/escribe">escribirle al Congreso</a>.</p>
+        <p class="lede">Del 15 de octubre de 2026 a marzo de 2027, el SIAPA <mark>raciona el agua</mark> en más de 600 colonias de la zona metropolitana, y en muchas el agua llega turbia o con mal olor. Aquí puedes ver qué zona te toca, recibir un aviso antes de cada corte, saber <a href="/contamina">de dónde viene la contaminación</a> y <a href="/escribe">escribirle al Congreso</a>.</p>
         <div class="buttons cta">
           <a class="button" href="/llego"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#map-pin"/></svg>Checa tu zona</a>
         </div>
