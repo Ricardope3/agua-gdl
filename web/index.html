@@ -148,8 +148,11 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .hero-side { display: grid; gap: 12px; align-content: start }
 .hero-fig { margin: 0; display: grid; gap: 6px }
 .hero-fig .note { margin: 0; color: var(--muted); font-size: .8rem }
-.hero-mapimg { display: block; background: var(--subtle); border: 1px solid var(--line); border-radius: 14px; padding: 8px; box-shadow: var(--shadow) }
+.hero-mapimg { display: block; margin: 0; background: var(--subtle); border: 1px solid var(--line); border-radius: 14px; padding: 8px; box-shadow: var(--shadow) }
 .hero-mapimg img { display: block; width: 100%; height: auto }
+.hero-mapimg { position: relative }
+.map-open { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); white-space: nowrap; box-shadow: 0 4px 14px rgb(0 0 0 / .35) }
+.map-open .i { color: inherit }
 @media (min-width: 720px) { .hero.hero-map { grid-template-columns: 1.05fr 1fr; gap: 36px } .hero-map h1 { font-size: clamp(2.1rem, 4.6vw, 3rem) } }
 </style>
 </head>
@@ -177,7 +180,10 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       </div>
       <div class="hero-side">
         <figure class="hero-fig">
-          <a class="hero-mapimg" href="/llego" aria-label="Checa tu zona en el mapa"><img src="/zonas.svg" alt="Mapa de las 7 zonas de la rotación del SIAPA" width="800" height="454"></a>
+          <div class="hero-mapimg">
+            <img src="/zonas.svg" alt="Mapa de las 7 zonas de la rotación del SIAPA" width="800" height="454">
+            <a class="button map-open" href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener" target="_blank"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#map-pin"/></svg>Ver mapa detallado<svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#external-link"/></svg></a>
+          </div>
           <figcaption class="note">Fuente: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa de la rotación del SIAPA</a>. Agua GDL no es del SIAPA.</figcaption>
         </figure>
         <a class="aviso" href="/avisos">
