@@ -47,12 +47,14 @@ header.top { padding: 20px 0 }
 .brand img { width: 30px; height: auto }
 h1 { font-size: clamp(2rem, 6vw, 3rem); line-height: 1.08; letter-spacing: -.02em; margin: 20px 0 16px; text-wrap: balance }
 .lede { font-size: 1.15rem; color: var(--muted); margin: 0 0 28px; max-width: 60ch }
-.finder { background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--brand); border-radius: 10px; padding: 20px }
+.finder { background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--brand); border-radius: 10px; padding: 16px 20px }
+.locate { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px }
+.locate .note { flex: 1 1 260px; margin: 0 }
 .button { display: inline-block; background: var(--brand-deep); color: var(--on-brand); font: inherit; font-weight: 700; font-size: 1.1rem; text-decoration: none; padding: 12px 20px; border: 0; border-radius: 8px; cursor: pointer }
 .button:hover { background: var(--brand) }
 .button:disabled { opacity: .6; cursor: progress }
 .note { margin: 10px 0 0; font-size: .95rem; color: var(--muted) }
-.or { display: flex; align-items: center; gap: 12px; margin: 20px 0; color: var(--muted); font-size: .95rem }
+.or { display: flex; align-items: center; gap: 12px; margin: 12px 0; color: var(--muted); font-size: .95rem }
 .or::before, .or::after { content: ""; flex: 1; border-top: 1px solid var(--line) }
 label { display: block; font-weight: 700; margin: 0 0 6px }
 .search { display: flex; flex-wrap: wrap; gap: 10px }
@@ -194,8 +196,10 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     <p class="lede">Encuentra tu zona de la rotación de agua del SIAPA y tus próximos días de racionamiento.</p>
 
     <div class="finder">
-      <button class="button" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#map-pin"/></svg>Usar mi ubicación</button>
-      <p class="note"><strong>Recomendado:</strong> con tu ubicación usamos el mapa de zonas del SIAPA, sin depender de los nombres de las colonias. Tu ubicación solo se usa para encontrar tu zona. No la guardamos.</p>
+      <div class="locate">
+        <button class="button" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#map-pin"/></svg>Usar mi ubicación</button>
+        <p class="note"><strong>Recomendado:</strong> usa el mapa de zonas del SIAPA, no los nombres de colonias. Solo la usamos para encontrar tu zona; no la guardamos.</p>
+      </div>
       <p class="or">o</p>
       <form id="buscar" role="search">
         <label for="colonia">Escribe el nombre de tu colonia</label>
