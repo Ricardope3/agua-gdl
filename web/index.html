@@ -114,13 +114,24 @@ h2.ih, h3.ih { display: flex; align-items: center; gap: 10px }
 .ih .i-badge { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--subtle); color: var(--brand); flex-shrink: 0 }
 h3.ih .i-badge { width: 28px; height: 28px }
 .values li { display: inline-flex; align-items: center; gap: 6px }
+header.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px }
+.site-nav { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; margin: 0 -6px }
+.site-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 8px; color: var(--muted); font-size: .9rem; font-weight: 500; text-decoration: none; white-space: nowrap }
+.site-nav a:hover { color: var(--fg); background: var(--subtle) }
+.site-nav a[aria-current="page"] { color: var(--link); background: var(--subtle) }
+@media (max-width: 560px) { .site-nav { width: calc(100% + 12px) } .site-nav a { flex: 1; justify-content: center; padding: 6px 4px; font-size: .82rem } .site-nav .i { display: none } }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
     <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
-    <span class="pill">En construcción</span>
+    <nav class="site-nav" aria-label="Secciones">
+      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#bell"/></svg>Avisos</a>
+      <a href="/llego"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#map-pin"/></svg>Mi zona</a>
+      <a href="/resultados"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#bar-chart"/></svg>Resultados</a>
+      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#landmark"/></svg>Congreso</a>
+    </nav>
   </header>
 
   <main>
