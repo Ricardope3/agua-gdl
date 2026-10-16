@@ -109,8 +109,6 @@ h2.ih, h3.ih { display: flex; align-items: center; gap: 10px }
 .map-frame img { display: block; width: 100%; height: clamp(170px, 42vw, 280px); object-fit: contain; padding: 12px 12px 0 }
 .map-cta { display: grid; justify-items: center; gap: 4px; padding: 8px 16px 14px; text-align: center }
 .map-cta .note { margin: 0 }
-.map-frame:has(iframe) { aspect-ratio: 4 / 3; max-height: 75vh }
-.map-frame iframe { display: block; width: 100%; height: 100%; border: 0 }
 .ih .i-badge { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--subtle); color: var(--brand); flex-shrink: 0 }
 h3.ih .i-badge { width: 28px; height: 28px }
 .values li { display: inline-flex; align-items: center; gap: 6px }
@@ -175,12 +173,12 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 
     <section class="mapa" aria-labelledby="mapa">
       <h2 id="mapa" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#map-pin"/></svg></span>Mapa de zonas del SIAPA</h2>
-      <p>El mapa oficial de la rotación: acércate a tu casa y toca tu zona para ver sus días. También puedes buscarla por colonia en <a href="/llego">¿Qué zona me toca?</a></p>
-      <div class="map-frame" id="mapa-siapa">
-        <img src="/zonas.svg" alt="Mapa de las 7 zonas de la rotación del SIAPA en la zona metropolitana de Guadalajara" width="800" height="454">
+      <p>Las 7 zonas de la rotación. Para saber cuál te toca y sus días, usa tu ubicación o busca tu colonia.</p>
+      <div class="map-frame">
+        <a href="/llego" tabindex="-1" aria-hidden="true"><img src="/zonas.svg" alt="" width="800" height="454"></a>
         <div class="map-cta">
-        <button class="button" type="button" id="cargar-mapa"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#map-pin"/></svg>Ver el mapa</button>
-        <p class="note">El mapa interactivo se carga desde Google Maps, que puede usar cookies.</p>
+        <a class="button" href="/llego"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#map-pin"/></svg>Checa tu zona</a>
+        <p class="note">Por ubicación o por nombre de colonia, con tus próximos días de racionamiento.</p>
         </div>
       </div>
       <p class="note">Fuente: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">rotaciondeserviciosiapa.jalisco.gob.mx</a>. Agua GDL no es del SIAPA.</p>
@@ -247,17 +245,6 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       <a class="email" href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>
     </section>
   </main>
-<script>
-  // Google's map loads only on request, so the page itself sets no third-party cookies.
-  document.getElementById("cargar-mapa").addEventListener("click", () => {
-    const frame = document.createElement("iframe");
-    frame.src = "https://www.google.com/maps/d/embed?mid=1AJ1jEcf4YzgRPw5r9yBXkZOoFMfoB6Y&ehbc=2E312F";
-    frame.title = "Mapa de zonas de la rotación del SIAPA";
-    frame.allowFullscreen = true;
-    frame.referrerPolicy = "no-referrer";
-    document.getElementById("mapa-siapa").replaceChildren(frame);
-  });
-</script>
 
   <footer>
     <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con el Gobierno de Jalisco.</p>
