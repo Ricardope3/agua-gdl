@@ -499,7 +499,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       const sameName = (c) => list.some((o) => norm(o.name) === norm(c.name) && norm(o.municipio) !== norm(c.municipio));
       for (const [c, f] of found) {
         L.geoJSON(f, { interactive: false, style: { color: halo, weight: 8, fill: false } }).addTo(group);
-        const line = L.geoJSON(f, { style: { color: ink, weight: 4, fill: list.length > 1, fillOpacity: 0 } }).addTo(group);
+        const line = L.geoJSON(f, { style: { color: ink, weight: 4, fill: true, fillOpacity: 0 } }).addTo(group);
         if (list.length > 1) line.on("click", () => showColonia(c, zones));
         line.on("mouseover", (e) => { choiceHover(c, true); track(e); });
         line.on("mousemove", track);
