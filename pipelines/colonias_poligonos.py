@@ -1,4 +1,4 @@
-"""Write web/colonias.geojson, the outline of each SIAPA colonia for the map on /llego with
+"""Write web/colonias.geojson, the outline of each SIAPA colonia for the map on /mizona with
 the zones whose map area it overlaps (SIAPA's list can name others), and
 api/data/otras_colonias.json, the colonias INE knows that aren't on SIAPA's rotation list,
 with the zones whose map area they overlap (none = not affected by the rotation).

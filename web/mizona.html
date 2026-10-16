@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>¿Qué zona me toca? · Agua GDL</title>
 <meta name="description" content="Encuentra tu zona de la rotación de agua del SIAPA en Guadalajara y tus próximos días de racionamiento, con tu ubicación o el nombre de tu colonia.">
-<link rel="canonical" href="https://aguagdl.com/llego">
+<link rel="canonical" href="https://aguagdl.com/mizona">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://aguagdl.com/llego">
+<meta property="og:url" content="https://aguagdl.com/mizona">
 <meta property="og:title" content="¿Qué zona me toca? Rotación de agua del SIAPA">
 <meta property="og:description" content="Tu zona y tus próximos días de racionamiento, con tu ubicación o tu colonia.">
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
@@ -186,7 +186,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
     <nav class="site-nav" aria-label="Secciones">
       <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#bell"/></svg>Avisos</a>
-      <a href="/llego" aria-current="page"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#map-pin"/></svg>Mi zona</a>
+      <a href="/mizona" aria-current="page"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#map-pin"/></svg>Mi zona</a>
       <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#landmark"/></svg>Congreso</a>
       <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#droplet"/></svg>Contaminación</a>
       <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#heart"/></svg>Antisionismo</a>
@@ -510,6 +510,22 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       scrollToTop(box);
       const L = window.L;
       const map = L.map(div, { scrollWheelZoom: false });
+      // The wheel scrolls the page, but a trackpad pinch (ctrl+wheel; gesture events in Safari) zooms the map.
+      let pinch = 0;
+      div.addEventListener("wheel", (e) => {
+        if (!e.ctrlKey) return;
+        e.preventDefault();
+        pinch -= e.deltaY / 100;
+        if (Math.abs(pinch) < 0.25) return;
+        map.setZoomAround(map.mouseEventToContainerPoint(e), map.getZoom() + pinch, { animate: false });
+        pinch = 0;
+      }, { passive: false });
+      let gestureStart = 0;
+      div.addEventListener("gesturestart", (e) => { e.preventDefault(); gestureStart = map.getZoom(); });
+      div.addEventListener("gesturechange", (e) => {
+        e.preventDefault();
+        map.setZoomAround(map.mouseEventToContainerPoint(e), gestureStart + Math.log2(e.scale), { animate: false });
+      });
       const missing = el("div", { class: "map-missing", role: "status" });
       missing.hidden = true;
       div.append(missing);

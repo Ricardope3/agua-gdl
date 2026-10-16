@@ -17,7 +17,7 @@ DAYS = {"mon": "lunes", "tue": "martes", "wed": "miércoles", "thu": "jueves", "
 # The landing map's light palette (pipelines/zonas_preview.py).
 COLORS = {1: "#008300", 2: "#2a78d6", 3: "#eda100", 4: "#1baf7a", 5: "#6250d6", 6: "#e87ba4", 7: "#e34948"}
 MUNICIPIOS = {"GUADALAJARA": "Guadalajara", "ZAPOPAN": "Zapopan", "SAN PEDRO TLAQUEPAQUE": "Tlaquepaque", "TONALA": "Tonalá", "TONALÁ": "Tonalá"}
-FOOT = "Rotación del SIAPA del 15 de octubre de 2026 al 31 de marzo de 2027. Busca tu zona y recibe avisos en https://aguagdl.com/llego. Agua GDL no es del SIAPA."
+FOOT = "Rotación del SIAPA del 15 de octubre de 2026 al 31 de marzo de 2027. Busca tu zona y recibe avisos en https://aguagdl.com/mizona. Agua GDL no es del SIAPA."
 
 
 def kml_color(hex_rgb, alpha):
