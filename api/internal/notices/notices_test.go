@@ -10,6 +10,7 @@ import (
 
 	"aguagdl/api/internal/fake"
 	"aguagdl/api/internal/store"
+	"aguagdl/api/internal/tg"
 )
 
 func TestSendIsIdempotentAndCapped(t *testing.T) {
@@ -50,5 +51,22 @@ func TestSendTelegramReachesOnlyTelegramOnce(t *testing.T) {
 	}
 	if len(tel.Sent) != 1 || tel.Sent[0].ChatID != 777 || tel.Sent[0].Text != "⚠️ <b>Cambio</b>" {
 		t.Fatalf("sent %+v", tel.Sent)
+	}
+}
+
+type blockedTelegram struct{ fake.Telegram }
+
+func (blockedTelegram) Send(context.Context, tg.Message) (int64, error) {
+	return 0, &tg.APIError{Status: 403, Description: "Forbidden: bot was blocked by the user"}
+}
+
+func TestBlockedTelegramChatIsNotAFailure(t *testing.T) {
+	ctx := context.Background()
+	st := fake.NewStore()
+	st.Subscribe(ctx, store.Telegram, "777", "", 4)
+	log := slog.New(slog.NewTextHandler(io.Discard, nil))
+	sent, err := SendTelegram(ctx, st, &blockedTelegram{}, Notice{Zone: 4, Key: "k"}, "hola", 0, log)
+	if sent != 0 || err != nil || len(st.Subs) != 0 {
+		t.Fatalf("a blocked bot is an opt-out: sent %d, err %v, subs %d", sent, err, len(st.Subs))
 	}
 }

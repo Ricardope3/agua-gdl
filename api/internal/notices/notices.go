@@ -94,6 +94,11 @@ func send(ctx context.Context, st Store, channel string, n Notice, interval time
 			return sent, errors.Join(err, capErr)
 		}
 		attempted, sendErr := st.SendNotice(ctx, s, n.Key, deliver)
+		var unreachable interface{ Gone() bool }
+		if errors.As(sendErr, &unreachable) && unreachable.Gone() {
+			log.Info("subscriber blocked the bot; subscription deleted", "subscriber", s.ID)
+			continue
+		}
 		if sendErr != nil {
 			err = errors.Join(err, fmt.Errorf("subscriber %d: %w", s.ID, sendErr))
 			log.Error("notice attempt failed", "subscriber", s.ID, "err", sendErr)

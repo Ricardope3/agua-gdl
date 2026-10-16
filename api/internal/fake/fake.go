@@ -249,7 +249,10 @@ func (s *Store) SendNotice(_ context.Context, sub store.Subscriber, k string, se
 	s.Notices[nk], s.SentAt[fmt.Sprintf("%d/notice/%s", sub.ID, k)] = true, s.Now()
 	_, err := send(current)
 	var rejected interface{ Rejected() bool }
-	if errors.As(err, &rejected) && rejected.Rejected() {
+	var gone interface{ Gone() bool }
+	if errors.As(err, &gone) && gone.Gone() {
+		delete(s.Subs, Key(current.Channel, current.UserID))
+	} else if errors.As(err, &rejected) && rejected.Rejected() {
 		delete(s.Notices, nk)
 		delete(s.SentAt, fmt.Sprintf("%d/notice/%s", sub.ID, k))
 	}
