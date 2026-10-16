@@ -498,7 +498,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       // The municipio only tells apart colonias with the same name in different municipios.
       const sameName = (c) => list.some((o) => norm(o.name) === norm(c.name) && norm(o.municipio) !== norm(c.municipio));
       for (const [c, f] of found) {
-        const under = L.geoJSON(f, { interactive: false, style: { color: halo, weight: 8, fill: false } }).addTo(group);
+        L.geoJSON(f, { interactive: false, style: { color: halo, weight: 8, fill: false } }).addTo(group);
         const line = L.geoJSON(f, { style: { color: ink, weight: 4, fill: list.length > 1, fillOpacity: 0 } }).addTo(group);
         if (list.length > 1) line.on("click", () => showColonia(c, zones));
         line.on("mouseover", (e) => { choiceHover(c, true); track(e); });
@@ -514,18 +514,33 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
           .addTo(map);
         const onMap = f.properties.zones;
         const hovered = c.zones.length > 1 && onMap.length ? `${label} · ${onMap.length > 1 ? "Zonas" : "Zona"} ${joinES(onMap)}` : label;
-        drawn.set(coloniaKey(c.name, c.municipio), [under, line, tip, label, hovered]);
+        drawn.set(coloniaKey(c.name, c.municipio), [f, tip, label, hovered]);
       }
       map.fitBounds(group.getBounds(), { padding: [24, 24] });
-      choiceHover = (c, on) => {
-        const layers = drawn.get(coloniaKey(c.name, c.municipio));
-        if (!layers) return;
-        const [under, line, tip, label, hovered] = layers;
-        under.setStyle({ color: on ? "#0c1e2c" : halo, weight: on ? 11 : 8 });
-        line.setStyle({ color: on ? HIGHLIGHT : ink, weight: on ? 6 : 4 });
-        tip.setContent(on ? hovered : label);
-        if (on) { under.bringToFront(); line.bringToFront(); tip.bringToFront(); }
+      // The highlight is drawn as new layers that ignore the mouse: moving the hovered
+      // outline to the front instead makes browsers drop its mouseout.
+      let hot = null;
+      const unhover = () => {
+        if (!hot) return;
+        hot.overlay.remove();
+        hot.tip.setContent(hot.label);
+        hot = null;
       };
+      choiceHover = (c, on) => {
+        const key = coloniaKey(c.name, c.municipio);
+        const layers = drawn.get(key);
+        if (!layers || (!on && hot?.key !== key)) return;
+        unhover();
+        if (!on) return;
+        const [f, tip, label, hovered] = layers;
+        const overlay = L.featureGroup([
+          L.geoJSON(f, { interactive: false, style: { color: "#0c1e2c", weight: 11, fill: false } }),
+          L.geoJSON(f, { interactive: false, style: { color: HIGHLIGHT, weight: 6, fill: false } }),
+        ]).addTo(map);
+        tip.setContent(hovered).bringToFront();
+        hot = { key, overlay, tip, label };
+      };
+      map.on("mouseout", () => { unhover(); light(null); cursorTip.remove(); });
       if (list.length > 1) return;
       let pin = null;
       map.on("click", async (e) => {
