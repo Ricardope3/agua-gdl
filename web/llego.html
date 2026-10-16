@@ -106,8 +106,8 @@ label { display: block; font-weight: 700; margin: 0 0 6px }
 .choice span { display: block; color: var(--muted); font-size: .85rem }
 .mapbox { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin: 0 0 14px; box-shadow: var(--shadow) }
 .mapbox > p { margin: 0 0 10px }
-.spotlight { position: fixed; inset: 0; z-index: 2000; pointer-events: none; animation: spot 2.2s ease-in-out forwards }
-@keyframes spot { 0% { opacity: 0 } 20% { opacity: 1 } 70% { opacity: 1 } 100% { opacity: 0 } }
+.spotlight { position: fixed; inset: 0; z-index: 2000; pointer-events: none; animation: spot 3s ease-in-out forwards }
+@keyframes spot { 0% { opacity: 0 } 15% { opacity: 1 } 75% { opacity: 1 } 100% { opacity: 0 } }
 @media (prefers-reduced-motion: reduce) { .spotlight { animation-duration: 1.4s } }
 .mapbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: 0 0 10px }
 .mapbar p { margin: 0 }
@@ -456,15 +456,21 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   // mapBlock shows list's outlines over the SIAPA zones. In a choice list (pick), tapping
   // one picks it; otherwise tapping a spot says which zone it's in.
   // spotlight briefly dims the screen around el, lit from where it is (or the nearest screen edge).
+  // It follows el every frame, since the page may still be scrolling to the results.
   function spotlight(el) {
     if (!el.isConnected) return;
-    const r = el.getBoundingClientRect();
-    const x = Math.min(Math.max(r.left + r.width / 2, 0), innerWidth);
-    const y = Math.min(Math.max(r.top + r.height / 2, 0), innerHeight);
     const veil = document.createElement("div");
     veil.className = "spotlight";
-    veil.style.background = `radial-gradient(circle at ${x}px ${y}px, transparent ${Math.max(r.width, 80) / 2 + 12}px, rgb(3 14 22 / .62) ${Math.max(r.width, 80) / 2 + 220}px)`;
+    const aim = () => {
+      const r = el.getBoundingClientRect();
+      const x = Math.min(Math.max(r.left + r.width / 2, 0), innerWidth);
+      const y = Math.min(Math.max(r.top + r.height / 2, 0), innerHeight);
+      const hole = Math.max(r.width, 80) / 2 + 10;
+      veil.style.background = `radial-gradient(circle at ${x}px ${y}px, transparent ${hole}px, rgb(3 14 22 / .8) ${hole + 120}px)`;
+      if (veil.isConnected) requestAnimationFrame(aim);
+    };
     document.body.append(veil);
+    aim();
     veil.addEventListener("animationend", () => veil.remove());
   }
 
