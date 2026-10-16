@@ -448,11 +448,11 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       }).addTo(map);
       L.geoJSON(zonas, {
-        interactive: false,
         style: (f) => {
           const color = ZONE_COLORS[Number(f.properties.zona.replace(/\D/g, ""))] || "#888";
           return { color, weight: 2, fillColor: color, fillOpacity: 0.28 };
         },
+        onEachFeature: (f, layer) => layer.bindTooltip(`Zona ${f.properties.zona.replace(/\D/g, "")}`, { sticky: true, className: "map-label" }),
       }).addTo(map);
       const ink = matchMedia("(prefers-color-scheme: dark)").matches ? "#f0f9ff" : "#0c1e2c";
       const halo = matchMedia("(prefers-color-scheme: dark)").matches ? "#06141d" : "#ffffff";
@@ -461,7 +461,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         L.geoJSON(f, { interactive: false, style: { color: halo, weight: 8, fill: false } }).addTo(group);
         const line = L.geoJSON(f, { style: { color: ink, weight: 4, fill: list.length > 1, fillOpacity: 0 } }).addTo(group);
         if (list.length > 1) {
-          line.bindTooltip(`${c.name} · ${municipio(c.municipio)} · ${c.zones.length > 1 ? "Zonas" : "Zona"} ${joinES(c.zones)}`, { permanent: true, direction: "center", className: "map-label" });
+          line.bindTooltip(`${c.name} · ${municipio(c.municipio)} · ${c.zones.length > 1 ? "Zonas" : "Zona"} ${joinES(c.zones)}`, { sticky: true, className: "map-label" });
           line.on("click", () => showColonia(c, zones));
         }
       }
