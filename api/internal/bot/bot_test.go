@@ -34,6 +34,9 @@ func newHarness(t *testing.T, now string) *harness {
 	}
 	zones, _ := geo.Load(data.Zonas)
 	cols, _ := colonias.Load(data.Colonias)
+	if err := cols.LoadOthers(data.OtrasColonias); err != nil {
+		t.Fatal(err)
+	}
 	at, _ := time.ParseInLocation("2006-01-02 15:04", now, loc)
 	h := &harness{store: fake.NewStore(), sender: &fake.Sender{}}
 	h.bot = &Bot{Store: h.store, Sender: h.sender, Schedule: sched, Zones: zones, Colonias: cols,
@@ -396,5 +399,15 @@ func TestManualReminderMatchesTheTemplate(t *testing.T) {
 		if !strings.Contains(got, want) {
 			t.Errorf("missing %q in:\n%s", want, got)
 		}
+	}
+}
+
+func TestColoniaOffTheList(t *testing.T) {
+	h := newHarness(t, "2026-10-14 10:00")
+	if got := h.send(t, text("Jardín Real")); !strings.Contains(got, "*JARDIN REAL* (Zapopan) no está en la lista") || !strings.Contains(got, "no le toca racionamiento") {
+		t.Errorf("a colonia outside the rotation should say so, got:\n%s", got)
+	}
+	if len(h.store.Subs) != 0 {
+		t.Error("must not subscribe")
 	}
 }

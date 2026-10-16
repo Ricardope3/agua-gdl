@@ -197,18 +197,39 @@ func (b *Bot) onText(ctx context.Context, r User, body string) error {
 		return b.text(ctx, r, msgHelp(b.BaseURL, r.Channel))
 	}
 	matches, exact := b.Colonias.Search(body, 10)
+	if others := b.Colonias.Others(body); !exact && len(others) > 0 {
+		return b.otherColonias(ctx, r, others, matches)
+	}
 	switch {
 	case len(matches) == 0:
 		return b.text(ctx, r, msgNotFound(strings.TrimSpace(body)))
 	case exact && len(matches) == 1:
 		return b.onColonia(ctx, r, matches[0])
 	}
+	return b.reply(ctx, r, Reply{Text: msgPickColonia, Button: "Ver colonias", Choices: coloniaChoices(matches)})
+}
+
+func coloniaChoices(matches []colonias.Colonia) []Choice {
 	choices := make([]Choice, len(matches))
 	for i, c := range matches {
 		label := zoneLabel(c.Zones)
 		choices[i] = Choice{ID: "C:" + c.Key(), Title: c.Name, Description: municipioName(c.Municipio) + " · " + strings.ToUpper(label[:1]) + label[1:]}
 	}
-	return b.reply(ctx, r, Reply{Text: msgPickColonia, Button: "Ver colonias", Choices: choices})
+	return choices
+}
+
+// otherColonias answers for colonias that exist but aren't on SIAPA's rotation list,
+// and still offers the look-alike names that are on it.
+func (b *Bot) otherColonias(ctx context.Context, r User, others []colonias.Other, matches []colonias.Colonia) error {
+	lines := make([]string, len(others))
+	for i, o := range others {
+		lines[i] = msgOtherColonia(o.Name, municipioName(o.Municipio), o.Zones)
+	}
+	text := strings.Join(lines, "\n\n")
+	if len(matches) == 0 {
+		return b.text(ctx, r, text)
+	}
+	return b.reply(ctx, r, Reply{Text: text + "\n\n" + msgOrOneOfThese, Button: "Ver colonias", Choices: coloniaChoices(matches)})
 }
 
 // onUserChanged follows a subscriber to a new number or business-scoped user ID,

@@ -74,6 +74,17 @@ Mándame tu 📍 *ubicación* o el *nombre de tu colonia*, por ejemplo: _Las Jun
 
 const msgPickColonia = "Encontré varias colonias parecidas. ¿Cuál es la tuya? 👇"
 
+// msgOtherColonia is for a colonia that exists but isn't on SIAPA's rotation list;
+// mun is its municipio as people write it, and zones the zones whose map area it overlaps.
+func msgOtherColonia(name, mun string, zones []int) string {
+	if len(zones) == 0 {
+		return fmt.Sprintf("✅ *%s* (%s) no está en la lista de colonias de la rotación del SIAPA y queda fuera de las zonas de su mapa, así que no le toca racionamiento.", name, mun)
+	}
+	return fmt.Sprintf("⚠️ *%s* (%s) no está en la lista de colonias de la rotación del SIAPA, pero queda dentro del mapa de la %s. El mapa y la lista no siempre coinciden: mándame tu 📍 *ubicación* para confirmarlo.", name, mun, zoneLabel(zones))
+}
+
+const msgOrOneOfThese = "¿O es alguna de estas? 👇"
+
 func msgPickZone(colonia string, zones []int) string {
 	where := "así que está repartida en la rotación (" + zoneLabel(zones) + ")"
 	if len(zones) == 1 {
