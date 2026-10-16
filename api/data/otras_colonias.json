@@ -2480,13 +2480,6 @@
   "zones": []
  },
  {
-  "name": "JARDINES DE LOS POETAS",
-  "municipio": "GUADALAJARA",
-  "zones": [
-   3
-  ]
- },
- {
   "name": "JARDINES DE NUEVO MEXICO",
   "municipio": "ZAPOPAN",
   "zones": []
@@ -3316,13 +3309,6 @@
   "name": "LAS POMAS",
   "municipio": "TLAQUEPAQUE",
   "zones": []
- },
- {
-  "name": "LAS PUERTAS",
-  "municipio": "TONALÁ",
-  "zones": [
-   4
-  ]
  },
  {
   "name": "LAS TORRES",
