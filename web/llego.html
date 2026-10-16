@@ -114,7 +114,7 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 .site-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 8px; color: var(--muted); font-size: .9rem; font-weight: 500; text-decoration: none; white-space: nowrap }
 .site-nav a:hover { color: var(--fg); background: var(--subtle) }
 .site-nav a[aria-current="page"] { color: var(--link); background: var(--subtle) }
-@media (max-width: 560px) { .site-nav { width: calc(100% + 12px) } .site-nav a { flex: 1; justify-content: center; padding: 6px 4px; font-size: .82rem } .site-nav .i { display: none } }
+@media (max-width: 560px) { .site-nav { width: calc(100% + 12px) } .site-nav { justify-content: space-between } .site-nav a { padding: 6px 5px; font-size: .78rem } .site-nav .i { display: none } }
 </style>
 </head>
 <body>
@@ -126,6 +126,7 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
       <a href="/llego" aria-current="page"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#map-pin"/></svg>Mi zona</a>
       <a href="/resultados"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#bar-chart"/></svg>Resultados</a>
       <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#landmark"/></svg>Congreso</a>
+      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#droplet"/></svg>Contaminación</a>
     </nav>
   </header>
 
