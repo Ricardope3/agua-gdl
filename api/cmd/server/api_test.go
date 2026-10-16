@@ -216,3 +216,14 @@ func TestWhatsAppWebhookIsOffWithoutItsSecret(t *testing.T) {
 		t.Fatalf("status %d, want 404 when WhatsApp isn't configured", rec.Code)
 	}
 }
+
+func TestTelegramSecretWithoutTokenIsIgnored(t *testing.T) {
+	t.Setenv("DATABASE_URL", "postgres://x")
+	t.Setenv("PUBLIC_BASE_URL", "https://aguagdl.test")
+	t.Setenv("TG_TOKEN", "")
+	t.Setenv("TG_WEBHOOK_SECRET", "s3cret")
+	c, err := loadConfig()
+	if err != nil || c.TGWebhookSecret != "" {
+		t.Fatalf("a secret without a token must not route the webhook: %q, %v", c.TGWebhookSecret, err)
+	}
+}

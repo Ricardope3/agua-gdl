@@ -60,10 +60,12 @@ func loadConfig() (config, error) {
 		return c, fmt.Errorf("missing env vars: %v", missing)
 	}
 	c.RemindersEnabled = c.WAToken != "" && os.Getenv("REMINDERS_ENABLED") == "true"
-	// Telegram is optional: off unless TG_TOKEN is set.
-	c.TGToken, c.TGWebhookSecret = os.Getenv("TG_TOKEN"), os.Getenv("TG_WEBHOOK_SECRET")
-	if c.TGToken != "" && c.TGWebhookSecret == "" {
-		return c, fmt.Errorf("TG_TOKEN needs TG_WEBHOOK_SECRET")
+	// Telegram is optional: off unless TG_TOKEN is set. The webhook is routed only with
+	// its secret, so without the token there must be no secret, or replies would have no sender.
+	if c.TGToken = os.Getenv("TG_TOKEN"); c.TGToken != "" {
+		if c.TGWebhookSecret = os.Getenv("TG_WEBHOOK_SECRET"); c.TGWebhookSecret == "" {
+			return c, fmt.Errorf("TG_TOKEN needs TG_WEBHOOK_SECRET")
+		}
 	}
 	c.TGRemindersEnabled = c.TGToken != "" && os.Getenv("TG_REMINDERS_ENABLED") == "true"
 	var err error
