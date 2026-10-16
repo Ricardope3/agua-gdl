@@ -512,14 +512,29 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     el("a", { href: "https://www.notisistema.com/noticias/siapa-amplia-a-342-colonias-el-descuento-de-80-por-ciento-por-mala-calidad-del-agua/", rel: "noopener", target: "_blank" }, "Notisistema, 1 de octubre"),
     "). No tenemos la lista oficial, así que no sabemos si tu colonia está incluida. Si tienes agua turbia o con olor, fíjate si tu próximo recibo trae el descuento.");
 
-  function showChoices(list, zones) {
-    const items = list.map((c) => {
+  function choiceList(list, zones) {
+    return el("ul", { class: "choices" }, ...list.map((c) => {
       const b = el("button", { type: "button", class: "choice" }, el("strong", {}, c.name),
         el("span", {}, `${municipio(c.municipio)} · ${c.zones.length > 1 ? "Zonas" : "Zona"} ${joinES(c.zones)}`));
       b.addEventListener("click", () => showColonia(c, zones));
       return el("li", {}, b);
-    });
-    show(el("p", {}, "Encontramos varias colonias parecidas. ¿Cuál es la tuya?"), el("ul", { class: "choices" }, ...items), mapBlock(list, zones));
+    }));
+  }
+
+  function showChoices(list, zones) {
+    show(el("p", {}, "Encontramos varias colonias parecidas. ¿Cuál es la tuya?"), choiceList(list, zones), mapBlock(list, zones));
+  }
+
+  // others are colonias that exist but aren't on SIAPA's rotation list; similar names
+  // that are on it are still offered below.
+  function showOthers(others, similar, zones) {
+    const nodes = others.map((o) => o.zones.length === 0
+      ? result("check", `${o.name} (${municipio(o.municipio)}): colonia no afectada`,
+        el("p", {}, "No está en la lista de colonias de la rotación del SIAPA y queda fuera de las zonas de su mapa, así que no le toca racionamiento."))
+      : result("info", `${o.name} (${municipio(o.municipio)}) no está en la lista del SIAPA`,
+        el("p", {}, `Pero queda dentro del mapa de la ${o.zones.length > 1 ? "zonas" : "zona"} ${joinES(o.zones)}. El mapa y la lista no siempre coinciden: `, locateLink("usa tu ubicación"), " para confirmarlo.")));
+    if (similar.length) nodes.push(el("p", {}, "¿O es alguna de estas?"), choiceList(similar, zones));
+    show(...nodes);
   }
 
   async function search(q) {
@@ -531,7 +546,9 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     try {
       const [r, zones] = await Promise.all([get("/v1/colonias?q=" + encodeURIComponent(q)), zoneTable()]);
       lastChoices = r.colonias;
-      if (r.colonias.length === 0) {
+      if (r.others && r.others.length) {
+        showOthers(r.others, r.colonias, zones);
+      } else if (r.colonias.length === 0) {
         show(msg(`No encontramos «${q}» en la lista de colonias del SIAPA. Revisa cómo se escribe, prueba con solo una parte del nombre o `, locateLink("usa tu ubicación"), ". También puedes buscarla en el ", mapLink(), "."));
       } else if (r.exact && r.colonias.length === 1) {
         showColonia(r.colonias[0], zones);
