@@ -65,7 +65,7 @@ def label_point(ring):
 municipios = json.loads((root / "pipelines/municipios_amg.geojson").read_text())["features"]
 MUN_NAMES = {"GUADALAJARA": "Guadalajara", "ZAPOPAN": "Zapopan", "SAN PEDRO TLAQUEPAQUE": "Tlaquepaque", "TONALA": "Tonalá"}
 # Where each municipio's label sits, as a fraction of the map, chosen by eye to stay clear of the zone labels.
-MUN_LABEL = {"Guadalajara": (0.49, 0.09), "Zapopan": (0.13, 0.12), "Tlaquepaque": (0.43, 0.83), "Tonalá": (0.80, 0.30)}
+MUN_LABEL = {"Guadalajara": (0.43, 0.05), "Zapopan": (0.13, 0.12), "Tlaquepaque": (0.43, 0.83), "Tonalá": (0.80, 0.30)}
 
 paths, labels = [], []
 for zone in sorted(zones):
