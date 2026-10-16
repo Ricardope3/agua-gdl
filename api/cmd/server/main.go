@@ -159,6 +159,7 @@ func run(log *slog.Logger) error {
 	}
 	go purge(ctx, db, sched, log)
 
+	runnerDone := make(chan struct{})
 	if cfg.RemindersEnabled || cfg.TGRemindersEnabled {
 		r := &reminders.Runner{Store: db, Schedule: sched,
 			Template: cfg.WATemplate, Language: cfg.WALanguage,
@@ -171,8 +172,12 @@ func run(log *slog.Logger) error {
 		if cfg.TGRemindersEnabled {
 			r.Telegram = telegram
 		}
-		go r.Run(ctx)
+		go func() {
+			r.Run(ctx)
+			close(runnerDone)
+		}()
 	} else {
+		close(runnerDone)
 		log.Warn("reminders disabled; set REMINDERS_ENABLED=true (WhatsApp) or TG_REMINDERS_ENABLED=true (Telegram) to send them")
 	}
 
@@ -192,6 +197,8 @@ func run(log *slog.Logger) error {
 	if err := srv.ListenAndServe(); !errors.Is(err, http.ErrServerClosed) {
 		return err
 	}
+	// Let a reminder that is being sent finish and be recorded before the pool closes.
+	<-runnerDone
 	return nil
 }
 

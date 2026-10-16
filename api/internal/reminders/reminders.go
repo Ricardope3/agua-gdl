@@ -171,11 +171,14 @@ func (r *Runner) sendChannel(ctx context.Context, channel string) (err error) {
 				return errors.Join(err, capErr)
 			}
 		}
-		attempted, sendErr := r.Store.SendReminder(ctx, s, tomorrow, zones, func(current store.Subscriber) (string, error) {
+		// A send that has started finishes and is recorded even during shutdown;
+		// the HTTP clients have their own timeouts.
+		sendCtx := context.WithoutCancel(ctx)
+		attempted, sendErr := r.Store.SendReminder(sendCtx, s, tomorrow, zones, func(current store.Subscriber) (string, error) {
 			if current.Channel == store.Telegram {
-				return "", r.sendTelegram(ctx, current, date)
+				return "", r.sendTelegram(ctx, sendCtx, current, date)
 			}
-			return r.Sender.Send(ctx, r.reminder(current, date))
+			return r.Sender.Send(sendCtx, r.reminder(current, date))
 		})
 		var unreachable interface{ Gone() bool }
 		if errors.As(sendErr, &unreachable) && unreachable.Gone() {
@@ -258,13 +261,14 @@ func (r *Runner) sleep(ctx context.Context, d time.Duration) error {
 
 // sendTelegram waits out Telegram's "too many requests" a few times: a 429 means
 // the message wasn't sent, so trying again can't duplicate it.
-func (r *Runner) sendTelegram(ctx context.Context, s store.Subscriber, date string) error {
+// Waits stop at shutdown (ctx); requests use sendCtx, which doesn't.
+func (r *Runner) sendTelegram(ctx, sendCtx context.Context, s store.Subscriber, date string) error {
 	m, err := bot.TelegramReminder(s.UserID, date, s.Zone)
 	if err != nil {
 		return err
 	}
 	for attempt := 0; ; attempt++ {
-		_, err = r.Telegram.Send(ctx, m)
+		_, err = r.Telegram.Send(sendCtx, m)
 		var apiErr *tg.APIError
 		if attempt == 3 || !errors.As(err, &apiErr) || apiErr.Status != 429 {
 			return err

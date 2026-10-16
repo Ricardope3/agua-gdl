@@ -1,5 +1,7 @@
 app = "agua-gdl-api"
 primary_region = "iad"
+# Room for an in-flight reminder (15 s HTTP timeout) to finish and be recorded on shutdown.
+kill_timeout = "30s"
 
 [build]
   dockerfile = "infra/Dockerfile"

@@ -340,3 +340,20 @@ func TestResubscribingAfterTheRunIsNotRemindedTwice(t *testing.T) {
 		t.Fatalf("the confirmation already announced tomorrow's cut: sent %d, err %v", len(snd.Sent), err)
 	}
 }
+
+func TestShutdownMidSendStillRecordsTheReminder(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	st, snd := fake.NewStore(), &fake.Sender{}
+	st.Subscribe(ctx, store.WhatsApp, "a", "a", 4)
+	r := runner(t, "2026-10-18 20:00", st, snd)
+	r.Sender = senderFunc(func(sendCtx context.Context, m wa.Message) (string, error) {
+		cancel()
+		if err := sendCtx.Err(); err != nil {
+			return "", err
+		}
+		return snd.Send(sendCtx, m)
+	})
+	if err := r.SendTonight(ctx); err != nil || len(snd.Sent) != 1 || len(st.Unresolved) != 0 {
+		t.Fatalf("a send in flight at shutdown must complete and be recorded: sent %d, unresolved %v, err %v", len(snd.Sent), st.Unresolved, err)
+	}
+}
