@@ -122,6 +122,9 @@ func run(log *slog.Logger) error {
 	if err != nil {
 		return err
 	}
+	if err := cols.LoadOthers(data.OtrasColonias); err != nil {
+		return err
+	}
 
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()

@@ -100,3 +100,21 @@ func TestSearchIgnoresOverlongQueries(t *testing.T) {
 		t.Errorf("a %d-character query must not be searched", len(strings.Repeat("analco ", 20)))
 	}
 }
+
+func TestOthers(t *testing.T) {
+	ix, err := Load(data.Colonias)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ix.LoadOthers(data.OtrasColonias); err != nil {
+		t.Fatal(err)
+	}
+	for _, q := range []string{"Jardín Real", "jardin real zapopan"} {
+		if got := ix.Others(q); len(got) != 1 || got[0].Municipio != "ZAPOPAN" || len(got[0].Zones) != 0 {
+			t.Errorf("%q: got %+v", q, got)
+		}
+	}
+	if got := ix.Others("Chapalita"); len(got) != 0 {
+		t.Errorf("a colonia on SIAPA's list is not an other: %+v", got)
+	}
+}

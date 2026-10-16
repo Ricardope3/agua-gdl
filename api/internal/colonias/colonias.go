@@ -24,7 +24,20 @@ type Colonia struct {
 // prefixes: SIAPA lists "Fracc. Jardines del Sauz" and "Jardines del Sauz" in different zones.
 func (c Colonia) Key() string { return c.key }
 
-type Index struct{ all []Colonia }
+// Other is a colonia in INE's cartography that isn't on SIAPA's rotation list. Zones are
+// the zones whose map area it overlaps; none means the rotation doesn't reach it.
+type Other struct {
+	Name      string `json:"name"`
+	Municipio string `json:"municipio"`
+	Zones     []int  `json:"zones"`
+	norm      string
+	munNorm   string
+}
+
+type Index struct {
+	all    []Colonia
+	others []Other
+}
 
 func Load(raw []byte) (*Index, error) {
 	var all []Colonia
@@ -38,6 +51,34 @@ func Load(raw []byte) (*Index, error) {
 		all[i].grams = trigrams(all[i].norm)
 	}
 	return &Index{all: all}, nil
+}
+
+// LoadOthers adds the colonias that aren't on SIAPA's list, for Others.
+func (ix *Index) LoadOthers(raw []byte) error {
+	if err := json.Unmarshal(raw, &ix.others); err != nil {
+		return fmt.Errorf("otras colonias: %w", err)
+	}
+	for i := range ix.others {
+		ix.others[i].norm = Normalize(ix.others[i].Name)
+		ix.others[i].munNorm = Normalize(ix.others[i].Municipio)
+	}
+	return nil
+}
+
+// Others returns the colonias off SIAPA's list whose name is exactly q, optionally
+// followed by its municipio.
+func (ix *Index) Others(q string) []Other {
+	if len([]rune(q)) > MaxQuery {
+		return nil
+	}
+	nq := Normalize(q)
+	var out []Other
+	for _, o := range ix.others {
+		if o.norm == nq || nq == o.norm+" "+o.munNorm || (o.munNorm == "TLAQUEPAQUE" && nq == o.norm+" SAN PEDRO TLAQUEPAQUE") {
+			out = append(out, o)
+		}
+	}
+	return out
 }
 
 var accents = strings.NewReplacer("Á", "A", "É", "E", "Í", "I", "Ó", "O", "Ú", "U", "Ü", "U", "Ñ", "N")

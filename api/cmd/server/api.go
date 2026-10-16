@@ -183,7 +183,13 @@ func (a *api) coloniaSearch(w http.ResponseWriter, r *http.Request) {
 	if matches == nil {
 		matches = []colonias.Colonia{}
 	}
-	writeJSON(w, map[string]any{"exact": exact, "colonias": matches}, publicFiveMinutes)
+	res := map[string]any{"exact": exact, "colonias": matches}
+	if !exact {
+		if others := a.cols.Others(q); len(others) > 0 {
+			res["others"] = others
+		}
+	}
+	writeJSON(w, res, publicFiveMinutes)
 }
 
 func (a *api) results(w http.ResponseWriter, r *http.Request) {
