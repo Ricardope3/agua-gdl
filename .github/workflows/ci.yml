@@ -1,5 +1,9 @@
 name: ci
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "17 13 * * 1"  # Mondays, so new Go or pgx vulnerabilities surface while the repo is quiet
 permissions:
   contents: read
 jobs:
