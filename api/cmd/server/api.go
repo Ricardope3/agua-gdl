@@ -179,7 +179,7 @@ func (a *api) coloniaSearch(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "q must have 1 to 80 characters", http.StatusBadRequest)
 		return
 	}
-	matches, exact := a.cols.Search(q, 10)
+	matches, exact := a.cols.Search(q, 0)
 	if matches == nil {
 		matches = []colonias.Colonia{}
 	}

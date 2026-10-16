@@ -131,7 +131,8 @@ func (ix *Index) ByKey(key string) (Colonia, bool) {
 // trigram matching on long input costs CPU on every call.
 const MaxQuery = 80
 
-// Search returns exact name matches if any (exact = true), otherwise the closest names.
+// Search returns exact name matches if any (exact = true), otherwise the closest names,
+// at most limit of them (limit <= 0: all).
 func (ix *Index) Search(q string, limit int) (matches []Colonia, exact bool) {
 	if len([]rune(q)) > MaxQuery {
 		return nil, false
@@ -178,7 +179,7 @@ func (ix *Index) Search(q string, limit int) (matches []Colonia, exact bool) {
 		}
 	}
 	sort.SliceStable(cands, func(i, j int) bool { return cands[i].s > cands[j].s })
-	for i := 0; i < len(cands) && i < limit; i++ {
+	for i := 0; i < len(cands) && (limit <= 0 || i < limit); i++ {
 		matches = append(matches, cands[i].c)
 	}
 	return matches, false

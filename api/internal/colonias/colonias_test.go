@@ -45,6 +45,9 @@ func TestSearch(t *testing.T) {
 	if c, ok := ix.ByKey(m[0].Key()); !ok || c.Name != "CHAPALITA" {
 		t.Fatal("ByKey")
 	}
+	if all, _ := ix.Search("po", 0); len(all) <= 10 {
+		t.Fatalf("limit 0 should return every match, got %d", len(all))
+	}
 	if m, _ := ix.Search("xyzzy qwerty", 5); len(m) != 0 {
 		t.Fatalf("nonsense matched %v", m)
 	}
