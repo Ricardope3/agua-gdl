@@ -168,24 +168,52 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .variant-bar a { color: #fde68a; text-decoration: none; padding: 2px 8px; border-radius: 999px; border: 1px solid #fde68a55 }
 .variant-bar a[aria-current="page"] { background: #fde68a; color: #1c1400; font-weight: 700 }
 
-.hero5 { padding: 20px 0 36px; display: grid; gap: 28px }
-.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 10px }
-.chips button { font: inherit; font-weight: 700; font-size: 1.1rem; width: 52px; height: 52px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; box-shadow: var(--shadow) }
-.chips button:hover { border-color: var(--brand) }
-.chips button[aria-pressed="true"] { background: var(--primary); color: var(--on-primary); border-color: var(--primary) }
-.hint { color: var(--muted); font-size: .92rem; margin: 0 }
-.zinfo { margin: 16px 0 0; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; padding: 16px; box-shadow: var(--shadow) }
-.zinfo h3 { margin: 0 0 4px; font-size: 1.15rem }
-.zinfo .big { font-size: 1.6rem; font-weight: 700; letter-spacing: -.02em; margin: 6px 0 2px; color: var(--brand) }
-.zinfo p { margin: 0 0 10px; color: var(--muted) }
-.zinfo .buttons { margin-top: 12px }
-@media (min-width: 720px) { .hero5 { grid-template-columns: 1.05fr 1fr; align-items: start } }
+.hero1 { display: grid; gap: 28px; padding: 20px 0 36px }
+.hero1 h1 { margin-bottom: 10px }
+.quick { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; box-shadow: var(--shadow); padding: 18px; margin: 22px 0 0 }
+.quick label { display: block; font-weight: 600; margin: 0 0 8px }
+.quick .row { display: flex; flex-wrap: wrap; gap: 8px }
+.quick input { flex: 1 1 220px; min-width: 0; font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; box-shadow: var(--shadow) }
+.quick input:focus-visible { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px var(--ring) }
+.quick button.button { font: inherit; font-weight: 500; font-size: .95rem; cursor: pointer }
+.quick .or { margin: 10px 0 0; color: var(--muted); font-size: .9rem }
+.band { display: grid; gap: 14px; margin: 0 0 40px }
+@media (min-width: 720px) { .hero1 { grid-template-columns: 1.05fr 1fr; align-items: center } .band { grid-template-columns: 1fr 1fr } }
+
+.hero2 { padding: 20px 0 8px }
+.hero2 .lede { margin: 0 0 18px }
+.today { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 14px; font-weight: 600 }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: .85rem }
+.pill.hot { background: #fee2e2; color: #991b1b } .pill.warm { background: #fef3c7; color: #92400e }
+.ztiles { list-style: none; margin: 0 0 18px; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr)); gap: 10px }
+.ztile { display: block; height: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; color: var(--fg); text-decoration: none; box-shadow: var(--shadow); border-left: 5px solid var(--zc, var(--brand)) }
+.ztile:hover { border-color: var(--zc, var(--brand)) }
+.ztile b { display: block; font-size: 1.05rem }
+.ztile .when { display: block; font-size: 1.35rem; font-weight: 700; letter-spacing: -.02em; line-height: 1.2; margin: 4px 0 2px }
+.ztile .when::first-letter { text-transform: uppercase }
+.ztile small { color: var(--muted); font-size: .8rem }
+.ztile.hot { background: color-mix(in srgb, #ef4444 10%, var(--surface)) } .ztile.warm { background: color-mix(in srgb, #f59e0b 12%, var(--surface)) }
+.ztiles .skeleton { height: 92px; border-radius: 12px; background: var(--subtle) }
+.hero2 .buttons { margin: 0 0 32px }
+.split { display: grid; gap: 14px; margin: 0 0 40px }
+@media (min-width: 720px) { .split { grid-template-columns: 1.2fr 1fr; align-items: start } }
+@media (prefers-color-scheme: dark) { .pill.hot { background: #450a0a; color: #fecaca } .pill.warm { background: #422006; color: #fde68a } }
+
+.hero5 { display: grid; gap: 24px; padding: 20px 0 32px }
+.hero5 .side h2 { font-size: 1.1rem; margin: 0 0 8px }
+.hero5 .ztiles { grid-template-columns: repeat(2, 1fr); gap: 8px }
+.hero5 .ztile { padding: 8px 12px; display: grid; grid-template-columns: auto 1fr; column-gap: 10px; align-items: baseline }
+.hero5 .ztile .when { font-size: 1.05rem; margin: 0 }
+.hero5 .ztile small { grid-column: 1 / -1 }
+.hero5 .ztiles .skeleton { height: 56px }
+.mapband { display: grid; gap: 14px; margin: 0 0 40px }
+@media (min-width: 720px) { .hero5 { grid-template-columns: 1.1fr 1fr; align-items: start } .mapband { grid-template-columns: 1.2fr 1fr; align-items: start } }
 </style>
 <script src="/theme.js"></script>
 </head>
 <body>
 <div class="wrap">
-  <div class="variant-bar"><strong>Prueba · v5: Elige tu zona</strong><a href="/">Actual</a><a href="/v1" title="Buscador primero">v1</a><a href="/v2" title="Calendario en vivo">v2</a><a href="/v3" title="Impacto">v3</a><a href="/v4" title="Barra de acción">v4</a><a href="/v5" aria-current="page" title="Elige tu zona">v5</a></div>
+  <div class="variant-bar"><strong>Prueba · v5: Lado a lado</strong><a href="/">Actual</a><a href="/v1" title="Buscador primero">v1</a><a href="/v2" title="Calendario en vivo">v2</a><a href="/v3" title="Buscador + semana">v3</a><a href="/v4" title="Semana + buscador">v4</a><a href="/v5" aria-current="page" title="Lado a lado">v5</a></div>
   <header class="top">
     <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
     <nav class="site-nav" aria-label="Secciones">
@@ -200,12 +228,24 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   <main>
     <div class="hero5">
       <div>
-        <h1>¿Cuál es tu zona?</h1>
-        <p class="lede">El SIAPA <mark>raciona el agua</mark> en 7 zonas hasta marzo de 2027. Toca la tuya para ver cuándo te toca.</p>
-        <div class="chips" role="group" aria-label="Zonas"><button type="button" aria-pressed="false" data-z="1">1</button><button type="button" aria-pressed="false" data-z="2">2</button><button type="button" aria-pressed="false" data-z="3">3</button><button type="button" aria-pressed="false" data-z="4">4</button><button type="button" aria-pressed="false" data-z="5">5</button><button type="button" aria-pressed="false" data-z="6">6</button><button type="button" aria-pressed="false" data-z="7">7</button></div>
-        <p class="hint">¿No sabes cuál es? <a href="/mizona">Búscala con tu ubicación o tu colonia</a>.</p>
-        <div class="zinfo" id="zinfo" hidden aria-live="polite"></div>
+        <h1>¿Te toca corte mañana?</h1>
+        <p class="lede">El SIAPA <mark>raciona el agua</mark> en más de 600 colonias hasta marzo de 2027. Escribe tu colonia y te decimos tu zona y tus días.</p>
+        <form class="quick" action="/mizona" method="get" role="search">
+          <label for="q">Tu colonia</label>
+          <div class="row">
+            <input id="q" name="q" type="search" autocomplete="off" placeholder="Por ejemplo: Las Juntas" required maxlength="80">
+            <button class="button glow" type="submit"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#search"/></svg>Ver mi zona</button>
+          </div>
+          <p class="or">o <a href="/mizona">usa tu ubicación</a>: es lo más exacto.</p>
+        </form>
       </div>
+      <div class="side">
+        <h2>Así va la semana</h2>
+        <p class="today" id="today" aria-live="polite"></p>
+      <ul class="ztiles" id="ztiles"><li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li></ul>
+      </div>
+    </div>
+    <div class="mapband">
       <div class="hero-side">
         <figure class="hero-fig">
           <div class="hero-mapimg">
@@ -214,6 +254,20 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
           </div>
           <figcaption class="note">Fuente: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa de la rotación del SIAPA</a>. Agua GDL no es del SIAPA.</figcaption>
         </figure>
+      </div>
+      <div class="hero-side">
+        <a class="aviso" href="/avisos">
+          <span class="aviso-head"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#bell"/></svg></span>Te mandamos un mensaje antes de que te corten el agua</span>
+          <span class="aviso-time">8 p.&nbsp;m.</span>
+          <span class="aviso-text">Un mensaje por <span class="nw"><svg class="tg" aria-hidden="true"><use href="/icons.svg?v=3#telegram"/></svg> Telegram</span> o una alerta en tu calendario la noche antes de cada corte en tu zona.</span>
+          <span class="button">Recibir avisos</span>
+        </a>
+        <a class="aviso" href="/escribe">
+          <span class="aviso-head"><span class="i-badge" style="background:#7c3aed"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#landmark"/></svg></span>El Congreso decide el contrato del acueducto</span>
+          <span class="aviso-time">$48,296 M</span>
+          <span class="aviso-text">pagaría el Estado en 25 años. Pide a las 38 diputaciones que no lo aprueben a ciegas.</span>
+          <span class="button">Escribir al Congreso</span>
+        </a>
       </div>
     </div>
     <section class="congreso" aria-labelledby="congreso">
@@ -293,32 +347,27 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   const joinES = (a) => a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + " y " + a[a.length - 1];
   const zonesP = fetch(API + "/v1/zones").then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); });
 
-  const box = document.getElementById("zinfo");
-  const chips = [...document.querySelectorAll(".chips button")];
-  const el = (tag, attrs, ...kids) => { const e = document.createElement(tag); Object.assign(e, attrs); e.append(...kids); return e; };
-  const icon = (n) => { const s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.setAttribute("class", "i"); s.setAttribute("aria-hidden", "true"); const u = document.createElementNS("http://www.w3.org/2000/svg", "use"); u.setAttribute("href", `/icons.svg?v=3#${n}`); s.append(u); return s; };
-  async function pick(n) {
-    chips.forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.z === String(n))));
-    try { localStorage.setItem("zona", n); } catch {}
-    box.hidden = false;
-    box.replaceChildren(el("p", {}, "Cargando…"));
-    let z;
-    try { z = (await zonesP).find((x) => x.zone === Number(n)); } catch {}
-    if (!z) { box.replaceChildren(el("p", {}, "No pudimos cargar el calendario. ", el("a", { href: "/mizona" }, "Ábrelo en «Mi zona»"), ".")); return; }
-    const d = nextCut(z);
-    const later = z.next.filter((x) => x > (d || today)).slice(0, 2).map(dayES);
-    box.replaceChildren(
-      el("h3", {}, `Zona ${z.zone}: ${joinES(z.days)}`),
-      el("p", { className: "big" }, d ? `Próximo corte: ${whenES(d)}` : "Sin más fechas"),
-      later.length ? el("p", {}, `Después: ${joinES(later)}.`) : "",
-      el("div", { className: "buttons" },
-        el("a", { className: "button glow", href: `https://t.me/AvisoAguaGDLbot?start=z${z.zone}`, rel: "noopener" }, icon("send"), "Avísame por Telegram"),
-        el("a", { className: "button alt", href: "/mizona" }, icon("calendar"), "Agregar a mi calendario")));
-  }
-  chips.forEach((c) => c.addEventListener("click", () => pick(c.dataset.z)));
-  let saved = null;
-  try { saved = localStorage.getItem("zona"); } catch {}
-  if (saved && /^[1-7]$/.test(saved)) pick(saved);
+  const COLORS = ["", "#e11d48", "#f59e0b", "#10b981", "#0ea5e9", "#8b5cf6", "#ec4899", "#14b8a6"];
+  const list = document.getElementById("ztiles");
+  const head = document.getElementById("today");
+  zonesP.then((zones) => {
+    list.replaceChildren(...zones.map((z) => {
+      const d = nextCut(z);
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = "/mizona";
+      a.className = "ztile" + (d === today ? " hot" : d === tomorrow ? " warm" : "");
+      a.style.setProperty("--zc", COLORS[z.zone] || "");
+      const b = document.createElement("b"); b.textContent = `Zona ${z.zone}`;
+      const w = document.createElement("span"); w.className = "when"; w.textContent = d ? whenES(d) : "sin fecha";
+      const s = document.createElement("small"); s.textContent = joinES(z.days);
+      a.append(b, w, s); li.append(a); return li;
+    }));
+    const hot = zones.filter((z) => nextCut(z) === today).map((z) => z.zone);
+    const warm = zones.filter((z) => nextCut(z) === tomorrow).map((z) => z.zone);
+    const pill = (cls, text) => { const p = document.createElement("span"); p.className = "pill " + cls; p.textContent = text; return p; };
+    head.replaceChildren(...[hot.length ? pill("hot", `Hoy: zona${hot.length > 1 ? "s" : ""} ${joinES(hot)}`) : null, warm.length ? pill("warm", `Mañana: zona${warm.length > 1 ? "s" : ""} ${joinES(warm)}`) : null].filter(Boolean));
+  }).catch(() => { list.hidden = true; head.textContent = "No pudimos cargar el calendario. Búscalo en «Mi zona»."; });
 })();
 </script>
 </body>

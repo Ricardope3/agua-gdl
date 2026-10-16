@@ -168,19 +168,44 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .variant-bar a { color: #fde68a; text-decoration: none; padding: 2px 8px; border-radius: 999px; border: 1px solid #fde68a55 }
 .variant-bar a[aria-current="page"] { background: #fde68a; color: #1c1400; font-weight: 700 }
 
-.trust { margin: 14px 0 0 } .trust.values li { font-size: .8rem; padding: 3px 10px }
-.actionbar { position: sticky; bottom: 0; z-index: 9; display: flex; gap: 8px; margin: 0 -16px; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(8px); border-top: 1px solid var(--line) }
-.actionbar .button { flex: 1; justify-content: center }
-details > summary { list-style: none; cursor: pointer } details > summary::-webkit-details-marker { display: none }
-details > summary h2 { display: inline-flex; align-items: center; gap: 8px } details > summary h2::after { content: "＋"; color: var(--brand); font-size: 1.1rem } details[open] > summary h2::after { content: "－" }
-.congreso .facts strong { font-size: 1.7rem }
-@media (min-width: 720px) { .actionbar { justify-content: center } .actionbar .button { flex: 0 0 auto; min-width: 220px } }
+.hero1 { display: grid; gap: 28px; padding: 20px 0 36px }
+.hero1 h1 { margin-bottom: 10px }
+.quick { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; box-shadow: var(--shadow); padding: 18px; margin: 22px 0 0 }
+.quick label { display: block; font-weight: 600; margin: 0 0 8px }
+.quick .row { display: flex; flex-wrap: wrap; gap: 8px }
+.quick input { flex: 1 1 220px; min-width: 0; font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; box-shadow: var(--shadow) }
+.quick input:focus-visible { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px var(--ring) }
+.quick button.button { font: inherit; font-weight: 500; font-size: .95rem; cursor: pointer }
+.quick .or { margin: 10px 0 0; color: var(--muted); font-size: .9rem }
+.band { display: grid; gap: 14px; margin: 0 0 40px }
+@media (min-width: 720px) { .hero1 { grid-template-columns: 1.05fr 1fr; align-items: center } .band { grid-template-columns: 1fr 1fr } }
+
+.hero2 { padding: 20px 0 8px }
+.hero2 .lede { margin: 0 0 18px }
+.today { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 14px; font-weight: 600 }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: .85rem }
+.pill.hot { background: #fee2e2; color: #991b1b } .pill.warm { background: #fef3c7; color: #92400e }
+.ztiles { list-style: none; margin: 0 0 18px; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr)); gap: 10px }
+.ztile { display: block; height: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; color: var(--fg); text-decoration: none; box-shadow: var(--shadow); border-left: 5px solid var(--zc, var(--brand)) }
+.ztile:hover { border-color: var(--zc, var(--brand)) }
+.ztile b { display: block; font-size: 1.05rem }
+.ztile .when { display: block; font-size: 1.35rem; font-weight: 700; letter-spacing: -.02em; line-height: 1.2; margin: 4px 0 2px }
+.ztile .when::first-letter { text-transform: uppercase }
+.ztile small { color: var(--muted); font-size: .8rem }
+.ztile.hot { background: color-mix(in srgb, #ef4444 10%, var(--surface)) } .ztile.warm { background: color-mix(in srgb, #f59e0b 12%, var(--surface)) }
+.ztiles .skeleton { height: 92px; border-radius: 12px; background: var(--subtle) }
+.hero2 .buttons { margin: 0 0 32px }
+.split { display: grid; gap: 14px; margin: 0 0 40px }
+@media (min-width: 720px) { .split { grid-template-columns: 1.2fr 1fr; align-items: start } }
+@media (prefers-color-scheme: dark) { .pill.hot { background: #450a0a; color: #fecaca } .pill.warm { background: #422006; color: #fde68a } }
+
+.hero2 .quick { margin: 0 0 32px; max-width: 640px }
 </style>
 <script src="/theme.js"></script>
 </head>
 <body>
 <div class="wrap">
-  <div class="variant-bar"><strong>Prueba · v4: Barra de acción</strong><a href="/">Actual</a><a href="/v1" title="Buscador primero">v1</a><a href="/v2" title="Calendario en vivo">v2</a><a href="/v3" title="Impacto">v3</a><a href="/v4" aria-current="page" title="Barra de acción">v4</a><a href="/v5" title="Elige tu zona">v5</a></div>
+  <div class="variant-bar"><strong>Prueba · v4: Semana + buscador</strong><a href="/">Actual</a><a href="/v1" title="Buscador primero">v1</a><a href="/v2" title="Calendario en vivo">v2</a><a href="/v3" title="Buscador + semana">v3</a><a href="/v4" aria-current="page" title="Semana + buscador">v4</a><a href="/v5" title="Lado a lado">v5</a></div>
   <header class="top">
     <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
     <nav class="site-nav" aria-label="Secciones">
@@ -193,22 +218,21 @@ details > summary h2 { display: inline-flex; align-items: center; gap: 8px } det
   </header>
 
   <main>
-    <div class="hero hero-map">
-      <div>
-        <h1>La crisis del agua en Guadalajara</h1>
-        <p class="lede">Del 15 de octubre de 2026 a marzo de 2027, el SIAPA <mark>raciona el agua</mark> en más de 600 colonias de la zona metropolitana, y en muchas el agua llega turbia o con mal olor. Aquí puedes ver qué zona te toca, recibir un aviso antes de cada corte, saber <a href="/contamina">de dónde viene la contaminación</a> y <a href="/escribe">escribirle al Congreso</a>.</p>
-        <ul class="values trust">
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#check"/></svg>Gratuito</li>
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#check"/></svg>Sin anuncios</li>
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#check"/></svg>No oficial</li>
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#check"/></svg>Sin partido</li>
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#check"/></svg>No guardamos tu nombre ni tu teléfono</li>
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#check"/></svg>Código abierto</li>
-      </ul>
-        <div class="buttons cta">
-          <a class="button glow" href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#map-pin"/></svg>Checa tu zona</a>
-        </div>
-      </div>
+    <div class="hero2">
+      <h1>¿Te toca corte mañana?</h1>
+      <p class="lede">El SIAPA <mark>raciona el agua</mark> por zonas, de 2 a 3 días por semana, hasta marzo de 2027. Así va la semana:</p>
+      <p class="today" id="today" aria-live="polite"></p>
+      <ul class="ztiles" id="ztiles"><li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li></ul>
+      <form class="quick" action="/mizona" method="get" role="search">
+          <label for="q">¿No sabes tu zona? Escribe tu colonia</label>
+          <div class="row">
+            <input id="q" name="q" type="search" autocomplete="off" placeholder="Por ejemplo: Las Juntas" required maxlength="80">
+            <button class="button glow" type="submit"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#search"/></svg>Ver mi zona</button>
+          </div>
+          <p class="or">o <a href="/mizona">usa tu ubicación</a>: es lo más exacto.</p>
+        </form>
+    </div>
+    <div class="split">
       <div class="hero-side">
         <figure class="hero-fig">
           <div class="hero-mapimg">
@@ -217,13 +241,13 @@ details > summary h2 { display: inline-flex; align-items: center; gap: 8px } det
           </div>
           <figcaption class="note">Fuente: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa de la rotación del SIAPA</a>. Agua GDL no es del SIAPA.</figcaption>
         </figure>
+      </div>
         <a class="aviso" href="/avisos">
           <span class="aviso-head"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#bell"/></svg></span>Te mandamos un mensaje antes de que te corten el agua</span>
           <span class="aviso-time">8 p.&nbsp;m.</span>
           <span class="aviso-text">Un mensaje por <span class="nw"><svg class="tg" aria-hidden="true"><use href="/icons.svg?v=3#telegram"/></svg> Telegram</span> o una alerta en tu calendario la noche antes de cada corte en tu zona.</span>
           <span class="button">Recibir avisos</span>
         </a>
-      </div>
     </div>
     <section class="congreso" aria-labelledby="congreso">
       <h2 id="congreso" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#landmark"/></svg></span>Pide a las diputaciones que voten contra la privatización del agua en Guadalajara</h2>
@@ -240,7 +264,7 @@ details > summary h2 { display: inline-flex; align-items: center; gap: 8px } det
       </div>
     </section>
     <section aria-labelledby="que">
-      <details><summary><h2 id="que">Lo que estamos haciendo</h2></summary>
+      <h2 id="que">Lo que estamos haciendo</h2>
       <ul class="cards">
         <li class="card">
           <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#bell"/></svg></span>Aviso la noche anterior</h3>
@@ -263,7 +287,6 @@ details > summary h2 { display: inline-flex; align-items: center; gap: 8px } det
           <span class="status">Próximamente</span>
         </li>
       </ul>
-      </details>
     </section>
     <section class="why" aria-labelledby="por-que">
       <h2 id="por-que" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#heart"/></svg></span>Por qué</h2>
@@ -283,10 +306,6 @@ details > summary h2 { display: inline-flex; align-items: center; gap: 8px } det
       <p>¿Tienes dudas o datos sobre el agua en tu colonia, o quieres ayudar? Si eres de una organización vecinal o civil que trabaja por el agua, también nos encantaría hablar.</p>
       <a class="email" href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>
     </section>
-    <div class="actionbar">
-      <a class="button glow" href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#map-pin"/></svg>Checa tu zona</a>
-      <a class="button alt" href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#bell"/></svg>Aviso 8 p. m.</a>
-    </div>
   </main>
 
   <footer>
@@ -295,5 +314,40 @@ details > summary h2 { display: inline-flex; align-items: center; gap: 8px } det
     <p><a href="/mizona">¿Qué zona me toca?</a> · <a href="/escribe">Escribe al Congreso</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a></p>
   </footer>
 </div>
+<script>
+(() => {
+  const API = "https://api.aguagdl.com";
+  const today = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Mexico_City" }).format(new Date());
+  const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00Z"); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
+  const tomorrow = addDays(today, 1);
+  const dayES = (iso) => new Intl.DateTimeFormat("es-MX", { timeZone: "UTC", weekday: "long", day: "numeric", month: "short" }).format(new Date(iso + "T12:00:00Z")).replace(".", "");
+  const whenES = (iso) => iso === today ? "hoy" : iso === tomorrow ? "mañana" : dayES(iso);
+  const nextCut = (z) => z.next.find((d) => d >= today);
+  const joinES = (a) => a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + " y " + a[a.length - 1];
+  const zonesP = fetch(API + "/v1/zones").then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); });
+
+  const COLORS = ["", "#e11d48", "#f59e0b", "#10b981", "#0ea5e9", "#8b5cf6", "#ec4899", "#14b8a6"];
+  const list = document.getElementById("ztiles");
+  const head = document.getElementById("today");
+  zonesP.then((zones) => {
+    list.replaceChildren(...zones.map((z) => {
+      const d = nextCut(z);
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = "/mizona";
+      a.className = "ztile" + (d === today ? " hot" : d === tomorrow ? " warm" : "");
+      a.style.setProperty("--zc", COLORS[z.zone] || "");
+      const b = document.createElement("b"); b.textContent = `Zona ${z.zone}`;
+      const w = document.createElement("span"); w.className = "when"; w.textContent = d ? whenES(d) : "sin fecha";
+      const s = document.createElement("small"); s.textContent = joinES(z.days);
+      a.append(b, w, s); li.append(a); return li;
+    }));
+    const hot = zones.filter((z) => nextCut(z) === today).map((z) => z.zone);
+    const warm = zones.filter((z) => nextCut(z) === tomorrow).map((z) => z.zone);
+    const pill = (cls, text) => { const p = document.createElement("span"); p.className = "pill " + cls; p.textContent = text; return p; };
+    head.replaceChildren(...[hot.length ? pill("hot", `Hoy: zona${hot.length > 1 ? "s" : ""} ${joinES(hot)}`) : null, warm.length ? pill("warm", `Mañana: zona${warm.length > 1 ? "s" : ""} ${joinES(warm)}`) : null].filter(Boolean));
+  }).catch(() => { list.hidden = true; head.textContent = "No pudimos cargar el calendario. Búscalo en «Mi zona»."; });
+})();
+</script>
 </body>
 </html>
