@@ -94,6 +94,8 @@ label { display: block; font-weight: 700; margin: 0 0 6px }
 .button.alt:hover { background: color-mix(in srgb, var(--brand) 22%, var(--surface)) }
 .button.glow { border: 3px solid transparent; background: linear-gradient(color-mix(in srgb, var(--brand) 14%, var(--surface)), color-mix(in srgb, var(--brand) 14%, var(--surface))) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100%; animation: glow 2s linear infinite; box-shadow: 0 0 10px 1px rgb(139 92 246 / .55), 0 0 22px 4px rgb(14 165 233 / .4) }
 .button.glow:hover { background: linear-gradient(color-mix(in srgb, var(--brand) 26%, var(--surface)), color-mix(in srgb, var(--brand) 26%, var(--surface))) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100% }
+.button.glow.solid { color: var(--on-primary); background: linear-gradient(var(--primary), var(--primary)) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100% }
+.button.glow.solid:hover { background: linear-gradient(var(--brand-deep), var(--brand-deep)) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100% }
 @keyframes glow { from { background-position: 0 0, 0% 0 } to { background-position: 0 0, 150% 0 } }
 @media (prefers-reduced-motion: reduce) { .button.glow { animation: none } }
 .zone .subscribe { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px }
@@ -197,7 +199,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 
     <div class="finder">
       <div class="locate">
-        <button class="button" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#map-pin"/></svg>Usar mi ubicación</button>
+        <button class="button glow solid" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#map-pin"/></svg>Usar mi ubicación</button>
         <p class="note"><strong>Recomendado:</strong> usa el mapa de zonas del SIAPA, no los nombres de colonias. Solo la usamos para encontrar tu zona; no la guardamos.</p>
       </div>
       <p class="or">o</p>
@@ -724,6 +726,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       show(msg("Escribe el nombre de tu colonia."));
       return;
     }
+    // Once someone searches by name, the location button stops calling for attention.
+    locBtn.classList.remove("glow", "solid");
     scrollToTop(form.closest(".finder"));
     search(q);
   });
