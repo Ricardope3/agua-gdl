@@ -118,11 +118,11 @@ func (s *Schedule) Weekdays(zone int) []time.Weekday { return s.days[zone] }
 // privacy notice promises.
 const RetentionDays = 30
 
-// Expired reports whether the rotation ended more than RetentionDays ago, so the
-// subscribers' numbers must be deleted. Update "end" in rotation.json if SIAPA
+// Expired reports whether t is on or after the RetentionDays-th day after the rotation's
+// end, so the subscribers' numbers must be deleted. Update "end" in rotation.json if SIAPA
 // extends the rotation.
 func (s *Schedule) Expired(t time.Time) bool {
-	return !s.end.IsZero() && s.Day(t).After(s.end.AddDate(0, 0, RetentionDays))
+	return !s.end.IsZero() && !s.Day(t).Before(s.end.AddDate(0, 0, RetentionDays))
 }
 
 func (s *Schedule) IsCut(zone int, t time.Time) bool {

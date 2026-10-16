@@ -217,10 +217,11 @@ func purge(ctx context.Context, db *store.DB, sched *rotation.Schedule, log *slo
 				log.Warn("rotation over; deleted all subscribers", "count", n)
 			}
 		}
+		// Run just after midnight, so the deletion happens on its first due day.
 		select {
 		case <-ctx.Done():
 			return
-		case <-time.After(24 * time.Hour):
+		case <-time.After(time.Until(sched.Day(time.Now()).AddDate(0, 0, 1).Add(time.Minute))):
 		}
 	}
 }
