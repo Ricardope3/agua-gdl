@@ -97,6 +97,10 @@ footer { font-size: .85rem }
 .buttons { display: flex; flex-wrap: wrap; gap: 10px }
 .button.alt { background: color-mix(in srgb, var(--brand) 12%, var(--surface)); color: var(--link); border: 1.5px solid var(--brand) }
 .button.alt:hover { background: color-mix(in srgb, var(--brand) 22%, var(--surface)) }
+.button.glow { border: 3px solid transparent; background: linear-gradient(var(--primary), var(--primary)) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100%; animation: glow 2s linear infinite; box-shadow: 0 0 10px 1px rgb(139 92 246 / .55), 0 0 22px 4px rgb(14 165 233 / .4) }
+.button.glow:hover { background: linear-gradient(var(--brand-deep), var(--brand-deep)) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100% }
+@keyframes glow { from { background-position: 0 0, 0% 0 } to { background-position: 0 0, 150% 0 } }
+@media (prefers-reduced-motion: reduce) { .button.glow { animation: none } }
 .nw { white-space: nowrap }
 mark { color: var(--mark-fg); font-weight: 600; background: var(--mark); padding: 1px 5px; border-radius: 4px; -webkit-box-decoration-break: clone; box-decoration-break: clone }
 .tg { width: 1em; height: 1em; vertical-align: -.14em }
@@ -179,7 +183,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         <h1>La crisis del agua en Guadalajara</h1>
         <p class="lede">Del 15 de octubre de 2026 a marzo de 2027, el SIAPA <mark>raciona el agua</mark> en más de 600 colonias de la zona metropolitana, y en muchas el agua llega turbia o con mal olor. Aquí puedes ver qué zona te toca, recibir un aviso antes de cada corte, saber <a href="/contamina">de dónde viene la contaminación</a> y <a href="/escribe">escribirle al Congreso</a>.</p>
         <div class="buttons cta">
-          <a class="button" href="/llego"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#map-pin"/></svg>Checa tu zona</a>
+          <a class="button glow" href="/llego"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#map-pin"/></svg>Checa tu zona</a>
         </div>
       </div>
       <div class="hero-side">
