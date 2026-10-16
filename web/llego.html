@@ -92,8 +92,8 @@ label { display: block; font-weight: 700; margin: 0 0 6px }
 .cal summary { cursor: pointer; font-weight: 600; color: var(--link) }
 .button.alt { background: color-mix(in srgb, var(--brand) 12%, var(--surface)); color: var(--link); border: 1.5px solid var(--brand) }
 .button.alt:hover { background: color-mix(in srgb, var(--brand) 22%, var(--surface)) }
-.button.glow { border: 2px solid transparent; background: linear-gradient(color-mix(in srgb, var(--brand) 14%, var(--surface)), color-mix(in srgb, var(--brand) 14%, var(--surface))) padding-box, linear-gradient(90deg, #0ea5e9, #a78bfa, #f472b6, #fbbf24, #22c55e, #0ea5e9) border-box; background-size: 100% 100%, 300% 100%; animation: glow 3s linear infinite; box-shadow: 0 0 14px color-mix(in srgb, var(--brand) 45%, transparent) }
-.button.glow:hover { background: linear-gradient(color-mix(in srgb, var(--brand) 26%, var(--surface)), color-mix(in srgb, var(--brand) 26%, var(--surface))) padding-box, linear-gradient(90deg, #0ea5e9, #a78bfa, #f472b6, #fbbf24, #22c55e, #0ea5e9) border-box; background-size: 100% 100%, 300% 100% }
+.button.glow { border: 3px solid transparent; background: linear-gradient(color-mix(in srgb, var(--brand) 14%, var(--surface)), color-mix(in srgb, var(--brand) 14%, var(--surface))) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100%; animation: glow 2s linear infinite; box-shadow: 0 0 10px 1px rgb(139 92 246 / .55), 0 0 22px 4px rgb(14 165 233 / .4) }
+.button.glow:hover { background: linear-gradient(color-mix(in srgb, var(--brand) 26%, var(--surface)), color-mix(in srgb, var(--brand) 26%, var(--surface))) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100% }
 @keyframes glow { from { background-position: 0 0, 0% 0 } to { background-position: 0 0, 150% 0 } }
 @media (prefers-reduced-motion: reduce) { .button.glow { animation: none } }
 .zone .subscribe { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px }
