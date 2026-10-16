@@ -608,7 +608,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   // that are on it are still offered below.
   function showOthers(others, similar, zones) {
     const nodes = others.map((o) => o.zones.length === 0
-      ? result("check", `${o.name} (${municipio(o.municipio)}): colonia no afectada`,
+      ? result("droplet", `${o.name} (${municipio(o.municipio)}): colonia no afectada`,
         el("p", {}, "No está en la lista de colonias de la rotación del SIAPA y queda fuera de las zonas de su mapa, así que no le toca racionamiento."))
       : result("info", `${o.name} (${municipio(o.municipio)}) no está en la lista del SIAPA`,
         el("p", {}, `Pero queda dentro del mapa de la ${o.zones.length > 1 ? "zonas" : "zona"} ${joinES(o.zones)}. El mapa y la lista no siempre coinciden: `, locateLink("usa tu ubicación"), " para confirmarlo.")));
