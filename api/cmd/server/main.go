@@ -170,7 +170,9 @@ func run(log *slog.Logger) error {
 	a := &api{bot: b, db: db, sched: sched, zones: zones, cols: cols,
 		appSecret: []byte(cfg.WAAppSecret), verifyToken: cfg.WAVerifyToken, tgSecret: cfg.TGWebhookSecret,
 		minShown: cfg.MinShown, log: log}
-	srv := &http.Server{Addr: ":" + cfg.Port, Handler: a.routes(), ReadHeaderTimeout: 10 * time.Second}
+	srv := &http.Server{Addr: ":" + cfg.Port, Handler: a.routes(),
+		ReadHeaderTimeout: 10 * time.Second, ReadTimeout: 15 * time.Second,
+		WriteTimeout: 30 * time.Second, IdleTimeout: 60 * time.Second}
 	go func() {
 		<-ctx.Done()
 		shutdown, cancel := context.WithTimeout(context.Background(), 10*time.Second)
