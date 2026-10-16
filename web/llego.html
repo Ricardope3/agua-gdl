@@ -90,6 +90,10 @@ label { display: block; font-weight: 700; margin: 0 0 6px }
 .cal summary { cursor: pointer; font-weight: 600; color: var(--link) }
 .button.alt { background: color-mix(in srgb, var(--brand) 12%, var(--surface)); color: var(--link); border: 1.5px solid var(--brand) }
 .button.alt:hover { background: color-mix(in srgb, var(--brand) 22%, var(--surface)) }
+.button.glow { border: 2px solid transparent; background: linear-gradient(color-mix(in srgb, var(--brand) 14%, var(--surface)), color-mix(in srgb, var(--brand) 14%, var(--surface))) padding-box, linear-gradient(90deg, #0ea5e9, #a78bfa, #f472b6, #fbbf24, #22c55e, #0ea5e9) border-box; background-size: 100% 100%, 300% 100%; animation: glow 3s linear infinite; box-shadow: 0 0 14px color-mix(in srgb, var(--brand) 45%, transparent) }
+.button.glow:hover { background: linear-gradient(color-mix(in srgb, var(--brand) 26%, var(--surface)), color-mix(in srgb, var(--brand) 26%, var(--surface))) padding-box, linear-gradient(90deg, #0ea5e9, #a78bfa, #f472b6, #fbbf24, #22c55e, #0ea5e9) border-box; background-size: 100% 100%, 300% 100% }
+@keyframes glow { from { background-position: 0 0, 0% 0 } to { background-position: 0 0, 150% 0 } }
+@media (prefers-reduced-motion: reduce) { .button.glow { animation: none } }
 .zone .subscribe { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px }
 .choices { list-style: none; margin: 0 0 14px; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr)); gap: 8px }
 .choices li { display: flex }
@@ -441,7 +445,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   // mapBlock shows list's outlines over the SIAPA zones. In a choice list (pick), tapping
   // one picks it; otherwise tapping a spot says which zone it's in.
   function mapBlock(list, zones, pick = list.length > 1) {
-    const open = el("button", { type: "button", class: "button alt" }, icon("map-pin"), "Ver en el mapa");
+    // A split colonia needs the map to find the right zone, so its button draws the eye.
+    const open = el("button", { type: "button", class: pick ? "button alt" : "button alt glow" }, icon("map-pin"), "Ver en el mapa");
     const box = el("div", { class: "mapbox" },
       el("p", {}, !pick ? "Esta colonia está en más de una zona. Mira en el mapa de qué lado queda tu casa." : list.length > 1 ? "¿No sabes cuál es? Míralas en el mapa." : "Mírala en el mapa."),
       el("p", {}, open),
