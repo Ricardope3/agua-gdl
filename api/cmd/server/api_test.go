@@ -162,8 +162,19 @@ func TestLimiterWindowAndMemoryCap(t *testing.T) {
 	for i := range maxTracked {
 		l.allow(strconv.Itoa(i), now.Add(time.Minute))
 	}
-	if l.allow("new", now.Add(time.Minute)) {
-		t.Fatal("past maxTracked addresses, new ones wait for the next window")
+	if !l.allow("new", now.Add(time.Minute)) {
+		t.Fatal("past maxTracked addresses, new ones are let through, not locked out")
+	}
+}
+
+func TestLimiterCountsIPv6PerSlash64(t *testing.T) {
+	l := &limiter{max: 1, counts: map[string]int{}}
+	now := time.Now()
+	if !l.allow("2001:db8:1:2::1", now) || l.allow("2001:db8:1:2::ffff", now) {
+		t.Fatal("two addresses in the same /64 share one budget")
+	}
+	if !l.allow("2001:db8:1:3::1", now) || !l.allow("203.0.113.7", now) {
+		t.Fatal("other /64s and IPv4 addresses have their own")
 	}
 }
 

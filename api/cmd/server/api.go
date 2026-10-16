@@ -8,6 +8,7 @@ import (
 	"log/slog"
 	"net"
 	"net/http"
+	"net/netip"
 	"strconv"
 	"strings"
 	"sync"
@@ -85,7 +86,10 @@ const v1PerMinute = 120
 // maxTracked bounds the limiter's memory if requests come from many addresses at once.
 const maxTracked = 10_000
 
-// limiter allows max requests per client IP in each one-minute window.
+// limiter allows max requests per client IP in each one-minute window. IPv6
+// clients count per /64, the block one subscriber usually gets. When too many
+// addresses arrive in one minute it stops counting new ones instead of locking
+// every new visitor out.
 type limiter struct {
 	mu     sync.Mutex
 	max    int
@@ -100,12 +104,25 @@ func (l *limiter) allow(ip string, now time.Time) bool {
 		l.start = now
 		clear(l.counts)
 	}
+	ip = limitKey(ip)
 	n, seen := l.counts[ip]
 	if !seen && len(l.counts) >= maxTracked {
-		return false
+		return true
 	}
 	l.counts[ip] = n + 1
 	return n < l.max
+}
+
+func limitKey(ip string) string {
+	addr, err := netip.ParseAddr(ip)
+	if err != nil || addr.Is4() || addr.Is4In6() {
+		return ip
+	}
+	p, err := addr.Prefix(64)
+	if err != nil {
+		return ip
+	}
+	return p.String()
 }
 
 // clientIP is the address Fly's proxy saw; without the proxy (local runs) it's the connection's.
