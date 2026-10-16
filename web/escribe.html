@@ -71,8 +71,8 @@ textarea.post { min-height: 7em }
 .actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 0 }
 .button { display: inline-flex; align-items: center; gap: 6px; height: 40px; background: var(--primary); color: var(--on-primary); font: inherit; font-size: .9rem; font-weight: 500; text-decoration: none; padding: 0 16px; border: 1px solid transparent; border-radius: 8px; cursor: pointer; box-shadow: var(--shadow); transition: opacity .15s, background .15s }
 .button:hover { background: var(--brand-deep); opacity: 1 }
-.button.alt { background: var(--surface); color: var(--link); border-color: var(--line) }
-.button.alt:hover { background: var(--subtle); opacity: 1 }
+.button.alt { background: color-mix(in srgb, var(--brand) 12%, var(--surface)); color: var(--link); border: 1.5px solid var(--brand) }
+.button.alt:hover { background: color-mix(in srgb, var(--brand) 22%, var(--surface)); opacity: 1 }
 .via { border: 0; padding: 0; margin: 16px 0 0; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; font-size: .9rem }
 .via legend { float: left; margin-right: 4px; color: var(--muted) }
 .via label { display: inline-flex; gap: 6px; align-items: center; font-weight: 400; font-size: .9rem; margin: 0 }
