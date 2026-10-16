@@ -283,11 +283,6 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   const warn = (...kids) => el("p", { class: "warn" }, ...kids);
   const result = (iconName, title, ...kids) => el("div", { class: "result" },
     el("h3", { class: "ih" }, badge(iconName), title), ...kids);
-  const searchButton = (text) => {
-    const b = el("button", { type: "button", class: "button" }, icon("search"), text);
-    b.addEventListener("click", () => { input.focus(); input.scrollIntoView({ block: "center" }); });
-    return b;
-  };
   const locateLink = (text) => {
     const b = el("button", { type: "button", class: "linklike" }, text);
     b.addEventListener("click", locate);
@@ -370,8 +365,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         const r = await get(`/v1/zone?lat=${lat.toFixed(4)}&lon=${lon.toFixed(4)}`);
         if (r.zones.length === 0) {
           show(result("map-pin", "Tu ubicación no está en ninguna zona del mapa del SIAPA",
-            el("p", {}, "Puede que no te toque la rotación. Pero el mapa y la lista de colonias del SIAPA no siempre coinciden, así que revisa también con el nombre de tu colonia."),
-            el("div", { class: "subscribe" }, searchButton("Buscar mi colonia"), el("a", { class: "button alt", href: MAP, rel: "noopener", target: "_blank" }, icon("map-pin"), "Ver el mapa del SIAPA", icon("external-link")))));
+            el("p", {}, "Puede que no te toque la rotación. Pero el mapa y la lista de colonias del SIAPA no siempre coinciden, así que busca también tu colonia por su nombre aquí arriba."),
+            el("div", { class: "subscribe" }, el("a", { class: "button alt", href: MAP, rel: "noopener", target: "_blank" }, icon("map-pin"), "Ver el mapa del SIAPA", icon("external-link")))));
         } else if (r.zones.length === 1) {
           show(el("p", {}, "Tu ubicación está en la ", el("strong", {}, `zona ${r.zones[0].zone}`), "."), cards(r.zones));
         } else {
