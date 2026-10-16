@@ -101,6 +101,8 @@ footer { font-size: .85rem }
 .buttons { display: flex; flex-wrap: wrap; gap: 10px }
 .button.alt { background: var(--surface); color: var(--link); border-color: var(--line) }
 .button.alt:hover { background: var(--subtle) }
+.nw { white-space: nowrap }
+.tg { width: 1em; height: 1em; vertical-align: -.14em }
 .i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
 h2.ih, h3.ih { display: flex; align-items: center; gap: 10px }
 .mapa { border-top: 0; padding-top: 0 }
@@ -150,11 +152,11 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   <header class="top">
     <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
     <nav class="site-nav" aria-label="Secciones">
-      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#bell"/></svg>Avisos</a>
-      <a href="/llego"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#map-pin"/></svg>Mi zona</a>
-      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#landmark"/></svg>Congreso</a>
-      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#droplet"/></svg>Contaminación</a>
-      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#heart"/></svg>Antisionismo</a>
+      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#bell"/></svg>Avisos</a>
+      <a href="/llego"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#map-pin"/></svg>Mi zona</a>
+      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#landmark"/></svg>Congreso</a>
+      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#droplet"/></svg>Contaminación</a>
+      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#heart"/></svg>Antisionismo</a>
     </nav>
   </header>
 
@@ -163,21 +165,21 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       <img src="/logo.svg" alt="Logo de Agua GDL: una gota de agua" width="180" height="261">
       <div>
         <h1>Avisos de agua para Guadalajara</h1>
-        <p class="lede">Del 15 de octubre de 2026 a marzo de 2027, el SIAPA rota el servicio de agua en más de 600 colonias de la zona metropolitana. Agua GDL te avisa gratis por Telegram o en tu calendario la noche antes de cada corte en tu zona, para que llenes tu tinaco a tiempo.</p>
+        <p class="lede">Del 15 de octubre de 2026 a marzo de 2027, el SIAPA rota el servicio de agua en más de 600 colonias de la zona metropolitana. Agua GDL te avisa gratis por <span class="nw"><svg class="tg" aria-hidden="true"><use href="/icons.svg?v=3#telegram"/></svg> Telegram</span> o en tu calendario la noche antes de cada corte en tu zona, para que llenes tu tinaco a tiempo.</p>
         <div class="notice">
-          <p><strong>Ya puedes suscribirte por Telegram o agregar los días de tu zona a tu calendario.</strong></p>
-          <a class="button" href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#bell"/></svg>Recibir avisos</a>
+          <p><strong>Ya puedes suscribirte por <span class="nw"><svg class="tg" aria-hidden="true"><use href="/icons.svg?v=3#telegram"/></svg> Telegram</span> o agregar los días de tu zona a tu calendario.</strong></p>
+          <a class="button" href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#bell"/></svg>Recibir avisos</a>
         </div>
       </div>
     </div>
 
     <section class="mapa" aria-labelledby="mapa">
-      <h2 id="mapa" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#map-pin"/></svg></span>Mapa de zonas del SIAPA</h2>
+      <h2 id="mapa" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#map-pin"/></svg></span>Mapa de zonas del SIAPA</h2>
       <p>Las 7 zonas de la rotación. Para saber cuál te toca y sus días, usa tu ubicación o busca tu colonia.</p>
       <div class="map-frame">
         <a href="/llego" tabindex="-1" aria-hidden="true"><img src="/zonas.svg" alt="" width="800" height="454"></a>
         <div class="map-cta">
-        <a class="button" href="/llego"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#map-pin"/></svg>Checa tu zona</a>
+        <a class="button" href="/llego"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#map-pin"/></svg>Checa tu zona</a>
         <p class="note">Por ubicación o por nombre de colonia, con tus próximos días de racionamiento.</p>
         </div>
       </div>
@@ -185,7 +187,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     </section>
 
     <section class="congreso" aria-labelledby="congreso">
-      <h2 id="congreso" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#landmark"/></svg></span>Escríbele al Congreso sobre el contrato del agua</h2>
+      <h2 id="congreso" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#landmark"/></svg></span>Escríbele al Congreso sobre el contrato del agua</h2>
       <p>El Gobierno de Jalisco pidió al Congreso aprobar un contrato de asociación público-privada (APP) para que una empresa privada construya y opere, por contrato con la Comisión Estatal del Agua, el acueducto sustituto Chapala–Guadalajara. Pide a las y los diputados que no lo aprueben sin estudios actualizados, matriz de riesgos y desglose de pagos.</p>
       <ul class="facts">
         <li><strong>$11,922 millones</strong><span>cuesta la obra</span></li>
@@ -194,8 +196,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       </ul>
       <p>Desde tu propia cuenta, en unos minutos: un correo a cada diputación, un post en X o un mensaje por Messenger. Agua GDL no ve ni guarda nada.</p>
       <div class="buttons">
-        <a class="button" href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#mail"/></svg>Escribir al Congreso</a>
-        <a class="button alt" href="https://firmale.iepcjalisco.mx/mecanismo/comision-estatal-del-vej21bkjvl" rel="noopener" target="_blank"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#pen-line"/></svg>Firmar la solicitud en el IEPC</a>
+        <a class="button" href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#mail"/></svg>Escribir al Congreso</a>
+        <a class="button alt" href="https://firmale.iepcjalisco.mx/mecanismo/comision-estatal-del-vej21bkjvl" rel="noopener" target="_blank"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#pen-line"/></svg>Firmar la solicitud en el IEPC</a>
       </div>
     </section>
 
@@ -203,22 +205,22 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       <h2 id="que">Lo que estamos haciendo</h2>
       <ul class="cards">
         <li class="card">
-          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#bell"/></svg></span>Aviso la noche anterior</h3>
-          <p>A las 8 de la noche te llega un mensaje por Telegram o una alerta de tu calendario: mañana hay corte en tu zona. Encuentra tu zona con tu ubicación, tu colonia o tu número de zona.</p>
+          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#bell"/></svg></span>Aviso la noche anterior</h3>
+          <p>A las 8 de la noche te llega un mensaje por <span class="nw"><svg class="tg" aria-hidden="true"><use href="/icons.svg?v=3#telegram"/></svg> Telegram</span> o una alerta de tu calendario: mañana hay corte en tu zona. Encuentra tu zona con tu ubicación, tu colonia o tu número de zona.</p>
           <span class="status">Disponible</span>
         </li>
         <li class="card">
-          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#droplet"/></svg></span>¿Llegó el agua?</h3>
+          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#droplet"/></svg></span>¿Llegó el agua?</h3>
           <p>Después de cada corte puedes contar cómo regresó el agua: normal, con baja presión, turbia o si no regresó.</p>
           <span class="status">Disponible</span>
         </li>
         <li class="card">
-          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#landmark"/></svg></span>Votómetro del acueducto</h3>
+          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#landmark"/></svg></span>Votómetro del acueducto</h3>
           <p>Qué postura ha tomado cada una de las 38 diputaciones sobre el contrato del acueducto Chapala–Guadalajara y cómo vota cuando llegue al pleno, con la fuente de cada dato.</p>
           <span class="status">Próximamente</span>
         </li>
         <li class="card">
-          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#check"/></svg></span>Promesómetro del agua</h3>
+          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#check"/></svg></span>Promesómetro del agua</h3>
           <p>Las promesas del Gobierno de Jalisco y del SIAPA sobre el agua, con su fecha límite, cuánto llevan cumplido y la fuente de cada una.</p>
           <span class="status">Próximamente</span>
         </li>
@@ -226,21 +228,21 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     </section>
 
     <section class="why" aria-labelledby="por-que">
-      <h2 id="por-que" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#heart"/></svg></span>Por qué</h2>
+      <h2 id="por-que" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#heart"/></svg></span>Por qué</h2>
       <p>Queremos que la información sobre el agua en Guadalajara sea fácil de consultar y de comprobar: cuándo hay corte, si el calendario se cumple y qué datos públicos existen.</p>
       <p>Empezamos con los avisos de la rotación. Después vendrán más herramientas hechas con datos abiertos.</p>
       <ul class="values">
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#check"/></svg>Gratuito</li>
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#check"/></svg>Sin anuncios</li>
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#check"/></svg>No oficial</li>
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#check"/></svg>Sin partido</li>
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#check"/></svg>No guardamos tu nombre ni tu teléfono</li>
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#check"/></svg>Código abierto</li>
+        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#check"/></svg>Gratuito</li>
+        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#check"/></svg>Sin anuncios</li>
+        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#check"/></svg>No oficial</li>
+        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#check"/></svg>Sin partido</li>
+        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#check"/></svg>No guardamos tu nombre ni tu teléfono</li>
+        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#check"/></svg>Código abierto</li>
       </ul>
     </section>
 
     <section class="contact" aria-labelledby="contacto">
-      <h2 id="contacto" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#mail"/></svg></span>Contacto</h2>
+      <h2 id="contacto" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#mail"/></svg></span>Contacto</h2>
       <p>¿Tienes dudas o datos sobre el agua en tu colonia, o quieres ayudar? Si eres de una organización vecinal o civil que trabaja por el agua, también nos encantaría hablar.</p>
       <a class="email" href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>
     </section>

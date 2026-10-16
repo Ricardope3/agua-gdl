@@ -169,11 +169,11 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   <header class="top">
     <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
     <nav class="site-nav" aria-label="Secciones">
-      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#bell"/></svg>Avisos</a>
-      <a href="/llego" aria-current="page"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#map-pin"/></svg>Mi zona</a>
-      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#landmark"/></svg>Congreso</a>
-      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#droplet"/></svg>Contaminación</a>
-      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#heart"/></svg>Antisionismo</a>
+      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#bell"/></svg>Avisos</a>
+      <a href="/llego" aria-current="page"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#map-pin"/></svg>Mi zona</a>
+      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#landmark"/></svg>Congreso</a>
+      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#droplet"/></svg>Contaminación</a>
+      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#heart"/></svg>Antisionismo</a>
     </nav>
   </header>
 
@@ -182,14 +182,14 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     <p class="lede">Encuentra tu zona de la rotación de agua del SIAPA y tus próximos días de racionamiento.</p>
 
     <div class="finder">
-      <button class="button" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#map-pin"/></svg>Usar mi ubicación</button>
+      <button class="button" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#map-pin"/></svg>Usar mi ubicación</button>
       <p class="note"><strong>Recomendado:</strong> con tu ubicación usamos el mapa de zonas del SIAPA, sin depender de los nombres de las colonias. Tu ubicación solo se usa para encontrar tu zona. No la guardamos.</p>
       <p class="or">o</p>
       <form id="buscar" role="search">
         <label for="colonia">Escribe el nombre de tu colonia</label>
         <div class="search">
           <input id="colonia" name="q" type="search" autocomplete="off" placeholder="Por ejemplo: Las Juntas">
-          <button class="button" type="submit"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#search"/></svg>Buscar</button>
+          <button class="button" type="submit"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#search"/></svg>Buscar</button>
         </div>
       </form>
       <p class="note">Los nombres vienen de la lista del SIAPA y muchas veces no coinciden con Google Maps. <a href="#lista">Por qué</a>.</p>
@@ -199,7 +199,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     <div id="resultado" aria-live="polite" tabindex="-1"></div>
 
     <section aria-labelledby="ojo">
-      <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#info"/></svg></span>Ten en cuenta</h2>
+      <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=3#info"/></svg></span>Ten en cuenta</h2>
       <div class="warn callout" id="lista">
         <svg class="trace" aria-hidden="true"><rect width="100%" height="100%" rx="10" pathLength="1"/></svg>
         <h3>La lista de colonias del SIAPA tiene errores</h3>
@@ -252,7 +252,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     svg.setAttribute("class", "i");
     svg.setAttribute("aria-hidden", "true");
     const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-    use.setAttribute("href", `/icons.svg?v=2#${name}`);
+    use.setAttribute("href", `/icons.svg?v=3#${name}`);
     svg.append(use);
     return svg;
   };
