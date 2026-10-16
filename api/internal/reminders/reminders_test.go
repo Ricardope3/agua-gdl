@@ -323,3 +323,20 @@ func TestManualReminderNeedsACutTomorrow(t *testing.T) {
 		t.Fatal("zone 4 has no cut on Friday 16")
 	}
 }
+
+func TestResubscribingAfterTheRunIsNotRemindedTwice(t *testing.T) {
+	ctx := context.Background()
+	st, snd := fake.NewStore(), &fake.Sender{}
+	r := runner(t, "2026-10-18 19:00", st, snd)
+	st.Subscribe(ctx, store.WhatsApp, "a", "a", 4)
+	clock := tick(r, st, r.Now().Add(time.Hour))
+	if err := r.SendTonight(ctx); err != nil || len(snd.Sent) != 1 {
+		t.Fatalf("sent %d, err %v", len(snd.Sent), err)
+	}
+	*clock = clock.Add(30 * time.Minute)
+	st.Unsubscribe(ctx, store.WhatsApp, "a", "a")
+	st.Subscribe(ctx, store.WhatsApp, "a", "a", 4)
+	if err := r.SendTonight(ctx); err != nil || len(snd.Sent) != 1 {
+		t.Fatalf("the confirmation already announced tomorrow's cut: sent %d, err %v", len(snd.Sent), err)
+	}
+}

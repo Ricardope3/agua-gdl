@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"slices"
 	"strconv"
 	"time"
 
@@ -141,8 +142,15 @@ func (r *Runner) sendChannel(ctx context.Context, channel string) (err error) {
 		return nil
 	}
 	subs, err := r.Store.DueSubscribers(ctx, channel, zones, tomorrow)
-	if err != nil || len(subs) == 0 {
+	if err != nil {
 		return transient(err)
+	}
+	// Whoever subscribed or changed zone after the reminder hour was told about tomorrow's
+	// cut in the confirmation; skipping them also keeps BAJA + re-subscribe from repeating it.
+	remindAt := r.Schedule.Day(now).Add(time.Duration(r.Hour) * time.Hour)
+	subs = slices.DeleteFunc(subs, func(s store.Subscriber) bool { return !s.UpdatedAt.Before(remindAt) })
+	if len(subs) == 0 {
+		return nil
 	}
 	y, m, _ := now.In(r.Schedule.Location()).Date()
 	monthStart := time.Date(y, m, 1, 0, 0, 0, 0, r.Schedule.Location())
