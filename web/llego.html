@@ -643,8 +643,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const q = input.value.trim();
-    if ([...q].length < 3) {
-      show(msg("Escribe al menos 3 letras del nombre de tu colonia."));
+    if (!q) {
+      show(msg("Escribe el nombre de tu colonia."));
       return;
     }
     search(q);

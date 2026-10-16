@@ -169,6 +169,10 @@ func (ix *Index) Search(q string, limit int) (matches []Colonia, exact bool) {
 		if len(nq) >= 4 && strings.Contains(c.norm, nq) {
 			s = max(s, 0.5)
 		}
+		// Trigrams can't match one or two letters, so short queries match word starts.
+		if len([]rune(nq)) < 3 && strings.Contains(" "+c.norm, " "+nq) {
+			s = max(s, 0.5)
+		}
 		if s >= 0.3 {
 			cands = append(cands, scored{c, s})
 		}

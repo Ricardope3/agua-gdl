@@ -94,6 +94,19 @@ func TestLastRowOfPDFPage(t *testing.T) {
 	}
 }
 
+func TestShortQueriesMatchWordStarts(t *testing.T) {
+	ix, _ := Load(data.Colonias)
+	m, _ := ix.Search("ch", 10)
+	if len(m) == 0 {
+		t.Fatal("no match for ch")
+	}
+	for _, c := range m {
+		if !strings.Contains(" "+c.norm, " CH") {
+			t.Errorf("%s has no word starting with CH", c.Name)
+		}
+	}
+}
+
 func TestSearchIgnoresOverlongQueries(t *testing.T) {
 	ix, _ := Load(data.Colonias)
 	if m, _ := ix.Search(strings.Repeat("analco ", 20), 10); m != nil {
