@@ -77,10 +77,11 @@ label { display: block; font-weight: 700; margin: 0 0 6px }
 .cal summary { cursor: pointer; font-weight: 600; color: var(--link) }
 .button.alt { background: var(--surface); color: var(--link); border-color: var(--line) }
 .zone .subscribe { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px }
-.choices { list-style: none; margin: 0 0 14px; padding: 0; display: grid; gap: 8px }
-.choice { width: 100%; text-align: left; font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; cursor: pointer }
+.choices { list-style: none; margin: 0 0 14px; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr)); gap: 8px }
+.choices li { display: flex }
+.choice { width: 100%; text-align: left; font: inherit; font-size: .95rem; line-height: 1.35; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; cursor: pointer }
 .choice:hover { border-color: var(--brand) }
-.choice span { display: block; color: var(--muted); font-size: .95rem }
+.choice span { display: block; color: var(--muted); font-size: .85rem }
 .mapbox { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin: 0 0 14px; box-shadow: var(--shadow) }
 .mapbox > p { margin: 0 0 10px }
 .mapbox .map { height: 380px; border-radius: 8px; margin: 0 0 10px; background: var(--subtle) }
@@ -460,10 +461,13 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       for (const [c, f] of found) {
         L.geoJSON(f, { interactive: false, style: { color: halo, weight: 8, fill: false } }).addTo(group);
         const line = L.geoJSON(f, { style: { color: ink, weight: 4, fill: list.length > 1, fillOpacity: 0 } }).addTo(group);
-        if (list.length > 1) {
-          line.bindTooltip(`${c.name} · ${municipio(c.municipio)} · ${c.zones.length > 1 ? "Zonas" : "Zona"} ${joinES(c.zones)}`, { sticky: true, className: "map-label" });
-          line.on("click", () => showColonia(c, zones));
-        }
+        if (list.length > 1) line.on("click", () => showColonia(c, zones));
+        // Name and municipio only: the outline can cross several zones, and the colors show which.
+        const b = line.getBounds();
+        L.tooltip({ permanent: true, direction: "top", className: "map-label" })
+          .setLatLng([b.getNorth(), b.getCenter().lng])
+          .setContent(`${c.name} · ${municipio(c.municipio)}`)
+          .addTo(map);
       }
       map.fitBounds(group.getBounds(), { padding: [24, 24] });
       if (list.length > 1) return;
