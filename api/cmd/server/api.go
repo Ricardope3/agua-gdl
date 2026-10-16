@@ -61,8 +61,10 @@ func (a *api) routes() http.Handler {
 	mux.HandleFunc("GET /v1/zone", a.zoneAt)
 	mux.HandleFunc("GET /v1/colonias", a.coloniaSearch)
 	mux.HandleFunc("GET /v1/results", a.results)
-	mux.HandleFunc("GET /wa/webhook", a.verify)
-	mux.HandleFunc("POST /wa/webhook", a.webhook)
+	if len(a.appSecret) > 0 {
+		mux.HandleFunc("GET /wa/webhook", a.verify)
+		mux.HandleFunc("POST /wa/webhook", a.webhook)
+	}
 	if a.tgSecret != "" {
 		mux.HandleFunc("POST /tg/webhook", a.telegram)
 	}

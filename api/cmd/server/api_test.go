@@ -32,7 +32,7 @@ func TestV1ErrorsAllowAnyOrigin(t *testing.T) {
 }
 
 func TestWebhookVerifyEchoesChallengeAsPlainText(t *testing.T) {
-	h := (&api{verifyToken: "tok"}).routes()
+	h := (&api{verifyToken: "tok", appSecret: []byte("secret")}).routes()
 	rec := httptest.NewRecorder()
 	h.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/wa/webhook?hub.mode=subscribe&hub.verify_token=tok&hub.challenge=%3Cb%3E1%3C%2Fb%3E", nil))
 	if rec.Code != http.StatusOK || rec.Body.String() != "<b>1</b>" || !strings.HasPrefix(rec.Header().Get("Content-Type"), "text/plain") {
@@ -205,5 +205,14 @@ func TestTelegramWebhookChecksTheSecret(t *testing.T) {
 	}
 	if code := post(h, "s3cret"); code != http.StatusOK || len(st.Subs) != 1 || len(tel.Sent) != 1 {
 		t.Fatalf("code %d, subs %d, replies %d", code, len(st.Subs), len(tel.Sent))
+	}
+}
+
+func TestWhatsAppWebhookIsOffWithoutItsSecret(t *testing.T) {
+	h := (&api{}).routes()
+	rec := httptest.NewRecorder()
+	h.ServeHTTP(rec, httptest.NewRequest(http.MethodPost, "/wa/webhook", strings.NewReader("{}")))
+	if rec.Code != http.StatusNotFound {
+		t.Fatalf("status %d, want 404 when WhatsApp isn't configured", rec.Code)
 	}
 }

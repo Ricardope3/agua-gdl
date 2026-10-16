@@ -43,12 +43,15 @@ func loadConfig() (config, error) {
 		WALanguage:     env("WA_LANGUAGE", "es_MX"),
 		HeartbeatURL:   os.Getenv("HEARTBEAT_URL"),
 	}
+	required := map[string]*string{"DATABASE_URL": &c.DatabaseURL, "PUBLIC_BASE_URL": &c.BaseURL}
+	// WhatsApp is optional: off unless WA_TOKEN is set, and then it needs the rest.
+	if c.WAToken = os.Getenv("WA_TOKEN"); c.WAToken != "" {
+		required["WA_PHONE_NUMBER_ID"] = &c.WAPhoneNumberID
+		required["WA_APP_SECRET"] = &c.WAAppSecret
+		required["WA_VERIFY_TOKEN"] = &c.WAVerifyToken
+	}
 	var missing []string
-	for name, dst := range map[string]*string{
-		"DATABASE_URL": &c.DatabaseURL, "PUBLIC_BASE_URL": &c.BaseURL,
-		"WA_TOKEN": &c.WAToken, "WA_PHONE_NUMBER_ID": &c.WAPhoneNumberID,
-		"WA_APP_SECRET": &c.WAAppSecret, "WA_VERIFY_TOKEN": &c.WAVerifyToken,
-	} {
+	for name, dst := range required {
 		if *dst = os.Getenv(name); *dst == "" {
 			missing = append(missing, name)
 		}
@@ -56,7 +59,7 @@ func loadConfig() (config, error) {
 	if len(missing) > 0 {
 		return c, fmt.Errorf("missing env vars: %v", missing)
 	}
-	c.RemindersEnabled = os.Getenv("REMINDERS_ENABLED") == "true"
+	c.RemindersEnabled = c.WAToken != "" && os.Getenv("REMINDERS_ENABLED") == "true"
 	// Telegram is optional: off unless TG_TOKEN is set.
 	c.TGToken, c.TGWebhookSecret = os.Getenv("TG_TOKEN"), os.Getenv("TG_WEBHOOK_SECRET")
 	if c.TGToken != "" && c.TGWebhookSecret == "" {
@@ -129,15 +132,19 @@ func run(log *slog.Logger) error {
 		return err
 	}
 
-	client := &wa.Client{
-		BaseURL:       "https://graph.facebook.com/" + cfg.WAGraphVersion,
-		PhoneNumberID: cfg.WAPhoneNumberID,
-		Token:         cfg.WAToken,
-		HTTP:          &http.Client{Timeout: 15 * time.Second},
-	}
-	b := &bot.Bot{Store: db, Sender: client, Schedule: sched, Zones: zones, Colonias: cols,
+	var client *wa.Client
+	b := &bot.Bot{Store: db, Schedule: sched, Zones: zones, Colonias: cols,
 		BaseURL: cfg.BaseURL, PhoneNumberID: cfg.WAPhoneNumberID, ReminderHour: cfg.ReminderHour,
 		RemindersOn: cfg.RemindersEnabled, NightCap: cfg.DailyCap, Now: time.Now, Log: log}
+	if cfg.WAToken != "" {
+		client = &wa.Client{
+			BaseURL:       "https://graph.facebook.com/" + cfg.WAGraphVersion,
+			PhoneNumberID: cfg.WAPhoneNumberID,
+			Token:         cfg.WAToken,
+			HTTP:          &http.Client{Timeout: 15 * time.Second},
+		}
+		b.Sender = client
+	}
 	var telegram *tg.Client
 	if cfg.TGToken != "" {
 		telegram = &tg.Client{BaseURL: "https://api.telegram.org", Token: cfg.TGToken, HTTP: &http.Client{Timeout: 15 * time.Second}}
@@ -179,7 +186,7 @@ func run(log *slog.Logger) error {
 		defer cancel()
 		srv.Shutdown(shutdown)
 	}()
-	log.Info("listening", "port", cfg.Port, "reminders", cfg.RemindersEnabled, "telegram", cfg.TGToken != "", "telegram_reminders", cfg.TGRemindersEnabled)
+	log.Info("listening", "port", cfg.Port, "whatsapp", cfg.WAToken != "", "reminders", cfg.RemindersEnabled, "telegram", cfg.TGToken != "", "telegram_reminders", cfg.TGRemindersEnabled)
 	if err := srv.ListenAndServe(); !errors.Is(err, http.ErrServerClosed) {
 		return err
 	}
