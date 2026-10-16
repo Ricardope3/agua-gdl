@@ -462,11 +462,11 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         L.geoJSON(f, { interactive: false, style: { color: halo, weight: 8, fill: false } }).addTo(group);
         const line = L.geoJSON(f, { style: { color: ink, weight: 4, fill: list.length > 1, fillOpacity: 0 } }).addTo(group);
         if (list.length > 1) line.on("click", () => showColonia(c, zones));
-        // Name and municipio only: the outline can cross several zones, and the colors show which.
+        // The name only: the outline can cross several zones, and the colors show which.
         const b = line.getBounds();
         L.tooltip({ permanent: true, direction: "top", className: "map-label" })
           .setLatLng([b.getNorth(), b.getCenter().lng])
-          .setContent(`${c.name} · ${municipio(c.municipio)}`)
+          .setContent(c.name)
           .addTo(map);
       }
       map.fitBounds(group.getBounds(), { padding: [24, 24] });
