@@ -90,9 +90,9 @@ section ul:not(.people) { margin: 0; padding-left: 20px; color: var(--muted); fo
 .people a { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; font-weight: 500; font-size: .875rem; text-decoration: none }
 @media (max-width: 640px) { .people li { flex-direction: column; align-items: stretch } .people .links { max-width: none; justify-content: flex-start } }
 .tabs-label { margin: 0 0 8px; font-weight: 600 }
-.tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 0 0 20px }
+.tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0 0 20px }
 @media (max-width: 760px) { .tabs { grid-template-columns: repeat(2, 1fr) } }
-@media (min-width: 761px) { .tabs button { flex-direction: column; align-items: center; text-align: center; gap: 8px } }
+
 .tabs button { display: flex; align-items: center; gap: 10px; text-align: left; font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; cursor: pointer; box-shadow: var(--shadow); transition: border-color .15s, background .15s }
 .tabs button:hover { border-color: var(--brand) }
 .tab-icon { display: grid; place-items: center; width: 34px; height: 34px; flex-shrink: 0; border-radius: 50%; background: var(--brand); color: var(--on-primary) }
@@ -102,6 +102,9 @@ section ul:not(.people) { margin: 0; padding-left: 20px; color: var(--muted); fo
 .tabs button[aria-selected="true"] { border: 2px solid var(--brand); padding: 9px 11px; background: color-mix(in srgb, var(--brand) 10%, var(--surface)) }
 .tabs button[aria-selected="true"] .tab-text strong { color: var(--link) }
 .panel > section { margin-top: 0 }
+.panel > section + section { margin-top: 20px }
+#p-porque ul { margin: 0 0 14px }
+#p-porque li { margin: 0 0 10px }
 .people a.who { white-space: normal; color: var(--fg); font-size: .95rem }
 .people a:hover { text-decoration: underline }
 .people .done { color: var(--muted); font-weight: 400 }
@@ -142,6 +145,7 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
       <button type="button" role="tab" id="t-redes" aria-controls="p-redes" data-tab="redes"><span class="tab-icon"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#message-circle"/></svg></span><span class="tab-text"><strong>X y Messenger</strong><small>Un post o un mensaje</small></span></button>
       <button type="button" role="tab" id="t-lista" aria-controls="p-lista" data-tab="lista"><span class="tab-icon"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#users"/></svg></span><span class="tab-text"><strong>Las 38</strong><small>Correo, redes y teléfono</small></span></button>
       <button type="button" role="tab" id="t-firma" aria-controls="p-firma" data-tab="firma"><span class="tab-icon"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#pen-line"/></svg></span><span class="tab-text"><strong>Firma</strong><small>Solicitud en el IEPC</small></span></button>
+      <button type="button" role="tab" id="t-porque" aria-controls="p-porque" data-tab="porque"><span class="tab-icon"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#info"/></svg></span><span class="tab-text"><strong>Por qué</strong><small>Nuestras razones</small></span></button>
     </nav>
 
     <div class="panel" role="tabpanel" id="p-correo" aria-labelledby="t-correo">
@@ -249,6 +253,34 @@ Atentamente,</textarea>
       <p>En el Instituto Electoral y de Participación Ciudadana de Jalisco (IEPC) hay una solicitud ciudadana para vigilar este contrato de la Comisión Estatal del Agua. Necesita 4,175 firmas, que valida el INE. Para firmar necesitas tu credencial del INE de Jalisco: nombre, folio, clave de elector, sección y tu firma en pantalla.</p>
       <a class="button" href="https://firmale.iepcjalisco.mx/mecanismo/comision-estatal-del-vej21bkjvl" rel="noopener" target="_blank"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#pen-line"/></svg>Firmar en el IEPC</a>
       <p class="note">Es una plataforma oficial del IEPC. La exposición de motivos es responsabilidad de quienes la promueven; Agua GDL no la organiza.</p>
+    </section>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-porque" aria-labelledby="t-porque">
+    <section aria-labelledby="porque-app">
+      <h2 id="porque-app" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#landmark"/></svg></span>Por qué nos oponemos a esta APP</h2>
+      <p>El Gobierno de Jalisco pidió al Congreso, el 8 de octubre de 2026, aprobar una asociación público-privada para que una empresa construya y opere durante 20 o 25 años el acueducto sustituto Chapala–Guadalajara, y el Estado le pague cada año.</p>
+      <ul>
+        <li><strong>Pagaríamos varias veces la obra.</strong> La inversión es de 11,922 millones de pesos; los pagos a la empresa llegarían hasta 39,689 millones en 20 años o 48,296 millones en 25, según las cifras presentadas en el Congreso (<a href="https://concienciapublica.com.mx/2026/10/13/oposicion-rechaza-privatizar-acueducto-chapala-guadalajara-costaria-hasta-48-mil-millones-de-pesos/" rel="noopener" target="_blank">Conciencia Pública</a>).</li>
+        <li><strong>Es deuda, aunque no se llame así.</strong> Son pagos obligatorios del presupuesto estatal durante dos décadas, que comprometen a los próximos gobiernos.</li>
+        <li><strong>Sin estudios ni transparencia.</strong> No se han publicado los estudios actualizados, la matriz de riesgos ni el desglose de pagos. El gobernador dijo en julio que cuatro empresas ya habían presentado propuestas, pero no se sabe cuáles (<a href="https://www.aztecajalisco.com/local/inversionistas-presentan-propuestas-para-acueducto-chapala-guadalajara/" rel="noopener" target="_blank">Azteca Jalisco</a>).</li>
+        <li><strong>El agua es un derecho, no un negocio.</strong> La presidenta Claudia Sheinbaum también rechazó el esquema por ser, en los hechos, una privatización (<a href="https://www.informador.mx/jalisco/pablo-lemus-asegura-que-no-se-privatizara-el-agua-de-guadalajara-20261014-0023.html" rel="noopener" target="_blank">El Informador</a>).</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="porque-palestina">
+      <h2 id="porque-palestina" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#heart"/></svg></span>Contra el colonialismo y el sionismo</h2>
+      <p>En Agua GDL estamos contra el colonialismo y el sionismo. El agua de Jalisco no debe quedar en manos de empresas que lucran con la ocupación de Palestina, donde Israel usa el agua como arma.</p>
+      <p>Hoy ninguna empresa ha sido elegida para el acueducto y no hay pruebas públicas de que una empresa israelí participe; el gobernador dijo que «no se va a entregar el servicio de agua potable a ninguna empresa israelí» (<a href="https://www.informador.mx/jalisco/pablo-lemus-asegura-que-no-se-privatizara-el-agua-de-guadalajara-20261014-0023.html" rel="noopener" target="_blank">El Informador</a>). Pero México sí tiene acuerdos con Mekorot, la empresa nacional de agua de Israel, y queremos que eso quede cerrado por ley:</p>
+      <ul>
+        <li><strong>Mekorot y México.</strong> La Conagua firmó acuerdos con Mekorot en 2013 y 2015 (<a href="https://www.gob.mx/conagua/prensa/firman-mexico-e-israel-acuerdo-para-la-remediacion-de-acuiferos" rel="noopener" target="_blank">Conagua</a>); según el diario israelí Globes, un exasesor de Netanyahu cobró por gestionarlos (<a href="https://en.globes.co.il/en/article-netanyahu-advisor-makes-millions-on-mekorot-mexico-deal-1000941278" rel="noopener" target="_blank">Globes</a>).</li>
+        <li><strong>La ONU la señala.</strong> Mekorot está en la base de datos de la ONU de empresas con actividades en los asentamientos israelíes en territorio palestino ocupado, por el uso del agua (<a href="https://www.ecoi.net/en/file/local/2024766/A_HRC_43_71_E.pdf" rel="noopener" target="_blank">ONU, A/HRC/43/71</a>).</li>
+        <li><strong>Agua desigual.</strong> Amnistía Internacional documentó que una persona palestina en Cisjordania apenas llega a 70 litros al día, contra más de 300 en Israel (<a href="https://www.amnesty.eu/news/troubled-waters-palestinians-denied-fair-access-to-water/" rel="noopener" target="_blank">Amnistía</a>); B'Tselem reporta que Mekorot reduce el agua a comunidades palestinas en verano para abastecer a los asentamientos (<a href="https://www.btselem.org/water/20071028_hebron_area" rel="noopener" target="_blank">B'Tselem</a>).</li>
+        <li><strong>Gaza.</strong> Human Rights Watch documentó que Israel cortó el 9 de octubre de 2023 las tres tuberías de Mekorot hacia Gaza y concluyó que la privación de agua constituye actos de genocidio (<a href="https://www.hrw.org/report/2024/12/19/extermination-and-acts-genocide/israel-deliberately-depriving-palestinians-gaza" rel="noopener" target="_blank">HRW</a>). La Corte Internacional de Justicia ordenó a Israel permitir el agua y los servicios básicos (<a href="https://www.icj-cij.org/node/203854" rel="noopener" target="_blank">CIJ</a>).</li>
+        <li><strong>Otros ya rompieron.</strong> La empresa de agua neerlandesa Vitens terminó su cooperación con Mekorot en 2013 (<a href="https://www.alhaq.org/advocacy/6691.html" rel="noopener" target="_blank">Al-Haq</a>), y en Argentina hay protestas contra sus convenios con varias provincias (<a href="https://www.aljazeera.com/news/2023/11/24/amid-gaza-war-activists-in-argentina-aim-to-expel-israeli-water-company" rel="noopener" target="_blank">Al Jazeera</a>).</li>
+      </ul>
+      <p><strong>Lo que pedimos:</strong> que cualquier ley o contrato del acueducto publique los nombres de las empresas que presenten propuestas y prohíba contratar a empresas incluidas en la base de datos de la ONU de empresas en los asentamientos.</p>
+      <p class="note">Nuestra crítica es al Estado de Israel y a empresas concretas por hechos documentados, nunca al pueblo judío.</p>
     </section>
     </div>
 
