@@ -125,13 +125,15 @@ func (f senderFunc) Send(ctx context.Context, m wa.Message) (string, error) { re
 
 func TestAnyFailedSendFailsHeartbeatIncludingAfterRestart(t *testing.T) {
 	for sendErr, wantCalls := range map[error]int{
-		errors.New("network timeout"):           1, // WhatsApp may have accepted it: never resend
-		&wa.APIError{Status: 400, Code: 131026}: 2, // Meta rejected it: nothing was sent, so a re-run retries
+		errors.New("network timeout"): 1, // WhatsApp may have accepted it: never resend
+		// Meta rejected it: nothing was sent, so each run retries with backoff until the 22:00 deadline.
+		&wa.APIError{Status: 400, Code: 131026}: 18,
 	} {
 		t.Run(sendErr.Error(), func(t *testing.T) {
 			st, snd := fake.NewStore(), &fake.Sender{}
 			st.Subscribe(context.Background(), store.WhatsApp, "a", "521111", 4)
 			r := runner(t, "2026-10-18 20:00", st, snd)
+			tick(r, st, r.Now())
 			calls := 0
 			r.Sender = senderFunc(func(context.Context, wa.Message) (string, error) { calls++; return "", sendErr })
 			var beats []bool

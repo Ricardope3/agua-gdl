@@ -102,3 +102,17 @@ func TestWhatsAppFailuresDontStopTelegram(t *testing.T) {
 type failingSender struct{ err error }
 
 func (f failingSender) Send(context.Context, wa.Message) (string, error) { return "", f.err }
+
+func TestRefusedTelegramSendIsRetriedTheSameNight(t *testing.T) {
+	ctx := context.Background()
+	st := fake.NewStore()
+	st.Subscribe(ctx, store.Telegram, "777", "", 4)
+	tel := &flakyTelegram{errs: []error{&tg.APIError{Status: 400, Description: "Bad Request"}}}
+	r := runner(t, "2026-10-18 20:00", st, nil)
+	r.Sender, r.Telegram = nil, tel
+	tick(r, st, r.Now())
+	r.runOnce(ctx)
+	if len(tel.Sent) != 1 || len(st.Unresolved) != 0 {
+		t.Fatalf("a refused send must be retried before the deadline: sent %d, unresolved %v", len(tel.Sent), st.Unresolved)
+	}
+}

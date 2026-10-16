@@ -81,12 +81,13 @@ func (r *Runner) nextRun(now time.Time) time.Time {
 }
 
 // runOnce retries a run that failed before contacting WhatsApp, e.g. the database
-// waking up, until the catch-up deadline; sends themselves are never retried here.
+// waking up, or had sends refused, until the catch-up deadline; only refused sends are
+// sent again, since nothing was delivered.
 func (r *Runner) runOnce(ctx context.Context) {
 	deadline := r.Schedule.Day(r.Now()).Add(time.Duration(r.CatchUpUntil) * time.Hour)
 	err := r.SendTonight(ctx)
-	for wait := time.Minute; errors.Is(err, errTransient) && r.Now().Add(wait).Before(deadline); wait = min(2*wait, 10*time.Minute) {
-		r.Log.Warn("reminders failed before sending; retrying", "err", err, "in", wait)
+	for wait := time.Minute; (errors.Is(err, errTransient) || errors.Is(err, errRejected)) && r.Now().Add(wait).Before(deadline); wait = min(2*wait, 10*time.Minute) {
+		r.Log.Warn("reminders incomplete; retrying", "err", err, "in", wait)
 		if r.sleep(ctx, wait) != nil {
 			break
 		}
@@ -109,6 +110,8 @@ var ErrCapped = errors.New("send cap reached")
 
 var errTransient = errors.New("failed before sending")
 
+var errRejected = errors.New("some sends were refused; they are retried")
+
 func transient(err error) error {
 	if err == nil {
 		return nil
@@ -130,11 +133,15 @@ func (r *Runner) SendTonight(ctx context.Context) error {
 func (r *Runner) sendChannel(ctx context.Context, channel string) (err error) {
 	now := r.Now()
 	tomorrow := r.Schedule.Day(now).AddDate(0, 0, 1)
+	rejected := false
 	defer func() {
 		n, checkErr := r.Store.UnresolvedReminders(ctx, channel, tomorrow)
 		err = errors.Join(err, transient(checkErr))
 		if n > 0 {
 			err = errors.Join(err, fmt.Errorf("%s: %d failed or uncertain reminder attempts require review", channel, n))
+		}
+		if rejected {
+			err = errors.Join(err, errRejected)
 		}
 	}()
 	zones := r.Schedule.ZonesOn(tomorrow)
@@ -190,6 +197,8 @@ func (r *Runner) sendChannel(ctx context.Context, channel string) (err error) {
 			return errors.Join(err, transient(fmt.Errorf("subscriber %d: %w", s.ID, sendErr)))
 		}
 		if sendErr != nil {
+			var refused interface{ Rejected() bool }
+			rejected = rejected || errors.As(sendErr, &refused) && refused.Rejected()
 			err = errors.Join(err, fmt.Errorf("subscriber %d: %w", s.ID, sendErr))
 			r.Log.Error("reminder attempt failed", "subscriber", s.ID, "err", sendErr)
 			if failures++; failures >= maxConsecutiveFailures {
