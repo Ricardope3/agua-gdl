@@ -194,9 +194,23 @@ func (ix *Index) exact(nq, mun string) []Colonia {
 	return out
 }
 
+// stopwords don't tell colonias apart, so they don't count toward similarity:
+// otherwise "los pino" matches LOS PATOS and LOS POCITOS on "LOS" alone.
+var stopwords = map[string]bool{"EL": true, "LA": true, "LOS": true, "LAS": true, "DE": true, "DEL": true, "Y": true}
+
 func trigrams(s string) map[string]bool {
+	words := strings.Fields(s)
+	var kept []string
+	for _, w := range words {
+		if !stopwords[w] {
+			kept = append(kept, w)
+		}
+	}
+	if len(kept) > 0 {
+		words = kept
+	}
 	g := map[string]bool{}
-	for _, w := range strings.Fields(s) {
+	for _, w := range words {
 		r := []rune("  " + w + " ")
 		for i := 0; i+3 <= len(r); i++ {
 			g[string(r[i:i+3])] = true

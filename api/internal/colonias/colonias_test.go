@@ -107,6 +107,19 @@ func TestShortQueriesMatchWordStarts(t *testing.T) {
 	}
 }
 
+func TestArticlesDontMatch(t *testing.T) {
+	ix, _ := Load(data.Colonias)
+	m, _ := ix.Search("los pino", 10)
+	if len(m) == 0 || m[0].Name != "LOS PINOS" {
+		t.Fatalf("los pino: %v", m)
+	}
+	for _, c := range m {
+		if !strings.Contains(c.norm, "PINO") {
+			t.Errorf("los pino matched %s", c.Name)
+		}
+	}
+}
+
 func TestSearchIgnoresOverlongQueries(t *testing.T) {
 	ix, _ := Load(data.Colonias)
 	if m, _ := ix.Search(strings.Repeat("analco ", 20), 10); m != nil {
