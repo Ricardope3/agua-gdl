@@ -119,6 +119,27 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 .site-nav .i { color: var(--brand) }
 .site-nav a[aria-current="page"] .i { color: inherit }
 li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
+.i { --ic: var(--brand) }
+.i:has(use[href$="#bell"]) { --ic: #d97706 }
+.i:has(use[href$="#map-pin"]) { --ic: #e11d48 }
+.i:has(use[href$="#landmark"]) { --ic: #7c3aed }
+.i:has(use[href$="#heart"]) { --ic: #dc2626 }
+.i:has(use[href$="#check"]) { --ic: #16a34a }
+.i:has(use[href$="#shield-check"]) { --ic: #16a34a }
+.i:has(use[href$="#mail"]) { --ic: #0d9488 }
+.i:has(use[href$="#pen-line"]) { --ic: #ea580c }
+.i:has(use[href$="#calendar"]) { --ic: #4f46e5 }
+@media (prefers-color-scheme: dark) { .i:has(use[href$="#bell"]) { --ic: #fbbf24 } .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#landmark"]) { --ic: #a78bfa } .i:has(use[href$="#heart"]) { --ic: #f87171 } .i:has(use[href$="#check"]) { --ic: #4ade80 } .i:has(use[href$="#shield-check"]) { --ic: #4ade80 } .i:has(use[href$="#mail"]) { --ic: #2dd4bf } .i:has(use[href$="#pen-line"]) { --ic: #fb923c } .i:has(use[href$="#calendar"]) { --ic: #818cf8 } }
+.site-nav .i, li > .i, p > .i, summary > .i, h3 > .i { color: var(--ic) }
+.ih .i-badge:has(use[href$="#bell"]) { background: #d97706 }
+.ih .i-badge:has(use[href$="#map-pin"]) { background: #e11d48 }
+.ih .i-badge:has(use[href$="#landmark"]) { background: #7c3aed }
+.ih .i-badge:has(use[href$="#heart"]) { background: #dc2626 }
+.ih .i-badge:has(use[href$="#check"]) { background: #16a34a }
+.ih .i-badge:has(use[href$="#shield-check"]) { background: #16a34a }
+.ih .i-badge:has(use[href$="#mail"]) { background: #0d9488 }
+.ih .i-badge:has(use[href$="#pen-line"]) { background: #ea580c }
+.ih .i-badge:has(use[href$="#calendar"]) { background: #4f46e5 }
 </style>
 </head>
 <body>
