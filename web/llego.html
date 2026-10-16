@@ -66,6 +66,11 @@ label { display: block; font-weight: 700; margin: 0 0 6px }
 .result p { margin: 0 0 16px; color: var(--muted) }
 .result .subscribe { display: flex; flex-wrap: wrap; gap: 10px }
 .warn { background: var(--warn-bg); border-left: 5px solid var(--warn); border-radius: 8px; padding: 12px 14px }
+.callout { margin: 0 0 18px; padding: 16px 18px; max-width: 72ch }
+.callout h3 { margin: 0 0 8px; font-size: 1.15rem; line-height: 1.3 }
+.callout p { margin: 0 0 10px }
+.callout ul { margin: 0; padding-left: 1.2em }
+.callout li { margin: 0 0 6px }
 .linklike { font: inherit; color: var(--link); background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer }
 .zones { display: grid; gap: 12px; margin: 0 0 14px }
 .zone { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px }
@@ -170,7 +175,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 
     <div class="finder">
       <button class="button" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#map-pin"/></svg>Usar mi ubicación</button>
-      <p class="note">Tu ubicación solo se usa para encontrar tu zona. No la guardamos.</p>
+      <p class="note"><strong>Recomendado:</strong> con tu ubicación usamos el mapa de zonas del SIAPA, sin depender de los nombres de las colonias. Tu ubicación solo se usa para encontrar tu zona. No la guardamos.</p>
       <p class="or">o</p>
       <form id="buscar" role="search">
         <label for="colonia">Escribe el nombre de tu colonia</label>
@@ -179,6 +184,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
           <button class="button" type="submit"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#search"/></svg>Buscar</button>
         </div>
       </form>
+      <p class="note">Los nombres vienen de la lista del SIAPA y muchas veces no coinciden con Google Maps. <a href="#lista">Por qué</a>.</p>
       <noscript><p class="note">Esta página necesita JavaScript. Consulta tu zona en el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa oficial del SIAPA</a>.</p></noscript>
     </div>
 
@@ -186,8 +192,18 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 
     <section aria-labelledby="ojo">
       <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#info"/></svg></span>Ten en cuenta</h2>
+      <div class="warn callout" id="lista">
+        <h3>La lista de colonias del SIAPA tiene errores</h3>
+        <p>Comparamos la <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/pdf/colonias_siapa.pdf" rel="noopener">lista de 621 colonias</a> del SIAPA con su propio <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa de zonas</a> y con los contornos de colonias del INE (diciembre de 2025):</p>
+        <ul>
+          <li><strong>228 colonias</strong> no aparecen con ese nombre en la cartografía del INE: son secciones, nombres antiguos o con otra ortografía, como JARDÍN DE LOS ESCRITORES o NUEVO FRACCIONAMIENTO. Muchas tampoco salen así en Google Maps.</li>
+          <li><strong>Hay colonias repetidas con zonas distintas:</strong> SAN FELIPE 2 SECCIÓN está en la zona 2 y SAN FELIPE SEGUNDA SECCIÓN en la zona 3.</li>
+          <li><strong>En 15 colonias</strong> la lista da más zonas que el mapa. Por ejemplo, LAS CONCHAS está en las zonas 2 y 6 en la lista, pero en el mapa solo queda en la 2.</li>
+          <li><strong>19 colonias</strong> quedan fuera de la zona que les da la lista, según el contorno del INE. PROVIDENCIA, CHAPALITA SUR y SANTA MÓNICA están en la zona 6 de la lista, pero el mapa las deja fuera de todas las zonas.</li>
+        </ul>
+        <p>Si buscas por ubicación y por nombre y te dan zonas distintas, prepárate para los días de las dos.</p>
+      </div>
       <ul class="plain">
-        <li>Las zonas y los días vienen del mapa y de la lista de colonias que publica el SIAPA. El mapa y la lista no siempre coinciden; si tienes dudas, revisa el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa oficial del SIAPA</a>.</li>
         <li>Según el SIAPA, cada racionamiento dura máximo un día y no es un corte total: baja la presión del agua. La Silla Rota publicó que empieza a las 12 de la noche del día programado.</li>
         <li>Agua GDL es una iniciativa ciudadana: no es del SIAPA ni del gobierno y no tiene partido.</li>
       </ul>
