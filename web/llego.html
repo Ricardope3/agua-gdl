@@ -66,7 +66,15 @@ label { display: block; font-weight: 700; margin: 0 0 6px }
 .result p { margin: 0 0 16px; color: var(--muted) }
 .result .subscribe { display: flex; flex-wrap: wrap; gap: 10px }
 .warn { background: var(--warn-bg); border-left: 5px solid var(--warn); border-radius: 8px; padding: 12px 14px }
-.callout { margin: 0 0 18px; padding: 16px 18px; max-width: 72ch }
+.callout { position: relative; margin: 0 0 18px; padding: 16px 18px; max-width: 72ch; scroll-margin-top: 24px }
+.callout .trace { position: absolute; inset: -4px; width: calc(100% + 8px); height: calc(100% + 8px); overflow: visible; pointer-events: none }
+.callout .trace rect { fill: none; stroke: var(--warn); stroke-width: 3; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0 }
+.callout.draw .trace rect { animation: trace 3.4s ease-out forwards }
+@keyframes trace { 0% { stroke-dashoffset: 1; opacity: 1 } 40% { stroke-dashoffset: 0; opacity: 1 } 80% { stroke-dashoffset: 0; opacity: 1 } 100% { stroke-dashoffset: 0; opacity: 0 } }
+@media (prefers-reduced-motion: reduce) { .callout.draw .trace rect { animation: trace-still 2.5s forwards } }
+@keyframes trace-still { 0%, 80% { stroke-dashoffset: 0; opacity: 1 } 100% { stroke-dashoffset: 0; opacity: 0 } }
+.map-missing { position: absolute; z-index: 1000; top: 10px; left: 60px; right: 10px; max-width: 46ch; margin: 0 auto; background: var(--warn-bg); color: var(--fg); border-left: 4px solid var(--warn); border-radius: 8px; padding: 8px 12px; font: 600 14px/1.35 var(--font); box-shadow: var(--shadow); pointer-events: none }
+.map-missing[hidden] { display: none }
 .callout h3 { margin: 0 0 8px; font-size: 1.15rem; line-height: 1.3 }
 .callout p { margin: 0 0 10px }
 .callout ul { margin: 0; padding-left: 1.2em }
@@ -193,6 +201,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     <section aria-labelledby="ojo">
       <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=2#info"/></svg></span>Ten en cuenta</h2>
       <div class="warn callout" id="lista">
+        <svg class="trace" aria-hidden="true"><rect width="100%" height="100%" rx="10" pathLength="1"/></svg>
         <h3>La lista de colonias del SIAPA tiene errores</h3>
         <p>Comparamos la <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/pdf/colonias_siapa.pdf" rel="noopener">lista de 621 colonias</a> del SIAPA con su propio <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa de zonas</a> y con los contornos de colonias del INE (diciembre de 2025):</p>
         <ul>
@@ -454,10 +463,14 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       const div = el("div", { class: "map", role: "region", "aria-label": "Mapa de la colonia y las zonas" });
       const absent = list.filter((c) => !byKey.has(coloniaKey(c.name, c.municipio)));
       const answer = el("p", { "aria-live": "polite" }, pick ? "Toca tu colonia en el mapa." : "Toca el lugar de tu casa en el mapa.",
-        absent.length ? ` No tenemos el contorno de ${joinES(absent.map((c) => `${c.name} (${municipio(c.municipio)})`))}.` : null);
+        absent.length ? ` No tenemos el contorno de ${joinES(absent.map((c) => `${c.name} (${municipio(c.municipio)})`))}: ` : null,
+        absent.length ? el("a", { href: "#lista" }, "por qué") : null, absent.length ? "." : null);
       box.replaceChildren(div, answer, box.lastChild);
       const L = window.L;
       const map = L.map(div, { scrollWheelZoom: false });
+      const missing = el("div", { class: "map-missing", role: "status" });
+      missing.hidden = true;
+      div.append(missing);
       map.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>');
       L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
@@ -542,7 +555,13 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       choiceHover = (c, on) => {
         const key = coloniaKey(c.name, c.municipio);
         const layers = drawn.get(key);
-        if (!layers || (!on && hot?.key !== key)) return;
+        if (!layers) {
+          missing.hidden = !on;
+          if (on) missing.textContent = `${c.name}: su nombre en la lista del SIAPA no coincide con el mapa de colonias del INE, así que no podemos dibujarla. Mira «Ten en cuenta», abajo.`;
+          return;
+        }
+        missing.hidden = true;
+        if (!on && hot?.key !== key) return;
         unhover();
         if (!on) return;
         const [f, tip, label, hovered] = layers;
@@ -653,6 +672,16 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   }
 
   locBtn.addEventListener("click", locate);
+  // Links to the list's errors scroll there and draw an outline around them.
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest('a[href="#lista"]')) return;
+    e.preventDefault();
+    const box = document.getElementById("lista");
+    box.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
+    box.classList.remove("draw");
+    void box.offsetWidth;
+    box.classList.add("draw");
+  });
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const q = input.value.trim();
