@@ -509,7 +509,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       box.replaceChildren(div, answer, box.lastChild);
       scrollToTop(box);
       const L = window.L;
-      const map = L.map(div, { scrollWheelZoom: false });
+      const map = L.map(div, { scrollWheelZoom: false, zoomSnap: 0.25 });
       // The wheel scrolls the page, but a trackpad pinch (ctrl+wheel; gesture events in Safari) zooms the map.
       let pinch = 0;
       div.addEventListener("wheel", (e) => {
