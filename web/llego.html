@@ -375,8 +375,15 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     }
     const back = lastChoices && lastChoices.length > 1 ? el("p", {}, el("button", { type: "button", class: "linklike" }, "← Ver las otras colonias")) : null;
     if (back) back.firstChild.addEventListener("click", () => showChoices(lastChoices, zones));
-    show(where, note, cards(c.zones.map((z) => zones.get(z)).filter(Boolean)), back);
+    show(where, note, cards(c.zones.map((z) => zones.get(z)).filter(Boolean)), discountNote(), back);
   }
+
+  // SIAPA hasn't published where the colonia list is, so this can't say whether the colonia qualifies.
+  const discountNote = () => isoToday(0) > "2026-12-15" ? null : el("p", { class: "note" },
+    el("strong", {}, "Revisa tu recibo: "),
+    "el SIAPA aprobó un descuento automático de 80% para 342 colonias con problemas de calidad del agua, en consumos de hasta 25 m³ al mes y hasta el 15 de diciembre (",
+    el("a", { href: "https://www.notisistema.com/noticias/siapa-amplia-a-342-colonias-el-descuento-de-80-por-ciento-por-mala-calidad-del-agua/", rel: "noopener", target: "_blank" }, "Notisistema, 1 de octubre"),
+    "). No tenemos la lista oficial, así que no sabemos si tu colonia está incluida. Si tienes agua turbia o con olor, fíjate si tu próximo recibo trae el descuento.");
 
   function showChoices(list, zones) {
     const items = list.map((c) => {
