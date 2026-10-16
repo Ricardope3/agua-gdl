@@ -753,6 +753,12 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     scrollToTop(form.closest(".finder"));
     search(q);
   });
+  // Other pages (a landing variant) can link here with ?q=colonia to search right away.
+  const preset = new URLSearchParams(location.search).get("q");
+  if (preset && preset.trim()) {
+    input.value = preset.trim().slice(0, 80);
+    form.requestSubmit();
+  }
 })();
 </script>
 </body>
