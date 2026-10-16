@@ -505,12 +505,13 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     show(where, note, map, cards(c.zones.map((z) => zones.get(z)).filter(Boolean)), discountNote(), back);
   }
 
-  // SIAPA hasn't published where the colonia list is, so this can't say whether the colonia qualifies.
   const discountNote = () => isoToday(0) > "2026-12-15" ? null : el("p", { class: "note" },
     el("strong", {}, "Revisa tu recibo: "),
-    "el SIAPA aprobó un descuento automático de 80% para 342 colonias con problemas de calidad del agua, en consumos de hasta 25 m³ al mes y hasta el 15 de diciembre (",
-    el("a", { href: "https://www.notisistema.com/noticias/siapa-amplia-a-342-colonias-el-descuento-de-80-por-ciento-por-mala-calidad-del-agua/", rel: "noopener", target: "_blank" }, "Notisistema, 1 de octubre"),
-    "). No tenemos la lista oficial, así que no sabemos si tu colonia está incluida. Si tienes agua turbia o con olor, fíjate si tu próximo recibo trae el descuento.");
+    "hasta el 15 de diciembre, las casas y pequeños comercios de las colonias con problemas de calidad del agua tienen 80% de descuento si su consumo promedio es de hasta 25 m³ al mes (",
+    el("a", { href: "https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25482/1785200563-2026-07-27-.pdf", rel: "noopener", target: "_blank" }, "decreto 30216/LXIV/26"),
+    "). La lista vigente de colonias se publicó el 8 de octubre en el ",
+    el("a", { href: "https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25862/1791483823-2026-10-08-IV.pdf", rel: "noopener", target: "_blank" }, "Periódico Oficial"),
+    ". Si tu colonia no está y tu agua llega turbia o con olor, puedes pedir el descuento al SIAPA, que hace una revisión técnica.");
 
   function choiceList(list, zones) {
     return el("ul", { class: "choices" }, ...list.map((c) => {
