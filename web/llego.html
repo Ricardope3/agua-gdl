@@ -81,6 +81,13 @@ label { display: block; font-weight: 700; margin: 0 0 6px }
 .choice { width: 100%; text-align: left; font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; cursor: pointer }
 .choice:hover { border-color: var(--brand) }
 .choice span { display: block; color: var(--muted); font-size: .95rem }
+.mapbox { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin: 0 0 14px; box-shadow: var(--shadow) }
+.mapbox > p { margin: 0 0 10px }
+.mapbox .map { height: 380px; border-radius: 8px; margin: 0 0 10px; background: var(--subtle) }
+.mapbox .note { margin: 0 }
+.map-label { background: var(--surface); color: var(--fg); border: 1px solid var(--line); font: 600 13px/1.3 var(--font); box-shadow: var(--shadow) }
+.map-label::before { display: none }
+@media (prefers-color-scheme: dark) { .mapbox .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) } .mapbox .leaflet-container { background: #0c1e2c } }
 section { padding: 36px 0 8px }
 h2 { font-size: 1.5rem; line-height: 1.2; margin: 0 0 14px; letter-spacing: -.01em }
 section p { margin: 0 0 14px; max-width: 65ch }
@@ -382,6 +389,105 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     }, { enableHighAccuracy: false, timeout: 20000, maximumAge: 60000 });
   }
 
+  // The map (Leaflet + OpenStreetMap tiles) loads only when asked, so nobody's IP reaches OSM by default.
+  const ZONE_COLORS = matchMedia("(prefers-color-scheme: dark)").matches
+    ? { 1: "#008300", 2: "#3987e5", 3: "#c98500", 4: "#199e70", 5: "#9085e9", 6: "#d55181", 7: "#d94141" }
+    : { 1: "#008300", 2: "#2a78d6", 3: "#eda100", 4: "#1baf7a", 5: "#6250d6", 6: "#e87ba4", 7: "#e34948" };
+  let mapDeps = null;
+  function loadMap() {
+    if (!mapDeps) {
+      const css = el("link", { rel: "stylesheet", href: "/vendor/leaflet-1.9.4/leaflet.css" });
+      document.head.append(css);
+      const script = new Promise((resolve, reject) => {
+        const t = el("script", { src: "/vendor/leaflet-1.9.4/leaflet.js" });
+        t.onload = resolve;
+        t.onerror = reject;
+        document.head.append(t);
+      });
+      const json = (path) => fetch(path).then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); });
+      mapDeps = Promise.all([json("/zonas.geojson"), json("/colonias.geojson"), script]);
+      mapDeps.catch(() => { mapDeps = null; });
+    }
+    return mapDeps;
+  }
+  const coloniaKey = (name, mun) => norm(name) + "|" + norm(municipio(mun));
+
+  // mapBlock shows list's outlines over the SIAPA zones. With several colonias, tapping
+  // one picks it; with one, tapping a spot says which zone it's in.
+  function mapBlock(list, zones) {
+    const open = el("button", { type: "button", class: "button alt" }, icon("map-pin"), "Ver en el mapa");
+    const box = el("div", { class: "mapbox" },
+      el("p", {}, list.length > 1 ? "¿No sabes cuál es? Míralas en el mapa." : "Esta colonia está en más de una zona. Mira en el mapa de qué lado queda tu casa."),
+      el("p", {}, open),
+      el("p", { class: "note" }, "El mapa se carga desde OpenStreetMap. Los contornos de las colonias son aproximados y vienen de la cartografía electoral del INE (diciembre de 2025); las zonas son las del mapa del SIAPA."));
+    open.addEventListener("click", async () => {
+      open.disabled = true;
+      let zonas, outlines;
+      try {
+        [zonas, outlines] = await loadMap();
+      } catch {
+        box.replaceChildren(el("p", { class: "note" }, "No pudimos cargar el mapa. Revisa tu zona en el ", mapLink(), "."));
+        return;
+      }
+      const byKey = new Map(outlines.features.map((f) => [coloniaKey(f.properties.name, f.properties.municipio), f]));
+      const found = list.map((c) => [c, byKey.get(coloniaKey(c.name, c.municipio))]).filter(([, f]) => f);
+      if (found.length === 0) {
+        box.replaceChildren(el("p", { class: "note" }, "No tenemos el contorno de esta colonia. Búscala en el ", mapLink(), "."));
+        return;
+      }
+      const div = el("div", { class: "map", role: "region", "aria-label": "Mapa de la colonia y las zonas" });
+      const absent = list.filter((c) => !byKey.has(coloniaKey(c.name, c.municipio)));
+      const answer = el("p", { "aria-live": "polite" }, list.length > 1 ? "Toca tu colonia en el mapa." : "Toca el lugar de tu casa en el mapa.",
+        absent.length ? ` No tenemos el contorno de ${joinES(absent.map((c) => `${c.name} (${municipio(c.municipio)})`))}.` : null);
+      box.replaceChildren(div, answer, box.lastChild);
+      const L = window.L;
+      const map = L.map(div, { scrollWheelZoom: false });
+      map.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>');
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      }).addTo(map);
+      L.geoJSON(zonas, {
+        interactive: false,
+        style: (f) => {
+          const color = ZONE_COLORS[Number(f.properties.zona.replace(/\D/g, ""))] || "#888";
+          return { color, weight: 2, fillColor: color, fillOpacity: 0.28 };
+        },
+      }).addTo(map);
+      const ink = matchMedia("(prefers-color-scheme: dark)").matches ? "#f0f9ff" : "#0c1e2c";
+      const halo = matchMedia("(prefers-color-scheme: dark)").matches ? "#06141d" : "#ffffff";
+      const group = L.featureGroup().addTo(map);
+      for (const [c, f] of found) {
+        L.geoJSON(f, { interactive: false, style: { color: halo, weight: 8, fill: false } }).addTo(group);
+        const line = L.geoJSON(f, { style: { color: ink, weight: 4, fill: list.length > 1, fillOpacity: 0 } }).addTo(group);
+        if (list.length > 1) {
+          line.bindTooltip(`${c.name} · ${municipio(c.municipio)} · ${c.zones.length > 1 ? "Zonas" : "Zona"} ${joinES(c.zones)}`, { permanent: true, direction: "center", className: "map-label" });
+          line.on("click", () => showColonia(c, zones));
+        }
+      }
+      map.fitBounds(group.getBounds(), { padding: [24, 24] });
+      if (list.length > 1) return;
+      let pin = null;
+      map.on("click", async (e) => {
+        const { lat, lng } = e.latlng;
+        if (pin) pin.setLatLng(e.latlng); else pin = L.circleMarker(e.latlng, { radius: 8, color: halo, weight: 3, fillColor: ink, fillOpacity: 1 }).addTo(map);
+        answer.replaceChildren("Buscando la zona de ese punto…");
+        try {
+          const r = await get(`/v1/zone?lat=${lat.toFixed(5)}&lon=${lng.toFixed(5)}`);
+          const nums = r.zones.map((z) => z.zone);
+          answer.replaceChildren(nums.length === 0
+            ? "Ese punto no está en ninguna zona del mapa del SIAPA."
+            : nums.length === 1
+              ? el("span", {}, "Ese punto está en la ", el("strong", {}, `zona ${nums[0]}`), ". Abajo están sus días.")
+              : `Ese punto queda en el límite entre las zonas ${joinES(nums)}.`);
+        } catch {
+          answer.replaceChildren("No pudimos consultar la zona de ese punto. Intenta de nuevo.");
+        }
+      });
+    });
+    return box;
+  }
+
   function showColonia(c, zones) {
     const name = el("strong", {}, c.name);
     const where = el("p", {}, name, `, ${municipio(c.municipio)}`);
@@ -395,7 +501,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     }
     const back = lastChoices && lastChoices.length > 1 ? el("p", {}, el("button", { type: "button", class: "linklike" }, "← Ver las otras colonias")) : null;
     if (back) back.firstChild.addEventListener("click", () => showChoices(lastChoices, zones));
-    show(where, note, cards(c.zones.map((z) => zones.get(z)).filter(Boolean)), discountNote(), back);
+    const map = c.zones.length > 1 ? mapBlock([c], zones) : null;
+    show(where, note, map, cards(c.zones.map((z) => zones.get(z)).filter(Boolean)), discountNote(), back);
   }
 
   // SIAPA hasn't published where the colonia list is, so this can't say whether the colonia qualifies.
@@ -412,7 +519,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       b.addEventListener("click", () => showColonia(c, zones));
       return el("li", {}, b);
     });
-    show(el("p", {}, "Encontramos varias colonias parecidas. ¿Cuál es la tuya?"), el("ul", { class: "choices" }, ...items));
+    show(el("p", {}, "Encontramos varias colonias parecidas. ¿Cuál es la tuya?"), el("ul", { class: "choices" }, ...items), mapBlock(list, zones));
   }
 
   async function search(q) {
