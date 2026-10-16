@@ -79,13 +79,6 @@
   ]
  },
  {
-  "name": "AGUA BLANCA POBLADO",
-  "municipio": "ZAPOPAN",
-  "zones": [
-   6
-  ]
- },
- {
   "name": "AGUA CALIENTE TETLAN",
   "municipio": "TONALÁ",
   "zones": []
@@ -134,13 +127,6 @@
   "municipio": "TLAQUEPAQUE",
   "zones": [
    5
-  ]
- },
- {
-  "name": "ALCAZAR ORIENTE",
-  "municipio": "ZAPOPAN",
-  "zones": [
-   6
   ]
  },
  {
@@ -326,13 +312,6 @@
   "zones": []
  },
  {
-  "name": "ARBOLEDAS SUR",
-  "municipio": "GUADALAJARA",
-  "zones": [
-   6
-  ]
- },
- {
   "name": "ARBORETO RESIDENCIAL",
   "municipio": "ZAPOPAN",
   "zones": []
@@ -368,13 +347,6 @@
   "name": "ARMONIA",
   "municipio": "ZAPOPAN",
   "zones": []
- },
- {
-  "name": "ARRAYANES",
-  "municipio": "TLAQUEPAQUE",
-  "zones": [
-   4
-  ]
  },
  {
   "name": "ARROYO HONDO",
@@ -513,13 +485,6 @@
   "zones": []
  },
  {
-  "name": "BARRAGAN HERNANDEZ",
-  "municipio": "GUADALAJARA",
-  "zones": [
-   2
-  ]
- },
- {
   "name": "BARRIO NUEVO",
   "municipio": "TONALÁ",
   "zones": []
@@ -590,13 +555,6 @@
   "name": "BOREALES",
   "municipio": "ZAPOPAN",
   "zones": []
- },
- {
-  "name": "BOSQUE DE LAS LOMAS",
-  "municipio": "ZAPOPAN",
-  "zones": [
-   6
-  ]
  },
  {
   "name": "BOSQUE DE LOS VIRREYES",
@@ -880,13 +838,6 @@
   ]
  },
  {
-  "name": "CHAPALITA DE OCCIDENTE",
-  "municipio": "ZAPOPAN",
-  "zones": [
-   6
-  ]
- },
- {
   "name": "CHAPALITA ORIENTE",
   "municipio": "ZAPOPAN",
   "zones": []
@@ -1042,13 +993,6 @@
   "name": "COLINAS VIRREYES",
   "municipio": "ZAPOPAN",
   "zones": []
- },
- {
-  "name": "COLLI CTM",
-  "municipio": "ZAPOPAN",
-  "zones": [
-   6
-  ]
  },
  {
   "name": "COLLI PRIMAVERA",
@@ -1234,13 +1178,6 @@
   "zones": []
  },
  {
-  "name": "COTO DEL CARMEN",
-  "municipio": "TLAQUEPAQUE",
-  "zones": [
-   5
-  ]
- },
- {
   "name": "COTO DEL REY",
   "municipio": "ZAPOPAN",
   "zones": [
@@ -1401,13 +1338,6 @@
   "zones": []
  },
  {
-  "name": "CRISTAL",
-  "municipio": "ZAPOPAN",
-  "zones": [
-   6
-  ]
- },
- {
   "name": "CRISTO REY",
   "municipio": "ZAPOPAN",
   "zones": []
@@ -1514,13 +1444,6 @@
  },
  {
   "name": "DE SANTIAGO",
-  "municipio": "TLAQUEPAQUE",
-  "zones": [
-   3
-  ]
- },
- {
-  "name": "DE SANTIAGO",
   "municipio": "ZAPOPAN",
   "zones": [
    6
@@ -1542,13 +1465,6 @@
   "name": "DEL CARRIL",
   "municipio": "ZAPOPAN",
   "zones": []
- },
- {
-  "name": "DEL FRESNO",
-  "municipio": "GUADALAJARA",
-  "zones": [
-   5
-  ]
  },
  {
   "name": "DEL FRESNO",
@@ -1698,13 +1614,6 @@
   "zones": []
  },
  {
-  "name": "EL BOSQUE",
-  "municipio": "ZAPOPAN",
-  "zones": [
-   6
-  ]
- },
- {
   "name": "EL BRISEÑO",
   "municipio": "ZAPOPAN",
   "zones": []
@@ -1752,13 +1661,6 @@
   "name": "EL CERRITO DE LA REYNA",
   "municipio": "TONALÁ",
   "zones": []
- },
- {
-  "name": "EL COLLI URBANO",
-  "municipio": "ZAPOPAN",
-  "zones": [
-   6
-  ]
  },
  {
   "name": "EL DUQUE",
@@ -2117,13 +2019,6 @@
   "zones": []
  },
  {
-  "name": "FORET",
-  "municipio": "ZAPOPAN",
-  "zones": [
-   6
-  ]
- },
- {
   "name": "FOVISSSTE ESTADIO",
   "municipio": "GUADALAJARA",
   "zones": []
@@ -2244,13 +2139,6 @@
   "zones": []
  },
  {
-  "name": "HACIENDA DE SAN MARTIN",
-  "municipio": "TLAQUEPAQUE",
-  "zones": [
-   4
-  ]
- },
- {
   "name": "HACIENDA DE VIDRIO",
   "municipio": "TLAQUEPAQUE",
   "zones": []
@@ -2264,13 +2152,6 @@
   "name": "HACIENDA DEL SOL",
   "municipio": "ZAPOPAN",
   "zones": []
- },
- {
-  "name": "HACIENDA DEL TEPEYAC",
-  "municipio": "ZAPOPAN",
-  "zones": [
-   6
-  ]
  },
  {
   "name": "HACIENDA DEL VALLE",
@@ -2287,13 +2168,6 @@
   "municipio": "ZAPOPAN",
   "zones": [
    6
-  ]
- },
- {
-  "name": "HACIENDA SAN PEDRO",
-  "municipio": "TLAQUEPAQUE",
-  "zones": [
-   4
   ]
  },
  {
@@ -2394,13 +2268,6 @@
   "name": "HORIZONTES DE TLAQUEPAQUE",
   "municipio": "TLAQUEPAQUE",
   "zones": []
- },
- {
-  "name": "HORMIGUERO",
-  "municipio": "GUADALAJARA",
-  "zones": [
-   3
-  ]
  },
  {
   "name": "HUAXTLA",
@@ -2707,13 +2574,6 @@
   "zones": []
  },
  {
-  "name": "JARDINES PLAZA DEL SOL",
-  "municipio": "GUADALAJARA",
-  "zones": [
-   5
-  ]
- },
- {
   "name": "JARDINES SAN FRANCISCO",
   "municipio": "ZAPOPAN",
   "zones": []
@@ -2849,13 +2709,6 @@
   "zones": []
  },
  {
-  "name": "LA CASTILLA",
-  "municipio": "ZAPOPAN",
-  "zones": [
-   6
-  ]
- },
- {
   "name": "LA CEIBA",
   "municipio": "ZAPOPAN",
   "zones": [
@@ -2947,13 +2800,6 @@
   "municipio": "TONALÁ",
   "zones": [
    4
-  ]
- },
- {
-  "name": "LA ESTANCIA",
-  "municipio": "ZAPOPAN",
-  "zones": [
-   6
   ]
  },
  {
@@ -3177,13 +3023,6 @@
   "zones": []
  },
  {
-  "name": "LA PEÑA",
-  "municipio": "ZAPOPAN",
-  "zones": [
-   6
-  ]
- },
- {
   "name": "LA PENAL",
   "municipio": "GUADALAJARA",
   "zones": [
@@ -3230,13 +3069,6 @@
  },
  {
   "name": "LA PUNTA",
-  "municipio": "TONALÁ",
-  "zones": [
-   4
-  ]
- },
- {
-  "name": "LA QUINTA CATALINA",
   "municipio": "TONALÁ",
   "zones": [
    4
@@ -4105,13 +3937,6 @@
   "zones": []
  },
  {
-  "name": "LOS PORTALES TLAQUEPAQUE",
-  "municipio": "TLAQUEPAQUE",
-  "zones": [
-   3
-  ]
- },
- {
   "name": "LOS PRADOS",
   "municipio": "TONALÁ",
   "zones": [
@@ -4277,13 +4102,6 @@
   "zones": []
  },
  {
-  "name": "MIRADOR",
-  "municipio": "GUADALAJARA",
-  "zones": [
-   3
-  ]
- },
- {
   "name": "MIRADOR ALAMO INDUSTRIAL",
   "municipio": "GUADALAJARA",
   "zones": [
@@ -4442,24 +4260,10 @@
   "zones": []
  },
  {
-  "name": "MOCTEZUMA",
-  "municipio": "ZAPOPAN",
-  "zones": [
-   6
-  ]
- },
- {
   "name": "MOCTEZUMA PTE",
   "municipio": "ZAPOPAN",
   "zones": [
    6
-  ]
- },
- {
-  "name": "MODELO",
-  "municipio": "GUADALAJARA",
-  "zones": [
-   2
   ]
  },
  {
@@ -4545,13 +4349,6 @@
   "zones": []
  },
  {
-  "name": "NUEVA AURORA",
-  "municipio": "TONALÁ",
-  "zones": [
-   4
-  ]
- },
- {
   "name": "NUEVA CENTRAL CAMIONERA",
   "municipio": "TLAQUEPAQUE",
   "zones": [
@@ -4569,13 +4366,6 @@
   "name": "NUEVA ESPAÑA",
   "municipio": "ZAPOPAN",
   "zones": []
- },
- {
-  "name": "NUEVA GALICIA",
-  "municipio": "ZAPOPAN",
-  "zones": [
-   6
-  ]
  },
  {
   "name": "NUEVA GALICIA 2",
@@ -4771,20 +4561,6 @@
   "zones": []
  },
  {
-  "name": "PARQUES DE SAN PEDRO",
-  "municipio": "GUADALAJARA",
-  "zones": [
-   3
-  ]
- },
- {
-  "name": "PARQUES DE SANTA CRUZ DEL VALLE",
-  "municipio": "TLAQUEPAQUE",
-  "zones": [
-   5
-  ]
- },
- {
   "name": "PARQUES DE TESISTAN",
   "municipio": "ZAPOPAN",
   "zones": []
@@ -4839,13 +4615,6 @@
   "zones": []
  },
  {
-  "name": "PARQUES TEPEYAC",
-  "municipio": "ZAPOPAN",
-  "zones": [
-   6
-  ]
- },
- {
   "name": "PASEO DE LOS PARQUES",
   "municipio": "TLAQUEPAQUE",
   "zones": [
@@ -4856,13 +4625,6 @@
   "name": "PASEO DEL BOSQUE",
   "municipio": "TLAQUEPAQUE",
   "zones": []
- },
- {
-  "name": "PASEOS DE LA CAÑADA",
-  "municipio": "TONALÁ",
-  "zones": [
-   4
-  ]
  },
  {
   "name": "PASEOS DE SANTIAGO",
@@ -5242,13 +5004,6 @@
   "zones": []
  },
  {
-  "name": "PUERTA DEL ROSARIO",
-  "municipio": "TONALÁ",
-  "zones": [
-   4
-  ]
- },
- {
   "name": "PUERTA DEL TULE",
   "municipio": "ZAPOPAN",
   "zones": []
@@ -5388,13 +5143,6 @@
   "name": "RDCIAL LOS OLIVOS",
   "municipio": "TLAQUEPAQUE",
   "zones": []
- },
- {
-  "name": "REAL",
-  "municipio": "GUADALAJARA",
-  "zones": [
-   2
-  ]
  },
  {
   "name": "REAL CANTABRIA",
@@ -5831,13 +5579,6 @@
   ]
  },
  {
-  "name": "SAN RAFAEL RESIDENCIAL",
-  "municipio": "GUADALAJARA",
-  "zones": [
-   3
-  ]
- },
- {
   "name": "SAN RAFAEL TERCERO",
   "municipio": "ZAPOPAN",
   "zones": []
@@ -5934,13 +5675,6 @@
   "name": "SANTA MARGARITA RESIDENCIAL",
   "municipio": "ZAPOPAN",
   "zones": []
- },
- {
-  "name": "SANTA MARIA",
-  "municipio": "TLAQUEPAQUE",
-  "zones": [
-   3
-  ]
  },
  {
   "name": "SANTA MARIA TEQUEPEXPAN",
@@ -6154,13 +5888,6 @@
   "zones": []
  },
  {
-  "name": "TEPEYAC DEL SOL",
-  "municipio": "ZAPOPAN",
-  "zones": [
-   6
-  ]
- },
- {
   "name": "TERCER MILENIO",
   "municipio": "ZAPOPAN",
   "zones": []
@@ -6209,13 +5936,6 @@
   "municipio": "TONALÁ",
   "zones": [
    4
-  ]
- },
- {
-  "name": "TLAQUEPAQUE PUEBLITO",
-  "municipio": "TLAQUEPAQUE",
-  "zones": [
-   3
   ]
  },
  {
@@ -6343,13 +6063,6 @@
   ]
  },
  {
-  "name": "VALLARTA LA PATRIA",
-  "municipio": "ZAPOPAN",
-  "zones": [
-   6
-  ]
- },
- {
   "name": "VALLARTA NORTE",
   "municipio": "GUADALAJARA",
   "zones": []
@@ -6363,13 +6076,6 @@
   "name": "VALLARTA SAN JORGE",
   "municipio": "GUADALAJARA",
   "zones": []
- },
- {
-  "name": "VALLE BALCONES DE SANTA MARIA",
-  "municipio": "TLAQUEPAQUE",
-  "zones": [
-   6
-  ]
  },
  {
   "name": "VALLE DE ATEMAJAC",
@@ -6663,20 +6369,6 @@
   "zones": []
  },
  {
-  "name": "VILLAS DEL PRADO",
-  "municipio": "TLAQUEPAQUE",
-  "zones": [
-   3
-  ]
- },
- {
-  "name": "VILLAS DEL TAPATIO",
-  "municipio": "TLAQUEPAQUE",
-  "zones": [
-   3
-  ]
- },
- {
   "name": "VILLAS DEL VALLE",
   "municipio": "ZAPOPAN",
   "zones": []
@@ -6736,13 +6428,6 @@
  {
   "name": "VILLASEÑOR (SANTA TERESITA)",
   "municipio": "GUADALAJARA",
-  "zones": [
-   6
-  ]
- },
- {
-  "name": "VIRREYES",
-  "municipio": "ZAPOPAN",
   "zones": [
    6
   ]
