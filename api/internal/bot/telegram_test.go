@@ -145,6 +145,14 @@ func TestTelegramReportAndBaja(t *testing.T) {
 	}
 }
 
+func TestReportReachesTheFirstOfTwoCutDays(t *testing.T) {
+	h := newTGHarness(t, "2026-10-21 09:00")
+	h.say(t, "zona 5")
+	if m := h.say(t, "/reportar"); !strings.Contains(m.Text, "martes 20 de octubre") {
+		t.Errorf("on Wednesday zone 5 should report Tuesday's cut:\n%s", m.Text)
+	}
+}
+
 func TestTelegramBlockingTheBotUnsubscribes(t *testing.T) {
 	h := newTGHarness(t, "2026-10-14 10:00")
 	h.say(t, "zona 2")

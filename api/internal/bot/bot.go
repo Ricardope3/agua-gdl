@@ -388,7 +388,8 @@ func (b *Bot) unsubscribe(ctx context.Context, r User) error {
 	return b.text(ctx, r, msgUnsubscribed)
 }
 
-// reportLastCut asks about the subscriber's most recent cut, today included.
+// reportLastCut asks about the subscriber's most recent cut, today included, unless
+// yesterday was a cut too: then today's is still running and yesterday's is the one to report.
 func (b *Bot) reportLastCut(ctx context.Context, r User) error {
 	if r.ID == "" {
 		return b.welcome(ctx, r)
@@ -400,10 +401,13 @@ func (b *Bot) reportLastCut(ctx context.Context, r User) error {
 	if !ok {
 		return b.welcome(ctx, r)
 	}
-	tomorrow := b.Schedule.Day(b.Now()).AddDate(0, 0, 1)
-	prev, ok := b.Schedule.PrevCut(s.Zone, tomorrow)
+	today := b.Schedule.Day(b.Now())
+	prev, ok := b.Schedule.PrevCut(s.Zone, today.AddDate(0, 0, 1))
 	if !ok {
 		return b.text(ctx, r, msgNoReportYet)
+	}
+	if yesterday := today.AddDate(0, 0, -1); prev.Equal(today) && b.Schedule.IsCut(s.Zone, yesterday) {
+		prev = yesterday
 	}
 	return b.askReport(ctx, r, prev.Format(rotation.DateLayout))
 }
