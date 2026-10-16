@@ -115,6 +115,10 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 .site-nav a:hover { color: var(--fg); background: var(--subtle) }
 .site-nav a[aria-current="page"] { color: var(--link); background: var(--subtle) }
 @media (max-width: 560px) { .site-nav { width: calc(100% + 12px) } .site-nav { justify-content: space-between } .site-nav a { padding: 6px 5px; font-size: .78rem } .site-nav .i { display: none } }
+.ih .i-badge { background: var(--brand); color: var(--on-primary) }
+.site-nav .i { color: var(--brand) }
+.site-nav a[aria-current="page"] .i { color: inherit }
+li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 </style>
 </head>
 <body>
