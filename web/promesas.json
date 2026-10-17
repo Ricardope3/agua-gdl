@@ -1,0 +1,614 @@
+{
+  "actualizado": "2026-10-17",
+  "replica": {"enviada": "2026-10-17", "cierra": "2026-10-26T23:59"},
+  "promesas": [
+    {
+      "id": "deuda",
+      "codigo": "A1",
+      "seccion": "app",
+      "titulo": "No será deuda pública",
+      "cita": "Todas estas acciones no representarán un incremento en las tarifas del SIAPA, no se privatizará el servicio, no será una deuda pública y sí servirá para mejorar la calidad del agua durante muchos años",
+      "quien": "Pablo Lemus Navarro",
+      "cargo": "gobernador de Jalisco",
+      "fecha": "2026-10-06",
+      "donde": "publicación en X con video",
+      "fuentes": [
+        {"url": "https://x.com/PabloLemusN/status/2107612364849782850", "archive": null, "medio": "X, @PabloLemusN", "fecha": "2026-10-06", "tipo": "primaria", "captura": "privada"},
+        {"url": "https://politica.expansion.mx/mexico/2026/10/08/crisis-agua-jalisco-lemus-acueducto-chapala-guadalajara", "archive": "https://web.archive.org/web/20261017132853/https://politica.expansion.mx/mexico/2026/10/08/crisis-agua-jalisco-lemus-acueducto-chapala-guadalajara", "medio": "Expansión", "fecha": "2026-10-08", "tipo": "prensa"}
+      ],
+      "tambien": [
+        {
+          "cita": "No hay deuda, no hay privatización porque los modelos CMRO no dejan en manos del particular la operación misma y el control mismo de lo que construyen",
+          "quien": "Luis García Sotelo",
+          "cargo": "secretario de la Hacienda Pública, ante diputados",
+          "fecha": "2026-10-08",
+          "fuentes": [{"url": "https://www.informador.mx/jalisco/descartan-endeudamiento-en-proyecto-de-segundo-acueducto-chapala-gdl-20261008-0117.html", "archive": "https://web.archive.org/web/20261017134230/https://www.informador.mx/jalisco/descartan-endeudamiento-en-proyecto-de-segundo-acueducto-chapala-gdl-20261008-0117.html", "medio": "El Informador", "fecha": "2026-10-08", "tipo": "prensa"}]
+        }
+      ],
+      "documento": {
+        "titulo": "Ley de Disciplina Financiera de las Entidades Federativas y los Municipios",
+        "citas": [
+          {"ref": "Artículo 2, fracción XXIX", "texto": "Obligaciones: los compromisos de pago a cargo de los Entes Públicos derivados de los Financiamientos y de las Asociaciones Público-Privadas"},
+          {"ref": "Artículo 23", "texto": "La Legislatura local, por el voto de las dos terceras partes de sus miembros presentes, autorizará los montos máximos para la contratación de Financiamientos y Obligaciones"}
+        ],
+        "texto": "El artículo 49 manda inscribir en el Registro Público Único de la Secretaría de Hacienda «la totalidad de los Financiamientos y Obligaciones», incluidos los contratos de asociación público-privada.",
+        "fuentes": [{"url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LDFEFM.pdf", "archive": "https://web.archive.org/web/20261012162251/https://www.diputados.gob.mx/LeyesBiblio/pdf/LDFEFM.pdf", "medio": "Cámara de Diputados", "fecha": "2022-05-10", "tipo": "primaria"}]
+      },
+      "plazo": {"fecha": null, "tipo": "lectura", "texto": "Lo revisamos con el decreto, si se aprueba, y luego con el contrato y su registro."},
+      "pasos": [
+        {"texto": "La iniciativa dice de dónde saldrán los pagos y si se registra como Obligación bajo la Ley de Disciplina Financiera.", "estado": "pendiente"},
+        {"texto": "El decreto del Congreso autoriza «montos máximos» para una Obligación con el voto de dos tercios (artículo 23).", "estado": "pendiente", "core": true},
+        {"texto": "El Presupuesto de Egresos 2027 muestra los pagos del contrato. Debe entregarse a más tardar el 1 de noviembre.", "estado": "pendiente"},
+        {"texto": "El contrato se inscribe en el Registro Público Único de Hacienda (artículo 49).", "estado": "pendiente"}
+      ],
+      "veredicto": "sin_pruebas",
+      "veredicto_fecha": "2026-10-16",
+      "nota": "La ley no llama «deuda pública» a los pagos de una asociación público-privada, pero los trata como Obligaciones: el mismo voto de dos tercios del Congreso y el mismo registro de Hacienda que un crédito. Falta leer la iniciativa para confirmar que este contrato es una asociación público-privada para la ley.",
+      "respuesta": null,
+      "historial": []
+    },
+    {
+      "id": "privatizacion",
+      "codigo": "A2",
+      "seccion": "app",
+      "titulo": "No se privatizará el servicio",
+      "cita": "no se privatizará el servicio",
+      "quien": "Pablo Lemus Navarro",
+      "cargo": "gobernador de Jalisco",
+      "fecha": "2026-10-06",
+      "donde": "publicación en X con video",
+      "fuentes": [
+        {"url": "https://x.com/PabloLemusN/status/2107612364849782850", "archive": null, "medio": "X, @PabloLemusN", "fecha": "2026-10-06", "tipo": "primaria", "captura": "privada"},
+        {"url": "https://politica.expansion.mx/mexico/2026/10/08/crisis-agua-jalisco-lemus-acueducto-chapala-guadalajara", "archive": "https://web.archive.org/web/20261017132853/https://politica.expansion.mx/mexico/2026/10/08/crisis-agua-jalisco-lemus-acueducto-chapala-guadalajara", "medio": "Expansión", "fecha": "2026-10-08", "tipo": "prensa"}
+      ],
+      "tambien": [],
+      "documento": {
+        "titulo": "El secretario de la Hacienda Pública, Luis García Sotelo, a los diputados (8 de octubre)",
+        "citas": [{"texto": "no dejan en manos del particular la operación misma y el control mismo de lo que construyen … y el privado, se obliga además, a mantener la operación, el mantenimiento, la rehabilitación del acueducto bajo los estándares que el contrato establece"}],
+        "texto": "El modelo se llama «Construcción, Mantenimiento, Rehabilitación y Operación (CMRO)». El gobierno distingue entre operar el acueducto, que haría la empresa por contrato, y dar el servicio a los usuarios, que seguiría en manos del SIAPA. Todavía no leemos el texto de la iniciativa.",
+        "fuentes": [{"url": "https://www.informador.mx/jalisco/descartan-endeudamiento-en-proyecto-de-segundo-acueducto-chapala-gdl-20261008-0117.html", "archive": "https://web.archive.org/web/20261017134230/https://www.informador.mx/jalisco/descartan-endeudamiento-en-proyecto-de-segundo-acueducto-chapala-gdl-20261008-0117.html", "medio": "El Informador", "fecha": "2026-10-08", "tipo": "prensa"}]
+      },
+      "plazo": {"fecha": null, "tipo": "lectura", "texto": "Lo revisamos con las bases de la licitación, el fallo y el inicio de operación. Ninguno tiene fecha."},
+      "pasos": [
+        {"texto": "La iniciativa dice quién opera el acueducto y quién da el servicio a los usuarios.", "estado": "pendiente"},
+        {"texto": "El decreto del Congreso.", "estado": "pendiente"},
+        {"texto": "Las bases de la licitación.", "estado": "pendiente"},
+        {"texto": "El contrato firmado.", "estado": "pendiente", "core": true}
+      ],
+      "veredicto": "sin_pruebas",
+      "veredicto_fecha": "2026-10-16",
+      "nota": "Si la iniciativa o el contrato dejan la operación del acueducto a la empresa, la frase del secretario se contradice con los documentos. La del gobernador la calificaremos sobre el servicio a los usuarios.",
+      "respuesta": null,
+      "historial": []
+    },
+    {
+      "id": "tarifas",
+      "codigo": "A3",
+      "seccion": "app",
+      "titulo": "No subirán las tarifas del SIAPA",
+      "cita": "no representarán un incremento en las tarifas del SIAPA",
+      "quien": "Pablo Lemus Navarro",
+      "cargo": "gobernador de Jalisco",
+      "fecha": "2026-10-06",
+      "donde": "publicación en X con video",
+      "fuentes": [
+        {"url": "https://x.com/PabloLemusN/status/2107612364849782850", "archive": null, "medio": "X, @PabloLemusN", "fecha": "2026-10-06", "tipo": "primaria", "captura": "privada"},
+        {"url": "https://politica.expansion.mx/mexico/2026/10/08/crisis-agua-jalisco-lemus-acueducto-chapala-guadalajara", "archive": "https://web.archive.org/web/20261017132853/https://politica.expansion.mx/mexico/2026/10/08/crisis-agua-jalisco-lemus-acueducto-chapala-guadalajara", "medio": "Expansión", "fecha": "2026-10-08", "tipo": "prensa"}
+      ],
+      "tambien": [
+        {
+          "cita": "Otra cosa es que no se aumentan las tarifas, porque el estado a través del organismo público descentralizado de la Comisión Estatal del Agua subsidia el costo financiero de este proyecto vía el presupuesto público anualizado",
+          "quien": "Luis García Sotelo",
+          "cargo": "secretario de la Hacienda Pública, ante diputados",
+          "fecha": "2026-10-08",
+          "fuentes": [{"url": "https://udgtv.com/noticias/jalisco-pide-aval-para-acueducto-de-casi-12-mil-mdp/334017", "archive": "https://web.archive.org/web/20261017133550/https://udgtv.com/noticias/jalisco-pide-aval-para-acueducto-de-casi-12-mil-mdp/334017", "medio": "UDG TV", "fecha": "2026-10-08", "tipo": "prensa"}]
+        }
+      ],
+      "documento": {
+        "titulo": "Todavía no hay documento",
+        "citas": [],
+        "texto": "El SIAPA no ha publicado su resolución de tarifas para 2027. Según el secretario, los pagos saldrían del presupuesto del estado, es decir, de los impuestos y no del recibo del agua.",
+        "fuentes": []
+      },
+      "plazo": {"fecha": null, "tipo": "lectura", "texto": "Primera revisión: la resolución de tarifas 2027 del SIAPA (sin fecha confirmada). Revisión final: la cláusula de pagos del contrato."},
+      "pasos": [
+        {"texto": "La iniciativa nombra al presupuesto del estado, a través de la Comisión Estatal del Agua, como fuente de pago.", "estado": "pendiente"},
+        {"texto": "El decreto no liga los pagos ni las garantías a las tarifas del SIAPA.", "estado": "pendiente"},
+        {"texto": "La resolución de tarifas 2027 del SIAPA no sube las tarifas por estas obras.", "estado": "pendiente", "core": true},
+        {"texto": "El contrato no usa los ingresos por tarifas del SIAPA.", "estado": "pendiente"}
+      ],
+      "veredicto": "sin_pruebas",
+      "veredicto_fecha": "2026-10-16",
+      "nota": "Antes de la resolución de tarifas 2027 publicaremos cómo contamos un ajuste que solo siga a la inflación.",
+      "respuesta": null,
+      "historial": []
+    },
+    {
+      "id": "empresa",
+      "codigo": "A4",
+      "seccion": "app",
+      "titulo": "«No se va a entregar el servicio de agua potable a ninguna empresa israelí»",
+      "cita": "No se va a entregar el servicio de agua potable a ninguna empresa israelí",
+      "quien": "Pablo Lemus Navarro",
+      "cargo": "gobernador de Jalisco",
+      "fecha": "2026-10-13",
+      "donde": "mensaje en video, según Tribuna de la Bahía; El Informador lo fecha el 13 de octubre",
+      "fuentes": [
+        {"url": "https://www.informador.mx/jalisco/pablo-lemus-asegura-que-no-se-privatizara-el-agua-de-guadalajara-20261014-0023.html", "archive": "https://web.archive.org/web/20261017134630/https://www.informador.mx/jalisco/pablo-lemus-asegura-que-no-se-privatizara-el-agua-de-guadalajara-20261014-0023.html", "medio": "El Informador", "fecha": "2026-10-14", "tipo": "prensa"},
+        {"url": "https://tribunadelabahia.com.mx/lemus-agua-empresas-israelies-jalisco/", "archive": "https://web.archive.org/web/20261017133211/https://tribunadelabahia.com.mx/lemus-agua-empresas-israelies-jalisco/", "medio": "Tribuna de la Bahía", "fecha": "2026-10-14", "tipo": "prensa"}
+      ],
+      "tambien": [],
+      "documento": {
+        "titulo": "Hoy no hay empresa elegida",
+        "citas": [],
+        "texto": "Según Milenio, la presidenta de la Comisión de Hacienda del Congreso dijo el 14 de octubre que la iniciativa considera una licitación pública y que todavía no hay una empresa seleccionada.",
+        "fuentes": [{"url": "https://www.milenio.com/comunidad/respalda-comision-de-hacienda-el-acueducto-chapala-guadalajara", "archive": "https://web.archive.org/web/20261017135419/https://www.milenio.com/comunidad/respalda-comision-de-hacienda-el-acueducto-chapala-guadalajara", "medio": "Milenio", "fecha": "2026-10-14", "tipo": "prensa"}]
+      },
+      "plazo": {"fecha": null, "tipo": "lectura", "texto": "Lo revisamos con las bases de la licitación, la lista de participantes y el fallo."},
+      "pasos": [
+        {"texto": "Las bases piden revelar quiénes participan y quiénes son sus accionistas.", "estado": "pendiente"},
+        {"texto": "Se publica la lista de participantes.", "estado": "pendiente"},
+        {"texto": "Se publica quién gana y quiénes son sus dueños.", "estado": "pendiente"},
+        {"texto": "El contrato firmado, con el país de la empresa y de quienes la controlan.", "estado": "pendiente", "core": true}
+      ],
+      "veredicto": "sin_pruebas",
+      "veredicto_fecha": "2026-10-16",
+      "nota": "Hoy no hay empresa elegida.",
+      "respuesta": null,
+      "historial": []
+    },
+    {
+      "id": "conagua",
+      "codigo": "A5",
+      "seccion": "app",
+      "titulo": "Ya tiene el aval de la Conagua",
+      "cita": "Este proyecto ya cuenta con el aval de la Conagua (@conagua_mx).",
+      "quien": "Pablo Lemus Navarro",
+      "cargo": "gobernador de Jalisco",
+      "fecha": "2026-10-06",
+      "donde": "publicación en X con video",
+      "fuentes": [
+        {"url": "https://x.com/PabloLemusN/status/2107612364849782850", "archive": null, "medio": "X, @PabloLemusN", "fecha": "2026-10-06", "tipo": "primaria", "captura": "privada"},
+        {"url": "https://politica.expansion.mx/mexico/2026/10/08/crisis-agua-jalisco-lemus-acueducto-chapala-guadalajara", "archive": "https://web.archive.org/web/20261017132853/https://politica.expansion.mx/mexico/2026/10/08/crisis-agua-jalisco-lemus-acueducto-chapala-guadalajara", "medio": "Expansión", "fecha": "2026-10-08", "tipo": "prensa"}
+      ],
+      "tambien": [],
+      "documento": {
+        "titulo": "No encontramos el documento de la Conagua",
+        "citas": [],
+        "texto": "Según NNC, el 15 de octubre la presidenta Claudia Sheinbaum dijo que la Conagua aún revisa a fondo los proyectos de agua del gobernador antes de reunirse con él.",
+        "fuentes": [{"url": "https://nnc.mx/articulo/congreso-de-jalisco-suspende-sesion-por-falta-de-quorum", "archive": "https://web.archive.org/web/20261017132609/https://nnc.mx/articulo/congreso-de-jalisco-suspende-sesion-por-falta-de-quorum", "medio": "NNC", "fecha": "2026-10-15", "tipo": "prensa"}]
+      },
+      "plazo": {"fecha": null, "tipo": "lectura", "texto": "Sin fecha. Lo calificamos cuando el oficio o dictamen de la Conagua sea público."},
+      "pasos": [
+        {"texto": "Se publica u obtenemos por transparencia el oficio o dictamen de la Conagua.", "estado": "pendiente", "core": true},
+        {"texto": "Su alcance: una revisión técnica del proyecto o una aprobación del financiamiento.", "estado": "pendiente"}
+      ],
+      "veredicto": "sin_pruebas",
+      "veredicto_fecha": "2026-10-16",
+      "nota": "Mientras el documento de la Conagua no sea público, no hay forma de comprobarlo.",
+      "respuesta": null,
+      "historial": []
+    },
+    {
+      "id": "licitacion",
+      "codigo": "A6",
+      "seccion": "app",
+      "titulo": "Habrá licitación pública y no hay empresa elegida",
+      "cita": "La iniciativa considera una licitación pública y todavía no hay una empresa seleccionada.",
+      "parafrasis": true,
+      "quien": "Laura Gabriela Cárdenas Rodríguez",
+      "cargo": "diputada y presidenta de la Comisión de Hacienda y Presupuestos",
+      "fecha": "2026-10-14",
+      "donde": "según Milenio y El Informador",
+      "fuentes": [
+        {"url": "https://www.milenio.com/comunidad/respalda-comision-de-hacienda-el-acueducto-chapala-guadalajara", "archive": "https://web.archive.org/web/20261017135419/https://www.milenio.com/comunidad/respalda-comision-de-hacienda-el-acueducto-chapala-guadalajara", "medio": "Milenio", "fecha": "2026-10-14", "tipo": "prensa"},
+        {"url": "https://www.informador.mx/jalisco/gabriela-cardenas-respalda-iniciativa-de-acueducto-chapala-guadalajara-llama-a-diputados-federales-a-asignar-recursos-para-jalisco-20261014-0200.html", "archive": "https://web.archive.org/web/20261017134446/https://www.informador.mx/jalisco/gabriela-cardenas-respalda-iniciativa-de-acueducto-chapala-guadalajara-llama-a-diputados-federales-a-asignar-recursos-para-jalisco-20261014-0200.html", "medio": "El Informador", "fecha": "2026-10-14", "tipo": "prensa"}
+      ],
+      "tambien": [],
+      "documento": {
+        "titulo": "En julio ya había propuestas de empresas",
+        "citas": [{"ref": "Azteca Jalisco, 29 de julio de 2026", "texto": "informó que cuatro empresas han presentado propuestas formales para financiar el nuevo acueducto Chapala-Guadalajara y la renovación de la planta potabilizadora de Miravalle bajo un modelo de asociación público-privada"}],
+        "texto": "La nota se refiere al gobernador. No se sabe quiénes son las cuatro empresas.",
+        "fuentes": [{"url": "https://www.aztecajalisco.com/local/inversionistas-presentan-propuestas-para-acueducto-chapala-guadalajara/", "archive": "https://web.archive.org/web/20261017133701/https://www.aztecajalisco.com/local/inversionistas-presentan-propuestas-para-acueducto-chapala-guadalajara/", "medio": "Azteca Jalisco", "fecha": "2026-07-29", "tipo": "prensa"}]
+      },
+      "plazo": {"fecha": null, "tipo": "lectura", "texto": "Lo revisamos con las bases, la apertura de propuestas y el fallo."},
+      "pasos": [
+        {"texto": "Se conocen los nombres de las cuatro propuestas (lo pedimos por transparencia).", "estado": "pendiente"},
+        {"texto": "Se publican las bases de la licitación.", "estado": "pendiente"},
+        {"texto": "Se publica el acta de apertura de propuestas.", "estado": "pendiente"},
+        {"texto": "Se publica el fallo.", "estado": "pendiente", "core": true}
+      ],
+      "veredicto": "en_riesgo",
+      "veredicto_fecha": "2026-10-16",
+      "nota": "Hubo propuestas de empresas antes de que existieran reglas para la licitación.",
+      "respuesta": null,
+      "historial": []
+    },
+    {
+      "id": "rotacion",
+      "codigo": "B1",
+      "seccion": "gobierno",
+      "titulo": "La rotación termina en marzo de 2027",
+      "cita": "El Programa de Rotación del Servicio de Agua Limpia iniciará el jueves 15 de octubre y se mantendrá hasta marzo de 2027",
+      "quien": "SIAPA",
+      "cargo": "boletín del Gobierno de Jalisco y el SIAPA",
+      "fecha": "2026-10-15",
+      "donde": "boletín de prensa",
+      "fuentes": [{"url": "https://www.siapa.gob.mx/prensa/presenta-gobierno-de-jalisco-programa-de-rotacion-del-servicio-de-agua-limpia-y-sitio-para", "archive": null, "medio": "SIAPA", "fecha": "2026-10-15", "tipo": "primaria", "captura": "privada"}],
+      "tambien": [
+        {
+          "cita": "¿Cuánto tiempo puede durar este esquema de rotación en el servicio? Estimamos que serán seis meses en una primera etapa",
+          "quien": "Pablo Lemus Navarro",
+          "cargo": "gobernador de Jalisco",
+          "fecha": "2026-10-06",
+          "fuentes": [
+            {"url": "https://x.com/PabloLemusN/status/2107612364849782850", "archive": null, "medio": "X, @PabloLemusN", "fecha": "2026-10-06", "tipo": "primaria", "captura": "privada"},
+            {"url": "https://politica.expansion.mx/mexico/2026/10/08/crisis-agua-jalisco-lemus-acueducto-chapala-guadalajara", "archive": "https://web.archive.org/web/20261017132853/https://politica.expansion.mx/mexico/2026/10/08/crisis-agua-jalisco-lemus-acueducto-chapala-guadalajara", "medio": "Expansión", "fecha": "2026-10-08", "tipo": "prensa"}
+          ]
+        }
+      ],
+      "documento": {
+        "titulo": "Lo que pasó",
+        "citas": [],
+        "texto": "La rotación empezó el 15 de octubre con las zonas 2 y 4 (113 colonias) y siguió el 16 con las zonas 1 y 6 (289 colonias), con calendario público. Según El Informador, el director del SIAPA no descartó ampliar el plazo.",
+        "fuentes": [{"url": "https://www.informador.mx/jalisco/siapa-comienzan-tandeos-en-la-zmg-con-113-colonias-piden-paciencia-y-verificar-calendario-de-rotacion-de-servicio-20261015-0177.html", "archive": "https://web.archive.org/web/20261017134828/https://www.informador.mx/jalisco/siapa-comienzan-tandeos-en-la-zmg-con-113-colonias-piden-paciencia-y-verificar-calendario-de-rotacion-de-servicio-20261015-0177.html", "medio": "El Informador", "fecha": "2026-10-15", "tipo": "prensa"}]
+      },
+      "plazo": {"fecha": "2027-03-31", "tipo": "lectura", "texto": "«Hasta marzo de 2027»: tomamos el último día de marzo. Una «segunda etapa» contaría como extensión."},
+      "pasos": [
+        {
+          "texto": "Empieza en la fecha anunciada y con calendario público.",
+          "estado": "cumplido",
+          "evidencia": [{"url": "https://www.informador.mx/jalisco/siapa-comienzan-tandeos-en-la-zmg-con-113-colonias-piden-paciencia-y-verificar-calendario-de-rotacion-de-servicio-20261015-0177.html", "archive": "https://web.archive.org/web/20261017134828/https://www.informador.mx/jalisco/siapa-comienzan-tandeos-en-la-zmg-con-113-colonias-piden-paciencia-y-verificar-calendario-de-rotacion-de-servicio-20261015-0177.html", "medio": "El Informador", "fecha": "2026-10-15"}]
+        },
+        {"texto": "Los ajustes al calendario se publican antes de aplicarse.", "estado": "pendiente"},
+        {"texto": "A más tardar el 28 de febrero de 2027 confirman la fecha de fin o anuncian una extensión.", "estado": "pendiente"},
+        {"texto": "Termina a más tardar el 31 de marzo de 2027 en las siete zonas.", "estado": "pendiente", "core": true}
+      ],
+      "veredicto": "se_cumple",
+      "veredicto_fecha": "2026-10-16",
+      "nota": "Empezó en la fecha anunciada y con calendario público. Falta ver si termina a tiempo.",
+      "respuesta": null,
+      "historial": []
+    },
+    {
+      "id": "laspintas",
+      "codigo": "B2",
+      "seccion": "gobierno",
+      "titulo": "Dejar de usar Las Pintas hasta que el agua se pueda potabilizar, y limpiarla",
+      "cita": "Los expertos nos recomiendan que la mejor decisión es dejar de utilizar el agua de la presa Las Pintas y el sistema antiguo de Chapala para abastecer de agua a la ciudad",
+      "quien": "Pablo Lemus Navarro",
+      "cargo": "gobernador de Jalisco",
+      "fecha": "2026-10-06",
+      "donde": "publicación en X con video",
+      "fuentes": [
+        {"url": "https://x.com/PabloLemusN/status/2107612364849782850", "archive": null, "medio": "X, @PabloLemusN", "fecha": "2026-10-06", "tipo": "primaria", "captura": "privada"},
+        {"url": "https://politica.expansion.mx/mexico/2026/10/08/crisis-agua-jalisco-lemus-acueducto-chapala-guadalajara", "archive": "https://web.archive.org/web/20261017132853/https://politica.expansion.mx/mexico/2026/10/08/crisis-agua-jalisco-lemus-acueducto-chapala-guadalajara", "medio": "Expansión", "fecha": "2026-10-08", "tipo": "prensa"}
+      ],
+      "tambien": [
+        {
+          "cita": "lo vamos a dejar de utilizar en tanto no tengamos la garantia de que esta agua puede ser potabilizada",
+          "quien": "Ernesto Marroquín",
+          "cargo": "secretario de Gestión Integral del Agua",
+          "fecha": "2026-10-15",
+          "fuentes": [{"url": "https://www.siapa.gob.mx/prensa/presenta-gobierno-de-jalisco-programa-de-rotacion-del-servicio-de-agua-limpia-y-sitio-para", "archive": null, "medio": "SIAPA", "fecha": "2026-10-15", "tipo": "primaria", "captura": "privada"}]
+        },
+        {
+          "cita": "El cierre del canal de Las Pintas es una medida provisional, mientras avanzamos en la atención de esta problemática. Lo primero es limpiar, desazolvar y atender la infraestructura dañada",
+          "quien": "Luis Barboza",
+          "cargo": "director de la Comisión Estatal del Agua",
+          "fecha": "2026-10-15",
+          "fuentes": [{"url": "https://www.siapa.gob.mx/prensa/presenta-gobierno-de-jalisco-programa-de-rotacion-del-servicio-de-agua-limpia-y-sitio-para", "archive": null, "medio": "SIAPA", "fecha": "2026-10-15", "tipo": "primaria", "captura": "privada"}]
+        }
+      ],
+      "documento": {
+        "titulo": "La propuesta técnica presentada a los alcaldes (12 de octubre)",
+        "citas": [{"ref": "Resumen de UDG TV", "texto": "entre marzo y julio de 2027 podría recurrirse nuevamente al suministro de Las Pintas durante el estiaje, dependiendo de las necesidades y las condiciones técnicas"}],
+        "texto": "La misma propuesta pone la limpieza entre noviembre de 2026 y marzo de 2027. No dice que antes de volver a usar Las Pintas se garantizará que el agua se puede potabilizar.",
+        "fuentes": [{"url": "https://udgtv.com/noticias/siapa-contempla-suspensiones-de-hasta-3-dias-por-semana/334344", "archive": "https://web.archive.org/web/20261017060328/https://udgtv.com/noticias/siapa-contempla-suspensiones-de-hasta-3-dias-por-semana/334344", "medio": "UDG TV", "fecha": "2026-10-12", "tipo": "prensa"}]
+      },
+      "plazo": {"fecha": "2027-03-31", "tipo": "lectura", "texto": "Limpieza: de noviembre de 2026 a marzo de 2027, según la propuesta técnica. Volver a usarla: sin fecha, solo con la garantía de que el agua se puede potabilizar."},
+      "pasos": [
+        {
+          "texto": "Se deja de usar Las Pintas. El boletín del 15 de octubre dice que «se apagó el sistema de Las Pintas».",
+          "estado": "declarado",
+          "evidencia": [{"url": "https://www.siapa.gob.mx/prensa/presenta-gobierno-de-jalisco-programa-de-rotacion-del-servicio-de-agua-limpia-y-sitio-para", "archive": null, "medio": "SIAPA", "fecha": "2026-10-15", "captura": "privada"}]
+        },
+        {"texto": "Se atienden las descargas: colectores reparados y la planta de San Antonio Tlayacapan ampliada de 32 a 65 litros por segundo (sin fecha).", "estado": "pendiente"},
+        {"texto": "Se desazolva la presa y el canal entre noviembre de 2026 y marzo de 2027.", "estado": "pendiente"},
+        {"texto": "Antes de volver a usarla, se publican resultados de un laboratorio acreditado que muestren que el agua se puede potabilizar.", "estado": "pendiente", "core": true}
+      ],
+      "veredicto": "en_riesgo",
+      "veredicto_fecha": "2026-10-16",
+      "nota": "El cierre está anunciado, pero la propia propuesta del gobierno contempla volver a usar Las Pintas en el estiaje sin mencionar la garantía.",
+      "respuesta": null,
+      "historial": []
+    },
+    {
+      "id": "reportes",
+      "codigo": "B3",
+      "seccion": "gobierno",
+      "titulo": "El SIAPA informará todos los días",
+      "cita": "Vamos a seguir informando día con día lo que va presentando este proceso",
+      "quien": "Ismael Jáuregui",
+      "cargo": "director general del SIAPA",
+      "fecha": "2026-10-15",
+      "donde": "conferencia de prensa, según El Informador",
+      "fuentes": [{"url": "https://www.informador.mx/jalisco/siapa-comienzan-tandeos-en-la-zmg-con-113-colonias-piden-paciencia-y-verificar-calendario-de-rotacion-de-servicio-20261015-0177.html", "archive": "https://web.archive.org/web/20261017134828/https://www.informador.mx/jalisco/siapa-comienzan-tandeos-en-la-zmg-con-113-colonias-piden-paciencia-y-verificar-calendario-de-rotacion-de-servicio-20261015-0177.html", "medio": "El Informador", "fecha": "2026-10-15", "tipo": "prensa"}],
+      "tambien": [],
+      "documento": {
+        "titulo": "Lo que encontramos",
+        "citas": [],
+        "texto": "Al 17 de octubre, lo más reciente en la sección de prensa del SIAPA era el boletín del 15 de octubre.",
+        "fuentes": [{"url": "https://www.siapa.gob.mx/prensa", "archive": null, "medio": "SIAPA", "fecha": "2026-10-17", "tipo": "primaria", "captura": "privada"}]
+      },
+      "plazo": {"fecha": "2027-03-31", "tipo": "lectura", "texto": "Todos los días mientras dure la rotación; tomamos el 31 de marzo de 2027."},
+      "pasos": [
+        {"texto": "El SIAPA dice dónde publica su informe diario.", "estado": "pendiente"},
+        {"texto": "Hay informe en al menos 9 de cada 10 días de rotación de cada mes.", "estado": "pendiente", "core": true},
+        {"texto": "Los informes dicen qué zonas recibieron agua y qué falló.", "estado": "pendiente"}
+      ],
+      "veredicto": "sin_pruebas",
+      "veredicto_fecha": "2026-10-16",
+      "nota": "Vamos a contar cuántos días hubo informe.",
+      "respuesta": null,
+      "historial": []
+    },
+    {
+      "id": "pipas",
+      "codigo": "B4",
+      "seccion": "gobierno",
+      "titulo": "Pipas, cisternas y tinacos gratis para las zonas afectadas",
+      "cita": "Aquellas zonas de la ciudad que se vean afectadas con bajas de presión en el servicio, tendrán atención por parte del @siapagdl y su Ayuntamiento con pipas, cisternas y tinacos.",
+      "quien": "Pablo Lemus Navarro",
+      "cargo": "gobernador de Jalisco",
+      "fecha": "2026-10-12",
+      "donde": "publicación en X",
+      "fuentes": [{"url": "https://www.informador.mx/jalisco/siapa-lemus-anuncia-rotacion-del-agua-en-guadalajara-inicia-el-15-de-octubre-20261012-0187.html", "archive": "https://web.archive.org/web/20261017135044/https://www.informador.mx/jalisco/siapa-lemus-anuncia-rotacion-del-agua-en-guadalajara-inicia-el-15-de-octubre-20261012-0187.html", "medio": "El Informador", "fecha": "2026-10-12", "tipo": "prensa"}],
+      "tambien": [],
+      "documento": {
+        "titulo": "Decreto 30216/LXIV/26, artículo Cuarto (obligatorio hasta el 15 de diciembre de 2026)",
+        "citas": [
+          {"ref": "Fracción II", "texto": "Garantizar el suministro gratuito de agua potable mediante pipas a las colonias afectadas, priorizando escuelas, hospitales, centros de salud, estancias para personas adultas mayores y demás instalaciones de atención prioritaria, así como a las personas usuarias que no cuenten con acceso suficiente y de calidad al servicio"},
+          {"ref": "Fracción IV", "texto": "Difundir de manera permanente los puntos de abastecimiento, horarios, rutas de distribución y demás información necesaria para garantizar que la población conozca las medidas implementadas"}
+        ],
+        "fuentes": [{"url": "https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25482/1785200563-2026-07-27-.pdf", "archive": "https://web.archive.org/web/20261017132105/https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper%2F25482%2F1785200563-2026-07-27-.pdf", "medio": "Periódico Oficial «El Estado de Jalisco», 27 de julio de 2026", "fecha": "2026-07-27", "tipo": "primaria"}]
+      },
+      "plazo": {"fecha": "2026-12-15", "tipo": "explicito", "texto": "La obligación del decreto vence el 15 de diciembre de 2026. El apoyo durante la rotación lo seguimos hasta el 31 de marzo de 2027."},
+      "pasos": [
+        {
+          "texto": "Hay un canal gratuito para pedir pipas: SIAPATEL 33 3668 2482 o 073, de lunes a domingo de 8:00 a 20:00.",
+          "estado": "cumplido",
+          "evidencia": [{"url": "https://www.informador.mx/jalisco/siapa-lemus-anuncia-rotacion-del-agua-en-guadalajara-inicia-el-15-de-octubre-20261012-0187.html", "archive": "https://web.archive.org/web/20261017135044/https://www.informador.mx/jalisco/siapa-lemus-anuncia-rotacion-del-agua-en-guadalajara-inicia-el-15-de-octubre-20261012-0187.html", "medio": "El Informador", "fecha": "2026-10-12"}]
+        },
+        {"texto": "El SIAPA publica los puntos, horarios y rutas, como pide el decreto. No los encontramos.", "estado": "pendiente", "core": true},
+        {"texto": "Hay un registro público de entregas (lo pedimos por transparencia).", "estado": "pendiente"},
+        {"texto": "No hay reportes creíbles de cobros por pipas gratuitas.", "estado": "pendiente"}
+      ],
+      "veredicto": "en_riesgo",
+      "veredicto_fecha": "2026-10-16",
+      "nota": "El canal para pedir pipas existe, pero no encontramos la publicación de puntos, horarios y rutas que pide el decreto.",
+      "respuesta": null,
+      "historial": []
+    },
+    {
+      "id": "descuentos",
+      "codigo": "B5",
+      "seccion": "gobierno",
+      "titulo": "Listas mensuales de colonias con descuento e informes mensuales al Congreso",
+      "cita": "La determinación de las zonas de aplicación, deberá ser actualizada cada mes mediante el acuerdo correspondiente",
+      "quien": "Congreso del Estado",
+      "cargo": "Decreto 30216/LXIV/26, artículo Tercero",
+      "fecha": "2026-07-27",
+      "donde": "Periódico Oficial",
+      "fuentes": [{"url": "https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25482/1785200563-2026-07-27-.pdf", "archive": "https://web.archive.org/web/20261017132105/https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper%2F25482%2F1785200563-2026-07-27-.pdf", "medio": "Periódico Oficial «El Estado de Jalisco», 27 de julio de 2026", "fecha": "2026-07-27", "tipo": "primaria"}],
+      "tambien": [
+        {
+          "cita": "remitirá al Congreso del Estado de Jalisco un informe mensual sobre el cumplimiento del presente Decreto mientras subsistan las medidas previstas en el mismo",
+          "quien": "Congreso del Estado",
+          "cargo": "Decreto 30216/LXIV/26, artículo Quinto, sobre el SIAPA",
+          "fecha": "2026-07-27",
+          "fuentes": [{"url": "https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25482/1785200563-2026-07-27-.pdf", "archive": "https://web.archive.org/web/20261017132105/https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper%2F25482%2F1785200563-2026-07-27-.pdf", "medio": "Periódico Oficial «El Estado de Jalisco», 27 de julio de 2026", "fecha": "2026-07-27", "tipo": "primaria"}]
+        }
+      ],
+      "documento": {
+        "titulo": "Lo publicado en el Periódico Oficial",
+        "citas": [],
+        "texto": "La primera lista salió el 14 de agosto con 235 colonias. La segunda salió el 8 de octubre con 342 colonias, 55 días después. No encontramos ningún informe mensual al Congreso.",
+        "fuentes": [
+          {"url": "https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25557/1786740179-2026-08-14-.pdf", "archive": "https://web.archive.org/web/20261017132124/https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper%2F25557%2F1786740179-2026-08-14-.pdf", "medio": "Periódico Oficial, 14 de agosto de 2026", "fecha": "2026-08-14", "tipo": "primaria"},
+          {"url": "https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25862/1791483823-2026-10-08-IV.pdf", "archive": null, "medio": "Periódico Oficial, 8 de octubre de 2026", "fecha": "2026-10-08", "tipo": "primaria", "captura": "privada"}
+        ]
+      },
+      "plazo": {"fecha": "2026-12-15", "tipo": "explicito", "texto": "Cada mes, hasta el 15 de diciembre de 2026, cuando vence el decreto."},
+      "pasos": [
+        {
+          "texto": "Primera lista: 14 de agosto, 235 colonias.",
+          "estado": "cumplido",
+          "evidencia": [{"url": "https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25557/1786740179-2026-08-14-.pdf", "archive": "https://web.archive.org/web/20261017132124/https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper%2F25557%2F1786740179-2026-08-14-.pdf", "medio": "Periódico Oficial", "fecha": "2026-08-14"}]
+        },
+        {
+          "texto": "Segunda lista: 8 de octubre, 342 colonias, 55 días después de la primera.",
+          "estado": "cumplido",
+          "evidencia": [{"url": "https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25862/1791483823-2026-10-08-IV.pdf", "archive": null, "medio": "Periódico Oficial", "fecha": "2026-10-08", "captura": "privada"}]
+        },
+        {"texto": "Informes mensuales del SIAPA al Congreso (agosto, septiembre, octubre y noviembre).", "estado": "pendiente", "core": true},
+        {"texto": "El descuento aparece en los recibos de las colonias de la lista.", "estado": "pendiente"},
+        {"texto": "Antes del 15 de diciembre se decide si el descuento sigue mientras dure la rotación.", "estado": "pendiente"}
+      ],
+      "veredicto": "en_riesgo",
+      "veredicto_fecha": "2026-10-16",
+      "nota": "La segunda lista salió 55 días después de la primera, y no encontramos ningún informe mensual al Congreso.",
+      "respuesta": null,
+      "historial": []
+    },
+    {
+      "id": "calidad-septiembre",
+      "codigo": "B6",
+      "seccion": "gobierno",
+      "titulo": "Mejor agua a finales de agosto y principios de septiembre",
+      "cita": "Vamos a empezar a ver mejor calidad del agua hacia finales de agosto y principios de septiembre, y vamos a ver una mejora muy, muy importante hacia febrero, marzo y abril del próximo año con estas inversiones",
+      "quien": "Pablo Lemus Navarro",
+      "cargo": "gobernador de Jalisco",
+      "fecha": "2026-07-13",
+      "donde": "entrevista en Radio Metrópoli",
+      "fuentes": [
+        {"url": "https://www.notisistema.com/noticias/en-dos-meses-habra-agua-limpia-en-zmg-lemus/", "archive": "https://web.archive.org/web/20261017135525/https://www.notisistema.com/noticias/en-dos-meses-habra-agua-limpia-en-zmg-lemus/", "medio": "Notisistema", "fecha": "2026-07-13", "tipo": "prensa"},
+        {"url": "https://www.cronica.com.mx/jalisco/2026/07/13/mejor-calidad-del-agua-a-finales-de-agosto-y-principios-de-septiembre-pablo-lemus/", "archive": "https://web.archive.org/web/20261017133813/https://www.cronica.com.mx/jalisco/2026/07/13/mejor-calidad-del-agua-a-finales-de-agosto-y-principios-de-septiembre-pablo-lemus/", "medio": "Crónica Jalisco", "fecha": "2026-07-13", "tipo": "prensa"}
+      ],
+      "tambien": [],
+      "documento": {
+        "titulo": "Lo que dijeron después del plazo",
+        "citas": [
+          {"ref": "SIAPA, 5 de octubre", "texto": "en los últimos días, se ha detectado agua con olor y/ o color procedente de la Presa de Las Pintas a través del Sistema Antiguo"},
+          {"ref": "Pablo Lemus, 6 de octubre", "texto": "La ciudad está viviendo una crisis de agua potable como nunca antes"}
+        ],
+        "fuentes": [
+          {"url": "https://www.siapa.gob.mx/prensa/refuerza-siapa-acciones-para-mitigar-afectaciones-por-agua-con-olor-yo-colorrefuerza-siapa", "archive": null, "medio": "SIAPA", "fecha": "2026-10-05", "tipo": "primaria", "captura": "privada"},
+          {"url": "https://x.com/PabloLemusN/status/2107612364849782850", "archive": null, "medio": "X, @PabloLemusN", "fecha": "2026-10-06", "tipo": "primaria", "captura": "privada"}
+        ]
+      },
+      "plazo": {"fecha": "2026-09-15", "tipo": "lectura", "texto": "«Finales de agosto y principios de septiembre»: tomamos el 15 de septiembre de 2026. La segunda parte de la frase se sigue en B8."},
+      "pasos": [
+        {"texto": "Resultados de laboratorio de agosto y septiembre que muestren la mejora. No los encontramos.", "estado": "pendiente"},
+        {
+          "texto": "Mejor calidad del agua hacia el 15 de septiembre. Después del plazo, el SIAPA reconoció agua con olor y color, y el gobernador habló de una crisis.",
+          "estado": "incumplido",
+          "core": true,
+          "evidencia": [
+            {"url": "https://www.siapa.gob.mx/prensa/refuerza-siapa-acciones-para-mitigar-afectaciones-por-agua-con-olor-yo-colorrefuerza-siapa", "archive": null, "medio": "SIAPA", "fecha": "2026-10-05", "captura": "privada"},
+            {"url": "https://x.com/PabloLemusN/status/2107612364849782850", "archive": null, "medio": "X, @PabloLemusN", "fecha": "2026-10-06", "captura": "privada"}
+          ]
+        },
+        {"texto": "Bajan las quejas por la calidad del agua.", "estado": "pendiente"}
+      ],
+      "veredicto": "incumplida",
+      "veredicto_fecha": "2026-10-16",
+      "nota": "Pasó el plazo y el propio gobierno reconoció después que el agua seguía llegando con olor y color.",
+      "respuesta": null,
+      "historial": []
+    },
+    {
+      "id": "calidad-semanas",
+      "codigo": "B7",
+      "seccion": "gobierno",
+      "titulo": "Una mejora sustancial en las próximas semanas",
+      "cita": "Si hacemos esto, podremos ver una mejora sustancial en la calidad del agua que recibe la ciudad en las próximas semanas",
+      "quien": "Pablo Lemus Navarro",
+      "cargo": "gobernador de Jalisco",
+      "fecha": "2026-10-06",
+      "donde": "publicación en X con video",
+      "fuentes": [
+        {"url": "https://x.com/PabloLemusN/status/2107612364849782850", "archive": null, "medio": "X, @PabloLemusN", "fecha": "2026-10-06", "tipo": "primaria", "captura": "privada"},
+        {"url": "https://politica.expansion.mx/mexico/2026/10/08/crisis-agua-jalisco-lemus-acueducto-chapala-guadalajara", "archive": "https://web.archive.org/web/20261017132853/https://politica.expansion.mx/mexico/2026/10/08/crisis-agua-jalisco-lemus-acueducto-chapala-guadalajara", "medio": "Expansión", "fecha": "2026-10-08", "tipo": "prensa"}
+      ],
+      "tambien": [],
+      "documento": {
+        "titulo": "Todavía no hay resultados públicos",
+        "citas": [],
+        "texto": "No encontramos resultados de laboratorio por punto de la red de la planta de Miravalle después del 6 de octubre. La Recomendación 10/2026 de la CEDHJ ya pide al SIAPA publicarlos.",
+        "fuentes": [{"url": "https://cedhj.org.mx/assets_web/doc/recomendaciones/emitidas/2026/20260430150739/recomendacion_1777583259457.pdf", "archive": null, "medio": "CEDHJ, Recomendación 10/2026", "fecha": "2026-04-30", "tipo": "primaria", "captura": "privada"}]
+      },
+      "plazo": {"fecha": "2026-12-01", "tipo": "lectura", "texto": "«En las próximas semanas»: tomamos ocho semanas, hasta el 1 de diciembre de 2026."},
+      "pasos": [
+        {"texto": "Se publican resultados de laboratorio por punto de la red de la planta 1 después del 6 de octubre.", "estado": "pendiente", "core": true},
+        {"texto": "El cloro residual y la turbiedad cumplen la NOM-127 en la mayoría de los puntos, comparados con muestreos independientes.", "estado": "pendiente"},
+        {"texto": "Bajan los reportes de agua sucia que recibe Agua GDL en las zonas de la planta 1 (solo como apoyo).", "estado": "pendiente"}
+      ],
+      "veredicto": "sin_pruebas",
+      "veredicto_fecha": "2026-10-16",
+      "nota": "Lo calificamos el 1 de diciembre con los resultados que se hayan publicado.",
+      "respuesta": null,
+      "historial": []
+    },
+    {
+      "id": "obras",
+      "codigo": "B8",
+      "seccion": "gobierno",
+      "titulo": "La Calera y la primera etapa de la planta de Miravalle, en unos seis meses",
+      "cita": "Estimamos que serán seis meses en una primera etapa, en lo que concluyen las obras del acueducto de desvío de La Calera y la ampliación de la Planta Potabilizadora número 1 de Miravalle",
+      "quien": "Pablo Lemus Navarro",
+      "cargo": "gobernador de Jalisco",
+      "fecha": "2026-10-06",
+      "donde": "publicación en X con video",
+      "fuentes": [
+        {"url": "https://x.com/PabloLemusN/status/2107612364849782850", "archive": null, "medio": "X, @PabloLemusN", "fecha": "2026-10-06", "tipo": "primaria", "captura": "privada"},
+        {"url": "https://politica.expansion.mx/mexico/2026/10/08/crisis-agua-jalisco-lemus-acueducto-chapala-guadalajara", "archive": "https://web.archive.org/web/20261017132853/https://politica.expansion.mx/mexico/2026/10/08/crisis-agua-jalisco-lemus-acueducto-chapala-guadalajara", "medio": "Expansión", "fecha": "2026-10-08", "tipo": "prensa"}
+      ],
+      "tambien": [],
+      "documento": {
+        "titulo": "Las fechas oficiales no coinciden",
+        "citas": [
+          {"ref": "Crónica, 13 de julio", "texto": "cuatro módulos de sedimentación para un nuevo módulo con capacidad de distribuir 2 mil litros de agua por segundo, cuya conclusión está proyectada para marzo de 2027"},
+          {"ref": "Crónica, 9 de octubre, sobre lo que dijo el gobernador", "texto": "mencionó que los trabajos se realizan en 3 partes y que la primera empezará a operar en abril de 2027, con una capacidad de procesamiento de 2 mil litros por segundo"}
+        ],
+        "texto": "La ficha del Plan Integral del Agua pone la estación de bombeo de La Calera y su conexión con el acueducto en 2026, con 756 millones de pesos.",
+        "fuentes": [
+          {"url": "https://www.cronica.com.mx/jalisco/guadalajara/2026/07/13/jalisco-anuncia-acciones-inmediatas-para-mejorar-la-calidad-del-agua-en-la-metropoli/", "archive": "https://web.archive.org/web/20261017133918/https://www.cronica.com.mx/jalisco/guadalajara/2026/07/13/jalisco-anuncia-acciones-inmediatas-para-mejorar-la-calidad-del-agua-en-la-metropoli/", "medio": "Crónica Jalisco", "fecha": "2026-07-13", "tipo": "prensa"},
+          {"url": "https://www.cronica.com.mx/jalisco/guadalajara/2026/10/09/invertiran-7-mil-500-mdp-en-modernizacion-de-planta-potabilizadora-de-miravalle/", "archive": "https://web.archive.org/web/20261017134028/https://www.cronica.com.mx/jalisco/guadalajara/2026/10/09/invertiran-7-mil-500-mdp-en-modernizacion-de-planta-potabilizadora-de-miravalle/", "medio": "Crónica Jalisco", "fecha": "2026-10-09", "tipo": "prensa"},
+          {"url": "https://planintegraldelagua.jalisco.gob.mx/pdf/an-0014.pdf", "archive": "https://web.archive.org/web/20261017132754/https://planintegraldelagua.jalisco.gob.mx/pdf/an-0014.pdf", "medio": "Plan Integral del Agua, ficha de La Calera", "fecha": "2026-10-16", "tipo": "primaria"}
+        ]
+      },
+      "plazo": {"fecha": "2027-04-06", "tipo": "lectura", "texto": "«Seis meses» desde el 6 de octubre: tomamos el 6 de abril de 2027."},
+      "pasos": [
+        {"texto": "Terminan las 66 celdas de la planta 1, previstas para octubre de 2026.", "estado": "pendiente"},
+        {"texto": "La Calera entra en operación.", "estado": "pendiente"},
+        {"texto": "Se contratan los módulos de sedimentación.", "estado": "pendiente"},
+        {"texto": "La primera etapa de la planta 1 opera con 2,000 litros por segundo.", "estado": "pendiente", "core": true}
+      ],
+      "veredicto": "en_riesgo",
+      "veredicto_fecha": "2026-10-16",
+      "nota": "La fecha oficial más reciente para la primera etapa de la planta 1, abril de 2027, puede caer después del 6 de abril, y las fechas oficiales no coinciden.",
+      "respuesta": null,
+      "historial": []
+    },
+    {
+      "id": "cedhj",
+      "codigo": "B9",
+      "seccion": "gobierno",
+      "titulo": "Cumplir la Recomendación 10/2026 de la CEDHJ sobre Las Pintas",
+      "cita": "Haga públicos los resultados de los análisis de calidad de agua que se generaron por laboratorios externos certificados durante el 2026",
+      "quien": "Comisión Estatal de Derechos Humanos Jalisco",
+      "cargo": "Recomendación 10/2026, punto Cuarta, fracción II, al SIAPA",
+      "fecha": "2026-04-30",
+      "donde": "recomendación dirigida a nueve autoridades, con 40 puntos",
+      "fuentes": [
+        {"url": "https://cedhj.org.mx/assets_web/doc/recomendaciones/emitidas/2026/20260430150739/recomendacion_1777583259457.pdf", "archive": null, "medio": "CEDHJ", "fecha": "2026-04-30", "tipo": "primaria", "captura": "privada"},
+        {"url": "https://udgtv.com/noticias/contaminacion-del-agua-afecta-a-650-colonias-de-la-zmg/322372", "archive": "https://web.archive.org/web/20261017133444/https://udgtv.com/noticias/contaminacion-del-agua-afecta-a-650-colonias-de-la-zmg/322372", "medio": "UDG TV", "fecha": "2026-06-25", "tipo": "prensa"}
+      ],
+      "tambien": [],
+      "documento": {
+        "titulo": "Ley de la CEDHJ, artículo 72",
+        "citas": [{"texto": "deberá informar, dentro de los diez días siguientes a su notificación, si acepta dicha recomendación. En su caso, deberá acreditar dentro de los quince días siguientes, que ha cumplido con la misma. Dicho plazo podrá ser ampliado cuando la naturaleza de la recomendación así lo requiera"}],
+        "texto": "Según UDG TV, la recomendación fue aceptada por las autoridades. En marzo de 2026, la presidenta de la CEDHJ dijo que de la Recomendación 10/2022, también sobre el agua, «de los puntos recomendatorios solamente tenemos un avance del dieciocho por ciento».",
+        "fuentes": [
+          {"url": "https://transparencia.info.jalisco.gob.mx/sites/default/files/Ley%20de%20la%20Comisi%C3%B3n%20Estatal%20de%20Derechos%20Humanos_11.pdf", "archive": "https://web.archive.org/web/20250810045232/https://transparencia.info.jalisco.gob.mx/sites/default/files/Ley%20de%20la%20Comisi%C3%B3n%20Estatal%20de%20Derechos%20Humanos_11.pdf", "medio": "Ley de la CEDHJ", "fecha": "2026-10-16", "tipo": "primaria"},
+          {"url": "https://www.milenio.com/comunidad/cedhj-suma-26-quejas-servicio-agua-amg", "archive": "https://web.archive.org/web/20261017135228/https://www.milenio.com/comunidad/cedhj-suma-26-quejas-servicio-agua-amg", "medio": "Milenio", "fecha": "2026-03-11", "tipo": "prensa"}
+        ]
+      },
+      "plazo": {"fecha": null, "tipo": "explicito", "texto": "Por ley, diez días para aceptarla y quince para acreditar que se cumplió; el plazo se puede ampliar."},
+      "pasos": [
+        {"texto": "La Secretaría de Gestión Integral del Agua presenta un plan de remediación de Las Pintas con presupuesto, calendario e indicadores públicos.", "estado": "pendiente"},
+        {"texto": "El SIAPA publica los resultados de los laboratorios externos de 2026.", "estado": "pendiente", "core": true},
+        {"texto": "El SIAPA publica cómo elige sus puntos de monitoreo y sus resultados.", "estado": "pendiente"},
+        {"texto": "La COPRISJAL vigila al azar y de forma permanente el agua contra la NOM-127 y avisa al SIAPA cuando falla.", "estado": "pendiente"},
+        {"texto": "La CEDHJ informa cuánto ha cumplido cada autoridad (lo pedimos por transparencia).", "estado": "pendiente"}
+      ],
+      "veredicto": "en_riesgo",
+      "veredicto_fecha": "2026-10-16",
+      "nota": "No encontramos publicados los resultados que pide el punto Cuarta. En 2022 la CEDHJ ya había pedido al SIAPA casi lo mismo.",
+      "respuesta": null,
+      "historial": []
+    }
+  ],
+  "solicitudes": [
+    {"a": "SIAPA", "folio": "140279226001093", "fecha": "2026-10-17", "tema": "la presa Las Pintas (la orden de dejar de usarla, los caudales que llegaban a la planta de Miravalle, el programa de limpieza, el plan de remediación y los análisis del agua)", "estado": "en proceso; el plazo para responder vence el 29 de octubre"},
+    {"a": "SIAPA", "folio": "140279226001094", "fecha": "2026-10-17", "tema": "los informes diarios de la rotación, los ajustes al calendario, los registros de presión por zona y los reportes de falta de agua", "estado": "en proceso; el plazo para responder vence el 29 de octubre"},
+    {"a": "Comisión Estatal del Agua", "folio": "140239726000217", "fecha": "2026-10-17", "tema": "la presa Las Pintas (la orden de dejar de usarla, los caudales que llegaban a la planta de Miravalle, el programa de limpieza, el plan de remediación y los análisis del agua)", "estado": "en proceso; el plazo para responder vence el 29 de octubre"},
+    {"a": "Congreso del Estado de Jalisco", "folio": "140280126000477", "fecha": "2026-10-17", "tema": "los informes mensuales del SIAPA al Congreso que pide el Decreto 30216/LXIV/26", "estado": "en proceso; el plazo para responder vence el 29 de octubre"},
+    {"a": "Comisión Estatal de Derechos Humanos Jalisco", "folio": "140293226000184", "fecha": "2026-10-17", "tema": "la aceptación y el cumplimiento de la Recomendación 10/2026, y de la 10/2022", "estado": "en proceso; el plazo para responder vence el 29 de octubre"},
+    {"a": "Secretaría de la Hacienda Pública", "folio": "142042226003448", "fecha": "2026-10-17", "tema": "la APP del acueducto (la opinión de la CONAGUA, las propuestas de empresas, los estudios de factibilidad y capacidad de pago, y si el contrato se registrará como obligación)", "estado": "en proceso; el plazo para responder vence el 29 de octubre"},
+    {"a": "Comisión Estatal del Agua", "folio": "140239726000218", "fecha": "2026-10-17", "tema": "la APP del acueducto (la opinión de la CONAGUA, las propuestas de empresas, los estudios de factibilidad y capacidad de pago, y si el contrato se registrará como obligación)", "estado": "en proceso; el plazo para responder vence el 29 de octubre"},
+    {"a": "CONAGUA", "folio": "340009400276526", "fecha": "2026-10-17", "tema": "la APP del acueducto (la opinión de la CONAGUA, las propuestas de empresas, los estudios de factibilidad y capacidad de pago, y si el contrato se registrará como obligación)", "estado": "en proceso; el plazo para responder vence el 18 de noviembre"}
+  ],
+  "correcciones": []
+}
