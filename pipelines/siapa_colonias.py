@@ -31,7 +31,8 @@ MUNICIPIOS = {"GUADALAJARA", "ZAPOPAN", "TLAQUEPAQUE", "TONALÁ"}
 # gets both zones. Checked by hand on 16 Oct 2026. Same-name rows that are different
 # places stay apart: EL ROSARIO (Guadalajara 3, Tonalá 4) and AGUA BLANCA (Tonalá 4,
 # Zapopan 6) are 6 and 26 km apart; ALAMO INDUSTRIAL's Tlaquepaque part is in zone 3 on
-# the list and the map; neither ARBOLEDAS (Guadalajara 7, Tlaquepaque 6) has an outline.
+# the list and the map; ARBOLEDAS (Guadalajara 7, Tlaquepaque 6) has no outline, and Google
+# Maps lists separate Arboledas places (checked 17 Oct), so it stays two colonias.
 SAME_COLONIA = [
     # Guadalajara's outline overlaps zones 5 and 6; INE has no CHAPALITA in Zapopan.
     [("CHAPALITA", "GUADALAJARA"), ("CHAPALITA", "ZAPOPAN")],
