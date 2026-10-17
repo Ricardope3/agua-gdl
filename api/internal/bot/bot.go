@@ -323,6 +323,10 @@ func (b *Bot) subscribe(ctx context.Context, r User, zone int) error {
 		b.Log.Warn("message without business-scoped user ID")
 		return b.text(ctx, r, msgNoUserID)
 	}
+	if b.Schedule.Expired(b.Now()) {
+		// The purge has deleted every subscriber; storing a new one would break that promise.
+		return b.text(ctx, r, msgRotationOver(b.BaseURL))
+	}
 	full, err := b.nightFull(ctx, r, zone)
 	if err != nil {
 		return err

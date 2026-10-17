@@ -135,6 +135,12 @@ const msgReportClosed = "Ese reporte ya cerró. ¡Gracias de todos modos! 🙏"
 
 const msgReportBeforeJoin = "Solo contamos reportes de cortes que empezaron después de tu suscripción. Podrás reportar el próximo 🙏"
 
+func msgRotationOver(base string) string {
+	return `🗓️ La rotación de agua del SIAPA ya terminó, así que ya no mandamos avisos ni guardamos suscripciones.
+
+Novedades: ` + base
+}
+
 func msgAskReport(date string) string {
 	return fmt.Sprintf("¿Cómo regresó el agua después del corte del *%s*? 👇", date)
 }

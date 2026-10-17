@@ -4,6 +4,7 @@ import (
 	"context"
 	"strings"
 	"testing"
+	"time"
 
 	"aguagdl/api/internal/fake"
 	"aguagdl/api/internal/store"
@@ -160,6 +161,29 @@ func TestRejoiningCantReportTheSameCutAgain(t *testing.T) {
 	}
 	if len(h.store.Reports) != 1 {
 		t.Fatalf("BAJA and subscribing again must not add reports for the same cut: %+v", h.store.Reports)
+	}
+}
+
+func TestNoSubscriptionsAfterTheRetentionDeadline(t *testing.T) {
+	h := newTGHarness(t, "2027-04-29 23:59")
+	h.say(t, "zona 4")
+	loc, _ := time.LoadLocation("America/Mexico_City")
+	h.bot.Now = func() time.Time { return time.Date(2027, 4, 30, 0, 0, 0, 0, loc) }
+	if m := h.say(t, "zona 6"); !strings.Contains(m.Text, "ya terminó") {
+		t.Fatalf("30 days after the end, no zone changes: %s", m.Text)
+	}
+	if s, _ := h.sub(t); s.Zone != 4 {
+		t.Fatalf("zone %d, want 4", s.Zone)
+	}
+	h.say(t, "/baja")
+	if _, ok := h.sub(t); ok {
+		t.Fatal("BAJA still works")
+	}
+	if m := h.say(t, "zona 4"); !strings.Contains(m.Text, "ya terminó") {
+		t.Fatalf("no new subscriptions after the purge: %s", m.Text)
+	}
+	if _, ok := h.sub(t); ok {
+		t.Fatal("subscribed after the retention deadline")
 	}
 }
 
