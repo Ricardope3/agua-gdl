@@ -122,7 +122,7 @@ func (s *Store) ChangeUser(_ context.Context, oldUserID, oldPhone, newUserID, ne
 	}
 	if found {
 		delete(s.Subs, keep.UserID)
-		keep.UserID, keep.Phone, keep.UpdatedAt = newUserID, newPhone, s.Now()
+		keep.UserID, keep.Phone = newUserID, newPhone
 		s.Subs[newUserID] = keep
 	}
 	return nil

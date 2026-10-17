@@ -765,3 +765,19 @@ func TestUpdatedReportTakesTheNewZone(t *testing.T) {
 		t.Fatalf("zone %d, err %v", zone, err)
 	}
 }
+
+func TestChangeUserKeepsTheLastChange(t *testing.T) {
+	db := testDB(t)
+	s := testSubscriber(t, db)
+	ctx := context.Background()
+	if _, err := db.pool.Exec(ctx, `update subscriber set updated_at = now() - interval '30 hours' where id = $1`, s.ID); err != nil {
+		t.Fatal(err)
+	}
+	if err := db.ChangeUser(ctx, s.UserID, "", "MX.new", "522222"); err != nil {
+		t.Fatal(err)
+	}
+	due, err := db.DueSubscribers(ctx, WhatsApp, []int{4}, time.Now())
+	if err != nil || len(due) != 1 || time.Since(due[0].UpdatedAt) < 29*time.Hour {
+		t.Fatalf("a number change sends no confirmation, so the nightly run must still remind it: %+v %v", due, err)
+	}
+}

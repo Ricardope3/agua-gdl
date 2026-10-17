@@ -177,6 +177,8 @@ func (db *DB) Subscribe(ctx context.Context, channel, userID, phone string, zone
 // subscription is dropped. One row survives: an existing subscription for newUserID,
 // else the one for oldUserID, else the newest holding oldPhone. Every other row with
 // the old ID or phone, the new ID or the new phone is deleted, even when none survives.
+// The survivor keeps its updated_at: no confirmation is sent, so the nightly run must
+// still remind it.
 func (db *DB) ChangeUser(ctx context.Context, oldUserID, oldPhone, newUserID, newPhone string) error {
 	const old = `((channel = 'wa' and user_id = $1) or phone = nullif($2, ''))`
 	if newUserID == "" {
@@ -196,7 +198,7 @@ func (db *DB) ChangeUser(ctx context.Context, oldUserID, oldPhone, newUserID, ne
 	if keep == 0 {
 		return nil
 	}
-	_, err = db.q.Exec(ctx, `update subscriber set user_id = $2, phone = nullif($3, ''), updated_at = now() where id = $1`,
+	_, err = db.q.Exec(ctx, `update subscriber set user_id = $2, phone = nullif($3, '') where id = $1`,
 		keep, newUserID, newPhone)
 	return err
 }
