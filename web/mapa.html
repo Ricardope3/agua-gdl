@@ -91,16 +91,18 @@ h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.08; letter-spacing: -
 .map-label .sub { display: block; font-weight: 500; color: var(--muted) }
 .map-label .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--zc, var(--muted)); margin-right: 5px }
 .leaflet-container a.reset { font-size: 18px; line-height: 30px }
-.card { position: absolute; z-index: 1000; top: 12px; left: 12px; width: min(360px, calc(100% - 24px)); max-height: calc(100% - 24px); overflow: auto; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; box-shadow: 0 10px 30px rgb(3 14 22 / .22) }
+.card { position: absolute; z-index: 1200; top: 12px; left: 12px; width: min(360px, calc(100% - 24px)); max-height: calc(100% - 24px); overflow: auto; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; box-shadow: 0 10px 30px rgb(3 14 22 / .22) }
 @media (max-width: 760px) { .card { top: auto; bottom: 10px; left: 10px; width: calc(100% - 20px); max-height: 58% } }
 .card h2 { margin: 0 32px 2px 0; font-size: 1.3rem; line-height: 1.2; letter-spacing: -.02em; color: var(--link); text-transform: uppercase }
 .card .where { margin: 0 0 10px; color: var(--muted) }
 .card .close { position: absolute; top: 10px; right: 10px; width: 34px; height: 34px; display: grid; place-items: center; font: inherit; color: var(--muted); background: none; border: 0; border-radius: 8px; cursor: pointer }
 .card .close:hover { color: var(--fg); background: var(--subtle) }
 .zbox { border-left: 6px solid var(--zc, var(--muted)); background: var(--subtle); border-radius: 10px; padding: 10px 12px; margin: 0 0 10px }
+.zbox.side { background: transparent; border: 1px dashed var(--line); border-left: 6px solid var(--zc, var(--muted)) }
 .zbox p { margin: 0 }
 .zbox .zn { font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted) }
 .zbox .zd { font-weight: 700; font-size: 1.1rem; line-height: 1.3 }
+.zbox.side .zd { font-weight: 600; font-size: 1rem }
 .zbox .next { margin-top: 4px; font-size: .95rem }
 .card .warn { background: var(--warn-bg); border-left: 5px solid var(--warn); border-radius: 8px; padding: 10px 12px; margin: 0 0 10px; font-size: .95rem }
 .card .subscribe { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0 }
@@ -166,7 +168,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#info"/></svg></span>Ten en cuenta</h2>
       <ul class="plain">
         <li><strong>El mapa da la zona por el contorno de la colonia</strong>, igual que el mapa del SIAPA. Su <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/pdf/colonias_siapa.pdf" rel="noopener">lista de 621 colonias</a> a veces dice otra zona: cuando pasa, aquí te mostramos las dos. En <a href="/mizona">Mi zona</a> puedes buscar por el nombre de la lista.</li>
-        <li><strong>Las colonias con borde punteado</strong> quedan en dos zonas. Mira de qué lado de la línea está tu casa o usa tu ubicación.</li>
+        <li><strong>Las colonias con borde punteado</strong> quedan repartidas entre dos zonas. Mira de qué lado de la línea está tu casa o usa tu ubicación. Si una colonia solo toca el límite de otra zona, te lo decimos así: su zona es una, y solo quienes viven junto a ese límite deben estar al pendiente de la otra.</li>
         <li>Según el SIAPA, cada racionamiento dura máximo un día y no es un corte total: baja la presión del agua.</li>
         <li>Agua GDL es una iniciativa ciudadana: no es del SIAPA ni del gobierno y no tiene partido. Tu ubicación solo se usa en tu navegador; no la guardamos.</li>
       </ul>
@@ -179,9 +181,11 @@ footer p { margin: 0 0 8px; max-width: 70ch }
   </footer>
 </div>
 <script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script src="/mapa.js"></script>
 <script>
 (() => {
   "use strict";
+  const M = window.aguaMapa;
   const API = (() => {
     const o = new URLSearchParams(location.search).get("api");
     try {
@@ -190,22 +194,14 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     } catch {}
     return "https://api.aguagdl.com";
   })();
-  const DATA = "/colonias_siapa.topo.json";
   const SIAPA = "https://rotaciondeserviciosiapa.jalisco.gob.mx/";
   const TELEGRAM = "https://t.me/AvisoAguaGDLbot";
   const DAYS = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
   const MONTHS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
   const dark = aguaDark();
-  const ZONE_COLORS = dark
-    ? { 1: "#008300", 2: "#3987e5", 3: "#c98500", 4: "#199e70", 5: "#9085e9", 6: "#d55181", 7: "#d94141" }
-    : { 1: "#008300", 2: "#2a78d6", 3: "#eda100", 4: "#1baf7a", 5: "#6250d6", 6: "#e87ba4", 7: "#e34948" };
-  const color = (z) => ZONE_COLORS[z] || "#888";
-  const ink = dark ? "#f0f9ff" : "#0c1e2c";
-  const halo = dark ? "#06141d" : "#ffffff";
-  const edge = dark ? "#0b1a24" : "#1f2d3a";
-  const faint = dark ? "#9bb8ca" : "#6b7f8c";
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const phone = () => matchMedia("(max-width: 760px)").matches;
+  const { norm, joinES } = M;
 
   const $ = (id) => document.getElementById(id);
   function el(tag, attrs, ...kids) {
@@ -223,9 +219,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     svg.append(use);
     return svg;
   };
-  const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase().replace(/[^A-Z0-9]+/g, " ").trim();
   const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
-  const joinES = (items) => items.length < 2 ? items.join("") : items.slice(0, -1).join(", ") + " y " + items[items.length - 1];
   function isoToday(offset) {
     const t = new Date(Intl.DateTimeFormat("en-CA", { timeZone: "America/Mexico_City" }).format(new Date()) + "T00:00:00Z");
     t.setUTCDate(t.getUTCDate() + (offset || 0));
@@ -238,44 +232,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     if (iso === isoToday(1)) return "mañana, " + s;
     return s;
   }
-  const zonesOf = (s) => s ? s.split(",").map(Number) : [];
-  const zoneLabel = (zs) => (zs.length > 1 ? "Zonas " : "Zona ") + joinES(zs.map(String));
   const SIAPALink = (text) => el("a", { href: SIAPA, rel: "noopener" }, text || "mapa oficial del SIAPA");
-
-  // TopoJSON → GeoJSON. Arcs are delta-encoded and quantized; a negative index is the arc reversed,
-  // and consecutive arcs share their junction point, which is pushed only once.
-  function decode(topo) {
-    const [sx, sy] = topo.transform.scale;
-    const [tx, ty] = topo.transform.translate;
-    const arcs = topo.arcs.map((arc) => {
-      let x = 0, y = 0;
-      return arc.map(([dx, dy]) => { x += dx; y += dy; return [x * sx + tx, y * sy + ty]; });
-    });
-    const ring = (idx) => {
-      const pts = [];
-      for (const i of idx) {
-        const a = i < 0 ? arcs[~i].slice().reverse() : arcs[i];
-        if (pts.length) pts.pop();
-        for (const p of a) pts.push(p);
-      }
-      return pts;
-    };
-    const geometry = (g) => g.type === "Polygon"
-      ? { type: "Polygon", coordinates: g.arcs.map(ring) }
-      : { type: "MultiPolygon", coordinates: g.arcs.map((poly) => poly.map(ring)) };
-    const features = (name) => topo.objects[name].geometries.map((g, i) => ({ type: "Feature", id: i, properties: g.properties, geometry: geometry(g) }));
-    return { colonias: features("colonias"), zonas: features("zonas") };
-  }
-  const inRing = ([x, y], ring) => {
-    let hit = false;
-    for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-      const [x1, y1] = ring[i], [x2, y2] = ring[j];
-      if ((y1 > y) !== (y2 > y) && x < (x2 - x1) * (y - y1) / (y2 - y1) + x1) hit = !hit;
-    }
-    return hit;
-  };
-  const contains = (f, pt) => (f.geometry.type === "Polygon" ? [f.geometry.coordinates] : f.geometry.coordinates)
-    .some((rings) => inRing(pt, rings[0]) && !rings.slice(1).some((r) => inRing(pt, r)));
 
   const status = $("estado");
   const say = (...kids) => status.replaceChildren(...kids);
@@ -285,14 +242,9 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     if (!res.ok) throw new Error("HTTP " + res.status);
     return res.json();
   }
-  const json = (path) => fetch(path).then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); });
 
   const map = L.map("mapa", { preferCanvas: true, zoomSnap: 0.25 });
-  map.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>');
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-  }).addTo(map);
+  M.tiles(L, map);
   map.setView([20.66, -103.37], 11);
 
   // zoneInfo: zone → { days, next } from the API, the same calendar the reminders use.
@@ -300,59 +252,28 @@ footer p { margin: 0 0 8px; max-width: 70ch }
   const daysText = (z) => zoneInfo.has(z) ? cap(joinES(zoneInfo.get(z).days)) : null;
   const nextCut = (z) => zoneInfo.has(z) ? zoneInfo.get(z).next.find((d) => d >= isoToday(0)) : null;
 
-  Promise.all([json(DATA), get("/v1/zones").catch(() => null)])
-    .then(([topo, zones]) => build(decode(topo), zones, topo.meta))
+  Promise.all([M.load(), get("/v1/zones").catch(() => null)])
+    .then(([data, zones]) => build(data, zones))
     .catch(() => say("No pudimos cargar el mapa de colonias. Intenta de nuevo en unos minutos o consulta el ", SIAPALink(), "."));
 
-  function build({ colonias, zonas }, zones, meta) {
+  function build({ colonias, zonas, meta }, zones) {
     if (zones) zoneInfo = new Map(zones.map((z) => [z.zone, z]));
     else say("No pudimos cargar los días de cada zona. El mapa funciona, pero revisa los días en el ", SIAPALink(), ".");
     if (meta && meta.fetched) {
       const [y, m, d] = meta.fetched.split("-").map(Number);
       $("consultado").textContent = `, consultados el ${d} de ${MONTHS[m - 1]} de ${y}`;
     }
-    let focus = null; // a zone picked in the legend dims the rest
-
-    const zoneStyle = (f) => {
-      const z = f.properties.z;
-      const dim = focus && focus !== z;
-      return { color: color(z), weight: dim ? 1 : 2, fillColor: color(z), fillOpacity: dim ? 0.04 : 0.16 };
-    };
-    const zoneLayer = L.geoJSON({ type: "FeatureCollection", features: zonas }, { interactive: false, style: zoneStyle }).addTo(map);
-    const home = zoneLayer.getBounds().pad(0.04);
+    const card = $("ficha");
+    let selected = null;
+    let closedAt = 0;
+    const drawn = M.draw(L, map, { colonias, zonas }, {
+      dark,
+      days: daysText,
+      // The second click of a double-click on the close button lands on the map: ignore it.
+      onClick: (f) => { if (Date.now() - closedAt > 500) select(f, { fit: false }); },
+    });
+    const { color, home } = drawn;
     map.fitBounds(home);
-
-    const canvas = L.canvas({ padding: 0.5 });
-    const coloniaStyle = (f) => {
-      const zs = zonesOf(f.properties.z);
-      if (!zs.length) return { color: faint, weight: 0.8, fillColor: "#000000", fillOpacity: focus ? 0 : 0.02, dashArray: null };
-      const dim = focus && !zs.includes(focus);
-      return { color: dim ? faint : edge, weight: dim ? 0.6 : 1, fillColor: color(zs[0]), fillOpacity: dim ? 0.04 : 0.3, dashArray: zs.length > 1 ? "4 3" : null };
-    };
-    const tipFor = (f) => {
-      const p = f.properties;
-      const zs = zonesOf(p.z);
-      const tip = el("span", {}, `${p.n} · ${p.m}`);
-      if (zs.length) {
-        for (const z of zs) {
-          const days = daysText(z);
-          tip.append(el("span", { class: "sub" }, el("span", { class: "dot", style: `--zc:${color(z)}` }), `Zona ${z}` + (days ? `: ${days}` : "")));
-        }
-      } else {
-        tip.append(el("span", { class: "sub" }, "Fuera de la rotación"));
-      }
-      return tip;
-    };
-    const coloniaLayer = L.geoJSON({ type: "FeatureCollection", features: colonias }, {
-      renderer: canvas,
-      style: coloniaStyle,
-      onEachFeature: (f, layer) => {
-        layer.bindTooltip(() => tipFor(f), { sticky: true, className: "map-label" });
-        layer.on("click", () => select(f, { fit: false }));
-        layer.on("mouseover", () => layer.setStyle({ weight: 2, fillOpacity: 0.5 }));
-        layer.on("mouseout", () => coloniaLayer.resetStyle(layer));
-      },
-    }).addTo(map);
 
     const Reset = L.Control.extend({
       onAdd() {
@@ -370,29 +291,22 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     new Reset({ position: "topleft" }).addTo(map);
 
     // Selection: a halo and a dark outline over the colonia, and the card.
-    const card = $("ficha");
-    let selected = null;
-    let highlight = null;
     function clearSelection() {
       selected = null;
-      if (highlight) highlight.remove();
-      highlight = null;
+      closedAt = Date.now();
+      drawn.clearHighlights();
       card.hidden = true;
       card.replaceChildren();
       history.replaceState(null, "", location.pathname);
     }
     function select(f, { fit = true } = {}) {
       selected = f;
-      if (highlight) highlight.remove();
-      const gj = { type: "Feature", geometry: f.geometry, properties: {} };
-      highlight = L.featureGroup([
-        L.geoJSON(gj, { interactive: false, style: { color: halo, weight: 9, fill: false } }),
-        L.geoJSON(gj, { interactive: false, style: { color: ink, weight: 4, fill: false } }),
-      ]).addTo(map);
+      drawn.clearHighlights();
+      const group = drawn.highlight(f);
       if (fit) {
         const pad = phone() ? { paddingTopLeft: [24, 24], paddingBottomRight: [24, Math.round(map.getSize().y * 0.55)] } : { paddingTopLeft: [400, 24], paddingBottomRight: [24, 24] };
         const opts = { ...pad, maxZoom: 15, animate: !reduced, duration: 0.7 };
-        if (reduced) map.fitBounds(highlight.getBounds(), opts); else map.flyToBounds(highlight.getBounds(), opts);
+        if (reduced) map.fitBounds(group.getBounds(), opts); else map.flyToBounds(group.getBounds(), opts);
       }
       renderCard(f);
       const q = new URLSearchParams({ q: f.properties.n, m: f.properties.m });
@@ -403,10 +317,10 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     const calendarLink = (z) => isIOS
       ? el("a", { class: "button alt", href: `https://${calendarURL(z)}` }, icon("calendar"), `Calendario · zona ${z}`)
       : el("a", { class: "button alt", href: `https://calendar.google.com/calendar/render?cid=${encodeURIComponent(`webcal://${calendarURL(z)}`)}`, rel: "noopener", target: "_blank" }, icon("calendar"), `Calendario · zona ${z}`);
-    function zoneBox(z) {
+    function zoneBox(z, side) {
       const days = daysText(z);
-      const box = el("div", { class: "zbox", style: `--zc:${color(z)}` },
-        el("p", { class: "zn" }, `Zona ${z}`),
+      const box = el("div", { class: side ? "zbox side" : "zbox", style: `--zc:${color(z)}` },
+        el("p", { class: "zn" }, side ? `Zona ${z} · al otro lado del límite` : `Zona ${z}`),
         el("p", { class: "zd" }, days || "No pudimos cargar los días"));
       const next = nextCut(z);
       if (next) box.append(el("p", { class: "next" }, icon("calendar"), " Próximo racionamiento: ", el("strong", {}, dateES(next))));
@@ -414,25 +328,27 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     }
     function renderCard(f) {
       const p = f.properties;
-      const zs = zonesOf(p.z);
-      const ls = zonesOf(p.l || "");
+      const z = M.zones(p);
+      const ls = M.zonesOf(p.l || "");
       const close = el("button", { type: "button", class: "close", "aria-label": "Cerrar" }, icon("x"));
       close.addEventListener("click", clearSelection);
       const kids = [close, el("h2", {}, p.n), el("p", { class: "where" }, p.m + (p.cp ? ` · C.P. ${p.cp}` : ""))];
-      if (!zs.length) {
+      if (!z.all.length) {
         kids.push(el("div", { class: "zbox" }, el("p", { class: "zn" }, "Fuera de la rotación"), el("p", { class: "zd" }, "Según el mapa del SIAPA, aquí no toca racionamiento.")));
       }
-      if (zs.length > 1) kids.push(el("p", { class: "warn" }, `Esta colonia queda en ${zoneLabel(zs).toLowerCase()}. Mira de qué lado de la línea punteada está tu casa, o usa tu ubicación.`));
-      for (const z of zs) kids.push(zoneBox(z));
-      const extra = ls.filter((z) => !zs.includes(z));
-      if (ls.length && ls.join() !== zs.join()) {
-        kids.push(el("p", { class: "warn" }, `La lista de colonias del SIAPA la pone en ${zoneLabel(ls).toLowerCase()}. El mapa y la lista no siempre coinciden: ${zs.length ? "prepárate para los días de las dos" : "prepárate para esos días"}.`));
-        for (const z of extra) kids.push(zoneBox(z));
+      const sentence = M.describe(p);
+      if (sentence) kids.push(el("p", { class: "warn" }, sentence));
+      for (const zone of z.main) kids.push(zoneBox(zone, false));
+      for (const zone of z.border) kids.push(zoneBox(zone, true));
+      const extra = ls.filter((zone) => !z.all.includes(zone));
+      if (ls.length && ls.join() !== [...z.all].sort().join()) {
+        kids.push(el("p", { class: "warn" }, `La lista de colonias del SIAPA la pone en ${M.zoneWord(ls)}. El mapa y la lista no siempre coinciden: ${z.all.length ? "prepárate para los días de las dos" : "prepárate para esos días"}.`));
+        for (const zone of extra) kids.push(zoneBox(zone, false));
       }
-      const all = [...zs, ...extra];
+      const all = [...z.main, ...z.border, ...extra];
       if (all.length) {
         kids.push(el("div", { class: "subscribe" },
-          ...all.map((z) => el("a", { class: "button", href: `${TELEGRAM}?start=z${z}`, rel: "noopener" }, icon("send"), `Aviso por Telegram · zona ${z}`)),
+          ...all.map((zone) => el("a", { class: "button", href: `${TELEGRAM}?start=z${zone}`, rel: "noopener" }, icon("send"), `Aviso por Telegram · zona ${zone}`)),
           ...all.map(calendarLink)));
         kids.push(el("p", { class: "note" }, "Gratis: un mensaje a las 8 p. m. la noche antes de cada racionamiento, o una alerta en tu calendario. Más opciones en ", el("a", { href: "/mizona" }, "Mi zona"), "."));
       }
@@ -443,7 +359,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     // Legend: tap a zone to dim the others; tap again to show all.
     const legend = $("leyenda");
     const chips = new Map();
-    const restyle = () => { zoneLayer.setStyle(zoneStyle); coloniaLayer.setStyle(coloniaStyle); };
+    let focus = null;
     for (const f of zonas) {
       const z = f.properties.z;
       const days = daysText(z);
@@ -451,9 +367,9 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       b.addEventListener("click", () => {
         focus = focus === z ? null : z;
         for (const [n, chip] of chips) chip.setAttribute("aria-pressed", String(focus === n));
-        restyle();
+        drawn.setFocus(focus);
         if (focus) {
-          map.fitBounds(zoneLayer.getLayers().filter((l) => l.feature.properties.z === z).reduce((b, l) => b.extend(l.getBounds()), L.latLngBounds([])), { padding: [24, 24] });
+          map.fitBounds(drawn.zoneLayer.getLayers().filter((l) => l.feature.properties.z === z).reduce((b, l) => b.extend(l.getBounds()), L.latLngBounds([])), { padding: [24, 24] });
           const next = nextCut(z);
           say(el("strong", {}, `Zona ${z}`), days ? `: ${days}.` : ".", next ? ` Próximo racionamiento: ${dateES(next)}.` : "");
         } else {
@@ -514,12 +430,12 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       if (!options.length) { closeList(); return; }
       list.replaceChildren(...options.map((f, i) => {
         const p = f.properties;
-        const zs = zonesOf(p.z);
+        const z = M.zones(p);
         const li = el("li", { role: "option", id: `op-${i}`, "aria-selected": "false" },
           el("strong", {}, p.n),
           el("span", { class: "sub" },
-            zs.length ? el("span", { class: "dot", style: `--zc:${color(zs[0])}` }) : null,
-            `${p.m}${p.cp ? ` · C.P. ${p.cp}` : ""} · ${zs.length ? zoneLabel(zs) : "Fuera de la rotación"}`));
+            z.all.length ? el("span", { class: "dot", style: `--zc:${color(z.main[0])}` }) : null,
+            `${p.m}${p.cp ? ` · C.P. ${p.cp}` : ""} · ${M.label(p)}`));
         li.addEventListener("mousedown", (e) => e.preventDefault());
         li.addEventListener("click", () => pick(f));
         return li;
@@ -534,7 +450,10 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     input.addEventListener("keydown", (e) => {
       if (e.key === "ArrowDown" && options.length) { e.preventDefault(); setActive((active + 1) % options.length); }
       else if (e.key === "ArrowUp" && options.length) { e.preventDefault(); setActive((active - 1 + options.length) % options.length); }
-      else if (e.key === "Escape") { closeList(); }
+      else if (e.key === "Escape") { if (list.hidden && selected) clearSelection(); else closeList(); }
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && e.target !== input && selected) clearSelection();
     });
     form.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -569,17 +488,17 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         const { latitude: lat, longitude: lon } = pos.coords;
         const here = L.latLng(lat, lon);
         if (pin) pin.setLatLng(here); else pin = L.marker(here, { icon: L.divIcon({ className: "pin", iconSize: [16, 16] }), keyboard: false, interactive: false }).addTo(map);
-        const inside = colonias.filter((f) => contains(f, [lon, lat]));
+        const inside = colonias.filter((f) => M.contains(f, [lon, lat]));
         const f = inside.find((c) => c.properties.z) || inside[0];
         if (f) {
           select(f);
           say("Tu ubicación está en ", el("strong", {}, f.properties.n), `, ${f.properties.m}.`);
           return;
         }
-        const zs = zonas.filter((zf) => contains(zf, [lon, lat])).map((zf) => zf.properties.z);
+        const zs = zonas.filter((zf) => M.contains(zf, [lon, lat])).map((zf) => zf.properties.z);
         clearSelection();
         map.flyTo(here, 15, { animate: !reduced });
-        say(zs.length ? el("span", {}, "Tu ubicación está en la ", el("strong", {}, zoneLabel(zs).toLowerCase()), ", pero no en ninguna colonia dibujada por el SIAPA. Abajo están los días de esa zona en ", el("a", { href: "/mizona" }, "Mi zona"), ".")
+        say(zs.length ? el("span", {}, "Tu ubicación está en la ", el("strong", {}, M.zoneWord(zs)), ", pero no en ninguna colonia dibujada por el SIAPA. Abajo están los días de esa zona en ", el("a", { href: "/mizona" }, "Mi zona"), ".")
           : "Tu ubicación no está en ninguna zona del mapa del SIAPA: puede que no te toque la rotación.");
       }, (err) => {
         if (settled) return;
