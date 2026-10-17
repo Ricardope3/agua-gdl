@@ -781,3 +781,37 @@ func TestChangeUserKeepsTheLastChange(t *testing.T) {
 		t.Fatalf("a number change sends no confirmation, so the nightly run must still remind it: %+v %v", due, err)
 	}
 }
+
+func TestAdmissionChecksWaitForEachOther(t *testing.T) {
+	db := testDB(t)
+	ctx := context.Background()
+	counted, release, first := make(chan struct{}), make(chan struct{}), make(chan error, 1)
+	go func() {
+		first <- db.ProcessInbound(ctx, "in.a", func(tx BotStore) error {
+			if _, err := tx.ZoneCounts(ctx); err != nil {
+				return err
+			}
+			close(counted)
+			<-release
+			return tx.Subscribe(ctx, WhatsApp, "MX.a", "", 4)
+		})
+	}()
+	select {
+	case <-counted:
+	case err := <-first:
+		t.Fatal(err)
+	}
+	time.AfterFunc(200*time.Millisecond, func() { close(release) })
+	var counts map[int]int
+	err := db.ProcessInbound(ctx, "in.b", func(tx BotStore) error {
+		var err error
+		counts, err = tx.ZoneCounts(ctx)
+		return err
+	})
+	if err != nil || <-first != nil {
+		t.Fatal(err)
+	}
+	if counts[4] != 1 {
+		t.Fatalf("the second check must see the first subscription, or both take the last slot: %v", counts)
+	}
+}

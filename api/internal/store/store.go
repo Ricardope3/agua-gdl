@@ -203,9 +203,16 @@ func (db *DB) ChangeUser(ctx context.Context, oldUserID, oldPhone, newUserID, ne
 	return err
 }
 
+// admissionLock serializes the capacity check with the subscription that follows it.
+const admissionLock = 7_103_115_241_818
+
 // ZoneCounts returns the number of WhatsApp subscribers in each zone, the ones Meta's
-// messaging limit applies to.
+// messaging limit applies to. Inside ProcessInbound it holds a lock until the transaction
+// ends, so two people can't both take a night's last slot.
 func (db *DB) ZoneCounts(ctx context.Context) (map[int]int, error) {
+	if _, err := db.q.Exec(ctx, `select pg_advisory_xact_lock($1)`, admissionLock); err != nil {
+		return nil, err
+	}
 	rows, err := db.q.Query(ctx, `select zone, count(*) from subscriber where channel = 'wa' group by zone`)
 	if err != nil {
 		return nil, err
