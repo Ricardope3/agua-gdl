@@ -161,10 +161,25 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .video .plat { position: absolute; top: 14px; left: 14px; font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: rgb(0 0 0 / .45); padding: 3px 8px; border-radius: 999px }
 .video .vt { font-size: 1rem; line-height: 1.3; font-weight: 700 }
 .video .src { font-size: .8rem; color: #cbd5e1 }
-.video iframe { display: block; width: 100%; border: 0; background: #000; aspect-ratio: 9 / 16 }
-.video[data-platform="youtube"] iframe { aspect-ratio: 16 / 9 }
-.video[data-vertical] iframe { aspect-ratio: 9 / 16 }
-.video[data-platform="x"] iframe { aspect-ratio: auto; height: 640px; background: transparent }
+.player { width: min(980px, calc(100vw - 32px)); max-width: none; max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px); padding: 0; border: 1px solid rgb(255 255 255 / .12); border-radius: 16px; background: var(--night); color: #f1f5f9; box-shadow: 0 30px 80px -20px rgb(0 0 0 / .7); overflow: auto }
+.player.narrow { width: min(480px, calc(100vw - 32px)) }
+.player.mid { width: min(620px, calc(100vw - 32px)) }
+.player::backdrop { background: rgb(2 6 12 / .82); backdrop-filter: blur(4px) }
+.player-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 14px 16px }
+.player-head h2 { font-size: 1.05rem; line-height: 1.3; margin: 6px 0 2px; color: #fff }
+.player-head p { margin: 0; font-size: .85rem; color: #94a3b8 }
+.player .plat { font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: rgb(255 255 255 / .1); padding: 3px 8px; border-radius: 999px }
+.player-close { flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgb(255 255 255 / .2); background: rgb(255 255 255 / .06); color: #fff; font: 400 1.4rem/1 var(--font); cursor: pointer }
+.player-close:hover, .player-nav button:hover { background: rgb(255 255 255 / .16) }
+.player-frame { display: grid; place-items: center; background: #000 }
+.player-frame.x { background: transparent; padding: 0 12px }
+.player-frame iframe { display: block; border: 0; width: 100%; aspect-ratio: 16 / 9; max-height: calc(100vh - 190px); max-height: calc(100dvh - 190px) }
+.player-frame iframe.tall { width: auto; max-width: 100%; height: min(calc(100vh - 190px), 720px); height: min(calc(100dvh - 190px), 720px); aspect-ratio: 9 / 16 }
+.player-frame iframe.x { width: min(550px, 100%); height: 640px; aspect-ratio: auto; max-height: none }
+.player-nav { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 16px; font-size: .9rem; color: #94a3b8 }
+.player-nav a { color: #bae6fd }
+.player-nav button { font: inherit; font-weight: 600; color: #fff; background: rgb(255 255 255 / .08); border: 1px solid rgb(255 255 255 / .16); border-radius: 999px; padding: 7px 14px; cursor: pointer; white-space: nowrap }
+@media (max-width: 460px) { .player-nav button span { display: none } }
 .video figcaption { padding: 10px 14px 12px; font-size: .85rem; color: var(--muted); background: var(--surface); margin-top: auto }
 .vnote { margin: -6px 0 14px }
 .more { margin: 14px 0 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 10px 16px }
@@ -472,6 +487,19 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       </div>
     </section>
     <p class="note">¿Falta algo? Escríbenos a <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a> con el enlace a la fuente.</p>
+
+    <dialog class="player" id="player" aria-labelledby="player-title">
+      <div class="player-head">
+        <div><span class="plat" id="player-plat"></span><h2 id="player-title"></h2><p id="player-src"></p></div>
+        <button type="button" class="player-close" aria-label="Cerrar">×</button>
+      </div>
+      <div class="player-frame" id="player-frame"></div>
+      <div class="player-nav">
+        <button type="button" data-step="-1" aria-label="Video anterior">←<span> Anterior</span></button>
+        <span><span id="player-count"></span> · <a id="player-link" href="#" rel="noopener" target="_blank"></a></span>
+        <button type="button" data-step="1" aria-label="Video siguiente"><span>Siguiente </span>→</button>
+      </div>
+    </dialog>
   </main>
 
   <footer>
@@ -505,23 +533,64 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     });
   }
 
+  const player = document.getElementById("player");
+  const frame = document.getElementById("player-frame");
+  const tiles = [...document.querySelectorAll(".video")];
+  const NAME = { youtube: "YouTube", x: "X", tiktok: "TikTok" };
   const SRC = {
-    youtube: (id) => `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`,
+    youtube: (id) => `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&playsinline=1&hl=es-419`,
     tiktok: (id) => `https://www.tiktok.com/player/v1/${id}?autoplay=1&rel=0`,
-    x: (id) => `https://platform.twitter.com/embed/Tweet.html?id=${id}&dnt=true&lang=es`,
+    x: (id) => `https://platform.twitter.com/embed/Tweet.html?id=${id}&dnt=true&lang=es&theme=${window.aguaDark?.() ? "dark" : "light"}`,
   };
-  for (const btn of document.querySelectorAll(".video button")) {
-    btn.addEventListener("click", () => {
-      const v = btn.closest(".video");
-      const f = document.createElement("iframe");
-      f.src = SRC[v.dataset.platform](v.dataset.id);
-      f.title = v.querySelector(".vt").textContent;
-      f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
-      f.allowFullscreen = true;
-      f.referrerPolicy = "strict-origin-when-cross-origin";
-      btn.replaceWith(f);
-    });
-  }
+  let current = 0;
+  const show = (i) => {
+    current = (i + tiles.length) % tiles.length;
+    const v = tiles[current];
+    const p = v.dataset.platform;
+    const title = v.querySelector(".vt").textContent;
+    document.getElementById("player-plat").textContent = NAME[p];
+    document.getElementById("player-title").textContent = title;
+    document.getElementById("player-src").textContent = v.querySelector(".src").textContent;
+    document.getElementById("player-count").textContent = `${current + 1} de ${tiles.length}`;
+    const link = document.getElementById("player-link");
+    link.href = v.querySelector("figcaption a").href;
+    link.textContent = `Ver en ${NAME[p]}`;
+    const f = document.createElement("iframe");
+    f.src = SRC[p](v.dataset.id);
+    f.title = title;
+    f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+    f.allowFullscreen = true;
+    f.referrerPolicy = "strict-origin-when-cross-origin";
+    f.className = p === "x" ? "x" : p === "tiktok" || "vertical" in v.dataset ? "tall" : "";
+    frame.className = p === "x" ? "player-frame x" : "player-frame";
+    player.classList.toggle("narrow", f.className === "tall");
+    player.classList.toggle("mid", p === "x");
+    frame.replaceChildren(f);
+    if (!player.open) player.showModal();
+  };
+  tiles.forEach((v, i) => v.querySelector("button").addEventListener("click", () => show(i)));
+  for (const b of player.querySelectorAll("[data-step]")) b.addEventListener("click", () => show(current + Number(b.dataset.step)));
+  player.querySelector(".player-close").addEventListener("click", () => player.close());
+  player.addEventListener("click", (e) => { if (e.target === player) player.close(); });
+  player.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") show(current + 1);
+    if (e.key === "ArrowLeft") show(current - 1);
+  });
+  player.addEventListener("close", () => {
+    frame.replaceChildren();
+    tiles[current].querySelector("button").focus({ preventScroll: true });
+  });
+  addEventListener("message", (e) => {
+    if (e.origin !== "https://platform.twitter.com") return;
+    let d = e.data;
+    if (typeof d === "string") {
+      try { d = JSON.parse(d); } catch { return; }
+    }
+    const m = d?.["twttr.embed"];
+    const h = m?.method === "twttr.private.resize" && m.params?.[0]?.height;
+    const f = frame.querySelector("iframe.x");
+    if (h && f) f.style.height = `${Math.ceil(h)}px`;
+  });
 })();
 </script>
 </body>
