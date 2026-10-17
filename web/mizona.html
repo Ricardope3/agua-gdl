@@ -122,6 +122,8 @@ label { display: block; font-weight: 700; margin: 0 0 6px }
 .mapbox .note { margin: 0 }
 .map-label { background: var(--surface); color: var(--fg); border: 1px solid var(--line); font: 600 13px/1.3 var(--font); box-shadow: var(--shadow) }
 .map-label::before { display: none }
+.map-label .sub { display: block; font-weight: 500; color: var(--muted) }
+.map-label .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--zc, var(--muted)); margin-right: 5px }
 .mapbox .leaflet-interactive:focus { outline: none }
 @media (prefers-color-scheme: dark) { .mapbox .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) } .mapbox .leaflet-container { background: #0c1e2c } }
 section { padding: 36px 0 8px }
@@ -450,32 +452,26 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   }
 
   // The map (Leaflet + OpenStreetMap tiles) loads only when asked, so nobody's IP reaches OSM by default.
-  const ZONE_COLORS = aguaDark()
-    ? { 1: "#008300", 2: "#3987e5", 3: "#c98500", 4: "#199e70", 5: "#9085e9", 6: "#d55181", 7: "#d94141" }
-    : { 1: "#008300", 2: "#2a78d6", 3: "#eda100", 4: "#1baf7a", 5: "#6250d6", 6: "#e87ba4", 7: "#e34948" };
+  // It is SIAPA's own map data, drawn by /mapa.js: every colonia filled by its zone.
   const HIGHLIGHT = "#facc15";
   let mapDeps = null;
   let choiceHover = null; // set by the map, so hovering an option highlights its outline
   function loadMap() {
     if (!mapDeps) {
-      const css = el("link", { rel: "stylesheet", href: "/vendor/leaflet-1.9.4/leaflet.css" });
-      document.head.append(css);
-      const script = new Promise((resolve, reject) => {
-        const t = el("script", { src: "/vendor/leaflet-1.9.4/leaflet.js" });
+      document.head.append(el("link", { rel: "stylesheet", href: "/vendor/leaflet-1.9.4/leaflet.css" }));
+      const script = (src) => new Promise((resolve, reject) => {
+        const t = el("script", { src });
         t.onload = resolve;
         t.onerror = reject;
         document.head.append(t);
       });
-      const json = (path) => fetch(path).then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); });
-      mapDeps = Promise.all([json("/zonas.geojson"), json("/colonias.geojson"), script]);
+      mapDeps = Promise.all([script("/vendor/leaflet-1.9.4/leaflet.js"), script("/mapa.js")]).then(() => window.aguaMapa.load());
       mapDeps.catch(() => { mapDeps = null; });
     }
     return mapDeps;
   }
   const coloniaKey = (name, mun) => norm(name) + "|" + norm(municipio(mun));
 
-  // mapBlock shows list's outlines over the SIAPA zones. In a choice list (pick), tapping
-  // one picks it; otherwise tapping a spot says which zone it's in.
   // spotlight briefly dims the screen around el, lit from where it is (or the nearest screen edge).
   // It follows el every frame, since the page may still be scrolling to the results.
   function spotlight(el) {
@@ -501,38 +497,39 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     scrollTo({ top: el.getBoundingClientRect().top + scrollY - (header ? header.offsetHeight : 0) - 12, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   }
 
-  // onZones gets the zones of a tapped spot; without it they're shown under the map.
+  // mapBlock shows SIAPA's map with the listed colonias outlined. In a choice list (pick),
+  // tapping an outlined colonia picks it; tapping any other colonia shows its zone, under the
+  // map or through onZones. A tap on a spot with no colonia asks the API which zone it is in.
   function mapBlock(list, zones, pick = list.length > 1, onZones = null) {
     const open = el("button", { type: "button", class: "button alt glow" }, icon("map-pin"), "Ver en el mapa");
     const box = el("div", { class: "mapbox" },
       el("div", { class: "mapbar" },
         el("p", {}, !pick ? "Esta colonia está en más de una zona. Mira en el mapa de qué lado queda tu casa." : list.length > 1 ? "¿No sabes cuál es? Míralas en el mapa." : "Mírala en el mapa."),
         open),
-      el("p", { class: "note" }, "El mapa se carga desde OpenStreetMap. Los contornos de las colonias son aproximados y vienen de la cartografía electoral del INE (diciembre de 2025); las zonas son las del mapa del SIAPA."));
+      el("p", { class: "note" }, "El mapa se carga desde OpenStreetMap. Las colonias y las zonas son las del mapa del SIAPA; los contornos son aproximados."));
     requestAnimationFrame(() => spotlight(open));
     open.addEventListener("click", async () => {
       open.disabled = true;
-      let zonas, outlines;
+      let data;
       try {
-        [zonas, outlines] = await loadMap();
+        data = await loadMap();
       } catch {
         box.replaceChildren(el("p", { class: "note" }, "No pudimos cargar el mapa. Revisa tu zona en el ", mapLink(), "."));
         return;
       }
-      const byKey = new Map(outlines.features.map((f) => [coloniaKey(f.properties.name, f.properties.municipio), f]));
-      const found = list.map((c) => [c, byKey.get(coloniaKey(c.name, c.municipio))]).filter(([, f]) => f);
-      const div = el("div", { class: "map", role: "region", "aria-label": "Mapa de la colonia y las zonas" });
-      const absent = list.filter((c) => !byKey.has(coloniaKey(c.name, c.municipio)));
-      // Without any outline there's nothing to pick, so a tap says which zone that spot is in.
+      const M = window.aguaMapa;
+      const L = window.L;
+      const found = list.map((c) => [c, M.find(data.colonias, c.name, c.municipio)]).filter(([, fs]) => fs.length);
+      const absent = list.filter((c) => !M.find(data.colonias, c.name, c.municipio).length);
+      const div = el("div", { class: "map", role: "region", "aria-label": "Mapa de las colonias y las zonas" });
       const tapPick = pick && found.length > 0;
-      const answer = el("p", { "aria-live": "polite" }, tapPick ? "Toca tu colonia en el mapa." : "Toca el lugar de tu casa en el mapa.",
-        absent.length ? ` No tenemos el contorno de ${joinES(absent.map((c) => `${c.name} (${municipio(c.municipio)})`))}: ` : null,
+      const answer = el("p", { "aria-live": "polite" }, tapPick ? "Toca tu colonia en el mapa." : "Toca cualquier colonia del mapa para ver su zona.",
+        absent.length ? ` El mapa del SIAPA no dibuja ${joinES(absent.map((c) => `${c.name} (${municipio(c.municipio)})`))} con ese nombre: ` : null,
         absent.length ? el("a", { href: "#lista" }, "por qué") : null, absent.length ? "." : null);
       const tapped = el("div");
       box.replaceChildren(div, answer, tapped, box.lastChild);
       scrollToTop(box);
-      const L = window.L;
-      const map = L.map(div, { scrollWheelZoom: false, zoomSnap: 0.25 });
+      const map = L.map(div, { preferCanvas: true, scrollWheelZoom: false, zoomSnap: 0.25 });
       // The wheel scrolls the page, but a trackpad pinch (ctrl+wheel; gesture events in Safari) zooms the map.
       let pinch = 0;
       div.addEventListener("wheel", (e) => {
@@ -552,116 +549,93 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       const missing = el("div", { class: "map-missing", role: "status" });
       missing.hidden = true;
       div.append(missing);
-      map.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>');
-      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 19,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      }).addTo(map);
-      const zoneNum = (f) => f.properties.zona.replace(/\D/g, "");
-      const zoneParts = new Map();
-      let lit = null;
-      // A zone is several polygons, so all of them light up together.
-      const light = (n) => {
-        if (lit === n) return;
-        if (lit) zoneParts.get(lit).forEach((p) => zoneLayer.resetStyle(p));
-        lit = n;
-        if (n) zoneParts.get(n).forEach((p) => p.setStyle({ weight: 4, fillOpacity: 0.45 }));
-      };
-      const inRings = ([x, y], rings) => rings.reduce((hit, ring) => ring.reduce((h, [x1, y1], i) => {
-        const [x2, y2] = ring[(i + 1) % ring.length];
-        return (y1 > y) !== (y2 > y) && x < x1 + (y - y1) * (x2 - x1) / (y2 - y1) ? !h : h;
-      }, hit), false);
-      const zoneAt = ({ lat, lng }) => {
-        const f = zonas.features.find((f) => (f.geometry.type === "Polygon" ? [f.geometry.coordinates] : f.geometry.coordinates)
-          .some((rings) => inRings([lng, lat], rings)));
-        return f ? zoneNum(f) : null;
-      };
-      const zoneLayer = L.geoJSON(zonas, {
-        style: (f) => {
-          const color = ZONE_COLORS[Number(zoneNum(f))] || "#888";
-          return { color, weight: 2, fillColor: color, fillOpacity: 0.28 };
+      M.tiles(L, map);
+      const days = (z) => zones.get(z) ? cap(joinES(zones.get(z).days)) : null;
+      const picks = new Map();
+      for (const [c, fs] of found) for (const f of fs) picks.set(f, c);
+      let lastTap = 0;
+      const drawn = M.draw(L, map, data, {
+        dark: aguaDark(),
+        days,
+        onClick: (f) => {
+          lastTap = Date.now();
+          const c = picks.get(f);
+          if (pick && c) {
+            showColonia(c, zones);
+            return;
+          }
+          const z = M.zones(f.properties);
+          const where = `${f.properties.n} (${municipio(f.properties.m)})`;
+          if (!z.all.length) {
+            answer.replaceChildren(`${where} queda fuera de las zonas del mapa del SIAPA: ahí no toca racionamiento.`);
+            tapped.replaceChildren();
+            return;
+          }
+          answer.replaceChildren(el("span", {}, where, " está en la ", el("strong", {}, M.zoneWord(z.main)), z.border.length ? `, ${M.borderWord(z.border)}` : "", ". Abajo están sus días."));
+          const nodes = [];
+          const sentence = M.describe(f.properties);
+          if (sentence) nodes.push(warn(sentence));
+          const info = z.main.map((n) => zones.get(n)).filter(Boolean);
+          if (onZones) onZones(info); else nodes.push(cards(info));
+          for (const n of z.border) {
+            const zi = zones.get(n);
+            nodes.push(el("p", { class: "note" }, `Al otro lado del límite, zona ${n}: ${zi ? joinES(zi.days) : "días no disponibles"}.`));
+          }
+          tapped.replaceChildren(...nodes);
         },
-        onEachFeature: (f, layer) => {
-          const n = zoneNum(f);
-          zoneParts.set(n, [...(zoneParts.get(n) || []), layer]);
-          layer.bindTooltip(`Zona ${n}`, { sticky: true, className: "map-label" });
-          layer.on("mouseover", () => light(n));
-          layer.on("mouseout", () => light(null));
-        },
-      }).addTo(map);
-      const ink = aguaDark() ? "#f0f9ff" : "#0c1e2c";
-      const halo = aguaDark() ? "#06141d" : "#ffffff";
-      const group = L.featureGroup().addTo(map);
-      // Outlines sit over the zones and catch the mouse, so they name the zone under it themselves.
-      const cursorTip = L.tooltip({ direction: "right", offset: [12, 0], className: "map-label" });
-      const track = (e) => {
-        const n = zoneAt(e.latlng);
-        light(n);
-        if (n) cursorTip.setLatLng(e.latlng).setContent(`Zona ${n}`).addTo(map);
-        else cursorTip.remove();
-      };
-      const drawn = new Map();
-      // The municipio only tells apart colonias with the same name in different municipios.
+      });
+      // The listed colonias get an outline and a label; the municipio only when two share a name.
       const sameName = (c) => list.some((o) => norm(o.name) === norm(c.name) && norm(o.municipio) !== norm(c.municipio));
-      for (const [c, f] of found) {
-        L.geoJSON(f, { interactive: false, style: { color: halo, weight: 8, fill: false } }).addTo(group);
-        const line = L.geoJSON(f, { style: { color: ink, weight: 4, fill: true, fillOpacity: 0 } }).addTo(group);
-        if (pick) line.on("click", () => showColonia(c, zones));
-        line.on("mouseover", (e) => { choiceHover(c, true); track(e); });
-        line.on("mousemove", track);
-        line.on("mouseout", () => { choiceHover(c, false); light(null); cursorTip.remove(); });
-        // Hovering a colonia the list puts in several zones names those zones, and the ones its
-        // outline overlaps on SIAPA's map when they differ: the list is what counts.
-        const b = line.getBounds();
+      const drawnBy = new Map();
+      let all = null;
+      for (const [c, fs] of found) {
         const label = sameName(c) ? `${c.name} · ${municipio(c.municipio)}` : c.name;
-        const tip = L.tooltip({ permanent: true, interactive: pick, direction: "top", className: "map-label" })
-          .setLatLng([b.getNorth(), b.getCenter().lng])
-          .setContent(label)
-          .addTo(map);
-        if (pick) tip.on("click", () => showColonia(c, zones));
-        const onMap = f.properties.zones;
-        const mapNote = onMap.length && onMap.join() !== c.zones.join() ? ` (en el mapa, ${joinES(onMap)})` : "";
-        const hovered = c.zones.length > 1 ? `${label} · Zonas ${joinES(c.zones)}${mapNote}` : label;
-        drawn.set(coloniaKey(c.name, c.municipio), [f, tip, label, hovered]);
+        let bounds = null;
+        for (const f of fs) {
+          const g = drawn.highlight(f, label);
+          bounds = bounds ? bounds.extend(g.getBounds()) : L.latLngBounds(g.getBounds());
+        }
+        all = all ? all.extend(bounds) : L.latLngBounds(bounds);
+        drawnBy.set(coloniaKey(c.name, c.municipio), fs);
       }
-      const listed = [...new Set(list.flatMap((c) => c.zones.map(String)))].flatMap((n) => zoneParts.get(n) || []);
-      map.fitBounds(found.length ? group.getBounds() : L.featureGroup(listed.length ? listed : [zoneLayer]).getBounds(), { padding: [24, 24] });
-      // The highlight is drawn as new layers that ignore the mouse: moving the hovered
-      // outline to the front instead makes browsers drop its mouseout.
+      const listed = [...new Set(list.flatMap((c) => c.zones))];
+      const zoneBounds = drawn.zoneLayer.getLayers().filter((l) => listed.includes(l.feature.properties.z)).reduce((b, l) => (b ? b.extend(l.getBounds()) : L.latLngBounds(l.getBounds())), null);
+      map.fitBounds(all || zoneBounds || drawn.home, { padding: [24, 24] });
+      // Hovering an option in the choice list lights its outline in yellow.
       let hot = null;
       const unhover = () => {
         if (!hot) return;
         hot.overlay.remove();
-        hot.tip.setContent(hot.label);
         hot = null;
       };
       choiceHover = (c, on) => {
         const key = coloniaKey(c.name, c.municipio);
-        const layers = drawn.get(key);
-        if (!layers) {
+        const fs = drawnBy.get(key);
+        if (!fs) {
           missing.hidden = !on;
-          if (on) missing.textContent = `${c.name}: su nombre en la lista del SIAPA no coincide con el mapa de colonias del INE, así que no podemos dibujarla. Mira «Ten en cuenta», abajo.`;
+          if (on) missing.textContent = `${c.name}: el mapa del SIAPA no dibuja una colonia con ese nombre en ${municipio(c.municipio)}, así que no podemos marcarla. Mira «Ten en cuenta», abajo.`;
           return;
         }
         missing.hidden = true;
         if (!on && hot?.key !== key) return;
         unhover();
         if (!on) return;
-        const [f, tip, label, hovered] = layers;
-        const overlay = L.featureGroup([
-          L.geoJSON(f, { interactive: false, style: { color: "#0c1e2c", weight: 11, fill: false } }),
-          L.geoJSON(f, { interactive: false, style: { color: HIGHLIGHT, weight: 6, fill: false } }),
-        ]).addTo(map);
-        tip.setContent(hovered).bringToFront();
-        hot = { key, overlay, tip, label };
+        const overlay = L.featureGroup(fs.flatMap((f) => {
+          const gj = { type: "Feature", geometry: f.geometry, properties: {} };
+          return [L.geoJSON(gj, { interactive: false, style: { color: "#0c1e2c", weight: 11, fill: false } }),
+            L.geoJSON(gj, { interactive: false, style: { color: HIGHLIGHT, weight: 6, fill: false } })];
+        })).addTo(map);
+        hot = { key, overlay };
       };
-      map.on("mouseout", () => { unhover(); light(null); cursorTip.remove(); });
+      map.on("mouseout", unhover);
       if (tapPick) return;
+      // A tap on a spot with no colonia drawn asks the API which zone polygon it is in.
       let pin = null;
       let taps = 0;
       map.on("click", async (e) => {
+        if (Date.now() - lastTap < 300) return;
         const { lat, lng } = e.latlng;
-        if (pin) pin.setLatLng(e.latlng); else pin = L.circleMarker(e.latlng, { radius: 8, color: halo, weight: 3, fillColor: ink, fillOpacity: 1 }).addTo(map);
+        if (pin) pin.setLatLng(e.latlng); else pin = L.circleMarker(e.latlng, { radius: 8, color: drawn.halo, weight: 3, fillColor: drawn.ink, fillOpacity: 1 }).addTo(map);
         answer.replaceChildren("Buscando la zona de ese punto…");
         const mine = ++taps;
         try {
@@ -688,7 +662,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     const where = el("p", {}, name, `, ${municipio(c.municipio)}`);
     let note;
     if (c.zones.length > 1) {
-      note = warn(`Esta colonia recibe agua de varios acueductos, así que aparece en las zonas ${joinES(c.zones)}. Para saber cuál te toca, `, locateLink("usa tu ubicación"), " o revisa el ", mapLink(), ".");
+      note = warn(`La lista del SIAPA pone esta colonia en las zonas ${joinES(c.zones)}: recibe agua de varios acueductos. Para saber cuál te toca, mira el mapa aquí abajo o `, locateLink("usa tu ubicación"), ".");
     } else if (c.multi) {
       note = warn("El SIAPA marca esta colonia como abastecida por varios acueductos, así que una parte podría tener otro calendario. Para confirmarlo, ", locateLink("usa tu ubicación"), " o revisa el ", mapLink(), ".");
     } else {
