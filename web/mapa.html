@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mapa de la rotación · Agua GDL</title>
+<meta name="description" content="Mapa de las colonias y zonas de la rotación de agua del SIAPA en Guadalajara: toca tu colonia o búscala por nombre o código postal y te decimos su zona y sus días de racionamiento.">
+<link rel="canonical" href="https://aguagdl.com/mapa">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aguagdl.com/mapa">
+<meta property="og:title" content="Mapa de la rotación de agua del SIAPA, colonia por colonia">
+<meta property="og:description" content="Toca tu colonia o búscala por nombre o código postal: su zona y sus días de racionamiento.">
+<meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#06141d" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
+<style>
+:root {
+  --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
+  --brand: #0284c7; --brand-deep: #0369a1; --link: #0369a1; --on-brand: #ffffff;
+  --primary: #0284c7; --on-primary: #ffffff; --ring: #0284c766;
+  --shadow: 0 1px 2px rgb(3 105 161 / .08);
+  --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --warn: #8a5a00; --warn-bg: #fff3d6;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #06141d; --surface: #0a1c28; --subtle: #0c3149; --fg: #f0f9ff; --muted: #9bb8ca; --line: #18384d;
+    --link: #7dd3fc; --primary: #0ea5e9; --on-primary: #ffffff; --ring: #38bdf866; --brand: #0ea5e9; --brand-deep: #0284c7;
+    --warn: #ffd27a; --warn-bg: #3a2c10;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+[hidden] { display: none !important }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased }
+a { color: var(--link); text-underline-offset: 3px }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); border-radius: 6px }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px }
+header.top { position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px; background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); margin: 0 -16px 20px; padding: 12px 16px }
+.brand { display: inline-flex; align-items: center; gap: 8px; color: var(--fg); text-decoration: none; font-weight: 600; font-size: 1rem; letter-spacing: -.01em }
+.brand img { width: 20px; height: auto }
+.site-nav { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; margin: 0 -6px }
+.site-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 8px; color: var(--muted); font-size: .9rem; font-weight: 500; text-decoration: none; white-space: nowrap }
+.site-nav a:hover { color: var(--fg); background: var(--subtle) }
+.site-nav a[aria-current="page"] { color: var(--link); background: var(--subtle) }
+@media (max-width: 560px) { .site-nav { width: calc(100% + 12px); justify-content: space-between } .site-nav a { padding: 6px 5px; font-size: .78rem } .site-nav .i { display: none } }
+h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.08; letter-spacing: -.03em; font-weight: 700; margin: 12px 0 10px; text-wrap: balance }
+.lede { font-size: 1.05rem; color: var(--muted); margin: 0 0 16px; max-width: 64ch }
+.i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
+.i { --ic: var(--brand) }
+.i:has(use[href$="#map-pin"]) { --ic: #e11d48 }
+.i:has(use[href$="#calendar"]) { --ic: #4f46e5 }
+.i:has(use[href$="#send"]) { --ic: #229ed9 }
+@media (prefers-color-scheme: dark) { .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#calendar"]) { --ic: #818cf8 } .i:has(use[href$="#send"]) { --ic: #2aabee } }
+.site-nav .i, p > .i, h2 > .i { color: var(--ic) }
+.site-nav a[aria-current="page"] .i { color: inherit }
+.button { display: inline-flex; align-items: center; gap: 6px; background: var(--primary); color: var(--on-primary); font: inherit; font-weight: 500; font-size: .95rem; text-decoration: none; padding: 10px 16px; border: 1px solid transparent; border-radius: 8px; box-shadow: var(--shadow); cursor: pointer; transition: background .15s }
+.button:hover { background: var(--brand-deep) }
+.button:disabled { opacity: .6; cursor: progress }
+.button.alt { background: color-mix(in srgb, var(--brand) 12%, var(--surface)); color: var(--link); border: 1.5px solid var(--brand) }
+.button.alt:hover { background: color-mix(in srgb, var(--brand) 22%, var(--surface)) }
+.button .i { color: inherit }
+.note { margin: 10px 0 0; font-size: .92rem; color: var(--muted); max-width: 80ch }
+.finder { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; margin: 0 0 12px }
+.search { position: relative; flex: 1 1 320px; min-width: 0 }
+.search label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap }
+.search input { width: 100%; font: inherit; font-size: 1.05rem; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 40px 12px 42px; box-shadow: var(--shadow); transition: border-color .15s }
+.search input:focus-visible { border-color: var(--brand) }
+.search > .i { position: absolute; left: 14px; top: 15px; color: var(--muted) }
+.search .clear { position: absolute; right: 6px; top: 7px; width: 36px; height: 36px; display: grid; place-items: center; font: inherit; color: var(--muted); background: none; border: 0; border-radius: 8px; cursor: pointer }
+.search .clear:hover { color: var(--fg); background: var(--subtle) }
+.suggest { position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 1100; margin: 0; padding: 4px; list-style: none; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 24px rgb(3 14 22 / .18); max-height: 320px; overflow: auto }
+.suggest li { padding: 8px 10px; border-radius: 8px; cursor: pointer; line-height: 1.35 }
+.suggest li[aria-selected="true"], .suggest li:hover { background: var(--subtle) }
+.suggest .sub { display: block; color: var(--muted); font-size: .85rem }
+.suggest .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--zc, var(--muted)); margin-right: 6px; vertical-align: -1px }
+.mapwrap { position: relative }
+.bigmap { height: clamp(420px, 72vh, 760px); border-radius: 12px; border: 1px solid var(--line); background: var(--subtle) }
+.bigmap:focus-visible { outline: 3px solid var(--brand) }
+@media (prefers-color-scheme: dark) { .bigmap .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) } .bigmap.leaflet-container { background: #0c1e2c } }
+.map-label { background: var(--surface); color: var(--fg); border: 1px solid var(--line); font: 600 13px/1.3 var(--font); box-shadow: var(--shadow); padding: 6px 8px }
+.map-label::before { display: none }
+.map-label .sub { display: block; font-weight: 500; color: var(--muted) }
+.map-label .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--zc, var(--muted)); margin-right: 5px }
+.leaflet-container a.reset { font-size: 18px; line-height: 30px }
+.card { position: absolute; z-index: 1000; top: 12px; left: 12px; width: min(360px, calc(100% - 24px)); max-height: calc(100% - 24px); overflow: auto; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; box-shadow: 0 10px 30px rgb(3 14 22 / .22) }
+@media (max-width: 760px) { .card { top: auto; bottom: 10px; left: 10px; width: calc(100% - 20px); max-height: 58% } }
+.card h2 { margin: 0 32px 2px 0; font-size: 1.3rem; line-height: 1.2; letter-spacing: -.02em; color: var(--link); text-transform: uppercase }
+.card .where { margin: 0 0 10px; color: var(--muted) }
+.card .close { position: absolute; top: 10px; right: 10px; width: 34px; height: 34px; display: grid; place-items: center; font: inherit; color: var(--muted); background: none; border: 0; border-radius: 8px; cursor: pointer }
+.card .close:hover { color: var(--fg); background: var(--subtle) }
+.zbox { border-left: 6px solid var(--zc, var(--muted)); background: var(--subtle); border-radius: 10px; padding: 10px 12px; margin: 0 0 10px }
+.zbox p { margin: 0 }
+.zbox .zn { font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted) }
+.zbox .zd { font-weight: 700; font-size: 1.1rem; line-height: 1.3 }
+.zbox .next { margin-top: 4px; font-size: .95rem }
+.card .warn { background: var(--warn-bg); border-left: 5px solid var(--warn); border-radius: 8px; padding: 10px 12px; margin: 0 0 10px; font-size: .95rem }
+.card .subscribe { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0 }
+.card .subscribe .button { font-size: .9rem; padding: 8px 12px }
+.card .note { margin-top: 10px; font-size: .85rem }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 10px; justify-content: center; margin: 10px 0 0; padding: 0; list-style: none }
+.legend button { display: inline-flex; align-items: center; gap: 7px; font: inherit; font-weight: 600; font-size: .95rem; color: var(--fg); background: none; border: 1px solid transparent; padding: 5px 9px; border-radius: 999px; cursor: pointer }
+.legend button:hover { background: var(--subtle) }
+.legend button[aria-pressed="true"] { background: var(--subtle); border-color: var(--zc) }
+.legend .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--zc); border: 1px solid rgb(0 0 0 / .25) }
+.pin { background: var(--surface); border: 3px solid var(--fg); border-radius: 50%; width: 16px; height: 16px; box-shadow: var(--shadow) }
+section { padding: 30px 0 8px }
+h2.ih { display: flex; align-items: center; gap: 10px; font-size: 1.4rem; line-height: 1.2; margin: 0 0 12px; letter-spacing: -.02em; font-weight: 600 }
+.ih .i-badge { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--brand); color: var(--on-primary); flex-shrink: 0 }
+.ih .i { color: inherit }
+section p, section li { max-width: 70ch }
+ul.plain { padding-left: 1.3em; margin: 0 0 14px }
+ul.plain li { margin: 0 0 8px }
+footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .85rem }
+footer p { margin: 0 0 8px; max-width: 70ch }
+</style>
+<script src="/theme.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
+    <nav class="site-nav" aria-label="Secciones">
+      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#bell"/></svg>Avisos</a>
+      <a href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg>Mi zona</a>
+      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#newspaper"/></svg>Noticias</a>
+      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#landmark"/></svg>Congreso</a>
+      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#droplet"/></svg>Contaminación</a>
+      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#heart"/></svg>Antisionismo</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Mapa de la rotación</h1>
+    <p class="lede">Toca tu colonia en el mapa, o búscala por nombre, municipio o código postal: te decimos su zona y sus días de racionamiento.</p>
+
+    <div class="finder">
+      <form class="search" id="buscar" role="search">
+        <label for="q">Busca tu colonia, municipio o código postal</label>
+        <svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#search"/></svg>
+        <input id="q" name="q" type="search" autocomplete="off" spellcheck="false" placeholder="Por ejemplo: Americana Guadalajara o 44100" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugerencias">
+        <button class="clear" type="button" id="limpiar" aria-label="Borrar la búsqueda" hidden><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#x"/></svg></button>
+        <ul class="suggest" id="sugerencias" role="listbox" aria-label="Colonias encontradas" hidden></ul>
+      </form>
+      <button class="button" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg>Usar mi ubicación</button>
+    </div>
+
+    <div class="mapwrap">
+      <div id="mapa" class="bigmap" role="region" aria-label="Mapa de colonias y zonas de la rotación" tabindex="0"></div>
+      <aside id="ficha" class="card" aria-live="polite" hidden></aside>
+    </div>
+    <ul class="legend" id="leyenda" aria-label="Zonas"></ul>
+    <p class="note" id="estado" aria-live="polite">Cargando el mapa de colonias…</p>
+    <p class="note">Fuente: datos del <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa de la rotación del SIAPA</a> (colonias, códigos postales y zonas<span id="consultado"></span>) y <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>. Los contornos son aproximados. Los días son los del calendario del SIAPA con el que mandamos los avisos. Agua GDL no es del SIAPA.</p>
+    <noscript><p class="note">Esta página necesita JavaScript. Consulta tu zona en el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa oficial del SIAPA</a>.</p></noscript>
+
+    <section aria-labelledby="ojo">
+      <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#info"/></svg></span>Ten en cuenta</h2>
+      <ul class="plain">
+        <li><strong>El mapa da la zona por el contorno de la colonia</strong>, igual que el mapa del SIAPA. Su <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/pdf/colonias_siapa.pdf" rel="noopener">lista de 621 colonias</a> a veces dice otra zona: cuando pasa, aquí te mostramos las dos. En <a href="/mizona">Mi zona</a> puedes buscar por el nombre de la lista.</li>
+        <li><strong>Las colonias con borde punteado</strong> quedan en dos zonas. Mira de qué lado de la línea está tu casa o usa tu ubicación.</li>
+        <li>Según el SIAPA, cada racionamiento dura máximo un día y no es un corte total: baja la presión del agua.</li>
+        <li>Agua GDL es una iniciativa ciudadana: no es del SIAPA ni del gobierno y no tiene partido. Tu ubicación solo se usa en tu navegador; no la guardamos.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con el Gobierno de Jalisco.</p>
+    <p><a href="/">Inicio</a> · <a href="/mizona">Mi zona</a> · <a href="/avisos">Avisos</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
+  </footer>
+</div>
+<script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script>
+(() => {
+  "use strict";
+  const API = (() => {
+    const o = new URLSearchParams(location.search).get("api");
+    try {
+      const u = new URL(o);
+      if (u.hostname === "localhost" || u.hostname === "127.0.0.1") return u.origin;
+    } catch {}
+    return "https://api.aguagdl.com";
+  })();
+  const DATA = "/colonias_siapa.topo.json";
+  const SIAPA = "https://rotaciondeserviciosiapa.jalisco.gob.mx/";
+  const TELEGRAM = "https://t.me/AvisoAguaGDLbot";
+  const DAYS = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+  const MONTHS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+  const dark = aguaDark();
+  const ZONE_COLORS = dark
+    ? { 1: "#008300", 2: "#3987e5", 3: "#c98500", 4: "#199e70", 5: "#9085e9", 6: "#d55181", 7: "#d94141" }
+    : { 1: "#008300", 2: "#2a78d6", 3: "#eda100", 4: "#1baf7a", 5: "#6250d6", 6: "#e87ba4", 7: "#e34948" };
+  const color = (z) => ZONE_COLORS[z] || "#888";
+  const ink = dark ? "#f0f9ff" : "#0c1e2c";
+  const halo = dark ? "#06141d" : "#ffffff";
+  const edge = dark ? "#0b1a24" : "#1f2d3a";
+  const faint = dark ? "#9bb8ca" : "#6b7f8c";
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const phone = () => matchMedia("(max-width: 760px)").matches;
+
+  const $ = (id) => document.getElementById(id);
+  function el(tag, attrs, ...kids) {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs || {})) n.setAttribute(k, v);
+    n.append(...kids.filter((k) => k != null));
+    return n;
+  }
+  const icon = (name) => {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("class", "i");
+    svg.setAttribute("aria-hidden", "true");
+    const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    use.setAttribute("href", `/icons.svg?v=4#${name}`);
+    svg.append(use);
+    return svg;
+  };
+  const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase().replace(/[^A-Z0-9]+/g, " ").trim();
+  const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+  const joinES = (items) => items.length < 2 ? items.join("") : items.slice(0, -1).join(", ") + " y " + items[items.length - 1];
+  function isoToday(offset) {
+    const t = new Date(Intl.DateTimeFormat("en-CA", { timeZone: "America/Mexico_City" }).format(new Date()) + "T00:00:00Z");
+    t.setUTCDate(t.getUTCDate() + (offset || 0));
+    return t.toISOString().slice(0, 10);
+  }
+  function dateES(iso) {
+    const t = new Date(iso + "T00:00:00Z");
+    const s = `${DAYS[t.getUTCDay()]} ${t.getUTCDate()} de ${MONTHS[t.getUTCMonth()]}`;
+    if (iso === isoToday(0)) return "hoy, " + s;
+    if (iso === isoToday(1)) return "mañana, " + s;
+    return s;
+  }
+  const zonesOf = (s) => s ? s.split(",").map(Number) : [];
+  const zoneLabel = (zs) => (zs.length > 1 ? "Zonas " : "Zona ") + joinES(zs.map(String));
+  const SIAPALink = (text) => el("a", { href: SIAPA, rel: "noopener" }, text || "mapa oficial del SIAPA");
+
+  // TopoJSON → GeoJSON. Arcs are delta-encoded and quantized; a negative index is the arc reversed,
+  // and consecutive arcs share their junction point, which is pushed only once.
+  function decode(topo) {
+    const [sx, sy] = topo.transform.scale;
+    const [tx, ty] = topo.transform.translate;
+    const arcs = topo.arcs.map((arc) => {
+      let x = 0, y = 0;
+      return arc.map(([dx, dy]) => { x += dx; y += dy; return [x * sx + tx, y * sy + ty]; });
+    });
+    const ring = (idx) => {
+      const pts = [];
+      for (const i of idx) {
+        const a = i < 0 ? arcs[~i].slice().reverse() : arcs[i];
+        if (pts.length) pts.pop();
+        for (const p of a) pts.push(p);
+      }
+      return pts;
+    };
+    const geometry = (g) => g.type === "Polygon"
+      ? { type: "Polygon", coordinates: g.arcs.map(ring) }
+      : { type: "MultiPolygon", coordinates: g.arcs.map((poly) => poly.map(ring)) };
+    const features = (name) => topo.objects[name].geometries.map((g, i) => ({ type: "Feature", id: i, properties: g.properties, geometry: geometry(g) }));
+    return { colonias: features("colonias"), zonas: features("zonas") };
+  }
+  const inRing = ([x, y], ring) => {
+    let hit = false;
+    for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+      const [x1, y1] = ring[i], [x2, y2] = ring[j];
+      if ((y1 > y) !== (y2 > y) && x < (x2 - x1) * (y - y1) / (y2 - y1) + x1) hit = !hit;
+    }
+    return hit;
+  };
+  const contains = (f, pt) => (f.geometry.type === "Polygon" ? [f.geometry.coordinates] : f.geometry.coordinates)
+    .some((rings) => inRing(pt, rings[0]) && !rings.slice(1).some((r) => inRing(pt, r)));
+
+  const status = $("estado");
+  const say = (...kids) => status.replaceChildren(...kids);
+  async function get(path) {
+    const opts = typeof AbortSignal.timeout === "function" ? { signal: AbortSignal.timeout(15000) } : {};
+    const res = await fetch(API + path, opts);
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    return res.json();
+  }
+  const json = (path) => fetch(path).then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); });
+
+  const map = L.map("mapa", { preferCanvas: true, zoomSnap: 0.25 });
+  map.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>');
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  }).addTo(map);
+  map.setView([20.66, -103.37], 11);
+
+  // zoneInfo: zone → { days, next } from the API, the same calendar the reminders use.
+  let zoneInfo = new Map();
+  const daysText = (z) => zoneInfo.has(z) ? cap(joinES(zoneInfo.get(z).days)) : null;
+  const nextCut = (z) => zoneInfo.has(z) ? zoneInfo.get(z).next.find((d) => d >= isoToday(0)) : null;
+
+  Promise.all([json(DATA), get("/v1/zones").catch(() => null)])
+    .then(([topo, zones]) => build(decode(topo), zones, topo.meta))
+    .catch(() => say("No pudimos cargar el mapa de colonias. Intenta de nuevo en unos minutos o consulta el ", SIAPALink(), "."));
+
+  function build({ colonias, zonas }, zones, meta) {
+    if (zones) zoneInfo = new Map(zones.map((z) => [z.zone, z]));
+    else say("No pudimos cargar los días de cada zona. El mapa funciona, pero revisa los días en el ", SIAPALink(), ".");
+    if (meta && meta.fetched) {
+      const [y, m, d] = meta.fetched.split("-").map(Number);
+      $("consultado").textContent = `, consultados el ${d} de ${MONTHS[m - 1]} de ${y}`;
+    }
+    let focus = null; // a zone picked in the legend dims the rest
+
+    const zoneStyle = (f) => {
+      const z = f.properties.z;
+      const dim = focus && focus !== z;
+      return { color: color(z), weight: dim ? 1 : 2, fillColor: color(z), fillOpacity: dim ? 0.04 : 0.16 };
+    };
+    const zoneLayer = L.geoJSON({ type: "FeatureCollection", features: zonas }, { interactive: false, style: zoneStyle }).addTo(map);
+    const home = zoneLayer.getBounds().pad(0.04);
+    map.fitBounds(home);
+
+    const canvas = L.canvas({ padding: 0.5 });
+    const coloniaStyle = (f) => {
+      const zs = zonesOf(f.properties.z);
+      if (!zs.length) return { color: faint, weight: 0.8, fillColor: "#000000", fillOpacity: focus ? 0 : 0.02, dashArray: null };
+      const dim = focus && !zs.includes(focus);
+      return { color: dim ? faint : edge, weight: dim ? 0.6 : 1, fillColor: color(zs[0]), fillOpacity: dim ? 0.04 : 0.3, dashArray: zs.length > 1 ? "4 3" : null };
+    };
+    const tipFor = (f) => {
+      const p = f.properties;
+      const zs = zonesOf(p.z);
+      const tip = el("span", {}, `${p.n} · ${p.m}`);
+      if (zs.length) {
+        for (const z of zs) {
+          const days = daysText(z);
+          tip.append(el("span", { class: "sub" }, el("span", { class: "dot", style: `--zc:${color(z)}` }), `Zona ${z}` + (days ? `: ${days}` : "")));
+        }
+      } else {
+        tip.append(el("span", { class: "sub" }, "Fuera de la rotación"));
+      }
+      return tip;
+    };
+    const coloniaLayer = L.geoJSON({ type: "FeatureCollection", features: colonias }, {
+      renderer: canvas,
+      style: coloniaStyle,
+      onEachFeature: (f, layer) => {
+        layer.bindTooltip(() => tipFor(f), { sticky: true, className: "map-label" });
+        layer.on("click", () => select(f, { fit: false }));
+        layer.on("mouseover", () => layer.setStyle({ weight: 2, fillOpacity: 0.5 }));
+        layer.on("mouseout", () => coloniaLayer.resetStyle(layer));
+      },
+    }).addTo(map);
+
+    const Reset = L.Control.extend({
+      onAdd() {
+        const bar = L.DomUtil.create("div", "leaflet-bar");
+        const a = L.DomUtil.create("a", "reset", bar);
+        a.href = "#";
+        a.textContent = "↺";
+        a.title = "Ver toda el área";
+        a.setAttribute("role", "button");
+        a.setAttribute("aria-label", a.title);
+        L.DomEvent.on(a, "click", (e) => { L.DomEvent.preventDefault(e); L.DomEvent.stopPropagation(e); map.fitBounds(home); });
+        return bar;
+      },
+    });
+    new Reset({ position: "topleft" }).addTo(map);
+
+    // Selection: a halo and a dark outline over the colonia, and the card.
+    const card = $("ficha");
+    let selected = null;
+    let highlight = null;
+    function clearSelection() {
+      selected = null;
+      if (highlight) highlight.remove();
+      highlight = null;
+      card.hidden = true;
+      card.replaceChildren();
+      history.replaceState(null, "", location.pathname);
+    }
+    function select(f, { fit = true } = {}) {
+      selected = f;
+      if (highlight) highlight.remove();
+      const gj = { type: "Feature", geometry: f.geometry, properties: {} };
+      highlight = L.featureGroup([
+        L.geoJSON(gj, { interactive: false, style: { color: halo, weight: 9, fill: false } }),
+        L.geoJSON(gj, { interactive: false, style: { color: ink, weight: 4, fill: false } }),
+      ]).addTo(map);
+      if (fit) {
+        const pad = phone() ? { paddingTopLeft: [24, 24], paddingBottomRight: [24, Math.round(map.getSize().y * 0.55)] } : { paddingTopLeft: [400, 24], paddingBottomRight: [24, 24] };
+        const opts = { ...pad, maxZoom: 15, animate: !reduced, duration: 0.7 };
+        if (reduced) map.fitBounds(highlight.getBounds(), opts); else map.flyToBounds(highlight.getBounds(), opts);
+      }
+      renderCard(f);
+      const q = new URLSearchParams({ q: f.properties.n, m: f.properties.m });
+      history.replaceState(null, "", `${location.pathname}?${q}`);
+    }
+    const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    const calendarURL = (z) => `aguagdl.com/calendario/zona-${z}.ics`;
+    const calendarLink = (z) => isIOS
+      ? el("a", { class: "button alt", href: `https://${calendarURL(z)}` }, icon("calendar"), `Calendario · zona ${z}`)
+      : el("a", { class: "button alt", href: `https://calendar.google.com/calendar/render?cid=${encodeURIComponent(`webcal://${calendarURL(z)}`)}`, rel: "noopener", target: "_blank" }, icon("calendar"), `Calendario · zona ${z}`);
+    function zoneBox(z) {
+      const days = daysText(z);
+      const box = el("div", { class: "zbox", style: `--zc:${color(z)}` },
+        el("p", { class: "zn" }, `Zona ${z}`),
+        el("p", { class: "zd" }, days || "No pudimos cargar los días"));
+      const next = nextCut(z);
+      if (next) box.append(el("p", { class: "next" }, icon("calendar"), " Próximo racionamiento: ", el("strong", {}, dateES(next))));
+      return box;
+    }
+    function renderCard(f) {
+      const p = f.properties;
+      const zs = zonesOf(p.z);
+      const ls = zonesOf(p.l || "");
+      const close = el("button", { type: "button", class: "close", "aria-label": "Cerrar" }, icon("x"));
+      close.addEventListener("click", clearSelection);
+      const kids = [close, el("h2", {}, p.n), el("p", { class: "where" }, p.m + (p.cp ? ` · C.P. ${p.cp}` : ""))];
+      if (!zs.length) {
+        kids.push(el("div", { class: "zbox" }, el("p", { class: "zn" }, "Fuera de la rotación"), el("p", { class: "zd" }, "Según el mapa del SIAPA, aquí no toca racionamiento.")));
+      }
+      if (zs.length > 1) kids.push(el("p", { class: "warn" }, `Esta colonia queda en ${zoneLabel(zs).toLowerCase()}. Mira de qué lado de la línea punteada está tu casa, o usa tu ubicación.`));
+      for (const z of zs) kids.push(zoneBox(z));
+      const extra = ls.filter((z) => !zs.includes(z));
+      if (ls.length && ls.join() !== zs.join()) {
+        kids.push(el("p", { class: "warn" }, `La lista de colonias del SIAPA la pone en ${zoneLabel(ls).toLowerCase()}. El mapa y la lista no siempre coinciden: ${zs.length ? "prepárate para los días de las dos" : "prepárate para esos días"}.`));
+        for (const z of extra) kids.push(zoneBox(z));
+      }
+      const all = [...zs, ...extra];
+      if (all.length) {
+        kids.push(el("div", { class: "subscribe" },
+          ...all.map((z) => el("a", { class: "button", href: `${TELEGRAM}?start=z${z}`, rel: "noopener" }, icon("send"), `Aviso por Telegram · zona ${z}`)),
+          ...all.map(calendarLink)));
+        kids.push(el("p", { class: "note" }, "Gratis: un mensaje a las 8 p. m. la noche antes de cada racionamiento, o una alerta en tu calendario. Más opciones en ", el("a", { href: "/mizona" }, "Mi zona"), "."));
+      }
+      card.replaceChildren(...kids);
+      card.hidden = false;
+    }
+
+    // Legend: tap a zone to dim the others; tap again to show all.
+    const legend = $("leyenda");
+    const chips = new Map();
+    const restyle = () => { zoneLayer.setStyle(zoneStyle); coloniaLayer.setStyle(coloniaStyle); };
+    for (const f of zonas) {
+      const z = f.properties.z;
+      const days = daysText(z);
+      const b = el("button", { type: "button", "aria-pressed": "false", style: `--zc:${color(z)}`, title: days ? `Zona ${z}: ${days}` : `Zona ${z}` }, el("span", { class: "dot", "aria-hidden": "true" }), `Zona ${z}`);
+      b.addEventListener("click", () => {
+        focus = focus === z ? null : z;
+        for (const [n, chip] of chips) chip.setAttribute("aria-pressed", String(focus === n));
+        restyle();
+        if (focus) {
+          map.fitBounds(zoneLayer.getLayers().filter((l) => l.feature.properties.z === z).reduce((b, l) => b.extend(l.getBounds()), L.latLngBounds([])), { padding: [24, 24] });
+          const next = nextCut(z);
+          say(el("strong", {}, `Zona ${z}`), days ? `: ${days}.` : ".", next ? ` Próximo racionamiento: ${dateES(next)}.` : "");
+        } else {
+          map.fitBounds(home);
+          say("");
+        }
+      });
+      chips.set(z, b);
+      legend.append(el("li", {}, b));
+    }
+    say("");
+
+    // Search over name, municipio and postal code, in the browser.
+    const input = $("q");
+    const clear = $("limpiar");
+    const list = $("sugerencias");
+    const form = $("buscar");
+    const index = colonias.map((f) => ({ f, key: norm(`${f.properties.n} ${f.properties.m} ${f.properties.cp}`), name: norm(f.properties.n), cp: f.properties.cp }));
+    function matches(q) {
+      const nq = norm(q);
+      if (!nq) return [];
+      const tokens = nq.split(" ");
+      const hits = index.filter((it) => tokens.every((t) => it.key.includes(t)));
+      const rank = (it) => (it.name === nq ? 0 : it.cp === nq ? 1 : it.name.startsWith(nq) ? 2 : it.key.startsWith(nq) ? 3 : 4);
+      hits.sort((a, b) => rank(a) - rank(b) || a.name.localeCompare(b.name) || a.f.properties.m.localeCompare(b.f.properties.m));
+      return hits.map((it) => it.f);
+    }
+    let options = [];
+    let active = -1;
+    function closeList() {
+      list.hidden = true;
+      list.replaceChildren();
+      input.setAttribute("aria-expanded", "false");
+      input.removeAttribute("aria-activedescendant");
+      options = [];
+      active = -1;
+    }
+    function pick(f) {
+      input.value = f.properties.n;
+      closeList();
+      select(f);
+      if (phone()) input.blur();
+    }
+    function setActive(i) {
+      active = i;
+      [...list.children].forEach((li, k) => li.setAttribute("aria-selected", String(k === i)));
+      if (i >= 0) {
+        input.setAttribute("aria-activedescendant", list.children[i].id);
+        list.children[i].scrollIntoView({ block: "nearest" });
+      } else {
+        input.removeAttribute("aria-activedescendant");
+      }
+    }
+    function suggest() {
+      const q = input.value.trim();
+      clear.hidden = !q;
+      options = matches(q).slice(0, 8);
+      if (!options.length) { closeList(); return; }
+      list.replaceChildren(...options.map((f, i) => {
+        const p = f.properties;
+        const zs = zonesOf(p.z);
+        const li = el("li", { role: "option", id: `op-${i}`, "aria-selected": "false" },
+          el("strong", {}, p.n),
+          el("span", { class: "sub" },
+            zs.length ? el("span", { class: "dot", style: `--zc:${color(zs[0])}` }) : null,
+            `${p.m}${p.cp ? ` · C.P. ${p.cp}` : ""} · ${zs.length ? zoneLabel(zs) : "Fuera de la rotación"}`));
+        li.addEventListener("mousedown", (e) => e.preventDefault());
+        li.addEventListener("click", () => pick(f));
+        return li;
+      }));
+      list.hidden = false;
+      input.setAttribute("aria-expanded", "true");
+      setActive(-1);
+    }
+    input.addEventListener("input", suggest);
+    input.addEventListener("focus", () => { if (input.value.trim()) suggest(); });
+    input.addEventListener("blur", () => setTimeout(closeList, 150));
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown" && options.length) { e.preventDefault(); setActive((active + 1) % options.length); }
+      else if (e.key === "ArrowUp" && options.length) { e.preventDefault(); setActive((active - 1 + options.length) % options.length); }
+      else if (e.key === "Escape") { closeList(); }
+    });
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const q = input.value.trim();
+      if (!q) { input.focus(); return; }
+      const f = active >= 0 ? options[active] : matches(q)[0];
+      if (f) { pick(f); return; }
+      closeList();
+      say(`No encontramos «${q}» en el mapa del SIAPA. Revisa cómo se escribe, prueba con tu código postal, toca tu colonia en el mapa o búscala por el nombre de la lista en `, el("a", { href: `/mizona?q=${encodeURIComponent(q)}` }, "Mi zona"), ".");
+    });
+    clear.addEventListener("click", () => { input.value = ""; clear.hidden = true; closeList(); clearSelection(); input.focus(); });
+
+    // Location: the colonia under the visitor, found in the browser; nothing is sent anywhere.
+    const locBtn = $("ubicacion");
+    let pin = null;
+    locBtn.addEventListener("click", () => {
+      if (!("geolocation" in navigator)) { say("Tu navegador no permite compartir tu ubicación. Busca tu colonia por nombre."); return; }
+      locBtn.disabled = true;
+      say("Buscando tu ubicación… Si tu navegador te pide permiso, toca «Permitir».");
+      let settled = false;
+      const giveUp = setTimeout(() => {
+        if (settled) return;
+        settled = true;
+        locBtn.disabled = false;
+        say("No pudimos obtener tu ubicación. Revisa que la ubicación esté activada o busca tu colonia por nombre.");
+      }, 25000);
+      navigator.geolocation.getCurrentPosition((pos) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(giveUp);
+        locBtn.disabled = false;
+        const { latitude: lat, longitude: lon } = pos.coords;
+        const here = L.latLng(lat, lon);
+        if (pin) pin.setLatLng(here); else pin = L.marker(here, { icon: L.divIcon({ className: "pin", iconSize: [16, 16] }), keyboard: false, interactive: false }).addTo(map);
+        const inside = colonias.filter((f) => contains(f, [lon, lat]));
+        const f = inside.find((c) => c.properties.z) || inside[0];
+        if (f) {
+          select(f);
+          say("Tu ubicación está en ", el("strong", {}, f.properties.n), `, ${f.properties.m}.`);
+          return;
+        }
+        const zs = zonas.filter((zf) => contains(zf, [lon, lat])).map((zf) => zf.properties.z);
+        clearSelection();
+        map.flyTo(here, 15, { animate: !reduced });
+        say(zs.length ? el("span", {}, "Tu ubicación está en la ", el("strong", {}, zoneLabel(zs).toLowerCase()), ", pero no en ninguna colonia dibujada por el SIAPA. Abajo están los días de esa zona en ", el("a", { href: "/mizona" }, "Mi zona"), ".")
+          : "Tu ubicación no está en ninguna zona del mapa del SIAPA: puede que no te toque la rotación.");
+      }, (err) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(giveUp);
+        locBtn.disabled = false;
+        say(err.code === 1 ? "No diste permiso para usar tu ubicación. Busca tu colonia por nombre o revisa los permisos de tu navegador." : "No pudimos obtener tu ubicación. Busca tu colonia por nombre.");
+      }, { enableHighAccuracy: false, timeout: 20000, maximumAge: 60000 });
+    });
+
+    // ?q=colonia&m=municipio opens on that colonia (the card sets it, so links can be shared).
+    const params = new URLSearchParams(location.search);
+    const preset = (params.get("q") || "").trim().slice(0, 80);
+    if (preset) {
+      const hits = matches(preset);
+      const m = params.get("m");
+      const best = (m && hits.find((f) => norm(f.properties.m) === norm(m) && norm(f.properties.n) === norm(preset))) || hits.find((f) => norm(f.properties.n) === norm(preset)) || hits[0];
+      if (best) {
+        input.value = best.properties.n;
+        clear.hidden = false;
+        select(best);
+      } else {
+        input.value = preset;
+        clear.hidden = false;
+        say(`No encontramos «${preset}» en el mapa del SIAPA. Toca tu colonia en el mapa o búscala por código postal.`);
+      }
+    }
+  }
+})();
+</script>
+</body>
+</html>
