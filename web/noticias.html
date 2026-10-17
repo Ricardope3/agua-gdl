@@ -206,8 +206,12 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .alert h3 { margin: 6px 0 8px; font-size: 1.2rem; line-height: 1.3 }
 .alert p { margin: 0 0 10px; max-width: 70ch }
 .alert p:last-child { margin: 0 }
-.alert.with-video { display: grid; grid-template-columns: minmax(0, 1fr) 200px; gap: 0 22px; align-items: start }
-@media (max-width: 560px) { .alert.with-video { grid-template-columns: none } .alert.with-video .video { max-width: 240px; margin-top: 14px } }
+.evidence { display: grid; grid-template-columns: repeat(3, minmax(0, 210px)); gap: 14px; margin-top: 16px; align-items: start }
+.face { margin: 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); box-shadow: var(--shadow) }
+.face img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover }
+.face figcaption { padding: 10px 14px 12px; font-size: .85rem; line-height: 1.45; color: var(--muted) }
+.face figcaption b { color: var(--fg); font-weight: 600 }
+@media (max-width: 560px) { .evidence { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 66%; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px } .evidence > * { scroll-snap-align: start } }
 .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px }
 .filters button { font: inherit; font-size: .85rem; font-weight: 600; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); cursor: pointer }
 .filters button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg) }
@@ -327,14 +331,16 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     </section>
 
     <section aria-labelledby="dobleplaza">
-      <div class="alert with-video">
-        <div>
-          <span class="warn"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#shield-check"/></svg>Investigación abierta</span>
-          <h3 id="dobleplaza">Dos de los policías enviados a Asuntos Internos también cobrarían en la Policía de Guadalajara</h3>
-          <p>Los dos policías estatales enviados a Asuntos Internos el miércoles por presuntos excesos en la marcha «están dados de alta también como empleados en la Policía de Guadalajara, lo que está prohibido por ley», publicó <a href="https://www.mural.com.mx/dobletean-puesto-2-policias-estatales/ar3295911" rel="noopener" target="_blank">Mural</a> el 16 de octubre. <a href="https://x.com/TelediarioGDL/status/2110382196494078407" rel="noopener" target="_blank">Telediario</a> difundió el video de su llegada.</p>
-          <p><a href="https://realidadgdl.com/dobletean-2-policias-que-reprimieron-manifestantes-en-gdl/9209/" rel="noopener" target="_blank">Realidad GDL</a> los identifica como <strong>Alexander Guadalupe Galván Guzmán</strong> y <strong>Salvador Guzmán García</strong>, y dice que no aparecen en la nómina pública porque están registrados como personal operativo. Hasta el 16 de octubre no se había anunciado ninguna sanción.</p>
+      <div class="alert">
+        <span class="warn"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#shield-check"/></svg>Investigación abierta</span>
+        <h3 id="dobleplaza">Dos de los policías enviados a Asuntos Internos también cobrarían en la Policía de Guadalajara</h3>
+        <p>Los dos policías estatales enviados a Asuntos Internos el miércoles por presuntos excesos en la marcha «están dados de alta también como empleados en la Policía de Guadalajara, lo que está prohibido por ley», publicó <a href="https://www.mural.com.mx/dobletean-puesto-2-policias-estatales/ar3295911" rel="noopener" target="_blank">Mural</a> el 16 de octubre. <a href="https://x.com/TelediarioGDL/status/2110382196494078407" rel="noopener" target="_blank">Telediario</a> difundió el video de su llegada.</p>
+        <p><a href="https://realidadgdl.com/dobletean-2-policias-que-reprimieron-manifestantes-en-gdl/9209/" rel="noopener" target="_blank">Realidad GDL</a> los identifica como <strong>Alexander Guadalupe Galván Guzmán</strong> y <strong>Salvador Guzmán García</strong>, y dice que no aparecen en la nómina pública porque están registrados como personal operativo. Hasta el 16 de octubre no se había anunciado ninguna sanción.</p>
+        <div class="evidence">
+          <figure class="face"><img src="/img/policias/policia-rostro.webp" width="340" height="425" alt="Rostro de un policía estatal sin capucha, con la cara salpicada de lodo" loading="lazy" decoding="async"><figcaption>Policía estatal en la marcha, sin capucha. <a href="https://realidadgdl.com/dobletean-2-policias-que-reprimieron-manifestantes-en-gdl/9209/" rel="noopener" target="_blank">Realidad GDL</a> publicó su foto como la de <b>Alexander Guadalupe Galván Guzmán</b>. Foto difundida en X.</figcaption></figure>
+          <figure class="face"><img src="/img/policias/policia-marcha.webp" width="445" height="455" alt="Un policía con el mismo rostro jala a un manifestante; el círculo rojo viene de la imagen difundida" loading="lazy" decoding="async"><figcaption>Un policía con el mismo rostro jala a un manifestante frente a Casa Jalisco. Imagen difundida en X, con el círculo original.</figcaption></figure>
+          <figure class="video" data-platform="x" data-id="2110382196494078407"><button type="button" aria-label="Reproducir: Los primeros policías investigados llegan a Asuntos Internos (X)"><img src="/img/videos/x-2110382196494078407.webp" alt="" loading="lazy" decoding="async"><span class="plat">X</span><span class="play" aria-hidden="true"></span><span class="vt">Los primeros policías investigados llegan a Asuntos Internos</span><span class="src">Telediario · 14 oct, 8:48</span></button><figcaption><a href="https://x.com/TelediarioGDL/status/2110382196494078407" rel="noopener" target="_blank">Ver en X</a></figcaption></figure>
         </div>
-        <figure class="video" data-platform="x" data-id="2110382196494078407"><button type="button" aria-label="Reproducir: Los primeros policías investigados llegan a Asuntos Internos (X)"><img src="/img/videos/x-2110382196494078407.webp" alt="" loading="lazy" decoding="async"><span class="plat">X</span><span class="play" aria-hidden="true"></span><span class="vt">Los primeros policías investigados llegan a Asuntos Internos</span><span class="src">Telediario · 14 oct, 8:48</span></button><figcaption><a href="https://x.com/TelediarioGDL/status/2110382196494078407" rel="noopener" target="_blank">Ver en X</a></figcaption></figure>
       </div>
     </section>
 
