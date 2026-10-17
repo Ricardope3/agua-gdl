@@ -317,7 +317,11 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     return zonesReq;
   }
 
+  // Each render bumps shown, so a lookup still loading can tell it was overtaken: a slow
+  // earlier search must not replace a newer one.
+  let shown = 0;
   function show(...nodes) {
+    shown++;
     choiceHover = null;
     out.replaceChildren(...nodes.filter((n) => n != null));
   }
@@ -390,12 +394,14 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     }
     locBtn.disabled = true;
     show(msg("Buscando tu ubicación… Si tu navegador te pide permiso, toca «Permitir»."));
+    const mine = shown;
     // Browsers can stay silent while the permission prompt is ignored or the system blocks location, so give up on our own.
     let settled = false;
     const giveUp = setTimeout(() => {
       if (settled) return;
       settled = true;
       locBtn.disabled = false;
+      if (shown !== mine) return;
       show(msg("No pudimos obtener tu ubicación. Revisa que tu navegador y tu celular o computadora tengan la ubicación activada, o ", searchLink("busca tu colonia"), "."));
     }, 25000);
     navigator.geolocation.getCurrentPosition(async (pos) => {
@@ -405,6 +411,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       try {
         const { latitude: lat, longitude: lon } = pos.coords;
         const r = await get(`/v1/zone?lat=${lat.toFixed(4)}&lon=${lon.toFixed(4)}`);
+        if (shown !== mine) return;
         if (r.zones.length === 0) {
           show(result("map-pin", "Tu ubicación no está en ninguna zona del mapa del SIAPA",
             el("p", {}, "Puede que no te toque la rotación. Pero el mapa y la lista de colonias del SIAPA no siempre coinciden, así que busca también tu colonia por su nombre aquí arriba."),
@@ -415,7 +422,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
           show(warn(`Tu ubicación queda en el límite entre las zonas ${joinES(r.zones.map((z) => z.zone))}. Revisa el `, mapLink(), " para saber cuál te toca."), cards(r.zones));
         }
       } catch {
-        unreachable();
+        if (shown === mine) unreachable();
       } finally {
         locBtn.disabled = false;
       }
@@ -424,6 +431,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       settled = true;
       clearTimeout(giveUp);
       locBtn.disabled = false;
+      if (shown !== mine) return;
       const why = err.code === 1 ? "No diste permiso para usar tu ubicación. " : "No pudimos obtener tu ubicación. ";
       show(msg(why, searchLink("Busca tu colonia"), " o revisa los permisos de ubicación de tu navegador."));
     }, { enableHighAccuracy: false, timeout: 20000, maximumAge: 60000 });
@@ -714,8 +722,10 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       return;
     }
     show(msg("Buscando…"));
+    const mine = shown;
     try {
       const [r, zones] = await Promise.all([get("/v1/colonias?q=" + encodeURIComponent(q)), zoneTable()]);
+      if (shown !== mine) return;
       lastChoices = r.colonias;
       if (r.others && r.others.length) {
         showOthers(r.others, r.colonias, zones);
@@ -727,7 +737,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         showChoices(r.colonias, zones);
       }
     } catch {
-      unreachable();
+      if (shown === mine) unreachable();
     }
   }
 
