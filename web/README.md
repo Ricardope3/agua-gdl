@@ -4,7 +4,7 @@ Publicado en https://aguagdl.com con Cloudflare Pages (sin comando de build, car
 
 `avisos.html` es la página para suscribirse por WhatsApp o Telegram; `privacidad.html` y `terminos.html` son el aviso de privacidad y los términos de uso, publicados el 14 de octubre de 2026 (la app de Meta enlaza a ellos, así que no cambies sus URL).
 
-`mapa.html` («Mapa de la rotación», /mapa) muestra todas las colonias del área metropolitana coloreadas por zona, con búsqueda por nombre, municipio o código postal; sus datos (`colonias_siapa.topo.json`) salen de `pipelines/siapa_mapa.py`, que los toma del mapa del SIAPA.
+`mapa.html` («Mapa de la rotación», /mapa) muestra todas las colonias del área metropolitana coloreadas por zona, con búsqueda por nombre, municipio o código postal; sus datos (`colonias_siapa.topo.json`) salen de `pipelines/siapa_mapa.py`, que los toma del mapa del SIAPA, y el código del mapa (`mapa.js`) lo comparte con `mizona.html`. Cuando una colonia apenas toca el límite de otra zona, las páginas dicen «al límite con la zona N» en vez de ponerla en las dos.
 
 `mizona.html` («¿Qué zona me toca?») busca la zona por ubicación o colonia (`resultados.html`, que mostraba `/v1/results`, se quitó el 16 oct 2026 hasta que haya suficientes reportes; está en el historial de git). Usa `https://api.aguagdl.com`; para probarlas con la API local, agrega `?api=http://localhost:8080` (solo acepta localhost).
 
