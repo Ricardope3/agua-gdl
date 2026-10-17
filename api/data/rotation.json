@@ -1,11 +1,11 @@
 {
   "source": "https://rotaciondeserviciosiapa.jalisco.gob.mx/ (calendario semanal)",
-  "checked": "2026-10-13",
+  "checked": "2026-10-17",
   "checked_by": "Ricardo Espinoza",
   "start": "2026-10-15",
   "end": "2027-03-31",
   "zones": {
-    "1": ["fri", "sun"],
+    "1": ["wed", "fri", "sun"],
     "2": ["tue", "thu", "sun"],
     "3": ["wed", "sat"],
     "4": ["mon", "thu"],
