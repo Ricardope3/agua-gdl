@@ -88,28 +88,34 @@ const v1PerMinute = 120
 // maxTracked bounds the limiter's memory if requests come from many addresses at once.
 const maxTracked = 10_000
 
+// overflowPerMinute is what every address past maxTracked shares in one window.
+const overflowPerMinute = 10 * v1PerMinute
+
 // limiter allows max requests per client IP in each one-minute window. IPv6
 // clients count per /64, the block one subscriber usually gets. When too many
-// addresses arrive in one minute it stops counting new ones instead of locking
-// every new visitor out.
+// addresses arrive in one minute, the new ones share one bigger budget instead of
+// each getting its own, so memory stays bounded without locking every new visitor
+// out or letting them through unlimited.
 type limiter struct {
-	mu     sync.Mutex
-	max    int
-	start  time.Time
-	counts map[string]int
+	mu       sync.Mutex
+	max      int
+	start    time.Time
+	counts   map[string]int
+	overflow int
 }
 
 func (l *limiter) allow(ip string, now time.Time) bool {
 	l.mu.Lock()
 	defer l.mu.Unlock()
 	if now.Sub(l.start) >= time.Minute {
-		l.start = now
+		l.start, l.overflow = now, 0
 		clear(l.counts)
 	}
 	ip = limitKey(ip)
 	n, seen := l.counts[ip]
 	if !seen && len(l.counts) >= maxTracked {
-		return true
+		l.overflow++
+		return l.overflow <= overflowPerMinute
 	}
 	l.counts[ip] = n + 1
 	return n < l.max

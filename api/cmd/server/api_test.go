@@ -162,8 +162,16 @@ func TestLimiterWindowAndMemoryCap(t *testing.T) {
 	for i := range maxTracked {
 		l.allow(strconv.Itoa(i), now.Add(time.Minute))
 	}
-	if !l.allow("new", now.Add(time.Minute)) {
-		t.Fatal("past maxTracked addresses, new ones are let through, not locked out")
+	for i := 0; l.overflow < overflowPerMinute; i++ {
+		if !l.allow("new"+strconv.Itoa(i), now.Add(time.Minute)) {
+			t.Fatal("past maxTracked addresses, new ones share a budget instead of being locked out")
+		}
+	}
+	if l.allow("new", now.Add(time.Minute)) || len(l.counts) != maxTracked {
+		t.Fatal("the shared budget runs out, and memory stays bounded")
+	}
+	if !l.allow("new", now.Add(2*time.Minute)) {
+		t.Fatal("the shared budget starts over with the window")
 	}
 }
 
