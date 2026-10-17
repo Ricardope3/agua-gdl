@@ -6,7 +6,6 @@ import (
 	"io"
 	"log/slog"
 	"testing"
-	"time"
 
 	"aguagdl/api/internal/fake"
 	"aguagdl/api/internal/store"
@@ -22,11 +21,11 @@ func TestSendIsIdempotentAndCapped(t *testing.T) {
 	n := Notice{Zone: 4, Key: "cambio_rotacion/4/2026-11-02", Template: "cambio_rotacion", Language: "es_MX",
 		Params: []string{"4", "lunes y jueves", "lunes 2 de noviembre"}}
 	log := slog.New(slog.NewTextHandler(io.Discard, nil))
-	sent, err := Send(ctx, st, snd, n, 2, 0, time.Now, log)
+	sent, err := Send(ctx, st, snd, n, 2, 0, st.Now, log)
 	if sent != 2 || !errors.Is(err, ErrCapped) {
 		t.Fatalf("the cap must stop the run: sent %d, err %v", sent, err)
 	}
-	sent, err = Send(ctx, st, snd, n, 10, 0, time.Now, log)
+	sent, err = Send(ctx, st, snd, n, 10, 0, st.Now, log)
 	if sent != 1 || err != nil || len(snd.Sent) != 3 {
 		t.Fatalf("a re-run reaches only the rest of zone 4: sent %d, total %d, err %v", sent, len(snd.Sent), err)
 	}

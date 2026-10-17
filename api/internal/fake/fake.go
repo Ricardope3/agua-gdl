@@ -30,15 +30,19 @@ type Store struct {
 	SentAt     map[string]time.Time
 	Unresolved map[string]string
 	Wamids     map[string]bool
-	Now        func() time.Time // stamps reminder attempts
+	Now        func() time.Time // stamps subscriptions and attempts; see NewStore
 	FailDue    int              // DueSubscribers fails this many times, like a database waking up
 	Notices    map[string]bool
 	nextID     int64
 }
 
+// NewStore's clock is stopped before every test's date, so whatever is subscribed before
+// a test sets Now is old, whenever the test runs.
 func NewStore() *Store {
+	start := time.Date(2026, 10, 1, 12, 0, 0, 0, time.FixedZone("CST", -6*60*60))
 	return &Store{Subs: map[string]store.Subscriber{}, SeenIDs: map[string]bool{}, Reminders: map[string]bool{},
-		SentAt: map[string]time.Time{}, Unresolved: map[string]string{}, Wamids: map[string]bool{}, Notices: map[string]bool{}, Now: time.Now}
+		SentAt: map[string]time.Time{}, Unresolved: map[string]string{}, Wamids: map[string]bool{}, Notices: map[string]bool{},
+		Now: func() time.Time { return start }}
 }
 
 func (s *Store) ProcessInbound(ctx context.Context, id string, process func(store.BotStore) error) error {
