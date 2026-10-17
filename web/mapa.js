@@ -210,5 +210,72 @@ window.aguaMapa = (() => {
     return { zoneLayer, coloniaLayer, home, color, ink, halo, highlight, clearHighlights, setFocus };
   }
 
-  return { DATA, BORDER, COLORS, norm, fold, joinES, zonesOf, zones, label, describe, borderWord, zoneWord, decode, contains, load, find, tiles, draw };
+  const icon = (name) => {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("class", "i");
+    svg.setAttribute("aria-hidden", "true");
+    const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    use.setAttribute("href", `/icons.svg?v=4#${name}`);
+    svg.append(use);
+    return svg;
+  };
+  // cross is a plain × for closing: the sprite's "x" is the X (Twitter) logo used on /escribe.
+  const cross = () => {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("class", "i");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("aria-hidden", "true");
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", "M6 6l12 12M18 6L6 18");
+    svg.append(path);
+    return svg;
+  };
+  // card builds the colonia card the pages float over the map (an <aside class="card">).
+  // o: title, subtitle, sentence (a warning above the zones, or null), main (zones the
+  // colonia is in), side (zones it only borders), extra (zones the other source gives) with
+  // extraNote, days(z) → text or null, next(z) → ISO date or null, dateES(iso), color(z),
+  // links(z) → nodes for the buttons, note (text or node), onClose().
+  function card(o) {
+    const c = node("aside", "card");
+    const close = node("button", "close");
+    close.type = "button";
+    close.setAttribute("aria-label", "Cerrar");
+    close.append(cross());
+    close.addEventListener("click", () => { if (o.onClose) o.onClose(); });
+    c.append(close, node("h2", "", o.title), node("p", "where", o.subtitle));
+    const zbox = (z, side) => {
+      const box = node("div", side ? "zbox side" : "zbox");
+      box.style.setProperty("--zc", o.color(z));
+      const days = o.days(z);
+      box.append(node("p", "zn", side ? `Zona ${z} · al otro lado del límite` : `Zona ${z}`), node("p", "zd", days || "No pudimos cargar los días"));
+      const next = o.next(z);
+      if (next) {
+        const line = node("p", "next");
+        line.append(icon("calendar"), " Próximo racionamiento: ", node("strong", "", o.dateES(next)));
+        box.append(line);
+      }
+      return box;
+    };
+    const main = o.main || [], side = o.side || [], extra = o.extra || [];
+    if (!main.length) {
+      const out = node("div", "zbox");
+      out.append(node("p", "zn", "Fuera de la rotación"), node("p", "zd", "Según el mapa del SIAPA, aquí no toca racionamiento."));
+      c.append(out);
+    }
+    if (o.sentence) c.append(node("p", "warn", o.sentence));
+    for (const z of main) c.append(zbox(z, false));
+    for (const z of side) c.append(zbox(z, true));
+    if (o.extraNote) c.append(node("p", "warn", o.extraNote));
+    for (const z of extra) c.append(zbox(z, false));
+    const all = [...main, ...side, ...extra];
+    if (all.length && o.links) {
+      const sub = node("div", "subscribe");
+      for (const z of all) sub.append(...o.links(z));
+      c.append(sub);
+    }
+    if (o.note) c.append(typeof o.note === "string" ? node("p", "note", o.note) : o.note);
+    return c;
+  }
+
+  return { DATA, BORDER, COLORS, norm, fold, joinES, zonesOf, zones, label, describe, borderWord, zoneWord, decode, contains, load, find, tiles, draw, card, icon, cross };
 })();

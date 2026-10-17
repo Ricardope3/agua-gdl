@@ -149,7 +149,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         <label for="q">Busca tu colonia, municipio o código postal</label>
         <svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#search"/></svg>
         <input id="q" name="q" type="search" autocomplete="off" spellcheck="false" placeholder="Por ejemplo: Americana Guadalajara o 44100" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugerencias">
-        <button class="clear" type="button" id="limpiar" aria-label="Borrar la búsqueda" hidden><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#x"/></svg></button>
+        <button class="clear" type="button" id="limpiar" aria-label="Borrar la búsqueda" hidden><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
         <ul class="suggest" id="sugerencias" role="listbox" aria-label="Colonias encontradas" hidden></ul>
       </form>
       <button class="button" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg>Usar mi ubicación</button>
@@ -317,42 +317,29 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     const calendarLink = (z) => isIOS
       ? el("a", { class: "button alt", href: `https://${calendarURL(z)}` }, icon("calendar"), `Calendario · zona ${z}`)
       : el("a", { class: "button alt", href: `https://calendar.google.com/calendar/render?cid=${encodeURIComponent(`webcal://${calendarURL(z)}`)}`, rel: "noopener", target: "_blank" }, icon("calendar"), `Calendario · zona ${z}`);
-    function zoneBox(z, side) {
-      const days = daysText(z);
-      const box = el("div", { class: side ? "zbox side" : "zbox", style: `--zc:${color(z)}` },
-        el("p", { class: "zn" }, side ? `Zona ${z} · al otro lado del límite` : `Zona ${z}`),
-        el("p", { class: "zd" }, days || "No pudimos cargar los días"));
-      const next = nextCut(z);
-      if (next) box.append(el("p", { class: "next" }, icon("calendar"), " Próximo racionamiento: ", el("strong", {}, dateES(next))));
-      return box;
-    }
+    const telegramLink = (z) => el("a", { class: "button", href: `${TELEGRAM}?start=z${z}`, rel: "noopener" }, icon("send"), `Aviso por Telegram · zona ${z}`);
     function renderCard(f) {
       const p = f.properties;
       const z = M.zones(p);
       const ls = M.zonesOf(p.l || "");
-      const close = el("button", { type: "button", class: "close", "aria-label": "Cerrar" }, icon("x"));
-      close.addEventListener("click", clearSelection);
-      const kids = [close, el("h2", {}, p.n), el("p", { class: "where" }, p.m + (p.cp ? ` · C.P. ${p.cp}` : ""))];
-      if (!z.all.length) {
-        kids.push(el("div", { class: "zbox" }, el("p", { class: "zn" }, "Fuera de la rotación"), el("p", { class: "zd" }, "Según el mapa del SIAPA, aquí no toca racionamiento.")));
-      }
-      const sentence = M.describe(p);
-      if (sentence) kids.push(el("p", { class: "warn" }, sentence));
-      for (const zone of z.main) kids.push(zoneBox(zone, false));
-      for (const zone of z.border) kids.push(zoneBox(zone, true));
-      const extra = ls.filter((zone) => !z.all.includes(zone));
-      if (ls.length && ls.join() !== [...z.all].sort().join()) {
-        kids.push(el("p", { class: "warn" }, `La lista de colonias del SIAPA la pone en ${M.zoneWord(ls)}. El mapa y la lista no siempre coinciden: ${z.all.length ? "prepárate para los días de las dos" : "prepárate para esos días"}.`));
-        for (const zone of extra) kids.push(zoneBox(zone, false));
-      }
-      const all = [...z.main, ...z.border, ...extra];
-      if (all.length) {
-        kids.push(el("div", { class: "subscribe" },
-          ...all.map((zone) => el("a", { class: "button", href: `${TELEGRAM}?start=z${zone}`, rel: "noopener" }, icon("send"), `Aviso por Telegram · zona ${zone}`)),
-          ...all.map(calendarLink)));
-        kids.push(el("p", { class: "note" }, "Gratis: un mensaje a las 8 p. m. la noche antes de cada racionamiento, o una alerta en tu calendario. Más opciones en ", el("a", { href: "/mizona" }, "Mi zona"), "."));
-      }
-      card.replaceChildren(...kids);
+      const differs = ls.length && ls.join() !== [...z.all].sort().join();
+      const built = M.card({
+        title: p.n,
+        subtitle: p.m + (p.cp ? ` · C.P. ${p.cp}` : ""),
+        sentence: M.describe(p),
+        main: z.main,
+        side: z.border,
+        extra: differs ? ls.filter((zone) => !z.all.includes(zone)) : [],
+        extraNote: differs ? `La lista de colonias del SIAPA la pone en ${M.zoneWord(ls)}. El mapa y la lista no siempre coinciden: ${z.all.length ? "prepárate para los días de las dos" : "prepárate para esos días"}.` : null,
+        days: daysText,
+        next: nextCut,
+        dateES,
+        color,
+        links: (zone) => [telegramLink(zone), calendarLink(zone)],
+        note: el("p", { class: "note" }, "Gratis: un mensaje a las 8 p. m. la noche antes de cada racionamiento, o una alerta en tu calendario. Más opciones en ", el("a", { href: "/mizona" }, "Mi zona"), "."),
+        onClose: clearSelection,
+      });
+      card.replaceChildren(...built.children);
       card.hidden = false;
     }
 
