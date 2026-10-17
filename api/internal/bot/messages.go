@@ -133,6 +133,8 @@ const msgNoReportYet = "Todavía no hay un corte que reportar en tu zona 👍"
 
 const msgReportClosed = "Ese reporte ya cerró. ¡Gracias de todos modos! 🙏"
 
+const msgReportBeforeJoin = "Solo contamos reportes de cortes que empezaron después de tu suscripción. Podrás reportar el próximo 🙏"
+
 func msgAskReport(date string) string {
 	return fmt.Sprintf("¿Cómo regresó el agua después del corte del *%s*? 👇", date)
 }

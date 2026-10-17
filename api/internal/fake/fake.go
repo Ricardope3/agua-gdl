@@ -83,7 +83,7 @@ func (s *Store) Subscribe(_ context.Context, channel, userID, phone string, zone
 	sub, ok := s.Subs[id]
 	if !ok {
 		s.nextID++
-		sub = store.Subscriber{ID: s.nextID, Channel: channel, UserID: userID}
+		sub = store.Subscriber{ID: s.nextID, Channel: channel, UserID: userID, CreatedAt: s.Now()}
 	}
 	if phone != "" {
 		sub.Phone = phone

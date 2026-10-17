@@ -868,3 +868,35 @@ func TestBudgetHoldsAcrossConcurrentSenders(t *testing.T) {
 		t.Fatalf("notices share the monthly cap: %v %v", attempted, err)
 	}
 }
+
+func TestCreatedAtSurvivesAZoneChangeButNotBAJA(t *testing.T) {
+	db := testDB(t)
+	ctx := context.Background()
+	created := func() time.Time {
+		t.Helper()
+		s, ok, err := db.Subscriber(ctx, Telegram, "777")
+		if err != nil || !ok {
+			t.Fatalf("subscriber: %v %v", ok, err)
+		}
+		return s.CreatedAt
+	}
+	if err := db.Subscribe(ctx, Telegram, "777", "", 4); err != nil {
+		t.Fatal(err)
+	}
+	first := created()
+	if err := db.Subscribe(ctx, Telegram, "777", "", 6); err != nil {
+		t.Fatal(err)
+	}
+	if !created().Equal(first) {
+		t.Fatal("a zone change is the same subscription")
+	}
+	if _, err := db.Unsubscribe(ctx, Telegram, "777", ""); err != nil {
+		t.Fatal(err)
+	}
+	if err := db.Subscribe(ctx, Telegram, "777", "", 6); err != nil {
+		t.Fatal(err)
+	}
+	if !created().After(first) {
+		t.Fatal("subscribing again after BAJA is a new subscription")
+	}
+}

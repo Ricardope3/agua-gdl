@@ -436,6 +436,9 @@ func (b *Bot) reportLastCut(ctx context.Context, r User) error {
 	if !ok {
 		return b.text(ctx, r, msgNoReportYet)
 	}
+	if !s.CreatedAt.Before(prev) {
+		return b.text(ctx, r, msgReportBeforeJoin)
+	}
 	return b.askReport(ctx, r, s.Zone, prev.Format(rotation.DateLayout))
 }
 
@@ -477,6 +480,11 @@ func (b *Bot) saveReport(ctx context.Context, r User, zone int, date, answer str
 	today := b.Schedule.Day(b.Now())
 	if err != nil || !b.Schedule.IsCut(zone, d) || d.After(today) || d.Before(today.AddDate(0, 0, -14)) {
 		return b.text(ctx, r, msgReportClosed)
+	}
+	// BAJA and subscribing again makes a new subscription; only one that already existed
+	// when the cut began may report it, so nobody can report the same cut twice.
+	if !s.CreatedAt.Before(d) {
+		return b.text(ctx, r, msgReportBeforeJoin)
 	}
 	if err := b.Store.SaveReport(ctx, s.ID, zone, d, answer); err != nil {
 		return err

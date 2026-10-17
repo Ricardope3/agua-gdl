@@ -44,6 +44,7 @@ type Subscriber struct {
 	Phone     string
 	Zone      int
 	UpdatedAt time.Time // last subscription or zone change; set by DueSubscribers only
+	CreatedAt time.Time // set by Subscriber only
 }
 
 type Result struct {
@@ -152,7 +153,7 @@ func (db *DB) PurgeSeen(ctx context.Context, before time.Time) error {
 
 func (db *DB) Subscriber(ctx context.Context, channel, userID string) (Subscriber, bool, error) {
 	s := Subscriber{Channel: channel, UserID: userID}
-	err := db.q.QueryRow(ctx, `select id, zone from subscriber where channel = $1 and user_id = $2`, channel, userID).Scan(&s.ID, &s.Zone)
+	err := db.q.QueryRow(ctx, `select id, zone, created_at from subscriber where channel = $1 and user_id = $2`, channel, userID).Scan(&s.ID, &s.Zone, &s.CreatedAt)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return Subscriber{}, false, nil
 	}

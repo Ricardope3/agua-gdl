@@ -145,6 +145,24 @@ func TestTelegramReportAndBaja(t *testing.T) {
 	}
 }
 
+func TestRejoiningCantReportTheSameCutAgain(t *testing.T) {
+	h := newTGHarness(t, "2026-10-16 09:00")
+	h.say(t, "/start z6") // on the store's clock, before the cut
+	h.press(t, "R:6:2026-10-16:turbia")
+	h.store.Now = h.bot.Now
+	for range 3 {
+		h.say(t, "/baja")
+		h.say(t, "/start z6")
+		if m := h.say(t, "/reportar"); !strings.Contains(m.Text, "después de tu suscripción") {
+			t.Fatalf("a subscription newer than the cut can't report it: %s", m.Text)
+		}
+		h.press(t, "R:6:2026-10-16:turbia")
+	}
+	if len(h.store.Reports) != 1 {
+		t.Fatalf("BAJA and subscribing again must not add reports for the same cut: %+v", h.store.Reports)
+	}
+}
+
 func TestReportKeepsTheZoneOfTheCut(t *testing.T) {
 	h := newTGHarness(t, "2026-10-18 09:00")
 	h.say(t, "zona 4")
