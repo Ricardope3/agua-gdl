@@ -489,7 +489,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     scrollTo({ top: el.getBoundingClientRect().top + scrollY - (header ? header.offsetHeight : 0) - 12, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   }
 
-  function mapBlock(list, zones, pick = list.length > 1) {
+  // onZones gets the zones of a tapped spot; without it they're shown under the map.
+  function mapBlock(list, zones, pick = list.length > 1, onZones = null) {
     const open = el("button", { type: "button", class: "button alt glow" }, icon("map-pin"), "Ver en el mapa");
     const box = el("div", { class: "mapbox" },
       el("div", { class: "mapbar" },
@@ -515,7 +516,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       const answer = el("p", { "aria-live": "polite" }, tapPick ? "Toca tu colonia en el mapa." : "Toca el lugar de tu casa en el mapa.",
         absent.length ? ` No tenemos el contorno de ${joinES(absent.map((c) => `${c.name} (${municipio(c.municipio)})`))}: ` : null,
         absent.length ? el("a", { href: "#lista" }, "por qué") : null, absent.length ? "." : null);
-      box.replaceChildren(div, answer, box.lastChild);
+      const tapped = el("div");
+      box.replaceChildren(div, answer, tapped, box.lastChild);
       scrollToTop(box);
       const L = window.L;
       const map = L.map(div, { scrollWheelZoom: false, zoomSnap: 0.25 });
@@ -643,20 +645,25 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       map.on("mouseout", () => { unhover(); light(null); cursorTip.remove(); });
       if (tapPick) return;
       let pin = null;
+      let taps = 0;
       map.on("click", async (e) => {
         const { lat, lng } = e.latlng;
         if (pin) pin.setLatLng(e.latlng); else pin = L.circleMarker(e.latlng, { radius: 8, color: halo, weight: 3, fillColor: ink, fillOpacity: 1 }).addTo(map);
         answer.replaceChildren("Buscando la zona de ese punto…");
+        const mine = ++taps;
         try {
           const r = await get(`/v1/zone?lat=${lat.toFixed(5)}&lon=${lng.toFixed(5)}`);
+          if (mine !== taps) return;
           const nums = r.zones.map((z) => z.zone);
           answer.replaceChildren(nums.length === 0
             ? "Ese punto no está en ninguna zona del mapa del SIAPA."
             : nums.length === 1
               ? el("span", {}, "Ese punto está en la ", el("strong", {}, `zona ${nums[0]}`), ". Abajo están sus días.")
-              : `Ese punto queda en el límite entre las zonas ${joinES(nums)}.`);
+              : `Ese punto queda en el límite entre las zonas ${joinES(nums)}. Abajo están sus días.`);
+          if (!nums.length) return;
+          if (onZones) onZones(r.zones); else tapped.replaceChildren(cards(r.zones));
         } catch {
-          answer.replaceChildren("No pudimos consultar la zona de ese punto. Intenta de nuevo.");
+          if (mine === taps) answer.replaceChildren("No pudimos consultar la zona de ese punto. Intenta de nuevo.");
         }
       });
     });
@@ -676,8 +683,10 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     }
     const back = lastChoices && lastChoices.length > 1 ? el("p", {}, el("button", { type: "button", class: "linklike" }, "← Ver las otras colonias")) : null;
     if (back) back.firstChild.addEventListener("click", () => showChoices(lastChoices, zones));
-    const map = c.zones.length > 1 ? mapBlock([c], zones) : null;
-    show(where, note, map, cards(c.zones.map((z) => zones.get(z)).filter(Boolean)), discountNote(), back);
+    // Tapping the map replaces the listed zones' cards with the tapped spot's.
+    const zoneCards = el("div", {}, cards(c.zones.map((z) => zones.get(z)).filter(Boolean)));
+    const map = c.zones.length > 1 ? mapBlock([c], zones, false, (found) => zoneCards.replaceChildren(cards(found))) : null;
+    show(where, note, map, zoneCards, discountNote(), back);
   }
 
   const discountNote = () => isoToday(0) > "2026-12-15" ? null : el("p", { class: "note" },
