@@ -17,8 +17,7 @@ import (
 
 type Store interface {
 	NoticeRecipients(ctx context.Context, channel string, zone int, key string) ([]store.Subscriber, error)
-	SendNotice(ctx context.Context, s store.Subscriber, key string, send func(store.Subscriber) (string, error)) (bool, error)
-	RecipientsSince(ctx context.Context, since time.Time) (int, error)
+	SendNotice(ctx context.Context, s store.Subscriber, key string, budget *store.Budget, send func(store.Subscriber) (string, error)) (bool, error)
 }
 
 type Sender interface {
@@ -39,30 +38,27 @@ type Notice struct {
 	Params   []string
 }
 
-// ErrCapped means the daily cap stopped the run; run it again later to reach the rest.
-var ErrCapped = errors.New("daily cap reached")
+// ErrCapped means the daily or monthly cap stopped the run; run it again later to reach the rest.
+var ErrCapped = errors.New("send cap reached")
 
 const maxConsecutiveFailures = 5
 
 // Send reaches every pending WhatsApp subscriber of n.Zone with the template and returns
-// how many were sent.
-func Send(ctx context.Context, st Store, snd Sender, n Notice, dailyCap int, interval time.Duration, now func() time.Time, log *slog.Logger) (sent int, err error) {
-	capped := func() error {
-		day, err := st.RecipientsSince(ctx, now().Add(-24*time.Hour))
-		if err == nil && day >= dailyCap {
-			err = ErrCapped
-		}
-		return err
+// how many were sent. The month for monthlyCap starts in now's time zone.
+func Send(ctx context.Context, st Store, snd Sender, n Notice, dailyCap, monthlyCap int, interval time.Duration, now func() time.Time, log *slog.Logger) (sent int, err error) {
+	budget := func() *store.Budget {
+		b := store.NewBudget(dailyCap, monthlyCap, now())
+		return &b
 	}
-	return send(ctx, st, store.WhatsApp, n, interval, capped, log, func(current store.Subscriber) (string, error) {
+	return send(ctx, st, store.WhatsApp, n, interval, budget, log, func(current store.Subscriber) (string, error) {
 		return snd.Send(ctx, wa.NewTemplate(wa.Recipient{UserID: current.UserID, Phone: current.Phone}, n.Template, n.Language, wa.BodyParams(n.Params...)))
 	})
 }
 
 // SendTelegram reaches every pending Telegram subscriber of n.Zone with text, which may use
-// WhatsApp-style *bold*, and a button to SIAPA's map. Telegram has no daily cap.
+// WhatsApp-style *bold*, and a button to SIAPA's map. Telegram has no caps.
 func SendTelegram(ctx context.Context, st Store, tel TelegramSender, n Notice, text string, interval time.Duration, log *slog.Logger) (int, error) {
-	return send(ctx, st, store.Telegram, n, interval, func() error { return nil }, log, func(current store.Subscriber) (string, error) {
+	return send(ctx, st, store.Telegram, n, interval, func() *store.Budget { return nil }, log, func(current store.Subscriber) (string, error) {
 		m, err := bot.TelegramMessage(current.UserID, bot.Reply{Text: text})
 		if err != nil {
 			return "", err
@@ -73,7 +69,7 @@ func SendTelegram(ctx context.Context, st Store, tel TelegramSender, n Notice, t
 	})
 }
 
-func send(ctx context.Context, st Store, channel string, n Notice, interval time.Duration, capped func() error, log *slog.Logger, deliver func(store.Subscriber) (string, error)) (sent int, err error) {
+func send(ctx context.Context, st Store, channel string, n Notice, interval time.Duration, budget func() *store.Budget, log *slog.Logger, deliver func(store.Subscriber) (string, error)) (sent int, err error) {
 	subs, err := st.NoticeRecipients(ctx, channel, n.Zone, n.Key)
 	if err != nil {
 		return 0, err
@@ -87,13 +83,11 @@ func send(ctx context.Context, st Store, channel string, n Notice, interval time
 			case <-time.After(interval):
 			}
 		}
-		if capErr := capped(); capErr != nil {
-			if errors.Is(capErr, ErrCapped) {
-				log.Warn("daily cap reached; run again later for the rest", "pending", len(subs)-i)
-			}
-			return sent, errors.Join(err, capErr)
+		attempted, sendErr := st.SendNotice(ctx, s, n.Key, budget(), deliver)
+		if errors.Is(sendErr, store.ErrOverBudget) {
+			log.Warn("send cap reached; run again later for the rest", "pending", len(subs)-i)
+			return sent, errors.Join(err, ErrCapped)
 		}
-		attempted, sendErr := st.SendNotice(ctx, s, n.Key, deliver)
 		var unreachable interface{ Gone() bool }
 		if errors.As(sendErr, &unreachable) && unreachable.Gone() {
 			log.Info("subscriber blocked the bot; subscription deleted", "subscriber", s.ID)

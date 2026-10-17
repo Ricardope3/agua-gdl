@@ -4,7 +4,7 @@
 //
 // It only reports what it would send unless -send is given. Re-running with the same
 // -zone and -from reaches only the subscribers who haven't received it, so it's safe
-// to run again after the daily cap stops it.
+// to run again after the daily or monthly cap stops it.
 //
 //	cd api
 //	DATABASE_URL='…' go run ./cmd/notify -zone 4 -from 2026-11-02
@@ -133,17 +133,20 @@ func run(channel string, zone int, from string, send bool) error {
 	if token == "" || phoneID == "" {
 		return errors.New("set WA_TOKEN and WA_PHONE_NUMBER_ID to send")
 	}
-	dailyCap, err := strconv.Atoi(env("DAILY_CAP", "250"))
-	if err != nil {
-		return fmt.Errorf("DAILY_CAP: %w", err)
+	caps := map[string]int{"DAILY_CAP": 250, "MONTHLY_CAP": 5000}
+	for name := range caps {
+		if caps[name], err = strconv.Atoi(env(name, strconv.Itoa(caps[name]))); err != nil {
+			return fmt.Errorf("%s: %w", name, err)
+		}
 	}
 	client := &wa.Client{BaseURL: "https://graph.facebook.com/" + env("WA_GRAPH_VERSION", "v24.0"),
 		PhoneNumberID: phoneID, Token: token, HTTP: &http.Client{Timeout: 15 * time.Second}}
 	log := slog.New(slog.NewTextHandler(os.Stderr, nil))
-	sent, err := notices.Send(ctx, db, client, n, dailyCap, 100*time.Millisecond, time.Now, log)
+	now := func() time.Time { return time.Now().In(loc) }
+	sent, err := notices.Send(ctx, db, client, n, caps["DAILY_CAP"], caps["MONTHLY_CAP"], 100*time.Millisecond, now, log)
 	fmt.Printf("sent %d\n", sent)
 	if errors.Is(err, notices.ErrCapped) {
-		fmt.Println("The daily cap stopped the run; run the same command again later for the rest.")
+		fmt.Println("A send cap stopped the run; run the same command again later for the rest.")
 	}
 	return err
 }

@@ -359,3 +359,28 @@ func TestShutdownMidSendStillRecordsTheReminder(t *testing.T) {
 		t.Fatalf("a send in flight at shutdown must complete and be recorded: sent %d, unresolved %v, err %v", len(snd.Sent), st.Unresolved, err)
 	}
 }
+
+// slotTaken refuses the first reservation, as if another sender took the last slot
+// between the runner's cap check and its reservation.
+type slotTaken struct {
+	*fake.Store
+	refused bool
+}
+
+func (s *slotTaken) SendReminder(ctx context.Context, sub store.Subscriber, d time.Time, zones []int, b *store.Budget, send func(store.Subscriber) (string, error)) (bool, error) {
+	if !s.refused && b != nil {
+		s.refused = true
+		return false, store.ErrOverBudget
+	}
+	return s.Store.SendReminder(ctx, sub, d, zones, b, send)
+}
+
+func TestSlotTakenByAnotherSenderIsRetriedNotSkipped(t *testing.T) {
+	st, snd := fake.NewStore(), &fake.Sender{}
+	st.Subscribe(context.Background(), store.WhatsApp, "a", "a", 4)
+	r := runner(t, "2026-10-18 20:00", st, snd)
+	r.Store = &slotTaken{Store: st}
+	if err := r.SendTonight(context.Background()); err != nil || len(snd.Sent) != 1 {
+		t.Fatalf("sent %d, err %v", len(snd.Sent), err)
+	}
+}

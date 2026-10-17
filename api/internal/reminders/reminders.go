@@ -20,7 +20,7 @@ import (
 
 type Store interface {
 	DueSubscribers(ctx context.Context, channel string, zones []int, cutDate time.Time) ([]store.Subscriber, error)
-	SendReminder(ctx context.Context, s store.Subscriber, cutDate time.Time, zones []int, send func(store.Subscriber) (string, error)) (bool, error)
+	SendReminder(ctx context.Context, s store.Subscriber, cutDate time.Time, zones []int, budget *store.Budget, send func(store.Subscriber) (string, error)) (bool, error)
 	UnresolvedReminders(ctx context.Context, channel string, cutDate time.Time) (int, error)
 	SentSince(ctx context.Context, since time.Time) (int, error)
 	RecipientsSince(ctx context.Context, since time.Time) (int, error)
@@ -159,8 +159,6 @@ func (r *Runner) sendChannel(ctx context.Context, channel string) (err error) {
 	if len(subs) == 0 {
 		return nil
 	}
-	y, m, _ := now.In(r.Schedule.Location()).Date()
-	monthStart := time.Date(y, m, 1, 0, 0, 0, 0, r.Schedule.Location())
 	deadline := r.Schedule.Day(now).Add(time.Duration(r.CatchUpUntil) * time.Hour)
 	date := rotation.DateES(tomorrow)
 	sent, failures := 0, 0
@@ -170,23 +168,33 @@ func (r *Runner) sendChannel(ctx context.Context, channel string) (err error) {
 				return errors.Join(err, sleepErr)
 			}
 		}
-		if channel == store.WhatsApp {
-			if capErr := r.waitForCap(ctx, monthStart, deadline, len(subs), sent); capErr != nil {
-				if !errors.Is(capErr, ErrCapped) {
-					capErr = transient(capErr)
-				}
-				return errors.Join(err, capErr)
-			}
-		}
 		// A send that has started finishes and is recorded even during shutdown;
 		// the HTTP clients have their own timeouts.
 		sendCtx := context.WithoutCancel(ctx)
-		attempted, sendErr := r.Store.SendReminder(sendCtx, s, tomorrow, zones, func(current store.Subscriber) (string, error) {
-			if current.Channel == store.Telegram {
-				return "", r.sendTelegram(ctx, sendCtx, current, date)
+		var attempted bool
+		var sendErr error
+		for {
+			var budget *store.Budget
+			if channel == store.WhatsApp {
+				if capErr := r.waitForCap(ctx, deadline, len(subs), sent); capErr != nil {
+					if !errors.Is(capErr, ErrCapped) {
+						capErr = transient(capErr)
+					}
+					return errors.Join(err, capErr)
+				}
+				budget = r.budget()
 			}
-			return r.Sender.Send(sendCtx, r.reminder(current, date))
-		})
+			attempted, sendErr = r.Store.SendReminder(sendCtx, s, tomorrow, zones, budget, func(current store.Subscriber) (string, error) {
+				if current.Channel == store.Telegram {
+					return "", r.sendTelegram(ctx, sendCtx, current, date)
+				}
+				return r.Sender.Send(sendCtx, r.reminder(current, date))
+			})
+			// Another sender may have taken the last slot since waitForCap looked.
+			if !errors.Is(sendErr, store.ErrOverBudget) {
+				break
+			}
+		}
 		var unreachable interface{ Gone() bool }
 		if errors.As(sendErr, &unreachable) && unreachable.Gone() {
 			r.Log.Info("subscriber blocked the bot; subscription deleted", "subscriber", s.ID)
@@ -220,10 +228,11 @@ func (r *Runner) sendChannel(ctx context.Context, channel string) (err error) {
 // window, so when last night's reminders still fill it, wait for them to expire
 // instead of skipping the rest of tonight's batch. Only the monthly cap, or
 // reaching the catch-up deadline, gives up.
-func (r *Runner) waitForCap(ctx context.Context, monthStart, deadline time.Time, due, sent int) error {
+func (r *Runner) waitForCap(ctx context.Context, deadline time.Time, due, sent int) error {
 	waiting := false
 	for {
-		month, err := r.Store.SentSince(ctx, monthStart)
+		b := r.budget()
+		month, err := r.Store.SentSince(ctx, b.MonthStart)
 		if err != nil {
 			return err
 		}
@@ -231,7 +240,7 @@ func (r *Runner) waitForCap(ctx context.Context, monthStart, deadline time.Time,
 			r.Log.Error("monthly cap reached; the rest will not get tonight's reminder", "due", due, "sent", sent)
 			return ErrCapped
 		}
-		day, err := r.Store.RecipientsSince(ctx, r.Now().Add(-24*time.Hour))
+		day, err := r.Store.RecipientsSince(ctx, b.DayStart)
 		if err != nil {
 			return err
 		}
@@ -254,6 +263,12 @@ func (r *Runner) waitForCap(ctx context.Context, monthStart, deadline time.Time,
 			return err
 		}
 	}
+}
+
+// budget is WhatsApp's caps as of now.
+func (r *Runner) budget() *store.Budget {
+	b := store.NewBudget(r.DailyCap, r.MonthlyCap, r.Now().In(r.Schedule.Location()))
+	return &b
 }
 
 func (r *Runner) sleep(ctx context.Context, d time.Duration) error {
@@ -331,8 +346,6 @@ func (r *Runner) SendManual(ctx context.Context, m Manual) (sent int, err error)
 		return 0, err
 	}
 	tomorrow := r.Schedule.Day(r.Now()).AddDate(0, 0, 1)
-	y, mo, _ := r.Now().In(r.Schedule.Location()).Date()
-	monthStart := time.Date(y, mo, 1, 0, 0, 0, 0, r.Schedule.Location())
 	failures := 0
 	for i, s := range subs {
 		if i > 0 {
@@ -340,12 +353,15 @@ func (r *Runner) SendManual(ctx context.Context, m Manual) (sent int, err error)
 				return sent, errors.Join(err, sleepErr)
 			}
 		}
-		if capErr := r.waitForCap(ctx, monthStart, r.Now(), len(subs), sent); capErr != nil {
+		if capErr := r.waitForCap(ctx, r.Now(), len(subs), sent); capErr != nil {
 			return sent, errors.Join(err, capErr)
 		}
-		attempted, sendErr := r.Store.SendReminder(ctx, s, tomorrow, []int{m.Zone}, func(current store.Subscriber) (string, error) {
+		attempted, sendErr := r.Store.SendReminder(ctx, s, tomorrow, []int{m.Zone}, r.budget(), func(current store.Subscriber) (string, error) {
 			return r.Sender.Send(ctx, wa.NewText(wa.Recipient{UserID: current.UserID, Phone: current.Phone}, m.Text))
 		})
+		if errors.Is(sendErr, store.ErrOverBudget) {
+			return sent, errors.Join(err, ErrCapped)
+		}
 		if sendErr != nil {
 			err = errors.Join(err, fmt.Errorf("subscriber %d: %w", s.ID, sendErr))
 			r.Log.Error("manual reminder failed", "subscriber", s.ID, "err", sendErr)

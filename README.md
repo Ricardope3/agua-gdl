@@ -61,7 +61,9 @@ Los topes se revisan antes de cada envío. El diario (`DAILY_CAP`) cuenta person
 distintas en una ventana móvil de 24 horas, como el límite de Meta. Si los avisos de
 anoche todavía la llenan, el lote espera a que salgan de la ventana en vez de saltarse
 a nadie; solo se rinde a las 22:00 o al llegar al tope mensual (`MONTHLY_CAP`, que
-cuenta mensajes).
+cuenta mensajes). Cada reserva vuelve a revisar ambos topes con un candado de Postgres,
+así que el lote nocturno y `notify` no pueden pasarlos aunque corran al mismo tiempo;
+los avisos de `notify` también se detienen en el tope mensual.
 
 Para revisar los intentos pendientes:
 

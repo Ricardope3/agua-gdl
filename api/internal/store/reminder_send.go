@@ -20,13 +20,13 @@ type gone interface{ Gone() bool }
 // Only attempts explicitly rejected are retried by a later run.
 // zones are the zones cut on cutDate: a subscriber who moved between two of them
 // mid-batch still gets the reminder, for the zone they're in now.
-func (db *DB) SendReminder(ctx context.Context, s Subscriber, cutDate time.Time, zones []int, send func(Subscriber) (string, error)) (attempted bool, err error) {
-	var reminderID int64
-	err = db.pool.QueryRow(ctx, `insert into reminder (subscriber_id, zone, cut_date, status, channel)
+// A nil budget means no caps, as on Telegram.
+func (db *DB) SendReminder(ctx context.Context, s Subscriber, cutDate time.Time, zones []int, budget *Budget, send func(Subscriber) (string, error)) (attempted bool, err error) {
+	reminderID, err := db.reserve(ctx, budget, `insert into reminder (subscriber_id, zone, cut_date, status, channel)
 		select id, zone, $3::date, 'sending', channel from subscriber where id = $1 and zone = any($2::int[])
 		on conflict (subscriber_id, cut_date) do update set status = 'sending', zone = excluded.zone, sent_at = now()
 			where reminder.status = 'rejected'
-		returning id`, s.ID, zones, cutDate.Format(dateLayout)).Scan(&reminderID)
+		returning id`, s.ID, zones, cutDate.Format(dateLayout))
 	if errors.Is(err, pgx.ErrNoRows) {
 		return false, nil
 	}
@@ -34,6 +34,52 @@ func (db *DB) SendReminder(ctx context.Context, s Subscriber, cutDate time.Time,
 		return false, err
 	}
 	return db.sendReserved(ctx, "reminder", reminderID, s.ID, zones, send)
+}
+
+// Budget is WhatsApp's caps: at most Daily recipients since DayStart (Meta's moving
+// 24 hours) and Monthly messages since MonthStart.
+type Budget struct {
+	Daily, Monthly       int
+	DayStart, MonthStart time.Time
+}
+
+func NewBudget(daily, monthly int, now time.Time) Budget {
+	y, m, _ := now.Date()
+	return Budget{Daily: daily, Monthly: monthly, DayStart: now.Add(-24 * time.Hour),
+		MonthStart: time.Date(y, m, 1, 0, 0, 0, 0, now.Location())}
+}
+
+// ErrOverBudget means a cap is full, so nothing was reserved or sent.
+var ErrOverBudget = errors.New("send cap reached")
+
+// budgetLock serializes reservations from every sender: the nightly run, notices and
+// manual reminders, on any machine.
+const budgetLock = 7_103_115_241_819
+
+// reserve runs insert, which returns the new attempt's ID, after checking budget in the
+// same transaction, so two senders can't both take the last slot.
+func (db *DB) reserve(ctx context.Context, budget *Budget, insert string, args ...any) (id int64, err error) {
+	err = pgx.BeginFunc(ctx, db.pool, func(tx pgx.Tx) error {
+		if budget != nil {
+			if _, err := tx.Exec(ctx, `select pg_advisory_xact_lock($1)`, budgetLock); err != nil {
+				return err
+			}
+			locked := &DB{pool: db.pool, q: tx}
+			month, err := locked.SentSince(ctx, budget.MonthStart)
+			if err != nil {
+				return err
+			}
+			day, err := locked.RecipientsSince(ctx, budget.DayStart)
+			if err != nil {
+				return err
+			}
+			if month >= budget.Monthly || day >= budget.Daily {
+				return ErrOverBudget
+			}
+		}
+		return tx.QueryRow(ctx, insert, args...).Scan(&id)
+	})
+	return id, err
 }
 
 // sendReserved makes the request for a reservation in table (reminder or notice)
@@ -98,13 +144,12 @@ func (db *DB) NoticeRecipients(ctx context.Context, channel string, zone int, ke
 
 // SendNotice sends a one-off notice, such as a schedule change, at most once per
 // subscriber and key, with the same guarantees as SendReminder.
-func (db *DB) SendNotice(ctx context.Context, s Subscriber, key string, send func(Subscriber) (string, error)) (attempted bool, err error) {
-	var id int64
-	err = db.pool.QueryRow(ctx, `insert into notice (subscriber_id, key, zone, status, channel)
+func (db *DB) SendNotice(ctx context.Context, s Subscriber, key string, budget *Budget, send func(Subscriber) (string, error)) (attempted bool, err error) {
+	id, err := db.reserve(ctx, budget, `insert into notice (subscriber_id, key, zone, status, channel)
 		select id, $2, zone, 'sending', channel from subscriber where id = $1 and zone = $3
 		on conflict (subscriber_id, key) do update set status = 'sending', sent_at = now()
 			where notice.status = 'rejected'
-		returning id`, s.ID, key, s.Zone).Scan(&id)
+		returning id`, s.ID, key, s.Zone)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return false, nil
 	}

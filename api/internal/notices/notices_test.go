@@ -6,6 +6,7 @@ import (
 	"io"
 	"log/slog"
 	"testing"
+	"time"
 
 	"aguagdl/api/internal/fake"
 	"aguagdl/api/internal/store"
@@ -21,17 +22,32 @@ func TestSendIsIdempotentAndCapped(t *testing.T) {
 	n := Notice{Zone: 4, Key: "cambio_rotacion/4/2026-11-02", Template: "cambio_rotacion", Language: "es_MX",
 		Params: []string{"4", "lunes y jueves", "lunes 2 de noviembre"}}
 	log := slog.New(slog.NewTextHandler(io.Discard, nil))
-	sent, err := Send(ctx, st, snd, n, 2, 0, st.Now, log)
+	sent, err := Send(ctx, st, snd, n, 2, 100, 0, st.Now, log)
 	if sent != 2 || !errors.Is(err, ErrCapped) {
 		t.Fatalf("the cap must stop the run: sent %d, err %v", sent, err)
 	}
-	sent, err = Send(ctx, st, snd, n, 10, 0, st.Now, log)
+	sent, err = Send(ctx, st, snd, n, 10, 100, 0, st.Now, log)
 	if sent != 1 || err != nil || len(snd.Sent) != 3 {
 		t.Fatalf("a re-run reaches only the rest of zone 4: sent %d, total %d, err %v", sent, len(snd.Sent), err)
 	}
 	tpl := snd.Sent[0].Template
 	if tpl.Name != "cambio_rotacion" || len(tpl.Components) != 1 || tpl.Components[0].Parameters[2].Text != "lunes 2 de noviembre" {
 		t.Errorf("unexpected template: %+v", tpl)
+	}
+}
+
+func TestMonthlyCapStopsNotices(t *testing.T) {
+	ctx := context.Background()
+	st, snd := fake.NewStore(), &fake.Sender{}
+	st.Subscribe(ctx, store.WhatsApp, "a", "a", 4)
+	now := st.Now().AddDate(0, 0, 14)
+	st.Now = func() time.Time { return now }
+	st.SentAt["98/2026-09-20"] = now.AddDate(0, -1, 0) // last month's
+	st.SentAt["99/2026-10-14"] = now.Add(-25 * time.Hour)
+	log := slog.New(slog.NewTextHandler(io.Discard, nil))
+	sent, err := Send(ctx, st, snd, Notice{Zone: 4, Key: "k"}, 100, 1, 0, st.Now, log)
+	if sent != 0 || !errors.Is(err, ErrCapped) || len(snd.Sent) != 0 {
+		t.Fatalf("this month's message fills a monthly cap of 1: sent %d, err %v", sent, err)
 	}
 }
 

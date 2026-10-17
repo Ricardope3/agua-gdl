@@ -173,11 +173,14 @@ func (s *Store) DueSubscribers(_ context.Context, channel string, zones []int, d
 	return out, nil
 }
 
-func (s *Store) SendReminder(ctx context.Context, sub store.Subscriber, d time.Time, zones []int, send func(store.Subscriber) (string, error)) (bool, error) {
+func (s *Store) SendReminder(ctx context.Context, sub store.Subscriber, d time.Time, zones []int, budget *store.Budget, send func(store.Subscriber) (string, error)) (bool, error) {
 	current, ok := s.Subs[Key(sub.Channel, sub.UserID)]
 	k := key(sub.ID, d)
 	if !ok || current.ID != sub.ID || !slices.Contains(zones, current.Zone) || s.Reminders[k] {
 		return false, nil
+	}
+	if s.overBudget(budget) {
+		return false, store.ErrOverBudget
 	}
 	s.Reminders[k], s.SentAt[k] = true, s.Now()
 	wamid, err := send(current)
@@ -244,11 +247,14 @@ func (s *Store) NoticeRecipients(_ context.Context, channel string, zone int, k 
 	return out, nil
 }
 
-func (s *Store) SendNotice(_ context.Context, sub store.Subscriber, k string, send func(store.Subscriber) (string, error)) (bool, error) {
+func (s *Store) SendNotice(_ context.Context, sub store.Subscriber, k string, budget *store.Budget, send func(store.Subscriber) (string, error)) (bool, error) {
 	nk := fmt.Sprintf("%d/%s", sub.ID, k)
 	current, ok := s.Subs[Key(sub.Channel, sub.UserID)]
 	if !ok || current.Zone != sub.Zone || s.Notices[nk] {
 		return false, nil
+	}
+	if s.overBudget(budget) {
+		return false, store.ErrOverBudget
 	}
 	s.Notices[nk], s.SentAt[fmt.Sprintf("%d/notice/%s", sub.ID, k)] = true, s.Now()
 	_, err := send(current)
@@ -261,6 +267,15 @@ func (s *Store) SendNotice(_ context.Context, sub store.Subscriber, k string, se
 		delete(s.SentAt, fmt.Sprintf("%d/notice/%s", sub.ID, k))
 	}
 	return true, err
+}
+
+func (s *Store) overBudget(b *store.Budget) bool {
+	if b == nil {
+		return false
+	}
+	month, _ := s.SentSince(context.Background(), b.MonthStart)
+	day, _ := s.RecipientsSince(context.Background(), b.DayStart)
+	return month >= b.Monthly || day >= b.Daily
 }
 
 // channelOf finds the channel of the subscriber in a reminder key; a deleted subscriber's
