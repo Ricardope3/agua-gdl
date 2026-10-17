@@ -796,7 +796,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       pick(options[active]);
       return;
     }
-    closeList();
+    cancelSuggestions();
     const q = input.value.trim();
     if (!q) {
       show(msg("Escribe el nombre de tu colonia."));
@@ -815,6 +815,13 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   let active = -1;
   let typing = 0;
   let pending = null;
+  // cancelSuggestions closes the list and forgets the keystrokes' pending request.
+  function cancelSuggestions() {
+    clearTimeout(typing);
+    if (pending) pending.abort();
+    pending = null;
+    closeList();
+  }
   function closeList() {
     list.hidden = true;
     list.replaceChildren();
@@ -835,7 +842,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   }
   async function pick(o) {
     input.value = o.name;
-    closeList();
+    cancelSuggestions();
     locBtn.classList.remove("glow", "solid");
     scrollToTop(form.closest(".finder"));
     show(msg("Buscando…"));
