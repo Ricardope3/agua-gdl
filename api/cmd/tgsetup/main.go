@@ -26,6 +26,8 @@ const (
 Iniciativa ciudadana: no es del SIAPA ni del gobierno y no tiene partido.
 
 Toca «Iniciar» y mándame tu ubicación, tu colonia o tu zona.
+
+El agua de Guadalajara llega sucia y racionada; no lo arregla un acueducto privado, lo arregla sanear los ríos. Más en https://aguagdl.com
 Aviso de privacidad: https://aguagdl.com/privacidad`
 )
 

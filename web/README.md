@@ -1,6 +1,6 @@
 Sitio estático de aguagdl.com, sin paso de build. `index.html` es la página de inicio.
 
-Publicado en https://aguagdl.com con Cloudflare Pages (sin comando de build, carpeta de salida `web`); cada push a `main` lo vuelve a publicar. `www.aguagdl.com` redirige a `aguagdl.com` con una regla de Cloudflare.
+Publicado en https://aguagdl.com con Cloudflare Pages (sin comando de build, carpeta de salida `web`); cada push a `main` lo vuelve a publicar. Las visitas se cuentan con Cloudflare Web Analytics (sin cookies; se activa en la pestaña Metrics del proyecto de Pages y Cloudflare inserta el script; `_headers` lo permite en la CSP y el aviso de privacidad lo describe en el punto 7). `www.aguagdl.com` redirige a `aguagdl.com` con una regla de Cloudflare.
 
 `avisos.html` es la página para suscribirse por WhatsApp o Telegram; `privacidad.html` y `terminos.html` son el aviso de privacidad y los términos de uso, publicados el 14 de octubre de 2026 (la app de Meta enlaza a ellos, así que no cambies sus URL).
 

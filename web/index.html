@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="facebook-domain-verification" content="li0vsm7edv0afccxodm5t0jvyiw0za">
 <title>Agua GDL · La crisis del agua en Guadalajara</title>
-<meta name="description" content="Iniciativa ciudadana sobre la crisis del agua en Guadalajara: tu zona de la rotación del SIAPA y sus días, avisos gratis antes de cada corte, de dónde viene la contaminación y cómo exigir al Congreso.">
+<meta name="description" content="El agua de Guadalajara llega sucia y racionada; no lo arregla un acueducto privado, lo arregla sanear los ríos. Tu zona de la rotación del SIAPA y sus días, avisos gratis antes de cada corte y cómo exigir al Congreso.">
 <link rel="canonical" href="https://aguagdl.com/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aguagdl.com/">
 <meta property="og:title" content="Agua GDL · La crisis del agua en Guadalajara">
-<meta property="og:description" content="Tu zona de la rotación y sus días, avisos gratis antes de cada corte, la contaminación del agua y el contrato del acueducto.">
+<meta property="og:description" content="El agua de Guadalajara llega sucia y racionada; no lo arregla un acueducto privado, lo arregla sanear los ríos. Tu zona y sus días, avisos gratis antes de cada corte y cómo exigir al Congreso.">
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary">
@@ -60,7 +60,6 @@ h2 { font-size: 1.6rem; line-height: 1.2; margin: 0 0 18px; letter-spacing: -.01
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px }
 .card h3 { margin: 0 0 6px; font-size: 1.1rem }
 .card p { margin: 0 0 12px; color: var(--muted) }
-.status { font-size: .8rem; font-weight: 700; color: var(--soon) }
 .why p { max-width: 65ch; margin: 0 0 14px }
 .values { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 18px 0 0 }
 .values li { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 5px 14px; font-size: .92rem; font-weight: 600 }
@@ -115,7 +114,7 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 .site-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 8px; color: var(--muted); font-size: .9rem; font-weight: 500; text-decoration: none; white-space: nowrap }
 .site-nav a:hover { color: var(--fg); background: var(--subtle) }
 .site-nav a[aria-current="page"] { color: var(--link); background: var(--subtle) }
-@media (max-width: 560px) { .site-nav { width: calc(100% + 12px) } .site-nav { justify-content: space-between } .site-nav a { padding: 6px 5px; font-size: .78rem } .site-nav .i { display: none } }
+@media (max-width: 560px) { header.top { position: static; padding: 8px 16px } .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center; gap: 2px } .site-nav a { flex: 1 1 30%; justify-content: center; padding: 4px; font-size: .82rem; line-height: 1.35 } .site-nav .i { display: none } }
 .ih .i-badge { background: var(--brand); color: var(--on-primary) }
 .site-nav .i { color: var(--brand) }
 .site-nav a[aria-current="page"] .i { color: inherit }
@@ -225,7 +224,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     <div class="hero5">
       <div>
         <h1>¿Te toca corte mañana?</h1>
-        <p class="lede">El SIAPA <mark>raciona el agua</mark> en más de 600 colonias hasta marzo de 2027. Escribe tu colonia y te decimos tu zona y tus días.</p>
+        <p class="lede">El agua de Guadalajara <mark>llega sucia y racionada</mark>; no lo arregla un acueducto privado, lo arregla sanear los ríos. Escribe tu colonia y te decimos tu zona y tus días.</p>
         <form class="quick" action="/mizona" method="get" role="search">
           <label for="q">Tu colonia</label>
           <div class="row">
@@ -248,7 +247,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
             <img src="/zonas.svg?v=4" alt="Mapa de las 7 zonas de la rotación del SIAPA" width="800" height="454">
             <a class="button map-open" href="/mapa"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg>Ver mapa detallado</a>
           </div>
-          <figcaption class="note">Fuente: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa de la rotación del SIAPA</a>. Agua GDL no es del SIAPA.</figcaption>
+          <figcaption class="note">El SIAPA raciona el agua en más de 600 colonias hasta marzo de 2027. Fuente: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa de la rotación del SIAPA</a>. Agua GDL no es del SIAPA.</figcaption>
         </figure>
       </div>
       <div class="hero-side">
@@ -258,17 +257,11 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
           <span class="aviso-text">Un mensaje por <span class="nw"><svg class="tg" aria-hidden="true"><use href="/icons.svg?v=4#telegram"/></svg> Telegram</span> o una alerta en tu calendario la noche antes de cada corte en tu zona.</span>
           <span class="button">Recibir avisos</span>
         </a>
-        <a class="aviso" href="/escribe">
-          <span class="aviso-head"><span class="i-badge" style="background:#7c3aed"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#landmark"/></svg></span>Que el Congreso vote no a privatizar el agua</span>
-          <span class="aviso-time">$48,296 M</span>
-          <span class="aviso-text">pagaría el Estado a una empresa privada en 25 años. Escríbeles a las 38 diputaciones para que voten en contra.</span>
-          <span class="button">Escribir al Congreso</span>
-        </a>
       </div>
     </div>
     <section class="congreso" aria-labelledby="congreso">
-      <h2 id="congreso" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#landmark"/></svg></span>Pide a las diputaciones que voten contra la privatización del agua en Guadalajara</h2>
-      <p>El Gobierno de Jalisco pidió al Congreso aprobar un contrato de asociación público-privada (APP) para que una empresa privada construya y opere, por contrato con la Comisión Estatal del Agua, el acueducto sustituto Chapala–Guadalajara. Pide a las y los diputados que no lo aprueben sin estudios actualizados, matriz de riesgos y desglose de pagos.</p>
+      <h2 id="congreso" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#landmark"/></svg></span>Que el Congreso vote no a privatizar el agua</h2>
+      <p>El Gobierno de Jalisco quiere que una empresa privada construya y opere el nuevo acueducto de Chapala a Guadalajara, y pagarle durante 25 años. El Congreso decide. Pídele a tu diputación que no lo apruebe sin estudios actualizados, sin saber cuánto se pagará cada año ni quién carga con los riesgos.</p>
       <ul class="facts">
         <li><strong>$11,922 millones</strong><span>cuesta la obra</span></li>
         <li><strong>hasta $48,296 millones</strong><span>pagaría el Estado en 25 años</span></li>
@@ -280,28 +273,23 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         <a class="button alt" href="https://firmale.iepcjalisco.mx/mecanismo/comision-estatal-del-vej21bkjvl" rel="noopener" target="_blank"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#pen-line"/></svg>Firmar la solicitud en el IEPC</a>
       </div>
     </section>
-    <section aria-labelledby="que">
-      <h2 id="que">Lo que estamos haciendo</h2>
+    <section aria-labelledby="mas">
+      <h2 id="mas">También puedes</h2>
       <ul class="cards">
         <li class="card">
-          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#bell"/></svg></span>Aviso la noche anterior</h3>
-          <p>A las 8 de la noche te llega un mensaje por <span class="nw"><svg class="tg" aria-hidden="true"><use href="/icons.svg?v=4#telegram"/></svg> Telegram</span> o una alerta de tu calendario: mañana hay corte en tu zona. Encuentra tu zona con tu ubicación, tu colonia o tu número de zona.</p>
-          <span class="status">Disponible</span>
+          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#newspaper"/></svg></span>Leer la crisis al día</h3>
+          <p>Los cortes, la marcha, las personas detenidas y el acueducto privado, con sus fuentes.</p>
+          <a href="/noticias">Noticias</a>
         </li>
         <li class="card">
-          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#droplet"/></svg></span>¿Llegó el agua?</h3>
-          <p>Después de cada corte puedes contar cómo regresó el agua: normal, con baja presión, turbia o si no regresó.</p>
-          <span class="status">Disponible</span>
+          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#droplet"/></svg></span>Ver quién contamina el agua</h3>
+          <p>Las 39 empresas en los registros oficiales de descargas al Río Santiago y el daño a la salud, con sus fuentes.</p>
+          <a href="/contamina">¿Quién contamina?</a>
         </li>
         <li class="card">
-          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#landmark"/></svg></span>Votómetro del acueducto</h3>
-          <p>Qué postura ha tomado cada una de las 38 diputaciones sobre el contrato del acueducto Chapala–Guadalajara y cómo vota cuando llegue al pleno, con la fuente de cada dato.</p>
-          <span class="status">Próximamente</span>
-        </li>
-        <li class="card">
-          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#check"/></svg></span>Promesómetro del agua</h3>
-          <p>Las promesas del Gobierno de Jalisco y del SIAPA sobre el agua, con su fecha límite, cuánto llevan cumplido y la fuente de cada una.</p>
-          <span class="status">Próximamente</span>
+          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#check"/></svg></span>Contar cómo regresó el agua</h3>
+          <p>Después de cada corte, dinos por Telegram si volvió normal, con baja presión, turbia o si no volvió.</p>
+          <a href="/avisos">Recibir avisos y reportar</a>
         </li>
       </ul>
     </section>

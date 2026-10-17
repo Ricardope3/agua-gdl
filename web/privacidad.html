@@ -78,7 +78,7 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 .site-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 8px; color: var(--muted); font-size: .9rem; font-weight: 500; text-decoration: none; white-space: nowrap }
 .site-nav a:hover { color: var(--fg); background: var(--subtle) }
 .site-nav a[aria-current="page"] { color: var(--link); background: var(--subtle) }
-@media (max-width: 560px) { .site-nav { width: calc(100% + 12px) } .site-nav { justify-content: space-between } .site-nav a { padding: 6px 5px; font-size: .78rem } .site-nav .i { display: none } }
+@media (max-width: 560px) { header.top { position: static; padding: 8px 16px } .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center; gap: 2px } .site-nav a { flex: 1 1 30%; justify-content: center; padding: 4px; font-size: .82rem; line-height: 1.35 } .site-nav .i { display: none } }
 .ih .i-badge { background: var(--brand); color: var(--on-primary) }
 .site-nav .i { color: var(--brand) }
 .site-nav a[aria-current="page"] .i { color: inherit }
@@ -124,7 +124,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 
   <main>
     <h1>Aviso de privacidad</h1>
-    <p class="updated">Última actualización: 16 de octubre de 2026. Conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (DOF, 20 de marzo de 2025).</p>
+    <p class="updated">Última actualización: 17 de octubre de 2026. Conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (DOF, 20 de marzo de 2025).</p>
 
     <div class="summary" id="simplificado">
       <h2 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#shield-check"/></svg></span>Aviso de privacidad simplificado</h2>
@@ -177,7 +177,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         <li><strong>Telegram</strong>: entrega los mensajes; consulta la <a href="https://telegram.org/privacy" rel="noopener">política de privacidad de Telegram</a>.</li>
         <li><strong>Fly.io</strong>: servidor del servicio, en Estados Unidos.</li>
         <li><strong>Neon</strong>: base de datos, en Estados Unidos.</li>
-        <li><strong>Cloudflare</strong>: aloja este sitio web.</li>
+        <li><strong>Cloudflare</strong>: aloja este sitio web y cuenta sus visitas con Web Analytics, sin cookies ni identificadores (punto 7).</li>
         <li><strong>Zoho Mail</strong>: correo de <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>, si nos escribes.</li>
       </ul>
     </section>
@@ -215,7 +215,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 
     <section aria-labelledby="sitio">
       <h3 id="sitio">7. Este sitio web</h3>
-      <p>aguagdl.com no usa cookies, publicidad ni herramientas de rastreo. Cloudflare, que lo aloja, procesa datos técnicos como tu dirección IP para entregar las páginas y protegerlas de ataques. Si en «¿Qué zona me toca?» tocas «Ver en el mapa», las calles se cargan desde OpenStreetMap, que recibe tu dirección IP según su <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener">política de privacidad</a>; los puntos que toques en ese mapa se usan solo para buscar la zona y no los guardamos. En «Noticias», los videos se cargan desde YouTube, X o TikTok solo si tocas uno; entonces esa plataforma recibe tu dirección IP y puede usar cookies según su propia política de privacidad (<a href="https://policies.google.com/privacy" rel="noopener">Google</a>, <a href="https://x.com/es/privacy" rel="noopener">X</a>, <a href="https://www.tiktok.com/legal/page/row/privacy-policy/es" rel="noopener">TikTok</a>).</p>
+      <p>aguagdl.com no usa cookies ni publicidad. Para saber cuántas personas ven cada página usamos Cloudflare Web Analytics, que no usa cookies, no guarda nada en tu navegador y no te identifica: registra la página que ves, desde qué sitio llegaste y cuánto tarda en cargar; Cloudflare deduce el país y el navegador de la petición y descarta tu dirección IP en su centro de datos más cercano (<a href="https://developers.cloudflare.com/speed/observatory/rum-beacon/" rel="noopener">cómo funciona</a>). Cloudflare, que además aloja el sitio, procesa datos técnicos como tu dirección IP para entregar las páginas y protegerlas de ataques. Si en «¿Qué zona me toca?» tocas «Ver en el mapa», las calles se cargan desde OpenStreetMap, que recibe tu dirección IP según su <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener">política de privacidad</a>; los puntos que toques en ese mapa se usan solo para buscar la zona y no los guardamos. En «Noticias», los videos se cargan desde YouTube, X o TikTok solo si tocas uno; entonces esa plataforma recibe tu dirección IP y puede usar cookies según su propia política de privacidad (<a href="https://policies.google.com/privacy" rel="noopener">Google</a>, <a href="https://x.com/es/privacy" rel="noopener">X</a>, <a href="https://www.tiktok.com/legal/page/row/privacy-policy/es" rel="noopener">TikTok</a>).</p>
       <p>Si usas <a href="/mizona">¿Qué zona me toca?</a>, tu ubicación o el nombre de tu colonia se envían a nuestro servidor solo para encontrar tu zona y no se guardan.</p>
     </section>
 

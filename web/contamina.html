@@ -9,7 +9,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aguagdl.com/contamina">
 <meta property="og:title" content="¿Quién contamina el agua de Guadalajara?">
-<meta property="og:description" content="Las empresas señaladas, el daño a la salud y lo que exigimos, con fuentes.">
+<meta property="og:description" content="El agua de Guadalajara llega sucia y racionada; no lo arregla un acueducto privado, lo arregla sanear los ríos. Las 39 empresas señaladas y el daño a la salud, con fuentes.">
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary">
@@ -92,8 +92,15 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 .site-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 8px; color: var(--muted); font-size: .9rem; font-weight: 500; text-decoration: none; white-space: nowrap }
 .site-nav a:hover { color: var(--fg); background: var(--subtle) }
 .site-nav a[aria-current="page"] { color: var(--link); background: var(--subtle) }
-@media (max-width: 560px) { .site-nav { width: calc(100% + 12px) } .site-nav { justify-content: space-between } .site-nav a { padding: 6px 5px; font-size: .78rem } .site-nav .i { display: none } }
+@media (max-width: 560px) { header.top { position: static; padding: 8px 16px } .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center; gap: 2px } .site-nav a { flex: 1 1 30%; justify-content: center; padding: 4px; font-size: .82rem; line-height: 1.35 } .site-nav .i { display: none } }
 main > section + section { margin-top: 8px }
+.lede + .buttons { margin: -12px 0 24px }
+.buttons.after { margin: 4px 0 18px }
+.more { margin: 0 0 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 10px 16px }
+.more summary { cursor: pointer; font-weight: 600; color: var(--link) }
+.more[open] summary { margin-bottom: 12px }
+.more .table-wrap { margin-bottom: 8px }
+.note { color: var(--muted); font-size: .9rem }
 .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; margin: 0 0 12px; max-width: 760px }
 table { width: 100%; border-collapse: collapse; font-size: .92rem }
 th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--line) }
@@ -145,7 +152,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 
   <main>
     <h1>¿Quién contamina el agua?</h1>
-    <p class="lede">El agua que llega a Guadalajara viene sobre todo del Lago de Chapala y de la parte alta del Río Santiago. Río abajo, en El Salto, Juanacatlán y Poncitlán, el Santiago es uno de los ríos más contaminados de México. Esto es lo que está documentado, con sus fuentes.</p>
+    <p class="lede">El agua de Guadalajara viene sobre todo del Lago de Chapala y de la parte alta del Río Santiago, y desde diciembre de 2025 la que entraba por el canal de Las Pintas llegó tan sucia que el SIAPA cerró ese sistema y empezó la rotación. Río abajo, en El Salto, Juanacatlán y Poncitlán, el Santiago es uno de los ríos más contaminados de México: los registros oficiales nombran a 39 empresas y puntos de descarga, y los estudios encuentran metales en la sangre y daño en el ADN de quienes viven ahí. Exigimos que se detengan y sancionen las descargas y que el dinero público vaya primero a sanear el agua, no a pagar 25 años un acueducto privado. Todo, con sus fuentes.</p>
+    <div class="buttons lede-actions"><a class="button" href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#mail"/></svg>Escribir al Congreso</a></div>
 
     <section aria-labelledby="empresas">
       <h2 id="empresas" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#users"/></svg></span>Las empresas en los registros oficiales</h2>
@@ -154,7 +162,9 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         <li><strong>REUDAC (2020):</strong> el Gobierno de Jalisco muestreó descargas en 2019 y encontró aguas residuales con al menos un contaminante por encima de la norma que, según el propio gobierno, «pudieran estar ligadas» a 29 empresas (<a href="https://drive.google.com/file/d/1UzfDnXJ0MwzNB_WDz9OsoASqQiWyxepy/view" rel="noopener" target="_blank">documento oficial</a>, <a href="https://www.informador.mx/jalisco/Gobierno-de-Jalisco-senala-a-29-empresas-por-contaminacion-en-el-Rio-Santiago-20200205-0135.html" rel="noopener" target="_blank">El Informador</a>).</li>
         <li><strong>RETC (2004–2018):</strong> los metales que las propias empresas reportaron haber arrojado al agua en El Salto, Zapotlanejo, Poncitlán y Ocotlán al Registro de Emisiones y Transferencia de Contaminantes de la Semarnat (las 21 con más kilos).</li>
       </ul>
-      <div class="table-wrap"><table>
+      <details class="more">
+        <summary>Ver las 39 empresas</summary>
+        <div class="table-wrap"><table>
         <thead><tr><th scope="col">Empresa</th><th scope="col">Señalada en el REUDAC</th><th scope="col">Metales al agua, RETC (kg)</th></tr></thead>
         <tbody>
           <tr><td>Zoltek de México</td><td>Sí</td><td>16,536.85</td></tr>
@@ -198,8 +208,9 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
           <tr><td>Servicios Estrella Azul de Occidente</td><td>Sí</td><td>—</td></tr>
         </tbody>
       </table></div>
+        <p class="note">Tabla compilada por RT en Español con datos del RETC (<a href="https://actualidad-rt.com/actualidad/340761-envenenamiento-ninos-mexico-rio-contaminacion-trasnacionales" rel="noopener" target="_blank">RT, enero de 2020</a>). Son cifras que reportan las propias empresas, así que pueden quedarse cortas, y el artículo atribuye algunas a periodos más cortos que 2004–2018.</p>
+      </details>
       <p class="note">«Pudieran estar ligadas» es la redacción oficial: el gobierno entregó la lista al gobierno federal para que la Conagua, que es la que puede sancionar, determinara responsabilidades. No es una sentencia. Además, la Conagua tenía en 2022 a 479 titulares con permiso para descargar al Santiago, 153 de ellos industriales, y la Profepa contaba sólo tres inspectores de industria en la delegación (<a href="https://www.cndh.org.mx/sites/default/files/documentos/2022-07/REC_2022_134.pdf" rel="noopener" target="_blank">CNDH, Recomendación 134/2022</a>).</p>
-      <p class="note">Tabla compilada por RT en Español con datos del RETC (<a href="https://actualidad-rt.com/actualidad/340761-envenenamiento-ninos-mexico-rio-contaminacion-trasnacionales" rel="noopener" target="_blank">RT, enero de 2020</a>). Son cifras que reportan las propias empresas, así que pueden quedarse cortas, y el artículo atribuye algunas a periodos más cortos que 2004–2018.</p>
     </section>
 
     <section aria-labelledby="origen">
@@ -237,6 +248,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         <li>Publicar los resultados del REUDAC por empresa y punto de descarga, actualizados.</li>
         <li>Que el dinero público vaya primero a sanear el agua y no a pagar durante 25 años un acueducto privado. Lee <a href="/escribe#porque">por qué nos oponemos a la APP</a>.</li>
       </ul>
+      <div class="buttons after"><a class="button" href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#mail"/></svg>Escribir al Congreso</a></div>
       <p class="note">La idea de esta página viene de la publicación de la Red Solidaria por Palestina y los Pueblos que Resisten GDL sobre los responsables de la contaminación del agua. Gracias.</p>
     </section>
 

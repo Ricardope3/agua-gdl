@@ -9,7 +9,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aguagdl.com/noticias">
 <meta property="og:title" content="La crisis del agua en Guadalajara, al día">
-<meta property="og:description" content="Cortes, represión, detenidos y el acueducto privado, con fuentes.">
+<meta property="og:description" content="El agua de Guadalajara llega sucia y racionada; no lo arregla un acueducto privado, lo arregla sanear los ríos. La crisis al día, con fuentes: cortes, represión, detenidos y el acueducto privado.">
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary">
@@ -93,7 +93,7 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 .site-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 8px; color: var(--muted); font-size: .9rem; font-weight: 500; text-decoration: none; white-space: nowrap }
 .site-nav a:hover { color: var(--fg); background: var(--subtle) }
 .site-nav a[aria-current="page"] { color: var(--link); background: var(--subtle) }
-@media (max-width: 560px) { .site-nav { width: calc(100% + 12px) } .site-nav { justify-content: space-between } .site-nav a { padding: 6px 5px; font-size: .78rem } .site-nav .i { display: none } }
+@media (max-width: 560px) { header.top { position: static; padding: 8px 16px } .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center; gap: 2px } .site-nav a { flex: 1 1 30%; justify-content: center; padding: 4px; font-size: .82rem; line-height: 1.35 } .site-nav .i { display: none } }
 main > section + section { margin-top: 8px }
 .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; margin: 0 0 12px; max-width: 760px }
 table { width: 100%; border-collapse: collapse; font-size: .92rem }
@@ -260,6 +260,28 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .act .buttons a { background: #fff; color: var(--night); font-weight: 600 }
 .act .buttons a.ghost { background: transparent; color: #fff; border: 1px solid rgb(255 255 255 / .4) }
 .note { color: var(--muted); font-size: .85rem }
+.latest-wrap { margin: 0 0 20px }
+.latest-h { display: block; font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px }
+.latest { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px }
+.latest li { position: relative; padding-left: 14px; font-size: .95rem; line-height: 1.4 }
+.latest li::before { content: ""; position: absolute; left: 0; top: .5em; width: 6px; height: 6px; border-radius: 50%; background: var(--rep) }
+.latest a { color: var(--fg); font-weight: 600; text-decoration: none }
+.latest a:hover { text-decoration: underline }
+.latest small { color: var(--muted) }
+main > .act:first-child { margin-top: 8px }
+.act .act-doc { margin: 16px 0 0; font-size: .92rem; color: #cbd5e1; max-width: 70ch }
+.act .act-doc a { color: #fff }
+.actbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; display: flex; align-items: center; justify-content: center; gap: 14px; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: color-mix(in srgb, var(--night) 94%, transparent); color: #fff; backdrop-filter: blur(8px); box-shadow: 0 -6px 24px rgb(0 0 0 / .25) }
+.actbar span { font-weight: 700; font-size: .95rem }
+.actbar .button { background: #fff; color: var(--night); font-weight: 600; padding: 8px 14px }
+body.has-actbar { padding-bottom: 76px }
+.more.days { padding: 10px 16px 0 }
+.more.days[open] { padding-bottom: 4px }
+.more.days[open] summary { margin-bottom: 18px }
+.more.days .day:last-child { margin-bottom: 14px }
+.day:has(+ details)::before { bottom: 0 }
+.more[open] > summary { margin-bottom: 12px }
+@media (max-width: 560px) { .stats { grid-template-columns: repeat(2, 1fr) } .stat b { font-size: 1.6rem } }
 @media (max-width: 560px) {
   .vgrid, .quotes { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 84%; overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 -16px; padding: 0 16px 10px; scroll-padding: 0 16px; scrollbar-width: thin }
   .vgrid > *, .quotes > * { scroll-snap-align: start }
@@ -284,7 +306,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   <section class="hero" aria-labelledby="titulo">
     <span class="eyebrow"><span class="pulse" aria-hidden="true"></span><span id="dia">Crisis del agua en Guadalajara</span></span>
     <h1 id="titulo">La crisis del agua, al día</h1>
-    <p class="lede">Cortes de agua en 627 colonias. Una marcha por agua limpia dispersada con gas lacrimógeno y agua a presión, periodistas heridos, detenidos que <a href="#testimonios">denuncian tortura</a> y seis manifestantes vinculados a proceso. Y un acueducto de 11,922 millones de pesos, que se pagaría a una empresa privada durante 20 o 25 años, esperando votos en el Congreso. Todo, con sus fuentes.</p>
+    <p class="lede">Cortes de agua en 627 colonias. Una marcha por agua limpia dispersada con gas lacrimógeno y agua a presión, periodistas heridos, detenidos que <a href="#testimonios">denuncian tortura</a> y seis manifestantes vinculados a proceso. Y un acueducto de 11,922 millones de pesos, que se pagaría a una empresa privada durante 20 o 25 años, esperando votos en el Congreso que <a href="#sin-votos">por ahora no tiene</a>. Todo, con sus fuentes.</p>
+    <div class="latest-wrap" id="latest-wrap" hidden><span class="latest-h">Lo último</span><ul class="latest" id="latest"></ul></div>
     <div class="stats">
       <div class="stat"><b>627</b><span>colonias con días sin agua hasta marzo de 2027</span><a href="https://www.informador.mx/jalisco/tandeos-siapa-guadalajara-habilitara-pipas-y-cisternas-para-colonias-afectadas-por-disminucion-de-agua-20261015-0182.html" rel="noopener" target="_blank">El Informador</a></div>
       <div class="stat"><b>2,500</b><span>litros por segundo menos: una cuarta parte del agua de la ciudad</span><a href="https://www.publimetro.com.mx/nacional/2026/10/08/sheinbaum-ofrece-apoyo-de-conagua-ante-calidad-del-agua-en-guadalajara/" rel="noopener" target="_blank">Publimetro</a></div>
@@ -303,6 +326,16 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   </section>
 
   <main>
+    <section class="act" aria-labelledby="actua">
+      <h2 id="actua">No es normal. Exige.</h2>
+      <p>El Congreso decide el contrato del acueducto. Escríbele a tu diputación, recibe los avisos de tu zona y firma la acción urgente por las personas detenidas.</p>
+      <div class="buttons">
+        <a class="button" href="/escribe">Escribe al Congreso</a>
+        <a class="button ghost" href="/avisos">Recibe avisos</a>
+        <a class="button ghost" href="https://redtdt.org.mx/archivos/23989" rel="noopener" target="_blank">Firma la acción urgente</a>
+      </div>
+      <p class="act-doc">¿Viste o viviste abusos el 11 de octubre? CEPAD, CLADEM Jalisco y el CUDJ del ITESO documentan los casos: manda testimonios, fotos o videos verificables a <a href="mailto:cudj@iteso.mx">cudj@iteso.mx</a>.</p>
+    </section>
     <section aria-labelledby="testimonios">
       <div class="sec-head">
         <h2 id="testimonios" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#user"/></svg></span>Lo que vivieron los detenidos</h2>
@@ -435,10 +468,17 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         <button type="button" data-filter="protesta" aria-pressed="false">Protesta</button>
       </div>
       <div class="day">
+        <h3>17 de octubre</h3>
+        <div class="feed">
+          <article data-tags="protesta"><span class="tag">Protesta</span><h4>Voluntarios se preparan para la marcha: brigada anti-gas en el Parque Morelos</h4><p>Un volante sin firma de organización convocó este sábado a las 10 a voluntarios para la marcha del domingo: capacitación para contener el gas lacrimógeno, un curso breve de primeros auxilios, conteo de voluntarios y donaciones. Se presenta como movimiento pacífico y apartidista.</p><span class="via">Volante difundido en redes, sin firma</span></article>
+        </div>
+      </div>
+      <div class="day">
         <h3>16 de octubre</h3>
         <div class="feed">
           <article data-tags="protesta"><span class="tag">Protesta</span><h4>El gobierno prepara un operativo para la marcha del domingo</h4><p>«Encabezamos una reunión de coordinación para preparar el operativo de la movilización del próximo domingo», publicó el secretario general de Gobierno, Salvador Zamora.</p><span class="via"><a href="https://x.com/SalvadorZamoraZ/status/2111218582076248501" rel="noopener" target="_blank">X</a></span></article>
           <article data-tags="justicia"><span class="tag">Detenidos</span><h4>Vinculan a proceso a otros cuatro manifestantes: ya son seis</h4><p>En los juzgados de Puente Grande, un juez los vinculó a proceso por lesiones y delitos contra la autoridad; seguirán el proceso en libertad. El martes ya habían vinculado a dos.</p><span class="via"><a href="https://www.informador.mx/jalisco/vinculan-a-proceso-a-4-detenidos-tras-protesta-por-el-agua-20261016-0148.html" rel="noopener" target="_blank">El Informador</a> · <a href="https://udgtv.com/noticias/vinculan-a-proceso-a-cuatro-detenidos-por-protesta-del-agua/334871" rel="noopener" target="_blank">UDG TV</a></span></article>
+          <article data-tags="justicia"><span class="tag">Detenidos</span><h4>CEPAD: «el Poder Judicial respaldó la criminalización de la protesta social»</h4><p>Al terminar la audiencia de Samuel, Alexis, Juan Darío y Teodoro, el Centro de Justicia para la Paz y el Desarrollo lamentó que el juez los vinculara a proceso «por lesiones y delitos cometidos contra representantes de la autoridad». Con CLADEM Jalisco y el CUDJ del ITESO documenta violaciones a derechos humanos durante y después de la marcha del 11 de octubre: pide testimonios, fotos y videos verificables a <a href="mailto:cudj@iteso.mx">cudj@iteso.mx</a>.</p><span class="via"><a href="https://x.com/CEPAD_AC/status/2111227241757839376" rel="noopener" target="_blank">CEPAD en X</a></span></article>
           <article data-tags="represion justicia"><span class="tag">Represión</span><h4>La CNDH escucha a los detenidos: golpes e insultos</h4><p>Manifestantes detenidos narraron a la Comisión Nacional de los Derechos Humanos agresiones e insultos de policías; uno contó que lo golpearon en un pasillo de Casa Jalisco.</p><span class="via"><a href="https://www.mural.com.mx/narran-manifestantes-tortura-policial-en-marcha-por-agua/ar3296227" rel="noopener" target="_blank">Mural</a></span></article>
           <article data-tags="represion justicia"><span class="tag">Represión</span><h4>La Fiscalía abre 14 carpetas por posibles abusos de policías</h4><p>Son por posibles abusos al detener a manifestantes afuera de Casa Jalisco, donde 39 personas fueron puestas a disposición del Ministerio Público.</p><span class="via"><a href="https://www.mural.com.mx/abren-14-carpetas-por-posibles-abusos-policiales-en-marcha/ar3296427" rel="noopener" target="_blank">Mural</a></span></article>
           <article data-tags="represion"><span class="tag">Represión</span><h4>Golpeadores y corruptos: los dos policías investigados tienen doble plaza ilegal</h4><p>Los dos primeros policías estatales enviados a Asuntos Internos, captados en video agrediendo a manifestantes, también están dados de alta en la Policía de Guadalajara, lo que la ley prohíbe. <a href="#dobleplaza">Detalles</a>.</p><span class="via"><a href="https://www.nmas.com.mx/seguridad/llevan-a-policias-estatales-a-asuntos-internos-por-abuso-de-autoridad-en-manifestacionagua-suicia-guadalajara/" rel="noopener" target="_blank">N+</a> · <a href="https://www.mural.com.mx/dobletean-puesto-2-policias-estatales/ar3295911" rel="noopener" target="_blank">Mural</a> ·<a href="https://realidadgdl.com/dobletean-2-policias-que-reprimieron-manifestantes-en-gdl/9209/" rel="noopener" target="_blank">Realidad GDL</a></span></article>
@@ -449,6 +489,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
           <article data-tags="acueducto"><span class="tag">Acueducto</span><h4>Lemus busca dinero federal para el acueducto y niega privatizar</h4><p>El gobierno estatal dice que «analiza alternativas que permitan sumar esfuerzos y recursos entre Jalisco y la Federación».</p><span class="via"><a href="https://www.informador.mx/jalisco/pablo-lemus-evalua-nuevos-esquemas-de-financiamiento-en-conjunto-con-la-federacion-para-la-construccion-del-acueducto-chapala-guadalajara-descartan-privatizacion-del-agua-20261016-0073.html" rel="noopener" target="_blank">El Informador</a></span></article>
         </div>
       </div>
+      <details class="more days" id="dias-anteriores">
+        <summary>Ver los días anteriores (del 6 al 15 de octubre)</summary>
       <div class="day">
         <h3>15 de octubre</h3>
         <div class="feed">
@@ -456,7 +498,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
           <article data-tags="represion"><span class="tag">Represión</span><h4>Piden la renuncia del secretario de Seguridad</h4><p>Diputados de oposición y colectivos exigen la salida de Juan Pablo Hernández González y procesos de separación del cargo para los funcionarios responsables.</p><span class="via"><a href="https://www.lajornadadeoriente.com.mx/noticias/nacional/diputados-y-colectivos-exigen-renuncia-del-secretario-de-seguridad-de-jalisco-academicos-condenan-violencia/" rel="noopener" target="_blank">La Jornada de Oriente</a></span></article>
           <article data-tags="protesta acueducto"><span class="tag">Protesta</span><h4>22 colectivos piden al Congreso frenar el acueducto privado</h4><p>IMDEC, Un Salto de Vida, Medusa Río Santiago y Pueblos Unidos de la Ribera de Chapala, entre otros, lo llaman «privatización paulatina», exigen un Parlamento Abierto y advierten pagos de hasta 48,296 millones de pesos.</p><span class="via"><a href="https://ahoramx.com/2026/10/colectivos-de-jalisco-exigen-frenar-ley-del-acueducto-chapala-guadalajara/" rel="noopener" target="_blank">Ahora Mx</a> · <a href="https://elcongresista.mx/politica/jalisco/colectivos-piden-rechazar-acueducto" rel="noopener" target="_blank">El Congresista</a> · <a href="https://www.infobae.com/mexico/2026/10/15/exigen-al-congreso-estatal-rechazar-modelo-privatizador-para-obras-hidricas-en-jalisco/" rel="noopener" target="_blank">Infobae</a></span></article>
           <article data-tags="acueducto"><span class="tag">Acueducto</span><h4>MC deja sin quórum al Congreso a propósito</h4><p>Sólo llegaron 17 de 38 diputados; faltó toda la bancada de MC. Se cayeron el trámite del acueducto y las comparecencias de los titulares del SIAPA, la CEA y Seguridad.</p><span class="via"><a href="https://nnc.mx/articulo/congreso-de-jalisco-suspende-sesion-por-falta-de-quorum" rel="noopener" target="_blank">NNC</a> · <a href="https://jalisco.quadratin.com.mx/principal/suspenden-sesion-en-congreso-local-y-queda-en-pausa-aprobacion-de-acueducto/" rel="noopener" target="_blank">Quadratín</a></span></article>
-          <article data-tags="acueducto"><span class="tag">Acueducto</span><h4>No hay votos para el acueducto</h4><p>Morena y sus aliados votarán en contra; el PAN condiciona su voto a un plan hídrico integral y el PVEM lo apoya. El Colegio de Ingenieros Civiles advierte que sin sustituir la línea el problema seguirá.</p><span class="via"><a href="https://www.meganoticias.mx/guadalajara/noticia/fallan-acuerdos-para-sacar-adelante-nuevo-acueducto-a-chapala/779648" rel="noopener" target="_blank">Meganoticias</a> · <a href="https://www.infobae.com/mexico/2026/10/16/morena-anuncia-voto-contra-propuesta-hidrica-en-jalisco-al-considerar-que-no-resuelve-el-problema-del-agua/" rel="noopener" target="_blank">Infobae</a></span></article>
+          <article id="sin-votos" data-tags="acueducto"><span class="tag">Acueducto</span><h4>No hay votos para el acueducto</h4><p>Morena y sus aliados votarán en contra; el PAN condiciona su voto a un plan hídrico integral y el PVEM lo apoya. El Colegio de Ingenieros Civiles advierte que sin sustituir la línea el problema seguirá.</p><span class="via"><a href="https://www.meganoticias.mx/guadalajara/noticia/fallan-acuerdos-para-sacar-adelante-nuevo-acueducto-a-chapala/779648" rel="noopener" target="_blank">Meganoticias</a> · <a href="https://www.infobae.com/mexico/2026/10/16/morena-anuncia-voto-contra-propuesta-hidrica-en-jalisco-al-considerar-que-no-resuelve-el-problema-del-agua/" rel="noopener" target="_blank">Infobae</a></span></article>
           <article data-tags="acueducto"><span class="tag">Acueducto</span><h4>Sheinbaum revisa dos proyectos de la Conagua para Jalisco</h4><p>Pidió una revisión técnica más amplia antes de hablar con Lemus. No se dieron costos ni la aportación federal.</p><span class="via"><a href="https://www.excelsior.com.mx/nacional/sheinbaum-analiza-dos-proyectos-hidricos-para-solucionar-problema-agua-jalisco" rel="noopener" target="_blank">Excélsior</a></span></article>
           <article data-tags="agua"><span class="tag">Cortes</span><h4>88 % de las muestras, sin cloro</h4><p>El monitoreo ciudadano del IMDEC suma 256 análisis en 110 colonias: 88 % sin cloro residual y coliformes fecales en seis colonias. No es oficial ni estadísticamente representativo, aclara el IMDEC.</p><span class="via"><a href="https://www.telediario.mx/comunidad/reportan-agua-con-metales-bacterias-fecales-y-sin-cloro-guadalajara" rel="noopener" target="_blank">Telediario</a> · <a href="https://www.meganoticias.mx/guadalajara/noticia/monitoreo-detecta-plomo-y-mercurio-en-muestras-de-agua-de-la-ciudad/776300" rel="noopener" target="_blank">Meganoticias</a></span></article>
           <article data-tags="agua"><span class="tag">Cortes</span><h4>Sin agua desde antes del calendario</h4><p>Vecinos de Bugambilias Country y Las Águilas (Zapopan), y de Oblatos, Blanco y Cuéllar y Valle del Álamo (Guadalajara) estaban sin agua desde el sábado, antes de que empezaran los cortes oficiales.</p><span class="via"><a href="https://www.cronica.com.mx/jalisco/guadalajara/2026/10/15/reportan-vecinos-falta-de-agua-en-colonias-del-amg-antes-del-inicio-de-los-tandeos/" rel="noopener" target="_blank">Crónica</a></span></article>
@@ -531,6 +573,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
           <article data-tags="agua"><span class="tag">Cortes</span><h4>Lemus anuncia seis meses de cortes de agua</h4><p>Por el cierre del sistema Las Pintas, 627 colonias que surte la potabilizadora de Miravalle tendrán días sin agua hasta marzo de 2027.</p><span class="via"><a href="https://www.informador.mx/jalisco/siapa-en-guadalajara-jalisco-lemus-anuncia-rotacion-del-servicio-por-seis-meses-20261006-0158.html" rel="noopener" target="_blank">El Informador</a></span></article>
         </div>
       </div>
+      </details>
     </section>
 
     <section aria-labelledby="voces">
@@ -540,58 +583,60 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       </div>
       <h3 class="qgroup">Organizaciones, academia y sociedad</h3>
       <div class="quotes">
+        <figure class="quote org"><blockquote>Hoy el Poder Judicial respaldó la criminalización de la protesta social.</blockquote><figcaption><b>CEPAD</b>, Centro de Justicia para la Paz y el Desarrollo, al terminar la audiencia de vinculación · 16 oct · <a href="https://x.com/CEPAD_AC/status/2111227241757839376" rel="noopener" target="_blank">X</a></figcaption></figure>
         <figure class="quote org"><blockquote>La represión nunca debe ser una opción ante las personas que pacíficamente se reúnen a exigir sus derechos.</blockquote><figcaption><b>Edith Olivares Ferreto</b>, Amnistía Internacional México · 12 oct · <a href="https://www.cronica.com.mx/estados/2026/10/12/amnistia-internacional-condena-represion-en-protesta-por-agua-en-guadalajara-exige-localizar-a-detenidos/" rel="noopener" target="_blank">Crónica</a></figcaption></figure>
         <figure class="quote org"><blockquote>El gobierno debe investigar de forma pronta e independiente todas las denuncias de uso excesivo de la fuerza.</blockquote><figcaption><b>Gina Romero</b>, relatora especial de la ONU sobre libertad de reunión pacífica · 13 oct · <a href="https://www.informador.mx/jalisco/relatora-de-la-onu-se-pronuncia-tras-polemica-por-protesta-del-agua-en-guadalajara-20261013-0059.html" rel="noopener" target="_blank">El Informador</a></figcaption></figure>
-        <figure class="quote org"><blockquote>Nos dijeron que a nosotros nos convenía que dijéramos que no queríamos más problemas.</blockquote><figcaption><b>Juan Darío Muñoz Nava</b>, estudiante detenido, sobre lo que les decían bajo custodia · 14 oct · <a href="https://www.proceso.com.mx/nacional/2026/10/14/detenidos-por-protesta-del-agua-en-jalisco-denuncian-tortura-y-fabricacion-de-pruebas-381860.html" rel="noopener" target="_blank">Proceso</a></figcaption></figure>
-        <figure class="quote org"><blockquote>Nadie debe ser juzgado por ejercer su derecho a la protesta.</blockquote><figcaption><b>CEPAD</b>, que acompaña a los detenidos · 16 oct · <a href="https://www.informador.mx/jalisco/vinculan-a-proceso-a-4-detenidos-tras-protesta-por-el-agua-20261016-0148.html" rel="noopener" target="_blank">El Informador</a></figcaption></figure>
-        <figure class="quote org"><blockquote>Reiteramos que la ciudadanía tiene derecho a protestar y las personas periodistas a informar sobre hechos de interés público.</blockquote><figcaption><b>Artículo 19 México y Centroamérica</b> · 11 oct · <a href="https://www.eluniversal.com.mx/nacion/periodistas-denuncian-agresiones-durante-protesta-por-agua-en-guadalajara-acusan-uso-de-gas-y-uso-de-fuerza/" rel="noopener" target="_blank">El Universal</a></figcaption></figure>
-        <figure class="quote org"><blockquote>Manifestarse para demandar su cumplimiento no puede ser motivo de detención, represión y criminalización.</blockquote><figcaption><b>ITESO</b>, sobre el derecho al agua · 12 oct · <a href="https://udgtv.com/noticias/iteso-exige-esclarecer-detenciones-tras-marcha-por-el-agua/334289" rel="noopener" target="_blank">UDG TV</a></figcaption></figure>
-        <figure class="quote org"><blockquote>La protesta social es un derecho y no debe criminalizarse.</blockquote><figcaption><b>282 académicos</b> de la UdeG, el ITESO, el CIESAS, la UNAM y otras instituciones · 12 oct · <a href="https://udgtv.com/noticias/282-profesores-universitarios-exigen-liberar-a-detenidos/334280" rel="noopener" target="_blank">UDG TV</a></figcaption></figure>
-        <figure class="quote org"><blockquote>Marchamos por los ríos, marchamos por los injustamente detenidos, marchamos por el derecho al agua.</blockquote><figcaption><b>Convocatoria a la segunda marcha</b> · 15 oct · <a href="https://www.unotv.com/estados/jalisco/otra-vez-a-las-calles-convocan-a-megamarcha-por-el-agua-en-jalisco/" rel="noopener" target="_blank">UnoTV</a></figcaption></figure>
-        <figure class="quote org"><blockquote>¡Restauración sí, privatización no! ¡SIAPA, repara tus fugas!</blockquote><figcaption><b>Organizaciones contra el acueducto privado</b> · 14 oct · <a href="https://www.unotv.com/estados/jalisco/organizaciones-rechazan-proyecto-de-acueducto-chapala-guadalajara-por-presunta-privatizacion-del-agua/" rel="noopener" target="_blank">UnoTV</a></figcaption></figure>
-        <figure class="quote org"><blockquote>…una alerta sanitaria llevaría a reconocer el fracaso en la gestión pública del agua.</blockquote><figcaption><b>José Arturo Gleason</b>, investigador de la UdeG · 13 oct · <a href="https://www.unotv.com/estados/jalisco/quien-contamina-el-agua-en-guadalajara-y-por-que-no-se-ha-emitido-una-alerta-sanitaria/" rel="noopener" target="_blank">UnoTV</a></figcaption></figure>
-        <figure class="quote org"><blockquote>Es más relevante evitar las fugas que construir nueva infraestructura cuando ya tenemos una red de distribución colapsada.</blockquote><figcaption><b>Alicia Torres</b>, académica de la UdeG · 15 oct · <a href="https://elcongresista.mx/politica/jalisco/colectivos-piden-rechazar-acueducto" rel="noopener" target="_blank">El Congresista</a></figcaption></figure>
-        <figure class="quote org"><blockquote>Este gravísimo problema que tiene que ver con la vida, con la salud.</blockquote><figcaption><b>Cardenal José Francisco Robles Ortega</b>, arzobispo de Guadalajara · 11 oct · <a href="https://jalisco.quadratin.com.mx/principal/piden-en-misa-de-patrocinio-de-la-generala-solucion-al-problema-del-agua/" rel="noopener" target="_blank">Quadratín</a></figcaption></figure>
-        <figure class="quote org"><blockquote>Rechazamos toda agresión y expresamos nuestra solidaridad con quienes legítimamente se manifestaron por su derecho al agua.</blockquote><figcaption><b>Coparmex Jalisco</b> · 12 oct · <a href="https://www.informador.mx/jalisco/reprueba-coparmex-violencia-en-manifestacion-del-agua-20261012-0144.html" rel="noopener" target="_blank">El Informador</a></figcaption></figure>
-        <figure class="quote org"><blockquote>Fue mal de las dos partes, la reacción de ambas partes.</blockquote><figcaption><b>Antonio Lancaster Jones</b>, Consejo de Cámaras Industriales de Jalisco, minimizando la represión · 13 oct · <a href="https://udgtv.com/noticias/minimiza-ccij-represion-del-gobierno-de-jalisco/334420" rel="noopener" target="_blank">UDG TV</a></figcaption></figure>
       </div>
+      <details class="more">
+        <summary>Ver las otras 12 citas</summary>
+        <div class="quotes">
+          <figure class="quote org"><blockquote>Nos dijeron que a nosotros nos convenía que dijéramos que no queríamos más problemas.</blockquote><figcaption><b>Juan Darío Muñoz Nava</b>, estudiante detenido, sobre lo que les decían bajo custodia · 14 oct · <a href="https://www.proceso.com.mx/nacional/2026/10/14/detenidos-por-protesta-del-agua-en-jalisco-denuncian-tortura-y-fabricacion-de-pruebas-381860.html" rel="noopener" target="_blank">Proceso</a></figcaption></figure>
+          <figure class="quote org"><blockquote>Nadie debe ser juzgado por ejercer su derecho a la protesta.</blockquote><figcaption><b>CEPAD</b>, que acompaña a los detenidos · 16 oct · <a href="https://www.informador.mx/jalisco/vinculan-a-proceso-a-4-detenidos-tras-protesta-por-el-agua-20261016-0148.html" rel="noopener" target="_blank">El Informador</a></figcaption></figure>
+          <figure class="quote org"><blockquote>Reiteramos que la ciudadanía tiene derecho a protestar y las personas periodistas a informar sobre hechos de interés público.</blockquote><figcaption><b>Artículo 19 México y Centroamérica</b> · 11 oct · <a href="https://www.eluniversal.com.mx/nacion/periodistas-denuncian-agresiones-durante-protesta-por-agua-en-guadalajara-acusan-uso-de-gas-y-uso-de-fuerza/" rel="noopener" target="_blank">El Universal</a></figcaption></figure>
+          <figure class="quote org"><blockquote>Manifestarse para demandar su cumplimiento no puede ser motivo de detención, represión y criminalización.</blockquote><figcaption><b>ITESO</b>, sobre el derecho al agua · 12 oct · <a href="https://udgtv.com/noticias/iteso-exige-esclarecer-detenciones-tras-marcha-por-el-agua/334289" rel="noopener" target="_blank">UDG TV</a></figcaption></figure>
+          <figure class="quote org"><blockquote>La protesta social es un derecho y no debe criminalizarse.</blockquote><figcaption><b>282 académicos</b> de la UdeG, el ITESO, el CIESAS, la UNAM y otras instituciones · 12 oct · <a href="https://udgtv.com/noticias/282-profesores-universitarios-exigen-liberar-a-detenidos/334280" rel="noopener" target="_blank">UDG TV</a></figcaption></figure>
+          <figure class="quote org"><blockquote>Marchamos por los ríos, marchamos por los injustamente detenidos, marchamos por el derecho al agua.</blockquote><figcaption><b>Convocatoria a la segunda marcha</b> · 15 oct · <a href="https://www.unotv.com/estados/jalisco/otra-vez-a-las-calles-convocan-a-megamarcha-por-el-agua-en-jalisco/" rel="noopener" target="_blank">UnoTV</a></figcaption></figure>
+          <figure class="quote org"><blockquote>¡Restauración sí, privatización no! ¡SIAPA, repara tus fugas!</blockquote><figcaption><b>Organizaciones contra el acueducto privado</b> · 14 oct · <a href="https://www.unotv.com/estados/jalisco/organizaciones-rechazan-proyecto-de-acueducto-chapala-guadalajara-por-presunta-privatizacion-del-agua/" rel="noopener" target="_blank">UnoTV</a></figcaption></figure>
+          <figure class="quote org"><blockquote>…una alerta sanitaria llevaría a reconocer el fracaso en la gestión pública del agua.</blockquote><figcaption><b>José Arturo Gleason</b>, investigador de la UdeG · 13 oct · <a href="https://www.unotv.com/estados/jalisco/quien-contamina-el-agua-en-guadalajara-y-por-que-no-se-ha-emitido-una-alerta-sanitaria/" rel="noopener" target="_blank">UnoTV</a></figcaption></figure>
+          <figure class="quote org"><blockquote>Es más relevante evitar las fugas que construir nueva infraestructura cuando ya tenemos una red de distribución colapsada.</blockquote><figcaption><b>Alicia Torres</b>, académica de la UdeG · 15 oct · <a href="https://elcongresista.mx/politica/jalisco/colectivos-piden-rechazar-acueducto" rel="noopener" target="_blank">El Congresista</a></figcaption></figure>
+          <figure class="quote org"><blockquote>Este gravísimo problema que tiene que ver con la vida, con la salud.</blockquote><figcaption><b>Cardenal José Francisco Robles Ortega</b>, arzobispo de Guadalajara · 11 oct · <a href="https://jalisco.quadratin.com.mx/principal/piden-en-misa-de-patrocinio-de-la-generala-solucion-al-problema-del-agua/" rel="noopener" target="_blank">Quadratín</a></figcaption></figure>
+          <figure class="quote org"><blockquote>Rechazamos toda agresión y expresamos nuestra solidaridad con quienes legítimamente se manifestaron por su derecho al agua.</blockquote><figcaption><b>Coparmex Jalisco</b> · 12 oct · <a href="https://www.informador.mx/jalisco/reprueba-coparmex-violencia-en-manifestacion-del-agua-20261012-0144.html" rel="noopener" target="_blank">El Informador</a></figcaption></figure>
+          <figure class="quote org"><blockquote>Fue mal de las dos partes, la reacción de ambas partes.</blockquote><figcaption><b>Antonio Lancaster Jones</b>, Consejo de Cámaras Industriales de Jalisco, minimizando la represión · 13 oct · <a href="https://udgtv.com/noticias/minimiza-ccij-represion-del-gobierno-de-jalisco/334420" rel="noopener" target="_blank">UDG TV</a></figcaption></figure>
+        </div>
+      </details>
 
       <h3 class="qgroup">Políticos y autoridades</h3>
       <div class="quotes">
         <figure class="quote"><blockquote>¿Cómo es posible que en el 2026 siga habiendo tortura de policías a jóvenes?</blockquote><figcaption><b>Claudia Sheinbaum</b>, presidenta de México, al pedir a la CNDH una investigación profunda · 14 oct · <a href="https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-de-la-presidenta-claudia-sheinbaum-pardo-del-14-de-octubre-de-2026" rel="noopener" target="_blank">versión estenográfica</a> · <a href="https://www.excelsior.com.mx/nacional/claudia-sheinbaum-cndh-investigar-tortura-jalisco" rel="noopener" target="_blank">Excélsior</a></figcaption></figure>
         <figure class="quote"><blockquote>He dado la instrucción de garantizar que puedan hacerlo de manera pacífica y segura.</blockquote><figcaption><b>Pablo Lemus</b>, gobernador (MC), sobre la marcha, un día antes · 10 oct · <a href="https://x.com/PabloLemusN/status/2109061742135255519" rel="noopener" target="_blank">X</a></figcaption></figure>
         <figure class="quote"><blockquote>Lo que vimos ayer, de utilizar el agua para disolver una manifestación, no debe ocurrir en México.</blockquote><figcaption><b>Claudia Sheinbaum</b>, presidenta de México · 12 oct · <a href="https://www.gob.mx/presidencia/articulos/version-estenografica-conferencia-de-prensa-de-la-presidenta-claudia-sheinbaum-pardo-del-12-de-octubre-de-2026" rel="noopener" target="_blank">versión estenográfica</a></figcaption></figure>
-        <figure class="quote"><blockquote>Hubo uso excesivo de la fuerza y detenciones injustas.</blockquote><figcaption><b>Pablo Lemus</b>, gobernador (MC) · 13 oct · <a href="https://grupoanimal.mx/estados/dos-detenidos-protesta-agua-guadalajara-vinculados" rel="noopener" target="_blank">Grupo Animal</a></figcaption></figure>
-        <figure class="quote"><blockquote>Lamentablemente, algunos de los oficiales olvidaron su deber y actuaron de forma impulsiva.</blockquote><figcaption><b>Juan Pablo Hernández González</b>, secretario de Seguridad de Jalisco · 15 oct · <a href="https://infobae.com/mexico/2026/10/15/policia-de-jalisco-llama-a-la-sociedad-civil-y-academicos-a-pulir-protocolos-de-actuacion-tras-represion-en-marcha-por-agua-limpia" rel="noopener" target="_blank">Infobae</a></figcaption></figure>
-        <figure class="quote"><blockquote>Los bomberos […] no se mandan solos, alguien de muy alto nivel del [Gobierno de Jalisco] les ordeno que actuarán contra los manifestantes con chorros de agua.</blockquote><figcaption><b>Sergio Chávez</b>, presidente municipal de Tonalá (Morena) · 14 oct · <a href="https://x.com/SergioChavez_D/status/2110406756799225998" rel="noopener" target="_blank">X</a></figcaption></figure>
-        <figure class="quote"><blockquote>La represión nunca debe ser y nunca será para nosotros una alternativa.</blockquote><figcaption><b>Laura Imelda Pérez Segura</b>, presidenta municipal de Tlaquepaque (Morena) · 11 oct · <a href="https://x.com/LauraImelPerezS/status/2109459115906883717" rel="noopener" target="_blank">X</a></figcaption></figure>
-        <figure class="quote"><blockquote>Solicitamos formalmente desde el [Senado] la renuncia del Secretario de Seguridad de Jalisco.</blockquote><figcaption><b>Carlos Lomelí</b>, senador por Jalisco (Morena) · 14 oct · <a href="https://x.com/DrCarlosLomeli/status/2110431736584904809" rel="noopener" target="_blank">X</a></figcaption></figure>
-        <figure class="quote"><blockquote>Reprimir al pueblo no es un error ni una falla de gestión, es una violación flagrante a los derechos humanos y un delito de Estado.</blockquote><figcaption><b>Erika Pérez García</b>, presidenta de Morena Jalisco · 13 oct · <a href="https://x.com/ErikaPerezMx/status/2110175494675030346" rel="noopener" target="_blank">X</a></figcaption></figure>
-        <figure class="quote"><blockquote>Lo que pasó el 11 de octubre en Jalisco no debe repetirse.</blockquote><figcaption><b>Clemente Castañeda</b>, senador (MC) · 13 oct · <a href="https://x.com/ClementeCH/status/2110143588029857915" rel="noopener" target="_blank">X</a></figcaption></figure>
-        <figure class="quote"><blockquote>A los actos de represión del gobierno de Jalisco esta tarde, respondemos YA BASTA.</blockquote><figcaption><b>Carlos Lomelí</b>, senador por Jalisco (Morena) · 11 oct · <a href="https://x.com/DrCarlosLomeli/status/2109424002578202941" rel="noopener" target="_blank">X</a></figcaption></figure>
-        <figure class="quote"><blockquote>Decidimos intencionalmente no presentarnos en la sesión del día de hoy.</blockquote><figcaption><b>José Luis Tostado</b>, coordinador de los diputados de MC, sobre la sesión que dejaron sin quórum · 15 oct · <a href="https://udgtv.com/noticias/diputados-de-mc-y-del-pvem-deciden-boicotear-congreso-local/334744" rel="noopener" target="_blank">UDG TV</a></figcaption></figure>
-        <figure class="quote"><blockquote>Es una falta de respeto, no es la primera vez que esto sucede.</blockquote><figcaption><b>Alondra Fausto</b>, presidenta de la Mesa Directiva del Congreso (PRI) · 15 oct · <a href="https://jalisco.quadratin.com.mx/principal/suspenden-sesion-en-congreso-local-y-queda-en-pausa-aprobacion-de-acueducto/" rel="noopener" target="_blank">Quadratín</a></figcaption></figure>
-        <figure class="quote"><blockquote>Renuncian a su capacidad de hacer política.</blockquote><figcaption><b>Mariana Casillas</b>, diputada (Futuro), sobre la ausencia de MC y el PVEM · 15 oct · <a href="https://x.com/MarianaCasGe/status/2110878378547151231" rel="noopener" target="_blank">X</a></figcaption></figure>
-        <figure class="quote"><blockquote>Morena, Hagamos, PT y Futuro rechazamos la iniciativa del gobierno del estado para entregar infraestructura hídrica a privados.</blockquote><figcaption><b>Miguel de la Rosa</b>, coordinador de los diputados de Morena · 15 oct · <a href="https://x.com/Delarosa4t/status/2110929944478159297" rel="noopener" target="_blank">X</a></figcaption></figure>
-        <figure class="quote"><blockquote>No consentiremos ningún negocio al amparo del poder ni la privatización del agua.</blockquote><figcaption><b>Alejandro Puerto</b>, diputado (Morena) · 15 oct · <a href="https://www.infobae.com/mexico/2026/10/16/morena-anuncia-voto-contra-propuesta-hidrica-en-jalisco-al-considerar-que-no-resuelve-el-problema-del-agua/" rel="noopener" target="_blank">Infobae</a></figcaption></figure>
-        <figure class="quote"><blockquote>El nuevo acueducto quedaría en manos privadas hasta por 25 años.</blockquote><figcaption><b>Tonantzin Cárdenas</b>, diputada · 16 oct · <a href="https://x.com/tonantzincarm/status/2111141652341346305" rel="noopener" target="_blank">X</a></figcaption></figure>
-        <figure class="quote"><blockquote>Quiero ser muy claro: eso es absolutamente falso. El agua de Jalisco no se va a privatizar.</blockquote><figcaption><b>Pablo Lemus</b>, gobernador (MC) · 16 oct · <a href="https://x.com/PabloLemusN/status/2111202092761395310" rel="noopener" target="_blank">X</a></figcaption></figure>
-        <figure class="quote"><blockquote>En Jalisco nunca se ha propuesto ni se ha buscado privatizar el agua de las y los jaliscienses.</blockquote><figcaption><b>Movimiento Ciudadano Jalisco</b> · 16 oct · <a href="https://x.com/MovCiudadanoJal/status/2111211113362649386" rel="noopener" target="_blank">X</a></figcaption></figure>
-        <figure class="quote"><blockquote>Ya está empezando a llegar agua limpia en algunas colonias de la ciudad.</blockquote><figcaption><b>Mirza Flores</b>, coordinadora de MC Jalisco · 10 oct · <a href="https://x.com/MirzaFloresG/status/2109033895387914742" rel="noopener" target="_blank">X</a></figcaption></figure>
-        <figure class="quote"><blockquote>Le pedí a Conagua que hiciera un análisis más profundo, técnico, de cuál es la solución.</blockquote><figcaption><b>Claudia Sheinbaum</b>, presidenta de México · 13 oct · <a href="https://www.informador.mx/jalisco/sheinbaum-alista-propuesta-para-el-gobierno-de-jalisco-sobre-la-calidad-del-agua-en-guadalajara-20261013-0050.html" rel="noopener" target="_blank">El Informador</a></figcaption></figure>
-        <figure class="quote"><blockquote>Vamos a reprogramar proyectos y acciones […] para concentrar nuestros esfuerzos y recursos.</blockquote><figcaption><b>Verónica Delgadillo</b>, presidenta municipal de Guadalajara, al anunciar 77 pipas · 15 oct · <a href="https://www.informador.mx/jalisco/tandeos-siapa-guadalajara-habilitara-pipas-y-cisternas-para-colonias-afectadas-por-disminucion-de-agua-20261015-0182.html" rel="noopener" target="_blank">El Informador</a></figcaption></figure>
       </div>
+      <details class="more">
+        <summary>Ver las otras 19 citas</summary>
+        <div class="quotes">
+          <figure class="quote"><blockquote>Hubo uso excesivo de la fuerza y detenciones injustas.</blockquote><figcaption><b>Pablo Lemus</b>, gobernador (MC) · 13 oct · <a href="https://grupoanimal.mx/estados/dos-detenidos-protesta-agua-guadalajara-vinculados" rel="noopener" target="_blank">Grupo Animal</a></figcaption></figure>
+          <figure class="quote"><blockquote>Lamentablemente, algunos de los oficiales olvidaron su deber y actuaron de forma impulsiva.</blockquote><figcaption><b>Juan Pablo Hernández González</b>, secretario de Seguridad de Jalisco · 15 oct · <a href="https://infobae.com/mexico/2026/10/15/policia-de-jalisco-llama-a-la-sociedad-civil-y-academicos-a-pulir-protocolos-de-actuacion-tras-represion-en-marcha-por-agua-limpia" rel="noopener" target="_blank">Infobae</a></figcaption></figure>
+          <figure class="quote"><blockquote>Los bomberos […] no se mandan solos, alguien de muy alto nivel del [Gobierno de Jalisco] les ordeno que actuarán contra los manifestantes con chorros de agua.</blockquote><figcaption><b>Sergio Chávez</b>, presidente municipal de Tonalá (Morena) · 14 oct · <a href="https://x.com/SergioChavez_D/status/2110406756799225998" rel="noopener" target="_blank">X</a></figcaption></figure>
+          <figure class="quote"><blockquote>La represión nunca debe ser y nunca será para nosotros una alternativa.</blockquote><figcaption><b>Laura Imelda Pérez Segura</b>, presidenta municipal de Tlaquepaque (Morena) · 11 oct · <a href="https://x.com/LauraImelPerezS/status/2109459115906883717" rel="noopener" target="_blank">X</a></figcaption></figure>
+          <figure class="quote"><blockquote>Solicitamos formalmente desde el [Senado] la renuncia del Secretario de Seguridad de Jalisco.</blockquote><figcaption><b>Carlos Lomelí</b>, senador por Jalisco (Morena) · 14 oct · <a href="https://x.com/DrCarlosLomeli/status/2110431736584904809" rel="noopener" target="_blank">X</a></figcaption></figure>
+          <figure class="quote"><blockquote>Reprimir al pueblo no es un error ni una falla de gestión, es una violación flagrante a los derechos humanos y un delito de Estado.</blockquote><figcaption><b>Erika Pérez García</b>, presidenta de Morena Jalisco · 13 oct · <a href="https://x.com/ErikaPerezMx/status/2110175494675030346" rel="noopener" target="_blank">X</a></figcaption></figure>
+          <figure class="quote"><blockquote>Lo que pasó el 11 de octubre en Jalisco no debe repetirse.</blockquote><figcaption><b>Clemente Castañeda</b>, senador (MC) · 13 oct · <a href="https://x.com/ClementeCH/status/2110143588029857915" rel="noopener" target="_blank">X</a></figcaption></figure>
+          <figure class="quote"><blockquote>A los actos de represión del gobierno de Jalisco esta tarde, respondemos YA BASTA.</blockquote><figcaption><b>Carlos Lomelí</b>, senador por Jalisco (Morena) · 11 oct · <a href="https://x.com/DrCarlosLomeli/status/2109424002578202941" rel="noopener" target="_blank">X</a></figcaption></figure>
+          <figure class="quote"><blockquote>Decidimos intencionalmente no presentarnos en la sesión del día de hoy.</blockquote><figcaption><b>José Luis Tostado</b>, coordinador de los diputados de MC, sobre la sesión que dejaron sin quórum · 15 oct · <a href="https://udgtv.com/noticias/diputados-de-mc-y-del-pvem-deciden-boicotear-congreso-local/334744" rel="noopener" target="_blank">UDG TV</a></figcaption></figure>
+          <figure class="quote"><blockquote>Es una falta de respeto, no es la primera vez que esto sucede.</blockquote><figcaption><b>Alondra Fausto</b>, presidenta de la Mesa Directiva del Congreso (PRI) · 15 oct · <a href="https://jalisco.quadratin.com.mx/principal/suspenden-sesion-en-congreso-local-y-queda-en-pausa-aprobacion-de-acueducto/" rel="noopener" target="_blank">Quadratín</a></figcaption></figure>
+          <figure class="quote"><blockquote>Renuncian a su capacidad de hacer política.</blockquote><figcaption><b>Mariana Casillas</b>, diputada (Futuro), sobre la ausencia de MC y el PVEM · 15 oct · <a href="https://x.com/MarianaCasGe/status/2110878378547151231" rel="noopener" target="_blank">X</a></figcaption></figure>
+          <figure class="quote"><blockquote>Morena, Hagamos, PT y Futuro rechazamos la iniciativa del gobierno del estado para entregar infraestructura hídrica a privados.</blockquote><figcaption><b>Miguel de la Rosa</b>, coordinador de los diputados de Morena · 15 oct · <a href="https://x.com/Delarosa4t/status/2110929944478159297" rel="noopener" target="_blank">X</a></figcaption></figure>
+          <figure class="quote"><blockquote>No consentiremos ningún negocio al amparo del poder ni la privatización del agua.</blockquote><figcaption><b>Alejandro Puerto</b>, diputado (Morena) · 15 oct · <a href="https://www.infobae.com/mexico/2026/10/16/morena-anuncia-voto-contra-propuesta-hidrica-en-jalisco-al-considerar-que-no-resuelve-el-problema-del-agua/" rel="noopener" target="_blank">Infobae</a></figcaption></figure>
+          <figure class="quote"><blockquote>El nuevo acueducto quedaría en manos privadas hasta por 25 años.</blockquote><figcaption><b>Tonantzin Cárdenas</b>, diputada · 16 oct · <a href="https://x.com/tonantzincarm/status/2111141652341346305" rel="noopener" target="_blank">X</a></figcaption></figure>
+          <figure class="quote"><blockquote>Quiero ser muy claro: eso es absolutamente falso. El agua de Jalisco no se va a privatizar.</blockquote><figcaption><b>Pablo Lemus</b>, gobernador (MC) · 16 oct · <a href="https://x.com/PabloLemusN/status/2111202092761395310" rel="noopener" target="_blank">X</a></figcaption></figure>
+          <figure class="quote"><blockquote>En Jalisco nunca se ha propuesto ni se ha buscado privatizar el agua de las y los jaliscienses.</blockquote><figcaption><b>Movimiento Ciudadano Jalisco</b> · 16 oct · <a href="https://x.com/MovCiudadanoJal/status/2111211113362649386" rel="noopener" target="_blank">X</a></figcaption></figure>
+          <figure class="quote"><blockquote>Ya está empezando a llegar agua limpia en algunas colonias de la ciudad.</blockquote><figcaption><b>Mirza Flores</b>, coordinadora de MC Jalisco · 10 oct · <a href="https://x.com/MirzaFloresG/status/2109033895387914742" rel="noopener" target="_blank">X</a></figcaption></figure>
+          <figure class="quote"><blockquote>Le pedí a Conagua que hiciera un análisis más profundo, técnico, de cuál es la solución.</blockquote><figcaption><b>Claudia Sheinbaum</b>, presidenta de México · 13 oct · <a href="https://www.informador.mx/jalisco/sheinbaum-alista-propuesta-para-el-gobierno-de-jalisco-sobre-la-calidad-del-agua-en-guadalajara-20261013-0050.html" rel="noopener" target="_blank">El Informador</a></figcaption></figure>
+          <figure class="quote"><blockquote>Vamos a reprogramar proyectos y acciones […] para concentrar nuestros esfuerzos y recursos.</blockquote><figcaption><b>Verónica Delgadillo</b>, presidenta municipal de Guadalajara, al anunciar 77 pipas · 15 oct · <a href="https://www.informador.mx/jalisco/tandeos-siapa-guadalajara-habilitara-pipas-y-cisternas-para-colonias-afectadas-por-disminucion-de-agua-20261015-0182.html" rel="noopener" target="_blank">El Informador</a></figcaption></figure>
+        </div>
+      </details>
     </section>
 
-    <section class="act" aria-labelledby="actua">
-      <h2 id="actua">No es normal. Exige.</h2>
-      <p>El Congreso decide el contrato del acueducto. Escríbele a tu diputación, recibe los avisos de tu zona y firma la acción urgente por las personas detenidas.</p>
-      <div class="buttons">
-        <a class="button" href="/escribe">Escribe al Congreso</a>
-        <a class="button ghost" href="/avisos">Recibe avisos</a>
-        <a class="button ghost" href="https://redtdt.org.mx/archivos/23989" rel="noopener" target="_blank">Firma la acción urgente</a>
-      </div>
-    </section>
     <p class="note">¿Falta algo? Escríbenos a <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a> con el enlace a la fuente.</p>
 
     <dialog class="player" id="player" aria-labelledby="player-title">
@@ -607,6 +652,11 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       </div>
     </dialog>
   </main>
+
+  <div class="actbar" id="actbar" hidden>
+    <span>No es normal. Exige.</span>
+    <a class="button" href="/escribe">Escribe al Congreso</a>
+  </div>
 
   <footer>
     <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con el Gobierno de Jalisco.</p>
@@ -629,10 +679,41 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     document.getElementById("marcha").hidden = true;
   }
 
+  const latest = document.getElementById("latest");
+  const arts = [...document.querySelectorAll(".day .feed article")];
+  arts.forEach((a, i) => { if (!a.id) a.id = `n${i}`; });
+  latest.replaceChildren(...arts.slice(0, 3).map((a) => {
+    const li = document.createElement("li");
+    const l = document.createElement("a");
+    l.href = `#${a.id}`;
+    l.textContent = a.querySelector("h4").textContent;
+    const d = document.createElement("small");
+    d.textContent = ` · ${a.closest(".day").querySelector("h3").textContent.replace(" de octubre", " oct")}`;
+    li.append(l, d);
+    return li;
+  }));
+  document.getElementById("latest-wrap").hidden = arts.length === 0;
+
+  const older = document.getElementById("dias-anteriores");
+  const reveal = () => { const t = location.hash && document.getElementById(location.hash.slice(1)); const d = t && t.closest("details"); if (d) d.open = true; };
+  addEventListener("hashchange", reveal);
+  reveal();
+
+  const act = document.querySelector("main > .act");
+  const bar = document.getElementById("actbar");
+  if (act && bar && "IntersectionObserver" in window) {
+    new IntersectionObserver(([e]) => {
+      const past = !e.isIntersecting && e.boundingClientRect.top < 0;
+      bar.hidden = !past;
+      document.body.classList.toggle("has-actbar", past);
+    }).observe(act);
+  }
+
   const chips = document.querySelectorAll("[data-filter]");
   for (const chip of chips) {
     chip.addEventListener("click", () => {
       const f = chip.dataset.filter;
+      if (f !== "todo") older.open = true;
       for (const c of chips) c.setAttribute("aria-pressed", String(c === chip));
       for (const a of document.querySelectorAll(".feed article")) a.hidden = f !== "todo" && !a.dataset.tags.split(" ").includes(f);
       for (const d of document.querySelectorAll(".day")) d.hidden = !d.querySelector("article:not([hidden])");
