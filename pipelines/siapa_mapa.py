@@ -11,17 +11,21 @@ the municipios) and /api/ajustes.php (days per zone and colonia zones edited by 
 admins, which the page applies over the file). Without --input/--ajustes both are downloaded.
 
 The output keeps the TopoJSON arcs and the colonias and zonas objects. Each colonia keeps
-n (name), m (municipio), cp and z (the map's zones, "1,5" when several) and gets l when
-SIAPA's PDF list (api/data/colonias.json) gives that name and municipio other zones.
-/mapa decodes the file in the browser. Days per zone are not copied: /mapa reads them from
-the API, i.e. api/data/rotation.json. When ajustes gives other days this prints a warning,
-since someone must check SIAPA's calendar before changing rotation.json; colonia overrides
-in ajustes are reported, not applied (none existed when this was written).
+n (name), m (municipio), cp and z (the map's zones, "1,5" when several), gets l when SIAPA's
+PDF list (api/data/colonias.json) gives that name and municipio other zones, and, when z has
+several zones, p: the share of the colonia's area inside each zone, in percent ("5:93,6:7",
+estimated on a grid of sample points), so the pages can tell a colonia split between zones
+from one that merely touches a border. /mapa and /mizona decode the file in the browser.
+Days per zone are not copied: the pages read them from the API, i.e. api/data/rotation.json.
+When ajustes gives other days this prints a warning, since someone must check SIAPA's
+calendar before changing rotation.json; colonia overrides in ajustes are reported, not
+applied (none existed when this was written).
 """
 
 import argparse
 import datetime
 import json
+import math
 import re
 import sys
 import unicodedata
@@ -35,6 +39,7 @@ UA = "Mozilla/5.0 (compatible; AguaGDL/1.0; +https://aguagdl.com)"
 PREFIXES = ("COLONIA ", "COL ", "FRACCIONAMIENTO ", "FRACC ", "FRAC ")
 MUNICIPIO_ALIAS = {"SAN PEDRO TLAQUEPAQUE": "TLAQUEPAQUE", "GDL": "GUADALAJARA"}
 DAY_KEYS = {"lunes": "mon", "martes": "tue", "miercoles": "wed", "jueves": "thu", "viernes": "fri", "sabado": "sat", "domingo": "sun"}
+SAMPLES = 900  # grid points per colonia when estimating the share of its area in each zone
 
 
 def fold(s):
@@ -65,6 +70,89 @@ def zones_of(z):
     return sorted(int(x) for x in str(z).split(",") if x.strip())
 
 
+def decode_arcs(topo):
+    sx, sy = topo["transform"]["scale"]
+    tx, ty = topo["transform"]["translate"]
+    arcs = []
+    for arc in topo["arcs"]:
+        x = y = 0
+        pts = []
+        for dx, dy in arc:
+            x += dx
+            y += dy
+            pts.append((x * sx + tx, y * sy + ty))
+        arcs.append(pts)
+    return arcs
+
+
+def polygons(g, arcs):
+    """The geometry's polygons, each a list of rings (outer first) of (lon, lat) points."""
+    def ring(idx):
+        pts = []
+        for i in idx:
+            a = arcs[i] if i >= 0 else arcs[~i][::-1]
+            if pts:
+                pts.pop()
+            pts.extend(a)
+        return pts
+    polys = [g["arcs"]] if g["type"] == "Polygon" else g["arcs"]
+    return [[ring(r) for r in poly] for poly in polys]
+
+
+def in_ring(pt, ring):
+    x, y = pt
+    hit = False
+    j = len(ring) - 1
+    for i in range(len(ring)):
+        x1, y1 = ring[i]
+        x2, y2 = ring[j]
+        if (y1 > y) != (y2 > y) and x < (x2 - x1) * (y - y1) / (y2 - y1) + x1:
+            hit = not hit
+        j = i
+    return hit
+
+
+def bbox(polys):
+    xs = [x for poly in polys for x, _ in poly[0]]
+    ys = [y for poly in polys for _, y in poly[0]]
+    return min(xs), min(ys), max(xs), max(ys)
+
+
+def inside(pt, polys, boxes=None):
+    for k, poly in enumerate(polys):
+        if boxes is not None:
+            x0, y0, x1, y1 = boxes[k]
+            if not (x0 <= pt[0] <= x1 and y0 <= pt[1] <= y1):
+                continue
+        if in_ring(pt, poly[0]) and not any(in_ring(pt, hole) for hole in poly[1:]):
+            return True
+    return False
+
+
+def zone_shares(colonia_polys, zone_polys, zone_boxes):
+    """Percent of the colonia's area in each zone, from a grid of sample points inside it."""
+    x0, y0, x1, y1 = bbox(colonia_polys)
+    step = math.sqrt((x1 - x0) * (y1 - y0) / SAMPLES) or 1e-6
+    counts = {}
+    total = 0
+    y = y0 + step / 2
+    while y < y1:
+        x = x0 + step / 2
+        while x < x1:
+            pt = (x, y)
+            if inside(pt, colonia_polys):
+                for z, polys in zone_polys.items():
+                    if inside(pt, polys, zone_boxes[z]):
+                        counts[z] = counts.get(z, 0) + 1
+                        total += 1
+                        break
+            x += step
+        y += step
+    if not total:
+        return {}
+    return {z: 100 * n / total for z, n in counts.items()}
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--input", help="local copy of SIAPA's TopoJSON (default: download)")
@@ -80,7 +168,14 @@ def main():
         for c in json.load(f):
             listed.setdefault((fold(c["name"]), municipio(c["municipio"])), set()).update(c["zones"])
 
-    colonias, matched, differs, with_zone = [], 0, 0, 0
+    arcs = decode_arcs(topo)
+    zonas = sorted(topo["objects"]["zonas"]["geometries"], key=lambda g: int(g["properties"]["z"]))
+    if len(zonas) != 7:
+        sys.exit(f"expected 7 zones, got {len(zonas)}")
+    zone_polys = {int(g["properties"]["z"]): polygons(g, arcs) for g in zonas}
+    zone_boxes = {z: [bbox([poly]) for poly in polys] for z, polys in zone_polys.items()}
+
+    colonias, matched, differs, with_zone, split, border = [], 0, 0, 0, 0, 0
     for g in topo["objects"]["colonias"]["geometries"]:
         p = g["properties"]
         z = zones_of(p.get("z", ""))
@@ -93,20 +188,27 @@ def main():
             if lz != z:
                 differs += 1
                 props["l"] = ",".join(map(str, lz))
+        if len(z) > 1:
+            shares = zone_shares(polygons(g, arcs), {k: zone_polys[k] for k in z}, zone_boxes)
+            if shares:
+                rounded = {k: max(1, round(v)) if v > 0 else 0 for k, v in shares.items()}
+                props["p"] = ",".join(f"{k}:{rounded[k]}" for k in sorted(rounded, key=lambda k: -shares[k]))
+                if min(shares.values()) < 10 and len(shares) == len(z):
+                    border += 1
+                elif len(shares) == len(z):
+                    split += 1
         colonias.append({"type": g["type"], "arcs": g["arcs"], "properties": props})
-    zonas = [{"type": g["type"], "arcs": g["arcs"], "properties": {"z": int(g["properties"]["z"]), "nombre": g["properties"].get("nombre", "")}}
-             for g in sorted(topo["objects"]["zonas"]["geometries"], key=lambda g: int(g["properties"]["z"]))]
-    if len(zonas) != 7:
-        sys.exit(f"expected 7 zones, got {len(zonas)}")
+    zonas_out = [{"type": g["type"], "arcs": g["arcs"], "properties": {"z": int(g["properties"]["z"]), "nombre": g["properties"].get("nombre", "")}} for g in zonas]
 
     result = {"type": "Topology", "transform": topo["transform"], "arcs": topo["arcs"],
               "objects": {"colonias": {"type": "GeometryCollection", "geometries": colonias},
-                          "zonas": {"type": "GeometryCollection", "geometries": zonas}},
+                          "zonas": {"type": "GeometryCollection", "geometries": zonas_out}},
               "meta": {"source": TOPO_URL, "fetched": args.fetched}}
     with open(args.out, "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, separators=(",", ":"))
         f.write("\n")
-    print(f"{args.out}: {len(colonias)} colonias ({with_zone} in a zone), {matched} on SIAPA's list, {differs} with other zones there; {len(topo['arcs'])} arcs")
+    print(f"{args.out}: {len(colonias)} colonias ({with_zone} in a zone), {matched} on SIAPA's list, {differs} with other zones there; "
+          f"{split + border} in several zones ({border} only touch a border, under 10 % in the other zone); {len(topo['arcs'])} arcs")
 
     with open(ROOT / "api" / "data" / "rotation.json", encoding="utf-8") as f:
         rotation = json.load(f)["zones"]
