@@ -355,12 +355,13 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       a.className = "ztile" + (d === today ? " hot" : d === tomorrow ? " warm" : "");
       a.style.setProperty("--zc", COLORS[z.zone] || "");
       const b = document.createElement("b"); b.textContent = `Zona ${z.zone}`;
-      const w = document.createElement("span"); w.className = "when"; w.textContent = d ? whenES(d) : "sin fecha";
+      const w = document.createElement("span"); w.className = "when"; w.textContent = !d ? "sin fecha" : d === today && z.next.includes(tomorrow) ? "hoy y mañana" : whenES(d);
       const s = document.createElement("small"); s.textContent = joinES(z.days);
       a.append(b, w, s); li.append(a); return li;
     }));
-    const hot = zones.filter((z) => nextCut(z) === today).map((z) => z.zone);
-    const warm = zones.filter((z) => nextCut(z) === tomorrow).map((z) => z.zone);
+    // Zones 5 and 7 are cut two days in a row, so tomorrow can't be judged by the next cut alone.
+    const hot = zones.filter((z) => z.next.includes(today)).map((z) => z.zone);
+    const warm = zones.filter((z) => z.next.includes(tomorrow)).map((z) => z.zone);
     const pill = (cls, text) => { const p = document.createElement("span"); p.className = "pill " + cls; p.textContent = text; return p; };
     head.replaceChildren(...[hot.length ? pill("hot", `Hoy: zona${hot.length > 1 ? "s" : ""} ${joinES(hot)}`) : null, warm.length ? pill("warm", `Mañana: zona${warm.length > 1 ? "s" : ""} ${joinES(warm)}`) : null].filter(Boolean));
   }).catch(() => { list.hidden = true; head.textContent = "No pudimos cargar el calendario. Búscalo en «Mi zona»."; });
