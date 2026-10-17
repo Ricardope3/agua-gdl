@@ -129,20 +129,30 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .ih .i-badge:has(use[href$="#calendar"]) { background: #4f46e5 }
 :root { --rep: #dc2626; --jus: #ea580c; --agua: #0284c7; --acu: #7c3aed; --pro: #0d9488; --night: #0b1118 }
 @media (prefers-color-scheme: dark) { :root { --rep: #f87171; --jus: #fb923c; --agua: #38bdf8; --acu: #a78bfa; --pro: #2dd4bf } }
-.hero { position: relative; margin-top: -20px; padding: 36px 0 28px; color: #f1f5f9; background: radial-gradient(900px 360px at 0% 0%, rgb(220 38 38 / .38), transparent 65%), radial-gradient(700px 320px at 100% 100%, rgb(2 132 199 / .35), transparent 65%), var(--night); border-image: linear-gradient(var(--night), var(--night)) fill 0 // 0 100vmax }
-.hero a { color: #bae6fd }
-.eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; border: 1px solid rgb(248 113 113 / .45); border-radius: 999px; background: rgb(220 38 38 / .15); color: #fecaca; font-size: .8rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase }
+.hero { --hero: var(--surface); position: relative; margin-top: -20px; padding: 36px 0 28px; color: var(--fg); background: var(--hero); border-image: linear-gradient(var(--hero), var(--hero)) fill 0 // 0 100vmax }
+.hero a { color: var(--link) }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; border: 1px solid rgb(220 38 38 / .35); border-radius: 999px; background: rgb(220 38 38 / .08); color: #b91c1c; font-size: .8rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase }
 .pulse { width: 8px; height: 8px; border-radius: 50%; background: #ef4444; box-shadow: 0 0 0 0 rgb(239 68 68 / .7); animation: pulse 1.8s infinite }
 @keyframes pulse { 70% { box-shadow: 0 0 0 10px rgb(239 68 68 / 0) } 100% { box-shadow: 0 0 0 0 rgb(239 68 68 / 0) } }
 @media (prefers-reduced-motion: reduce) { .pulse { animation: none } }
-.hero h1 { color: #fff; font-size: clamp(2.2rem, 7vw, 3.6rem); margin: 16px 0 12px; max-width: 16ch }
-.hero .lede { color: #cbd5e1; font-size: 1.1rem; max-width: 62ch; margin: 0 0 24px }
+.hero h1 { color: var(--fg); font-size: clamp(2.2rem, 7vw, 3.6rem); margin: 16px 0 12px; max-width: 16ch }
+.hero .lede { color: var(--muted); font-size: 1.1rem; max-width: 62ch; margin: 0 0 24px }
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 0 0 18px }
-.stat { background: rgb(255 255 255 / .05); border: 1px solid rgb(255 255 255 / .1); border-radius: 12px; padding: 14px 14px 12px; display: flex; flex-direction: column; gap: 4px }
-.stat b { font-size: clamp(1.8rem, 5vw, 2.4rem); line-height: 1; font-weight: 800; letter-spacing: -.03em; font-variant-numeric: tabular-nums; color: #fff }
-.stat.red b { color: #f87171 }
-.stat span { color: #cbd5e1; font-size: .85rem; line-height: 1.35 }
-.stat a { font-size: .75rem; color: #94a3b8; margin-top: auto }
+.stat { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 14px 14px 12px; display: flex; flex-direction: column; gap: 4px }
+.stat b { font-size: clamp(1.8rem, 5vw, 2.4rem); line-height: 1; font-weight: 800; letter-spacing: -.03em; font-variant-numeric: tabular-nums; color: var(--fg) }
+.stat.red b { color: var(--rep) }
+.stat span { color: var(--muted); font-size: .85rem; line-height: 1.35 }
+.stat a { font-size: .75rem; color: var(--muted); margin-top: auto }
+@media (prefers-color-scheme: dark) {
+  .hero { --hero: var(--night); color: #f1f5f9 }
+  .hero a { color: #bae6fd }
+  .eyebrow { border-color: rgb(248 113 113 / .45); background: rgb(220 38 38 / .15); color: #fecaca }
+  .hero h1, .stat b { color: #fff }
+  .hero .lede, .stat span { color: #cbd5e1 }
+  .stat { background: rgb(255 255 255 / .05); border-color: rgb(255 255 255 / .1) }
+  .stat.red b { color: #f87171 }
+  .stat a { color: #94a3b8 }
+}
 .march { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; padding: 14px 16px; border-radius: 12px; background: linear-gradient(90deg, #b91c1c, #c2410c); color: #fff; box-shadow: 0 10px 30px -10px rgb(220 38 38 / .6) }
 .march .when { font-weight: 800; font-size: 1.05rem }
 .march .what { flex: 1 1 260px; font-size: .95rem }
