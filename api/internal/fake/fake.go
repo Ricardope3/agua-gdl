@@ -33,6 +33,7 @@ type Store struct {
 	Now        func() time.Time // stamps subscriptions and attempts; see NewStore
 	FailDue    int              // DueSubscribers fails this many times, like a database waking up
 	Notices    map[string]bool
+	Replies    map[string][][]byte // queued replies by inbound message ID
 	nextID     int64
 }
 
@@ -42,7 +43,7 @@ func NewStore() *Store {
 	start := time.Date(2026, 10, 1, 12, 0, 0, 0, time.FixedZone("CST", -6*60*60))
 	return &Store{Subs: map[string]store.Subscriber{}, SeenIDs: map[string]bool{}, Reminders: map[string]bool{},
 		SentAt: map[string]time.Time{}, Unresolved: map[string]string{}, Wamids: map[string]bool{}, Notices: map[string]bool{},
-		Now: func() time.Time { return start }}
+		Replies: map[string][][]byte{}, Now: func() time.Time { return start }}
 }
 
 func (s *Store) ProcessInbound(ctx context.Context, id string, process func(store.BotStore) error) error {
@@ -50,13 +51,29 @@ func (s *Store) ProcessInbound(ctx context.Context, id string, process func(stor
 		return nil
 	}
 	before := *s
-	before.Subs, before.SeenIDs = maps.Clone(s.Subs), maps.Clone(s.SeenIDs)
+	before.Subs, before.SeenIDs, before.Replies = maps.Clone(s.Subs), maps.Clone(s.SeenIDs), maps.Clone(s.Replies)
 	before.Reports = append([]Report(nil), s.Reports...)
 	s.SeenIDs[id] = true
 	if err := process(s); err != nil {
 		*s = before
 		return err
 	}
+	return nil
+}
+
+func (s *Store) QueueReply(_ context.Context, id string, body []byte) error {
+	s.Replies[id] = append(s.Replies[id], body)
+	return nil
+}
+
+func (s *Store) SendReplies(_ context.Context, id string, send func([]byte) error) error {
+	for len(s.Replies[id]) > 0 {
+		if err := send(s.Replies[id][0]); err != nil {
+			return err
+		}
+		s.Replies[id] = s.Replies[id][1:]
+	}
+	delete(s.Replies, id)
 	return nil
 }
 

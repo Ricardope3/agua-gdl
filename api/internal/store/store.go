@@ -146,7 +146,12 @@ func (db *DB) DeleteSubscribers(ctx context.Context) (int64, error) {
 	return tag.RowsAffected(), err
 }
 
+// PurgeSeen forgets inbound message IDs seen before the given time, and replies that
+// couldn't be sent for a day: they hold the chat ID and the text.
 func (db *DB) PurgeSeen(ctx context.Context, before time.Time) error {
+	if _, err := db.q.Exec(ctx, `delete from pending_reply where created_at < now() - interval '1 day'`); err != nil {
+		return err
+	}
 	_, err := db.q.Exec(ctx, `delete from inbound_seen where seen_at < $1`, before)
 	return err
 }

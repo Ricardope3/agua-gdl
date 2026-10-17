@@ -900,3 +900,60 @@ func TestCreatedAtSurvivesAZoneChangeButNotBAJA(t *testing.T) {
 		t.Fatal("subscribing again after BAJA is a new subscription")
 	}
 }
+
+func TestQueuedRepliesSurviveARefusal(t *testing.T) {
+	db := testDB(t)
+	ctx := context.Background()
+	if err := db.ProcessInbound(ctx, "tg:1", func(tx BotStore) error {
+		for _, body := range []string{`"one"`, `"two"`, `"three"`} {
+			if err := tx.QueueReply(ctx, "tg:1", []byte(body)); err != nil {
+				return err
+			}
+		}
+		return nil
+	}); err != nil {
+		t.Fatal(err)
+	}
+	refused := errors.New("429")
+	var sent []string
+	refuse := true
+	send := func(body []byte) error {
+		if string(body) == `"two"` && refuse {
+			refuse = false
+			return refused
+		}
+		sent = append(sent, string(body))
+		return nil
+	}
+	if err := db.SendReplies(ctx, "tg:1", send); !errors.Is(err, refused) {
+		t.Fatal(err)
+	}
+	if err := db.SendReplies(ctx, "tg:1", send); err != nil {
+		t.Fatal(err)
+	}
+	if err := db.SendReplies(ctx, "tg:1", send); err != nil || fmt.Sprint(sent) != `["one" "two" "three"]` {
+		t.Fatalf("each reply once, in order: %v %v", sent, err)
+	}
+	failed := errors.New("command failed")
+	if err := db.ProcessInbound(ctx, "tg:2", func(tx BotStore) error {
+		if err := tx.QueueReply(ctx, "tg:2", []byte(`"stale"`)); err != nil {
+			return err
+		}
+		return failed
+	}); !errors.Is(err, failed) {
+		t.Fatal(err)
+	}
+	if err := db.ProcessInbound(ctx, "tg:3", func(tx BotStore) error { return tx.QueueReply(ctx, "tg:3", []byte(`"old"`)) }); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := db.pool.Exec(ctx, `update pending_reply set created_at = now() - interval '25 hours'`); err != nil {
+		t.Fatal(err)
+	}
+	if err := db.PurgeSeen(ctx, time.Now().Add(-7*24*time.Hour)); err != nil {
+		t.Fatal(err)
+	}
+	var n int
+	if err := db.pool.QueryRow(ctx, `select count(*) from pending_reply`).Scan(&n); err != nil || n != 0 {
+		t.Fatalf("a rolled-back command queues nothing, and a day-old reply is purged: %d %v", n, err)
+	}
+}

@@ -184,8 +184,8 @@ func TestPermanentSendErrorIsNotRetried(t *testing.T) {
 	}
 	h.bot.Sender = failingSender{&wa.APIError{Status: 500}}
 	p.Entry[0].Changes[0].Value.Messages[0].ID = "w2"
-	if err := h.bot.Handle(context.Background(), p); err == nil {
-		t.Error("server error should make Meta retry")
+	if err := h.bot.Handle(context.Background(), p); err != nil || len(h.store.Replies) != 0 {
+		t.Errorf("a server error may have delivered the reply, so it isn't kept for a retry: %v %d", err, len(h.store.Replies))
 	}
 }
 
@@ -217,8 +217,8 @@ func TestReplyFailureCannotReplaySubscriptionAfterBaja(t *testing.T) {
 	m.ID, m.From, m.FromUserID = "original-zone-message", "5213300000000", "MX.42"
 	p := wa.Payload{Entry: []wa.Entry{{Changes: []wa.Change{{Field: "messages", Value: wa.Value{Messages: []wa.Inbound{m}}}}}}}
 	h.bot.Sender = failingSender{errors.New("reply timeout")}
-	if err := h.bot.Handle(context.Background(), p); err == nil {
-		t.Fatal("expected reply failure")
+	if err := h.bot.Handle(context.Background(), p); err != nil {
+		t.Fatalf("a reply that may have been delivered is dropped, not retried: %v", err)
 	}
 	if len(h.store.Subs) != 1 || !h.store.SeenIDs[m.ID] {
 		t.Fatal("command and processed marker must be committed before replying")

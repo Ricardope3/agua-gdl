@@ -146,6 +146,42 @@ func TestTelegramReportAndBaja(t *testing.T) {
 	}
 }
 
+// refusing answers the first sends with Telegram's 429.
+type refusing struct {
+	fake.Telegram
+	refuse, attempts int
+}
+
+func (r *refusing) Send(ctx context.Context, m tg.Message) (int64, error) {
+	r.attempts++
+	if r.refuse > 0 {
+		r.refuse--
+		return 0, &tg.APIError{Status: 429, Description: "Too Many Requests"}
+	}
+	return r.Telegram.Send(ctx, m)
+}
+
+func TestRefusedReplyIsSentWhenTelegramRetries(t *testing.T) {
+	h := newTGHarness(t, "2026-10-14 10:00")
+	tel := &refusing{refuse: 1}
+	h.bot.Telegram = tel
+	u := tg.Update{UpdateID: 1, Message: &tg.InboundMessage{Chat: tg.Chat{ID: 777, Type: "private"}, Text: "/start z6"}}
+	if err := h.bot.HandleTelegram(context.Background(), u); err == nil {
+		t.Fatal("a refused reply must make Telegram retry the update")
+	}
+	for range 2 {
+		if err := h.bot.HandleTelegram(context.Background(), u); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if tel.attempts != 2 || len(tel.Sent) != 1 || !strings.Contains(tel.Sent[0].Text, "Zona 6") {
+		t.Fatalf("the retry sends the confirmation once: %d attempts, sent %+v", tel.attempts, tel.Sent)
+	}
+	if s, _ := h.sub(t); s.Zone != 6 || len(h.store.Subs) != 1 {
+		t.Fatalf("the command runs once: %+v", h.store.Subs)
+	}
+}
+
 func TestRejoiningCantReportTheSameCutAgain(t *testing.T) {
 	h := newTGHarness(t, "2026-10-16 09:00")
 	h.say(t, "/start z6") // on the store's clock, before the cut

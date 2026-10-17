@@ -3,6 +3,7 @@ package bot
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"log/slog"
@@ -71,8 +72,8 @@ type Bot struct {
 }
 
 type queued struct {
-	to    User
-	reply Reply
+	To    User
+	Reply Reply
 }
 
 var (
@@ -129,25 +130,39 @@ func (b *Bot) handleMessage(ctx context.Context, m wa.Inbound, contacts []wa.Con
 	return b.process(ctx, m.ID, func(w *Bot) error { return w.route(ctx, r, m) })
 }
 
-// process runs one inbound message. The command and its deduplication marker commit
-// together before any HTTP call: a failed reply must never let a retried delivery
-// replay a completed command.
+// process runs one inbound message. The command, its deduplication marker and its
+// replies commit together before any HTTP call: a failed reply must never let a retried
+// delivery replay a completed command, but the retry still sends the replies refused.
 func (b *Bot) process(ctx context.Context, id string, handle func(*Bot) error) error {
-	var replies []queued
 	err := b.Store.ProcessInbound(ctx, id, func(tx Store) error {
+		var replies []queued
 		worker := *b
 		worker.Store, worker.queue = tx, &replies
-		return handle(&worker)
+		if err := handle(&worker); err != nil {
+			return err
+		}
+		for _, q := range replies {
+			body, err := json.Marshal(q)
+			if err != nil {
+				return err
+			}
+			if err := tx.QueueReply(ctx, id, body); err != nil {
+				return err
+			}
+		}
+		return nil
 	})
 	if err != nil {
 		return err
 	}
-	for _, q := range replies {
-		if err := b.deliver(ctx, q.to, q.reply); err != nil {
-			return err
+	return b.Store.SendReplies(ctx, id, func(body []byte) error {
+		var q queued
+		if err := json.Unmarshal(body, &q); err != nil {
+			b.Log.Error("queued reply unreadable", "err", err)
+			return nil
 		}
-	}
-	return nil
+		return b.deliver(ctx, q.To, q.Reply)
+	})
 }
 
 func (b *Bot) route(ctx context.Context, r User, m wa.Inbound) error {
@@ -503,13 +518,15 @@ func (b *Bot) text(ctx context.Context, r User, body string) error {
 // reply queues a reply while an inbound message is processed, else sends it.
 func (b *Bot) reply(ctx context.Context, to User, r Reply) error {
 	if b.queue != nil {
-		*b.queue = append(*b.queue, queued{to, r})
+		*b.queue = append(*b.queue, queued{To: to, Reply: r})
 		return nil
 	}
 	return b.deliver(ctx, to, r)
 }
 
-// deliver drops permanent API errors so the webhook isn't retried for a reply we can never send.
+// deliver returns an error only when the reply was refused and trying again may work, e.g.
+// Telegram's 429, so the webhook's retry sends it. A reply that can never be sent, or that
+// may have been delivered despite the error, is dropped: resending could repeat it.
 func (b *Bot) deliver(ctx context.Context, to User, r Reply) error {
 	var err error
 	if to.Channel == store.Telegram {
@@ -521,11 +538,18 @@ func (b *Bot) deliver(ctx context.Context, to User, r Reply) error {
 		_, err = b.Sender.Send(ctx, whatsAppMessage(to, r))
 	}
 	var permanent interface{ Permanent() bool }
-	if errors.As(err, &permanent) && permanent.Permanent() {
+	var refused interface{ Rejected() bool }
+	switch {
+	case err == nil:
+		return nil
+	case errors.As(err, &permanent) && permanent.Permanent():
 		b.Log.Warn("reply not delivered", "err", err)
 		return nil
+	case errors.As(err, &refused) && refused.Rejected():
+		return err
 	}
-	return err
+	b.Log.Warn("reply may not have been delivered; not retried", "err", err)
+	return nil
 }
 
 func whatsAppMessage(to User, r Reply) wa.Message {
