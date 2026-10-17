@@ -211,6 +211,20 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .face img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover }
 .face figcaption { padding: 10px 14px 12px; font-size: .85rem; line-height: 1.45; color: var(--muted) }
 .face figcaption b { color: var(--fg); font-weight: 600 }
+.testimonies { display: grid; gap: 16px }
+.testimony { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 20px; align-items: start; background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--rep); border-radius: 14px; padding: 18px; box-shadow: var(--shadow) }
+.testimony > .video { grid-column: 1; grid-row: 1 }
+.testimony > div { grid-column: 2; grid-row: 1 }
+.testimony.text-only { grid-template-columns: minmax(0, 1fr) }
+.testimony.text-only > div { grid-column: 1 }
+.testimony h3 { margin: 0; font-size: 1.25rem; line-height: 1.25 }
+.testimony .who { margin: 2px 0 12px; color: var(--muted); font-size: .9rem }
+.testimony blockquote { margin: 0 0 12px; font-size: 1.15rem; line-height: 1.45; font-weight: 600; letter-spacing: -.01em; max-width: 60ch }
+.testimony blockquote::before { content: "“"; display: block; font: 800 2.6rem/.7 Georgia, "Times New Roman", serif; color: var(--rep) }
+.testimony p { margin: 0 0 8px; max-width: 70ch }
+.testimony .status { font-size: .92rem; font-weight: 600 }
+.testimony .via { font-size: .8rem; color: var(--muted) }
+@media (max-width: 560px) { .testimony { grid-template-columns: minmax(0, 1fr); padding: 16px } .testimony > .video, .testimony > div { grid-column: 1; grid-row: auto } .testimony > .video { max-width: 220px } }
 @media (max-width: 560px) { .evidence { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 66%; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px } .evidence > * { scroll-snap-align: start } }
 .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px }
 .filters button { font: inherit; font-size: .85rem; font-weight: 600; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); cursor: pointer }
@@ -270,7 +284,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   <section class="hero" aria-labelledby="titulo">
     <span class="eyebrow"><span class="pulse" aria-hidden="true"></span><span id="dia">Crisis del agua en Guadalajara</span></span>
     <h1 id="titulo">La crisis del agua, al día</h1>
-    <p class="lede">Cortes de agua en 627 colonias. Una marcha por agua limpia dispersada con gas lacrimógeno y agua a presión, periodistas heridos, detenidos que denuncian tortura y seis manifestantes vinculados a proceso. Y un acueducto de 11,922 millones de pesos, que se pagaría a una empresa privada durante 20 o 25 años, esperando votos en el Congreso. Todo, con sus fuentes.</p>
+    <p class="lede">Cortes de agua en 627 colonias. Una marcha por agua limpia dispersada con gas lacrimógeno y agua a presión, periodistas heridos, detenidos que <a href="#testimonios">denuncian tortura</a> y seis manifestantes vinculados a proceso. Y un acueducto de 11,922 millones de pesos, que se pagaría a una empresa privada durante 20 o 25 años, esperando votos en el Congreso. Todo, con sus fuentes.</p>
     <div class="stats">
       <div class="stat"><b>627</b><span>colonias con días sin agua hasta marzo de 2027</span><a href="https://www.informador.mx/jalisco/tandeos-siapa-guadalajara-habilitara-pipas-y-cisternas-para-colonias-afectadas-por-disminucion-de-agua-20261015-0182.html" rel="noopener" target="_blank">El Informador</a></div>
       <div class="stat"><b>2,500</b><span>litros por segundo menos: una cuarta parte del agua de la ciudad</span><a href="https://www.publimetro.com.mx/nacional/2026/10/08/sheinbaum-ofrece-apoyo-de-conagua-ante-calidad-del-agua-en-guadalajara/" rel="noopener" target="_blank">Publimetro</a></div>
@@ -289,6 +303,69 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   </section>
 
   <main>
+    <section aria-labelledby="testimonios">
+      <div class="sec-head">
+        <h2 id="testimonios" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#user"/></svg></span>Lo que vivieron los detenidos</h2>
+        <span class="warn"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#info"/></svg>Contiene relatos de tortura</span>
+      </div>
+      <p class="note vnote">Personas detenidas el 11 de octubre cuentan con su nombre lo que les hicieron policías al detenerlas y dentro de Casa Jalisco. Las citas son textuales, de los medios que las entrevistaron.</p>
+      <div class="testimonies">
+        <article class="testimony">
+          <div>
+            <h3>Iván Becerra García</h3>
+            <p class="who">Activista por el agua</p>
+            <blockquote>Entre él y otro compañero me llevaban de las manos y me iban dando puñetazos en el área abdominal y de costillas.</blockquote>
+            <p>Lo detuvieron en la marcha y, según cuenta, lo siguieron golpeando dentro de Casa Jalisco, donde tuvieron a los detenidos en un cuarto. Dice que tiene «posible fractura en cervicales».</p>
+            <p class="status">Quedó libre esa noche, «con reservas de ley».</p>
+            <span class="via"><a href="https://www.nmas.com.mx/jalisco/seguridad/en-punto-video-liberan-a-ultimas-personas-detenidas-por-protesta-por-el-agua-en-guadalajara/" rel="noopener" target="_blank">N+</a> · <a href="https://www.youtube.com/watch?v=szoxagvQoUE" rel="noopener" target="_blank">Somos el Medio</a> · <a href="https://www.youtube.com/watch?v=IKNbTLTOez4" rel="noopener" target="_blank">entrevista en Milenio</a></span>
+          </div>
+          <figure class="video" data-platform="youtube" data-id="szoxagvQoUE"><button type="button" aria-label="Reproducir: Iván Becerra García rompe el silencio tras su detención (YouTube)"><img src="/img/videos/youtube-szoxagvQoUE.webp" alt="" loading="lazy" decoding="async"><span class="plat">YouTube</span><span class="play" aria-hidden="true"></span><span class="vt">Iván Becerra García rompe el silencio tras su detención</span><span class="src">Somos el Medio · 13 oct</span></button><figcaption><a href="https://www.youtube.com/watch?v=szoxagvQoUE" rel="noopener" target="_blank">Ver en YouTube</a></figcaption></figure>
+        </article>
+        <article class="testimony">
+          <div>
+            <h3>Teodoro Jesús Torres Valdez</h3>
+            <p class="who">Activista, 50 años, padre y abuelo</p>
+            <blockquote>Me empezaron a golpear, a golpear, pero como yo tenía las esposas enfrente, pues yo me estaba tapando los golpes.</blockquote>
+            <p>Encapuchados lo jalaron detrás de la línea de antimotines y lo metieron a Casa Jalisco, donde, dice, lo golpearon, patearon y amenazaron ya esposado. Salió con los dos ojos morados, una herida en la cabeza («Aquí me abrieron la cabeza») y, según él, costillas rotas. También lo contó en un <a href="https://www.tiktok.com/@gloria.reza.reportera/video/7697307737977294101" rel="noopener" target="_blank">video de Gloria Reza</a>.</p>
+            <p class="status">Vinculado a proceso el 16 de octubre por lesiones y delitos contra la autoridad; sigue el proceso en libertad.</p>
+            <span class="via"><a href="https://grupoanimal.mx/estados/policias-me-abrieron-la-cabeza-teodoro-denuncia-golpes-protesta-agua-guadalajara" rel="noopener" target="_blank">Animal Político</a> · <a href="https://www.informador.mx/jalisco/vinculan-a-proceso-a-4-detenidos-tras-protesta-por-el-agua-20261016-0148.html" rel="noopener" target="_blank">El Informador</a></span>
+          </div>
+          <figure class="video" data-platform="youtube" data-id="CsV8dQW-K0o" data-vertical><button type="button" aria-label="Reproducir: «Los policías me abrieron la cabeza» (YouTube)"><img src="/img/videos/youtube-CsV8dQW-K0o.webp" alt="" loading="lazy" decoding="async"><span class="plat">YouTube</span><span class="play" aria-hidden="true"></span><span class="vt">«Los policías me abrieron la cabeza»</span><span class="src">Animal Político · 15 oct</span></button><figcaption><a href="https://www.youtube.com/watch?v=CsV8dQW-K0o" rel="noopener" target="_blank">Ver en YouTube</a></figcaption></figure>
+        </article>
+        <article class="testimony text-only">
+          <div>
+            <h3>Alejandra Rivas</h3>
+            <p class="who">Integrante del centro cultural Casa Quinqué</p>
+            <blockquote>Me tocó ver cómo una compa se convulsionó.</blockquote>
+            <p>Tras detenerla en la calle Ontario, las agentes la tiraron al suelo y la arrastraron por el pavimento. Entró a Casa Jalisco sin zapatos y con heridas en la cabeza; en un cuarto de paredes de cristal, policías siguieron golpeándola y le pisaron los tobillos mientras le decían «esto es lo que querías ¿no?».</p>
+            <p class="status">Está dispuesta a denunciar ante la FGR.</p>
+            <span class="via"><a href="https://www.lajornadamaya.mx/nacional/269569/victima-relata-torturas-sufridas-junto-a-otros-detenidos-en-casa-jalisco-tras-protesta-por-crisis-hidrica" rel="noopener" target="_blank">La Jornada</a></span>
+          </div>
+        </article>
+        <article class="testimony">
+          <div>
+            <h3>Samuel Morales Navarro</h3>
+            <p class="who">Repartidor de Rappi</p>
+            <blockquote>Me tumban de la motocicleta, me golpean, me arrastraron como pudieron toda la cuadra… me metieron, nos golpearon a todos.</blockquote>
+            <p>Circulaba en su motocicleta por Manuel Acuña y Rubén Darío cuando, dice, policías lo derribaron, golpearon y arrastraron. Perdió su moto, casco, mochila y teléfono, con los que trabaja.</p>
+            <p class="status">Vinculado a proceso el 16 de octubre; sigue el proceso en libertad.</p>
+            <span class="via"><a href="https://www.proceso.com.mx/nacional/2026/10/14/detenidos-por-protesta-del-agua-en-jalisco-denuncian-tortura-y-fabricacion-de-pruebas-381860.html" rel="noopener" target="_blank">Proceso</a> · <a href="https://www.informador.mx/jalisco/vinculan-a-proceso-a-4-detenidos-tras-protesta-por-el-agua-20261016-0148.html" rel="noopener" target="_blank">El Informador</a></span>
+          </div>
+          <figure class="video" data-platform="youtube" data-id="mopKyiVt8Js"><button type="button" aria-label="Reproducir: Samuel denuncia golpes y la desaparición de su motocicleta (YouTube)"><img src="/img/videos/youtube-mopKyiVt8Js.webp" alt="" loading="lazy" decoding="async"><span class="plat">YouTube</span><span class="play" aria-hidden="true"></span><span class="vt">Samuel denuncia golpes y la desaparición de su motocicleta</span><span class="src">Grupo Fórmula · 14 oct</span></button><figcaption><a href="https://www.youtube.com/watch?v=mopKyiVt8Js" rel="noopener" target="_blank">Ver en YouTube</a></figcaption></figure>
+        </article>
+        <article class="testimony text-only">
+          <div>
+            <h3>Juan Darío Muñoz Nava</h3>
+            <p class="who">Estudiante de Ingeniería Biomédica en el CUCEI (UdeG), 28 años</p>
+            <blockquote>Me preocupa por mi integridad… si ya fueron capaces de falsificar fotos, videos y de dar declaraciones falsas, pues no sabemos qué más pueden llegar a hacer.</blockquote>
+            <p>Antimotines lo detuvieron por la espalda cuando ayudaba a acomodar las vallas. Bajo custodia, dice, les indicaron qué escribir en los documentos que firmaron, y una foto presentada en su contra lo muestra con un ojo morado que, asegura, nunca tuvo.</p>
+            <p class="status">Vinculado a proceso el 16 de octubre; sigue el proceso en libertad.</p>
+            <span class="via"><a href="https://www.proceso.com.mx/nacional/2026/10/14/detenidos-por-protesta-del-agua-en-jalisco-denuncian-tortura-y-fabricacion-de-pruebas-381860.html" rel="noopener" target="_blank">Proceso</a> · <a href="https://www.informador.mx/jalisco/vinculan-a-proceso-a-4-detenidos-tras-protesta-por-el-agua-20261016-0148.html" rel="noopener" target="_blank">El Informador</a></span>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <section aria-labelledby="videos">
       <div class="sec-head">
         <h2 id="videos" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#video"/></svg></span>Lo que grabaron</h2>
@@ -299,7 +376,6 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         <figure class="video" data-platform="youtube" data-id="UB-TR9GkYOQ"><button type="button" aria-label="Reproducir: Policías usan gas y chorros de agua para dispersar la marcha (YouTube)"><img src="/img/videos/youtube-UB-TR9GkYOQ.webp" alt="" loading="lazy" decoding="async"><span class="plat">YouTube</span><span class="play" aria-hidden="true"></span><span class="vt">Policías usan gas y chorros de agua para dispersar la marcha</span><span class="src">Canal 44 · 11 oct</span></button><figcaption><a href="https://www.youtube.com/watch?v=UB-TR9GkYOQ" rel="noopener" target="_blank">Ver en YouTube</a></figcaption></figure>
         <figure class="video" data-platform="x" data-id="2109372356779200729"><button type="button" aria-label="Reproducir: Gas lacrimógeno, agua a presión y detenciones arbitrarias (X)"><img src="/img/videos/x-2109372356779200729.webp" alt="" loading="lazy" decoding="async"><span class="plat">X</span><span class="play" aria-hidden="true"></span><span class="vt">Gas lacrimógeno, agua a presión y detenciones arbitrarias</span><span class="src">Red TDT, video del IMDEC · 11 oct, 13:55</span></button><figcaption><a href="https://x.com/RedTDT/status/2109372356779200729" rel="noopener" target="_blank">Ver en X</a></figcaption></figure>
         <figure class="video" data-platform="youtube" data-id="JgLc7pyUj0M"><button type="button" aria-label="Reproducir: Policías golpean a manifestantes frente a Casa Jalisco (YouTube)"><img src="/img/videos/youtube-JgLc7pyUj0M.webp" alt="" loading="lazy" decoding="async"><span class="plat">YouTube</span><span class="play" aria-hidden="true"></span><span class="vt">Policías golpean a manifestantes frente a Casa Jalisco</span><span class="src">N+ · 11 oct</span></button><figcaption><a href="https://www.youtube.com/watch?v=JgLc7pyUj0M" rel="noopener" target="_blank">Ver en YouTube</a></figcaption></figure>
-        <figure class="video" data-platform="youtube" data-id="CsV8dQW-K0o" data-vertical><button type="button" aria-label="Reproducir: «Los policías me abrieron la cabeza» (YouTube)"><img src="/img/videos/youtube-CsV8dQW-K0o.webp" alt="" loading="lazy" decoding="async"><span class="plat">YouTube</span><span class="play" aria-hidden="true"></span><span class="vt">«Los policías me abrieron la cabeza»</span><span class="src">Animal Político · 15 oct</span></button><figcaption><a href="https://www.youtube.com/watch?v=CsV8dQW-K0o" rel="noopener" target="_blank">Ver en YouTube</a></figcaption></figure>
         <figure class="video" data-platform="x" data-id="2109367473552437311"><button type="button" aria-label="Reproducir: Gas, ráfagas de agua y violencia física contra manifestantes (X)"><img src="/img/videos/x-2109367473552437311.webp" alt="" loading="lazy" decoding="async"><span class="plat">X</span><span class="play" aria-hidden="true"></span><span class="vt">Gas, ráfagas de agua y violencia física contra manifestantes</span><span class="src">ZonaDocs · 11 oct, 13:36</span></button><figcaption><a href="https://x.com/ZonaDocs/status/2109367473552437311" rel="noopener" target="_blank">Ver en X</a></figcaption></figure>
         <figure class="video" data-platform="youtube" data-id="otZG3VBXFAU"><button type="button" aria-label="Reproducir: Un periodista, herido en el rostro por gas lacrimógeno (YouTube)"><img src="/img/videos/youtube-otZG3VBXFAU.webp" alt="" loading="lazy" decoding="async"><span class="plat">YouTube</span><span class="play" aria-hidden="true"></span><span class="vt">Un periodista, herido en el rostro por gas lacrimógeno</span><span class="src">Somos el Medio · 11 oct</span></button><figcaption><a href="https://www.youtube.com/watch?v=otZG3VBXFAU" rel="noopener" target="_blank">Ver en YouTube</a></figcaption></figure>
         <figure class="video" data-platform="youtube" data-id="upEOMWRrHuQ"><button type="button" aria-label="Reproducir: Policías golpean a un manifestante (YouTube)"><img src="/img/videos/youtube-upEOMWRrHuQ.webp" alt="" loading="lazy" decoding="async"><span class="plat">YouTube</span><span class="play" aria-hidden="true"></span><span class="vt">Policías golpean a un manifestante</span><span class="src">Milenio · 14 oct</span></button><figcaption><a href="https://www.youtube.com/watch?v=upEOMWRrHuQ" rel="noopener" target="_blank">Ver en YouTube</a></figcaption></figure>
@@ -466,7 +542,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       <div class="quotes">
         <figure class="quote org"><blockquote>La represión nunca debe ser una opción ante las personas que pacíficamente se reúnen a exigir sus derechos.</blockquote><figcaption><b>Edith Olivares Ferreto</b>, Amnistía Internacional México · 12 oct · <a href="https://www.cronica.com.mx/estados/2026/10/12/amnistia-internacional-condena-represion-en-protesta-por-agua-en-guadalajara-exige-localizar-a-detenidos/" rel="noopener" target="_blank">Crónica</a></figcaption></figure>
         <figure class="quote org"><blockquote>El gobierno debe investigar de forma pronta e independiente todas las denuncias de uso excesivo de la fuerza.</blockquote><figcaption><b>Gina Romero</b>, relatora especial de la ONU sobre libertad de reunión pacífica · 13 oct · <a href="https://www.informador.mx/jalisco/relatora-de-la-onu-se-pronuncia-tras-polemica-por-protesta-del-agua-en-guadalajara-20261013-0059.html" rel="noopener" target="_blank">El Informador</a></figcaption></figure>
-        <figure class="quote org"><blockquote>Nos dijeron que a nosotros nos convenía que dijéramos que no queríamos más problemas.</blockquote><figcaption><b>Uno de los detenidos</b>, sobre lo que les decían bajo custodia · 14 oct · <a href="https://www.proceso.com.mx/nacional/2026/10/14/detenidos-por-protesta-del-agua-en-jalisco-denuncian-tortura-y-fabricacion-de-pruebas-381860.html" rel="noopener" target="_blank">Proceso</a></figcaption></figure>
+        <figure class="quote org"><blockquote>Nos dijeron que a nosotros nos convenía que dijéramos que no queríamos más problemas.</blockquote><figcaption><b>Juan Darío Muñoz Nava</b>, estudiante detenido, sobre lo que les decían bajo custodia · 14 oct · <a href="https://www.proceso.com.mx/nacional/2026/10/14/detenidos-por-protesta-del-agua-en-jalisco-denuncian-tortura-y-fabricacion-de-pruebas-381860.html" rel="noopener" target="_blank">Proceso</a></figcaption></figure>
         <figure class="quote org"><blockquote>Nadie debe ser juzgado por ejercer su derecho a la protesta.</blockquote><figcaption><b>CEPAD</b>, que acompaña a los detenidos · 16 oct · <a href="https://www.informador.mx/jalisco/vinculan-a-proceso-a-4-detenidos-tras-protesta-por-el-agua-20261016-0148.html" rel="noopener" target="_blank">El Informador</a></figcaption></figure>
         <figure class="quote org"><blockquote>Reiteramos que la ciudadanía tiene derecho a protestar y las personas periodistas a informar sobre hechos de interés público.</blockquote><figcaption><b>Artículo 19 México y Centroamérica</b> · 11 oct · <a href="https://www.eluniversal.com.mx/nacion/periodistas-denuncian-agresiones-durante-protesta-por-agua-en-guadalajara-acusan-uso-de-gas-y-uso-de-fuerza/" rel="noopener" target="_blank">El Universal</a></figcaption></figure>
         <figure class="quote org"><blockquote>Manifestarse para demandar su cumplimiento no puede ser motivo de detención, represión y criminalización.</blockquote><figcaption><b>ITESO</b>, sobre el derecho al agua · 12 oct · <a href="https://udgtv.com/noticias/iteso-exige-esclarecer-detenciones-tras-marcha-por-el-agua/334289" rel="noopener" target="_blank">UDG TV</a></figcaption></figure>
