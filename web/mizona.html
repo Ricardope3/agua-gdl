@@ -119,6 +119,26 @@ label { display: block; font-weight: 700; margin: 0 0 6px }
 .mapbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: 0 0 10px }
 .mapbar p { margin: 0 }
 .mapbox .map { height: 380px; border-radius: 8px; margin: 0 0 10px; background: var(--subtle) }
+.mapbox .map.tall { height: clamp(420px, 72vh, 640px) }
+.mapbox .mapwrap { position: relative }
+.mapbox .card { position: absolute; z-index: 1200; top: 12px; left: 12px; width: min(360px, calc(100% - 24px)); max-height: calc(100% - 34px); overflow: auto; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; box-shadow: 0 10px 30px rgb(3 14 22 / .22) }
+@media (max-width: 760px) { .mapbox .card { top: auto; bottom: 20px; left: 10px; width: calc(100% - 20px); max-height: 58% } }
+.mapbox .card h2 { margin: 0 32px 2px 0; font-size: 1.3rem; line-height: 1.2; letter-spacing: -.02em; color: var(--link); text-transform: uppercase }
+.mapbox .card .where { margin: 0 0 10px; color: var(--muted); max-width: none }
+.mapbox .card .close { position: absolute; top: 10px; right: 10px; width: 34px; height: 34px; display: grid; place-items: center; font: inherit; color: var(--muted); background: none; border: 0; border-radius: 8px; cursor: pointer }
+.mapbox .card .close:hover { color: var(--fg); background: var(--subtle) }
+.mapbox .card .close .i { color: inherit }
+.zbox { border-left: 6px solid var(--zc, var(--muted)); background: var(--subtle); border-radius: 10px; padding: 10px 12px; margin: 0 0 10px }
+.zbox.side { background: transparent; border: 1px dashed var(--line); border-left: 6px solid var(--zc, var(--muted)) }
+.zbox p { margin: 0; max-width: none }
+.zbox .zn { font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted) }
+.zbox .zd { font-weight: 700; font-size: 1.1rem; line-height: 1.3 }
+.zbox.side .zd { font-weight: 600; font-size: 1rem }
+.zbox .next { margin-top: 4px; font-size: .95rem }
+.mapbox .card .warn { background: var(--warn-bg); border-left: 5px solid var(--warn); border-radius: 8px; padding: 10px 12px; margin: 0 0 10px; font-size: .95rem; max-width: none }
+.mapbox .card .subscribe { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0 }
+.mapbox .card .subscribe .button { font-size: .9rem; padding: 8px 12px }
+.mapbox .card .note { margin-top: 10px; font-size: .85rem }
 .mapbox .note { margin: 0 }
 .map-label { background: var(--surface); color: var(--fg); border: 1px solid var(--line); font: 600 13px/1.3 var(--font); box-shadow: var(--shadow) }
 .map-label::before { display: none }
@@ -451,8 +471,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     }, { enableHighAccuracy: false, timeout: 20000, maximumAge: 60000 });
   }
 
-  // The map (Leaflet + OpenStreetMap tiles) loads only when asked, so nobody's IP reaches OSM by default.
-  // It is SIAPA's own map data, drawn by /mapa.js: every colonia filled by its zone.
+  // The map (Leaflet + OpenStreetMap tiles) loads with the first result, so nobody's IP
+  // reaches OSM before searching. It is SIAPA's own map data, drawn by /mapa.js.
   const HIGHLIGHT = "#facc15";
   let mapDeps = null;
   let choiceHover = null; // set by the map, so hovering an option highlights its outline
@@ -471,64 +491,51 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     return mapDeps;
   }
   const coloniaKey = (name, mun) => norm(name) + "|" + norm(municipio(mun));
-
-  // spotlight briefly dims the screen around el, lit from where it is (or the nearest screen edge).
-  // It follows el every frame, since the page may still be scrolling to the results.
-  function spotlight(el) {
-    if (!el.isConnected) return;
-    const veil = document.createElement("div");
-    veil.className = "spotlight";
-    const aim = () => {
-      const r = el.getBoundingClientRect();
-      const x = Math.min(Math.max(r.left + r.width / 2, 0), innerWidth);
-      const y = Math.min(Math.max(r.top + r.height / 2, 0), innerHeight);
-      const hole = Math.max(r.width, 80) / 2 + 10;
-      veil.style.background = `radial-gradient(circle at ${x}px ${y}px, transparent ${hole}px, rgb(3 14 22 / .8) ${hole + 120}px)`;
-      if (veil.isConnected) requestAnimationFrame(aim);
-    };
-    document.body.append(veil);
-    aim();
-    veil.addEventListener("animationend", () => veil.remove());
-  }
+  const phone = () => matchMedia("(max-width: 760px)").matches;
+  const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // scrollToTop brings el to the top of the screen, just under the sticky menu.
   function scrollToTop(el) {
     const header = document.querySelector("header.top");
-    scrollTo({ top: el.getBoundingClientRect().top + scrollY - (header ? header.offsetHeight : 0) - 12, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    scrollTo({ top: el.getBoundingClientRect().top + scrollY - (header ? header.offsetHeight : 0) - 12, behavior: reduced() ? "auto" : "smooth" });
   }
+  const telegramLink = (z) => el("a", { class: "button", href: `${TELEGRAM}?start=z${z}`, rel: "noopener" }, icon("send"), `Aviso por Telegram · zona ${z}`);
+  const calendarLink = (z) => isIOS
+    ? el("a", { class: "button alt", href: `https://${calendarURL(z)}` }, icon("calendar"), `Calendario · zona ${z}`)
+    : el("a", { class: "button alt", href: googleCalendar(z), rel: "noopener", target: "_blank" }, icon("calendar"), `Calendario · zona ${z}`);
+  const nextCut = (zones, z) => (zones.get(z) ? zones.get(z).next.find((d) => d >= isoToday(0)) : null) || null;
+  const lowerDate = (iso) => dateES(iso).replace(/^./, (ch) => ch.toLowerCase());
 
-  // mapBlock shows SIAPA's map with the listed colonias outlined. In a choice list (pick),
-  // tapping an outlined colonia picks it; tapping any other colonia shows its zone, under the
-  // map or through onZones. A tap on a spot with no colonia asks the API which zone it is in.
-  function mapBlock(list, zones, pick = list.length > 1, onZones = null) {
-    const open = el("button", { type: "button", class: "button alt glow" }, icon("map-pin"), "Ver en el mapa");
+  // mapBlock shows SIAPA's map with the listed colonias outlined, opening at once. With
+  // card (a list colonia), its card floats over the map, the list's zones first and the
+  // map's view as a note. In a choice list (pick), tapping an outlined colonia picks it;
+  // tapping any other colonia shows its own card. A tap on a spot with no colonia asks the
+  // API which zone it is in and shows that zone's days under the map.
+  function mapBlock(list, zones, pick = list.length > 1, card = null) {
     const box = el("div", { class: "mapbox" },
-      el("div", { class: "mapbar" },
-        el("p", {}, !pick ? "Esta colonia está en más de una zona. Mira en el mapa de qué lado queda tu casa." : list.length > 1 ? "¿No sabes cuál es? Míralas en el mapa." : "Mírala en el mapa."),
-        open),
+      el("p", { class: "note" }, "Cargando el mapa…"),
       el("p", { class: "note" }, "El mapa se carga desde OpenStreetMap. Las colonias y las zonas son las del mapa del SIAPA; los contornos son aproximados."));
-    requestAnimationFrame(() => spotlight(open));
-    open.addEventListener("click", async () => {
-      open.disabled = true;
+    (async () => {
       let data;
       try {
         data = await loadMap();
       } catch {
-        box.replaceChildren(el("p", { class: "note" }, "No pudimos cargar el mapa. Revisa tu zona en el ", mapLink(), "."));
+        box.replaceChildren(el("p", { class: "note" }, "No pudimos cargar el mapa. Revisa tu zona en el ", mapLink(), "."), card ? cards(card.zones.map((z) => zones.get(z)).filter(Boolean)) : null);
         return;
       }
+      if (!box.isConnected) return;
       const M = window.aguaMapa;
       const L = window.L;
       const found = list.map((c) => [c, M.find(data.colonias, c.name, c.municipio)]).filter(([, fs]) => fs.length);
       const absent = list.filter((c) => !M.find(data.colonias, c.name, c.municipio).length);
-      const div = el("div", { class: "map", role: "region", "aria-label": "Mapa de las colonias y las zonas" });
+      const div = el("div", { class: card ? "map tall" : "map", role: "region", "aria-label": "Mapa de las colonias y las zonas" });
+      const wrap = el("div", { class: "mapwrap" }, div);
       const tapPick = pick && found.length > 0;
       const answer = el("p", { "aria-live": "polite" }, tapPick ? "Toca tu colonia en el mapa." : "Toca cualquier colonia del mapa para ver su zona.",
-        absent.length ? ` El mapa del SIAPA no dibuja ${joinES(absent.map((c) => `${c.name} (${municipio(c.municipio)})`))} con ese nombre: ` : null,
-        absent.length ? el("a", { href: "#lista" }, "por qué") : null, absent.length ? "." : null);
+        absent.length && !card ? ` El mapa del SIAPA no dibuja ${joinES(absent.map((c) => `${c.name} (${municipio(c.municipio)})`))} con ese nombre: ` : null,
+        absent.length && !card ? el("a", { href: "#lista" }, "por qué") : null, absent.length && !card ? "." : null);
       const tapped = el("div");
-      box.replaceChildren(div, answer, tapped, box.lastChild);
-      scrollToTop(box);
+      box.replaceChildren(wrap, answer, tapped, box.lastChild);
       const map = L.map(div, { preferCanvas: true, scrollWheelZoom: false, zoomSnap: 0.25 });
       // The wheel scrolls the page, but a trackpad pinch (ctrl+wheel; gesture events in Safari) zooms the map.
       let pinch = 0;
@@ -553,7 +560,41 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       const days = (z) => zones.get(z) ? cap(joinES(zones.get(z).days)) : null;
       const picks = new Map();
       for (const [c, fs] of found) for (const f of fs) picks.set(f, c);
-      let lastTap = 0;
+      let shownCard = null;
+      const closeCard = () => {
+        if (shownCard) shownCard.remove();
+        shownCard = null;
+        drawn.clearHighlights();
+      };
+      const cardOpts = { days, next: (z) => nextCut(zones, z), dateES: lowerDate, links: (z) => [telegramLink(z), calendarLink(z)],
+        note: "Gratis: un mensaje a las 8 p. m. la noche antes de cada racionamiento, o una alerta en tu calendario. Abajo, otras formas de agregar el calendario y cómo activar la alerta.", onClose: closeCard };
+      const place = (node) => {
+        if (shownCard) shownCard.remove();
+        shownCard = node;
+        wrap.append(node);
+      };
+      // fitTo leaves room for the card: on the left on wide screens, at the bottom on phones.
+      const fitTo = (bounds, animate) => {
+        const pad = shownCard
+          ? (phone() ? { paddingTopLeft: [24, 24], paddingBottomRight: [24, Math.round(map.getSize().y * 0.55)] } : { paddingTopLeft: [400, 24], paddingBottomRight: [24, 24] })
+          : { padding: [24, 24] };
+        const opts = { ...pad, maxZoom: 15, animate: animate && !reduced(), duration: 0.7 };
+        if (opts.animate) map.flyToBounds(bounds, opts); else map.fitBounds(bounds, opts);
+      };
+      // mapCard shows a tapped colonia the way /mapa does: the map's zones first, the list's as a note.
+      const mapCard = (f) => {
+        const p = f.properties;
+        const z = M.zones(p);
+        const ls = M.zonesOf(p.l || "");
+        const differs = ls.length && ls.join() !== [...z.all].sort().join();
+        place(M.card({ ...cardOpts, title: p.n, subtitle: municipio(p.m) + (p.cp ? ` · C.P. ${p.cp}` : ""), sentence: M.describe(p), main: z.main, side: z.border,
+          extra: differs ? ls.filter((zone) => !z.all.includes(zone)) : [],
+          extraNote: differs ? `La lista de colonias del SIAPA la pone en ${M.zoneWord(ls)}. El mapa y la lista no siempre coinciden: ${z.all.length ? "prepárate para los días de las dos" : "prepárate para esos días"}.` : null,
+          color: drawn.color }));
+        drawn.clearHighlights();
+        const g = drawn.highlight(f);
+        fitTo(g.getBounds(), true);
+      };
       const drawn = M.draw(L, map, data, {
         dark: aguaDark(),
         days,
@@ -564,26 +605,16 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
             showColonia(c, zones);
             return;
           }
+          mapCard(f);
           const z = M.zones(f.properties);
           const where = `${f.properties.n} (${municipio(f.properties.m)})`;
-          if (!z.all.length) {
-            answer.replaceChildren(`${where} queda fuera de las zonas del mapa del SIAPA: ahí no toca racionamiento.`);
-            tapped.replaceChildren();
-            return;
-          }
-          answer.replaceChildren(el("span", {}, where, " está en la ", el("strong", {}, M.zoneWord(z.main)), z.border.length ? `, ${M.borderWord(z.border)}` : "", ". Abajo están sus días."));
-          const nodes = [];
-          const sentence = M.describe(f.properties);
-          if (sentence) nodes.push(warn(sentence));
-          const info = z.main.map((n) => zones.get(n)).filter(Boolean);
-          if (onZones) onZones(info); else nodes.push(cards(info));
-          for (const n of z.border) {
-            const zi = zones.get(n);
-            nodes.push(el("p", { class: "note" }, `Al otro lado del límite, zona ${n}: ${zi ? joinES(zi.days) : "días no disponibles"}.`));
-          }
-          tapped.replaceChildren(...nodes);
+          answer.replaceChildren(z.all.length
+            ? el("span", {}, where, " está en la ", el("strong", {}, M.zoneWord(z.main)), z.border.length ? `, ${M.borderWord(z.border)}` : "", ".")
+            : `${where} queda fuera de las zonas del mapa del SIAPA: ahí no toca racionamiento.`);
+          tapped.replaceChildren();
         },
       });
+      let lastTap = 0;
       // The listed colonias get an outline and a label; the municipio only when two share a name.
       const sameName = (c) => list.some((o) => norm(o.name) === norm(c.name) && norm(o.municipio) !== norm(c.municipio));
       const drawnBy = new Map();
@@ -598,9 +629,31 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         all = all ? all.extend(bounds) : L.latLngBounds(bounds);
         drawnBy.set(coloniaKey(c.name, c.municipio), fs);
       }
+      if (card) {
+        // The searched colonia's card: the list's zones first; the map's view when it differs.
+        const fs = M.find(data.colonias, card.name, card.municipio);
+        const p = fs.length ? fs[0].properties : null;
+        const mz = p ? M.zones(p) : null;
+        let sentence = null, side = [], extra = [], extraNote = null;
+        if (card.zones.length > 1) sentence = `La lista del SIAPA pone esta colonia en las ${M.zoneWord(card.zones)}: recibe agua de varios acueductos. Mira en el mapa de qué lado queda tu casa, o usa tu ubicación.`;
+        else if (card.multi) sentence = "El SIAPA marca esta colonia como abastecida por varios acueductos, así que una parte podría tener otro calendario. Para confirmarlo, usa tu ubicación.";
+        if (!mz) {
+          extraNote = `El mapa del SIAPA no dibuja una colonia llamada ${card.name} en ${municipio(card.municipio)}; estos son los días de su lista.`;
+        } else if (!mz.all.length) {
+          extraNote = "En el mapa del SIAPA el contorno de esta colonia queda fuera de todas las zonas; la lista la pone aquí.";
+        } else if ([...mz.all].sort().join() !== card.zones.slice().sort().join()) {
+          extra = mz.main.filter((z) => !card.zones.includes(z));
+          side = mz.border.filter((z) => !card.zones.includes(z));
+          extraNote = `En el mapa del SIAPA queda en la ${M.label(p).toLowerCase()}. El mapa y la lista no siempre coinciden: prepárate para los días de las dos.`;
+        } else if (mz.border.length && !sentence) {
+          sentence = M.describe(p);
+          side = mz.border;
+        }
+        place(M.card({ ...cardOpts, title: card.name, subtitle: municipio(card.municipio) + (p && p.cp ? ` · C.P. ${p.cp}` : ""), sentence, main: card.zones, side, extra, extraNote, color: drawn.color }));
+      }
       const listed = [...new Set(list.flatMap((c) => c.zones))];
       const zoneBounds = drawn.zoneLayer.getLayers().filter((l) => listed.includes(l.feature.properties.z)).reduce((b, l) => (b ? b.extend(l.getBounds()) : L.latLngBounds(l.getBounds())), null);
-      map.fitBounds(all || zoneBounds || drawn.home, { padding: [24, 24] });
+      fitTo(all || zoneBounds || drawn.home, false);
       // Hovering an option in the choice list lights its outline in yellow.
       let hot = null;
       const unhover = () => {
@@ -647,33 +700,22 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
             : nums.length === 1
               ? el("span", {}, "Ese punto está en la ", el("strong", {}, `zona ${nums[0]}`), ". Abajo están sus días.")
               : `Ese punto queda en el límite entre las zonas ${joinES(nums)}. Abajo están sus días.`);
-          if (!nums.length) return;
-          if (onZones) onZones(r.zones); else tapped.replaceChildren(cards(r.zones));
+          tapped.replaceChildren(nums.length ? cards(r.zones) : null);
         } catch {
           if (mine === taps) answer.replaceChildren("No pudimos consultar la zona de ese punto. Intenta de nuevo.");
         }
       });
-    });
+    })();
     return box;
   }
 
+  // showColonia: the map with the colonia outlined and its card floating over it, then the
+  // calendar details for its zones.
   function showColonia(c, zones) {
-    const name = el("strong", {}, c.name);
-    const where = el("p", {}, name, `, ${municipio(c.municipio)}`);
-    let note;
-    if (c.zones.length > 1) {
-      note = warn(`La lista del SIAPA pone esta colonia en las zonas ${joinES(c.zones)}: recibe agua de varios acueductos. Para saber cuál te toca, mira el mapa aquí abajo o `, locateLink("usa tu ubicación"), ".");
-    } else if (c.multi) {
-      note = warn("El SIAPA marca esta colonia como abastecida por varios acueductos, así que una parte podría tener otro calendario. Para confirmarlo, ", locateLink("usa tu ubicación"), " o revisa el ", mapLink(), ".");
-    } else {
-      where.append(": ", el("strong", {}, `zona ${c.zones[0]}`), ".");
-    }
     const back = lastChoices && lastChoices.length > 1 ? el("p", {}, el("button", { type: "button", class: "linklike" }, "← Ver las otras colonias")) : null;
     if (back) back.firstChild.addEventListener("click", () => showChoices(lastChoices, zones));
-    // Tapping the map replaces the listed zones' cards with the tapped spot's.
-    const zoneCards = el("div", {}, cards(c.zones.map((z) => zones.get(z)).filter(Boolean)));
-    const map = c.zones.length > 1 ? mapBlock([c], zones, false, (found) => zoneCards.replaceChildren(cards(found))) : null;
-    show(where, note, map, zoneCards, discountNote(), back);
+    const details = c.zones.map((z) => el("div", { class: "zone" }, el("h3", { class: "ih" }, badge("calendar"), `Calendario de la zona ${z}`), calendarLinks(z)));
+    show(mapBlock([c], zones, false, c), ...details, discountNote(), back);
   }
 
   const discountNote = () => isoToday(0) > "2026-12-15" ? null : el("p", { class: "note" },
