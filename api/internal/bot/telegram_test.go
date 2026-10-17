@@ -182,6 +182,26 @@ func TestRefusedReplyIsSentWhenTelegramRetries(t *testing.T) {
 	}
 }
 
+func TestBajaCancelsARefusedConfirmation(t *testing.T) {
+	h := newTGHarness(t, "2026-10-14 10:00")
+	tel := &refusing{refuse: 1}
+	h.bot.Telegram = tel
+	start := tg.Update{UpdateID: 100, Message: &tg.InboundMessage{Chat: tg.Chat{ID: 777, Type: "private"}, Text: "/start z6"}}
+	if err := h.bot.HandleTelegram(context.Background(), start); err == nil {
+		t.Fatal("a refused reply must make Telegram retry the update")
+	}
+	h.say(t, "/baja") // delivered before Telegram retries the start
+	if err := h.bot.HandleTelegram(context.Background(), start); err != nil {
+		t.Fatal(err)
+	}
+	if len(tel.Sent) != 1 || !strings.Contains(tel.Sent[0].Text, "ya no recibirás") {
+		t.Fatalf("after BAJA only the goodbye is sent, never the old confirmation: %+v", tel.Sent)
+	}
+	if _, ok := h.sub(t); ok || len(h.store.Replies["tg:100"]) != 0 {
+		t.Fatalf("BAJA drops the subscription and its queued replies: %+v", h.store.Replies)
+	}
+}
+
 func TestRejoiningCantReportTheSameCutAgain(t *testing.T) {
 	h := newTGHarness(t, "2026-10-16 09:00")
 	h.say(t, "/start z6") // on the store's clock, before the cut

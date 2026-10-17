@@ -33,17 +33,23 @@ type Store struct {
 	Now        func() time.Time // stamps subscriptions and attempts; see NewStore
 	FailDue    int              // DueSubscribers fails this many times, like a database waking up
 	Notices    map[string]bool
-	Replies    map[string][][]byte // queued replies by inbound message ID
+	Replies    map[string][]Pending // queued replies by inbound message ID
 	nextID     int64
 }
 
 // NewStore's clock is stopped before every test's date, so whatever is subscribed before
 // a test sets Now is old, whenever the test runs.
+// Pending is a queued reply and its recipient.
+type Pending struct {
+	Channel, UserID, Phone string
+	Body                   []byte
+}
+
 func NewStore() *Store {
 	start := time.Date(2026, 10, 1, 12, 0, 0, 0, time.FixedZone("CST", -6*60*60))
 	return &Store{Subs: map[string]store.Subscriber{}, SeenIDs: map[string]bool{}, Reminders: map[string]bool{},
 		SentAt: map[string]time.Time{}, Unresolved: map[string]string{}, Wamids: map[string]bool{}, Notices: map[string]bool{},
-		Replies: map[string][][]byte{}, Now: func() time.Time { return start }}
+		Replies: map[string][]Pending{}, Now: func() time.Time { return start }}
 }
 
 func (s *Store) ProcessInbound(ctx context.Context, id string, process func(store.BotStore) error) error {
@@ -61,14 +67,14 @@ func (s *Store) ProcessInbound(ctx context.Context, id string, process func(stor
 	return nil
 }
 
-func (s *Store) QueueReply(_ context.Context, id string, body []byte) error {
-	s.Replies[id] = append(s.Replies[id], body)
+func (s *Store) QueueReply(_ context.Context, id, channel, userID, phone string, body []byte) error {
+	s.Replies[id] = append(s.Replies[id], Pending{channel, userID, phone, body})
 	return nil
 }
 
 func (s *Store) SendReplies(_ context.Context, id string, send func([]byte) error) error {
 	for len(s.Replies[id]) > 0 {
-		if err := send(s.Replies[id][0]); err != nil {
+		if err := send(s.Replies[id][0].Body); err != nil {
 			return err
 		}
 		s.Replies[id] = s.Replies[id][1:]
@@ -162,6 +168,11 @@ func (s *Store) Unsubscribe(_ context.Context, channel, userID, phone string) (b
 			delete(s.Subs, k)
 			removed = true
 		}
+	}
+	for id, replies := range s.Replies {
+		s.Replies[id] = slices.DeleteFunc(replies, func(p Pending) bool {
+			return (userID != "" && p.Channel == channel && p.UserID == userID) || (phone != "" && p.Phone == phone)
+		})
 	}
 	return removed, nil
 }

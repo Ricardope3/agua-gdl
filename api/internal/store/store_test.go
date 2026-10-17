@@ -906,7 +906,7 @@ func TestQueuedRepliesSurviveARefusal(t *testing.T) {
 	ctx := context.Background()
 	if err := db.ProcessInbound(ctx, "tg:1", func(tx BotStore) error {
 		for _, body := range []string{`"one"`, `"two"`, `"three"`} {
-			if err := tx.QueueReply(ctx, "tg:1", []byte(body)); err != nil {
+			if err := tx.QueueReply(ctx, "tg:1", Telegram, "1", "", []byte(body)); err != nil {
 				return err
 			}
 		}
@@ -936,14 +936,14 @@ func TestQueuedRepliesSurviveARefusal(t *testing.T) {
 	}
 	failed := errors.New("command failed")
 	if err := db.ProcessInbound(ctx, "tg:2", func(tx BotStore) error {
-		if err := tx.QueueReply(ctx, "tg:2", []byte(`"stale"`)); err != nil {
+		if err := tx.QueueReply(ctx, "tg:2", Telegram, "2", "", []byte(`"stale"`)); err != nil {
 			return err
 		}
 		return failed
 	}); !errors.Is(err, failed) {
 		t.Fatal(err)
 	}
-	if err := db.ProcessInbound(ctx, "tg:3", func(tx BotStore) error { return tx.QueueReply(ctx, "tg:3", []byte(`"old"`)) }); err != nil {
+	if err := db.ProcessInbound(ctx, "tg:3", func(tx BotStore) error { return tx.QueueReply(ctx, "tg:3", Telegram, "3", "", []byte(`"old"`)) }); err != nil {
 		t.Fatal(err)
 	}
 	if _, err := db.pool.Exec(ctx, `update pending_reply set created_at = now() - interval '25 hours'`); err != nil {
@@ -955,5 +955,68 @@ func TestQueuedRepliesSurviveARefusal(t *testing.T) {
 	var n int
 	if err := db.pool.QueryRow(ctx, `select count(*) from pending_reply`).Scan(&n); err != nil || n != 0 {
 		t.Fatalf("a rolled-back command queues nothing, and a day-old reply is purged: %d %v", n, err)
+	}
+}
+
+func TestAcceptedReplyIsNeverResent(t *testing.T) {
+	db := testDB(t)
+	ctx := context.Background()
+	if err := db.ProcessInbound(ctx, "tg:1", func(tx BotStore) error {
+		return tx.QueueReply(ctx, "tg:1", Telegram, "1", "", []byte(`"hi"`))
+	}); err != nil {
+		t.Fatal(err)
+	}
+	// Forgetting the reply fails right after the provider accepted it.
+	if _, err := db.pool.Exec(ctx, `create function block_delete() returns trigger language plpgsql as $$
+		begin raise exception 'database gone'; end $$;
+		create trigger block_delete before delete on pending_reply execute function block_delete()`); err != nil {
+		t.Fatal(err)
+	}
+	sent := 0
+	send := func([]byte) error { sent++; return nil }
+	if err := db.SendReplies(ctx, "tg:1", send); err == nil {
+		t.Fatal("the failed delete must be reported")
+	}
+	if _, err := db.pool.Exec(ctx, `drop trigger block_delete on pending_reply`); err != nil {
+		t.Fatal(err)
+	}
+	if err := db.SendReplies(ctx, "tg:1", send); err != nil || sent != 1 {
+		t.Fatalf("the accepted reply stays claimed, never resent: sent %d, %v", sent, err)
+	}
+	var n int
+	if err := db.pool.QueryRow(ctx, `select count(*) from pending_reply where claimed_at is not null`).Scan(&n); err != nil || n != 1 {
+		t.Fatalf("the claim stays until the purge: %d %v", n, err)
+	}
+}
+
+func TestUnsubscribeCancelsQueuedReplies(t *testing.T) {
+	db := testDB(t)
+	ctx := context.Background()
+	if err := db.ProcessInbound(ctx, "tg:1", func(tx BotStore) error {
+		if err := tx.Subscribe(ctx, Telegram, "777", "", 4); err != nil {
+			return err
+		}
+		return tx.QueueReply(ctx, "tg:1", Telegram, "777", "", []byte(`"subscribed"`))
+	}); err != nil {
+		t.Fatal(err)
+	}
+	if err := db.ProcessInbound(ctx, "tg:2", func(tx BotStore) error {
+		return tx.QueueReply(ctx, "tg:2", Telegram, "888", "", []byte(`"other"`))
+	}); err != nil {
+		t.Fatal(err)
+	}
+	if removed, err := db.Unsubscribe(ctx, Telegram, "777", ""); err != nil || !removed {
+		t.Fatal(removed, err)
+	}
+	var n int
+	if err := db.pool.QueryRow(ctx, `select count(*) from pending_reply where user_id = '777'`).Scan(&n); err != nil || n != 0 {
+		t.Fatalf("BAJA drops the replies queued for the person: %d %v", n, err)
+	}
+	sent := 0
+	if err := db.SendReplies(ctx, "tg:1", func([]byte) error { sent++; return nil }); err != nil || sent != 0 {
+		t.Fatalf("nothing left to send: %d %v", sent, err)
+	}
+	if err := db.SendReplies(ctx, "tg:2", func([]byte) error { sent++; return nil }); err != nil || sent != 1 {
+		t.Fatalf("other people's replies stay: %d %v", sent, err)
 	}
 }

@@ -1,8 +1,10 @@
 package store
 
 import (
+	"cmp"
 	"context"
 	"errors"
+	"slices"
 	"time"
 
 	"github.com/jackc/pgx/v5"
@@ -18,7 +20,7 @@ type BotStore interface {
 	ZoneCounts(context.Context) (map[int]int, error)
 	SaveReport(context.Context, int64, int, time.Time, string) error
 	UpdateStatus(context.Context, string, string) (bool, error)
-	QueueReply(ctx context.Context, inboundID string, body []byte) error
+	QueueReply(ctx context.Context, inboundID, channel, userID, phone string, body []byte) error
 	SendReplies(ctx context.Context, inboundID string, send func(body []byte) error) error
 }
 
@@ -36,45 +38,52 @@ func (db *DB) ProcessInbound(ctx context.Context, wamid string, process func(Bot
 }
 
 // QueueReply stores a reply to the inbound message, in the same transaction as the
-// command, so a retried delivery of the message can still send it.
-func (db *DB) QueueReply(ctx context.Context, inboundID string, body []byte) error {
-	_, err := db.q.Exec(ctx, `insert into pending_reply (inbound_hash, body) values ($1, $2)`, hashID(inboundID), body)
+// command, so a retried delivery of the message can still send it. The recipient is
+// stored apart from the body so BAJA can cancel the replies queued for them.
+func (db *DB) QueueReply(ctx context.Context, inboundID, channel, userID, phone string, body []byte) error {
+	_, err := db.q.Exec(ctx, `insert into pending_reply (inbound_hash, channel, user_id, phone, body) values ($1, $2, $3, nullif($4, ''), $5)`,
+		hashID(inboundID), channel, userID, phone, body)
 	return err
 }
 
-// SendReplies sends inboundID's queued replies in order, forgetting each one send
-// returns nil for. At the first error it stops and keeps that reply and the rest for the
-// next delivery of the message. The rows stay locked meanwhile, so a concurrent delivery
-// skips them instead of sending them twice.
+// SendReplies sends inboundID's queued replies in order. Each reply is claimed in its
+// own committed transaction before the request, and forgotten once send returns nil, so
+// a reply the provider accepted is never sent again even if forgetting it fails or the
+// process dies: the claim stays until the daily purge. At the first error it releases
+// that reply and the rest for the next delivery of the message. A concurrent delivery
+// finds nothing to claim meanwhile.
 func (db *DB) SendReplies(ctx context.Context, inboundID string, send func(body []byte) error) error {
-	var sendErr error
-	err := pgx.BeginFunc(ctx, db.pool, func(tx pgx.Tx) error {
-		rows, err := tx.Query(ctx, `select id, body from pending_reply where inbound_hash = $1
-			order by id for update skip locked`, hashID(inboundID))
-		if err != nil {
-			return err
-		}
-		type pending struct {
-			id   int64
-			body []byte
-		}
-		replies, err := pgx.CollectRows(rows, func(r pgx.CollectableRow) (pending, error) {
-			var p pending
-			err := r.Scan(&p.id, &p.body)
-			return p, err
-		})
-		if err != nil {
-			return err
-		}
-		for _, p := range replies {
-			if sendErr = send(p.body); sendErr != nil {
-				return nil // commit what was sent
-			}
-			if _, err := tx.Exec(ctx, `delete from pending_reply where id = $1`, p.id); err != nil {
-				return err
-			}
-		}
-		return nil
+	rows, err := db.pool.Query(ctx, `update pending_reply set claimed_at = now() where id in (
+			select id from pending_reply where inbound_hash = $1 and claimed_at is null for update skip locked)
+		returning id, body`, hashID(inboundID))
+	if err != nil {
+		return err
+	}
+	type pending struct {
+		id   int64
+		body []byte
+	}
+	replies, err := pgx.CollectRows(rows, func(r pgx.CollectableRow) (pending, error) {
+		var p pending
+		err := r.Scan(&p.id, &p.body)
+		return p, err
 	})
-	return errors.Join(err, sendErr)
+	if err != nil {
+		return err
+	}
+	slices.SortFunc(replies, func(a, b pending) int { return cmp.Compare(a.id, b.id) })
+	for i, p := range replies {
+		if sendErr := send(p.body); sendErr != nil {
+			ids := make([]int64, 0, len(replies)-i)
+			for _, rest := range replies[i:] {
+				ids = append(ids, rest.id)
+			}
+			_, err := db.pool.Exec(ctx, `update pending_reply set claimed_at = null where id = any($1::bigint[])`, ids)
+			return errors.Join(sendErr, err)
+		}
+		if _, err := db.pool.Exec(ctx, `delete from pending_reply where id = $1`, p.id); err != nil {
+			return err
+		}
+	}
+	return nil
 }

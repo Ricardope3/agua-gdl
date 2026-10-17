@@ -146,7 +146,7 @@ func (b *Bot) process(ctx context.Context, id string, handle func(*Bot) error) e
 			if err != nil {
 				return err
 			}
-			if err := tx.QueueReply(ctx, id, body); err != nil {
+			if err := tx.QueueReply(ctx, id, q.To.Channel, q.To.ID, q.To.Phone, body); err != nil {
 				return err
 			}
 		}

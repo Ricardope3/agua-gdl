@@ -233,8 +233,12 @@ func (db *DB) ZoneCounts(ctx context.Context) (map[int]int, error) {
 }
 
 // Unsubscribe deletes userID's subscription and any holding phone, so BAJA stops
-// every reminder to that number.
+// every reminder to that number, and cancels the replies still queued for them, so an
+// earlier confirmation can't arrive after the goodbye and the chat ID isn't kept.
 func (db *DB) Unsubscribe(ctx context.Context, channel, userID, phone string) (bool, error) {
+	if _, err := db.q.Exec(ctx, `delete from pending_reply where (channel = $1 and user_id = $2) or phone = nullif($3, '')`, channel, userID, phone); err != nil {
+		return false, err
+	}
 	tag, err := db.q.Exec(ctx, `delete from subscriber where (channel = $1 and user_id = $2) or phone = nullif($3, '')`, channel, userID, phone)
 	return tag.RowsAffected() > 0, err
 }
