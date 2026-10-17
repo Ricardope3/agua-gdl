@@ -59,6 +59,13 @@ h1 { font-size: clamp(2rem, 6vw, 3rem); line-height: 1.08; letter-spacing: -.02e
 label { display: block; font-weight: 700; margin: 0 0 6px }
 .search { display: flex; flex-wrap: wrap; gap: 10px }
 .search input { flex: 1 1 200px; min-width: 0; font: inherit; color: var(--fg); background: var(--surface); border: 2px solid var(--muted); border-radius: 8px; padding: 10px 12px }
+.search .field { position: relative; flex: 1 1 200px; min-width: 0 }
+.search .field input { width: 100% }
+.suggest { position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 1100; margin: 0; padding: 4px; list-style: none; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 24px rgb(3 14 22 / .18); max-height: 320px; overflow: auto }
+.suggest[hidden] { display: none }
+.suggest li { padding: 8px 10px; border-radius: 8px; cursor: pointer; line-height: 1.35; font-size: .95rem }
+.suggest li[aria-selected="true"], .suggest li:hover { background: var(--subtle) }
+.suggest .sub { display: block; color: var(--muted); font-size: .85rem }
 #resultado { margin-top: 24px; scroll-margin-top: 16px }
 #resultado:empty { display: none }
 #resultado > p { margin: 0 0 14px; max-width: 65ch }
@@ -207,7 +214,10 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       <form id="buscar" role="search">
         <label for="colonia">Escribe el nombre de tu colonia</label>
         <div class="search">
-          <input id="colonia" name="q" type="search" autocomplete="off" placeholder="Por ejemplo: Las Juntas">
+          <div class="field">
+            <input id="colonia" name="q" type="search" autocomplete="off" spellcheck="false" placeholder="Por ejemplo: Las Juntas" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugerencias">
+            <ul class="suggest" id="sugerencias" role="listbox" aria-label="Colonias encontradas" hidden></ul>
+          </div>
           <button class="button" type="submit"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#search"/></svg>Buscar</button>
         </div>
       </form>
@@ -766,6 +776,11 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   });
   form.addEventListener("submit", (e) => {
     e.preventDefault();
+    if (active >= 0 && options[active]) {
+      pick(options[active]);
+      return;
+    }
+    closeList();
     const q = input.value.trim();
     if (!q) {
       show(msg("Escribe el nombre de tu colonia."));
@@ -775,6 +790,110 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     locBtn.classList.remove("glow", "solid");
     scrollToTop(form.closest(".finder"));
     search(q);
+  });
+
+  // Suggestions while typing: the API's matches for the text so far, picked with the mouse
+  // or the arrow keys; a pick runs the same flow as a search that found that colonia.
+  const list = document.getElementById("sugerencias");
+  let options = [];
+  let active = -1;
+  let typing = 0;
+  let pending = null;
+  function closeList() {
+    list.hidden = true;
+    list.replaceChildren();
+    input.setAttribute("aria-expanded", "false");
+    input.removeAttribute("aria-activedescendant");
+    options = [];
+    active = -1;
+  }
+  function setActive(i) {
+    active = i;
+    [...list.children].forEach((li, k) => li.setAttribute("aria-selected", String(k === i)));
+    if (i >= 0) {
+      input.setAttribute("aria-activedescendant", list.children[i].id);
+      list.children[i].scrollIntoView({ block: "nearest" });
+    } else {
+      input.removeAttribute("aria-activedescendant");
+    }
+  }
+  async function pick(o) {
+    input.value = o.name;
+    closeList();
+    locBtn.classList.remove("glow", "solid");
+    scrollToTop(form.closest(".finder"));
+    show(msg("Buscando…"));
+    const mine = shown;
+    try {
+      const zones = await zoneTable();
+      if (shown !== mine) return;
+      if (o.other) showOthers([o], o.similar, zones);
+      else showColonia(o, zones);
+    } catch {
+      if (shown === mine) unreachable();
+    }
+  }
+  function suggest(r) {
+    lastChoices = r.colonias;
+    const others = r.exact ? [] : (r.others || []).slice(0, 3).map((o) => ({ ...o, other: true, similar: r.colonias }));
+    options = [...others, ...r.colonias.slice(0, 8)];
+    if (!options.length) {
+      closeList();
+      return;
+    }
+    list.replaceChildren(...options.map((o, i) => {
+      const where = o.other
+        ? `${municipio(o.municipio)} · no está en la lista del SIAPA${o.zones.length ? ` · en el mapa, ${o.zones.length > 1 ? "zonas" : "zona"} ${joinES(o.zones)}` : " · colonia no afectada"}`
+        : `${municipio(o.municipio)} · ${o.zones.length > 1 ? "Zonas" : "Zona"} ${joinES(o.zones)}`;
+      const li = el("li", { role: "option", id: `op-${i}`, "aria-selected": "false" }, el("strong", {}, o.name), el("span", { class: "sub" }, where));
+      li.addEventListener("mousedown", (e) => e.preventDefault());
+      li.addEventListener("click", () => pick(o));
+      return li;
+    }));
+    list.hidden = false;
+    input.setAttribute("aria-expanded", "true");
+    setActive(-1);
+  }
+  input.addEventListener("input", () => {
+    clearTimeout(typing);
+    const q = input.value.trim();
+    if (norm(q).length < 2 || MUNICIPIOS[norm(q)]) {
+      closeList();
+      return;
+    }
+    typing = setTimeout(async () => {
+      if (pending) pending.abort();
+      const ctl = new AbortController();
+      pending = ctl;
+      try {
+        const res = await fetch(API + "/v1/colonias?q=" + encodeURIComponent(q.slice(0, 80)), { signal: ctl.signal });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const r = await res.json();
+        if (pending === ctl && input.value.trim() === q) suggest(r);
+      } catch {
+        // A failed or superseded request leaves the list as it was: the search button still works.
+      }
+    }, 250);
+  });
+  input.addEventListener("focus", () => {
+    if (options.length && input.value.trim()) {
+      list.hidden = false;
+      input.setAttribute("aria-expanded", "true");
+    }
+  });
+  input.addEventListener("blur", () => setTimeout(closeList, 150));
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowDown" && options.length) {
+      e.preventDefault();
+      list.hidden = false;
+      input.setAttribute("aria-expanded", "true");
+      setActive((active + 1) % options.length);
+    } else if (e.key === "ArrowUp" && options.length) {
+      e.preventDefault();
+      setActive((active - 1 + options.length) % options.length);
+    } else if (e.key === "Escape") {
+      closeList();
+    }
   });
   // Other pages (a landing variant) can link here with ?q=colonia to search right away.
   const preset = new URLSearchParams(location.search).get("q");
