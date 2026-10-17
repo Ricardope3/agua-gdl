@@ -196,6 +196,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .alert h3 { margin: 6px 0 8px; font-size: 1.2rem; line-height: 1.3 }
 .alert p { margin: 0 0 10px; max-width: 70ch }
 .alert p:last-child { margin: 0 }
+.alert.with-video { display: grid; grid-template-columns: minmax(0, 1fr) 200px; gap: 0 22px; align-items: start }
+@media (max-width: 560px) { .alert.with-video { grid-template-columns: none } .alert.with-video .video { max-width: 240px; margin-top: 14px } }
 .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px }
 .filters button { font: inherit; font-size: .85rem; font-weight: 600; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); cursor: pointer }
 .filters button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg) }
@@ -298,6 +300,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         <figure class="video" data-platform="youtube" data-id="rwamE16b_MA"><button type="button" aria-label="Reproducir: Acusan a policías de arrastrar y golpear a mujeres (YouTube)"><img src="/img/videos/youtube-rwamE16b_MA.webp" alt="" loading="lazy" decoding="async"><span class="plat">YouTube</span><span class="play" aria-hidden="true"></span><span class="vt">Acusan a policías de arrastrar y golpear a mujeres</span><span class="src">W Radio · 15 oct</span></button><figcaption><a href="https://www.youtube.com/watch?v=rwamE16b_MA" rel="noopener" target="_blank">Ver en YouTube</a></figcaption></figure>
         <figure class="video" data-platform="x" data-id="2109389377801486675"><button type="button" aria-label="Reproducir: Nueve personas retenidas dentro de Casa Jalisco (X)"><img src="/img/videos/x-2109389377801486675.webp" alt="" loading="lazy" decoding="async"><span class="plat">X</span><span class="play" aria-hidden="true"></span><span class="vt">Nueve personas retenidas dentro de Casa Jalisco</span><span class="src">IMDEC · 11 oct, 15:03</span></button><figcaption><a href="https://x.com/imdecac/status/2109389377801486675" rel="noopener" target="_blank">Ver en X</a></figcaption></figure>
         <figure class="video" data-platform="youtube" data-id="8zm8SzRM24A"><button type="button" aria-label="Reproducir: Detenidos denuncian tortura y pruebas fabricadas (YouTube)"><img src="/img/videos/youtube-8zm8SzRM24A.webp" alt="" loading="lazy" decoding="async"><span class="plat">YouTube</span><span class="play" aria-hidden="true"></span><span class="vt">Detenidos denuncian tortura y pruebas fabricadas</span><span class="src">Pie de Nota · 15 oct</span></button><figcaption><a href="https://www.youtube.com/watch?v=8zm8SzRM24A" rel="noopener" target="_blank">Ver en YouTube</a></figcaption></figure>
+        <figure class="video" data-platform="tiktok" data-id="7697307737977294101" data-vertical><button type="button" aria-label="Reproducir: Un activista denuncia que torturaron a los detenidos en Casa Jalisco (TikTok)"><img src="/img/videos/tiktok-7697307737977294101.webp" alt="" loading="lazy" decoding="async"><span class="plat">TikTok</span><span class="play" aria-hidden="true"></span><span class="vt">Un activista denuncia que torturaron a los detenidos en Casa Jalisco</span><span class="src">Gloria Reza, periodista · 16 oct</span></button><figcaption><a href="https://www.tiktok.com/@gloria.reza.reportera/video/7697307737977294101" rel="noopener" target="_blank">Ver en TikTok</a></figcaption></figure>
         <figure class="video" data-platform="youtube" data-id="AA1-6xEwa-U"><button type="button" aria-label="Reproducir: Cronología: de la marcha a la represión (YouTube)"><img src="/img/videos/youtube-AA1-6xEwa-U.webp" alt="" loading="lazy" decoding="async"><span class="plat">YouTube</span><span class="play" aria-hidden="true"></span><span class="vt">Cronología: de la marcha a la represión</span><span class="src">Canal 44 · 12 oct</span></button><figcaption><a href="https://www.youtube.com/watch?v=AA1-6xEwa-U" rel="noopener" target="_blank">Ver en YouTube</a></figcaption></figure>
       </div>
       <details class="more">
@@ -314,11 +317,14 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     </section>
 
     <section aria-labelledby="dobleplaza">
-      <div class="alert">
-        <span class="warn"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#shield-check"/></svg>Investigación abierta</span>
-        <h3 id="dobleplaza">Dos de los policías enviados a Asuntos Internos también cobrarían en la Policía de Guadalajara</h3>
-        <p>Los dos policías estatales enviados a Asuntos Internos el miércoles por presuntos excesos en la marcha «están dados de alta también como empleados en la Policía de Guadalajara, lo que está prohibido por ley», publicó <a href="https://www.mural.com.mx/dobletean-puesto-2-policias-estatales/ar3295911" rel="noopener" target="_blank">Mural</a> el 16 de octubre.</p>
-        <p><a href="https://realidadgdl.com/dobletean-2-policias-que-reprimieron-manifestantes-en-gdl/9209/" rel="noopener" target="_blank">Realidad GDL</a> los identifica como <strong>Alexander Guadalupe Galván Guzmán</strong> y <strong>Salvador Guzmán García</strong>, y dice que no aparecen en la nómina pública porque están registrados como personal operativo. Hasta el 16 de octubre no se había anunciado ninguna sanción.</p>
+      <div class="alert with-video">
+        <div>
+          <span class="warn"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#shield-check"/></svg>Investigación abierta</span>
+          <h3 id="dobleplaza">Dos de los policías enviados a Asuntos Internos también cobrarían en la Policía de Guadalajara</h3>
+          <p>Los dos policías estatales enviados a Asuntos Internos el miércoles por presuntos excesos en la marcha «están dados de alta también como empleados en la Policía de Guadalajara, lo que está prohibido por ley», publicó <a href="https://www.mural.com.mx/dobletean-puesto-2-policias-estatales/ar3295911" rel="noopener" target="_blank">Mural</a> el 16 de octubre. <a href="https://x.com/TelediarioGDL/status/2110382196494078407" rel="noopener" target="_blank">Telediario</a> difundió el video de su llegada.</p>
+          <p><a href="https://realidadgdl.com/dobletean-2-policias-que-reprimieron-manifestantes-en-gdl/9209/" rel="noopener" target="_blank">Realidad GDL</a> los identifica como <strong>Alexander Guadalupe Galván Guzmán</strong> y <strong>Salvador Guzmán García</strong>, y dice que no aparecen en la nómina pública porque están registrados como personal operativo. Hasta el 16 de octubre no se había anunciado ninguna sanción.</p>
+        </div>
+        <figure class="video" data-platform="x" data-id="2110382196494078407"><button type="button" aria-label="Reproducir: Los primeros policías investigados llegan a Asuntos Internos (X)"><img src="/img/videos/x-2110382196494078407.webp" alt="" loading="lazy" decoding="async"><span class="plat">X</span><span class="play" aria-hidden="true"></span><span class="vt">Los primeros policías investigados llegan a Asuntos Internos</span><span class="src">Telediario · 14 oct, 8:48</span></button><figcaption><a href="https://x.com/TelediarioGDL/status/2110382196494078407" rel="noopener" target="_blank">Ver en X</a></figcaption></figure>
       </div>
     </section>
 
