@@ -226,6 +226,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         <ul>
           <li><strong>228 colonias</strong> no aparecen con ese nombre en la cartografía del INE: son secciones, nombres antiguos o con otra ortografía, como JARDÍN DE LOS ESCRITORES o NUEVO FRACCIONAMIENTO. Muchas tampoco salen así en Google Maps.</li>
           <li><strong>Hay colonias repetidas con zonas distintas:</strong> SAN FELIPE 2 SECCIÓN está en la zona 2 y SAN FELIPE SEGUNDA SECCIÓN en la zona 3.</li>
+          <li><strong>Colonias partidas entre municipios:</strong> la lista pone CHAPALITA en la zona 5 en Guadalajara y en la 6 en Zapopan, y CIUDAD DEL SOL en la 5 en Tlaquepaque y en la 6 en Zapopan. Su contorno queda en las dos zonas del mapa, así que aquí les mostramos las dos.</li>
           <li><strong>En 15 colonias</strong> la lista da más zonas que el mapa. Por ejemplo, LAS CONCHAS está en las zonas 2 y 6 en la lista, pero en el mapa solo queda en la 2.</li>
           <li><strong>19 colonias</strong> quedan fuera de la zona que les da la lista, según el contorno del INE. PROVIDENCIA, CHAPALITA SUR y SANTA MÓNICA están en la zona 6 de la lista, pero el mapa las deja fuera de todas las zonas.</li>
         </ul>
@@ -598,8 +599,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         line.on("mouseover", (e) => { choiceHover(c, true); track(e); });
         line.on("mousemove", track);
         line.on("mouseout", () => { choiceHover(c, false); light(null); cursorTip.remove(); });
-        // SIAPA's list can put a colonia in zones its map doesn't, so hovering one the list
-        // puts in several names the zones its outline overlaps on the map.
+        // Hovering a colonia the list puts in several zones names those zones, and the ones its
+        // outline overlaps on SIAPA's map when they differ: the list is what counts.
         const b = line.getBounds();
         const label = sameName(c) ? `${c.name} · ${municipio(c.municipio)}` : c.name;
         const tip = L.tooltip({ permanent: true, interactive: pick, direction: "top", className: "map-label" })
@@ -608,7 +609,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
           .addTo(map);
         if (pick) tip.on("click", () => showColonia(c, zones));
         const onMap = f.properties.zones;
-        const hovered = c.zones.length > 1 && onMap.length ? `${label} · ${onMap.length > 1 ? "Zonas" : "Zona"} ${joinES(onMap)}` : label;
+        const mapNote = onMap.length && onMap.join() !== c.zones.join() ? ` (en el mapa, ${joinES(onMap)})` : "";
+        const hovered = c.zones.length > 1 ? `${label} · Zonas ${joinES(c.zones)}${mapNote}` : label;
         drawn.set(coloniaKey(c.name, c.municipio), [f, tip, label, hovered]);
       }
       const listed = [...new Set(list.flatMap((c) => c.zones.map(String)))].flatMap((n) => zoneParts.get(n) || []);
