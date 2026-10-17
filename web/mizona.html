@@ -557,6 +557,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       missing.hidden = true;
       div.append(missing);
       M.tiles(L, map);
+      // Any tap on the map brings it to the top of the screen, so the card and the results are in view.
+      map.on("click", () => scrollToTop(box));
       const days = (z) => zones.get(z) ? cap(joinES(zones.get(z).days)) : null;
       const picks = new Map();
       for (const [c, fs] of found) for (const f of fs) picks.set(f, c);
