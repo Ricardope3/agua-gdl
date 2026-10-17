@@ -290,7 +290,8 @@
   "name": "CHAPALITA",
   "municipio": "GUADALAJARA",
   "zones": [
-   5
+   5,
+   6
   ],
   "multi": true
  },
@@ -2230,7 +2231,8 @@
   "name": "CIUDAD DEL SOL",
   "municipio": "TLAQUEPAQUE",
   "zones": [
-   5
+   5,
+   6
   ],
   "multi": true
  },
@@ -3528,6 +3530,7 @@
   "name": "CHAPALITA",
   "municipio": "ZAPOPAN",
   "zones": [
+   5,
    6
   ],
   "multi": true
@@ -3576,6 +3579,7 @@
   "name": "CIUDAD DEL SOL",
   "municipio": "ZAPOPAN",
   "zones": [
+   5,
    6
   ],
   "multi": true

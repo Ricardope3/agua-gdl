@@ -30,6 +30,11 @@ func TestSearch(t *testing.T) {
 	if !exact || len(m) != 2 {
 		t.Fatalf("Chapalita is in Guadalajara and Zapopan: %v %v", m, exact)
 	}
+	for _, c := range m {
+		if len(c.Zones) != 2 || c.Zones[0] != 5 || c.Zones[1] != 6 {
+			t.Fatalf("SIAPA lists Chapalita in zones 5 and 6, %s has %v", c.Municipio, c.Zones)
+		}
+	}
 	m, exact = ix.Search("Chapalita, Zapopan", 5)
 	if !exact || len(m) != 1 || m[0].Municipio != "ZAPOPAN" {
 		t.Fatalf("exact: %v %v", m, exact)

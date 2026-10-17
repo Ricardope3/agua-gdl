@@ -5,7 +5,10 @@ Usage: python siapa_colonias.py colonias_siapa.pdf ../api/data/colonias.json
 Each page belongs to one zone (the big header digit). The "Zona N" legend on
 every page is drawn at 19pt over the table, so those characters are dropped
 before reading the table. A trailing "*" means the colonia is served by
-several aqueducts and appears under more than one zone.
+several aqueducts and appears under more than one zone. SIAPA marks every row
+whose name appears in more than one zone, even when the rows are in different
+municipios; SAME_COLONIA lists the ones that are one colonia, whose zones are
+merged.
 
 Use the 12 Oct 2026 PDF (34 pages, 621 colonias). SIAPA's 13 Oct reissue has
 truncated columns.
@@ -22,6 +25,19 @@ ZONE_DIGIT_SIZE = 50.5
 LEGEND_SIZE = 19.0
 ROW_SIZE = 20.0
 MUNICIPIOS = {"GUADALAJARA", "ZAPOPAN", "TLAQUEPAQUE", "TONALÁ"}
+
+# Colonias SIAPA lists under two municipios with a different zone in each, both marked
+# "*", that are one colonia: SIAPA's zone map puts its INE outline in both zones. Each row
+# gets both zones. Checked by hand on 16 Oct 2026. Same-name rows that are different
+# places stay apart: EL ROSARIO (Guadalajara 3, Tonalá 4) and AGUA BLANCA (Tonalá 4,
+# Zapopan 6) are 6 and 26 km apart; ALAMO INDUSTRIAL's Tlaquepaque part is in zone 3 on
+# the list and the map; neither ARBOLEDAS (Guadalajara 7, Tlaquepaque 6) has an outline.
+SAME_COLONIA = [
+    # Guadalajara's outline overlaps zones 5 and 6; INE has no CHAPALITA in Zapopan.
+    [("CHAPALITA", "GUADALAJARA"), ("CHAPALITA", "ZAPOPAN")],
+    # Zapopan's outline overlaps zones 5 and 6; neither INE nor OpenStreetMap has one in Tlaquepaque.
+    [("CIUDAD DEL SOL", "TLAQUEPAQUE"), ("CIUDAD DEL SOL", "ZAPOPAN")],
+]
 
 
 def clean_spaced(s):
@@ -66,6 +82,13 @@ def main(pdf_path, out_path):
                 split = next(r.cells[1][0] for r in last.rows if len(r.cells) > 1 and r.cells[1])
                 for name, mun in rows_below(body, last.bbox[3], split):
                     add(zone, name, mun)
+    for group in SAME_COLONIA:
+        parts = [rows.get(key) for key in group]
+        if not all(p and p["multi"] for p in parts):
+            sys.exit(f"{group} is no longer on the list with * in each municipio")
+        zones = sorted({z for p in parts for z in p["zones"]})
+        for p in parts:
+            p["zones"] = list(zones)
     out = sorted(rows.values(), key=lambda r: (strip_accents(r["municipio"]), strip_accents(r["name"])))
     for r in out:
         r["zones"].sort()
