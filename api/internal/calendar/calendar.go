@@ -10,8 +10,8 @@ import (
 
 const mapURL = "https://rotaciondeserviciosiapa.jalisco.gob.mx/"
 
-// Zone returns the feed for one zone: an all-day event per rationing day, with an alert at 8 p.m. the evening
-// before each run of consecutive days (one on the evening of a cut day would come too late).
+// Zone returns the feed for one zone: an all-day event per rationing day, and on the first day of each block
+// of cuts (rotation.BlockGap) alerts at 8 p.m. two days before and the evening before, like the bot's messages.
 func Zone(s *rotation.Schedule, zone int) []byte {
 	start, end := s.Span()
 	if end.IsZero() {
@@ -43,12 +43,15 @@ func Zone(s *rotation.Schedule, zone int) []byte {
 		line("DESCRIPTION:%s", escape("Corte según el calendario del SIAPA. El SIAPA dice que solo baja la presión y por un día; vecinos nos cuentan que el agua se va desde antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: "+mapURL+" · Agua GDL (no oficial): https://aguagdl.com"))
 		line("URL:%s", mapURL)
 		line("TRANSP:TRANSPARENT")
-		if s.StartsRun(zone, d) {
-			line("BEGIN:VALARM")
-			line("ACTION:DISPLAY")
-			line("DESCRIPTION:%s", escape(fmt.Sprintf("Mañana %s hay racionamiento de agua en la zona %d", rotation.DatesES(s.Run(zone, d)), zone)))
-			line("TRIGGER:-PT4H")
-			line("END:VALARM")
+		if s.StartsBlock(zone, d) {
+			days := rotation.DatesES(s.Block(zone, d))
+			for _, a := range []struct{ trigger, when string }{{"-P1DT4H", "En dos días"}, {"-PT4H", "Mañana"}} {
+				line("BEGIN:VALARM")
+				line("ACTION:DISPLAY")
+				line("DESCRIPTION:%s", escape(fmt.Sprintf("%s empieza el racionamiento de agua en la zona %d: %s", a.when, zone, days)))
+				line("TRIGGER:%s", a.trigger)
+				line("END:VALARM")
+			}
 		}
 		line("END:VEVENT")
 	}

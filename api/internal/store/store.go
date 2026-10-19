@@ -250,16 +250,60 @@ func (db *DB) SaveReport(ctx context.Context, subscriberID int64, zone int, cutD
 	return err
 }
 
-// SaveWater records an answer to the reminder about the cut starting on cutDate. Only a
-// subscription that was sent that reminder can answer, so BAJA and subscribing again can't
-// add answers; it reports whether the answer was kept.
+// AheadKey and ReturnKey name the notices the nightly run sends about the block of cuts
+// starting on start: two days before it, and after it to whoever had no water.
+func AheadKey(start time.Time) string  { return "previo:" + start.Format(dateLayout) }
+func ReturnKey(start time.Time) string { return "regreso:" + start.Format(dateLayout) }
+
+// SaveWater records an answer to the notice or reminder about the block of cuts starting on
+// cutDate. Only a subscription that was sent one of them can answer, so BAJA and subscribing
+// again can't add answers; it reports whether the answer was kept.
 func (db *DB) SaveWater(ctx context.Context, subscriberID int64, zone int, cutDate time.Time, answer string) (bool, error) {
 	tag, err := db.q.Exec(ctx, `insert into water_report (subscriber_id, zone, cut_date, answer)
 		select $1, $2, $3::date, $4 where exists (
-			select 1 from reminder where subscriber_id = $1 and cut_date = $3::date and status <> 'rejected')
+			select 1 from reminder where subscriber_id = $1 and cut_date = $3::date and status <> 'rejected'
+			union all
+			select 1 from notice where subscriber_id = $1 and key = $5 and status <> 'rejected')
 		on conflict (subscriber_id, cut_date) do update set answer = excluded.answer, zone = excluded.zone, created_at = now()`,
-		subscriberID, zone, cutDate.Format(dateLayout), answer)
+		subscriberID, zone, cutDate.Format(dateLayout), answer, AheadKey(cutDate))
 	return tag.RowsAffected() > 0, err
+}
+
+// NoWater returns the subscribers who said they had no water before the block starting on
+// start: its evening-before reminder would tell them nothing.
+func (db *DB) NoWater(ctx context.Context, start time.Time) (map[int64]bool, error) {
+	rows, err := db.q.Query(ctx, `select subscriber_id from water_report
+		where cut_date = $1::date and answer = 'no' and subscriber_id is not null`, start.Format(dateLayout))
+	if err != nil {
+		return nil, err
+	}
+	ids := map[int64]bool{}
+	var id int64
+	_, err = pgx.ForEachRow(rows, []any{&id}, func() error {
+		ids[id] = true
+		return nil
+	})
+	return ids, err
+}
+
+// ReturnRecipients lists a channel's subscribers in zone who said they had no water or little
+// before the block from start to last, haven't reported since how it came back, and haven't
+// been asked yet.
+func (db *DB) ReturnRecipients(ctx context.Context, channel string, zone int, start, last time.Time) ([]Subscriber, error) {
+	rows, err := db.q.Query(ctx, `select s.id, s.channel, s.user_id, coalesce(s.phone, ''), s.zone from subscriber s
+		where s.channel = $1 and s.zone = $2
+			and exists (select 1 from water_report w where w.subscriber_id = s.id and w.cut_date = $3::date and w.answer in ('no', 'poca'))
+			and not exists (select 1 from cut_report c where c.subscriber_id = s.id and c.cut_date between $3::date and $4::date)
+			and not exists (select 1 from notice n where n.subscriber_id = s.id and n.key = $5 and n.status <> 'rejected')
+		order by s.id`, channel, zone, start.Format(dateLayout), last.Format(dateLayout), ReturnKey(start))
+	if err != nil {
+		return nil, err
+	}
+	return pgx.CollectRows(rows, func(r pgx.CollectableRow) (Subscriber, error) {
+		var s Subscriber
+		err := r.Scan(&s.ID, &s.Channel, &s.UserID, &s.Phone, &s.Zone)
+		return s, err
+	})
 }
 
 // UpdateStatus records a delivery status and reports whether it changed a reminder.

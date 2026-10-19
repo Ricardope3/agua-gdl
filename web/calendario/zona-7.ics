@@ -24,8 +24,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 17 y domingo 18 de octubre hay racionamiento de
-  agua en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 17 y domingo 18 de octubre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 17 y domingo 18 de octubre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -58,8 +64,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 24 y domingo 25 de octubre hay racionamiento de
-  agua en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 24 y domingo 25 de octubre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 24 y domingo 25 de octubre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -92,8 +104,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 31 de octubre y domingo 1 de noviembre hay raci
- onamiento de agua en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 31 de octubre y domingo 1 de noviembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 31 de octubre y domingo 1 de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -126,8 +144,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 7 y domingo 8 de noviembre hay racionamiento de
-  agua en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 7 y domingo 8 de noviembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 7 y domingo 8 de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -160,8 +184,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 14 y domingo 15 de noviembre hay racionamiento 
- de agua en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 14 y domingo 15 de noviembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 14 y domingo 15 de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -194,8 +224,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 21 y domingo 22 de noviembre hay racionamiento 
- de agua en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 21 y domingo 22 de noviembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 21 y domingo 22 de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -228,8 +264,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 28 y domingo 29 de noviembre hay racionamiento 
- de agua en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 28 y domingo 29 de noviembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 28 y domingo 29 de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -262,8 +304,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 5 y domingo 6 de diciembre hay racionamiento de
-  agua en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 5 y domingo 6 de diciembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 5 y domingo 6 de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -296,8 +344,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 12 y domingo 13 de diciembre hay racionamiento 
- de agua en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 12 y domingo 13 de diciembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 12 y domingo 13 de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -330,8 +384,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 19 y domingo 20 de diciembre hay racionamiento 
- de agua en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 19 y domingo 20 de diciembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 19 y domingo 20 de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -364,8 +424,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 26 y domingo 27 de diciembre hay racionamiento 
- de agua en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 26 y domingo 27 de diciembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 26 y domingo 27 de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -398,8 +464,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 2 y domingo 3 de enero hay racionamiento de agu
- a en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 2 y domingo 3 de enero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 2 y domingo 3 de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -432,8 +504,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 9 y domingo 10 de enero hay racionamiento de ag
- ua en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 9 y domingo 10 de enero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 9 y domingo 10 de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -466,8 +544,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 16 y domingo 17 de enero hay racionamiento de a
- gua en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 16 y domingo 17 de enero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 16 y domingo 17 de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -500,8 +584,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 23 y domingo 24 de enero hay racionamiento de a
- gua en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 23 y domingo 24 de enero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 23 y domingo 24 de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -534,8 +624,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 30 y domingo 31 de enero hay racionamiento de a
- gua en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 30 y domingo 31 de enero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 30 y domingo 31 de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -568,8 +664,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 6 y domingo 7 de febrero hay racionamiento de a
- gua en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 6 y domingo 7 de febrero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 6 y domingo 7 de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -602,8 +704,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 13 y domingo 14 de febrero hay racionamiento de
-  agua en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 13 y domingo 14 de febrero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 13 y domingo 14 de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -636,8 +744,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 20 y domingo 21 de febrero hay racionamiento de
-  agua en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 20 y domingo 21 de febrero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 20 y domingo 21 de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -670,8 +784,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 27 y domingo 28 de febrero hay racionamiento de
-  agua en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 27 y domingo 28 de febrero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 27 y domingo 28 de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -704,8 +824,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 6 y domingo 7 de marzo hay racionamiento de agu
- a en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 6 y domingo 7 de marzo
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 6 y domingo 7 de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -738,8 +864,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 13 y domingo 14 de marzo hay racionamiento de a
- gua en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 13 y domingo 14 de marzo
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 13 y domingo 14 de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -772,8 +904,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 20 y domingo 21 de marzo hay racionamiento de a
- gua en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 20 y domingo 21 de marzo
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 20 y domingo 21 de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -806,8 +944,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana sábado 27 y domingo 28 de marzo hay racionamiento de a
- gua en la zona 7
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 7: sá
+ bado 27 y domingo 28 de marzo
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 7: sábado 
+ 27 y domingo 28 de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT

@@ -95,28 +95,40 @@ func TestExpired(t *testing.T) {
 	}
 }
 
-func TestRuns(t *testing.T) {
+func TestBlocks(t *testing.T) {
 	s := load(t, data.Rotation)
 	cases := []struct {
-		zone  int
-		day   string
-		start bool
-		run   string
+		zone       int
+		day        string
+		start, end bool
+		block      string
+		first      string
 	}{
-		{5, "2026-10-20", true, "martes 20 y miércoles 21 de octubre"},
-		{5, "2026-10-21", false, "miércoles 21 de octubre"},
-		{5, "2026-10-24", true, "sábado 24 de octubre"},
-		{7, "2026-10-31", true, "sábado 31 de octubre y domingo 1 de noviembre"},
-		{2, "2026-10-15", true, "jueves 15 de octubre"},
-		{4, "2026-10-20", false, ""},
+		{5, "2026-10-20", true, false, "martes 20 y miércoles 21 de octubre", "2026-10-20"},
+		{5, "2026-10-21", false, true, "miércoles 21 de octubre", "2026-10-20"},
+		{1, "2026-10-16", true, false, "viernes 16 y domingo 18 de octubre", "2026-10-16"},
+		{1, "2026-10-21", true, false, "miércoles 21, viernes 23 y domingo 25 de octubre", "2026-10-21"},
+		{1, "2026-10-25", false, true, "domingo 25 de octubre", "2026-10-21"},
+		{2, "2026-10-18", true, false, "domingo 18, martes 20 y jueves 22 de octubre", "2026-10-18"},
+		{2, "2026-10-20", false, false, "martes 20 y jueves 22 de octubre", "2026-10-18"},
+		{7, "2026-10-31", true, false, "sábado 31 de octubre y domingo 1 de noviembre", "2026-10-31"},
+		{4, "2026-10-19", true, true, "lunes 19 de octubre", "2026-10-19"},
+		{4, "2026-10-20", false, false, "", ""},
 	}
 	for _, c := range cases {
 		d := day(s, c.day)
-		if got := s.StartsRun(c.zone, d); got != c.start {
-			t.Errorf("zone %d %s: starts a run = %v, want %v", c.zone, c.day, got, c.start)
+		if got := s.StartsBlock(c.zone, d); got != c.start {
+			t.Errorf("zone %d %s: starts a block = %v, want %v", c.zone, c.day, got, c.start)
 		}
-		if got := DatesES(s.Run(c.zone, d)); got != c.run {
-			t.Errorf("zone %d %s: run %q, want %q", c.zone, c.day, got, c.run)
+		if got := s.EndsBlock(c.zone, d); got != c.end {
+			t.Errorf("zone %d %s: ends a block = %v, want %v", c.zone, c.day, got, c.end)
+		}
+		if got := DatesES(s.Block(c.zone, d)); got != c.block {
+			t.Errorf("zone %d %s: block %q, want %q", c.zone, c.day, got, c.block)
+		}
+		first, ok := s.BlockStart(c.zone, d)
+		if got := first.Format(DateLayout); ok != (c.first != "") || (ok && got != c.first) {
+			t.Errorf("zone %d %s: block starts %s %v, want %q", c.zone, c.day, got, ok, c.first)
 		}
 	}
 }

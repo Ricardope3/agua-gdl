@@ -339,7 +339,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         dateES,
         color,
         links: (zone) => [telegramLink(zone), calendarLink(zone)],
-        note: el("p", { class: "note" }, "Gratis: un mensaje a las 8 p. m. la noche antes de cada racionamiento, o una alerta en tu calendario. Más opciones en ", el("a", { href: "/mizona" }, "Mi zona"), "."),
+        note: el("p", { class: "note" }, "Gratis: un mensaje a las 8 p. m. dos días antes de cada racionamiento y otro la noche antes, o alertas en tu calendario. Más opciones en ", el("a", { href: "/mizona" }, "Mi zona"), "."),
         onClose: clearSelection,
       });
       card.replaceChildren(...built.children);

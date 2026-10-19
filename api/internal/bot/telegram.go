@@ -146,16 +146,28 @@ func truncate(s string, n int) string {
 	return string(r[:n-1]) + "…"
 }
 
-// TelegramReminder is a Telegram chat's reminder for the run of cut days that starts
-// tomorrow, with buttons to say whether the water is still on, for SIAPA's map and for BAJA.
+// TelegramReminder is a Telegram chat's reminder for the block of cuts that starts tomorrow,
+// with buttons to say whether the water is still on, for SIAPA's map and for BAJA.
 func TelegramReminder(chatID string, zone int, days []time.Time) (tg.Message, error) {
 	if len(days) == 0 {
 		return tg.Message{}, errors.New("reminder without cut days")
 	}
-	m, err := TelegramMessage(chatID, Reply{Text: msgTelegramReminder(rotation.DatesES(days), zone)})
+	return withWaterButtons(chatID, msgTelegramReminder(days, zone), zone, days[0])
+}
+
+// TelegramNotice is the notice two days before a block of cuts, with the reminder's buttons.
+func TelegramNotice(chatID string, zone int, days []time.Time) (tg.Message, error) {
+	if len(days) == 0 {
+		return tg.Message{}, errors.New("notice without cut days")
+	}
+	return withWaterButtons(chatID, msgNotice(days, zone), zone, days[0])
+}
+
+func withWaterButtons(chatID, text string, zone int, start time.Time) (tg.Message, error) {
+	m, err := TelegramMessage(chatID, Reply{Text: text})
 	answers := make([]tg.InlineButton, len(waterAnswers))
 	for i, a := range waterAnswers {
-		answers[i] = tg.InlineButton{Text: a.title, CallbackData: fmt.Sprintf("A:%d:%s:%s", zone, days[0].Format(rotation.DateLayout), a.key)}
+		answers[i] = tg.InlineButton{Text: a.title, CallbackData: fmt.Sprintf("A:%d:%s:%s", zone, start.Format(rotation.DateLayout), a.key)}
 	}
 	m.ReplyMarkup = tg.InlineKeyboard{InlineKeyboard: [][]tg.InlineButton{
 		answers,
@@ -163,4 +175,17 @@ func TelegramReminder(chatID string, zone int, days []time.Time) (tg.Message, er
 		{{Text: "Dejar de recibir avisos", CallbackData: "BAJA"}},
 	}}
 	return m, err
+}
+
+// TelegramFollowUp asks, after a block, how the water came back, with REPORTAR's answers for
+// its last day.
+func TelegramFollowUp(chatID string, zone int, days []time.Time) (tg.Message, error) {
+	if len(days) == 0 {
+		return tg.Message{}, errors.New("follow-up without cut days")
+	}
+	choices := make([]Choice, len(reportAnswers))
+	for i, a := range reportAnswers {
+		choices[i] = Choice{ID: fmt.Sprintf("R:%d:%s:%s", zone, days[len(days)-1].Format(rotation.DateLayout), a.key), Title: a.title}
+	}
+	return TelegramMessage(chatID, Reply{Text: msgFollowUp(days, zone), Choices: choices})
 }

@@ -401,7 +401,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         el("a", { class: "button alt", href: `webcal://${calendarURL(zone)}` }, "iPhone o Mac: suscribirme"),
         el("a", { class: "button alt", href: googleCalendar(zone), rel: "noopener", target: "_blank" }, "Android o Google Calendar"),
         copy),
-      el("p", { class: "note" }, "Cada día de racionamiento de la zona, con una alerta a las 8 p. m. de la noche anterior. No guardamos ningún dato tuyo."),
+      el("p", { class: "note" }, "Cada día de racionamiento de la zona, con alertas a las 8 p. m. dos días antes y la noche antes. No guardamos ningún dato tuyo."),
       el("p", { class: "note" }, el("strong", {}, "En iPhone, «agregar con alerta» "), "copia los días a tu calendario con la alerta incluida (ábrelo en Safari y toca «Agregar todo»). No se actualiza: si el SIAPA cambia el calendario lo avisaremos aquí y en el bot, y tendrás que borrarlos y agregarlos otra vez."),
       el("p", { class: "note" }, el("strong", {}, "«Suscribirme» "), "se actualiza solo, pero al suscribirte desactiva «Eliminar alertas» o no te llegará el aviso. Si ya te suscribiste: Ajustes › Apps › Calendario › Cuentas › Calendarios suscritos › Agua GDL › desactiva «Eliminar alertas»."),
       el("p", { class: "note" }, el("strong", {}, "En Android: "), "Google Calendar no usa las alertas de los calendarios suscritos. En la app, abre Configuración › Agua GDL › Notificaciones de eventos de todo el día y agrega una el día anterior a las 8 p. m."));
@@ -419,7 +419,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       el("div", { class: "subscribe" },
         calendarButton(z.zone),
         el("a", { class: "button alt", href: `${TELEGRAM}?start=z${z.zone}`, rel: "noopener" }, icon("send"), "Recibir el aviso por Telegram")),
-      el("p", { class: "note" }, `Gratis. El calendario trae cada corte de la zona ${z.zone} con una alerta a las 8 p. m. la noche anterior (abajo te decimos cómo asegurarte de que suene) y no guarda ningún dato tuyo. En Telegram, al tocar «Iniciar» aceptas los avisos; `, el("a", { href: "/privacidad" }, "aviso de privacidad"), "."),
+      el("p", { class: "note" }, `Gratis. El calendario trae cada corte de la zona ${z.zone} con alertas a las 8 p. m. dos días antes y la noche antes (abajo te decimos cómo asegurarte de que suenen) y no guarda ningún dato tuyo. En Telegram, al tocar «Iniciar» aceptas los avisos; `, el("a", { href: "/privacidad" }, "aviso de privacidad"), "."),
       calendarLinks(z.zone));
   }
   const cards = (zones) => el("div", { class: "zones" }, ...zones.map(zoneCard));
@@ -572,7 +572,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         drawn.clearHighlights();
       };
       const cardOpts = { days, next: (z) => nextCut(zones, z), dateES: lowerDate, links: (z) => [telegramLink(z), calendarLink(z)],
-        note: "Gratis: un mensaje a las 8 p. m. la noche antes de cada racionamiento, o una alerta en tu calendario. Abajo, otras formas de agregar el calendario y cómo activar la alerta.", onClose: closeCard };
+        note: "Gratis: un mensaje a las 8 p. m. dos días antes de cada racionamiento y otro la noche antes, o alertas en tu calendario. Abajo, otras formas de agregar el calendario y cómo activar la alerta.", onClose: closeCard };
       const place = (node) => {
         if (shownCard) shownCard.remove();
         shownCard = node;

@@ -57,16 +57,21 @@ func TestZoneSixFirstWeek(t *testing.T) {
 	}
 }
 
-func TestOneAlarmPerRunOfCutDays(t *testing.T) {
-	ics := string(Zone(schedule(t), 5))
-	tuesday := ics[strings.Index(ics, "DTSTART;VALUE=DATE:20261020\r\n"):]
-	tuesday = tuesday[:strings.Index(tuesday, "END:VEVENT")]
-	if !strings.Contains(tuesday, "TRIGGER:-PT4H") || !strings.Contains(strings.ReplaceAll(tuesday, "\r\n ", ""), "Mañana martes 20 y miércoles 21 de octubre") {
-		t.Errorf("Tuesday's alarm must cover Tuesday and Wednesday:\n%s", tuesday)
+func TestAlarmsOnlyBeforeEachBlock(t *testing.T) {
+	event := func(ics, date string) string {
+		e := ics[strings.Index(ics, "DTSTART;VALUE=DATE:"+date+"\r\n"):]
+		return strings.ReplaceAll(e[:strings.Index(e, "END:VEVENT")], "\r\n ", "")
 	}
-	wednesday := ics[strings.Index(ics, "DTSTART;VALUE=DATE:20261021\r\n"):]
-	wednesday = wednesday[:strings.Index(wednesday, "END:VEVENT")]
-	if strings.Contains(wednesday, "VALARM") {
-		t.Errorf("Wednesday continues Tuesday's cut: its alarm would ring in the middle of it:\n%s", wednesday)
+	zone1 := string(Zone(schedule(t), 1))
+	wednesday := event(zone1, "20261021")
+	for _, want := range []string{"TRIGGER:-P1DT4H", "TRIGGER:-PT4H", "zona 1: miércoles 21\\, viernes 23 y domingo 25 de octubre"} {
+		if !strings.Contains(wednesday, want) {
+			t.Errorf("zone 1's Wednesday starts the block; missing %q in:\n%s", want, wednesday)
+		}
+	}
+	for _, date := range []string{"20261023", "20261025"} {
+		if e := event(zone1, date); strings.Contains(e, "VALARM") {
+			t.Errorf("%s continues the block: an alarm would ring in the middle of it:\n%s", date, e)
+		}
 	}
 }

@@ -22,6 +22,13 @@
 // (Telegram has no templates, no 24-hour window and no daily cap):
 //
 //	DATABASE_URL='…' TG_TOKEN='…' go run ./cmd/notify -channel tg -zone 4 -from 2026-11-02 -send
+//
+// With -avisos it tells every Telegram subscriber, once, that the reminders now also come two
+// days before each block of cuts, with their zone's cuts for the coming week (bot.AvisosChange).
+// Run it right after deploying that change and before that evening's 8 p.m. run: a block already
+// under way got the old reminder, and the new run sends nothing for the block's later days.
+//
+//	DATABASE_URL='…' TG_TOKEN='…' go run ./cmd/notify -avisos -send
 package main
 
 import (
@@ -52,9 +59,12 @@ func main() {
 	tomorrow := flag.Bool("tomorrow", false, "send tomorrow's reminder for -zone as a normal text instead of cambio_rotacion")
 	send := flag.Bool("send", false, "send the messages; without it, only report")
 	channel := flag.String("channel", store.WhatsApp, "wa (WhatsApp) or tg (Telegram)")
+	avisos := flag.Bool("avisos", false, "tell every Telegram subscriber, once, about the notice two days before each cut")
 	flag.Parse()
 	var err error
 	switch {
+	case *avisos:
+		err = runAvisos(*send)
 	case *channel != store.WhatsApp && *channel != store.Telegram:
 		err = fmt.Errorf("-channel must be %s or %s", store.WhatsApp, store.Telegram)
 	case *tomorrow && *channel == store.Telegram:
@@ -209,6 +219,72 @@ func runTomorrow(zone int, send bool) error {
 	if errors.Is(err, reminders.ErrCapped) {
 		fmt.Println("A send cap stopped the run; run the same command again later for the rest.")
 	}
+	return err
+}
+
+// avisosKey makes the change message idempotent: a re-run reaches only whoever hasn't got it.
+const avisosKey = "avisos/2026-10"
+
+// runAvisos sends bot.AvisosChange to every Telegram subscriber who hasn't received it.
+func runAvisos(send bool) error {
+	loc, err := time.LoadLocation("America/Mexico_City")
+	if err != nil {
+		return err
+	}
+	sched, err := rotation.Load(data.Rotation, loc)
+	if err != nil {
+		return err
+	}
+	url := os.Getenv("DATABASE_URL")
+	if url == "" {
+		return errors.New("set DATABASE_URL")
+	}
+	ctx := context.Background()
+	db, err := store.Open(ctx, url)
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+	if err := db.Migrate(ctx); err != nil {
+		return err
+	}
+	// Each zone's message lists its cuts from tomorrow through the next week.
+	tomorrow := sched.Day(time.Now()).AddDate(0, 0, 1)
+	texts := map[int]string{}
+	due := 0
+	for _, zone := range sched.Zones() {
+		var next []time.Time
+		for _, d := range sched.NextCuts(zone, tomorrow, 7) {
+			if d.Before(tomorrow.AddDate(0, 0, 7)) {
+				next = append(next, d)
+			}
+		}
+		texts[zone] = bot.AvisosChange(env("PUBLIC_BASE_URL", "https://aguagdl.com"), zone, next)
+		subs, err := db.NoticeRecipients(ctx, store.Telegram, zone, avisosKey)
+		if err != nil {
+			return err
+		}
+		due += len(subs)
+		fmt.Printf("Zone %d: %d Telegram subscribers; next cuts: %s\n", zone, len(subs), rotation.DatesES(next))
+	}
+	fmt.Printf("\nTo %d Telegram subscribers in all. Zone 1's message:\n\n%s\n\n", due, texts[1])
+	if !send {
+		fmt.Println("Dry run. Add -send to send it.")
+		return nil
+	}
+	token := os.Getenv("TG_TOKEN")
+	if token == "" {
+		return errors.New("set TG_TOKEN to send")
+	}
+	client := &tg.Client{BaseURL: "https://api.telegram.org", Token: token, HTTP: &http.Client{Timeout: 15 * time.Second}}
+	log := slog.New(slog.NewTextHandler(os.Stderr, nil))
+	total := 0
+	for _, zone := range sched.Zones() {
+		sent, sendErr := notices.SendTelegram(ctx, db, client, notices.Notice{Zone: zone, Key: avisosKey}, texts[zone], 100*time.Millisecond, log)
+		total += sent
+		err = errors.Join(err, sendErr)
+	}
+	fmt.Printf("sent %d\n", total)
 	return err
 }
 

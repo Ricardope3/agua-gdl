@@ -87,9 +87,9 @@ func TestDailyCapWaitsForLastNightToExpire(t *testing.T) {
 	ctx := context.Background()
 	loc, _ := time.LoadLocation("America/Mexico_City")
 	st, snd := fake.NewStore(), &fake.Sender{}
-	// Friday night reminds Saturday's zones 3, 5 and 7; Saturday night reminds Sunday's 1 and 2
-	// (zone 7's Sunday continues Saturday's cut, which its reminder already covered).
-	for user, zone := range map[string]int{"a": 3, "b": 5, "c": 7, "d": 1, "e": 2, "f": 2} {
+	// Friday night reminds Saturday's zones 3, 5 and 7; Saturday night reminds Sunday's zone 2
+	// (zone 1's Sunday continues Friday's block and zone 7's Saturday's).
+	for user, zone := range map[string]int{"a": 3, "b": 5, "c": 7, "d": 1, "e": 2, "f": 2, "g": 2} {
 		st.Subscribe(ctx, store.WhatsApp, user, user, zone)
 	}
 	r := runner(t, "2026-10-16 20:00", st, snd)
@@ -215,7 +215,8 @@ func TestDailyCapIsAMovingWindow(t *testing.T) {
 	ctx := context.Background()
 	loc, _ := time.LoadLocation("America/Mexico_City")
 	st, snd := fake.NewStore(), &fake.Sender{}
-	for user, zone := range map[string]int{"a": 4, "b": 6, "c": 2, "d": 5, "e": 2} {
+	// Zone 2's Tuesday continues Sunday's block, so Monday night reminds zone 5 only.
+	for user, zone := range map[string]int{"a": 4, "b": 6, "c": 5, "d": 5, "e": 5} {
 		st.Subscribe(ctx, store.WhatsApp, user, user, zone)
 	}
 	r := runner(t, "2026-10-18 20:00", st, snd)

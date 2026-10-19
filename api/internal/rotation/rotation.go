@@ -147,19 +147,53 @@ func (s *Schedule) ZonesOn(t time.Time) []int {
 	return zones
 }
 
-// StartsRun reports whether zone's cut on t's day begins a run of consecutive cut days,
-// which gets one reminder: one for a later day would arrive in the middle of the cut.
-func (s *Schedule) StartsRun(zone int, t time.Time) bool {
-	return s.IsCut(zone, t) && !s.IsCut(zone, s.Day(t).AddDate(0, 0, -1))
+// BlockGap is the most days between two cuts of one block. Neighbours report the water
+// goes a day early and takes days to return, so with at most one free day between two
+// cuts it doesn't come back in time: the block gets one round of messages.
+const BlockGap = 2
+
+// StartsBlock reports whether zone's cut on t's day begins a block: no cut in the BlockGap days before.
+func (s *Schedule) StartsBlock(zone int, t time.Time) bool {
+	return s.IsCut(zone, t) && s.near(zone, t, -1) == nil
 }
 
-// Run returns the consecutive cut days for zone from t's day on, at most a week.
-func (s *Schedule) Run(zone int, t time.Time) []time.Time {
-	var days []time.Time
-	for d := s.Day(t); len(days) < 7 && s.IsCut(zone, d); d = d.AddDate(0, 0, 1) {
-		days = append(days, d)
+// EndsBlock reports whether zone's cut on t's day ends a block: no cut in the BlockGap days after.
+func (s *Schedule) EndsBlock(zone int, t time.Time) bool {
+	return s.IsCut(zone, t) && s.near(zone, t, 1) == nil
+}
+
+// Block returns zone's cut days from t's day to the end of its block, at most two weeks of them.
+func (s *Schedule) Block(zone int, t time.Time) []time.Time {
+	if !s.IsCut(zone, t) {
+		return nil
+	}
+	days := []time.Time{s.Day(t)}
+	for next := s.near(zone, t, 1); next != nil && len(days) < 14; next = s.near(zone, *next, 1) {
+		days = append(days, *next)
 	}
 	return days
+}
+
+// BlockStart returns the first day of the block that zone's cut on t's day belongs to.
+func (s *Schedule) BlockStart(zone int, t time.Time) (time.Time, bool) {
+	if !s.IsCut(zone, t) {
+		return time.Time{}, false
+	}
+	d := s.Day(t)
+	for prev, steps := s.near(zone, d, -1), 0; prev != nil && steps < 14; prev, steps = s.near(zone, *prev, -1), steps+1 {
+		d = *prev
+	}
+	return d, true
+}
+
+// near returns zone's closest cut within BlockGap days of t's day, after it (dir 1) or before it (dir -1).
+func (s *Schedule) near(zone int, t time.Time, dir int) *time.Time {
+	for i := 1; i <= BlockGap; i++ {
+		if d := s.Day(t).AddDate(0, 0, dir*i); s.IsCut(zone, d) {
+			return &d
+		}
+	}
+	return nil
 }
 
 // NextCuts returns up to n cut days for zone, starting with t's day.

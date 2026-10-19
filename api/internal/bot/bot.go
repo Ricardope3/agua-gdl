@@ -302,7 +302,7 @@ func (b *Bot) onPayload(ctx context.Context, r User, p string) error {
 			return b.saveReport(ctx, r, zone, parts[0], parts[1])
 		}
 	case "A":
-		// A:zone:date:answer, the reminder's «¿Ahorita tienes agua?»
+		// A:zone:date:answer, «¿Ahorita tienes agua?» on a block's notice or reminder
 		parts := strings.Split(rest, ":")
 		if len(parts) != 3 {
 			break
@@ -417,22 +417,31 @@ func (b *Bot) subscribedText(channel string, zone int, fresh bool) string {
 		days: rotation.DaysES(b.Schedule.Weekdays(zone)),
 		hour: rotation.HourES(b.ReminderHour),
 	}
-	// Tonight's reminder covers tomorrow only if it's not too late, reminders are on and
-	// tomorrow starts a run of cut days; otherwise warn here.
-	late := !b.remindersOn(channel) || now.In(b.Schedule.Location()).Hour() >= b.ReminderHour
-	if b.Schedule.IsCut(zone, tomorrow) && (late || !b.Schedule.StartsRun(zone, tomorrow)) {
-		info.cutTomorrow = rotation.DatesES(b.Schedule.Run(zone, tomorrow))
+	tonight := b.remindersOn(channel) && now.In(b.Schedule.Location()).Hour() < b.ReminderHour
+	// No reminder comes tonight for tomorrow's cut once tonight's run has passed, or when
+	// tomorrow continues a block: warn about it here.
+	if b.Schedule.IsCut(zone, tomorrow) && !(tonight && b.Schedule.StartsBlock(zone, tomorrow)) {
+		info.cutTomorrow = b.Schedule.Block(zone, tomorrow)
 	}
+	// The next message is a block's notice two days before (Telegram only), else its reminder
+	// the evening before, whichever is still ahead.
 	for _, cut := range b.Schedule.NextCuts(zone, tomorrow, 14) {
-		if !b.Schedule.StartsRun(zone, cut) || (cut.Equal(tomorrow) && info.cutTomorrow != "") {
+		if !b.Schedule.StartsBlock(zone, cut) {
 			continue
 		}
-		remind := cut.AddDate(0, 0, -1)
-		info.nextReminder = rotation.DateES(remind)
-		if remind.Equal(today) {
+		evenings := []time.Time{cut.AddDate(0, 0, -2), cut.AddDate(0, 0, -1)}
+		if channel != store.Telegram {
+			evenings = evenings[1:]
+		}
+		i := slices.IndexFunc(evenings, func(d time.Time) bool { return d.After(today) || (d.Equal(today) && tonight) })
+		if i < 0 {
+			continue
+		}
+		info.nextReminder = rotation.DateES(evenings[i])
+		if evenings[i].Equal(today) {
 			info.nextReminder = "hoy"
 		}
-		info.nextCut = rotation.DatesES(b.Schedule.Run(zone, cut))
+		info.nextCut = b.Schedule.Block(zone, cut)
 		break
 	}
 	return msgSubscribed(info)
@@ -525,8 +534,8 @@ func (b *Bot) saveReport(ctx context.Context, r User, zone int, date, answer str
 	return b.text(ctx, r, msgThanks)
 }
 
-// saveWater keeps an answer to the reminder's «¿Ahorita tienes agua?» about the cut starting
-// on date, from the evening before until the run's last day.
+// saveWater keeps an answer to «¿Ahorita tienes agua?» about the block of cuts starting on
+// date, from its notice two days before until the block's last day.
 func (b *Bot) saveWater(ctx context.Context, r User, zone int, date, answer string) error {
 	i := slices.IndexFunc(waterAnswers, func(a struct{ key, title, thanks string }) bool { return a.key == answer })
 	if i < 0 || r.ID == "" {
@@ -540,9 +549,9 @@ func (b *Bot) saveWater(ctx context.Context, r User, zone int, date, answer stri
 		return b.welcome(ctx, r)
 	}
 	d, err := b.Schedule.ParseDate(date)
-	run := b.Schedule.Run(zone, d)
+	block := b.Schedule.Block(zone, d)
 	today := b.Schedule.Day(b.Now())
-	if err != nil || len(run) == 0 || today.Before(d.AddDate(0, 0, -1)) || today.After(run[len(run)-1]) {
+	if err != nil || len(block) == 0 || today.Before(d.AddDate(0, 0, -2)) || today.After(block[len(block)-1]) {
 		return b.text(ctx, r, msgReportClosed)
 	}
 	kept, err := b.Store.SaveWater(ctx, s.ID, zone, d, answer)

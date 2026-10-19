@@ -362,3 +362,18 @@ func TestOnlyTheRemindedSubscriptionCanAnswer(t *testing.T) {
 		t.Fatalf("BAJA and subscribing again must not add answers: %+v", h.store.Water)
 	}
 }
+
+func TestAnswersOpenWithTheNotice(t *testing.T) {
+	h := newTGHarness(t, "2026-10-18 21:00") // Sunday: the notice for Tuesday's block went out at 8 p.m.
+	h.say(t, "/start z5")
+	s, _ := h.sub(t)
+	h.store.Notices[fmt.Sprintf("%d/previo:2026-10-20", s.ID)] = true
+	if m := h.press(t, "A:5:2026-10-20:no"); !strings.Contains(m.Text, "SIAPABOT") || len(h.store.Water) != 1 {
+		t.Fatalf("an answer to the notice counts: %s %+v", m.Text, h.store.Water)
+	}
+	loc, _ := time.LoadLocation("America/Mexico_City")
+	h.bot.Now = func() time.Time { return time.Date(2026, 10, 17, 21, 0, 0, 0, loc) }
+	if m := h.press(t, "A:5:2026-10-20:si"); !strings.Contains(m.Text, "ya cerró") || h.store.Water[0].Answer != "no" {
+		t.Errorf("not before the notice's evening: %s %+v", m.Text, h.store.Water)
+	}
+}

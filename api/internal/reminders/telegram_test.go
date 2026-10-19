@@ -121,22 +121,109 @@ func TestRefusedTelegramSendIsRetriedTheSameNight(t *testing.T) {
 	}
 }
 
-func TestOneReminderPerRunOfCutDays(t *testing.T) {
+func tgRunner(t *testing.T, now string, st *fake.Store, tel *fake.Telegram) *Runner {
+	t.Helper()
+	r := runner(t, now, st, nil)
+	r.Sender, r.Telegram = nil, tel
+	return r
+}
+
+func TestOneRoundOfMessagesPerBlock(t *testing.T) {
 	ctx := context.Background()
 	st, tel := fake.NewStore(), &fake.Telegram{}
 	st.Subscribe(ctx, store.Telegram, "501", "", 5) // Tuesday and Wednesday in a row, then Saturday
 	st.Subscribe(ctx, store.Telegram, "301", "", 3) // Wednesday and Saturday
-	r := runner(t, "2026-10-19 20:00", st, nil)
-	r.Sender, r.Telegram = nil, tel
-	if err := r.SendTonight(ctx); err != nil || len(tel.Sent) != 1 {
+	if err := tgRunner(t, "2026-10-19 20:00", st, tel).SendTonight(ctx); err != nil || len(tel.Sent) != 2 {
 		t.Fatalf("Monday: err %v, sent %d", err, len(tel.Sent))
 	}
-	if m := tel.Sent[0]; m.ChatID != 501 || !strings.Contains(m.Text, "<b>mañana martes 20 y miércoles 21 de octubre</b>") {
-		t.Errorf("zone 5's reminder must cover both days: %s", m.Text)
+	if m := tel.Sent[0]; m.ChatID != 501 || !strings.Contains(m.Text, "<b>mañana martes 20 de octubre</b>, y también el miércoles 21 de octubre") {
+		t.Errorf("zone 5's reminder must cover its block: %s", m.Text)
 	}
-	r = runner(t, "2026-10-20 20:00", st, nil)
-	r.Sender, r.Telegram = nil, tel
-	if err := r.SendTonight(ctx); err != nil || len(tel.Sent) != 2 || tel.Sent[1].ChatID != 301 {
-		t.Fatalf("Tuesday, in the middle of zone 5's cut, only zone 3 is reminded: err %v, sent %+v", err, tel.Sent)
+	if m := tel.Sent[1]; m.ChatID != 301 || !strings.Contains(m.Text, "Se acerca el corte en la Zona 3") || !strings.Contains(m.Text, "<b>miércoles 21 de octubre</b>") {
+		t.Errorf("zone 3 gets its notice two days before Wednesday: %s", m.Text)
 	}
+	if kb := tel.Sent[1].ReplyMarkup.(tg.InlineKeyboard); kb.InlineKeyboard[0][2].CallbackData != "A:3:2026-10-21:no" {
+		t.Errorf("the notice asks «¿Ahorita tienes agua?» about the block: %+v", kb)
+	}
+	if err := tgRunner(t, "2026-10-19 20:30", st, tel).SendTonight(ctx); err != nil || len(tel.Sent) != 2 {
+		t.Fatalf("a second run must not resend: err %v, sent %d", err, len(tel.Sent))
+	}
+	if err := tgRunner(t, "2026-10-20 20:00", st, tel).SendTonight(ctx); err != nil || len(tel.Sent) != 3 || tel.Sent[2].ChatID != 301 {
+		t.Fatalf("Tuesday, in the middle of zone 5's block, only zone 3 is reminded: err %v, sent %+v", err, tel.Sent)
+	}
+}
+
+func TestNoReminderForWhoeverHasNoWater(t *testing.T) {
+	ctx := context.Background()
+	st, tel := fake.NewStore(), &fake.Telegram{}
+	st.Subscribe(ctx, store.Telegram, "301", "", 3)
+	st.Subscribe(ctx, store.Telegram, "302", "", 3)
+	if err := tgRunner(t, "2026-10-19 20:00", st, tel).SendTonight(ctx); err != nil || len(tel.Sent) != 2 {
+		t.Fatalf("Monday's notices: err %v, sent %d", err, len(tel.Sent))
+	}
+	dry := st.Subs[fake.Key(store.Telegram, "301")]
+	if kept, _ := st.SaveWater(ctx, dry.ID, 3, day(t, "2026-10-21"), "no"); !kept {
+		t.Fatal("the notice's answer must be kept")
+	}
+	if err := tgRunner(t, "2026-10-20 20:00", st, tel).SendTonight(ctx); err != nil || len(tel.Sent) != 3 || tel.Sent[2].ChatID != 302 {
+		t.Fatalf("Tuesday: only whoever still has water gets «llena tu tinaco»: err %v, sent %+v", err, tel.Sent)
+	}
+}
+
+func TestAskWhetherTheWaterCameBack(t *testing.T) {
+	ctx := context.Background()
+	st, tel := fake.NewStore(), &fake.Telegram{}
+	st.Subscribe(ctx, store.Telegram, "601", "", 6) // Monday's block, then Friday's
+	st.Subscribe(ctx, store.Telegram, "602", "", 6)
+	st.Subscribe(ctx, store.Telegram, "603", "", 6)
+	if err := tgRunner(t, "2026-10-17 20:00", st, tel).SendTonight(ctx); err != nil || len(tel.Sent) != 3 {
+		t.Fatalf("Saturday's notices for Monday: err %v, sent %d", err, len(tel.Sent))
+	}
+	monday := day(t, "2026-10-19")
+	for user, answer := range map[string]string{"601": "no", "602": "poca", "603": "si"} {
+		if kept, _ := st.SaveWater(ctx, st.Subs[fake.Key(store.Telegram, user)].ID, 6, monday, answer); !kept {
+			t.Fatalf("%s's answer must be kept", user)
+		}
+	}
+	st.SaveReport(ctx, st.Subs[fake.Key(store.Telegram, "602")].ID, 6, monday, "normal") // already said how it came back
+	tel.Sent = nil
+	if err := tgRunner(t, "2026-10-18 20:00", st, tel).SendTonight(ctx); err != nil || len(tel.Sent) != 2 {
+		t.Fatalf("Sunday: the reminder skips whoever has no water: err %v, sent %d", err, len(tel.Sent))
+	}
+	tel.Sent = nil
+	if err := tgRunner(t, "2026-10-20 20:00", st, tel).SendTonight(ctx); err != nil || len(tel.Sent) != 1 {
+		t.Fatalf("Tuesday: one «¿Ya regresó?», to 601 only: err %v, sent %+v", err, tel.Sent)
+	}
+	m := tel.Sent[0]
+	kb, ok := m.ReplyMarkup.(tg.InlineKeyboard)
+	if m.ChatID != 601 || !strings.Contains(m.Text, "¿Ya regresó el agua?") || !ok || kb.InlineKeyboard[0][0].CallbackData != "R:6:2026-10-19:normal" {
+		t.Errorf("follow-up: %+v", m)
+	}
+	if err := tgRunner(t, "2026-10-20 20:30", st, tel).SendTonight(ctx); err != nil || len(tel.Sent) != 1 {
+		t.Fatalf("asked once: err %v, sent %d", err, len(tel.Sent))
+	}
+}
+
+func TestNoticeNightsDontAlsoAskWhetherTheWaterCameBack(t *testing.T) {
+	ctx := context.Background()
+	st, tel := fake.NewStore(), &fake.Telegram{}
+	st.Subscribe(ctx, store.Telegram, "401", "", 4) // Monday, then Thursday: Tuesday is the Thursday notice's night
+	if err := tgRunner(t, "2026-10-17 20:00", st, tel).SendTonight(ctx); err != nil || len(tel.Sent) != 1 {
+		t.Fatalf("Saturday's notice: err %v, sent %d", err, len(tel.Sent))
+	}
+	st.SaveWater(ctx, st.Subs[fake.Key(store.Telegram, "401")].ID, 4, day(t, "2026-10-19"), "no")
+	tel.Sent = nil
+	if err := tgRunner(t, "2026-10-20 20:00", st, tel).SendTonight(ctx); err != nil || len(tel.Sent) != 1 || !strings.Contains(tel.Sent[0].Text, "Se acerca el corte") {
+		t.Fatalf("Tuesday: only Thursday's notice, whose question covers Monday's: err %v, sent %+v", err, tel.Sent)
+	}
+}
+
+func day(t *testing.T, v string) time.Time {
+	t.Helper()
+	loc, _ := time.LoadLocation("America/Mexico_City")
+	d, err := time.ParseInLocation("2006-01-02", v, loc)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return d
 }

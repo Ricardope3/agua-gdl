@@ -1,5 +1,6 @@
 // Package reminders sends the evening-before reminder, on WhatsApp and Telegram, to every
-// subscriber whose zone's cut starts tomorrow.
+// subscriber whose zone's block of cuts starts tomorrow; on Telegram also a notice two days
+// before each block, and afterwards a question to whoever said they had no water.
 package reminders
 
 import (
@@ -22,6 +23,11 @@ type Store interface {
 	DueSubscribers(ctx context.Context, channel string, zones []int, cutDate time.Time) ([]store.Subscriber, error)
 	SendReminder(ctx context.Context, s store.Subscriber, cutDate time.Time, zones []int, budget *store.Budget, send func(store.Subscriber) (string, error)) (bool, error)
 	UnresolvedReminders(ctx context.Context, channel string, cutDate time.Time) (int, error)
+	NoWater(ctx context.Context, start time.Time) (map[int64]bool, error)
+	NoticeRecipients(ctx context.Context, channel string, zone int, key string) ([]store.Subscriber, error)
+	ReturnRecipients(ctx context.Context, channel string, zone int, start, last time.Time) ([]store.Subscriber, error)
+	SendNotice(ctx context.Context, s store.Subscriber, key string, budget *store.Budget, send func(store.Subscriber) (string, error)) (bool, error)
+	UnresolvedNotices(ctx context.Context, channel, key string) (int, error)
 	SentSince(ctx context.Context, since time.Time) (int, error)
 	RecipientsSince(ctx context.Context, since time.Time) (int, error)
 }
@@ -125,7 +131,7 @@ func (r *Runner) SendTonight(ctx context.Context) error {
 		err = r.sendChannel(ctx, store.WhatsApp)
 	}
 	if r.Telegram != nil {
-		err = errors.Join(err, r.sendChannel(ctx, store.Telegram))
+		err = errors.Join(err, r.sendChannel(ctx, store.Telegram), r.sendAhead(ctx), r.askReturn(ctx))
 	}
 	return err
 }
@@ -144,8 +150,8 @@ func (r *Runner) sendChannel(ctx context.Context, channel string) (err error) {
 			err = errors.Join(err, errRejected)
 		}
 	}()
-	// A zone cut two days in a row got one reminder, the evening before the first.
-	zones := slices.DeleteFunc(r.Schedule.ZonesOn(tomorrow), func(z int) bool { return !r.Schedule.StartsRun(z, tomorrow) })
+	// A block of cuts gets one reminder, the evening before its first day.
+	zones := slices.DeleteFunc(r.Schedule.ZonesOn(tomorrow), func(z int) bool { return !r.Schedule.StartsBlock(z, tomorrow) })
 	if len(zones) == 0 {
 		return nil
 	}
@@ -157,6 +163,12 @@ func (r *Runner) sendChannel(ctx context.Context, channel string) (err error) {
 	// cut in the confirmation; skipping them also keeps BAJA + re-subscribe from repeating it.
 	remindAt := r.Schedule.Day(now).Add(time.Duration(r.Hour) * time.Hour)
 	subs = slices.DeleteFunc(subs, func(s store.Subscriber) bool { return !s.UpdatedAt.Before(remindAt) })
+	// Whoever already said they have no water learns nothing from «llena tu tinaco».
+	dry, err := r.Store.NoWater(ctx, tomorrow)
+	if err != nil {
+		return transient(err)
+	}
+	subs = slices.DeleteFunc(subs, func(s store.Subscriber) bool { return dry[s.ID] })
 	if len(subs) == 0 {
 		return nil
 	}
@@ -187,7 +199,11 @@ func (r *Runner) sendChannel(ctx context.Context, channel string) (err error) {
 			}
 			attempted, sendErr = r.Store.SendReminder(sendCtx, s, tomorrow, zones, budget, func(current store.Subscriber) (string, error) {
 				if current.Channel == store.Telegram {
-					return "", r.sendTelegram(ctx, sendCtx, current, r.Schedule.Run(current.Zone, tomorrow))
+					m, err := bot.TelegramReminder(current.UserID, current.Zone, r.Schedule.Block(current.Zone, tomorrow))
+					if err != nil {
+						return "", err
+					}
+					return "", r.sendTelegram(ctx, sendCtx, m)
 				}
 				return r.Sender.Send(sendCtx, r.reminder(current, date))
 			})
@@ -287,13 +303,9 @@ func (r *Runner) sleep(ctx context.Context, d time.Duration) error {
 // sendTelegram waits out Telegram's "too many requests" a few times: a 429 means
 // the message wasn't sent, so trying again can't duplicate it.
 // Waits stop at shutdown (ctx); requests use sendCtx, which doesn't.
-func (r *Runner) sendTelegram(ctx, sendCtx context.Context, s store.Subscriber, days []time.Time) error {
-	m, err := bot.TelegramReminder(s.UserID, s.Zone, days)
-	if err != nil {
-		return err
-	}
+func (r *Runner) sendTelegram(ctx, sendCtx context.Context, m tg.Message) error {
 	for attempt := 0; ; attempt++ {
-		_, err = r.Telegram.Send(sendCtx, m)
+		_, err := r.Telegram.Send(sendCtx, m)
 		var apiErr *tg.APIError
 		if attempt == 3 || !errors.As(err, &apiErr) || apiErr.Status != 429 {
 			return err
@@ -302,6 +314,105 @@ func (r *Runner) sendTelegram(ctx, sendCtx context.Context, s store.Subscriber, 
 			return errors.Join(err, sleepErr)
 		}
 	}
+}
+
+// sendAhead sends Telegram's notice two days before each block of cuts: neighbours report
+// the water goes a day early, so the evening before can be too late.
+func (r *Runner) sendAhead(ctx context.Context) error {
+	start := r.Schedule.Day(r.Now()).AddDate(0, 0, 2)
+	var err error
+	for _, zone := range r.Schedule.ZonesOn(start) {
+		if !r.Schedule.StartsBlock(zone, start) {
+			continue
+		}
+		subs, qErr := r.Store.NoticeRecipients(ctx, store.Telegram, zone, store.AheadKey(start))
+		if qErr != nil {
+			err = errors.Join(err, transient(qErr))
+			continue
+		}
+		err = errors.Join(err, r.sendNotices(ctx, subs, store.AheadKey(start), func(s store.Subscriber) (tg.Message, error) {
+			return bot.TelegramNotice(s.UserID, s.Zone, r.Schedule.Block(s.Zone, start))
+		}))
+	}
+	return err
+}
+
+// askReturn asks, the evening after a block of cuts, whoever said they had no water or little
+// whether it came back; not on a night their zone gets a notice, whose question covers it.
+func (r *Runner) askReturn(ctx context.Context) error {
+	today := r.Schedule.Day(r.Now())
+	last := today.AddDate(0, 0, -1)
+	var err error
+	for _, zone := range r.Schedule.ZonesOn(last) {
+		if !r.Schedule.EndsBlock(zone, last) || r.Schedule.StartsBlock(zone, today.AddDate(0, 0, 2)) {
+			continue
+		}
+		start, _ := r.Schedule.BlockStart(zone, last)
+		subs, qErr := r.Store.ReturnRecipients(ctx, store.Telegram, zone, start, last)
+		if qErr != nil {
+			err = errors.Join(err, transient(qErr))
+			continue
+		}
+		days := r.Schedule.Block(zone, start)
+		err = errors.Join(err, r.sendNotices(ctx, subs, store.ReturnKey(start), func(s store.Subscriber) (tg.Message, error) {
+			return bot.TelegramFollowUp(s.UserID, s.Zone, days)
+		}))
+	}
+	return err
+}
+
+// sendNotices sends a Telegram notice to each subscriber through the notice table's
+// reservation, so nobody gets it twice, and reports the attempts that need review.
+func (r *Runner) sendNotices(ctx context.Context, subs []store.Subscriber, key string, render func(store.Subscriber) (tg.Message, error)) (err error) {
+	defer func() {
+		n, checkErr := r.Store.UnresolvedNotices(ctx, store.Telegram, key)
+		err = errors.Join(err, transient(checkErr))
+		if n > 0 {
+			err = errors.Join(err, fmt.Errorf("%s: %d failed or uncertain notice attempts require review", key, n))
+		}
+	}()
+	sent, failures := 0, 0
+	for i, s := range subs {
+		if i > 0 {
+			if sleepErr := r.sleep(ctx, r.Interval); sleepErr != nil {
+				return errors.Join(err, sleepErr)
+			}
+		}
+		sendCtx := context.WithoutCancel(ctx)
+		attempted, sendErr := r.Store.SendNotice(sendCtx, s, key, nil, func(current store.Subscriber) (string, error) {
+			m, err := render(current)
+			if err != nil {
+				return "", err
+			}
+			return "", r.sendTelegram(ctx, sendCtx, m)
+		})
+		var unreachable interface{ Gone() bool }
+		if errors.As(sendErr, &unreachable) && unreachable.Gone() {
+			r.Log.Info("subscriber blocked the bot; subscription deleted", "subscriber", s.ID)
+			continue
+		}
+		if sendErr != nil && !attempted {
+			return errors.Join(err, transient(fmt.Errorf("subscriber %d: %w", s.ID, sendErr)))
+		}
+		if sendErr != nil {
+			var refused interface{ Rejected() bool }
+			if errors.As(sendErr, &refused) && refused.Rejected() {
+				err = errors.Join(err, errRejected)
+			}
+			err = errors.Join(err, fmt.Errorf("subscriber %d: %w", s.ID, sendErr))
+			r.Log.Error("notice attempt failed", "key", key, "subscriber", s.ID, "err", sendErr)
+			if failures++; failures >= maxConsecutiveFailures {
+				return err
+			}
+			continue
+		}
+		if attempted {
+			failures = 0
+			sent++
+		}
+	}
+	r.Log.Info("notices sent", "key", key, "sent", sent, "due", len(subs))
+	return err
 }
 
 func (r *Runner) reminder(s store.Subscriber, date string) wa.Message {

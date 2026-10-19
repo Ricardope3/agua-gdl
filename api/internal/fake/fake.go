@@ -34,6 +34,7 @@ type Store struct {
 	Now        func() time.Time // stamps subscriptions and attempts; see NewStore
 	FailDue    int              // DueSubscribers fails this many times, like a database waking up
 	Notices    map[string]bool
+	NoticeErrs map[string]bool      // notice attempts whose outcome is unknown, keyed like Notices
 	Replies    map[string][]Pending // queued replies by inbound message ID
 	nextID     int64
 }
@@ -49,7 +50,7 @@ type Pending struct {
 func NewStore() *Store {
 	start := time.Date(2026, 10, 1, 12, 0, 0, 0, time.FixedZone("CST", -6*60*60))
 	return &Store{Subs: map[string]store.Subscriber{}, SeenIDs: map[string]bool{}, Reminders: map[string]bool{},
-		SentAt: map[string]time.Time{}, Unresolved: map[string]string{}, Wamids: map[string]bool{}, Notices: map[string]bool{},
+		SentAt: map[string]time.Time{}, Unresolved: map[string]string{}, Wamids: map[string]bool{}, Notices: map[string]bool{}, NoticeErrs: map[string]bool{},
 		Replies: map[string][]Pending{}, Now: func() time.Time { return start }}
 }
 
@@ -184,10 +185,10 @@ func (s *Store) SaveReport(_ context.Context, id int64, zone int, d time.Time, a
 	return nil
 }
 
-// SaveWater keeps one answer per subscription and cut, and only from a subscription that
-// was sent that cut's reminder, like store.DB.SaveWater.
+// SaveWater keeps one answer per subscription and block, and only from a subscription that
+// was sent that block's notice or reminder, like store.DB.SaveWater.
 func (s *Store) SaveWater(_ context.Context, id int64, zone int, d time.Time, answer string) (bool, error) {
-	if !s.Reminders[key(id, d)] {
+	if !s.Reminders[key(id, d)] && !s.Notices[fmt.Sprintf("%d/%s", id, store.AheadKey(d))] {
 		return false, nil
 	}
 	w := Report{id, zone, d.Format("2006-01-02"), answer}
@@ -199,6 +200,47 @@ func (s *Store) SaveWater(_ context.Context, id int64, zone int, d time.Time, an
 	}
 	s.Water = append(s.Water, w)
 	return true, nil
+}
+
+func (s *Store) NoWater(_ context.Context, start time.Time) (map[int64]bool, error) {
+	ids := map[int64]bool{}
+	for _, w := range s.Water {
+		if w.Date == start.Format("2006-01-02") && w.Answer == "no" {
+			ids[w.SubscriberID] = true
+		}
+	}
+	return ids, nil
+}
+
+// ReturnRecipients mirrors store.DB.ReturnRecipients.
+func (s *Store) ReturnRecipients(_ context.Context, channel string, zone int, start, last time.Time) ([]store.Subscriber, error) {
+	var out []store.Subscriber
+	for _, sub := range s.Subs {
+		if sub.Channel != channel || sub.Zone != zone || s.Notices[fmt.Sprintf("%d/%s", sub.ID, store.ReturnKey(start))] {
+			continue
+		}
+		dry := slices.ContainsFunc(s.Water, func(w Report) bool {
+			return w.SubscriberID == sub.ID && w.Date == start.Format("2006-01-02") && (w.Answer == "no" || w.Answer == "poca")
+		})
+		reported := slices.ContainsFunc(s.Reports, func(r Report) bool {
+			return r.SubscriberID == sub.ID && r.Date >= start.Format("2006-01-02") && r.Date <= last.Format("2006-01-02")
+		})
+		if dry && !reported {
+			out = append(out, sub)
+		}
+	}
+	slices.SortFunc(out, func(a, b store.Subscriber) int { return int(a.ID - b.ID) })
+	return out, nil
+}
+
+func (s *Store) UnresolvedNotices(_ context.Context, channel, k string) (int, error) {
+	n := 0
+	for nk := range s.NoticeErrs {
+		if strings.HasSuffix(nk, "/"+k) && s.channelOf(nk) == channel {
+			n++
+		}
+	}
+	return n, nil
 }
 
 func (s *Store) UpdateStatus(_ context.Context, wamid, _ string) (bool, error) {
@@ -312,6 +354,8 @@ func (s *Store) SendNotice(_ context.Context, sub store.Subscriber, k string, bu
 	} else if errors.As(err, &rejected) && rejected.Rejected() {
 		delete(s.Notices, nk)
 		delete(s.SentAt, fmt.Sprintf("%d/notice/%s", sub.ID, k))
+	} else if err != nil {
+		s.NoticeErrs[nk] = true
 	}
 	return true, err
 }

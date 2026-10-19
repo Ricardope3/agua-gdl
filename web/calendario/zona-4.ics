@@ -24,8 +24,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 15 de octubre hay racionamiento de agua en la zo
- na 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 15 de octubre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 1
+ 5 de octubre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -44,8 +50,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 19 de octubre hay racionamiento de agua en la zon
- a 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 19 de octubre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 19
+  de octubre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -64,8 +76,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 22 de octubre hay racionamiento de agua en la zo
- na 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 22 de octubre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 2
+ 2 de octubre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -84,8 +102,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 26 de octubre hay racionamiento de agua en la zon
- a 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 26 de octubre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 26
+  de octubre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -104,8 +128,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 29 de octubre hay racionamiento de agua en la zo
- na 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 29 de octubre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 2
+ 9 de octubre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -124,8 +154,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 2 de noviembre hay racionamiento de agua en la zo
- na 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 2 de noviembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 2 
+ de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -144,8 +180,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 5 de noviembre hay racionamiento de agua en la z
- ona 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 5 de noviembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 5
+  de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -164,8 +206,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 9 de noviembre hay racionamiento de agua en la zo
- na 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 9 de noviembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 9 
+ de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -184,8 +232,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 12 de noviembre hay racionamiento de agua en la 
- zona 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 12 de noviembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 1
+ 2 de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -204,8 +258,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 16 de noviembre hay racionamiento de agua en la z
- ona 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 16 de noviembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 16
+  de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -224,8 +284,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 19 de noviembre hay racionamiento de agua en la 
- zona 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 19 de noviembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 1
+ 9 de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -244,8 +310,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 23 de noviembre hay racionamiento de agua en la z
- ona 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 23 de noviembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 23
+  de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -264,8 +336,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 26 de noviembre hay racionamiento de agua en la 
- zona 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 26 de noviembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 2
+ 6 de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -284,8 +362,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 30 de noviembre hay racionamiento de agua en la z
- ona 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 30 de noviembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 30
+  de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -304,8 +388,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 3 de diciembre hay racionamiento de agua en la z
- ona 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 3 de diciembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 3
+  de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -324,8 +414,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 7 de diciembre hay racionamiento de agua en la zo
- na 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 7 de diciembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 7 
+ de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -344,8 +440,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 10 de diciembre hay racionamiento de agua en la 
- zona 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 10 de diciembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 1
+ 0 de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -364,8 +466,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 14 de diciembre hay racionamiento de agua en la z
- ona 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 14 de diciembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 14
+  de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -384,8 +492,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 17 de diciembre hay racionamiento de agua en la 
- zona 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 17 de diciembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 1
+ 7 de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -404,8 +518,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 21 de diciembre hay racionamiento de agua en la z
- ona 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 21 de diciembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 21
+  de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -424,8 +544,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 24 de diciembre hay racionamiento de agua en la 
- zona 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 24 de diciembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 2
+ 4 de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -444,8 +570,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 28 de diciembre hay racionamiento de agua en la z
- ona 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 28 de diciembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 28
+  de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -464,8 +596,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 31 de diciembre hay racionamiento de agua en la 
- zona 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 31 de diciembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 3
+ 1 de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -484,7 +622,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 4 de enero hay racionamiento de agua en la zona 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 4 de enero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 4 
+ de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -503,8 +648,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 7 de enero hay racionamiento de agua en la zona 
- 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 7 de enero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 7
+  de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -523,8 +674,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 11 de enero hay racionamiento de agua en la zona 
- 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 11 de enero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 11
+  de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -543,8 +700,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 14 de enero hay racionamiento de agua en la zona
-  4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 14 de enero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 1
+ 4 de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -563,8 +726,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 18 de enero hay racionamiento de agua en la zona 
- 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 18 de enero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 18
+  de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -583,8 +752,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 21 de enero hay racionamiento de agua en la zona
-  4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 21 de enero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 2
+ 1 de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -603,8 +778,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 25 de enero hay racionamiento de agua en la zona 
- 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 25 de enero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 25
+  de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -623,8 +804,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 28 de enero hay racionamiento de agua en la zona
-  4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 28 de enero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 2
+ 8 de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -643,8 +830,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 1 de febrero hay racionamiento de agua en la zona
-  4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 1 de febrero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 1 
+ de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -663,8 +856,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 4 de febrero hay racionamiento de agua en la zon
- a 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 4 de febrero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 4
+  de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -683,8 +882,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 8 de febrero hay racionamiento de agua en la zona
-  4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 8 de febrero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 8 
+ de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -703,8 +908,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 11 de febrero hay racionamiento de agua en la zo
- na 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 11 de febrero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 1
+ 1 de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -723,8 +934,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 15 de febrero hay racionamiento de agua en la zon
- a 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 15 de febrero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 15
+  de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -743,8 +960,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 18 de febrero hay racionamiento de agua en la zo
- na 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 18 de febrero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 1
+ 8 de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -763,8 +986,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 22 de febrero hay racionamiento de agua en la zon
- a 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 22 de febrero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 22
+  de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -783,8 +1012,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 25 de febrero hay racionamiento de agua en la zo
- na 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 25 de febrero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 2
+ 5 de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -803,7 +1038,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 1 de marzo hay racionamiento de agua en la zona 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 1 de marzo
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 1 
+ de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -822,8 +1064,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 4 de marzo hay racionamiento de agua en la zona 
- 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 4 de marzo
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 4
+  de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -842,7 +1090,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 8 de marzo hay racionamiento de agua en la zona 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 8 de marzo
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 8 
+ de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -861,8 +1116,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 11 de marzo hay racionamiento de agua en la zona
-  4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 11 de marzo
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 1
+ 1 de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -881,8 +1142,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 15 de marzo hay racionamiento de agua en la zona 
- 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 15 de marzo
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 15
+  de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -901,8 +1168,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 18 de marzo hay racionamiento de agua en la zona
-  4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 18 de marzo
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 1
+ 8 de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -921,8 +1194,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 22 de marzo hay racionamiento de agua en la zona 
- 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 22 de marzo
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 22
+  de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -941,8 +1220,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 25 de marzo hay racionamiento de agua en la zona
-  4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: jue
+ ves 25 de marzo
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: jueves 2
+ 5 de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -961,8 +1246,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana lunes 29 de marzo hay racionamiento de agua en la zona 
- 4
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 4: lun
+ es 29 de marzo
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 4: lunes 29
+  de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT

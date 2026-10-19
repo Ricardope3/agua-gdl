@@ -1066,3 +1066,49 @@ func TestWaterAnswersNeedTheReminderAndSurviveBaja(t *testing.T) {
 		t.Fatalf("want one unlinked answer «poca»: %d %q linked=%v %v", n, answer, linked, err)
 	}
 }
+
+func TestNoticeAnswersAndTheReturnQuestion(t *testing.T) {
+	db := testDB(t)
+	ctx := context.Background()
+	start := time.Date(2026, 10, 19, 0, 0, 0, 0, time.UTC)
+	ids := map[string]int64{}
+	for _, user := range []string{"601", "602", "603", "604"} {
+		if err := db.Subscribe(ctx, Telegram, user, "", 6); err != nil {
+			t.Fatal(err)
+		}
+		s, _, _ := db.Subscriber(ctx, Telegram, user)
+		ids[user] = s.ID
+		if user == "604" {
+			continue // subscribed after the notice went out
+		}
+		if _, err := db.SendNotice(ctx, s, AheadKey(start), nil, func(Subscriber) (string, error) { return "", nil }); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for user, answer := range map[string]string{"601": "no", "602": "poca", "603": "si", "604": "no"} {
+		kept, err := db.SaveWater(ctx, ids[user], 6, start, answer)
+		if err != nil || kept != (user != "604") {
+			t.Fatalf("%s: kept %v, err %v", user, kept, err)
+		}
+	}
+	dry, err := db.NoWater(ctx, start)
+	if err != nil || len(dry) != 1 || !dry[ids["601"]] {
+		t.Fatalf("only 601 said «no»: %v %v", dry, err)
+	}
+	if err := db.SaveReport(ctx, ids["602"], 6, start, "normal"); err != nil {
+		t.Fatal(err)
+	}
+	due, err := db.ReturnRecipients(ctx, Telegram, 6, start, start)
+	if err != nil || len(due) != 1 || due[0].ID != ids["601"] {
+		t.Fatalf("ask only 601: «poca» already reported, «si» had water, 604 never answered: %+v %v", due, err)
+	}
+	if _, err := db.SendNotice(ctx, due[0], ReturnKey(start), nil, func(Subscriber) (string, error) { return "", errors.New("timeout") }); err == nil {
+		t.Fatal("want the send error")
+	}
+	if n, err := db.UnresolvedNotices(ctx, Telegram, ReturnKey(start)); err != nil || n != 1 {
+		t.Fatalf("an uncertain attempt needs review: %d %v", n, err)
+	}
+	if again, err := db.ReturnRecipients(ctx, Telegram, 6, start, start); err != nil || len(again) != 0 {
+		t.Fatalf("an uncertain attempt is never resent: %+v %v", again, err)
+	}
+}

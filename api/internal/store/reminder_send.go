@@ -159,6 +159,14 @@ func (db *DB) SendNotice(ctx context.Context, s Subscriber, key string, budget *
 	return db.sendReserved(ctx, "notice", id, s.ID, []int{s.Zone}, send)
 }
 
+// UnresolvedNotices counts a notice's attempts that need review, as UnresolvedReminders does.
+func (db *DB) UnresolvedNotices(ctx context.Context, channel, key string) (int, error) {
+	var n int
+	err := db.pool.QueryRow(ctx, `select count(*) from notice where channel = $1 and key = $2
+		and status in ('sending', 'uncertain', 'rejected', 'failed')`, channel, key).Scan(&n)
+	return n, err
+}
+
 // UnresolvedReminders also catches interrupted attempts on a subsequent startup.
 func (db *DB) UnresolvedReminders(ctx context.Context, channel string, cutDate time.Time) (int, error) {
 	var n int

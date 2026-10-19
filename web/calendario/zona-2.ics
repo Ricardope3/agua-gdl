@@ -24,8 +24,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 15 de octubre hay racionamiento de agua en la zo
- na 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: jue
+ ves 15 de octubre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: jueves 1
+ 5 de octubre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -44,8 +50,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 18 de octubre hay racionamiento de agua en la z
- ona 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 18\, martes 20 y jueves 22 de octubre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 18\, martes 20 y jueves 22 de octubre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -62,12 +74,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 20 de octubre hay racionamiento de agua en la zo
- na 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20261022@aguagdl.com
@@ -82,12 +88,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 22 de octubre hay racionamiento de agua en la zo
- na 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20261025@aguagdl.com
@@ -104,8 +104,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 25 de octubre hay racionamiento de agua en la z
- ona 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 25\, martes 27 y jueves 29 de octubre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 25\, martes 27 y jueves 29 de octubre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -122,12 +128,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 27 de octubre hay racionamiento de agua en la zo
- na 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20261029@aguagdl.com
@@ -142,12 +142,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 29 de octubre hay racionamiento de agua en la zo
- na 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20261101@aguagdl.com
@@ -164,8 +158,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 1 de noviembre hay racionamiento de agua en la 
- zona 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 1\, martes 3 y jueves 5 de noviembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 1\, martes 3 y jueves 5 de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -182,12 +182,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 3 de noviembre hay racionamiento de agua en la z
- ona 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20261105@aguagdl.com
@@ -202,12 +196,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 5 de noviembre hay racionamiento de agua en la z
- ona 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20261108@aguagdl.com
@@ -224,8 +212,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 8 de noviembre hay racionamiento de agua en la 
- zona 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 8\, martes 10 y jueves 12 de noviembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 8\, martes 10 y jueves 12 de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -242,12 +236,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 10 de noviembre hay racionamiento de agua en la 
- zona 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20261112@aguagdl.com
@@ -262,12 +250,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 12 de noviembre hay racionamiento de agua en la 
- zona 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20261115@aguagdl.com
@@ -284,8 +266,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 15 de noviembre hay racionamiento de agua en la
-  zona 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 15\, martes 17 y jueves 19 de noviembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 15\, martes 17 y jueves 19 de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -302,12 +290,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 17 de noviembre hay racionamiento de agua en la 
- zona 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20261119@aguagdl.com
@@ -322,12 +304,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 19 de noviembre hay racionamiento de agua en la 
- zona 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20261122@aguagdl.com
@@ -344,8 +320,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 22 de noviembre hay racionamiento de agua en la
-  zona 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 22\, martes 24 y jueves 26 de noviembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 22\, martes 24 y jueves 26 de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -362,12 +344,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 24 de noviembre hay racionamiento de agua en la 
- zona 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20261126@aguagdl.com
@@ -382,12 +358,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 26 de noviembre hay racionamiento de agua en la 
- zona 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20261129@aguagdl.com
@@ -404,8 +374,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 29 de noviembre hay racionamiento de agua en la
-  zona 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 29 de noviembre\, martes 1 y jueves 3 de diciembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 29 de noviembre\, martes 1 y jueves 3 de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -422,12 +398,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 1 de diciembre hay racionamiento de agua en la z
- ona 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20261203@aguagdl.com
@@ -442,12 +412,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 3 de diciembre hay racionamiento de agua en la z
- ona 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20261206@aguagdl.com
@@ -464,8 +428,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 6 de diciembre hay racionamiento de agua en la 
- zona 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 6\, martes 8 y jueves 10 de diciembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 6\, martes 8 y jueves 10 de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -482,12 +452,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 8 de diciembre hay racionamiento de agua en la z
- ona 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20261210@aguagdl.com
@@ -502,12 +466,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 10 de diciembre hay racionamiento de agua en la 
- zona 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20261213@aguagdl.com
@@ -524,8 +482,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 13 de diciembre hay racionamiento de agua en la
-  zona 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 13\, martes 15 y jueves 17 de diciembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 13\, martes 15 y jueves 17 de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -542,12 +506,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 15 de diciembre hay racionamiento de agua en la 
- zona 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20261217@aguagdl.com
@@ -562,12 +520,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 17 de diciembre hay racionamiento de agua en la 
- zona 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20261220@aguagdl.com
@@ -584,8 +536,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 20 de diciembre hay racionamiento de agua en la
-  zona 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 20\, martes 22 y jueves 24 de diciembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 20\, martes 22 y jueves 24 de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -602,12 +560,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 22 de diciembre hay racionamiento de agua en la 
- zona 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20261224@aguagdl.com
@@ -622,12 +574,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 24 de diciembre hay racionamiento de agua en la 
- zona 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20261227@aguagdl.com
@@ -644,8 +590,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 27 de diciembre hay racionamiento de agua en la
-  zona 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 27\, martes 29 y jueves 31 de diciembre
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 27\, martes 29 y jueves 31 de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -662,12 +614,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 29 de diciembre hay racionamiento de agua en la 
- zona 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20261231@aguagdl.com
@@ -682,12 +628,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 31 de diciembre hay racionamiento de agua en la 
- zona 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270103@aguagdl.com
@@ -704,8 +644,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 3 de enero hay racionamiento de agua en la zona
-  2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 3\, martes 5 y jueves 7 de enero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 3\, martes 5 y jueves 7 de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -722,12 +668,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 5 de enero hay racionamiento de agua en la zona 
- 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270107@aguagdl.com
@@ -742,12 +682,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 7 de enero hay racionamiento de agua en la zona 
- 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270110@aguagdl.com
@@ -764,8 +698,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 10 de enero hay racionamiento de agua en la zon
- a 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 10\, martes 12 y jueves 14 de enero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 10\, martes 12 y jueves 14 de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -782,12 +722,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 12 de enero hay racionamiento de agua en la zona
-  2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270114@aguagdl.com
@@ -802,12 +736,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 14 de enero hay racionamiento de agua en la zona
-  2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270117@aguagdl.com
@@ -824,8 +752,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 17 de enero hay racionamiento de agua en la zon
- a 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 17\, martes 19 y jueves 21 de enero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 17\, martes 19 y jueves 21 de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -842,12 +776,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 19 de enero hay racionamiento de agua en la zona
-  2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270121@aguagdl.com
@@ -862,12 +790,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 21 de enero hay racionamiento de agua en la zona
-  2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270124@aguagdl.com
@@ -884,8 +806,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 24 de enero hay racionamiento de agua en la zon
- a 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 24\, martes 26 y jueves 28 de enero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 24\, martes 26 y jueves 28 de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -902,12 +830,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 26 de enero hay racionamiento de agua en la zona
-  2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270128@aguagdl.com
@@ -922,12 +844,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 28 de enero hay racionamiento de agua en la zona
-  2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270131@aguagdl.com
@@ -944,8 +860,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 31 de enero hay racionamiento de agua en la zon
- a 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 31 de enero\, martes 2 y jueves 4 de febrero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 31 de enero\, martes 2 y jueves 4 de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -962,12 +884,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 2 de febrero hay racionamiento de agua en la zon
- a 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270204@aguagdl.com
@@ -982,12 +898,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 4 de febrero hay racionamiento de agua en la zon
- a 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270207@aguagdl.com
@@ -1004,8 +914,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 7 de febrero hay racionamiento de agua en la zo
- na 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 7\, martes 9 y jueves 11 de febrero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 7\, martes 9 y jueves 11 de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -1022,12 +938,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 9 de febrero hay racionamiento de agua en la zon
- a 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270211@aguagdl.com
@@ -1042,12 +952,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 11 de febrero hay racionamiento de agua en la zo
- na 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270214@aguagdl.com
@@ -1064,8 +968,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 14 de febrero hay racionamiento de agua en la z
- ona 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 14\, martes 16 y jueves 18 de febrero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 14\, martes 16 y jueves 18 de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -1082,12 +992,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 16 de febrero hay racionamiento de agua en la zo
- na 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270218@aguagdl.com
@@ -1102,12 +1006,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 18 de febrero hay racionamiento de agua en la zo
- na 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270221@aguagdl.com
@@ -1124,8 +1022,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 21 de febrero hay racionamiento de agua en la z
- ona 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 21\, martes 23 y jueves 25 de febrero
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 21\, martes 23 y jueves 25 de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -1142,12 +1046,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 23 de febrero hay racionamiento de agua en la zo
- na 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270225@aguagdl.com
@@ -1162,12 +1060,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 25 de febrero hay racionamiento de agua en la zo
- na 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270228@aguagdl.com
@@ -1184,8 +1076,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 28 de febrero hay racionamiento de agua en la z
- ona 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 28 de febrero\, martes 2 y jueves 4 de marzo
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 28 de febrero\, martes 2 y jueves 4 de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -1202,12 +1100,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 2 de marzo hay racionamiento de agua en la zona 
- 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270304@aguagdl.com
@@ -1222,12 +1114,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 4 de marzo hay racionamiento de agua en la zona 
- 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270307@aguagdl.com
@@ -1244,8 +1130,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 7 de marzo hay racionamiento de agua en la zona
-  2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 7\, martes 9 y jueves 11 de marzo
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 7\, martes 9 y jueves 11 de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -1262,12 +1154,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 9 de marzo hay racionamiento de agua en la zona 
- 2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270311@aguagdl.com
@@ -1282,12 +1168,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 11 de marzo hay racionamiento de agua en la zona
-  2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270314@aguagdl.com
@@ -1304,8 +1184,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 14 de marzo hay racionamiento de agua en la zon
- a 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 14\, martes 16 y jueves 18 de marzo
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 14\, martes 16 y jueves 18 de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -1322,12 +1208,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 16 de marzo hay racionamiento de agua en la zona
-  2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270318@aguagdl.com
@@ -1342,12 +1222,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 18 de marzo hay racionamiento de agua en la zona
-  2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270321@aguagdl.com
@@ -1364,8 +1238,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 21 de marzo hay racionamiento de agua en la zon
- a 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 21\, martes 23 y jueves 25 de marzo
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 21\, martes 23 y jueves 25 de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -1382,12 +1262,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 23 de marzo hay racionamiento de agua en la zona
-  2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270325@aguagdl.com
@@ -1402,12 +1276,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana jueves 25 de marzo hay racionamiento de agua en la zona
-  2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-2-20270328@aguagdl.com
@@ -1424,8 +1292,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana domingo 28 de marzo hay racionamiento de agua en la zon
- a 2
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 2: dom
+ ingo 28 y martes 30 de marzo
+TRIGGER:-P1DT4H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 2: domingo 
+ 28 y martes 30 de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -1442,11 +1316,5 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
  ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana martes 30 de marzo hay racionamiento de agua en la zona
-  2
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 END:VCALENDAR

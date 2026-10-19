@@ -80,7 +80,7 @@ func TestSubscribeByZone(t *testing.T) {
 func TestLateSubscriberIsWarnedAboutTomorrow(t *testing.T) {
 	h := newHarness(t, "2026-10-14 21:30")
 	got := h.send(t, text("ZONA 2"))
-	if !strings.Contains(got, "¡Ojo! *Mañana jueves 15 de octubre* hay corte") || !strings.Contains(got, "corte del domingo 18 de octubre") {
+	if !strings.Contains(got, "¡Ojo! *Mañana jueves 15 de octubre* hay corte") || !strings.Contains(got, "(cortes del domingo 18, martes 20 y jueves 22 de octubre)") {
 		t.Errorf("unexpected:\n%s", got)
 	}
 }
@@ -412,11 +412,11 @@ func TestColoniaOffTheList(t *testing.T) {
 	}
 }
 
-func TestNextReminderCoversTheWholeRunOfCuts(t *testing.T) {
+func TestNextMessageCoversTheWholeBlock(t *testing.T) {
 	cases := []struct{ now, want, notWant string }{
-		{"2026-10-19 10:00", "Próximo aviso: *hoy, 8 p. m.* (corte del martes 20 y miércoles 21 de octubre)", "¡Ojo!"},
-		{"2026-10-19 21:00", "¡Ojo! *Mañana martes 20 y miércoles 21 de octubre* hay corte", "corte del miércoles"},
-		{"2026-10-20 10:00", "¡Ojo! *Mañana miércoles 21 de octubre* hay corte", "Próximo aviso: *hoy"},
+		{"2026-10-19 10:00", "Próximo aviso: *hoy, 8 p. m.* (cortes del martes 20 y miércoles 21 de octubre)", "¡Ojo!"},
+		{"2026-10-19 21:00", "¡Ojo! *Mañana martes 20 de octubre* hay corte, y también el miércoles 21 de octubre.", "cortes del martes"},
+		{"2026-10-20 10:00", "¡Ojo! *Mañana miércoles 21 de octubre* hay corte.", "Próximo aviso: *hoy"},
 	}
 	for _, c := range cases {
 		h := newHarness(t, c.now)
@@ -425,7 +425,17 @@ func TestNextReminderCoversTheWholeRunOfCuts(t *testing.T) {
 			t.Errorf("%s: want %q and not %q in:\n%s", c.now, c.want, c.notWant, got)
 		}
 		if c.now != "2026-10-19 10:00" && !strings.Contains(got, "Próximo aviso: *viernes 23 de octubre, 8 p. m.* (corte del sábado 24 de octubre)") {
-			t.Errorf("%s: no reminder comes in the middle of a cut, so the next one is Friday's:\n%s", c.now, got)
+			t.Errorf("%s: no reminder comes in the middle of a block, so the next one is Friday's:\n%s", c.now, got)
+		}
+	}
+}
+
+func TestTelegramPromisesTheNoticeTwoDaysBefore(t *testing.T) {
+	h := newTGHarness(t, "2026-10-19 21:00")
+	m := h.say(t, "/start z5")
+	for _, want := range []string{"dos días antes y otra vez la noche antes", "Próximo aviso: <b>jueves 22 de octubre, 8 p. m.</b> (corte del sábado 24 de octubre)"} {
+		if !strings.Contains(m.Text, want) {
+			t.Errorf("missing %q in:\n%s", want, m.Text)
 		}
 	}
 }
