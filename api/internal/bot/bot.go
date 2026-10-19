@@ -1,4 +1,5 @@
-// Package bot answers WhatsApp messages: subscriptions, zone lookups, unsubscribes and cut reports.
+// Package bot answers Telegram and WhatsApp messages: subscriptions, zone lookups, unsubscribes,
+// answers to the reminders and cut reports.
 package bot
 
 import (
@@ -229,7 +230,11 @@ func (b *Bot) onText(ctx context.Context, r User, body string) error {
 	case exact && len(matches) == 1:
 		return b.onColonia(ctx, r, matches[0])
 	}
-	return b.reply(ctx, r, Reply{Text: msgPickColonia, Button: "Ver colonias", Choices: coloniaChoices(matches)})
+	text := msgPickColonia
+	if len(matches) == 1 {
+		text = msgPickOneColonia
+	}
+	return b.reply(ctx, r, Reply{Text: text, Button: labelSeeColonias, Choices: coloniaChoices(matches)})
 }
 
 func coloniaChoices(matches []colonias.Colonia) []Choice {
@@ -252,7 +257,11 @@ func (b *Bot) otherColonias(ctx context.Context, r User, others []colonias.Other
 	if len(matches) == 0 {
 		return b.text(ctx, r, text)
 	}
-	return b.reply(ctx, r, Reply{Text: text + "\n\n" + msgOrOneOfThese, Button: "Ver colonias", Choices: coloniaChoices(matches)})
+	more := msgOrOneOfThese
+	if len(matches) == 1 {
+		more = msgOrThisOne
+	}
+	return b.reply(ctx, r, Reply{Text: text + "\n\n" + more, Button: labelSeeColonias, Choices: coloniaChoices(matches)})
 }
 
 // onUserChanged follows a subscriber to a new number or business-scoped user ID,
@@ -339,9 +348,9 @@ func (b *Bot) onColonia(ctx context.Context, r User, c colonias.Colonia) error {
 func (b *Bot) pickZone(ctx context.Context, r User, body string, zones []int) error {
 	choices := make([]Choice, len(zones))
 	for i, z := range zones {
-		choices[i] = Choice{ID: fmt.Sprintf("Z:%d", z), Title: fmt.Sprintf("Zona %d", z), Description: "Cortes: " + rotation.DaysES(b.Schedule.Weekdays(z))}
+		choices[i] = Choice{ID: fmt.Sprintf("Z:%d", z), Title: zoneTitle(z), Description: zoneDays(rotation.DaysES(b.Schedule.Weekdays(z)))}
 	}
-	return b.reply(ctx, r, Reply{Text: body, Button: "Elegir zona", Choices: choices})
+	return b.reply(ctx, r, Reply{Text: body, Button: labelPickZone, Choices: choices})
 }
 
 func (b *Bot) greet(ctx context.Context, r User) error {
@@ -434,7 +443,7 @@ func (b *Bot) subscribedText(channel string, zone int, fresh bool) string {
 	}
 	tonight := b.remindersOn(channel) && now.In(b.Schedule.Location()).Hour() < b.ReminderHour
 	// No reminder comes tonight for tomorrow's cut once tonight's run has passed, or when
-	// tomorrow continues a block; nor for the rest of a block that started today: warn here.
+	// tomorrow continues a block; nor for the rest of the block under way: warn here.
 	if b.Schedule.IsCut(zone, tomorrow) && !(tonight && b.Schedule.StartsBlock(zone, tomorrow)) {
 		info.cutTomorrow = b.Schedule.Block(zone, tomorrow)
 	} else if block := b.Schedule.Block(zone, today); len(block) > 1 {
@@ -519,7 +528,7 @@ func (b *Bot) askReport(ctx context.Context, r User, zone int, date string) erro
 		}
 		choices[i] = Choice{ID: id, Title: a.title}
 	}
-	return b.reply(ctx, r, Reply{Text: msgAskReport(rotation.DateES(d)), Button: "Elegir respuesta", Choices: choices})
+	return b.reply(ctx, r, Reply{Text: msgAskReport(rotation.DateES(d)), Button: labelPickAnswer, Choices: choices})
 }
 
 func (b *Bot) saveReport(ctx context.Context, r User, zone int, date, answer, sig string) error {
@@ -647,28 +656,9 @@ func whatsAppMessage(to User, r Reply) wa.Message {
 	return wa.NewList(rec, r.Text, r.Button, rows)
 }
 
-// zoneLabel is "zona 3" or "zonas 1, 5 y 6".
-func zoneLabel(zones []int) string {
-	if len(zones) == 1 {
-		return "zona " + zoneList(zones)
-	}
-	return "zonas " + zoneList(zones)
-}
-
 func municipioName(m string) string {
 	if name := municipios[colonias.Normalize(m)]; name != "" {
 		return name
 	}
 	return m
-}
-
-func zoneList(zones []int) string {
-	s := make([]string, len(zones))
-	for i, z := range zones {
-		s[i] = strconv.Itoa(z)
-	}
-	if len(s) < 2 {
-		return strings.Join(s, "")
-	}
-	return strings.Join(s[:len(s)-1], ", ") + " y " + s[len(s)-1]
 }

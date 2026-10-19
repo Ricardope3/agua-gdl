@@ -402,6 +402,22 @@ func TestManualReminderMatchesTheTemplate(t *testing.T) {
 	}
 }
 
+func TestWordingAgreesInNumber(t *testing.T) {
+	if got := msgOtherColonia("HERNANDEZ ROMO", "Guadalajara", []int{2, 3}); !strings.Contains(got, "dentro del mapa de las zonas 2 y 3") {
+		t.Errorf("two zones:\n%s", got)
+	}
+	if got := msgOtherColonia("VALLARTA NORTE", "Guadalajara", []int{6}); !strings.Contains(got, "dentro del mapa de la zona 6") {
+		t.Errorf("one zone:\n%s", got)
+	}
+	tue := time.Date(2026, 10, 20, 0, 0, 0, 0, time.UTC)
+	if got := msgNotice([]time.Time{tue}, 4); !strings.Contains(got, "Se acerca el corte en la Zona 4") {
+		t.Errorf("one cut:\n%s", got)
+	}
+	if got := msgNotice([]time.Time{tue, tue.AddDate(0, 0, 1)}, 5); !strings.Contains(got, "Se acercan los cortes en la Zona 5") {
+		t.Errorf("a block:\n%s", got)
+	}
+}
+
 func TestColoniaOffTheList(t *testing.T) {
 	h := newHarness(t, "2026-10-14 10:00")
 	if got := h.send(t, text("Jardín Real")); !strings.Contains(got, "*JARDIN REAL* (Zapopan) no está en la lista") || !strings.Contains(got, "no le toca racionamiento") {

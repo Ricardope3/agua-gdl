@@ -66,7 +66,7 @@ func telegramUser(chatID int64) User {
 var startZoneRe = regexp.MustCompile(`^z([1-7])$`)
 
 // onCommand handles the bot's menu: /start (with an optional deep-link zone, e.g. /start z6),
-// /zona, /reportar, /pipa, /baja and /ayuda.
+// /zona, /reportar, /pipa, /escribe, /baja and /ayuda.
 func (b *Bot) onCommand(ctx context.Context, r User, text string) error {
 	cmd, arg, _ := strings.Cut(strings.TrimPrefix(text, "/"), " ")
 	cmd, _, _ = strings.Cut(strings.ToLower(cmd), "@")
@@ -118,7 +118,7 @@ func TelegramMessage(chatID string, r Reply) (tg.Message, error) {
 		}
 		m.ReplyMarkup = tg.InlineKeyboard{InlineKeyboard: rows}
 	case r.AskLocation:
-		m.ReplyMarkup = tg.ReplyKeyboard{Keyboard: [][]tg.KeyboardButton{{{Text: "📍 Mandar mi ubicación", RequestLocation: true}}},
+		m.ReplyMarkup = tg.ReplyKeyboard{Keyboard: [][]tg.KeyboardButton{{{Text: labelSendLocation, RequestLocation: true}}},
 			ResizeKeyboard: true, OneTimeKeyboard: true}
 	case r.CloseKeyboard:
 		m.ReplyMarkup = tg.RemoveKeyboard{RemoveKeyboard: true}
@@ -172,8 +172,8 @@ func withWaterButtons(chatID, text string, zone int, start time.Time) (tg.Messag
 	}
 	m.ReplyMarkup = tg.InlineKeyboard{InlineKeyboard: [][]tg.InlineButton{
 		answers,
-		{{Text: "🗺️ Mapa del SIAPA", URL: MapURL}},
-		{{Text: "Dejar de recibir avisos", CallbackData: "BAJA"}},
+		{{Text: labelSIAPAMap, URL: MapURL}},
+		{{Text: labelStop, CallbackData: "BAJA"}},
 	}}
 	return m, err
 }

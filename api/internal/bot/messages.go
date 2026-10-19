@@ -2,6 +2,7 @@ package bot
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
 
@@ -28,7 +29,7 @@ func msgWelcome(base, channel string) string {
 	}
 	return `¡Hola! 👋 Soy *Agua GDL*.
 
-Te aviso por ` + appName(channel) + ` ` + whenES(channel) + ` de cada corte de agua en tu zona por la rotación del SIAPA 💧
+Te aviso por ` + appName(channel) + ` de los cortes de agua de tu zona por la rotación del SIAPA: ` + whenES(channel) + ` 💧
 
 Para empezar, mándame una de estas:
 📍 Tu *ubicación* (` + how + `)
@@ -39,12 +40,13 @@ Servicio ciudadano, gratuito, no oficial y sin partido.
 🔒 Aviso de privacidad: ` + base + `/privacidad`
 }
 
-// whenES is when the reminders come: Telegram also gets a notice two days before.
+// whenES is when the reminders come: Telegram also gets a notice two days before, and cuts
+// close together (rotation.BlockGap) get one round, before the first.
 func whenES(channel string) string {
 	if channel == store.Telegram {
-		return "dos días antes y otra vez la noche antes"
+		return "dos días antes y otra vez la noche antes (una vez por tanda cuando los cortes van seguidos)"
 	}
-	return "la noche antes"
+	return "la noche antes (una vez por tanda cuando los cortes van seguidos)"
 }
 
 func msgHelp(base, channel string) string {
@@ -54,7 +56,7 @@ func msgHelp(base, channel string) string {
 	}
 	return `Esto es lo que puedo hacer 💧
 
-📍 Manda tu *ubicación* o el *nombre de tu colonia* para saber tu zona
+📍 Manda tu *ubicación* o el *nombre de tu colonia*: te digo tu zona y te suscribo a sus avisos
 🔢 *ZONA 1* a *ZONA 7*: suscribirte o cambiar de zona
 📝 *REPORTAR*: contar cómo regresó el agua después del último corte
 🚚 *PIPA*: cómo pedir una pipa al SIAPA
@@ -89,16 +91,20 @@ Mándame tu 📍 *ubicación* o el *nombre de tu colonia*, por ejemplo: _Las Jun
 
 const msgPickColonia = "Encontré varias colonias parecidas. ¿Cuál es la tuya? 👇"
 
+const msgPickOneColonia = "Encontré una colonia parecida. ¿Es la tuya? 👇"
+
 // msgOtherColonia is for a colonia that exists but isn't on SIAPA's rotation list;
 // mun is its municipio as people write it, and zones the zones whose map area it overlaps.
 func msgOtherColonia(name, mun string, zones []int) string {
 	if len(zones) == 0 {
 		return fmt.Sprintf("✅ *%s* (%s) no está en la lista de colonias de la rotación del SIAPA y queda fuera de las zonas de su mapa, así que no le toca racionamiento.", name, mun)
 	}
-	return fmt.Sprintf("⚠️ *%s* (%s) no está en la lista de colonias de la rotación del SIAPA, pero queda dentro del mapa de la %s. El mapa y la lista no siempre coinciden: mándame tu 📍 *ubicación* para confirmarlo.", name, mun, zoneLabel(zones))
+	return fmt.Sprintf("⚠️ *%s* (%s) no está en la lista de colonias de la rotación del SIAPA, pero queda dentro del mapa de %s. El mapa y la lista no siempre coinciden: mándame tu 📍 *ubicación* para confirmarlo.", name, mun, theZoneLabel(zones))
 }
 
 const msgOrOneOfThese = "¿O es alguna de estas? 👇"
+
+const msgOrThisOne = "¿O es esta? 👇"
 
 func msgPickZone(colonia string, zones []int) string {
 	where := "así que está repartida en la rotación (" + zoneLabel(zones) + ")"
@@ -165,7 +171,7 @@ const msgThanks = "🙏 ¡Gracias! Tu reporte ayuda a ver cómo está tu zona."
 // waterAnswers are the Telegram reminder's buttons for «¿Ahorita tienes agua?» and what
 // each answer gets back.
 var waterAnswers = []struct{ key, title, thanks string }{
-	{"si", "✅ Sí", "🙏 ¡Gracias! Aprovecha para llenar tu tinaco y tus garrafones antes del corte."},
+	{"si", "✅ Sí", "🙏 ¡Gracias! Aprovecha para llenar tu tinaco y tus garrafones mientras tengas agua."},
 	{"poca", "🟡 Poca", "🙏 ¡Gracias! Llena lo que puedas mientras salga."},
 	{"no", "❌ No", "🙏 Gracias por avisarnos: nos ayuda a avisar con más tiempo.\n\n" + msgPipa},
 }
@@ -182,7 +188,7 @@ type subscribedInfo struct {
 	days         string
 	fresh        bool
 	cutTomorrow  []time.Time // set when no reminder comes for tomorrow's cut: tonight's run has passed or it continues a block
-	cutsLeft     []time.Time // the rest of a block that started today: no reminder comes for them
+	cutsLeft     []time.Time // the rest of the block under way, from today: no reminder comes for them
 	off          bool        // reminders are switched off on the server
 	nextReminder string
 	nextCut      []time.Time // the block the next message is about
@@ -194,7 +200,7 @@ type subscribedInfo struct {
 func msgSubscribed(i subscribedInfo) string {
 	var b strings.Builder
 	if i.fresh {
-		fmt.Fprintf(&b, "✅ ¡Listo! Te avisaré %s de cada corte de agua en la *Zona %d*.\n\n", whenES(i.channel), i.zone)
+		fmt.Fprintf(&b, "✅ ¡Listo! Te avisaré de los cortes de agua de la *Zona %d*: %s.\n\n", i.zone, whenES(i.channel))
 	} else {
 		fmt.Fprintf(&b, "👋 Estás suscrito a los avisos de la *Zona %d*.\n\n", i.zone)
 	}
@@ -218,7 +224,7 @@ func msgSubscribed(i subscribedInfo) string {
 
 func storedID(channel string) string {
 	if channel == store.Telegram {
-		return "tu ID de chat de Telegram"
+		return "tu ID de usuario de Telegram (no tu teléfono)"
 	}
 	return "tu número de WhatsApp"
 }
@@ -231,7 +237,7 @@ func ScheduleChange(zone int, days, from string) string {
 
 El SIAPA cambió los días de racionamiento. Ahora son: *%s*, a partir del %s.
 
-Te seguiré avisando antes de cada corte 💧
+Te seguiré avisando antes de los cortes 💧
 
 ℹ️ Aviso ciudadano, no oficial. Confirma en el mapa del SIAPA.`, zone, days, from)
 }
@@ -266,13 +272,17 @@ func cutsES(days []time.Time) string {
 // msgNotice is Telegram's notice two days before a block of cuts, with the same buttons as
 // the reminder: neighbours report the water goes a day early, so the evening before can be late.
 func msgNotice(days []time.Time, zone int) string {
-	return fmt.Sprintf(`🔔 *Se acerca el corte en la Zona %d:* según el calendario del SIAPA, el *%s*.
+	coming := "Se acerca el corte"
+	if len(days) > 1 {
+		coming = "Se acercan los cortes"
+	}
+	return fmt.Sprintf(`🔔 *%s en la Zona %d:* según el calendario del SIAPA, el *%s*.
 
 Vecinos nos cuentan que el agua se va desde un día antes y tarda más en volver. Si todavía tienes, llena con tiempo tu tinaco, cubetas y garrafones, y tápalos bien.
 
 *¿Ahorita tienes agua?* Si ya se te fue, avísanos 👇
 
-ℹ️ Aviso ciudadano, no oficial. Confirma tu colonia en el mapa del SIAPA.`, zone, rotation.DatesES(days))
+ℹ️ Aviso ciudadano, no oficial. Confirma tu colonia en el mapa del SIAPA.`, coming, zone, rotation.DatesES(days))
 }
 
 // msgFollowUp asks, the evening after a block, whoever said they had no water or little.
@@ -288,8 +298,8 @@ func msgReportMap(base string) string {
 }
 
 // AvisosChange tells a zone's Telegram subscribers, once, about the notice two days before each
-// cut. It lists the zone's cuts for the coming week: a block already under way when the change is
-// deployed got the old reminder, which named only its first day.
+// block of cuts. It lists the zone's cuts for the coming week: a block already under way when the
+// change is deployed got the old reminder, which named only its first day.
 func AvisosChange(base string, zone int, next []time.Time) string {
 	coming := ""
 	if len(next) > 0 {
@@ -299,9 +309,8 @@ func AvisosChange(base string, zone int, next []time.Time) string {
 
 Vecinos nos contaron que el agua se va desde antes del corte y tarda más en volver. Por eso, desde ahora:
 
-🔔 Te avisamos *dos días antes* de cada corte y otra vez la noche antes.
-💧 Te preguntamos si todavía tienes agua. Si ya se te fue, no te mandamos el aviso de la noche antes y, después del corte, te preguntamos si ya regresó.
-🗓️ Si tu zona tiene cortes con uno o ningún día de por medio, te avisamos una sola vez por tanda.
+🔔 Te avisamos *dos días antes* de los cortes y otra vez la noche antes. Si tu zona tiene cortes seguidos (con uno o ningún día de por medio), una vez por tanda, antes del primero.
+💧 Te preguntamos si todavía tienes agua. Si ya se te fue, no te mandamos el aviso de la noche antes. Si no tienes o tienes poca, después de la tanda te preguntamos si ya regresó, salvo que esa noche te llegue el aviso de la siguiente.
 
 ` + coming + `Si prefieres no recibirlos, escribe *BAJA*. Todo lo que guardamos: ` + base + `/privacidad`
 }
@@ -312,13 +321,53 @@ Vecinos nos contaron que el agua se va desde antes del corte y tarda más en vol
 func msgTelegramReminder(days []time.Time, zone int) string {
 	return fmt.Sprintf(`💧 La *Zona %d* tiene corte *mañana %s*%s, según el calendario del SIAPA.
 
-El SIAPA dice que solo baja la presión y por un día, pero vecinos nos cuentan que el agua se va desde antes y tarda más en volver.
+El SIAPA dice que los racionamientos son «por máximo un día» y que «no serán cortes totales», pero vecinos nos cuentan que el agua se va desde antes y tarda más en volver.
 
 🪣 Si todavía tienes agua, llena tu tinaco, cubetas y garrafones, y tápalos bien.
 
 *¿Ahorita tienes agua?* Tu respuesta nos ayuda a avisar mejor 👇
 
 ℹ️ Aviso ciudadano, no oficial. Confirma tu colonia en el mapa del SIAPA.`, zone, rotation.DateES(days[0]), alsoES(days))
+}
+
+// Button and list labels.
+const (
+	labelSeeColonias  = "Ver colonias"
+	labelPickZone     = "Elegir zona"
+	labelPickAnswer   = "Elegir respuesta"
+	labelSendLocation = "📍 Mandar mi ubicación"
+	labelSIAPAMap     = "🗺️ Mapa del SIAPA"
+	labelStop         = "Dejar de recibir avisos"
+)
+
+func zoneTitle(zone int) string { return fmt.Sprintf("Zona %d", zone) }
+
+func zoneDays(days string) string { return "Cortes: " + days }
+
+// zoneLabel is "zona 3" or "zonas 1, 5 y 6"; theZoneLabel adds the article.
+func zoneLabel(zones []int) string {
+	if len(zones) == 1 {
+		return "zona " + zoneList(zones)
+	}
+	return "zonas " + zoneList(zones)
+}
+
+func theZoneLabel(zones []int) string {
+	if len(zones) == 1 {
+		return "la " + zoneLabel(zones)
+	}
+	return "las " + zoneLabel(zones)
+}
+
+func zoneList(zones []int) string {
+	s := make([]string, len(zones))
+	for i, z := range zones {
+		s[i] = strconv.Itoa(z)
+	}
+	if len(s) < 2 {
+		return strings.Join(s, "")
+	}
+	return strings.Join(s[:len(s)-1], ", ") + " y " + s[len(s)-1]
 }
 
 // reminderBody is the text of WhatsApp's approved aviso_corte template.

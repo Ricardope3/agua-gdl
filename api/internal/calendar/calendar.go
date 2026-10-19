@@ -40,7 +40,7 @@ func Zone(s *rotation.Schedule, zone int) []byte {
 		line("DTSTART;VALUE=DATE:%s", d.Format("20060102"))
 		line("DTEND;VALUE=DATE:%s", d.AddDate(0, 0, 1).Format("20060102"))
 		line("SUMMARY:%s", escape(fmt.Sprintf("💧 Racionamiento de agua · Zona %d", zone)))
-		line("DESCRIPTION:%s", escape("Corte según el calendario del SIAPA. El SIAPA dice que solo baja la presión y por un día; vecinos nos cuentan que el agua se va desde antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: "+mapURL+" · Agua GDL (no oficial): https://aguagdl.com"))
+		line("DESCRIPTION:%s", escape("Corte según el calendario del SIAPA. El SIAPA dice que los racionamientos son «por máximo un día» y que «no serán cortes totales»; vecinos nos cuentan que el agua se va desde antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: "+mapURL+" · Agua GDL (no oficial): https://aguagdl.com"))
 		line("URL:%s", mapURL)
 		line("TRANSP:TRANSPARENT")
 		if s.StartsBlock(zone, d) {

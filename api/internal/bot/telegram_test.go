@@ -77,7 +77,7 @@ func TestTelegramDeepLinkSubscribes(t *testing.T) {
 	if !ok || s.Zone != 6 || s.Phone != "" {
 		t.Fatalf("not subscribed: %+v", s)
 	}
-	if _, ok := m.ReplyMarkup.(tg.RemoveKeyboard); !ok || !strings.Contains(m.Text, "<b>Zona 6</b>") || !strings.Contains(m.Text, "tu ID de chat de Telegram") {
+	if _, ok := m.ReplyMarkup.(tg.RemoveKeyboard); !ok || !strings.Contains(m.Text, "<b>Zona 6</b>") || !strings.Contains(m.Text, "tu ID de usuario de Telegram") {
 		t.Errorf("confirmation: %+v", m)
 	}
 	if got := h.say(t, "/start z9"); !strings.Contains(got.Text, "Estás suscrito a los avisos de la <b>Zona 6</b>") {

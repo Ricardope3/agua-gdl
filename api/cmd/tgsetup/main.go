@@ -20,8 +20,8 @@ import (
 
 const (
 	name             = "Agua GDL"
-	shortDescription = "Aviso gratis dos días antes de cada corte de agua del SIAPA en tu zona y la noche antes. Ciudadano, sin partido."
-	description      = `Te aviso gratis dos días antes de cada corte de agua de la rotación del SIAPA en tu zona, y otra vez la noche antes (zona metropolitana de Guadalajara).
+	shortDescription = "Aviso gratis dos días antes de los cortes de agua del SIAPA en tu zona y la noche antes. Ciudadano, sin partido."
+	description      = `Te aviso gratis dos días antes de los cortes de agua del SIAPA en tu zona y otra vez la noche antes (una vez por tanda si van seguidos). Zona metropolitana de Guadalajara.
 
 Iniciativa ciudadana: no es del SIAPA ni del gobierno y no tiene partido.
 
