@@ -235,7 +235,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     <section aria-labelledby="como">
       <h2 class="sec" id="como">Cómo funciona</h2>
       <ul class="plain">
-        <li><strong>Es anónimo.</strong> De cada reporte guardamos la colonia, tu respuesta, si sale turbia, con olor o con sedimento, y la hora. No guardamos tu nombre, tu teléfono, tu ubicación ni tu dirección IP; tu ubicación solo se usa en tu navegador para encontrar tu colonia.</li>
+        <li><strong>Es anónimo.</strong> De cada reporte guardamos la colonia, tu respuesta, si sale turbia, con olor o con sedimento, y la hora. No guardamos tu nombre, tu teléfono, tu ubicación ni tu dirección IP; tu ubicación solo se usa en tu navegador para encontrar tu colonia. Las calles del mapa vienen de OpenStreetMap, que ve qué parte del mapa se carga.</li>
         <li><strong>Para evitar abusos</strong>, el servidor recuerda por una hora, solo en memoria, cuántos reportes llegan de cada conexión, con un límite por colonia y por hora. El límite es más alto donde muchas casas o celulares comparten la misma dirección de internet.</li>
         <li><strong>Son reportes de vecinos, no mediciones ni análisis de laboratorio.</strong> Reporta más quien no tiene agua, así que el mapa muestra dónde falta, no cuánta ciudad está sin agua.</li>
         <li><strong>Las colonias y sus contornos</strong> son los del <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa de la rotación del SIAPA</a>. Para saber tu zona y tus días de corte, ve <a href="/mapa">el mapa de la rotación</a>.</li>
@@ -308,7 +308,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
   async function call(path, opts) {
     const timeout = typeof AbortSignal.timeout === "function" ? { signal: AbortSignal.timeout(15000) } : {};
     const res = await fetch(API + path, { ...timeout, ...opts });
-    if (!res.ok) { const e = new Error("HTTP " + res.status); e.status = res.status; throw e; }
+    if (!res.ok) { const e = new Error("HTTP " + res.status); e.status = res.status; e.body = await res.text().catch(() => ""); throw e; }
     return res.json();
   }
 
@@ -361,7 +361,8 @@ footer p { margin: 0 0 8px; max-width: 70ch }
 
     // Rings with the count, like a donut chart of the answers, over the colonias with reports.
     const markers = L.layerGroup().addTo(map);
-    function donut(c) {
+    function donut(counts) {
+      const c = { sin_agua: Number(counts.sin_agua) || 0, baja: Number(counts.baja) || 0, con_agua: Number(counts.con_agua) || 0 };
       const t = totalOf(c), R = 15, C = 2 * Math.PI * R;
       let off = 0, segs = "";
       for (const [k, color] of [["sin_agua", COLORS.dry], ["baja", COLORS.low], ["con_agua", COLORS.ok]]) {
@@ -395,7 +396,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       layer.setStyle(styleOf);
       drawMarkers();
       renderSummary(s);
-      if (selected) renderCard(selected);
+      if (selected && !card.querySelector("form.report")) renderCard(selected);
     }
 
     // The colonia card: its reports in the last 24 h and the form to add one.
@@ -436,8 +437,9 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     // A report from this browser stays marked for an hour, so the card thanks instead of asking again.
     const SEEN = 60 * 60 * 1000;
     const seenKey = (k) => `reporte:${k}`;
-    const reportedAt = (k) => { try { return Number(localStorage.getItem(seenKey(k))) || 0; } catch { return 0; } };
-    const remember = (k) => { try { localStorage.setItem(seenKey(k), String(Date.now())); } catch {} };
+    const mine = new Map(); // this visit's reports, in case the browser blocks storage
+    const reportedAt = (k) => { let at = mine.get(k) || 0; try { at = Math.max(at, Number(localStorage.getItem(seenKey(k))) || 0); } catch {} return at; };
+    const remember = (k) => { mine.set(k, Date.now()); try { localStorage.setItem(seenKey(k), String(Date.now())); } catch {} };
 
     function countsBlock(c) {
       const t = totalOf(c);
@@ -555,7 +557,8 @@ footer p { margin: 0 0 8px; max-width: 70ch }
           call("/v1/reportes").then(apply).catch(() => {});
         } catch (err) {
           send.disabled = false;
-          msg.textContent = err.status === 429 ? "Ya llegaron varios reportes seguidos desde tu conexión. Intenta en una hora."
+          msg.textContent = err.status === 429 && /colonia/.test(err.body || "") ? "Ya llegaron muchos reportes de esta colonia en la última hora, y el mapa ya muestra cómo está. Intenta más tarde."
+            : err.status === 429 ? "Ya llegaron varios reportes seguidos desde tu conexión. Intenta en una hora."
             : err.status === 503 ? "Llegaron demasiados reportes en la última hora. Intenta de nuevo más tarde."
             : err.status ? "No pudimos guardar tu reporte. Intenta de nuevo en unos minutos."
             : "No pudimos enviar tu reporte. Revisa tu conexión e intenta de nuevo.";
@@ -570,9 +573,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       $("total").textContent = fmt(t);
       $("total-txt").textContent = t === 1 ? "reporte de agua en las últimas 24 horas" : "reportes de agua en las últimas 24 horas";
       const bar = $("barra");
-      bar.children[0].style.width = `${pct(s.sin_agua, t)}%`;
-      bar.children[1].style.width = `${pct(s.baja, t)}%`;
-      bar.children[2].style.width = t ? `${100 - pct(s.sin_agua, t) - pct(s.baja, t)}%` : "0%";
+      [s.sin_agua, s.baja, s.con_agua].forEach((n, i) => { bar.children[i].style.width = t ? `${100 * n / t}%` : "0%"; });
       $("reparto").replaceChildren(
         el("li", {}, el("span", { class: "dot dry" }), "Sin agua ", el("b", {}, fmt(s.sin_agua)), el("small", {}, `${pct(s.sin_agua, t)} %`)),
         el("li", {}, el("span", { class: "dot low" }), "Baja presión ", el("b", {}, fmt(s.baja)), el("small", {}, `${pct(s.baja, t)} %`)),
