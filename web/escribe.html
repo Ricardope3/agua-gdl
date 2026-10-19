@@ -24,7 +24,7 @@
   --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
   --brand: #0284c7; --brand-deep: #0369a1; --link: #0369a1; --on-brand: #ffffff;
   --primary: #0284c7; --on-primary: #ffffff; --ring: #0284c766;
-  --warn: #dc2626; --warn-bg: #fffbeb;
+  --warn: #dc2626;
   --shadow: 0 1px 2px rgb(3 105 161 / .08);
   --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
@@ -32,7 +32,7 @@
   :root {
     --bg: #06141d; --surface: #0a1c28; --subtle: #0c3149; --fg: #f0f9ff; --muted: #9bb8ca; --line: #18384d;
     --link: #7dd3fc; --primary: #0ea5e9; --on-primary: #ffffff; --ring: #38bdf866; --brand: #0ea5e9; --brand-deep: #0284c7;
-    --warn: #f87171; --warn-bg: #1c1608;
+    --warn: #f87171;
     color-scheme: dark;
   }
 }
@@ -61,23 +61,60 @@ textarea.post { min-height: 7em }
 #mi-dip { margin: 12px 0 0 }
 .firma { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 0 12px }
 @media (max-width: 560px) { .firma { grid-template-columns: 1fr } }
-.firma input:enabled:placeholder-shown { background: var(--warn-bg); border-color: var(--brand) }
+.firma input { scroll-margin-top: 80px }
 .firma input.falta { border-color: var(--warn); box-shadow: 0 0 0 3px color-mix(in srgb, var(--warn) 25%, transparent) }
 .firma input:disabled { opacity: .5; cursor: not-allowed }
 .check { display: inline-flex; gap: 8px; align-items: center; font-weight: 400; font-size: .9rem; margin: 0; cursor: pointer }
-.check input, .via input { width: 16px; height: 16px; margin: 0; box-shadow: none; accent-color: var(--primary) }
+.check input { width: 16px; height: 16px; margin: 0; box-shadow: none; accent-color: var(--primary) }
 .firma-tu { margin-top: 16px }
-#seccion-estado.falta, #estado.falta { color: var(--warn); font-weight: 500 }
-.field { margin: 0 0 20px }
+#seccion-estado.falta, #firma-estado.falta { color: var(--warn); font-weight: 500 }
 .actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 0 }
-.button { display: inline-flex; align-items: center; gap: 6px; height: 40px; background: var(--primary); color: var(--on-primary); font: inherit; font-size: .9rem; font-weight: 500; text-decoration: none; padding: 0 16px; border: 1px solid transparent; border-radius: 8px; cursor: pointer; box-shadow: var(--shadow); transition: opacity .15s, background .15s }
+.button { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; background: var(--primary); color: var(--on-primary); font: inherit; font-size: .9rem; font-weight: 500; line-height: 1.3; text-decoration: none; padding: 6px 16px; border: 1px solid transparent; border-radius: 8px; cursor: pointer; box-shadow: var(--shadow); transition: opacity .15s, background .15s }
 .button:hover { background: var(--brand-deep); opacity: 1 }
 .button.alt { background: color-mix(in srgb, var(--brand) 12%, var(--surface)); color: var(--link); border: 1.5px solid var(--brand) }
 .button.alt:hover { background: color-mix(in srgb, var(--brand) 22%, var(--surface)); opacity: 1 }
-.via { border: 0; padding: 0; margin: 16px 0 0; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; font-size: .9rem }
-.via legend { float: left; margin-right: 4px; color: var(--muted) }
-.via label { display: inline-flex; gap: 6px; align-items: center; font-weight: 400; font-size: .9rem; margin: 0 }
 .note { margin: 12px 0 0; font-size: .875rem; color: var(--muted) }
+#firma-estado:empty, #estado:empty { margin: 0 }
+.steps { list-style: none; margin: 0; padding: 0; counter-reset: paso }
+.steps > li { counter-increment: paso }
+.steps > li + li { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--line) }
+.paso { display: flex; align-items: center; gap: 10px; font-size: 1.05rem; margin: 0 0 4px }
+.paso::before { content: counter(paso); display: grid; place-items: center; width: 28px; height: 28px; flex-shrink: 0; border-radius: 50%; background: var(--brand); color: var(--on-primary); font-size: .875rem; letter-spacing: 0 }
+.hint { margin: 0 0 14px }
+.mail { border: 1px solid var(--line); border-radius: 10px; background: var(--bg) }
+.mail-row { display: flex; align-items: baseline; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--line); font-size: .95rem }
+.mail-row > :first-child { flex: 0 0 3.7em; margin: 0; color: var(--muted); font-size: .875rem; font-weight: 400 }
+.mail-row > :last-child { flex: 1; min-width: 0 }
+.mail-row b { font-weight: 600 }
+.mail-row small { display: block; color: var(--muted); font-size: .8rem; overflow-wrap: break-word }
+@media (max-width: 560px) { .mail-row, .mail-text { padding-left: 12px; padding-right: 12px } .mail-row > :first-child { flex-basis: 3.2em } }
+.mail-row input { padding: 6px 10px }
+.mail input, .mail textarea { background: var(--surface) }
+.mail-text { padding: 14px }
+.auto { margin: 0; color: var(--muted); font-size: .95rem }
+#saludo { margin: 0 0 10px }
+#firma-vista { margin: 10px 0 0 }
+#firma-vista span { display: block }
+#firma-vista .ph { font-style: italic; opacity: .75 }
+.via { border: 0; padding: 0; margin: 0 0 14px; display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; font-size: .9rem }
+.via legend { float: left; color: var(--muted) }
+.seg { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg) }
+.seg label { position: relative; margin: 0; padding: 5px 12px; border-radius: 7px; font-size: .875rem; font-weight: 500; color: var(--muted); cursor: pointer }
+.seg input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer }
+.seg label:has(:checked) { background: var(--primary); color: var(--on-primary) }
+.seg label:has(:focus-visible) { box-shadow: 0 0 0 3px var(--ring) }
+.button.big { min-height: 48px; padding: 10px 20px; font-size: 1rem; font-weight: 600 }
+@media (max-width: 560px) { .button.big { display: flex; width: 100%; justify-content: center } }
+#avance { display: flex; align-items: center; gap: 10px }
+#avance progress { flex: 0 1 220px; height: 6px; border: 0; border-radius: 3px; background: var(--subtle); appearance: none; overflow: hidden }
+#avance progress::-webkit-progress-bar { background: var(--subtle) }
+#avance progress::-webkit-progress-value { background: var(--primary) }
+#avance progress::-moz-progress-bar { background: var(--primary) }
+.otra { margin: 20px 0 0 }
+.otra summary { cursor: pointer; color: var(--link); font-size: .9rem; font-weight: 500 }
+.otra ol { margin: 10px 0 0; padding-left: 20px; font-size: .9rem; color: var(--muted) }
+.otra li + li { margin-top: 8px }
+.otra .button { margin-right: 4px }
 h2 { font-size: 1.2rem; line-height: 1.3; font-weight: 600; margin: 0 0 8px; letter-spacing: -.02em }
 section p { margin: 0 0 14px; max-width: 65ch; color: var(--muted); font-size: .95rem }
 section ul:not(.people) { margin: 0; padding-left: 20px; color: var(--muted); font-size: .95rem }
@@ -185,28 +222,32 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 
     <div class="panel" role="tabpanel" id="p-correo" aria-labelledby="t-correo">
     <div class="box">
-      <div class="field">
-        <label for="asunto">Asunto</label>
-        <input id="asunto" value="Petición ciudadana: voten en contra de la APP del acueducto Chapala–Guadalajara">
-      </div>
-      <div class="field">
-        <div class="firma">
-          <div>
-            <label for="nombre">Tu nombre</label>
-            <input id="nombre" autocomplete="name" placeholder="Escribe tu nombre">
+      <ol class="steps">
+        <li>
+          <h2 class="paso">Firma tu correo</h2>
+          <p class="note hint">Tu firma va al final de cada correo. Con tu nombre y tu colonia, el correo pesa más.</p>
+          <div class="firma">
+            <div>
+              <label for="nombre">Tu nombre</label>
+              <input id="nombre" autocomplete="name" placeholder="Escribe tu nombre">
+            </div>
+            <div>
+              <label for="colonia">Tu colonia y municipio</label>
+              <input id="colonia" placeholder="Ej. Analco, Guadalajara">
+            </div>
           </div>
-          <div>
-            <label for="colonia">Tu colonia y municipio</label>
-            <input id="colonia" placeholder="Ej. Analco, Guadalajara">
-          </div>
-        </div>
-        <label class="check"><input type="checkbox" id="anonimo"> Enviar sin mi nombre ni mi colonia</label>
-        <p class="note" style="margin:6px 0 0">Van al final del correo, como firma. Con tu nombre y tu colonia el correo pesa más.</p>
-      </div>
-      <div class="field">
-        <label for="texto">Mensaje</label>
-        <p class="note" style="margin:0 0 8px">Cada correo empieza solo con el nombre de la persona, por ejemplo «Dip. Mónica Paola Magaña Mendoza:». Escribe aquí el resto.</p>
-        <textarea id="texto">Como habitante de Jalisco, le pido que vote en contra del contrato de asociación público-privada (APP) que el Ejecutivo propone para que la Comisión Estatal del Agua construya y opere el acueducto sustituto Chapala–Guadalajara. El agua no debe quedar en manos de una empresa privada.
+          <label class="check"><input type="checkbox" id="anonimo"> Enviar sin firma</label>
+          <p class="note" id="firma-estado" aria-live="polite"></p>
+        </li>
+        <li>
+          <h2 class="paso">Revisa el correo</h2>
+          <p class="note hint">Ya está escrito. Puedes cambiar el asunto y el texto: un correo con tus palabras pesa más.</p>
+          <div class="mail">
+            <div class="mail-row"><span>Para</span><span id="para"></span></div>
+            <div class="mail-row"><label for="asunto">Asunto</label><input id="asunto" value="Petición ciudadana: voten en contra de la APP del acueducto Chapala–Guadalajara"></div>
+            <div class="mail-text">
+              <p class="auto" id="saludo"></p>
+              <textarea id="texto" aria-label="Texto del correo">Como habitante de Jalisco, le pido que vote en contra del contrato de asociación público-privada (APP) que el Ejecutivo propone para que la Comisión Estatal del Agua construya y opere el acueducto sustituto Chapala–Guadalajara. El agua no debe quedar en manos de una empresa privada.
 
 Mis razones:
 
@@ -217,19 +258,34 @@ Mis razones:
 El agua es un derecho humano y su gestión debe ser pública y transparente. Daré seguimiento al sentido del voto de cada integrante del Congreso en este tema y lo compartiré con mi comunidad.
 
 Atentamente,</textarea>
-      </div>
-      <div class="actions">
-        <a class="button" id="siguiente" href="#" rel="noopener" target="_blank"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#mail"/></svg>Escribir a la siguiente diputación</a>
-        <button class="button alt" type="button" id="copiar-correos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#copy"/></svg>Copiar correos</button>
-        <button class="button alt" type="button" id="copiar-texto"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#copy"/></svg>Copiar texto</button>
-      </div>
-      <p class="note" id="progreso"></p>
-      <fieldset class="via">
-        <legend>Abrir con</legend>
-        <label><input type="radio" name="via" value="gmail" checked> Gmail</label>
-        <label><input type="radio" name="via" value="app"> Mi app de correo</label>
-      </fieldset>
-      <p class="note" id="estado" aria-live="polite">Cada correo sale por separado y con el nombre de la persona: toca el botón, envía el correo y vuelve aquí para el siguiente. Un correo personal pesa más que uno copiado: cambia lo que quieras.</p>
+              <p class="auto" id="firma-vista"></p>
+            </div>
+          </div>
+        </li>
+        <li>
+          <h2 class="paso">Envíalo a cada diputación</h2>
+          <p class="note hint">Son 38 correos, uno para cada persona y con su nombre. Toca el botón, envía el correo que se abre y vuelve aquí para el siguiente.</p>
+          <fieldset class="via">
+            <legend>Abrir con</legend>
+            <span class="seg">
+              <label><input type="radio" name="via" value="gmail" checked>Gmail</label>
+              <label><input type="radio" name="via" value="app">Mi app de correo</label>
+            </span>
+          </fieldset>
+          <a class="button big" id="siguiente" href="#" rel="noopener" target="_blank"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#mail"/></svg>Abrir el correo 1 de 38</a>
+          <p class="note" id="avance" hidden><progress id="barra" max="38" value="0"></progress><span id="progreso"></span></p>
+          <details class="otra">
+            <summary>¿Prefieres mandar un solo correo a las 38?</summary>
+            <p class="note">Abre un correo nuevo y pega cada cosa en su lugar:</p>
+            <ol>
+              <li><button class="button alt" type="button" id="copiar-correos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#copy"/></svg>Copiar los 38 correos</button> y pégalos en «Para».</li>
+              <li><button class="button alt" type="button" id="copiar-asunto"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#copy"/></svg>Copiar el asunto</button> y pégalo en «Asunto».</li>
+              <li><button class="button alt" type="button" id="copiar-texto"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#copy"/></svg>Copiar el texto</button> y pégalo en el mensaje.</li>
+            </ol>
+            <p class="note" id="estado" aria-live="polite"></p>
+          </details>
+        </li>
+      </ol>
     </div>
     </div>
 
@@ -252,8 +308,8 @@ Atentamente,</textarea>
           <input id="colonia-tu" placeholder="Ej. Analco, Guadalajara">
         </div>
       </div>
-      <label class="check"><input type="checkbox" id="anonimo-tu"> Enviar sin mi nombre ni mi colonia</label>
-      <p class="note" style="margin:6px 0 0">Van al final del correo, como firma. Son los mismos de la pestaña Correo.</p>
+      <label class="check"><input type="checkbox" id="anonimo-tu"> Enviar sin firma</label>
+      <p class="note" style="margin:6px 0 0">Tu firma va al final del correo; es la misma de la pestaña Correo.</p>
       <ul class="people" id="mi-dip" hidden></ul>
       <p class="note">Además de la diputación de tu distrito, las 18 de representación proporcional representan a todo Jalisco.</p>
     </section>
@@ -417,19 +473,27 @@ Atentamente,</textarea>
   const anon = () => $("anonimo").checked;
   const signature = () => anon() ? "" : ["nombre", "colonia"].map((id) => $(id).value.trim()).filter(Boolean).join("\n");
   const body = (greeting = ALL) => [`${greeting}\n\n${$("texto").value.trimEnd()}`, signature()].filter(Boolean).join("\n");
+  const missing = () => anon() ? [] : ["nombre", "colonia"].filter((id) => !$(id).value.trim());
   // Stop a send until the signature is filled in or the person chose to go without it.
   function ready() {
-    const missing = anon() ? [] : ["nombre", "colonia"].filter((id) => !$(id).value.trim());
-    ["nombre", "colonia"].forEach((id) => [id, `${id}-tu`].forEach((f) => $(f).classList.toggle("falta", missing.includes(id))));
+    const gaps = missing();
+    ["nombre", "colonia"].forEach((id) => [id, `${id}-tu`].forEach((f) => $(f).classList.toggle("falta", gaps.includes(id))));
     const onTu = !$("p-tu").hidden;
-    const status = onTu ? $("seccion-estado") : $("estado");
-    status.classList.toggle("falta", missing.length > 0);
-    if (missing.length) {
-      status.textContent = "Falta tu nombre o tu colonia y municipio. Escríbelos o marca «Enviar sin mi nombre ni mi colonia».";
+    const status = onTu ? $("seccion-estado") : $("firma-estado");
+    status.classList.toggle("falta", gaps.length > 0);
+    if (gaps.length) {
+      status.textContent = "Escribe tu nombre y tu colonia, o marca «Enviar sin firma».";
       if (!onTu) showTab("correo");
-      $(onTu ? `${missing[0]}-tu` : missing[0]).focus();
+      $(onTu ? `${gaps[0]}-tu` : gaps[0]).focus();
     }
-    return !missing.length;
+    return !gaps.length;
+  }
+  // Take the warning back once nothing is missing.
+  function settled() {
+    if (missing().length) return;
+    for (const f of ["firma-estado", "seccion-estado"]) {
+      if ($(f).classList.contains("falta")) { $(f).classList.remove("falta"); $(f).textContent = ""; }
+    }
   }
   // One panel at a time; the hash keeps the chosen tab on reload and in shared links.
   const TABS = [...document.querySelectorAll("[data-tab]")].map((b) => b.dataset.tab);
@@ -446,7 +510,7 @@ Atentamente,</textarea>
   showTab(location.hash.slice(1));
   const q = encodeURIComponent;
   const gmail = (to, greeting) => `https://mail.google.com/mail/?view=cm&fs=1&to=${q(to.join(","))}&su=${q(subject())}&body=${q(body(greeting))}`;
-  const mailto = (to) => `mailto:${to.join(",")}?subject=${q(subject())}&body=${q(body())}`;
+  const mailto = (to, greeting) => `mailto:${to.join(",")}?subject=${q(subject())}&body=${q(body(greeting))}`;
 
   // Progress through the list, remembered on this device only.
   const KEY = "escribe-enviados";
@@ -457,15 +521,39 @@ Atentamente,</textarea>
   const link = (email, name) => viaApp() ? mailto([email], `Dip. ${name}:`) : gmail([email], `Dip. ${name}:`);
   const nextOne = () => DIPUTADOS.find(([, email]) => !sent.has(email));
 
+  // The preview is the next email as it goes out: recipient, greeting and signature.
+  function preview([name, email]) {
+    const who = document.createElement("b");
+    who.textContent = name;
+    const address = document.createElement("small");
+    const [user, domain] = email.split("@");
+    address.append(user, document.createElement("wbr"), `@${domain}`);
+    $("para").replaceChildren(who, address);
+    $("saludo").textContent = `Dip. ${name}:`;
+    const lines = anon() ? [["Sin firma", false]]
+      : [["nombre", "Tu nombre"], ["colonia", "Tu colonia y municipio"]].map(([id, hole]) => [$(id).value.trim() || hole, !!$(id).value.trim()]);
+    $("firma-vista").replaceChildren(...lines.map(([text, filled]) => {
+      const span = document.createElement("span");
+      span.textContent = text;
+      if (!filled) span.className = "ph";
+      return span;
+    }));
+  }
+
   function refresh() {
     const next = nextOne();
+    const done = DIPUTADOS.filter(([, email]) => sent.has(email)).length;
     const btn = $("siguiente");
+    preview(next || DIPUTADOS[0]);
+    $("avance").hidden = !done;
+    $("barra").max = DIPUTADOS.length;
+    $("barra").value = done;
     if (next) {
       btn.href = link(next[1], next[0]);
       btn.target = viaApp() ? "" : "_blank";
-      btn.replaceChildren(icon("mail"), `Escribir a ${next[0]} (${sent.size + 1} de ${DIPUTADOS.length})`);
+      btn.replaceChildren(icon("mail"), `Abrir el correo ${done + 1} de ${DIPUTADOS.length}`);
       btn.hidden = false;
-      $("progreso").textContent = sent.size ? `Llevas ${sent.size} de ${DIPUTADOS.length}.` : "";
+      $("progreso").textContent = `Llevas ${done} de ${DIPUTADOS.length}.`;
     } else {
       btn.hidden = true;
       $("progreso").replaceChildren(`¡Listo! Ya les escribiste a las ${DIPUTADOS.length} diputaciones. Gracias. `, reset);
@@ -615,8 +703,9 @@ Atentamente,</textarea>
       $("estado").textContent = "No se pudo copiar. Selecciona el texto y cópialo a mano.";
     }
   }
-  $("copiar-correos").addEventListener("click", () => copy(all.join(", "), `Copiamos los ${all.length} correos.`));
-  $("copiar-texto").addEventListener("click", () => ready() && copy(`${subject()}\n\n${body()}`, "Copiamos el asunto y el mensaje."));
+  $("copiar-correos").addEventListener("click", () => copy(all.join(", "), `Copiamos los ${all.length} correos: pégalos en «Para».`));
+  $("copiar-asunto").addEventListener("click", () => copy(subject(), "Copiamos el asunto: pégalo en «Asunto»."));
+  $("copiar-texto").addEventListener("click", () => ready() && copy(body(), "Copiamos el texto: pégalo en el mensaje."));
   $("asunto").addEventListener("input", refresh);
   $("post").addEventListener("input", refresh);
   // Grow the message box to fit its text, so nothing hides behind a scrollbar and there's no empty space.
@@ -632,14 +721,14 @@ Atentamente,</textarea>
   // The Tu diputación tab has its own copy of the signature fields, kept in sync with the Correo tab.
   for (const id of ["nombre", "colonia"]) {
     for (const [from, to] of [[id, `${id}-tu`], [`${id}-tu`, id]]) {
-      $(from).addEventListener("input", () => { $(to).value = $(from).value; [from, to].forEach((f) => $(f).classList.remove("falta")); refresh(); });
+      $(from).addEventListener("input", () => { $(to).value = $(from).value; [from, to].forEach((f) => $(f).classList.remove("falta")); settled(); refresh(); });
     }
   }
   for (const [from, to] of [["anonimo", "anonimo-tu"], ["anonimo-tu", "anonimo"]]) {
     $(from).addEventListener("change", () => {
       $(to).checked = $(from).checked;
       ["nombre", "colonia", "nombre-tu", "colonia-tu"].forEach((f) => { $(f).disabled = anon(); $(f).classList.remove("falta"); });
-      ["estado", "seccion-estado"].forEach((f) => $(f).classList.remove("falta"));
+      settled();
       refresh();
     });
   }
