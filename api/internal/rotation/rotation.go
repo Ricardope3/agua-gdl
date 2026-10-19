@@ -147,6 +147,21 @@ func (s *Schedule) ZonesOn(t time.Time) []int {
 	return zones
 }
 
+// StartsRun reports whether zone's cut on t's day begins a run of consecutive cut days,
+// which gets one reminder: one for a later day would arrive in the middle of the cut.
+func (s *Schedule) StartsRun(zone int, t time.Time) bool {
+	return s.IsCut(zone, t) && !s.IsCut(zone, s.Day(t).AddDate(0, 0, -1))
+}
+
+// Run returns the consecutive cut days for zone from t's day on, at most a week.
+func (s *Schedule) Run(zone int, t time.Time) []time.Time {
+	var days []time.Time
+	for d := s.Day(t); len(days) < 7 && s.IsCut(zone, d); d = d.AddDate(0, 0, 1) {
+		days = append(days, d)
+	}
+	return days
+}
+
 // NextCuts returns up to n cut days for zone, starting with t's day.
 func (s *Schedule) NextCuts(zone int, t time.Time, n int) []time.Time {
 	var cuts []time.Time

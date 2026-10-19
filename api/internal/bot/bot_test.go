@@ -411,3 +411,21 @@ func TestColoniaOffTheList(t *testing.T) {
 		t.Error("must not subscribe")
 	}
 }
+
+func TestNextReminderCoversTheWholeRunOfCuts(t *testing.T) {
+	cases := []struct{ now, want, notWant string }{
+		{"2026-10-19 10:00", "Próximo aviso: *hoy, 8 p. m.* (corte del martes 20 y miércoles 21 de octubre)", "¡Ojo!"},
+		{"2026-10-19 21:00", "¡Ojo! *Mañana martes 20 y miércoles 21 de octubre* hay corte", "corte del miércoles"},
+		{"2026-10-20 10:00", "¡Ojo! *Mañana miércoles 21 de octubre* hay corte", "Próximo aviso: *hoy"},
+	}
+	for _, c := range cases {
+		h := newHarness(t, c.now)
+		got := h.send(t, text("zona 5"))
+		if !strings.Contains(got, c.want) || strings.Contains(got, c.notWant) {
+			t.Errorf("%s: want %q and not %q in:\n%s", c.now, c.want, c.notWant, got)
+		}
+		if c.now != "2026-10-19 10:00" && !strings.Contains(got, "Próximo aviso: *viernes 23 de octubre, 8 p. m.* (corte del sábado 24 de octubre)") {
+			t.Errorf("%s: no reminder comes in the middle of a cut, so the next one is Friday's:\n%s", c.now, got)
+		}
+	}
+}

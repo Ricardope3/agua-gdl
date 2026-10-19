@@ -1020,3 +1020,49 @@ func TestUnsubscribeCancelsQueuedReplies(t *testing.T) {
 		t.Fatalf("other people's replies stay: %d %v", sent, err)
 	}
 }
+
+func TestWaterAnswersNeedTheReminderAndSurviveBaja(t *testing.T) {
+	db := testDB(t)
+	ctx := context.Background()
+	cut := time.Date(2026, 10, 20, 0, 0, 0, 0, time.UTC)
+	if err := db.Subscribe(ctx, Telegram, "777", "", 5); err != nil {
+		t.Fatal(err)
+	}
+	s, _, err := db.Subscriber(ctx, Telegram, "777")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if kept, err := db.SaveWater(ctx, s.ID, 5, cut, "no"); err != nil || kept {
+		t.Fatalf("no reminder sent yet, so no answer: %v %v", kept, err)
+	}
+	if _, err := db.SendReminder(ctx, s, cut, []int{5}, nil, func(Subscriber) (string, error) { return "", nil }); err != nil {
+		t.Fatal(err)
+	}
+	for _, answer := range []string{"no", "poca"} {
+		if kept, err := db.SaveWater(ctx, s.ID, 5, cut, answer); err != nil || !kept {
+			t.Fatalf("%s: %v %v", answer, kept, err)
+		}
+	}
+	if kept, err := db.SaveWater(ctx, s.ID, 5, cut.AddDate(0, 0, 4), "no"); err != nil || kept {
+		t.Fatalf("a cut without a reminder can't be answered: %v %v", kept, err)
+	}
+	if _, err := db.SaveWater(ctx, s.ID, 5, cut, "tal vez"); err == nil {
+		t.Fatal("unknown answers must be refused")
+	}
+	if _, err := db.Unsubscribe(ctx, Telegram, "777", ""); err != nil {
+		t.Fatal(err)
+	}
+	if err := db.Subscribe(ctx, Telegram, "777", "", 5); err != nil {
+		t.Fatal(err)
+	}
+	again, _, _ := db.Subscriber(ctx, Telegram, "777")
+	if kept, err := db.SaveWater(ctx, again.ID, 5, cut, "no"); err != nil || kept {
+		t.Fatalf("BAJA and subscribing again must not add an answer: %v %v", kept, err)
+	}
+	var n int
+	var answer string
+	var linked bool
+	if err := db.pool.QueryRow(ctx, `select count(*), min(answer), bool_or(subscriber_id is not null) from water_report`).Scan(&n, &answer, &linked); err != nil || n != 1 || answer != "poca" || linked {
+		t.Fatalf("want one unlinked answer «poca»: %d %q linked=%v %v", n, answer, linked, err)
+	}
+}

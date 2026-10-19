@@ -19,6 +19,7 @@ type BotStore interface {
 	ChangeUser(ctx context.Context, oldUserID, oldPhone, newUserID, newPhone string) error
 	ZoneCounts(context.Context) (map[int]int, error)
 	SaveReport(context.Context, int64, int, time.Time, string) error
+	SaveWater(context.Context, int64, int, time.Time, string) (bool, error)
 	UpdateStatus(context.Context, string, string) (bool, error)
 	QueueReply(ctx context.Context, inboundID, channel, userID, phone string, body []byte) error
 	SendReplies(ctx context.Context, inboundID string, send func(body []byte) error) error

@@ -10,7 +10,8 @@ import (
 
 const mapURL = "https://rotaciondeserviciosiapa.jalisco.gob.mx/"
 
-// Zone returns the feed for one zone: an all-day event per rationing day, with an alert at 8 p.m. the evening before.
+// Zone returns the feed for one zone: an all-day event per rationing day, with an alert at 8 p.m. the evening
+// before each run of consecutive days (one on the evening of a cut day would come too late).
 func Zone(s *rotation.Schedule, zone int) []byte {
 	start, end := s.Span()
 	if end.IsZero() {
@@ -39,14 +40,16 @@ func Zone(s *rotation.Schedule, zone int) []byte {
 		line("DTSTART;VALUE=DATE:%s", d.Format("20060102"))
 		line("DTEND;VALUE=DATE:%s", d.AddDate(0, 0, 1).Format("20060102"))
 		line("SUMMARY:%s", escape(fmt.Sprintf("💧 Racionamiento de agua · Zona %d", zone)))
-		line("DESCRIPTION:%s", escape("Según el calendario del SIAPA, puede bajar la presión o faltar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa oficial: "+mapURL+" · Agua GDL (no oficial): https://aguagdl.com"))
+		line("DESCRIPTION:%s", escape("Corte según el calendario del SIAPA. El SIAPA dice que solo baja la presión y por un día; vecinos nos cuentan que el agua se va desde antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: "+mapURL+" · Agua GDL (no oficial): https://aguagdl.com"))
 		line("URL:%s", mapURL)
 		line("TRANSP:TRANSPARENT")
-		line("BEGIN:VALARM")
-		line("ACTION:DISPLAY")
-		line("DESCRIPTION:%s", escape(fmt.Sprintf("Mañana hay racionamiento de agua en la zona %d", zone)))
-		line("TRIGGER:-PT4H")
-		line("END:VALARM")
+		if s.StartsRun(zone, d) {
+			line("BEGIN:VALARM")
+			line("ACTION:DISPLAY")
+			line("DESCRIPTION:%s", escape(fmt.Sprintf("Mañana %s hay racionamiento de agua en la zona %d", rotation.DatesES(s.Run(zone, d)), zone)))
+			line("TRIGGER:-PT4H")
+			line("END:VALARM")
+		}
 		line("END:VEVENT")
 	}
 	line("END:VCALENDAR")

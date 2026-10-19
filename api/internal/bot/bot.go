@@ -301,6 +301,15 @@ func (b *Bot) onPayload(ctx context.Context, r User, p string) error {
 		if len(parts) == 2 {
 			return b.saveReport(ctx, r, zone, parts[0], parts[1])
 		}
+	case "A":
+		// A:zone:date:answer, the reminder's «¿Ahorita tienes agua?»
+		parts := strings.Split(rest, ":")
+		if len(parts) != 3 {
+			break
+		}
+		if zone, err := strconv.Atoi(parts[0]); err == nil {
+			return b.saveWater(ctx, r, zone, parts[1], parts[2])
+		}
 	}
 	return b.text(ctx, r, msgHelp(b.BaseURL, r.Channel))
 }
@@ -408,18 +417,23 @@ func (b *Bot) subscribedText(channel string, zone int, fresh bool) string {
 		days: rotation.DaysES(b.Schedule.Weekdays(zone)),
 		hour: rotation.HourES(b.ReminderHour),
 	}
-	next := b.Schedule.NextCuts(zone, tomorrow, 2)
-	if len(next) > 0 && next[0].Equal(tomorrow) && (!b.remindersOn(channel) || now.In(b.Schedule.Location()).Hour() >= b.ReminderHour) {
-		info.cutTomorrow = rotation.DateES(tomorrow)
-		next = next[1:]
+	// Tonight's reminder covers tomorrow only if it's not too late, reminders are on and
+	// tomorrow starts a run of cut days; otherwise warn here.
+	late := !b.remindersOn(channel) || now.In(b.Schedule.Location()).Hour() >= b.ReminderHour
+	if b.Schedule.IsCut(zone, tomorrow) && (late || !b.Schedule.StartsRun(zone, tomorrow)) {
+		info.cutTomorrow = rotation.DatesES(b.Schedule.Run(zone, tomorrow))
 	}
-	if len(next) > 0 {
-		remind := next[0].AddDate(0, 0, -1)
+	for _, cut := range b.Schedule.NextCuts(zone, tomorrow, 14) {
+		if !b.Schedule.StartsRun(zone, cut) || (cut.Equal(tomorrow) && info.cutTomorrow != "") {
+			continue
+		}
+		remind := cut.AddDate(0, 0, -1)
 		info.nextReminder = rotation.DateES(remind)
 		if remind.Equal(today) {
 			info.nextReminder = "hoy"
 		}
-		info.nextCut = rotation.DateES(next[0])
+		info.nextCut = rotation.DatesES(b.Schedule.Run(zone, cut))
+		break
 	}
 	return msgSubscribed(info)
 }
@@ -509,6 +523,36 @@ func (b *Bot) saveReport(ctx context.Context, r User, zone int, date, answer str
 		return err
 	}
 	return b.text(ctx, r, msgThanks)
+}
+
+// saveWater keeps an answer to the reminder's «¿Ahorita tienes agua?» about the cut starting
+// on date, from the evening before until the run's last day.
+func (b *Bot) saveWater(ctx context.Context, r User, zone int, date, answer string) error {
+	i := slices.IndexFunc(waterAnswers, func(a struct{ key, title, thanks string }) bool { return a.key == answer })
+	if i < 0 || r.ID == "" {
+		return b.text(ctx, r, msgHelp(b.BaseURL, r.Channel))
+	}
+	s, ok, err := b.Store.Subscriber(ctx, r.Channel, r.ID)
+	if err != nil {
+		return err
+	}
+	if !ok {
+		return b.welcome(ctx, r)
+	}
+	d, err := b.Schedule.ParseDate(date)
+	run := b.Schedule.Run(zone, d)
+	today := b.Schedule.Day(b.Now())
+	if err != nil || len(run) == 0 || today.Before(d.AddDate(0, 0, -1)) || today.After(run[len(run)-1]) {
+		return b.text(ctx, r, msgReportClosed)
+	}
+	kept, err := b.Store.SaveWater(ctx, s.ID, zone, d, answer)
+	if err != nil {
+		return err
+	}
+	if !kept {
+		return b.text(ctx, r, msgReportClosed)
+	}
+	return b.text(ctx, r, waterAnswers[i].thanks)
 }
 
 func (b *Bot) text(ctx context.Context, r User, body string) error {

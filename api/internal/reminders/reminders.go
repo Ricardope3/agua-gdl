@@ -1,5 +1,5 @@
 // Package reminders sends the evening-before reminder, on WhatsApp and Telegram, to every
-// subscriber whose zone is cut tomorrow.
+// subscriber whose zone's cut starts tomorrow.
 package reminders
 
 import (
@@ -144,7 +144,8 @@ func (r *Runner) sendChannel(ctx context.Context, channel string) (err error) {
 			err = errors.Join(err, errRejected)
 		}
 	}()
-	zones := r.Schedule.ZonesOn(tomorrow)
+	// A zone cut two days in a row got one reminder, the evening before the first.
+	zones := slices.DeleteFunc(r.Schedule.ZonesOn(tomorrow), func(z int) bool { return !r.Schedule.StartsRun(z, tomorrow) })
 	if len(zones) == 0 {
 		return nil
 	}
@@ -186,7 +187,7 @@ func (r *Runner) sendChannel(ctx context.Context, channel string) (err error) {
 			}
 			attempted, sendErr = r.Store.SendReminder(sendCtx, s, tomorrow, zones, budget, func(current store.Subscriber) (string, error) {
 				if current.Channel == store.Telegram {
-					return "", r.sendTelegram(ctx, sendCtx, current, date)
+					return "", r.sendTelegram(ctx, sendCtx, current, r.Schedule.Run(current.Zone, tomorrow))
 				}
 				return r.Sender.Send(sendCtx, r.reminder(current, date))
 			})
@@ -286,8 +287,8 @@ func (r *Runner) sleep(ctx context.Context, d time.Duration) error {
 // sendTelegram waits out Telegram's "too many requests" a few times: a 429 means
 // the message wasn't sent, so trying again can't duplicate it.
 // Waits stop at shutdown (ctx); requests use sendCtx, which doesn't.
-func (r *Runner) sendTelegram(ctx, sendCtx context.Context, s store.Subscriber, date string) error {
-	m, err := bot.TelegramReminder(s.UserID, date, s.Zone)
+func (r *Runner) sendTelegram(ctx, sendCtx context.Context, s store.Subscriber, days []time.Time) error {
+	m, err := bot.TelegramReminder(s.UserID, s.Zone, days)
 	if err != nil {
 		return err
 	}

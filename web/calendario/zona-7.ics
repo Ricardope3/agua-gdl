@@ -15,15 +15,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20261017
 DTEND;VALUE=DATE:20261018
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 17 y domingo 18 de octubre hay racionamiento de
+  agua en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -33,17 +35,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20261018
 DTEND;VALUE=DATE:20261019
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20261024@aguagdl.com
@@ -51,15 +49,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20261024
 DTEND;VALUE=DATE:20261025
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 24 y domingo 25 de octubre hay racionamiento de
+  agua en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -69,17 +69,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20261025
 DTEND;VALUE=DATE:20261026
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20261031@aguagdl.com
@@ -87,15 +83,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20261031
 DTEND;VALUE=DATE:20261101
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 31 de octubre y domingo 1 de noviembre hay raci
+ onamiento de agua en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -105,17 +103,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20261101
 DTEND;VALUE=DATE:20261102
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20261107@aguagdl.com
@@ -123,15 +117,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20261107
 DTEND;VALUE=DATE:20261108
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 7 y domingo 8 de noviembre hay racionamiento de
+  agua en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -141,17 +137,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20261108
 DTEND;VALUE=DATE:20261109
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20261114@aguagdl.com
@@ -159,15 +151,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20261114
 DTEND;VALUE=DATE:20261115
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 14 y domingo 15 de noviembre hay racionamiento 
+ de agua en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -177,17 +171,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20261115
 DTEND;VALUE=DATE:20261116
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20261121@aguagdl.com
@@ -195,15 +185,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20261121
 DTEND;VALUE=DATE:20261122
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 21 y domingo 22 de noviembre hay racionamiento 
+ de agua en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -213,17 +205,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20261122
 DTEND;VALUE=DATE:20261123
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20261128@aguagdl.com
@@ -231,15 +219,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20261128
 DTEND;VALUE=DATE:20261129
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 28 y domingo 29 de noviembre hay racionamiento 
+ de agua en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -249,17 +239,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20261129
 DTEND;VALUE=DATE:20261130
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20261205@aguagdl.com
@@ -267,15 +253,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20261205
 DTEND;VALUE=DATE:20261206
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 5 y domingo 6 de diciembre hay racionamiento de
+  agua en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -285,17 +273,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20261206
 DTEND;VALUE=DATE:20261207
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20261212@aguagdl.com
@@ -303,15 +287,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20261212
 DTEND;VALUE=DATE:20261213
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 12 y domingo 13 de diciembre hay racionamiento 
+ de agua en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -321,17 +307,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20261213
 DTEND;VALUE=DATE:20261214
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20261219@aguagdl.com
@@ -339,15 +321,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20261219
 DTEND;VALUE=DATE:20261220
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 19 y domingo 20 de diciembre hay racionamiento 
+ de agua en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -357,17 +341,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20261220
 DTEND;VALUE=DATE:20261221
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20261226@aguagdl.com
@@ -375,15 +355,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20261226
 DTEND;VALUE=DATE:20261227
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 26 y domingo 27 de diciembre hay racionamiento 
+ de agua en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -393,17 +375,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20261227
 DTEND;VALUE=DATE:20261228
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20270102@aguagdl.com
@@ -411,15 +389,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270102
 DTEND;VALUE=DATE:20270103
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 2 y domingo 3 de enero hay racionamiento de agu
+ a en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -429,17 +409,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270103
 DTEND;VALUE=DATE:20270104
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20270109@aguagdl.com
@@ -447,15 +423,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270109
 DTEND;VALUE=DATE:20270110
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 9 y domingo 10 de enero hay racionamiento de ag
+ ua en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -465,17 +443,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270110
 DTEND;VALUE=DATE:20270111
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20270116@aguagdl.com
@@ -483,15 +457,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270116
 DTEND;VALUE=DATE:20270117
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 16 y domingo 17 de enero hay racionamiento de a
+ gua en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -501,17 +477,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270117
 DTEND;VALUE=DATE:20270118
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20270123@aguagdl.com
@@ -519,15 +491,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270123
 DTEND;VALUE=DATE:20270124
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 23 y domingo 24 de enero hay racionamiento de a
+ gua en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -537,17 +511,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270124
 DTEND;VALUE=DATE:20270125
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20270130@aguagdl.com
@@ -555,15 +525,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270130
 DTEND;VALUE=DATE:20270131
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 30 y domingo 31 de enero hay racionamiento de a
+ gua en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -573,17 +545,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270131
 DTEND;VALUE=DATE:20270201
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20270206@aguagdl.com
@@ -591,15 +559,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270206
 DTEND;VALUE=DATE:20270207
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 6 y domingo 7 de febrero hay racionamiento de a
+ gua en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -609,17 +579,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270207
 DTEND;VALUE=DATE:20270208
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20270213@aguagdl.com
@@ -627,15 +593,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270213
 DTEND;VALUE=DATE:20270214
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 13 y domingo 14 de febrero hay racionamiento de
+  agua en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -645,17 +613,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270214
 DTEND;VALUE=DATE:20270215
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20270220@aguagdl.com
@@ -663,15 +627,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270220
 DTEND;VALUE=DATE:20270221
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 20 y domingo 21 de febrero hay racionamiento de
+  agua en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -681,17 +647,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270221
 DTEND;VALUE=DATE:20270222
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20270227@aguagdl.com
@@ -699,15 +661,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270227
 DTEND;VALUE=DATE:20270228
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 27 y domingo 28 de febrero hay racionamiento de
+  agua en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -717,17 +681,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270228
 DTEND;VALUE=DATE:20270301
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20270306@aguagdl.com
@@ -735,15 +695,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270306
 DTEND;VALUE=DATE:20270307
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 6 y domingo 7 de marzo hay racionamiento de agu
+ a en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -753,17 +715,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270307
 DTEND;VALUE=DATE:20270308
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20270313@aguagdl.com
@@ -771,15 +729,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270313
 DTEND;VALUE=DATE:20270314
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 13 y domingo 14 de marzo hay racionamiento de a
+ gua en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -789,17 +749,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270314
 DTEND;VALUE=DATE:20270315
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20270320@aguagdl.com
@@ -807,15 +763,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270320
 DTEND;VALUE=DATE:20270321
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 20 y domingo 21 de marzo hay racionamiento de a
+ gua en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -825,17 +783,13 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270321
 DTEND;VALUE=DATE:20270322
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-7-20270327@aguagdl.com
@@ -843,15 +797,17 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270327
 DTEND;VALUE=DATE:20270328
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
+DESCRIPTION:Mañana sábado 27 y domingo 28 de marzo hay racionamiento de a
+ gua en la zona 7
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -861,16 +817,12 @@ DTSTAMP:20261015T060000Z
 DTSTART;VALUE=DATE:20270328
 DTEND;VALUE=DATE:20270329
 SUMMARY:💧 Racionamiento de agua · Zona 7
-DESCRIPTION:Según el calendario del SIAPA\, puede bajar la presión o falt
- ar el agua hasta por un día. Llena tu tinaco la noche anterior. Mapa ofic
- ial: https://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no ofici
- al): https://aguagdl.com
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que solo ba
+ ja la presión y por un día\; vecinos nos cuentan que el agua se va desde
+  antes y tarda más en volver. Llena tu tinaco con tiempo. Mapa oficial: h
+ ttps://rotaciondeserviciosiapa.jalisco.gob.mx/ · Agua GDL (no oficial): h
+ ttps://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana hay racionamiento de agua en la zona 7
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 END:VCALENDAR

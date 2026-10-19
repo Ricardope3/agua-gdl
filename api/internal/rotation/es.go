@@ -17,16 +17,33 @@ func DateES(t time.Time) string {
 	return fmt.Sprintf("%s %d de %s", weekdayNames[t.Weekday()], t.Day(), monthNames[t.Month()])
 }
 
+// DatesES formats days as "martes 20 y miércoles 21 de octubre", naming the month once
+// when they share it.
+func DatesES(days []time.Time) string {
+	names := make([]string, len(days))
+	for i, d := range days {
+		names[i] = DateES(d)
+		if d.Month() == days[len(days)-1].Month() && i < len(days)-1 {
+			names[i] = fmt.Sprintf("%s %d", weekdayNames[d.Weekday()], d.Day())
+		}
+	}
+	return joinES(names)
+}
+
+func joinES(names []string) string {
+	if len(names) < 2 {
+		return strings.Join(names, "")
+	}
+	return strings.Join(names[:len(names)-1], ", ") + " y " + names[len(names)-1]
+}
+
 // DaysES formats weekdays as "martes, jueves y domingo".
 func DaysES(ws []time.Weekday) string {
 	names := make([]string, len(ws))
 	for i, w := range ws {
 		names[i] = weekdayNames[w]
 	}
-	if len(names) < 2 {
-		return strings.Join(names, "")
-	}
-	return strings.Join(names[:len(names)-1], ", ") + " y " + names[len(names)-1]
+	return joinES(names)
 }
 
 // HourES formats a 24-hour clock hour as "8 p. m.".

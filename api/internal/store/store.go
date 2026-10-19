@@ -250,6 +250,18 @@ func (db *DB) SaveReport(ctx context.Context, subscriberID int64, zone int, cutD
 	return err
 }
 
+// SaveWater records an answer to the reminder about the cut starting on cutDate. Only a
+// subscription that was sent that reminder can answer, so BAJA and subscribing again can't
+// add answers; it reports whether the answer was kept.
+func (db *DB) SaveWater(ctx context.Context, subscriberID int64, zone int, cutDate time.Time, answer string) (bool, error) {
+	tag, err := db.q.Exec(ctx, `insert into water_report (subscriber_id, zone, cut_date, answer)
+		select $1, $2, $3::date, $4 where exists (
+			select 1 from reminder where subscriber_id = $1 and cut_date = $3::date and status <> 'rejected')
+		on conflict (subscriber_id, cut_date) do update set answer = excluded.answer, zone = excluded.zone, created_at = now()`,
+		subscriberID, zone, cutDate.Format(dateLayout), answer)
+	return tag.RowsAffected() > 0, err
+}
+
 // UpdateStatus records a delivery status and reports whether it changed a reminder.
 func (db *DB) UpdateStatus(ctx context.Context, wamid, status string) (bool, error) {
 	const progress = `array_position(array['sent','delivered','read','failed'], status) < array_position(array['sent','delivered','read','failed'], $2)`

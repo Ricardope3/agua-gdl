@@ -56,3 +56,17 @@ func TestZoneSixFirstWeek(t *testing.T) {
 		}
 	}
 }
+
+func TestOneAlarmPerRunOfCutDays(t *testing.T) {
+	ics := string(Zone(schedule(t), 5))
+	tuesday := ics[strings.Index(ics, "DTSTART;VALUE=DATE:20261020\r\n"):]
+	tuesday = tuesday[:strings.Index(tuesday, "END:VEVENT")]
+	if !strings.Contains(tuesday, "TRIGGER:-PT4H") || !strings.Contains(strings.ReplaceAll(tuesday, "\r\n ", ""), "Mañana martes 20 y miércoles 21 de octubre") {
+		t.Errorf("Tuesday's alarm must cover Tuesday and Wednesday:\n%s", tuesday)
+	}
+	wednesday := ics[strings.Index(ics, "DTSTART;VALUE=DATE:20261021\r\n"):]
+	wednesday = wednesday[:strings.Index(wednesday, "END:VEVENT")]
+	if strings.Contains(wednesday, "VALARM") {
+		t.Errorf("Wednesday continues Tuesday's cut: its alarm would ring in the middle of it:\n%s", wednesday)
+	}
+}

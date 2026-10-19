@@ -2,11 +2,14 @@ package bot
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 
+	"aguagdl/api/internal/rotation"
 	"aguagdl/api/internal/store"
 	"aguagdl/api/internal/tg"
 )
@@ -143,11 +146,19 @@ func truncate(s string, n int) string {
 	return string(r[:n-1]) + "…"
 }
 
-// TelegramReminder is tomorrow's reminder for a Telegram chat, with buttons for SIAPA's map
-// and for BAJA.
-func TelegramReminder(chatID, date string, zone int) (tg.Message, error) {
-	m, err := TelegramMessage(chatID, Reply{Text: msgTelegramReminder(date, zone)})
+// TelegramReminder is a Telegram chat's reminder for the run of cut days that starts
+// tomorrow, with buttons to say whether the water is still on, for SIAPA's map and for BAJA.
+func TelegramReminder(chatID string, zone int, days []time.Time) (tg.Message, error) {
+	if len(days) == 0 {
+		return tg.Message{}, errors.New("reminder without cut days")
+	}
+	m, err := TelegramMessage(chatID, Reply{Text: msgTelegramReminder(rotation.DatesES(days), zone)})
+	answers := make([]tg.InlineButton, len(waterAnswers))
+	for i, a := range waterAnswers {
+		answers[i] = tg.InlineButton{Text: a.title, CallbackData: fmt.Sprintf("A:%d:%s:%s", zone, days[0].Format(rotation.DateLayout), a.key)}
+	}
 	m.ReplyMarkup = tg.InlineKeyboard{InlineKeyboard: [][]tg.InlineButton{
+		answers,
 		{{Text: "🗺️ Mapa del SIAPA", URL: MapURL}},
 		{{Text: "Dejar de recibir avisos", CallbackData: "BAJA"}},
 	}}

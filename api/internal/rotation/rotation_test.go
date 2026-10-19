@@ -94,3 +94,29 @@ func TestExpired(t *testing.T) {
 		t.Error("without an end date nothing expires")
 	}
 }
+
+func TestRuns(t *testing.T) {
+	s := load(t, data.Rotation)
+	cases := []struct {
+		zone  int
+		day   string
+		start bool
+		run   string
+	}{
+		{5, "2026-10-20", true, "martes 20 y miércoles 21 de octubre"},
+		{5, "2026-10-21", false, "miércoles 21 de octubre"},
+		{5, "2026-10-24", true, "sábado 24 de octubre"},
+		{7, "2026-10-31", true, "sábado 31 de octubre y domingo 1 de noviembre"},
+		{2, "2026-10-15", true, "jueves 15 de octubre"},
+		{4, "2026-10-20", false, ""},
+	}
+	for _, c := range cases {
+		d := day(s, c.day)
+		if got := s.StartsRun(c.zone, d); got != c.start {
+			t.Errorf("zone %d %s: starts a run = %v, want %v", c.zone, c.day, got, c.start)
+		}
+		if got := DatesES(s.Run(c.zone, d)); got != c.run {
+			t.Errorf("zone %d %s: run %q, want %q", c.zone, c.day, got, c.run)
+		}
+	}
+}

@@ -26,6 +26,7 @@ type Store struct {
 	Subs       map[string]store.Subscriber // keyed by Key(channel, user ID)
 	SeenIDs    map[string]bool
 	Reports    []Report
+	Water      []Report // answers to «¿Ahorita tienes agua?»
 	Reminders  map[string]bool
 	SentAt     map[string]time.Time
 	Unresolved map[string]string
@@ -59,6 +60,7 @@ func (s *Store) ProcessInbound(ctx context.Context, id string, process func(stor
 	before := *s
 	before.Subs, before.SeenIDs, before.Replies = maps.Clone(s.Subs), maps.Clone(s.SeenIDs), maps.Clone(s.Replies)
 	before.Reports = append([]Report(nil), s.Reports...)
+	before.Water = append([]Report(nil), s.Water...)
 	s.SeenIDs[id] = true
 	if err := process(s); err != nil {
 		*s = before
@@ -180,6 +182,23 @@ func (s *Store) Unsubscribe(_ context.Context, channel, userID, phone string) (b
 func (s *Store) SaveReport(_ context.Context, id int64, zone int, d time.Time, answer string) error {
 	s.Reports = append(s.Reports, Report{id, zone, d.Format("2006-01-02"), answer})
 	return nil
+}
+
+// SaveWater keeps one answer per subscription and cut, and only from a subscription that
+// was sent that cut's reminder, like store.DB.SaveWater.
+func (s *Store) SaveWater(_ context.Context, id int64, zone int, d time.Time, answer string) (bool, error) {
+	if !s.Reminders[key(id, d)] {
+		return false, nil
+	}
+	w := Report{id, zone, d.Format("2006-01-02"), answer}
+	for i, old := range s.Water {
+		if old.SubscriberID == id && old.Date == w.Date {
+			s.Water[i] = w
+			return true, nil
+		}
+	}
+	s.Water = append(s.Water, w)
+	return true, nil
 }
 
 func (s *Store) UpdateStatus(_ context.Context, wamid, _ string) (bool, error) {

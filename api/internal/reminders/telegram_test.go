@@ -43,9 +43,13 @@ func TestTelegramRemindersSkipMetaCaps(t *testing.T) {
 	}
 	m := tel.Sent[0]
 	kb, ok := m.ReplyMarkup.(tg.InlineKeyboard)
-	if m.ChatID != 777 || !strings.Contains(m.Text, "<b>Mañana lunes 19 de octubre</b>") || !strings.Contains(m.Text, "<b>Zona 4</b>") ||
-		!ok || kb.InlineKeyboard[1][0].CallbackData != "BAJA" || kb.InlineKeyboard[0][0].URL == "" {
+	if m.ChatID != 777 || !strings.Contains(m.Text, "<b>mañana lunes 19 de octubre</b>") || !strings.Contains(m.Text, "<b>Zona 4</b>") ||
+		!ok || len(kb.InlineKeyboard) != 3 || kb.InlineKeyboard[0][2].CallbackData != "A:4:2026-10-19:no" ||
+		kb.InlineKeyboard[1][0].URL == "" || kb.InlineKeyboard[2][0].CallbackData != "BAJA" {
 		t.Errorf("telegram reminder: %+v", m)
+	}
+	if strings.Contains(m.Text, "hasta por un día") {
+		t.Error("the Telegram reminder must not state SIAPA's account as fact")
 	}
 	if err := r.SendTonight(ctx); err != nil || len(tel.Sent) != 2 {
 		t.Error("a second run must not resend")
@@ -114,5 +118,25 @@ func TestRefusedTelegramSendIsRetriedTheSameNight(t *testing.T) {
 	r.runOnce(ctx)
 	if len(tel.Sent) != 1 || len(st.Unresolved) != 0 {
 		t.Fatalf("a refused send must be retried before the deadline: sent %d, unresolved %v", len(tel.Sent), st.Unresolved)
+	}
+}
+
+func TestOneReminderPerRunOfCutDays(t *testing.T) {
+	ctx := context.Background()
+	st, tel := fake.NewStore(), &fake.Telegram{}
+	st.Subscribe(ctx, store.Telegram, "501", "", 5) // Tuesday and Wednesday in a row, then Saturday
+	st.Subscribe(ctx, store.Telegram, "301", "", 3) // Wednesday and Saturday
+	r := runner(t, "2026-10-19 20:00", st, nil)
+	r.Sender, r.Telegram = nil, tel
+	if err := r.SendTonight(ctx); err != nil || len(tel.Sent) != 1 {
+		t.Fatalf("Monday: err %v, sent %d", err, len(tel.Sent))
+	}
+	if m := tel.Sent[0]; m.ChatID != 501 || !strings.Contains(m.Text, "<b>mañana martes 20 y miércoles 21 de octubre</b>") {
+		t.Errorf("zone 5's reminder must cover both days: %s", m.Text)
+	}
+	r = runner(t, "2026-10-20 20:00", st, nil)
+	r.Sender, r.Telegram = nil, tel
+	if err := r.SendTonight(ctx); err != nil || len(tel.Sent) != 2 || tel.Sent[1].ChatID != 301 {
+		t.Fatalf("Tuesday, in the middle of zone 5's cut, only zone 3 is reminded: err %v, sent %+v", err, tel.Sent)
 	}
 }

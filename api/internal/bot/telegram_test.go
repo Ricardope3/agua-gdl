@@ -2,6 +2,7 @@ package bot
 
 import (
 	"context"
+	"fmt"
 	"strings"
 	"testing"
 	"time"
@@ -317,5 +318,47 @@ func TestWriteToCongressIsTelegramOnly(t *testing.T) {
 	}
 	if m := h.say(t, "ayuda"); !strings.Contains(m.Text, "ESCRIBIR") {
 		t.Errorf("Telegram help: %s", m.Text)
+	}
+}
+
+func TestWaterAnswersToTheReminder(t *testing.T) {
+	h := newTGHarness(t, "2026-10-19 21:00")
+	h.say(t, "/start z5")
+	s, _ := h.sub(t)
+	h.store.Reminders[fmt.Sprintf("%d/2026-10-20", s.ID)] = true // Monday's reminder for Tuesday and Wednesday
+	if m := h.press(t, "A:5:2026-10-20:no"); !strings.Contains(m.Text, "SIAPABOT") || !strings.Contains(m.Text, "073") {
+		t.Errorf("«No» must say how to get a pipa: %s", m.Text)
+	}
+	h.press(t, "A:5:2026-10-20:poca")
+	if len(h.store.Water) != 1 || h.store.Water[0].Answer != "poca" || h.store.Water[0].Zone != 5 {
+		t.Fatalf("one answer per cut, the latest: %+v", h.store.Water)
+	}
+	loc, _ := time.LoadLocation("America/Mexico_City")
+	h.bot.Now = func() time.Time { return time.Date(2026, 10, 21, 18, 0, 0, 0, loc) }
+	if m := h.press(t, "A:5:2026-10-20:si"); !strings.Contains(m.Text, "Gracias") || h.store.Water[0].Answer != "si" {
+		t.Errorf("answers stay open until the run's last day: %s %+v", m.Text, h.store.Water)
+	}
+	h.bot.Now = func() time.Time { return time.Date(2026, 10, 22, 8, 0, 0, 0, loc) }
+	if m := h.press(t, "A:5:2026-10-20:no"); !strings.Contains(m.Text, "ya cerró") || h.store.Water[0].Answer != "si" {
+		t.Errorf("closed after the run: %s %+v", m.Text, h.store.Water)
+	}
+}
+
+func TestOnlyTheRemindedSubscriptionCanAnswer(t *testing.T) {
+	h := newTGHarness(t, "2026-10-19 21:00")
+	h.say(t, "/start z5")
+	s, _ := h.sub(t)
+	h.store.Reminders[fmt.Sprintf("%d/2026-10-20", s.ID)] = true
+	h.press(t, "A:5:2026-10-20:no")
+	h.store.Now = h.bot.Now
+	for range 3 {
+		h.say(t, "/baja")
+		h.say(t, "/start z5")
+		if m := h.press(t, "A:5:2026-10-20:no"); !strings.Contains(m.Text, "ya cerró") {
+			t.Fatalf("a subscription that wasn't sent the reminder can't answer it: %s", m.Text)
+		}
+	}
+	if len(h.store.Water) != 1 {
+		t.Fatalf("BAJA and subscribing again must not add answers: %+v", h.store.Water)
 	}
 }

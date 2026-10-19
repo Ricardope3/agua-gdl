@@ -147,6 +147,14 @@ func msgAskReport(date string) string {
 
 const msgThanks = "🙏 ¡Gracias! Tu reporte ayuda a ver cómo está tu zona."
 
+// waterAnswers are the Telegram reminder's buttons for «¿Ahorita tienes agua?» and what
+// each answer gets back.
+var waterAnswers = []struct{ key, title, thanks string }{
+	{"si", "✅ Sí", "🙏 ¡Gracias! Aprovecha para llenar tu tinaco y tus garrafones antes del corte."},
+	{"poca", "🟡 Poca", "🙏 ¡Gracias! Llena lo que puedas mientras salga."},
+	{"no", "❌ No", "🙏 Gracias por avisarnos: nos ayuda a avisar con más tiempo.\n\n" + msgPipa},
+}
+
 var reportAnswers = []struct{ key, title string }{
 	{"normal", "✅ Regresó normal"},
 	{"baja", "🟡 Baja presión"},
@@ -158,7 +166,7 @@ type subscribedInfo struct {
 	zone         int
 	days         string
 	fresh        bool
-	cutTomorrow  string // non-empty when tomorrow's cut is too close for a reminder
+	cutTomorrow  string // non-empty when no reminder comes for tomorrow's cut: too late, reminders off, or it continues today's
 	off          bool   // reminders are switched off on the server
 	nextReminder string
 	nextCut      string
@@ -176,7 +184,7 @@ func msgSubscribed(i subscribedInfo) string {
 	}
 	fmt.Fprintf(&b, "📅 Días de corte: *%s*\n", i.days)
 	if i.cutTomorrow != "" {
-		fmt.Fprintf(&b, "⚠️ ¡Ojo! *Mañana %s* hay corte. Llena hoy tu tinaco.\n", i.cutTomorrow)
+		fmt.Fprintf(&b, "⚠️ ¡Ojo! *Mañana %s* hay corte. Si todavía tienes agua, llena hoy tu tinaco.\n", i.cutTomorrow)
 	}
 	switch {
 	case i.off:
@@ -220,11 +228,22 @@ func ManualReminder(date string, zone int) string {
 Agua GDL · Escribe *BAJA* para no recibir avisos`
 }
 
-// msgTelegramReminder goes with buttons for the map and for BAJA.
-func msgTelegramReminder(date string, zone int) string {
-	return reminderBody(date, zone) + "\n\nℹ️ Aviso ciudadano, no oficial. Confirma tu colonia en el mapa del SIAPA 👇"
+// msgTelegramReminder is the reminder for the run of cut days that starts tomorrow; it goes
+// with buttons to answer whether the water is still on, for the map and for BAJA. Unlike
+// WhatsApp's approved template, it doesn't repeat SIAPA's account as fact.
+func msgTelegramReminder(dates string, zone int) string {
+	return fmt.Sprintf(`💧 La *Zona %d* tiene corte *mañana %s*, según el calendario del SIAPA.
+
+El SIAPA dice que solo baja la presión y por un día, pero vecinos nos cuentan que el agua se va desde antes y tarda más en volver.
+
+🪣 Si todavía tienes agua, llena tu tinaco, cubetas y garrafones, y tápalos bien.
+
+*¿Ahorita tienes agua?* Tu respuesta nos ayuda a avisar mejor 👇
+
+ℹ️ Aviso ciudadano, no oficial. Confirma tu colonia en el mapa del SIAPA.`, zone, dates)
 }
 
+// reminderBody is the text of WhatsApp's approved aviso_corte template.
 func reminderBody(date string, zone int) string {
 	return fmt.Sprintf(`💧 *Mañana %s* hay racionamiento de agua en la *Zona %d* por la rotación del SIAPA: puede bajar la presión o faltar el agua hasta por un día.
 
