@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>¿Hay agua en tu colonia? · Agua GDL</title>
-<meta name="description" content="Mapa de reportes de vecinos: cómo está el agua en cada colonia de Guadalajara en las últimas 24 horas. Reporta la tuya en tres toques, sin cuenta y de forma anónima.">
+<meta name="description" content="Mapa de reportes de vecinos: cómo está el agua en cada colonia de Guadalajara en las últimas 24 horas. Reporta la tuya en cuatro toques, sin cuenta y de forma anónima.">
 <link rel="canonical" href="https://aguagdl.com/reportes">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aguagdl.com/reportes">
@@ -196,7 +196,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
 
   <main>
     <h1>¿Hay agua en tu colonia?</h1>
-    <p class="lede">Lo que reportan los vecinos en las últimas 24 horas. Toca tu colonia para ver cómo está y reportar la tuya: sin cuenta, anónimo y en tres toques. No son datos oficiales.</p>
+    <p class="lede">Lo que reportan los vecinos en las últimas 24 horas. Toca tu colonia para ver cómo está y reportar la tuya: sin cuenta, anónimo y en cuatro toques. No son datos oficiales.</p>
 
     <div class="finder">
       <form class="search" id="buscar" role="search">
@@ -241,7 +241,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
 
     <section aria-labelledby="semana" id="semana-sec" hidden>
       <h2 class="sec" id="semana">El SIAPA dice un día. Esto reportan los vecinos</h2>
-      <p class="note" style="margin-top:0">Según el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">SIAPA</a>, cada zona tiene de 2 a 3 racionamientos por semana «por máximo un día» y «no serán cortes totales». Esta es la última semana por zona: el marco señala los días de corte de su calendario y el color, lo que dicen los reportes del mapa y las respuestas del bot de Telegram. Cada reporte del mapa cuenta para la zona donde está la mayor parte de su colonia.</p>
+      <p class="note" style="margin-top:0">Según el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">SIAPA</a>, cada zona tiene de 2 a 3 racionamientos por semana «por máximo un día» y «no serán cortes totales». Esta es la última semana por zona: el marco señala los días de corte de su calendario y el color, lo que dicen los reportes del mapa y las respuestas del bot de Telegram. Cada reporte del mapa cuenta para la zona donde está la mayor parte de su colonia. El porcentaje cuenta solo los reportes del mapa, porque el bot pregunta en noches sin corte.</p>
       <p class="headline" id="fuera" style="font-size:1.1rem;margin:14px 0">Cargando…</p>
       <div class="tablewrap"><table class="week" id="semana-tabla"><caption class="sr">Reportes por zona y día de la última semana</caption></table></div>
       <ul class="legend" aria-label="Cómo leer la tabla">
@@ -335,6 +335,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
 
   const status = $("estado");
   const say = (...kids) => status.replaceChildren(...kids);
+  const LOAD_FAILED = "No pudimos cargar los reportes. El mapa funciona; intenta de nuevo en unos minutos.";
   async function call(path, opts) {
     const timeout = typeof AbortSignal.timeout === "function" ? { signal: AbortSignal.timeout(15000) } : {};
     const res = await fetch(API + path, { ...timeout, ...opts });
@@ -383,7 +384,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         l.bindTooltip(() => {
           const c = byKey.get(keyOf(f.properties));
           return el("span", {}, `${f.properties.n} · ${f.properties.m}`,
-            el("span", { class: "sub" }, c ? `${totalOf(c)} ${totalOf(c) === 1 ? "reporte" : "reportes"} en 24 h` : "Sin reportes en 24 h"));
+            c ? el("span", { class: "sub" }, `${totalOf(c)} ${totalOf(c) === 1 ? "reporte" : "reportes"} en 24 h`) : summary ? el("span", { class: "sub" }, "Sin reportes en 24 h") : null);
         }, { sticky: true, className: "map-label" });
         l.on("click", () => { if (Date.now() - closedAt > 500) select(f, { fit: false }); });
       },
@@ -412,7 +413,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         const fs = features.get(k);
         if (!fs) continue;
         const center = L.geoJSON(fs[0]).getBounds().getCenter();
-        const m = L.marker(center, { icon: L.divIcon({ className: "donut", html: donut(c), iconSize: [40, 40] }), keyboard: false, title: `${fs[0].properties.n}: ${totalOf(c)} reportes` });
+        const m = L.marker(center, { icon: L.divIcon({ className: "donut", html: donut(c), iconSize: [40, 40] }), keyboard: false, title: `${fs[0].properties.n}: ${totalOf(c)} ${totalOf(c) === 1 ? "reporte" : "reportes"}` });
         m.on("click", () => select(fs[0]));
         markers.addLayer(m);
       }
@@ -427,6 +428,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       drawMarkers();
       renderSummary(s);
       if (selected && !card.querySelector("form.report")) renderCard(selected);
+      if (status.textContent === LOAD_FAILED) say("");
     }
 
     // The colonia card: its reports in the last 24 h and the form to add one.
@@ -470,6 +472,15 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     const mine = new Map(); // this visit's reports, in case the browser blocks storage
     const reportedAt = (k) => { let at = mine.get(k) || 0; try { at = Math.max(at, Number(localStorage.getItem(seenKey(k))) || 0); } catch {} return at; };
     const remember = (k) => { mine.set(k, Date.now()); try { localStorage.setItem(seenKey(k), String(Date.now())); } catch {} };
+    // The privacy notice promises only the last hour's reports: older marks go.
+    try {
+      const old = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith(seenKey("")) && !(Date.now() - Number(localStorage.getItem(k)) < SEEN)) old.push(k);
+      }
+      for (const k of old) localStorage.removeItem(k);
+    } catch {}
 
     function countsBlock(c) {
       const t = totalOf(c);
@@ -500,7 +511,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       close.addEventListener("click", clearSelection);
       const kids = [close, el("h2", {}, p.n), el("p", { class: "where" }, `${p.m}${p.cp ? ` · C.P. ${p.cp}` : ""} · ${M.label(p)}`)];
       if (c) kids.push(...countsBlock(c));
-      else kids.push(el("p", { class: "none" }, "Nadie ha reportado esta colonia en las últimas 24 horas."));
+      else kids.push(el("p", { class: "none" }, summary ? "Nadie ha reportado esta colonia en las últimas 24 horas." : "No pudimos cargar los reportes de esta colonia."));
       const when = reportedAt(k);
       if (Date.now() - when < 2 * 60 * 1000) {
         kids.push(el("p", { class: "thanks" }, "¡Gracias! Tu reporte ya está en el mapa."), share(p));
@@ -587,8 +598,12 @@ footer p { margin: 0 0 8px; max-width: 70ch }
           call("/v1/reportes").then(apply).catch(() => {});
         } catch (err) {
           send.disabled = false;
-          msg.textContent = err.status === 429 && /colonia/.test(err.body || "") ? "Ya llegaron muchos reportes de esta colonia en la última hora, y el mapa ya muestra cómo está. Intenta más tarde."
-            : err.status === 429 ? "Ya llegaron varios reportes seguidos desde tu conexión. Intenta en una hora."
+          // The API's 429s: "colonia: too many reports this hour", "too many reports" (this
+          // connection's hourly limit) and "too many requests" (every /v1 call, per minute).
+          const body = (err.body || "").trim();
+          msg.textContent = err.status === 429 && /colonia/.test(body) ? "Ya llegaron muchos reportes de esta colonia en la última hora, y el mapa ya muestra cómo está. Intenta más tarde."
+            : err.status === 429 && body === "too many reports" ? "Ya llegaron varios reportes seguidos desde tu conexión. Intenta en una hora."
+            : err.status === 429 ? "Llegaron muchas consultas seguidas desde tu conexión. Espera un minuto e intenta de nuevo."
             : err.status === 503 ? "Llegaron demasiados reportes en la última hora. Intenta de nuevo más tarde."
             : err.status ? "No pudimos guardar tu reporte. Intenta de nuevo en unos minutos."
             : "No pudimos enviar tu reporte. Revisa tu conexión e intenta de nuevo.";
@@ -612,7 +627,8 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       tile("t-colonias", s.colonias_con_reportes, "colonia con reportes", "colonias con reportes");
       tile("t-secas", s.mayormente_sin_agua, "colonia con mayoría sin agua", "colonias con mayoría sin agua");
       tile("t-historico", s.historico, "reporte desde que abrió el mapa", "reportes desde que abrió el mapa");
-      $("actualizado").textContent = t ? `Actualizado a las ${timeES(s.updated)}`.replace(/\.?$/, ".") : "Todavía no hay reportes en las últimas 24 horas. Sé la primera persona en reportar tu colonia.";
+      const at = timeES(s.updated);
+      $("actualizado").textContent = t ? `Actualizado ${/^1:/.test(at) ? "a la" : "a las"} ${at}`.replace(/\.?$/, ".") : "Todavía no hay reportes en las últimas 24 horas. Sé la primera persona en reportar tu colonia.";
       $("bot-min").textContent = `El detalle se muestra desde ${s.bot.min} respuestas por zona, para que nadie pueda ser identificado.`;
       const rows = s.bot.zonas.map((z) => z.detalle
         ? el("tr", {}, el("td", {}, `Zona ${z.zone}`), el("td", { class: "n" }, fmt(z.respuestas)), el("td", { class: "n" }, fmt(z.detalle.sin_agua)), el("td", { class: "n" }, fmt(z.detalle.baja)), el("td", { class: "n" }, fmt(z.detalle.con_agua)), el("td", { class: "n" }, fmt(z.detalle.turbia)))
@@ -640,12 +656,15 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       $("semana-min").textContent = `Menos de ${w.min} reportes: solo el número`;
       const dry = w.sin_agua.en_corte + w.sin_agua.fuera_de_corte;
       $("fuera").replaceChildren(...(dry >= 20
-        ? [el("b", {}, `${pct(w.sin_agua.fuera_de_corte, dry)} %`), ` de los reportes «sin agua» de la última semana (${fmt(w.sin_agua.fuera_de_corte)} de ${fmt(dry)}) llegaron en días sin corte en su zona.`]
+        ? [el("b", {}, `${pct(w.sin_agua.fuera_de_corte, dry)} %`), ` de los reportes «sin agua» del mapa en la última semana (${fmt(w.sin_agua.fuera_de_corte)} de ${fmt(dry)}) llegaron en días sin corte en su zona.`]
         : ["Todavía hay pocos reportes para compararlos con el calendario del SIAPA. Reporta tu colonia y pásalo a tus vecinos."]));
     }
 
     if (first) { apply(first); say(""); }
-    else say("No pudimos cargar los reportes. El mapa funciona; intenta de nuevo en unos minutos.");
+    else {
+      say(LOAD_FAILED);
+      $("bot-filas").replaceChildren(el("tr", {}, el("td", { colspan: "6", class: "few" }, "No pudimos cargar las respuestas. Intenta de nuevo en unos minutos.")));
+    }
     setInterval(() => { if (!document.hidden) call("/v1/reportes").then(apply).catch(() => {}); }, 120000);
 
     // Search over name, municipio and postal code, in the browser.
@@ -692,7 +711,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         const p = f.properties;
         const c = byKey.get(keyOf(p));
         const li = el("li", { role: "option", id: `op-${i}`, "aria-selected": "false" }, el("strong", {}, p.n),
-          el("span", { class: "sub" }, `${p.m}${p.cp ? ` · C.P. ${p.cp}` : ""} · ${c ? `${totalOf(c)} ${totalOf(c) === 1 ? "reporte" : "reportes"} hoy` : "sin reportes"}`));
+          el("span", { class: "sub" }, `${p.m}${p.cp ? ` · C.P. ${p.cp}` : ""}${c ? ` · ${totalOf(c)} ${totalOf(c) === 1 ? "reporte" : "reportes"} en 24 h` : summary ? " · sin reportes" : ""}`));
         li.addEventListener("mousedown", (e) => e.preventDefault());
         li.addEventListener("click", () => pick(f));
         return li;

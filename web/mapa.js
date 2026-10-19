@@ -45,7 +45,9 @@ window.aguaMapa = (() => {
     return { all, main, border, split: main.length > 1, shares };
   }
   const zoneWord = (zs) => (zs.length > 1 ? "zonas " : "zona ") + joinES(zs.map(String));
-  const borderWord = (zs) => `al límite con ${zs.length > 1 ? "las zonas" : "la zona"} ${joinES(zs.map(String))}`;
+  // theZones: "la zona 6" · "las zonas 5 y 6".
+  const theZones = (zs) => (zs.length > 1 ? "las " : "la ") + zoneWord(zs);
+  const borderWord = (zs) => `al límite con ${theZones(zs)}`;
   // label: "Zona 6" · "Zonas 5 y 6" · "Zona 6, al límite con la zona 5" · "Fuera de la rotación".
   function label(props) {
     const z = zones(props);
@@ -59,10 +61,10 @@ window.aguaMapa = (() => {
     if (z.all.length < 2) return null;
     if (z.split) {
       const pct = z.shares.size ? ` (más o menos ${joinES(z.main.map((zone) => `${Math.round(z.shares.get(zone))} %`))} de su superficie)` : "";
-      return `Esta colonia queda repartida entre las ${zoneWord(z.main)}${pct}. Mira de qué lado de la línea punteada está tu casa, o usa tu ubicación.`
-        + (z.border.length ? ` También toca el límite de la ${zoneWord(z.border)}.` : "");
+      return `Esta colonia queda repartida entre las ${zoneWord(z.main)}${pct}. Mira en el mapa de qué lado del límite entre zonas queda tu casa, o usa tu ubicación.`
+        + (z.border.length ? ` También toca el límite de ${theZones(z.border)}.` : "");
     }
-    return `Esta colonia está en la ${zoneWord(z.main)}, ${borderWord(z.border)}. Si vives junto a ese límite, revisa también los días de ${z.border.length > 1 ? "esas zonas" : `la zona ${z.border[0]}`}.`;
+    return `Esta colonia está en ${theZones(z.main)}, ${borderWord(z.border)}. Si vives junto a ese límite, revisa también los días de ${z.border.length > 1 ? "esas zonas" : `la zona ${z.border[0]}`}.`;
   }
 
   // TopoJSON → GeoJSON. Arcs are delta-encoded and quantized; a negative index is the arc
@@ -277,5 +279,5 @@ window.aguaMapa = (() => {
     return c;
   }
 
-  return { DATA, BORDER, COLORS, norm, fold, joinES, zonesOf, zones, label, describe, borderWord, zoneWord, decode, contains, load, find, tiles, draw, card, icon, cross };
+  return { DATA, BORDER, COLORS, norm, fold, joinES, zonesOf, zones, label, describe, borderWord, zoneWord, theZones, decode, contains, load, find, tiles, draw, card, icon, cross };
 })();

@@ -82,7 +82,7 @@ label { display: block; font-weight: 700; margin: 0 0 6px }
 @keyframes trace { 0% { stroke-dashoffset: 1; opacity: 1 } 40% { stroke-dashoffset: 0; opacity: 1 } 80% { stroke-dashoffset: 0; opacity: 1 } 100% { stroke-dashoffset: 0; opacity: 0 } }
 @media (prefers-reduced-motion: reduce) { .callout.draw .trace rect { animation: trace-still 2.5s forwards } }
 @keyframes trace-still { 0%, 80% { stroke-dashoffset: 0; opacity: 1 } 100% { stroke-dashoffset: 0; opacity: 0 } }
-.map-missing { position: absolute; z-index: 1000; top: 10px; left: 60px; right: 10px; max-width: 46ch; margin: 0 auto; background: var(--warn-bg); color: var(--fg); border-left: 4px solid var(--warn); border-radius: 8px; padding: 8px 12px; font: 600 14px/1.35 var(--font); box-shadow: var(--shadow); pointer-events: none }
+.map-missing { position: absolute; z-index: 1000; top: 10px; left: 10px; right: 60px; max-width: 46ch; margin: 0 auto; background: var(--warn-bg); color: var(--fg); border-left: 4px solid var(--warn); border-radius: 8px; padding: 8px 12px; font: 600 14px/1.35 var(--font); box-shadow: var(--shadow); pointer-events: none }
 .map-missing[hidden] { display: none }
 .callout h3 { margin: 0 0 8px; font-size: 1.15rem; line-height: 1.3 }
 .callout p { margin: 0 0 10px }
@@ -269,7 +269,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         <p>Si buscas por ubicación y por nombre y te dan zonas distintas, prepárate para los días de las dos.</p>
       </div>
       <ul class="plain">
-        <li>Según el SIAPA, cada racionamiento dura máximo un día y no es un corte total: baja la presión del agua. La Silla Rota publicó que empieza a las 12 de la noche del día programado. Vecinos nos cuentan que en sus colonias el agua se va desde antes y tarda más en volver.</li>
+        <li>Según el SIAPA, cada zona tiene de 2 a 3 racionamientos por semana «por máximo un día» y «no serán cortes totales». <a href="https://lasillarota.com/estados/2026/10/14/como-funcionara-la-rotacion-de-agua-en-guadalajara-aqui-las-claves-533014.html" rel="noopener">La Silla Rota publicó</a> que cada racionamiento empieza a las cero horas del día programado. Vecinos nos cuentan que en sus colonias el agua se va desde antes y tarda más en volver.</li>
         <li>Agua GDL es una iniciativa ciudadana: no es del SIAPA ni del gobierno y no tiene partido.</li>
       </ul>
     </section>
@@ -401,7 +401,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         el("a", { class: "button alt", href: `webcal://${calendarURL(zone)}` }, "iPhone o Mac: suscribirme"),
         el("a", { class: "button alt", href: googleCalendar(zone), rel: "noopener", target: "_blank" }, "Android o Google Calendar"),
         copy),
-      el("p", { class: "note" }, "Cada día de racionamiento de la zona, con alertas a las 8 p. m. dos días antes y la noche antes. No guardamos ningún dato tuyo."),
+      el("p", { class: "note" }, "Cada día de racionamiento de la zona, con alertas a las 8 p. m. dos días antes y la noche antes de cada tanda de cortes. No guardamos ningún dato tuyo."),
       el("p", { class: "note" }, el("strong", {}, "En iPhone, «agregar con alerta» "), "copia los días a tu calendario con la alerta incluida (ábrelo en Safari y toca «Agregar todo»). No se actualiza: si el SIAPA cambia el calendario lo avisaremos aquí y en el bot, y tendrás que borrarlos y agregarlos otra vez."),
       el("p", { class: "note" }, el("strong", {}, "«Suscribirme» "), "se actualiza solo, pero al suscribirte desactiva «Eliminar alertas» o no te llegará el aviso. Si ya te suscribiste: Ajustes › Apps › Calendario › Cuentas › Calendarios suscritos › Agua GDL › desactiva «Eliminar alertas»."),
       el("p", { class: "note" }, el("strong", {}, "En Android: "), "Google Calendar no usa las alertas de los calendarios suscritos. En la app, abre Configuración › Agua GDL › Notificaciones de eventos de todo el día y agrega una el día anterior a las 8 p. m."));
@@ -419,7 +419,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       el("div", { class: "subscribe" },
         calendarButton(z.zone),
         el("a", { class: "button alt", href: `${TELEGRAM}?start=z${z.zone}`, rel: "noopener" }, icon("send"), "Recibir el aviso por Telegram")),
-      el("p", { class: "note" }, `Gratis. El calendario trae cada corte de la zona ${z.zone} con alertas a las 8 p. m. dos días antes y la noche antes (abajo te decimos cómo asegurarte de que suenen) y no guarda ningún dato tuyo. En Telegram, al tocar «Iniciar» aceptas los avisos; `, el("a", { href: "/privacidad" }, "aviso de privacidad"), "."),
+      el("p", { class: "note" }, `Gratis. El calendario trae cada corte de la zona ${z.zone}, con alertas a las 8 p. m. dos días antes y la noche antes de cada tanda de cortes (abajo te decimos cómo asegurarte de que suenen), y no guarda ningún dato tuyo. En Telegram, al tocar «Iniciar» aceptas los avisos; `, el("a", { href: "/privacidad" }, "aviso de privacidad"), "."),
       calendarLinks(z.zone));
   }
   const cards = (zones) => el("div", { class: "zones" }, ...zones.map(zoneCard));
@@ -539,7 +539,9 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         absent.length && !card ? el("a", { href: "#lista" }, "por qué") : null, absent.length && !card ? "." : null);
       const tapped = el("div");
       box.replaceChildren(wrap, answer, tapped, box.lastChild);
-      const map = L.map(div, { preferCanvas: true, scrollWheelZoom: false, zoomSnap: 0.25 });
+      // The zoom buttons go top right: the colonia card opens top left.
+      const map = L.map(div, { preferCanvas: true, scrollWheelZoom: false, zoomSnap: 0.25, zoomControl: false });
+      L.control.zoom({ position: "topright" }).addTo(map);
       // The wheel scrolls the page, but a trackpad pinch (ctrl+wheel; gesture events in Safari) zooms the map.
       let pinch = 0;
       div.addEventListener("wheel", (e) => {
@@ -571,8 +573,9 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         shownCard = null;
         drawn.clearHighlights();
       };
+      // Only a searched colonia's map has the calendar details below it.
       const cardOpts = { days, next: (z) => nextCut(zones, z), dateES: lowerDate, links: (z) => [telegramLink(z), calendarLink(z)],
-        note: "Gratis: un mensaje a las 8 p. m. dos días antes de cada racionamiento y otro la noche antes, o alertas en tu calendario. Abajo, otras formas de agregar el calendario y cómo activar la alerta.", onClose: closeCard };
+        note: "Gratis: un mensaje a las 8 p. m. dos días antes de los cortes de tu zona y la noche antes (una vez por tanda cuando los cortes van seguidos), o alertas en tu calendario." + (card ? " Abajo, otras formas de agregar el calendario y cómo activar la alerta." : ""), onClose: closeCard };
       const place = (node) => {
         if (shownCard) shownCard.remove();
         shownCard = node;
@@ -594,7 +597,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         const differs = ls.length && ls.join() !== [...z.all].sort().join();
         place(M.card({ ...cardOpts, title: p.n, subtitle: municipio(p.m) + (p.cp ? ` · C.P. ${p.cp}` : ""), sentence: M.describe(p), main: z.main, side: z.border,
           extra: differs ? ls.filter((zone) => !z.all.includes(zone)) : [],
-          extraNote: differs ? `La lista de colonias del SIAPA la pone en ${M.zoneWord(ls)}. El mapa y la lista no siempre coinciden: ${z.all.length ? "prepárate para los días de las dos" : "prepárate para esos días"}.` : null,
+          extraNote: differs ? `La lista de colonias del SIAPA la pone en ${M.theZones(ls)}. El mapa y la lista no siempre coinciden: ${z.all.length ? "prepárate para los días de las dos" : "prepárate para esos días"}.` : null,
           color: drawn.color }));
         drawn.clearHighlights();
         const g = drawn.highlight(f);
@@ -614,7 +617,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
           const z = M.zones(f.properties);
           const where = `${f.properties.n} (${municipio(f.properties.m)})`;
           answer.replaceChildren(z.all.length
-            ? el("span", {}, where, " está en la ", el("strong", {}, M.zoneWord(z.main)), z.border.length ? `, ${M.borderWord(z.border)}` : "", ".")
+            ? el("span", {}, where, " está en ", el("strong", {}, M.theZones(z.main)), z.border.length ? `, ${M.borderWord(z.border)}` : "", ".")
             : `${where} queda fuera de las zonas del mapa del SIAPA: ahí no toca racionamiento.`);
           tapped.replaceChildren();
         },
@@ -636,25 +639,38 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       }
       if (card) {
         // The searched colonia's card: the list's zones first; the map's view when it differs.
+        // A name can have several outlines (OBRERA in Guadalajara: C.P. 44150 in zone 5, 44400
+        // in zone 2): the ones in the list's zones stand for it, and only when none is does the
+        // card warn.
         const fs = M.find(data.colonias, card.name, card.municipio);
-        const p = fs.length ? fs[0].properties : null;
-        const mz = p ? M.zones(p) : null;
+        const same = (zs) => [...zs].sort().join() === [...card.zones].sort().join();
+        const match = fs.filter((f) => same(M.zones(f.properties).all));
+        const cps = [...new Set((match.length ? match : fs).map((f) => f.properties.cp).filter(Boolean))].sort();
         let sentence = null, side = [], extra = [], extraNote = null;
         if (card.zones.length > 1) sentence = `La lista del SIAPA pone esta colonia en las ${M.zoneWord(card.zones)}: recibe agua de varios acueductos. Mira en el mapa de qué lado queda tu casa, o usa tu ubicación.`;
         else if (card.multi) sentence = "El SIAPA marca esta colonia como abastecida por varios acueductos, así que una parte podría tener otro calendario. Para confirmarlo, usa tu ubicación.";
-        if (!mz) {
+        const views = fs.map((f) => M.zones(f.properties));
+        const main = [...new Set(views.flatMap((z) => z.main))];
+        const border = [...new Set(views.flatMap((z) => z.border))].filter((z) => !main.includes(z));
+        if (!fs.length) {
           extraNote = `El mapa del SIAPA no dibuja una colonia llamada ${card.name} en ${municipio(card.municipio)}; estos son los días de su lista.`;
-        } else if (!mz.all.length) {
-          extraNote = "En el mapa del SIAPA el contorno de esta colonia queda fuera de todas las zonas; la lista la pone aquí.";
-        } else if ([...mz.all].sort().join() !== card.zones.slice().sort().join()) {
-          extra = mz.main.filter((z) => !card.zones.includes(z));
-          side = mz.border.filter((z) => !card.zones.includes(z));
-          extraNote = `En el mapa del SIAPA queda en la ${M.label(p).toLowerCase()}. El mapa y la lista no siempre coinciden: prepárate para los días de las dos.`;
-        } else if (mz.border.length && !sentence) {
-          sentence = M.describe(p);
-          side = mz.border;
+        } else if (match.length) {
+          const mz = M.zones(match[0].properties);
+          if (mz.border.length && !sentence) {
+            sentence = M.describe(match[0].properties);
+            side = mz.border;
+          }
+        } else if (!main.length) {
+          extraNote = fs.length > 1 ? "En el mapa del SIAPA los contornos con este nombre quedan fuera de todas las zonas; la lista pone la colonia aquí."
+            : "En el mapa del SIAPA el contorno de esta colonia queda fuera de todas las zonas; la lista la pone aquí.";
+        } else {
+          extra = main.filter((z) => !card.zones.includes(z));
+          side = border.filter((z) => !card.zones.includes(z));
+          const shown = new Set([...card.zones, ...extra, ...side]).size;
+          extraNote = `En el mapa del SIAPA ${fs.length > 1 ? "las colonias con este nombre quedan" : "queda"} en ${M.theZones(main)}${border.length ? `, ${M.borderWord(border)}` : ""}. El mapa y la lista no siempre coinciden`
+            + (extra.length || side.length ? `: prepárate para los días de ${shown > 2 ? "todas" : "las dos"}.` : ".");
         }
-        place(M.card({ ...cardOpts, title: card.name, subtitle: municipio(card.municipio) + (p && p.cp ? ` · C.P. ${p.cp}` : ""), sentence, main: card.zones, side, extra, extraNote, color: drawn.color }));
+        place(M.card({ ...cardOpts, title: card.name, subtitle: municipio(card.municipio) + (cps.length ? ` · C.P. ${joinES(cps)}` : ""), sentence, main: card.zones, side, extra, extraNote, color: drawn.color }));
       }
       const listed = [...new Set(list.flatMap((c) => c.zones))];
       const zoneBounds = drawn.zoneLayer.getLayers().filter((l) => listed.includes(l.feature.properties.z)).reduce((b, l) => (b ? b.extend(l.getBounds()) : L.latLngBounds(l.getBounds())), null);
@@ -754,7 +770,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       ? result("droplet", `${o.name} (${municipio(o.municipio)}): colonia no afectada`,
         el("p", {}, "No está en la lista de colonias de la rotación del SIAPA y queda fuera de las zonas de su mapa, así que no le toca racionamiento."))
       : result("info", `${o.name} (${municipio(o.municipio)}) no está en la lista del SIAPA`,
-        el("p", {}, `Pero queda dentro del mapa de la ${o.zones.length > 1 ? "zonas" : "zona"} ${joinES(o.zones)}. El mapa y la lista no siempre coinciden: `, locateLink("usa tu ubicación"), " para confirmarlo.")));
+        el("p", {}, `Pero queda dentro del mapa de ${o.zones.length > 1 ? "las zonas" : "la zona"} ${joinES(o.zones)}. El mapa y la lista no siempre coinciden: `, locateLink("usa tu ubicación"), " para confirmarlo.")));
     if (similar.length) nodes.push(el("p", {}, "¿O es alguna de estas?"), mapBlock(similar, zones, true), choiceList(similar, zones));
     show(...nodes);
   }

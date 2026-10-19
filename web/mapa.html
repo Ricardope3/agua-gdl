@@ -171,8 +171,8 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#info"/></svg></span>Ten en cuenta</h2>
       <ul class="plain">
         <li><strong>El mapa da la zona por el contorno de la colonia</strong>, igual que el mapa del SIAPA. Su <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/pdf/colonias_siapa.pdf" rel="noopener">lista de 621 colonias</a> a veces dice otra zona: cuando pasa, aquí te mostramos las dos. En <a href="/mizona">Mi zona</a> puedes buscar por el nombre de la lista.</li>
-        <li><strong>Las colonias con borde punteado</strong> quedan repartidas entre dos zonas. Mira de qué lado de la línea está tu casa o usa tu ubicación. Si una colonia solo toca el límite de otra zona, te lo decimos así: su zona es una, y solo quienes viven junto a ese límite deben estar al pendiente de la otra.</li>
-        <li>Según el SIAPA, cada racionamiento dura máximo un día y no es un corte total: baja la presión del agua. Vecinos nos cuentan que en sus colonias el agua se va desde antes y tarda más en volver.</li>
+        <li><strong>Las colonias con borde punteado</strong> quedan repartidas entre dos o más zonas. Mira de qué lado del límite entre zonas queda tu casa o usa tu ubicación. Si una colonia solo toca el límite de otra zona, te lo decimos así: su zona es una, y solo quienes viven junto a ese límite deben estar al pendiente de la otra.</li>
+        <li>Según el SIAPA, cada zona tiene de 2 a 3 racionamientos por semana «por máximo un día» y «no serán cortes totales». Vecinos nos cuentan que en sus colonias el agua se va desde antes y tarda más en volver.</li>
         <li>Agua GDL es una iniciativa ciudadana: no es del SIAPA ni del gobierno y no tiene partido. Tu ubicación solo se usa en tu navegador para encontrar tu colonia: no nos llega ni la guardamos. Las calles del mapa vienen de OpenStreetMap, que ve qué parte del mapa se carga.</li>
       </ul>
     </section>
@@ -246,7 +246,9 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     return res.json();
   }
 
-  const map = L.map("mapa", { preferCanvas: true, zoomSnap: 0.25 });
+  // The zoom buttons go top right: the colonia card opens top left.
+  const map = L.map("mapa", { preferCanvas: true, zoomSnap: 0.25, zoomControl: false });
+  L.control.zoom({ position: "topright" }).addTo(map);
   M.tiles(L, map);
   map.setView([20.66, -103.37], 11);
 
@@ -261,7 +263,8 @@ footer p { margin: 0 0 8px; max-width: 70ch }
 
   function build({ colonias, zonas, meta }, zones) {
     if (zones) zoneInfo = new Map(zones.map((z) => [z.zone, z]));
-    else say("No pudimos cargar los días de cada zona. El mapa funciona, pero revisa los días en el ", SIAPALink(), ".");
+    // idle is the status with nothing else to say: empty, or that the days didn't load.
+    const idle = () => zones ? say("") : say("No pudimos cargar los días de cada zona. El mapa funciona, pero revisa los días en el ", SIAPALink(), ".");
     if (meta && meta.fetched) {
       const [y, m, d] = meta.fetched.split("-").map(Number);
       $("consultado").textContent = `, consultados el ${d} de ${MONTHS[m - 1]} de ${y}`;
@@ -291,7 +294,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         return bar;
       },
     });
-    new Reset({ position: "topleft" }).addTo(map);
+    new Reset({ position: "topright" }).addTo(map);
 
     // Selection: a halo and a dark outline over the colonia, and the card.
     function clearSelection() {
@@ -333,13 +336,13 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         main: z.main,
         side: z.border,
         extra: differs ? ls.filter((zone) => !z.all.includes(zone)) : [],
-        extraNote: differs ? `La lista de colonias del SIAPA la pone en ${M.zoneWord(ls)}. El mapa y la lista no siempre coinciden: ${z.all.length ? "prepárate para los días de las dos" : "prepárate para esos días"}.` : null,
+        extraNote: differs ? `La lista de colonias del SIAPA la pone en ${M.theZones(ls)}. El mapa y la lista no siempre coinciden: ${z.all.length ? "prepárate para los días de las dos" : "prepárate para esos días"}.` : null,
         days: daysText,
         next: nextCut,
         dateES,
         color,
         links: (zone) => [telegramLink(zone), calendarLink(zone)],
-        note: el("p", { class: "note" }, "Gratis: un mensaje a las 8 p. m. dos días antes de cada racionamiento y otro la noche antes, o alertas en tu calendario. Más opciones en ", el("a", { href: "/mizona" }, "Mi zona"), "."),
+        note: el("p", { class: "note" }, "Gratis: un mensaje a las 8 p. m. dos días antes de los cortes de tu zona y la noche antes (una vez por tanda cuando los cortes van seguidos), o alertas en tu calendario. Más opciones en ", el("a", { href: "/mizona" }, "Mi zona"), "."),
         onClose: clearSelection,
       });
       card.replaceChildren(...built.children);
@@ -364,13 +367,13 @@ footer p { margin: 0 0 8px; max-width: 70ch }
           say(el("strong", {}, `Zona ${z}`), days ? `: ${days}.` : ".", next ? ` Próximo racionamiento: ${dateES(next)}.` : "");
         } else {
           map.fitBounds(home);
-          say("");
+          idle();
         }
       });
       chips.set(z, b);
       legend.append(el("li", {}, b));
     }
-    say("");
+    idle();
 
     // Search over name, municipio and postal code, in the browser.
     const input = $("q");
@@ -480,15 +483,21 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         if (pin) pin.setLatLng(here); else pin = L.marker(here, { icon: L.divIcon({ className: "pin", iconSize: [16, 16] }), keyboard: false, interactive: false }).addTo(map);
         const inside = colonias.filter((f) => M.contains(f, [lon, lat]));
         const f = inside.find((c) => c.properties.z) || inside[0];
+        const zs = zonas.filter((zf) => M.contains(zf, [lon, lat])).map((zf) => zf.properties.z);
         if (f) {
           select(f);
-          say("Tu ubicación está en ", el("strong", {}, f.properties.n), `, ${f.properties.m}.`);
+          // In a colonia with several zones, the zone under the visitor tells which part is theirs.
+          const part = M.zones(f.properties).all.length > 1 && zs.length ? [", en la parte de ", el("strong", {}, M.theZones(zs))] : [];
+          say("Tu ubicación está en ", el("strong", {}, f.properties.n), `, ${f.properties.m}`, ...part, ".");
           return;
         }
-        const zs = zonas.filter((zf) => M.contains(zf, [lon, lat])).map((zf) => zf.properties.z);
         clearSelection();
         map.flyTo(here, 15, { animate: !reduced });
-        say(zs.length ? el("span", {}, "Tu ubicación está en la ", el("strong", {}, M.zoneWord(zs)), ", pero no en ninguna colonia dibujada por el SIAPA. Abajo están los días de esa zona en ", el("a", { href: "/mizona" }, "Mi zona"), ".")
+        const days = zs.filter((z) => zoneInfo.has(z)).map((z) => {
+          const next = nextCut(z);
+          return ` Zona ${z}: ${joinES(zoneInfo.get(z).days)}${next ? `; próximo racionamiento: ${dateES(next)}` : ""}.`;
+        });
+        say(zs.length ? el("span", {}, "Tu ubicación está en ", el("strong", {}, M.theZones(zs)), ", pero no en ninguna colonia dibujada por el SIAPA.", ...(days.length ? days : [" Revisa sus días en el ", SIAPALink(), "."]))
           : "Tu ubicación no está en ninguna zona del mapa del SIAPA: puede que no te toque la rotación.");
       }, (err) => {
         if (settled) return;

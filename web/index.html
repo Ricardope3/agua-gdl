@@ -186,6 +186,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .pill.hot { background: #fee2e2; color: #991b1b } .pill.warm { background: #fef3c7; color: #92400e }
 .ztiles { list-style: none; margin: 0 0 18px; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr)); gap: 10px }
 .ztile { display: block; height: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; color: var(--fg); text-decoration: none; box-shadow: var(--shadow); border-left: 5px solid var(--zc, var(--brand)) }
+.ztile { --zc: var(--zl) }
 .ztile:hover { border-color: var(--zc, var(--brand)) }
 .ztile b { display: block; font-size: 1.05rem }
 .ztile .when { display: block; font-size: 1.35rem; font-weight: 700; letter-spacing: -.02em; line-height: 1.2; margin: 4px 0 2px }
@@ -196,7 +197,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .hero2 .buttons { margin: 0 0 32px }
 .split { display: grid; gap: 14px; margin: 0 0 40px }
 @media (min-width: 720px) { .split { grid-template-columns: 1.2fr 1fr; align-items: start } }
-@media (prefers-color-scheme: dark) { .pill.hot { background: #450a0a; color: #fecaca } .pill.warm { background: #422006; color: #fde68a } }
+@media (prefers-color-scheme: dark) { .pill.hot { background: #450a0a; color: #fecaca } .pill.warm { background: #422006; color: #fde68a } .ztile { --zc: var(--zd) } }
 
 .hero5 { display: grid; gap: 24px; padding: 20px 0 32px }
 .hero5 .side h2 { font-size: 1.1rem; margin: 0 0 8px }
@@ -261,7 +262,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         <a class="aviso" href="/avisos">
           <span class="aviso-head"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#bell"/></svg></span>Te mandamos un mensaje antes de que te corten el agua</span>
           <span class="aviso-time">8 p.&nbsp;m.</span>
-          <span class="aviso-text">Un mensaje por <span class="nw"><svg class="tg" aria-hidden="true"><use href="/icons.svg?v=4#telegram"/></svg> Telegram</span> o una alerta en tu calendario dos días antes de cada corte en tu zona y otra la noche antes.</span>
+          <span class="aviso-text">Un mensaje por <span class="nw"><svg class="tg" aria-hidden="true"><use href="/icons.svg?v=4#telegram"/></svg> Telegram</span> o una alerta en tu calendario dos días antes de los cortes de tu zona y la noche antes (una vez por tanda cuando los cortes van seguidos).</span>
           <span class="button">Recibir avisos</span>
         </a>
         <a class="aviso" href="/escribe">
@@ -274,7 +275,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     </div>
     <section class="congreso" aria-labelledby="congreso">
       <h2 id="congreso" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#landmark"/></svg></span>Que el Congreso vote no a privatizar el agua</h2>
-      <p>El Gobierno de Jalisco quiere que una empresa privada construya y opere el nuevo acueducto de Chapala a Guadalajara, y pagarle durante 25 años. El Congreso decide. Pídele a tu diputación que no lo apruebe sin estudios actualizados, sin saber cuánto se pagará cada año ni quién carga con los riesgos.</p>
+      <p>El Gobierno de Jalisco quiere que una empresa privada construya y opere el nuevo acueducto de Chapala a Guadalajara, y pagarle durante 20 o 25 años. El Congreso decide. Pídele a tu diputación que no lo apruebe sin estudios actualizados, sin saber cuánto se pagará cada año ni quién carga con los riesgos.</p>
       <ul class="facts">
         <li><strong>$11,922 millones</strong><span>cuesta la obra</span></li>
         <li><strong>hasta $48,296 millones</strong><span>pagaría el Estado en 25 años, según <a href="https://concienciapublica.com.mx/2026/10/13/oposicion-rechaza-privatizar-acueducto-chapala-guadalajara-costaria-hasta-48-mil-millones-de-pesos/" rel="noopener">la oposición en el Congreso</a></span></li>
@@ -309,7 +310,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     <section class="why" aria-labelledby="por-que">
       <h2 id="por-que" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#heart"/></svg></span>Por qué</h2>
       <p>Queremos que la información sobre el agua en Guadalajara sea fácil de consultar y de comprobar: cuándo hay corte, si el calendario se cumple y qué datos públicos existen.</p>
-      <p>Empezamos con los avisos de la rotación. Después vendrán más herramientas hechas con datos abiertos.</p>
+      <p>Empezamos con los avisos de la rotación; ahora también hay un <a href="/mapa">mapa de la rotación</a> colonia por colonia, un <a href="/reportes">mapa de reportes de vecinos</a> y <a href="/promesas">las promesas del acueducto frente a los documentos</a>. Vendrán más herramientas hechas con datos abiertos.</p>
       <ul class="values">
         <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#check"/></svg>Gratuito</li>
         <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#check"/></svg>Sin anuncios</li>
@@ -332,6 +333,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     <p><a href="/mizona">¿Qué zona me toca?</a> · <a href="/escribe">Escribe al Congreso</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a></p>
   </footer>
 </div>
+<script src="/mapa.js"></script>
 <script>
 (() => {
   const API = (() => {
@@ -347,11 +349,12 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     if (!s || !s.total) return;
     const pct = (n, t) => Math.round(100 * n / t);
     const pulse = document.getElementById("pulse");
-    const kids = [`En las últimas 24 horas llegaron `, Object.assign(document.createElement("b"), { textContent: s.total.toLocaleString("es-MX") }),
+    const kids = [`En las últimas 24 horas ${s.total === 1 ? "llegó" : "llegaron"} `, Object.assign(document.createElement("b"), { textContent: s.total.toLocaleString("es-MX") }),
       ` ${s.total === 1 ? "reporte" : "reportes"} de ${s.colonias_con_reportes.toLocaleString("es-MX")} ${s.colonias_con_reportes === 1 ? "colonia" : "colonias"}: `,
       Object.assign(document.createElement("b"), { textContent: `${pct(s.sin_agua, s.total)} %` }), " sin agua."];
+    // The week's split counts only the map's reports: the bot asks on evenings without a cut.
     const w = s.semana, dry = w ? w.sin_agua.en_corte + w.sin_agua.fuera_de_corte : 0;
-    if (dry >= 20) kids.push(` En la última semana, ${pct(w.sin_agua.fuera_de_corte, dry)} % de los «sin agua» llegaron en días sin corte en su zona.`);
+    if (dry >= 20) kids.push(` En la última semana, ${pct(w.sin_agua.fuera_de_corte, dry)} % de los reportes «sin agua» del mapa llegaron en días sin corte en su zona.`);
     pulse.replaceChildren(...kids);
     pulse.hidden = false;
   }).catch(() => {});
@@ -364,7 +367,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   const joinES = (a) => a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + " y " + a[a.length - 1];
   const zonesP = fetch(API + "/v1/zones").then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); });
 
-  const COLORS = ["", "#e11d48", "#f59e0b", "#10b981", "#0ea5e9", "#8b5cf6", "#ec4899", "#14b8a6"];
+  // The tiles take each zone's colour from the map (mapa.js), light and dark; CSS picks one.
+  const COLORS = window.aguaMapa ? window.aguaMapa.COLORS : { light: {}, dark: {} };
   const list = document.getElementById("ztiles");
   const head = document.getElementById("today");
   zonesP.then((zones) => {
@@ -374,7 +378,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       const a = document.createElement("a");
       a.href = "/mizona";
       a.className = "ztile" + (d === today ? " hot" : d === tomorrow ? " warm" : "");
-      a.style.setProperty("--zc", COLORS[z.zone] || "");
+      if (COLORS.light[z.zone]) a.style.setProperty("--zl", COLORS.light[z.zone]);
+      if (COLORS.dark[z.zone]) a.style.setProperty("--zd", COLORS.dark[z.zone]);
       const b = document.createElement("b"); b.textContent = `Zona ${z.zone}`;
       const w = document.createElement("span"); w.className = "when"; w.textContent = !d ? "sin fecha" : d === today && z.next.includes(tomorrow) ? "hoy y mañana" : whenES(d);
       const s = document.createElement("small"); s.textContent = joinES(z.days);
