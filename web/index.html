@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="facebook-domain-verification" content="li0vsm7edv0afccxodm5t0jvyiw0za">
 <title>Agua GDL · La crisis del agua en Guadalajara</title>
-<meta name="description" content="El agua de Guadalajara llega sucia y racionada; no lo arregla un acueducto privado, lo arregla sanear los ríos. Tu zona de la rotación del SIAPA y sus días, avisos gratis antes de cada corte y cómo exigir al Congreso.">
+<meta name="description" content="El agua de Guadalajara llega sucia y racionada; no lo arregla un acueducto privado, lo arregla sanear los ríos. Reporta si hay agua en tu colonia y mira lo que reportan tus vecinos; tu zona de la rotación del SIAPA y sus días, avisos gratis y cómo exigir al Congreso.">
 <link rel="canonical" href="https://aguagdl.com/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aguagdl.com/">
 <meta property="og:title" content="Agua GDL · La crisis del agua en Guadalajara">
-<meta property="og:description" content="El agua de Guadalajara llega sucia y racionada; no lo arregla un acueducto privado, lo arregla sanear los ríos. Tu zona y sus días, avisos gratis antes de cada corte y cómo exigir al Congreso.">
+<meta property="og:description" content="El agua de Guadalajara llega sucia y racionada; no lo arregla un acueducto privado, lo arregla sanear los ríos. ¿Tienes agua hoy? Repórtalo y mira lo que reportan tus vecinos, colonia por colonia.">
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary">
@@ -180,6 +180,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .hero2 { padding: 20px 0 8px }
 .hero2 .lede { margin: 0 0 18px }
 .today { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 14px; font-weight: 600 }
+.pulse { margin: 16px 0 0; font-weight: 600; max-width: 60ch }
+.pulse b { font-variant-numeric: tabular-nums }
 .pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: .85rem }
 .pill.hot { background: #fee2e2; color: #991b1b } .pill.warm { background: #fef3c7; color: #92400e }
 .ztiles { list-style: none; margin: 0 0 18px; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr)); gap: 10px }
@@ -226,19 +228,21 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   <main>
     <div class="hero5">
       <div>
-        <h1>¿Te toca corte mañana?</h1>
-        <p class="lede">El agua de Guadalajara <mark>llega sucia y racionada</mark>; no lo arregla un acueducto privado, lo arregla sanear los ríos. Escribe tu colonia y te decimos tu zona y tus días.</p>
-        <form class="quick" action="/mizona" method="get" role="search">
+        <h1>¿Tienes agua hoy?</h1>
+        <p class="lede">El agua de Guadalajara <mark>llega sucia y racionada</mark>; no lo arregla un acueducto privado, lo arregla sanear los ríos. Reporta cómo está el agua en tu colonia y mira lo que reportan tus vecinos: sin cuenta y anónimo.</p>
+        <p class="pulse" id="pulse" aria-live="polite" hidden></p>
+        <form class="quick" action="/reportes" method="get" role="search">
           <label for="q">Tu colonia</label>
+          <input type="hidden" name="reportar" value="1">
           <div class="row">
             <input id="q" name="q" type="search" autocomplete="off" placeholder="Por ejemplo: Las Juntas" required maxlength="80">
-            <button class="button glow" type="submit"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#search"/></svg>Ver mi zona</button>
+            <button class="button glow" type="submit"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg>Reportar mi colonia</button>
           </div>
-          <p class="or">o <a href="/mizona">usa tu ubicación</a>: es lo más exacto.</p>
+          <p class="or">o <a href="/reportes">mira el mapa de reportes</a>. ¿Tus días de corte? <a href="/mizona">Busca tu zona</a>.</p>
         </form>
       </div>
       <div class="side">
-        <h2>Así va la semana</h2>
+        <h2>Así va la semana, según el SIAPA</h2>
         <p class="today" id="today" aria-live="polite"></p>
       <ul class="ztiles" id="ztiles"><li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li></ul>
       </div>
@@ -296,9 +300,9 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
           <a href="/contamina">¿Quién contamina?</a>
         </li>
         <li class="card">
-          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg></span>Ver si hay agua en tu colonia</h3>
-          <p>Lo que reportan los vecinos en las últimas 24 horas, colonia por colonia. Reporta la tuya: sin cuenta y anónimo.</p>
-          <a href="/reportes">Mapa de reportes</a>
+          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#calendar"/></svg></span>Saber tu zona y tus días de corte</h3>
+          <p>Escribe tu colonia o usa tu ubicación y te decimos tu zona de la rotación y tus próximos cortes, según el calendario del SIAPA.</p>
+          <a href="/mizona">¿Qué zona me toca?</a>
         </li>
       </ul>
     </section>
@@ -330,7 +334,27 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 </div>
 <script>
 (() => {
-  const API = "https://api.aguagdl.com";
+  const API = (() => {
+    const o = new URLSearchParams(location.search).get("api");
+    try {
+      const u = new URL(o);
+      if (u.hostname === "localhost" || u.hostname === "127.0.0.1") return u.origin;
+    } catch {}
+    return "https://api.aguagdl.com";
+  })();
+  // What neighbours reported in the last day, under the question.
+  fetch(API + "/v1/reportes").then((r) => (r.ok ? r.json() : null)).then((s) => {
+    if (!s || !s.total) return;
+    const pct = (n, t) => Math.round(100 * n / t);
+    const pulse = document.getElementById("pulse");
+    const kids = [`En las últimas 24 horas llegaron `, Object.assign(document.createElement("b"), { textContent: s.total.toLocaleString("es-MX") }),
+      ` ${s.total === 1 ? "reporte" : "reportes"} de ${s.colonias_con_reportes.toLocaleString("es-MX")} ${s.colonias_con_reportes === 1 ? "colonia" : "colonias"}: `,
+      Object.assign(document.createElement("b"), { textContent: `${pct(s.sin_agua, s.total)} %` }), " sin agua."];
+    const w = s.semana, dry = w ? w.sin_agua.en_corte + w.sin_agua.fuera_de_corte : 0;
+    if (dry >= 20) kids.push(` En la última semana, ${pct(w.sin_agua.fuera_de_corte, dry)} % de los «sin agua» llegaron en días sin corte en su zona.`);
+    pulse.replaceChildren(...kids);
+    pulse.hidden = false;
+  }).catch(() => {});
   const today = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Mexico_City" }).format(new Date());
   const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00Z"); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
   const tomorrow = addDays(today, 1);

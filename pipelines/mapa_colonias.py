@@ -6,7 +6,8 @@ Usage: python3 pipelines/mapa_colonias.py [--check]
 Reads web/colonias_siapa.topo.json (built by pipelines/siapa_mapa.py) and lists each colonia
 once as [name, municipio, postal code, zones]: the key the page sends and the API checks.
 Name, municipio and postal code repeat on 56 outlines that are pieces of one colonia, so
-their reports count together, and their zones are joined. Run it after siapa_mapa.py;
+their reports count together, and their zones are joined, the one with most of the colonia's
+area first (the count on /reportes puts a report in that zone). Run it after siapa_mapa.py;
 --check fails when the file is stale (internal/webreports's test checks it too).
 """
 import argparse
@@ -21,12 +22,16 @@ OUT = ROOT / "api" / "data" / "colonias_mapa.json"
 
 def build():
     topo = json.loads(SRC.read_bytes())
-    zones = {}
+    shares = {}
     for g in topo["objects"]["colonias"]["geometries"]:
         p = g["properties"]
-        key = (p["n"], p["m"], p.get("cp", ""))
-        zones.setdefault(key, set()).update(int(z) for z in p.get("z", "").split(",") if z)
-    rows = [[n, m, cp, ",".join(map(str, sorted(zs)))] for (n, m, cp), zs in sorted(zones.items())]
+        share = shares.setdefault((p["n"], p["m"], p.get("cp", "")), {})
+        zs = [int(z) for z in p.get("z", "").split(",") if z]
+        parts = dict(x.split(":") for x in p["p"].split(",")) if p.get("p") else {}
+        for z in zs:
+            share[z] = share.get(z, 0) + int(parts.get(str(z), 100 if len(zs) == 1 else 0))
+    order = lambda s: ",".join(str(z) for z in sorted(s, key=lambda z: (-s[z], z)))  # noqa: E731
+    rows = [[n, m, cp, order(s)] for (n, m, cp), s in sorted(shares.items())]
     return "[\n" + ",\n".join(json.dumps(r, ensure_ascii=False) for r in rows) + "\n]\n", len(rows)
 
 

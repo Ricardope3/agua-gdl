@@ -16,6 +16,8 @@ import (
 	"net/netip"
 	"slices"
 	"sort"
+	"strconv"
+	"strings"
 	"sync"
 	"time"
 
@@ -27,6 +29,8 @@ type Store interface {
 	WebReportsSince(ctx context.Context, since time.Time) ([]store.WebReport, error)
 	CountWebReports(ctx context.Context) (int, error)
 	BotAnswersSince(ctx context.Context, since time.Time) ([]store.BotAnswer, error)
+	WebReportsByDay(ctx context.Context, since time.Time) ([]store.DayCount, error)
+	BotAnswersByDay(ctx context.Context, since time.Time) ([]store.DayCount, error)
 }
 
 const (
@@ -53,9 +57,14 @@ const (
 	// maxPending bounds the reports held while the database is unreachable.
 	maxPending = 20_000
 	summaryTTL = 30 * time.Second
-	// botTTL is how long the bot's answers are reused: they change slowly and live in Postgres.
+	// botTTL is how long the bot's answers and the week are reused: they change slowly and
+	// come from Postgres.
 	botTTL = 30 * time.Minute
+	// weekDays is how far back the week compares the reports with SIAPA's calendar.
+	weekDays = 7
 )
+
+const dateLayout = "2006-01-02"
 
 var (
 	ErrUnknownColonia = errors.New("unknown colonia")
@@ -130,10 +139,36 @@ type Summary struct {
 		Min   int           `json:"min"`
 		Zones []ZoneAnswers `json:"zonas"`
 	} `json:"bot"`
+	Week *Week `json:"semana,omitempty"`
+}
+
+// Week is the last seven days by zone: SIAPA's cut days beside what people reported on the map
+// and answered in the bot, to see whether the water goes only on the days the calendar says.
+// A map report counts for its colonia's main zone; zone 0 is colonias outside the rotation.
+type Week struct {
+	Days  []string   `json:"dias"` // oldest first
+	Min   int        `json:"min"`  // reports a day needs before its split shows
+	Zones []WeekZone `json:"zonas"`
+	Dry   struct {
+		OnCut  int `json:"en_corte"`
+		OffCut int `json:"fuera_de_corte"`
+	} `json:"sin_agua"` // «sin agua» in zones 1 to 7, on their cut days and on other days
+}
+
+type WeekZone struct {
+	Zone int       `json:"zone"`
+	Cuts []bool    `json:"cortes"`
+	Days []DayCell `json:"dias"`
+}
+
+type DayCell struct {
+	Total  int     `json:"total"`
+	Detail *Counts `json:"detalle,omitempty"`
 }
 
 type colonia struct {
 	name, municipio, cp string
+	zone                int // the one with most of its area; 0 = outside the rotation
 }
 
 // Board holds the recent reports and the limits. Its methods are safe for concurrent use.
@@ -154,8 +189,12 @@ type Board struct {
 	cachedAt  time.Time
 	raw, gz   []byte // cached encoded, plain and gzipped
 	bot       []store.BotAnswer
+	week      *Week
 	botAt     time.Time
 	botWanted bool
+
+	// Cuts reports SIAPA's cut days, which the week marks; nil leaves them unmarked.
+	Cuts func(zone int, day time.Time) bool
 }
 
 // New reads the colonias people may report on (api/data/colonias_mapa.json).
@@ -166,7 +205,8 @@ func New(st Store, coloniasJSON []byte, minShown int, loc *time.Location, now fu
 	}
 	b := &Board{store: st, minShown: minShown, loc: loc, now: now, log: log, colonias: map[string]colonia{}, hits: map[string][]time.Time{}}
 	for _, r := range rows {
-		b.colonias[Key(r[0], r[1], r[2])] = colonia{r[0], r[1], r[2]}
+		zone, _ := strconv.Atoi(strings.Split(r[3], ",")[0])
+		b.colonias[Key(r[0], r[1], r[2])] = colonia{r[0], r[1], r[2], zone}
 	}
 	return b, nil
 }
@@ -186,9 +226,13 @@ func (b *Board) Load(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
+	week, err := b.loadWeek(ctx, now)
+	if err != nil {
+		return err
+	}
 	b.mu.Lock()
 	defer b.mu.Unlock()
-	b.recent, b.allTime, b.bot, b.botAt, b.cached = recent, all+len(b.pending), bot, now, nil
+	b.recent, b.allTime, b.bot, b.week, b.botAt, b.cached = recent, all+len(b.pending), bot, week, now, nil
 	return nil
 }
 
@@ -406,6 +450,7 @@ func (b *Board) summary(now time.Time) *Summary {
 	})
 	s.Total, s.Colonias = s.Counts.total(), len(s.Reports)
 	s.Bot.Hours, s.Bot.Min, s.Bot.Zones = int(Window/time.Hour), b.minShown, b.botZones()
+	s.Week = b.week
 	b.cached, b.cachedAt, b.raw, b.gz = &s, now, nil, nil
 	return &s
 }
@@ -474,8 +519,8 @@ func (b *Board) Flush(ctx context.Context) error {
 	return nil
 }
 
-// refreshBot reloads the bot's answers when someone looked at the map since the last load
-// and botTTL has passed.
+// refreshBot reloads the bot's answers and the week when someone looked at the map since the
+// last load and botTTL has passed.
 func (b *Board) refreshBot(ctx context.Context) error {
 	now := b.now()
 	b.mu.Lock()
@@ -488,10 +533,85 @@ func (b *Board) refreshBot(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
+	week, err := b.loadWeek(ctx, now)
+	if err != nil {
+		return err
+	}
 	b.mu.Lock()
-	b.bot, b.botAt, b.botWanted, b.cached = rows, now, false, nil
+	b.bot, b.week, b.botAt, b.botWanted, b.cached = rows, week, now, false, nil
 	b.mu.Unlock()
 	return nil
+}
+
+// loadWeek counts the last weekDays days by zone and day.
+func (b *Board) loadWeek(ctx context.Context, now time.Time) (*Week, error) {
+	local := now.In(b.loc)
+	first := time.Date(local.Year(), local.Month(), local.Day()-(weekDays-1), 0, 0, 0, 0, b.loc)
+	web, err := b.store.WebReportsByDay(ctx, first)
+	if err != nil {
+		return nil, err
+	}
+	bot, err := b.store.BotAnswersByDay(ctx, first)
+	if err != nil {
+		return nil, err
+	}
+	w := &Week{Min: b.minShown}
+	days := map[string]int{}
+	for i := range weekDays {
+		d := first.AddDate(0, 0, i).Format(dateLayout)
+		days[d] = i
+		w.Days = append(w.Days, d)
+	}
+	counts := map[int]*[weekDays]Counts{}
+	add := func(zone int, day time.Time, answer string, n int) {
+		i, ok := days[day.Format(dateLayout)]
+		if !ok {
+			return
+		}
+		if counts[zone] == nil {
+			counts[zone] = &[weekDays]Counts{}
+		}
+		c := &counts[zone][i]
+		switch answer {
+		case "sin_agua", "no", "no_regreso":
+			c.SinAgua += n
+		case "baja", "poca":
+			c.Baja += n
+		case "con_agua", "si", "normal", "turbia":
+			c.ConAgua += n
+		}
+	}
+	for _, r := range web {
+		if col, ok := b.colonias[r.Colonia]; ok {
+			add(col.zone, r.Day, r.Answer, r.Count)
+		}
+	}
+	for _, r := range bot {
+		add(r.Zone, r.Day, r.Answer, r.Count)
+	}
+	for _, zone := range []int{1, 2, 3, 4, 5, 6, 7, 0} {
+		wz := WeekZone{Zone: zone, Cuts: make([]bool, weekDays), Days: make([]DayCell, weekDays)}
+		for i := range weekDays {
+			var c Counts
+			if counts[zone] != nil {
+				c = counts[zone][i]
+			}
+			wz.Cuts[i] = zone > 0 && b.Cuts != nil && b.Cuts(zone, first.AddDate(0, 0, i))
+			wz.Days[i].Total = c.total()
+			if c.total() > 0 && c.total() >= b.minShown {
+				wz.Days[i].Detail = &c
+			}
+			switch {
+			case zone == 0:
+			case wz.Cuts[i]:
+				w.Dry.OnCut += c.SinAgua
+			default:
+				w.Dry.OffCut += c.SinAgua
+			}
+		}
+		w.Zones = append(w.Zones, wz)
+	}
+	return w, nil
 }
 
 // Run writes the reports every interval until ctx ends. The server flushes once more after it

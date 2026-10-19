@@ -252,6 +252,12 @@ func (m *memReports) CountWebReports(context.Context) (int, error) { return 0, n
 func (m *memReports) BotAnswersSince(context.Context, time.Time) ([]store.BotAnswer, error) {
 	return nil, nil
 }
+func (m *memReports) WebReportsByDay(context.Context, time.Time) ([]store.DayCount, error) {
+	return nil, nil
+}
+func (m *memReports) BotAnswersByDay(context.Context, time.Time) ([]store.DayCount, error) {
+	return nil, nil
+}
 
 func TestReportsFromTheMap(t *testing.T) {
 	loc, _ := time.LoadLocation("America/Mexico_City")

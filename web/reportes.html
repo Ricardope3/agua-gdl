@@ -42,6 +42,7 @@
 * { box-sizing: border-box }
 html { -webkit-text-size-adjust: 100% }
 [hidden] { display: none !important }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased }
 a { color: var(--link); text-underline-offset: 3px }
 a:focus-visible, button:focus-visible, input:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); border-radius: 6px }
@@ -156,6 +157,21 @@ tr:last-child td { border-bottom: 0 }
 thead th { font-size: .8rem; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); background: var(--subtle) }
 td.n { font-variant-numeric: tabular-nums }
 td.few { color: var(--muted) }
+table.week { min-width: 560px; table-layout: fixed }
+table.week th, table.week td { padding: 8px 4px; text-align: center }
+table.week th[scope="row"] { text-align: left; padding-left: 12px; width: 7.5em; font-weight: 600 }
+table.week th.zn { white-space: nowrap }
+table.week thead th { text-transform: none; letter-spacing: 0; font-size: .82rem; line-height: 1.2 }
+table.week td { font-variant-numeric: tabular-nums; font-weight: 600; border-left: 1px solid var(--line) }
+table.week td.dry { background: color-mix(in srgb, var(--dry) 38%, var(--surface)) }
+table.week td.low { background: color-mix(in srgb, var(--low) 38%, var(--surface)) }
+table.week td.ok { background: color-mix(in srgb, var(--ok) 32%, var(--surface)) }
+table.week td.few { background: var(--subtle); font-weight: 500 }
+table.week td.none { color: var(--muted); font-weight: 400 }
+table.week td.cut { box-shadow: inset 0 0 0 2.5px var(--fg) }
+@media (max-width: 560px) { table.week { min-width: 0; font-size: .85rem } table.week th[scope="row"] { width: 5.2em; padding-left: 8px } table.week th, table.week td { padding: 7px 1px } }
+.legend .cutmark { width: 14px; height: 14px; border-radius: 3px; box-shadow: inset 0 0 0 2.5px var(--fg); display: inline-block }
+.legend .fewmark { width: 14px; height: 14px; border-radius: 3px; background: var(--subtle); border: 1px solid var(--line); display: inline-block }
 ul.plain { padding-left: 1.3em; margin: 0 0 14px }
 ul.plain li { margin: 0 0 8px; max-width: 70ch }
 footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .85rem }
@@ -221,6 +237,20 @@ footer p { margin: 0 0 8px; max-width: 70ch }
           <button class="button" type="button" id="reportar"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg>Reportar mi colonia</button>
         </div>
       </div>
+    </section>
+
+    <section aria-labelledby="semana">
+      <h2 class="sec" id="semana">El SIAPA dice un día. Esto reportan los vecinos</h2>
+      <p class="note" style="margin-top:0">Según el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">SIAPA</a>, cada corte dura «máximo un día» y «no serán cortes totales». Esta es la última semana por zona: el marco señala los días de corte de su calendario y el color, lo que dicen los reportes del mapa y las respuestas del bot de Telegram. Cada reporte del mapa cuenta para la zona donde está la mayor parte de su colonia.</p>
+      <p class="headline" id="fuera" style="font-size:1.1rem;margin:14px 0">Cargando…</p>
+      <div class="tablewrap"><table class="week" id="semana-tabla"><caption class="sr">Reportes por zona y día de la última semana</caption></table></div>
+      <ul class="legend" aria-label="Cómo leer la tabla">
+        <li><span class="dot dry"></span>Mayoría sin agua</li>
+        <li><span class="dot low"></span>Baja presión o mixto</li>
+        <li><span class="dot ok"></span>Mayoría con agua</li>
+        <li><span class="fewmark"></span><span id="semana-min">Pocos reportes: solo el número</span></li>
+        <li><span class="cutmark"></span>Día de corte según el SIAPA</li>
+      </ul>
     </section>
 
     <section aria-labelledby="bot">
@@ -588,6 +618,29 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         ? el("tr", {}, el("td", {}, `Zona ${z.zone}`), el("td", { class: "n" }, fmt(z.respuestas)), el("td", { class: "n" }, fmt(z.detalle.sin_agua)), el("td", { class: "n" }, fmt(z.detalle.baja)), el("td", { class: "n" }, fmt(z.detalle.con_agua)), el("td", { class: "n" }, fmt(z.detalle.turbia)))
         : el("tr", {}, el("td", {}, `Zona ${z.zone}`), el("td", { class: "n" }, fmt(z.respuestas)), el("td", { class: "few", colspan: "4" }, "Todavía pocas respuestas")));
       $("bot-filas").replaceChildren(...(rows.length ? rows : [el("tr", {}, el("td", { colspan: "6", class: "few" }, "Todavía no hay respuestas en las últimas 24 horas."))]));
+      if (s.semana) renderWeek(s.semana);
+    }
+
+    // The week: SIAPA's cut days (outlined) beside what the reports say, by zone and day.
+    const DOW = ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"];
+    const DOW_LONG = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+    function renderWeek(w) {
+      const dates = w.dias.map((d) => { const [y, m, day] = d.split("-").map(Number); return new Date(Date.UTC(y, m - 1, day)); });
+      const head = el("tr", {}, el("th", { scope: "col" }, "Zona"), ...dates.map((d) => el("th", { scope: "col" }, DOW[d.getUTCDay()], el("br"), String(d.getUTCDate()))));
+      const rows = w.zonas.map((z) => el("tr", {}, el("th", { scope: "row", class: z.zone ? "zn" : "" }, z.zone ? `Zona ${z.zone}` : "Fuera de la rotación"),
+        ...z.dias.map((c, i) => {
+          const d = dates[i], cut = z.cortes[i];
+          const t = Number(c.total) || 0, det = c.detalle;
+          const cls = !t ? "none" : !det ? "few" : 2 * det.sin_agua > t ? "dry" : 2 * det.con_agua > t ? "ok" : "low";
+          const said = !t ? "sin reportes" : det ? `${t} ${t === 1 ? "reporte" : "reportes"}: ${det.sin_agua} sin agua, ${det.baja} con baja presión, ${det.con_agua} con agua` : `${t} ${t === 1 ? "reporte" : "reportes"}`;
+          return el("td", { class: `${cls}${cut ? " cut" : ""}`, title: `${DOW_LONG[d.getUTCDay()]} ${d.getUTCDate()}: ${said}${cut ? "; día de corte" : ""}` }, t ? fmt(t) : "–");
+        })));
+      $("semana-tabla").replaceChildren($("semana-tabla").querySelector("caption"), el("thead", {}, head), el("tbody", {}, ...rows));
+      $("semana-min").textContent = `Menos de ${w.min} reportes: solo el número`;
+      const dry = w.sin_agua.en_corte + w.sin_agua.fuera_de_corte;
+      $("fuera").replaceChildren(...(dry >= 20
+        ? [el("b", {}, `${pct(w.sin_agua.fuera_de_corte, dry)} %`), ` de los reportes «sin agua» de la última semana (${fmt(w.sin_agua.fuera_de_corte)} de ${fmt(dry)}) llegaron en días sin corte en su zona.`]
+        : ["Todavía hay pocos reportes para compararlos con el calendario del SIAPA. Reporta tu colonia y pásalo a tus vecinos."]));
     }
 
     if (first) { apply(first); say(""); }
@@ -709,15 +762,33 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     });
 
     // ?q=colonia&m=municipio&cp=postal code opens on that colonia (the card sets it, so links can
-    // be shared); the postal code tells apart same-named colonias in one municipio.
+    // be shared); the postal code tells apart same-named colonias in one municipio. A bare ?q=
+    // (the landing's search) opens a colonia only when one matches; otherwise it lists them.
+    // &reportar=1 opens the report form.
     const params = new URLSearchParams(location.search);
     const preset = (params.get("q") || "").trim().slice(0, 80);
     if (preset) {
       const hits = matches(preset);
       const m = params.get("m"), cp = params.get("cp");
       const same = (f) => norm(f.properties.n) === norm(preset) && (!m || norm(f.properties.m) === norm(m));
-      const best = (cp && hits.find((f) => same(f) && f.properties.cp === cp)) || hits.find(same) || hits[0];
-      if (best) { input.value = best.properties.n; clear.hidden = false; select(best); }
+      const exact = hits.filter(same);
+      const best = (cp && exact.find((f) => f.properties.cp === cp)) || (exact.length === 1 || m ? exact[0] : null) || (hits.length === 1 ? hits[0] : null);
+      wantsForm = params.get("reportar") === "1";
+      if (best) {
+        input.value = best.properties.n;
+        clear.hidden = false;
+        select(best, { form: wantsForm });
+        wantsForm = false;
+      } else if (hits.length) {
+        input.value = preset;
+        input.focus();
+        suggest();
+        say(`Hay varias colonias con «${preset}»: elige la tuya en la lista.`);
+      } else {
+        input.value = preset;
+        clear.hidden = false;
+        say(`No encontramos «${preset}» en el mapa del SIAPA. Revisa cómo se escribe, prueba con tu código postal o toca tu colonia en el mapa.`);
+      }
     }
   }
 })();

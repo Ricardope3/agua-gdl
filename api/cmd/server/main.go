@@ -171,6 +171,7 @@ func run(log *slog.Logger) error {
 	if err != nil {
 		return err
 	}
+	reports.Cuts = sched.IsCut // the week marks SIAPA's cut days beside the reports
 	if err := reports.Load(ctx); err != nil {
 		return fmt.Errorf("web reports: %w", err)
 	}

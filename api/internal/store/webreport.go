@@ -73,3 +73,45 @@ func (db *DB) BotAnswersSince(ctx context.Context, since time.Time) ([]BotAnswer
 		return a, err
 	})
 }
+
+// DayCount is how many reports or answers with one answer a colonia (the map's) or a zone
+// (the bot's) got on one day in Guadalajara.
+type DayCount struct {
+	Colonia string
+	Zone    int
+	Day     time.Time // the date, at midnight UTC
+	Answer  string
+	Count   int
+}
+
+// WebReportsByDay counts the map's reports by colonia, local day and answer since a time.
+func (db *DB) WebReportsByDay(ctx context.Context, since time.Time) ([]DayCount, error) {
+	rows, err := db.q.Query(ctx, `select colonia, (created_at at time zone 'America/Mexico_City')::date, status, count(*)::int
+		from web_report where created_at >= $1 group by 1, 2, 3 order by 2, 1, 3`, since)
+	if err != nil {
+		return nil, err
+	}
+	return pgx.CollectRows(rows, func(r pgx.CollectableRow) (DayCount, error) {
+		var c DayCount
+		err := r.Scan(&c.Colonia, &c.Day, &c.Answer, &c.Count)
+		return c, err
+	})
+}
+
+// BotAnswersByDay counts the bot's answers by zone, local day and answer since a time.
+func (db *DB) BotAnswersByDay(ctx context.Context, since time.Time) ([]DayCount, error) {
+	rows, err := db.q.Query(ctx, `select zone, (created_at at time zone 'America/Mexico_City')::date as day, answer, count(*)::int
+		from water_report where created_at >= $1 group by 1, 2, 3
+		union all
+		select zone, (created_at at time zone 'America/Mexico_City')::date, answer, count(*)::int
+		from cut_report where created_at >= $1 group by 1, 2, 3
+		order by 2, 1, 3`, since)
+	if err != nil {
+		return nil, err
+	}
+	return pgx.CollectRows(rows, func(r pgx.CollectableRow) (DayCount, error) {
+		var c DayCount
+		err := r.Scan(&c.Zone, &c.Day, &c.Answer, &c.Count)
+		return c, err
+	})
+}

@@ -18,10 +18,19 @@ import (
 )
 
 type fakeStore struct {
-	saved    []store.WebReport
-	failSave int
-	bot      []store.BotAnswer
-	botCalls int
+	saved            []store.WebReport
+	failSave         int
+	bot              []store.BotAnswer
+	botCalls         int
+	webDays, botDays []store.DayCount
+}
+
+func (f *fakeStore) WebReportsByDay(context.Context, time.Time) ([]store.DayCount, error) {
+	return f.webDays, nil
+}
+
+func (f *fakeStore) BotAnswersByDay(context.Context, time.Time) ([]store.DayCount, error) {
+	return f.botDays, nil
 }
 
 func (f *fakeStore) SaveWebReports(_ context.Context, rs []store.WebReport) error {
@@ -287,6 +296,44 @@ func TestBotAnswersByZone(t *testing.T) {
 	b.refreshBot(context.Background())
 	if st.botCalls != calls+1 {
 		t.Fatal("nobody looked at the map since: no query")
+	}
+}
+
+func TestWeekComparesReportsWithTheCalendar(t *testing.T) {
+	clock := start(t) // Sunday 18 October
+	day := func(d int) time.Time { return time.Date(2026, 10, d, 0, 0, 0, 0, time.UTC) }
+	st := &fakeStore{
+		webDays: []store.DayCount{
+			{Colonia: "OBLATOS|Guadalajara|44360", Day: day(17), Answer: "sin_agua", Count: 8}, // 73 % zone 3, 27 % zone 2
+			{Colonia: "OBLATOS|Guadalajara|44360", Day: day(16), Answer: "sin_agua", Count: 6},
+			{Colonia: "20 DE NOVIEMBRE|Tonalá|45404", Day: day(18), Answer: "sin_agua", Count: 2}, // outside the rotation
+			{Colonia: "OBLATOS|Guadalajara|44360", Day: day(10), Answer: "sin_agua", Count: 50},   // before the week
+		},
+		botDays: []store.DayCount{{Zone: 3, Day: day(16), Answer: "no", Count: 3}, {Zone: 3, Day: day(16), Answer: "si", Count: 1}},
+	}
+	b := board(t, st, clock)
+	b.Cuts = func(zone int, d time.Time) bool { // zone 3 is cut on Wednesdays and Saturdays
+		return zone == 3 && (d.Weekday() == time.Wednesday || d.Weekday() == time.Saturday)
+	}
+	if err := b.Load(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	w := b.Summary().Week
+	if w == nil || len(w.Days) != 7 || w.Days[0] != "2026-10-12" || w.Days[6] != "2026-10-18" || len(w.Zones) != 8 {
+		t.Fatalf("seven days ending today, zones 1 to 7 and outside the rotation: %+v", w)
+	}
+	z3 := w.Zones[2]
+	if z3.Zone != 3 || !z3.Cuts[2] || !z3.Cuts[5] || z3.Cuts[4] {
+		t.Fatalf("zone 3's cut days: %+v", z3.Cuts)
+	}
+	if fri := z3.Days[4]; fri.Total != 10 || fri.Detail == nil || fri.Detail.SinAgua != 9 || fri.Detail.ConAgua != 1 {
+		t.Fatalf("Friday, no cut: the map's reports and the bot's answers together: %+v", fri)
+	}
+	if w.Dry.OnCut != 8 || w.Dry.OffCut != 9 {
+		t.Fatalf("«sin agua» on cut days and on other days: %+v", w.Dry)
+	}
+	if out := w.Zones[7]; out.Zone != 0 || out.Days[6].Total != 2 || out.Days[6].Detail != nil {
+		t.Fatalf("outside the rotation, below the minimum only the number shows: %+v", out)
 	}
 }
 

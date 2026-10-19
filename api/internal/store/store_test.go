@@ -1146,6 +1146,25 @@ func TestWebReportsAndBotAnswers(t *testing.T) {
 	if err := db.SaveReport(ctx, s.ID, s.Zone, cut.AddDate(0, 0, -3), "turbia"); err != nil {
 		t.Fatal(err)
 	}
+	loc, _ := time.LoadLocation("America/Mexico_City")
+	late := time.Date(2026, 10, 17, 23, 30, 0, 0, loc) // 05:30 UTC on the 18th: still the 17th in Guadalajara
+	if err := db.SaveWebReports(ctx, []WebReport{{Colonia: "1 DE MAYO|Guadalajara|44940", Status: "sin_agua", At: late}, {Colonia: "1 DE MAYO|Guadalajara|44940", Status: "sin_agua", At: late.Add(time.Minute)}}); err != nil {
+		t.Fatal(err)
+	}
+	days, err := db.WebReportsByDay(ctx, late.Add(-time.Hour))
+	var night *DayCount
+	for i, d := range days {
+		if d.Day.Format("2006-01-02") == "2026-10-17" {
+			night = &days[i]
+		}
+	}
+	if err != nil || night == nil || night.Colonia != "1 DE MAYO|Guadalajara|44940" || night.Answer != "sin_agua" || night.Count != 2 {
+		t.Fatalf("reports by day in Guadalajara: %+v %v", days, err)
+	}
+	byDay, err := db.BotAnswersByDay(ctx, now.Add(-24*time.Hour))
+	if err != nil || len(byDay) != 2 || byDay[0].Zone != s.Zone || byDay[0].Count != 1 {
+		t.Fatalf("the bot's answers by day: %+v %v", byDay, err)
+	}
 	answers, err := db.BotAnswersSince(ctx, now.Add(-24*time.Hour))
 	if err != nil || len(answers) != 2 {
 		t.Fatalf("both kinds of answer, by zone: %+v %v", answers, err)
