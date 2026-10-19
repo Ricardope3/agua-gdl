@@ -457,7 +457,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
           el("li", {}, el("span", { class: "dot ok" }), "Con agua ", el("b", {}, fmt(c.con_agua)))),
         q.length ? el("p", { class: "quality" }, `Cuando sale: ${M.joinES(q)}.`) : null,
         c.ultimo ? el("p", { class: "quality" }, `Último reporte: ${ago(c.ultimo)}.`) : null,
-      ];
+      ].filter(Boolean);
     }
 
     function renderCard(f, openForm) {
