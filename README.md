@@ -1,9 +1,9 @@
 # Agua GDL
 
-Avisos gratuitos por WhatsApp y Telegram la noche antes de cada corte de la rotación de agua del SIAPA (Guadalajara, oct 2026 – mar 2027). Servicio ciudadano, no oficial y sin partido.
+Avisos gratuitos por Telegram antes de los cortes de la rotación de agua del SIAPA (Guadalajara, oct 2026 – mar 2027): dos días antes y la noche antes, una vez por tanda cuando los cortes van seguidos. También el mapa de reportes de los vecinos (aguagdl.com/reportes), el mapa de la rotación y un calendario por zona. Servicio ciudadano, no oficial y sin partido. WhatsApp funcionó hasta el 15 de octubre de 2026, cuando Meta cerró la cuenta; su código sigue, apagado mientras no haya `WA_TOKEN`.
 
-- `api/` servicio en Go: webhooks de WhatsApp y Telegram, avisos de las 20:00, búsqueda de zona y colonia, resultados.
-- `api/data/` zonas (KML público del SIAPA), 621 colonias (PDF del SIAPA del 12 oct 2026) y calendario semanal.
+- `api/` servicio en Go: webhook de Telegram (y el de WhatsApp, solo con `WA_TOKEN`), avisos de las 20:00, búsqueda de zona y colonia, reportes del mapa.
+- `api/data/` el mapa del SIAPA (sus colonias con las zonas que les da y sus 7 zonas; copia de `web/colonias_siapa.topo.json`), 621 colonias (PDF del SIAPA del 12 oct 2026), las demás colonias del INE y el calendario semanal.
 - `pipelines/` scripts que regeneran `api/data` desde las fuentes del SIAPA y avisan si cambian.
 
 ## Desarrollo
@@ -14,7 +14,7 @@ cp .env.example .env   # llena los valores
 cd api && go test ./... && set -a && . ../.env && go run ./cmd/server
 ```
 
-Endpoints: `GET /v1/zones`, `GET /v1/zone?lat=&lon=`, `GET /v1/colonias?q=`, `GET /v1/results`, `GET|POST /wa/webhook`, `POST /tg/webhook` (solo con `TG_WEBHOOK_SECRET`).
+Endpoints: `GET /healthz`, `GET /v1/zones`, `GET /v1/zone?lat=&lon=`, `GET /v1/colonias?q=`, `GET /v1/results`, `GET|POST /v1/reportes`, `POST /tg/webhook` (con `TG_TOKEN` y `TG_WEBHOOK_SECRET`) y `GET|POST /wa/webhook` (solo con `WA_TOKEN`).
 
 Las pruebas de integración crean y borran esquemas aislados en una base de pruebas:
 `cd api && TEST_DATABASE_URL=postgres://postgres:dev@localhost:55432/aguagdl?sslmode=disable go test -race ./...`.
@@ -22,9 +22,9 @@ CI las ejecuta con PostgreSQL 17. Sin `TEST_DATABASE_URL`, esas pruebas se omite
 
 ## Despliegue
 
-`fly launch --copy-config --no-deploy`, luego `fly secrets set DATABASE_URL='…' PUBLIC_BASE_URL=https://aguagdl.com WA_TOKEN='…' WA_PHONE_NUMBER_ID=… WA_APP_SECRET='…' WA_VERIFY_TOKEN='…' HEARTBEAT_URL='…'` (con comillas simples: el `?` y el `&` de la URL de Neon rompen el comando en zsh) y `fly deploy --ha=false`. Sin `--ha=false`, el primer despliegue crea dos máquinas: no duplican avisos, pero la que termina primero cuenta como `sending` el envío en curso de la otra y manda una falsa alarma al heartbeat. Despliega desde `main` limpio: `fly deploy` sube la carpeta local. Los avisos solo salen con `REMINDERS_ENABLED=true` (WhatsApp) o `TG_REMINDERS_ENABLED=true` (Telegram); cada canal se envía aparte y la falla de uno no detiene al otro.
+`fly launch --copy-config --no-deploy`, luego `fly secrets set DATABASE_URL='…' PUBLIC_BASE_URL=https://aguagdl.com HEARTBEAT_URL='…'` (con comillas simples: el `?` y el `&` de la URL de Neon rompen el comando en zsh), los secretos de Telegram (abajo) y `fly deploy --ha=false`. Sin `--ha=false`, el primer despliegue crea dos máquinas: no duplican avisos, pero la que termina primero cuenta como `sending` el envío en curso de la otra y manda una falsa alarma al heartbeat, y cada una guardaría en memoria sus propios reportes del mapa y sus límites, así que el mapa quedaría partido. Despliega desde `main` limpio: `fly deploy` sube la carpeta local. Los avisos solo salen con `TG_REMINDERS_ENABLED=true` (Telegram) o `REMINDERS_ENABLED=true` (WhatsApp, que además necesita `WA_TOKEN`, `WA_PHONE_NUMBER_ID`, `WA_APP_SECRET` y `WA_VERIFY_TOKEN`); cada canal se envía aparte y la falla de uno no detiene al otro.
 
-Telegram: crea el bot con @BotFather, guarda `TG_TOKEN` y `TG_WEBHOOK_SECRET` (`openssl rand -hex 32`) con `fly secrets import`, despliega y corre una vez `cd api && TG_TOKEN='…' TG_WEBHOOK_SECRET='…' go run ./cmd/tgsetup`: registra el webhook, el nombre, las descripciones y el menú de comandos. Telegram no tiene plantillas, ventana de 24 horas ni tope diario; guardamos el ID del chat, no el número. Si alguien bloquea el bot, se borra su suscripción. El enlace `https://t.me/<bot>?start=z4` suscribe directo a la zona 4.
+Telegram: crea el bot con @BotFather, guarda `TG_TOKEN` y `TG_WEBHOOK_SECRET` (`openssl rand -hex 32`) con `fly secrets import`, despliega y corre una vez `cd api && TG_TOKEN='…' TG_WEBHOOK_SECRET='…' go run ./cmd/tgsetup`: registra el webhook, el nombre, las descripciones y el menú de comandos. Telegram no tiene plantillas, ventana de 24 horas ni tope diario; guardamos el ID de usuario de Telegram, no el número. Después de cambiar sus descripciones o comandos, vuelve a correr `tgsetup`. Si alguien bloquea el bot, se borra su suscripción. El enlace `https://t.me/<bot>?start=z4` suscribe directo a la zona 4.
 
 Antes de desplegar la migración `005_phone_unique.sql` sobre una base que ya tenga suscriptores, revisa si algún número está en más de una suscripción; la migración conserva solo la más reciente de cada número:
 
@@ -50,12 +50,15 @@ el proceso se detiene entre la reserva y el registro final, el aviso queda como
 el heartbeat avisa de la incertidumbre al revisar el lote de esa noche. Cualquier
 error de envío hace fallar el heartbeat, aunque otros avisos salgan bien.
 
-Si Meta rechaza el envío con un error 4xx (plantilla pausada, token inválido, sin
-método de pago…), el aviso queda como `rejected`: no salió, no cuenta contra los
-topes y se reintenta si el servidor vuelve a correr esa noche. Tras 5 errores
-seguidos el lote se detiene: corrige la causa y reinicia con `fly machine restart`
-antes de las 22:00. Si Meta reporta después que un aviso no se entregó (`failed`),
-el servidor manda el heartbeat a `/fail` en ese momento.
+Si WhatsApp o Telegram rechazan el envío con un error 4xx (plantilla pausada, token
+inválido, sin método de pago…), el aviso queda como `rejected`: no salió, no cuenta
+contra los topes y la corrida lo vuelve a intentar sola, esperando cada vez más (1, 2,
+4… hasta 10 minutos), hasta `CATCH_UP_UNTIL_HOUR` (22:00). Tras 5 errores seguidos el
+lote se detiene: si fueron rechazos, la corrida vuelve a intentar más tarde; si fueron
+envíos inciertos, corrige la causa y reinicia con `fly machine restart` antes de las
+22:00 para que la corrida de recuperación siga con quien falta. Si Meta reporta después
+que un aviso no se entregó (`failed`), el servidor manda el heartbeat a `/fail` en ese
+momento.
 
 Los topes se revisan antes de cada envío. El diario (`DAILY_CAP`) cuenta personas
 distintas en una ventana móvil de 24 horas, como el límite de Meta. Si los avisos de
@@ -80,17 +83,17 @@ confirmarlo, conserva `uncertain`.
 
 ## Datos
 
-Si el SIAPA cambia los días, edita `api/data/rotation.json` (`skip`/`extra` para fechas sueltas) y despliega. Luego avisa a los suscriptores de cada zona que cambió con la plantilla `cambio_rotacion` (los días salen de `rotation.json`):
+Si el SIAPA cambia los días, edita `api/data/rotation.json` (`skip`/`extra` para fechas sueltas; actualiza `checked` y `checked_by`), regenera los calendarios con `cd api && go run ./cmd/calendars` (la prueba de `internal/calendar` falla si no) y despliega. Luego avisa a los suscriptores de cada zona que cambió (los días salen de `rotation.json`; sin `-channel tg`, `notify` usa WhatsApp):
 
 ```sh
 cd api
-DATABASE_URL='…' go run ./cmd/notify -zone 4 -from 2026-11-02          # solo muestra a cuántos y qué dice
-DATABASE_URL='…' WA_TOKEN='…' WA_PHONE_NUMBER_ID=… go run ./cmd/notify -zone 4 -from 2026-11-02 -send
+DATABASE_URL='…' go run ./cmd/notify -channel tg -zone 4 -from 2026-11-02          # solo muestra a cuántos y qué dice
+DATABASE_URL='…' TG_TOKEN='…' go run ./cmd/notify -channel tg -zone 4 -from 2026-11-02 -send
 ```
 
-Cuenta para el tope diario igual que los avisos; si el tope lo detiene, vuelve a correr el mismo comando más tarde: no repite a quien ya lo recibió.
+Volver a correr el mismo comando no repite a quien ya lo recibió. En WhatsApp cuenta para el tope diario igual que los avisos: si el tope lo detiene, vuelve a correrlo más tarde. (`-avisos` avisaba una vez del cambio a los avisos por tandas; no se mandó.)
 
-Si la plantilla `aviso_corte` todavía no está aprobada (o Meta la pausó), puedes mandar el aviso de mañana como mensaje normal. WhatsApp solo entrega mensajes normales a quien escribió en las últimas 24 horas, así que llega solo a quien se suscribió o cambió de zona en las últimas 23. Queda registrado como el aviso de esa noche: la corrida de las 20:00 no se lo repite. En zsh, `read -s` pide cada valor sin mostrarlo ni guardarlo en el historial:
+Solo WhatsApp (apagado): si la plantilla `aviso_corte` todavía no está aprobada (o Meta la pausó), puedes mandar el aviso de mañana como mensaje normal. WhatsApp solo entrega mensajes normales a quien escribió en las últimas 24 horas, así que llega solo a quien se suscribió o cambió de zona en las últimas 23. Queda registrado como el aviso de esa noche: la corrida de las 20:00 no se lo repite. En zsh, `read -s` pide cada valor sin mostrarlo ni guardarlo en el historial:
 
 ```sh
 cd api
@@ -100,21 +103,20 @@ read -s 'WA_TOKEN?Token: '; export WA_TOKEN
 WA_PHONE_NUMBER_ID=… WA_GRAPH_VERSION=… go run ./cmd/notify -zone 6 -tomorrow -send
 ```
 
-Para regenerar colonias:
+Para regenerar colonias, usa el PDF del 12 de octubre de 2026 (34 páginas; está en las notas privadas del proyecto, `siapa/colonias_siapa.pdf`): el que publica hoy el SIAPA es la reedición del 13 de octubre, con columnas cortadas, y el script falla con él.
 
 ```sh
 python3 -m venv pipelines/.venv && pipelines/.venv/bin/pip install pdfplumber==0.11.4
 pipelines/.venv/bin/python pipelines/siapa_colonias.py colonias_siapa.pdf api/data/colonias.json
 ```
 
-Para regenerar las zonas desde el KML del mapa del SIAPA (solo biblioteca estándar):
+Para regenerar el mapa del SIAPA y lo que sale de él (solo biblioteca estándar; descarga su TopoJSON y `ajustes.php`): `siapa_mapa.py` escribe `web/colonias_siapa.topo.json` y su copia en `api/data`, con la que el bot y `/v1/zone` ubican la zona, y `mapa_colonias.py` escribe las colonias de `/reportes` y las zonas de las colonias que no están en la lista:
 
 ```sh
-curl -sL 'https://www.google.com/maps/d/kml?mid=1AJ1jEcf4YzgRPw5r9yBXkZOoFMfoB6Y&forcekml=1' -o zonas.kml
-python3 pipelines/siapa_zonas.py zonas.kml api/data/zonas.geojson
+python3 pipelines/siapa_mapa.py && python3 pipelines/mapa_colonias.py
 ```
 
-Cada 6 horas, `.github/workflows/siapa-watch.yml` corre `pipelines/siapa_watch.py`: descarga la página, el calendario, el PDF y el KML del SIAPA y compara su SHA-256 con `pipelines/siapa_sources.json`. Si algo cambió, abre el issue «SIAPA cambió sus fuentes» (o comenta en el que siga abierto) con el reporte. Revisa el cambio, actualiza `api/data` si hace falta y luego la línea base:
+Cada 6 horas, `.github/workflows/siapa-watch.yml` corre `pipelines/siapa_watch.py`: descarga la página, el PDF, el mapa (TopoJSON) y `ajustes.php` del SIAPA, compara su SHA-256 con `pipelines/siapa_sources.json`, el mapa con `web/colonias_siapa.topo.json` y los días de `ajustes.php` con `rotation.json`. Si algo cambió, abre el issue «SIAPA cambió sus fuentes» (o comenta en el que siga abierto) con el reporte. Revisa el cambio, actualiza `api/data` si hace falta y luego la línea base:
 
 ```sh
 python3 pipelines/siapa_watch.py --update && git commit -m 'Update the SIAPA baseline' pipelines/siapa_sources.json
@@ -122,4 +124,4 @@ python3 pipelines/siapa_watch.py --update && git commit -m 'Update the SIAPA bas
 
 El CDN del SIAPA guarda cada archivo hasta un día, así que un cambio puede tardar ese tiempo en detectarse.
 
-Código bajo MIT. Datos del SIAPA / Gobierno de Jalisco.
+Código bajo MIT. Datos del SIAPA / Gobierno de Jalisco y del INE (contornos de colonias y secciones electorales).
