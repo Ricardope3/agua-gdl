@@ -17,13 +17,13 @@ func DateES(t time.Time) string {
 	return fmt.Sprintf("%s %d de %s", weekdayNames[t.Weekday()], t.Day(), monthNames[t.Month()])
 }
 
-// DatesES formats days as "martes 20 y miércoles 21 de octubre", naming the month once
-// when they share it.
+// DatesES formats days as "martes 20 y miércoles 21 de octubre", naming each month once:
+// "viernes 30 de octubre y domingo 1 de noviembre".
 func DatesES(days []time.Time) string {
 	names := make([]string, len(days))
 	for i, d := range days {
 		names[i] = DateES(d)
-		if d.Month() == days[len(days)-1].Month() && i < len(days)-1 {
+		if i < len(days)-1 && d.Month() == days[i+1].Month() {
 			names[i] = fmt.Sprintf("%s %d", weekdayNames[d.Weekday()], d.Day())
 		}
 	}

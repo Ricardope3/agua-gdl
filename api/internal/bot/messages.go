@@ -64,6 +64,11 @@ func msgHelp(base, channel string) string {
 🔒 Aviso de privacidad: ` + base + `/privacidad`
 }
 
+// msgUseButtons answers a typed «sí», «ya no» or «poca»: the reminders' buttons carry the answer.
+const msgUseButtons = `Para contestar, toca uno de los botones del mensaje 👆
+
+Si lo que quieres es dejar de recibir avisos, escribe *BAJA*. Para ver todo lo que puedo hacer, escribe *AYUDA*.`
+
 func msgNotFound(q string) string {
 	return fmt.Sprintf(`No encontré «%s» en la lista de colonias del SIAPA 😕
 
@@ -167,7 +172,7 @@ var waterAnswers = []struct{ key, title, thanks string }{
 
 var reportAnswers = []struct{ key, title string }{
 	{"normal", "✅ Regresó normal"},
-	{"baja", "🟡 Baja presión"},
+	{"baja", "🟡 Poca presión"}, // not «Baja…»: a typed «baja» is BAJA
 	{"no_regreso", "❌ No ha regresado"},
 	{"turbia", "🟤 Turbia o con olor"},
 }

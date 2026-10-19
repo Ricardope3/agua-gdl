@@ -119,13 +119,13 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: mi
- ércoles 28 de octubre\, viernes 30 de octubre y domingo 1 de noviembre
+ ércoles 28\, viernes 30 de octubre y domingo 1 de noviembre
 TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 1: miércol
- es 28 de octubre\, viernes 30 de octubre y domingo 1 de noviembre
+ es 28\, viernes 30 de octubre y domingo 1 de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT

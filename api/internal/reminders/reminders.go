@@ -328,7 +328,9 @@ func (r *Runner) sendTelegram(ctx, sendCtx context.Context, m tg.Message) error 
 // sendAhead sends Telegram's notice two days before each block of cuts: neighbours report
 // the water goes a day early, so the evening before can be too late.
 func (r *Runner) sendAhead(ctx context.Context) error {
-	start := r.Schedule.Day(r.Now()).AddDate(0, 0, 2)
+	today := r.Schedule.Day(r.Now())
+	start := today.AddDate(0, 0, 2)
+	remindAt := today.Add(time.Duration(r.Hour) * time.Hour)
 	var err error
 	for _, zone := range r.Schedule.ZonesOn(start) {
 		if !r.Schedule.StartsBlock(zone, start) {
@@ -339,6 +341,9 @@ func (r *Runner) sendAhead(ctx context.Context) error {
 			err = errors.Join(err, transient(qErr))
 			continue
 		}
+		// As with the reminder: whoever subscribed after the run hour was told the next message
+		// in the confirmation, and BAJA + subscribing again must not repeat tonight's notice.
+		subs = slices.DeleteFunc(subs, func(s store.Subscriber) bool { return !s.UpdatedAt.Before(remindAt) })
 		err = errors.Join(err, r.sendNotices(ctx, subs, store.AheadKey(start), func(s store.Subscriber) (tg.Message, error) {
 			return bot.TelegramNotice(s.UserID, s.Zone, r.Schedule.Block(s.Zone, start))
 		}))

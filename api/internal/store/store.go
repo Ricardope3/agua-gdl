@@ -43,7 +43,7 @@ type Subscriber struct {
 	UserID    string // WhatsApp's business-scoped user ID, or the Telegram chat ID
 	Phone     string
 	Zone      int
-	UpdatedAt time.Time // last subscription or zone change; set by DueSubscribers only
+	UpdatedAt time.Time // last subscription or zone change; set by DueSubscribers and NoticeRecipients only
 	CreatedAt time.Time // set by Subscriber only
 }
 

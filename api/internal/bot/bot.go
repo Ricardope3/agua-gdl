@@ -77,9 +77,15 @@ type queued struct {
 }
 
 var (
-	zoneRe      = regexp.MustCompile(`^(?:ZONA ?)?([1-7])$`)
-	badZoneRe   = regexp.MustCompile(`^ZONA ?\d*$`)
-	stopWords   = []string{"BAJA", "ALTO", "STOP", "CANCELAR", "DARME DE BAJA", "YA NO", "DEJAR DE RECIBIR AVISOS"}
+	zoneRe    = regexp.MustCompile(`^(?:ZONA ?)?([1-7])$`)
+	badZoneRe = regexp.MustCompile(`^ZONA ?\d*$`)
+	stopWords = []string{"BAJA", "ALTO", "STOP", "CANCELAR", "DARME DE BAJA", "DEJAR DE RECIBIR AVISOS"}
+	// answerWords are typed answers to the reminders' questions, whose buttons carry the
+	// answer: «Ya no» to «¿Ahorita tienes agua?» must not unsubscribe or search colonias.
+	answerWords = []string{"SI", "NO", "YA NO", "SI HAY", "NO HAY", "YA NO HAY", "NO HAY AGUA", "YA NO HAY AGUA", "SIN AGUA", "CON AGUA",
+		"YA SE FUE", "SE FUE", "SI TENGO", "NO TENGO", "YA NO TENGO", "POCA", "POQUITA", "POCA AGUA", "POCA PRESION", "BAJA PRESION",
+		"YA REGRESO", "YA LLEGO", "YA HAY", "YA HAY AGUA", "REGRESO NORMAL", "NO HA REGRESADO", "NO HA LLEGADO", "TODAVIA NO", "AUN NO",
+		"TURBIA", "SUCIA", "CON OLOR"}
 	helpWords   = []string{"AYUDA", "MENU", "INFO", "OPCIONES"}
 	reportWords = []string{"REPORTAR", "REPORTE", "REPORTAR CORTE"}
 	pipaWords   = []string{"PIPA", "PIPAS", "PEDIR PIPA", "SIAPA", "SIAPATEL"}
@@ -195,6 +201,8 @@ func (b *Bot) onText(ctx context.Context, r User, body string) error {
 		return b.text(ctx, r, msgHelp(b.BaseURL, r.Channel))
 	case slices.Contains(stopWords, n):
 		return b.unsubscribe(ctx, r)
+	case slices.Contains(answerWords, n):
+		return b.text(ctx, r, msgUseButtons)
 	case slices.Contains(reportWords, n):
 		return b.reportLastCut(ctx, r)
 	case slices.Contains(pipaWords, n):

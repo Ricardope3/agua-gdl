@@ -128,7 +128,7 @@ func (db *DB) sendReserved(ctx context.Context, table string, id, subscriberID i
 // NoticeRecipients lists a channel's subscribers in zone who haven't received the notice
 // key, including those whose earlier attempt was rejected.
 func (db *DB) NoticeRecipients(ctx context.Context, channel string, zone int, key string) ([]Subscriber, error) {
-	rows, err := db.q.Query(ctx, `select s.id, s.channel, s.user_id, coalesce(s.phone, ''), s.zone from subscriber s
+	rows, err := db.q.Query(ctx, `select s.id, s.channel, s.user_id, coalesce(s.phone, ''), s.zone, s.updated_at from subscriber s
 		where s.channel = $3 and s.zone = $1 and not exists (
 			select 1 from notice n where n.subscriber_id = s.id and n.key = $2 and n.status <> 'rejected')
 		order by s.id`, zone, key, channel)
@@ -137,7 +137,7 @@ func (db *DB) NoticeRecipients(ctx context.Context, channel string, zone int, ke
 	}
 	return pgx.CollectRows(rows, func(r pgx.CollectableRow) (Subscriber, error) {
 		var s Subscriber
-		err := r.Scan(&s.ID, &s.Channel, &s.UserID, &s.Phone, &s.Zone)
+		err := r.Scan(&s.ID, &s.Channel, &s.UserID, &s.Phone, &s.Zone, &s.UpdatedAt)
 		return s, err
 	})
 }

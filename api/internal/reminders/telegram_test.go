@@ -183,6 +183,21 @@ func TestOneRoundOfMessagesPerBlock(t *testing.T) {
 	}
 }
 
+func TestNoticeNotRepeatedAfterSubscribingAgain(t *testing.T) {
+	ctx := context.Background()
+	st, tel := fake.NewStore(), &fake.Telegram{}
+	st.Subscribe(ctx, store.Telegram, "301", "", 3)
+	if err := tgRunner(t, "2026-10-19 20:00", st, tel).SendTonight(ctx); err != nil || len(tel.Sent) != 1 {
+		t.Fatalf("Monday's notice: err %v, sent %d", err, len(tel.Sent))
+	}
+	st.Now = func() time.Time { return day(t, "2026-10-19").Add(20*time.Hour + 30*time.Minute) }
+	st.Unsubscribe(ctx, store.Telegram, "301", "")
+	st.Subscribe(ctx, store.Telegram, "301", "", 3)
+	if err := tgRunner(t, "2026-10-19 20:45", st, tel).SendTonight(ctx); err != nil || len(tel.Sent) != 1 {
+		t.Fatalf("BAJA and subscribing again must not repeat tonight's notice: err %v, sent %d", err, len(tel.Sent))
+	}
+}
+
 func TestNoReminderForWhoeverHasNoWater(t *testing.T) {
 	ctx := context.Background()
 	st, tel := fake.NewStore(), &fake.Telegram{}

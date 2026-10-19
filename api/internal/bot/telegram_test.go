@@ -85,6 +85,24 @@ func TestTelegramDeepLinkSubscribes(t *testing.T) {
 	}
 }
 
+func TestTypedAnswersPointToTheButtons(t *testing.T) {
+	h := newTGHarness(t, "2026-10-19 21:00")
+	h.say(t, "/start z5")
+	for _, text := range []string{"Ya no", "ya no.", "Sí", "No hay agua", "Poca", "Baja presión", "Ya regresó"} {
+		m := h.say(t, text)
+		if s, ok := h.sub(t); !ok || s.Zone != 5 {
+			t.Fatalf("%q changed the subscription: %+v %v", text, s, ok)
+		}
+		if !strings.Contains(m.Text, "toca uno de los botones") || !strings.Contains(m.Text, "<b>BAJA</b>") {
+			t.Errorf("%q: %s", text, m.Text)
+		}
+	}
+	h.say(t, "baja")
+	if _, ok := h.sub(t); ok {
+		t.Fatal("BAJA still unsubscribes")
+	}
+}
+
 func TestTelegramColoniaButtonsAndLocation(t *testing.T) {
 	h := newTGHarness(t, "2026-10-14 10:00")
 	m := h.say(t, "jardines del sauz")

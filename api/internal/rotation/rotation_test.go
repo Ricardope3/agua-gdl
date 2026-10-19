@@ -109,6 +109,7 @@ func TestBlocks(t *testing.T) {
 		{1, "2026-10-16", true, false, "viernes 16 y domingo 18 de octubre", "2026-10-16"},
 		{1, "2026-10-21", true, false, "miércoles 21, viernes 23 y domingo 25 de octubre", "2026-10-21"},
 		{1, "2026-10-25", false, true, "domingo 25 de octubre", "2026-10-21"},
+		{1, "2026-10-28", true, false, "miércoles 28, viernes 30 de octubre y domingo 1 de noviembre", "2026-10-28"},
 		{2, "2026-10-18", true, false, "domingo 18, martes 20 y jueves 22 de octubre", "2026-10-18"},
 		{2, "2026-10-20", false, false, "martes 20 y jueves 22 de octubre", "2026-10-18"},
 		{7, "2026-10-31", true, false, "sábado 31 de octubre y domingo 1 de noviembre", "2026-10-31"},
