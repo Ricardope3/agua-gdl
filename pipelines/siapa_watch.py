@@ -3,13 +3,15 @@
 Usage: python siapa_watch.py [--update] [siapa_sources.json]
 
 Prints a Markdown report. The KML is also converted with siapa_zonas.py and
-compared with api/data/zonas.geojson. Writes changed=true|false and a
+compared with api/data/zonas.geojson, and the cut days in ajustes.php (what
+SIAPA edits from its admin panel; its page shows them) are compared with
+api/data/rotation.json: a difference counts as a change until the repo matches. Writes changed=true|false and a
 fingerprint of the live hashes to $GITHUB_OUTPUT when it's set. Exits 1 only
 when a source can't be fetched. --update rewrites the baseline with what's
 live now and drops the comment of every source that changed.
 
 SIAPA's CDN caches each file for about a day (query strings don't bypass it),
-so a change can take that long to show up here.
+so a change can take that long to show up here; ajustes.php isn't cached.
 """
 
 import hashlib
@@ -27,7 +29,11 @@ sys.path.insert(0, str(HERE))
 import siapa_zonas  # noqa: E402
 
 GEOJSON = HERE.parent / "api" / "data" / "zonas.geojson"
+ROTATION = HERE.parent / "api" / "data" / "rotation.json"
 KML = "zonas.kml"
+AJUSTES = "ajustes.php"
+DAYS = {"lunes": "mon", "martes": "tue", "miercoles": "wed", "jueves": "thu", "viernes": "fri", "sabado": "sat", "domingo": "sun"}
+DIAS = {v: k.replace("miercoles", "miércoles").replace("sabado", "sábado") for k, v in DAYS.items()}
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
 TIMEOUT = 60
 MAX_BYTES = 20 * 1024 * 1024
@@ -38,6 +44,7 @@ HINTS = {
     "calendario.webp": "Compara el calendario con `api/data/rotation.json`.",
     "colonias_siapa.pdf": "Revisa que el PDF nuevo esté completo antes de regenerar `api/data/colonias.json` con `pipelines/siapa_colonias.py`.",
     KML: "Regenera las zonas: `curl -sL '{url}' -o zonas.kml && python3 pipelines/siapa_zonas.py zonas.kml api/data/zonas.geojson` y revisa el diff.",
+    AJUSTES: "El SIAPA cambió días de corte o zonas de colonias desde su panel. Si cambiaron los días, corrige `api/data/rotation.json` (con `checked` y `checked_by`), corre `go run ./cmd/calendars` desde `api/` y avisa a las zonas con `cmd/notify`. Si cambiaron colonias, regenera `web/colonias_siapa.topo.json` con `pipelines/siapa_mapa.py` y `api/data/colonias_mapa.json` con `pipelines/mapa_colonias.py`.",
 }
 
 
@@ -90,6 +97,36 @@ def zones_report(kml):
     )
 
 
+def ajustes_sha(body):
+    # A save from the panel that changes nothing only moves "actualizado".
+    try:
+        data = json.loads(body)
+        data.pop("actualizado", None)
+        body = json.dumps(data, sort_keys=True, ensure_ascii=False).encode()
+    except ValueError:
+        pass
+    return hashlib.sha256(body).hexdigest()
+
+
+def days_report(body):
+    """The cut days SIAPA's page shows against rotation.json: (text, differs)."""
+    try:
+        data = json.loads(body)
+        live = {z: [DAYS[d] for d in v["dias"]] for z, v in data["zonas"].items()}
+        moved = len(data.get("colonias") or {})
+    except (ValueError, KeyError, TypeError, AttributeError) as e:
+        return f"**No se pudieron leer los días de `{AJUSTES}`:** {code(e, 200)}", True
+    with open(ROTATION, encoding="utf-8") as f:
+        repo = json.load(f)["zones"]
+    moved = f" Colonias con la zona cambiada a mano: {moved}." if moved else ""
+    diff = sorted(z for z in live.keys() | repo.keys() if live.get(z) != repo.get(z))
+    if not diff:
+        return f"Los días de corte de `{AJUSTES}` son iguales a `api/data/rotation.json` en las {len(live)} zonas.{moved}", False
+    names = lambda days: ", ".join(DIAS[d] for d in days) or "ninguno"  # noqa: E731
+    parts = [f"zona {z}: SIAPA {names(live.get(z, []))}; rotation.json {names(repo.get(z, []))}" for z in diff]
+    return f"**Los días de corte de `{AJUSTES}` difieren de `api/data/rotation.json`:** {'; '.join(parts)}.{moved}", True
+
+
 def main(args):
     update = "--update" in args
     paths = [a for a in args if a != "--update"]
@@ -97,7 +134,7 @@ def main(args):
     with open(path, encoding="utf-8") as f:
         sources = json.load(f)
 
-    rows, changed, errors, live, zones = [], [], [], {}, None
+    rows, changed, errors, live, zones, days = [], [], [], {}, None, None
     for name, s in sources.items():
         link = f"[{name}]({s['url']})"
         try:
@@ -106,17 +143,20 @@ def main(args):
             errors.append(name)
             rows.append(f"| {link} | **error:** {code(e, 200)} | | | {short(s.get('sha256'))} |")
             continue
-        sha = hashlib.sha256(body).hexdigest()
+        sha = ajustes_sha(body) if name == AJUSTES else hashlib.sha256(body).hexdigest()
         live[name] = {"sha256": sha, "bytes": len(body), "last_modified": modified}
         if name == KML:
             zones = zones_report(body)
+        differs = False
+        if name == AJUSTES:
+            days, differs = days_report(body)
         old_lm = s.get("last_modified")
         lm = (code(modified) if modified else "—") if modified == old_lm else f"{code(old_lm) if old_lm else '—'} → {code(modified) if modified else '—'}"
-        if sha == s.get("sha256"):
+        if sha == s.get("sha256") and not differs:
             rows.append(f"| {link} | sin cambios | {len(body):,} B | {lm} | {short(sha)} |")
             continue
         changed.append(name)
-        status = "**cambió**" if s.get("sha256") else "**nueva**"
+        status = "**difiere del repo**" if sha == s.get("sha256") else "**cambió**" if s.get("sha256") else "**nueva**"
         size = f"{s['bytes']:,} → {len(body):,} B" if s.get("bytes", len(body)) != len(body) else f"{len(body):,} B"
         rows.append(f"| {link} | {status} | {size} | {lm} | {short(s.get('sha256'))} → {short(sha)} |")
 
@@ -132,6 +172,8 @@ def main(args):
     ]
     if zones:
         out += ["", "### Zonas", "", zones]
+    if days:
+        out += ["", "### Días de corte", "", days]
     notes = [f"- `{n}`: {sources[n]['comment']}" for n in changed if sources[n].get("comment")]
     if notes:
         out += ["", "### Notas de la línea base", "", *notes]
