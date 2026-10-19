@@ -177,6 +177,7 @@ type subscribedInfo struct {
 	days         string
 	fresh        bool
 	cutTomorrow  []time.Time // set when no reminder comes for tomorrow's cut: tonight's run has passed or it continues a block
+	cutsLeft     []time.Time // the rest of a block that started today: no reminder comes for them
 	off          bool        // reminders are switched off on the server
 	nextReminder string
 	nextCut      []time.Time // the block the next message is about
@@ -195,6 +196,8 @@ func msgSubscribed(i subscribedInfo) string {
 	fmt.Fprintf(&b, "📅 Días de corte: *%s*\n", i.days)
 	if len(i.cutTomorrow) > 0 {
 		fmt.Fprintf(&b, "⚠️ ¡Ojo! *Mañana %s* hay corte%s. Si todavía tienes agua, llena hoy tu tinaco.\n", rotation.DateES(i.cutTomorrow[0]), alsoES(i.cutTomorrow))
+	} else if len(i.cutsLeft) > 0 {
+		fmt.Fprintf(&b, "⚠️ ¡Ojo! Hoy hay corte en tu zona, y también el *%s*. De esos días no te llegará aviso: si todavía tienes agua, llena tu tinaco.\n", rotation.DatesES(i.cutsLeft))
 	}
 	switch {
 	case i.off:

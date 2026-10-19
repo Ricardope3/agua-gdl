@@ -2,6 +2,10 @@ package reminders
 
 import (
 	"context"
+	"errors"
+	"fmt"
+	"net"
+	"slices"
 	"strings"
 	"testing"
 	"time"
@@ -24,6 +28,32 @@ func (f *flakyTelegram) Send(ctx context.Context, m tg.Message) (int64, error) {
 		return 0, err
 	}
 	return f.Telegram.Send(ctx, m)
+}
+
+func TestNetworkBlipIsRetried(t *testing.T) {
+	st := fake.NewStore()
+	ctx := context.Background()
+	for i := range 10 {
+		st.Subscribe(ctx, store.Telegram, fmt.Sprint(700+i), "", 4)
+	}
+	r := runner(t, "2026-10-18 20:00", st, nil)
+	down := fmt.Errorf("tg: sendMessage: %w", &tg.NotSentError{Err: &net.OpError{Op: "dial", Net: "tcp", Err: errors.New("connect: network is unreachable")}})
+	tel := &flakyTelegram{errs: slices.Repeat([]error{down}, 25)} // the first five subscribers' four tries each, and more
+	r.Sender, r.Telegram = nil, tel
+	now := r.Now()
+	r.Now = func() time.Time { return now }
+	r.Sleep = func(_ context.Context, d time.Duration) error { now = now.Add(d); return nil }
+	r.runOnce(ctx)
+	got := map[int64]int{}
+	for _, m := range tel.Sent {
+		got[m.ChatID]++
+	}
+	if len(got) != 10 || len(tel.Sent) != 10 {
+		t.Fatalf("nothing reached Telegram, so the run tries again until everyone has it once: %d sent to %d chats", len(tel.Sent), len(got))
+	}
+	if now.Hour() >= 22 {
+		t.Fatalf("delivered within the catch-up window, not at %s", now.Format("15:04"))
+	}
 }
 
 func TestTelegramRemindersSkipMetaCaps(t *testing.T) {

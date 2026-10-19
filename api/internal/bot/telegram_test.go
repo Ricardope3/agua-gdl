@@ -21,6 +21,7 @@ type tgHarness struct {
 func newTGHarness(t *testing.T, now string) *tgHarness {
 	h := &tgHarness{harness: newHarness(t, now), tg: &fake.Telegram{}}
 	h.bot.Telegram, h.bot.TelegramOn = h.tg, true
+	SignButtons("test")
 	return h
 }
 
@@ -129,7 +130,7 @@ func TestTelegramReportAndBaja(t *testing.T) {
 	h.say(t, "/start z6")
 	m := h.say(t, "/reportar")
 	kb, ok := m.ReplyMarkup.(tg.InlineKeyboard)
-	if !ok || len(kb.InlineKeyboard) != 4 || kb.InlineKeyboard[1][0].CallbackData != "R:6:2026-10-16:baja" {
+	if !ok || len(kb.InlineKeyboard) != 4 || !strings.HasPrefix(kb.InlineKeyboard[1][0].CallbackData, "R:6:2026-10-16:baja:") || len(kb.InlineKeyboard[1][0].CallbackData) > 64 {
 		t.Fatalf("report buttons: %+v", m)
 	}
 	h.press(t, "R:6:2026-10-16:baja")
@@ -247,9 +248,9 @@ func TestNoSubscriptionsAfterTheRetentionDeadline(t *testing.T) {
 func TestReportKeepsTheZoneOfTheCut(t *testing.T) {
 	h := newTGHarness(t, "2026-10-18 09:00")
 	h.say(t, "zona 4")
-	h.say(t, "/reportar")
+	kb, _ := h.say(t, "/reportar").ReplyMarkup.(tg.InlineKeyboard)
 	h.say(t, "zona 6")
-	h.press(t, "R:4:2026-10-15:normal")
+	h.press(t, kb.InlineKeyboard[0][0].CallbackData) // «Regresó normal», signed for zone 4's cut
 	if len(h.store.Reports) != 1 || h.store.Reports[0].Zone != 4 {
 		t.Fatalf("a report after a zone change must count for the old zone: %+v", h.store.Reports)
 	}
@@ -318,6 +319,54 @@ func TestWriteToCongressIsTelegramOnly(t *testing.T) {
 	}
 	if m := h.say(t, "ayuda"); !strings.Contains(m.Text, "ESCRIBIR") {
 		t.Errorf("Telegram help: %s", m.Text)
+	}
+}
+
+func TestJoinInTheMiddleOfABlock(t *testing.T) {
+	for _, c := range []struct{ now, zone, later string }{
+		{"2026-10-21 10:00", "1", "viernes 23"}, // zone 1: Wednesday, Friday and Sunday are one block
+		{"2026-10-23 10:00", "1", "domingo 25"},
+		{"2026-10-18 10:00", "2", "martes 20"}, // zone 2: Sunday, Tuesday and Thursday
+		{"2026-10-20 10:00", "2", "jueves 22"},
+	} {
+		h := newTGHarness(t, c.now)
+		m := h.say(t, "/start z"+c.zone)
+		if !strings.Contains(m.Text, "Hoy hay corte") || !strings.Contains(m.Text, c.later) || !strings.Contains(m.Text, "Próximo aviso") {
+			t.Errorf("%s, zone %s: no message comes for the rest of the block (%s), so the confirmation names it:\n%s", c.now, c.zone, c.later, m.Text)
+		}
+	}
+	h := newTGHarness(t, "2026-10-25 10:00")
+	if m := h.say(t, "/start z1"); strings.Contains(m.Text, "Hoy hay corte") {
+		t.Errorf("Sunday ends zone 1's block, so nothing is left to warn about: %s", m.Text)
+	}
+}
+
+func TestMadeUpButtonsCantAnswerForAnotherZone(t *testing.T) {
+	h := newTGHarness(t, "2026-10-20 21:00")
+	h.say(t, "/start z1")
+	s, _ := h.sub(t)
+	h.store.Reminders[fmt.Sprintf("%d/2026-10-21", s.ID)] = true
+	for _, data := range []string{"A:3:2026-10-21:no", "A:3:2026-10-21:no:AAAAAAAA"} { // zone 3 is cut that Wednesday too
+		if m := h.press(t, data); !strings.Contains(m.Text, "ya cerró") {
+			t.Errorf("%s: %s", data, m.Text)
+		}
+	}
+	if len(h.store.Water) != 0 {
+		t.Fatalf("a zone 1 subscriber answered for zone 3: %+v", h.store.Water)
+	}
+	m, err := TelegramReminder(s.UserID, 1, h.bot.Schedule.Block(1, h.bot.Schedule.Day(h.bot.Now()).AddDate(0, 0, 1)))
+	if err != nil {
+		t.Fatal(err)
+	}
+	h.press(t, m.ReplyMarkup.(tg.InlineKeyboard).InlineKeyboard[0][2].CallbackData) // ❌ No, as the reminder sends it
+	if len(h.store.Water) != 1 || h.store.Water[0].Zone != 1 || h.store.Water[0].Answer != "no" {
+		t.Fatalf("the reminder's own button: %+v", h.store.Water)
+	}
+	h = newTGHarness(t, "2026-10-16 09:00")
+	h.say(t, "/start z6")
+	h.press(t, "R:1:2026-10-16:baja") // zone 1 is cut that Friday too
+	if len(h.store.Reports) != 0 {
+		t.Fatalf("a zone 6 subscriber reported zone 1's cut: %+v", h.store.Reports)
 	}
 }
 

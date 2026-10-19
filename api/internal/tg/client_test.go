@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"io"
+	"net"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -65,8 +66,27 @@ func TestNetworkErrorHidesTheToken(t *testing.T) {
 	c := &Client{BaseURL: srv.URL, Token: "123:SECRET", HTTP: &http.Client{Timeout: 10 * time.Millisecond}}
 	_, err := c.Send(context.Background(), NewHTML(1, "x"))
 	var apiErr *APIError
+	var notSent *NotSentError
 	if err == nil || errors.As(err, &apiErr) || strings.Contains(err.Error(), "SECRET") {
 		t.Fatalf("err=%v", err)
+	}
+	if errors.As(err, &notSent) {
+		t.Fatalf("the request went out before the timeout, so it may have been delivered: %v", err)
+	}
+}
+
+func TestUnreachableIsNotSent(t *testing.T) {
+	ln, err := net.Listen("tcp", "127.0.0.1:0")
+	if err != nil {
+		t.Fatal(err)
+	}
+	addr := ln.Addr().String()
+	ln.Close() // nobody listens there now
+	c := &Client{BaseURL: "http://" + addr, Token: "123:SECRET", HTTP: &http.Client{Timeout: 2 * time.Second}}
+	_, err = c.Send(context.Background(), NewHTML(1, "x"))
+	var refused interface{ Rejected() bool }
+	if err == nil || !errors.As(err, &refused) || !refused.Rejected() || strings.Contains(err.Error(), "SECRET") {
+		t.Fatalf("a refused connection sends nothing, so it can be retried: %v", err)
 	}
 }
 

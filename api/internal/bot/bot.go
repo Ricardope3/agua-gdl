@@ -289,8 +289,11 @@ func (b *Bot) onPayload(ctx context.Context, r User, p string) error {
 	case "REPORT":
 		return b.askReport(ctx, r, 0, rest)
 	case "R":
-		// R:zone:date:answer; buttons sent before the zone was added are R:date:answer.
-		parts, zone := strings.Split(rest, ":"), 0
+		// R:zone:date:answer:signature; older buttons are R:zone:date:answer or R:date:answer.
+		parts, zone, sig := strings.Split(rest, ":"), 0, ""
+		if len(parts) == 4 {
+			sig, parts = parts[3], parts[:3]
+		}
 		if len(parts) == 3 {
 			var err error
 			if zone, err = strconv.Atoi(parts[0]); err != nil {
@@ -299,16 +302,20 @@ func (b *Bot) onPayload(ctx context.Context, r User, p string) error {
 			parts = parts[1:]
 		}
 		if len(parts) == 2 {
-			return b.saveReport(ctx, r, zone, parts[0], parts[1])
+			return b.saveReport(ctx, r, zone, parts[0], parts[1], sig)
 		}
 	case "A":
-		// A:zone:date:answer, «¿Ahorita tienes agua?» on a block's notice or reminder
+		// A:zone:date:answer:signature, «¿Ahorita tienes agua?» on a block's notice or
+		// reminder; older buttons have no signature.
 		parts := strings.Split(rest, ":")
-		if len(parts) != 3 {
+		if len(parts) == 3 {
+			parts = append(parts, "")
+		}
+		if len(parts) != 4 {
 			break
 		}
 		if zone, err := strconv.Atoi(parts[0]); err == nil {
-			return b.saveWater(ctx, r, zone, parts[1], parts[2])
+			return b.saveWater(ctx, r, zone, parts[1], parts[2], parts[3])
 		}
 	}
 	return b.text(ctx, r, msgHelp(b.BaseURL, r.Channel))
@@ -419,9 +426,11 @@ func (b *Bot) subscribedText(channel string, zone int, fresh bool) string {
 	}
 	tonight := b.remindersOn(channel) && now.In(b.Schedule.Location()).Hour() < b.ReminderHour
 	// No reminder comes tonight for tomorrow's cut once tonight's run has passed, or when
-	// tomorrow continues a block: warn about it here.
+	// tomorrow continues a block; nor for the rest of a block that started today: warn here.
 	if b.Schedule.IsCut(zone, tomorrow) && !(tonight && b.Schedule.StartsBlock(zone, tomorrow)) {
 		info.cutTomorrow = b.Schedule.Block(zone, tomorrow)
+	} else if block := b.Schedule.Block(zone, today); len(block) > 1 {
+		info.cutsLeft = block[1:]
 	}
 	// The next message is a block's notice two days before (Telegram only), else its reminder
 	// the evening before, whichever is still ahead.
@@ -496,12 +505,16 @@ func (b *Bot) askReport(ctx context.Context, r User, zone int, date string) erro
 	}
 	choices := make([]Choice, len(reportAnswers))
 	for i, a := range reportAnswers {
-		choices[i] = Choice{ID: prefix + a.key, Title: a.title}
+		id := prefix + a.key
+		if zone > 0 {
+			id = signed(id, r.ID, "R", zone, date)
+		}
+		choices[i] = Choice{ID: id, Title: a.title}
 	}
 	return b.reply(ctx, r, Reply{Text: msgAskReport(rotation.DateES(d)), Button: "Elegir respuesta", Choices: choices})
 }
 
-func (b *Bot) saveReport(ctx context.Context, r User, zone int, date, answer string) error {
+func (b *Bot) saveReport(ctx context.Context, r User, zone int, date, answer, sig string) error {
 	if !slices.ContainsFunc(reportAnswers, func(a struct{ key, title string }) bool { return a.key == answer }) {
 		return b.text(ctx, r, msgHelp(b.BaseURL, r.Channel))
 	}
@@ -517,6 +530,8 @@ func (b *Bot) saveReport(ctx context.Context, r User, zone int, date, answer str
 	}
 	if zone == 0 {
 		zone = s.Zone
+	} else if !zoneTrusted(r.ID, "R", zone, date, sig, s.Zone) {
+		return b.text(ctx, r, msgReportClosed) // made-up callback data for another zone
 	}
 	d, err := b.Schedule.ParseDate(date)
 	today := b.Schedule.Day(b.Now())
@@ -536,7 +551,7 @@ func (b *Bot) saveReport(ctx context.Context, r User, zone int, date, answer str
 
 // saveWater keeps an answer to «¿Ahorita tienes agua?» about the block of cuts starting on
 // date, from its notice two days before until the block's last day.
-func (b *Bot) saveWater(ctx context.Context, r User, zone int, date, answer string) error {
+func (b *Bot) saveWater(ctx context.Context, r User, zone int, date, answer, sig string) error {
 	i := slices.IndexFunc(waterAnswers, func(a struct{ key, title, thanks string }) bool { return a.key == answer })
 	if i < 0 || r.ID == "" {
 		return b.text(ctx, r, msgHelp(b.BaseURL, r.Channel))
@@ -547,6 +562,9 @@ func (b *Bot) saveWater(ctx context.Context, r User, zone int, date, answer stri
 	}
 	if !ok {
 		return b.welcome(ctx, r)
+	}
+	if !zoneTrusted(r.ID, "A", zone, date, sig, s.Zone) {
+		return b.text(ctx, r, msgReportClosed) // made-up callback data for another zone
 	}
 	d, err := b.Schedule.ParseDate(date)
 	block := b.Schedule.Block(zone, d)

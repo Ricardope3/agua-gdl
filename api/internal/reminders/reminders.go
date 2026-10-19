@@ -300,17 +300,26 @@ func (r *Runner) sleep(ctx context.Context, d time.Duration) error {
 	}
 }
 
-// sendTelegram waits out Telegram's "too many requests" a few times: a 429 means
-// the message wasn't sent, so trying again can't duplicate it.
-// Waits stop at shutdown (ctx); requests use sendCtx, which doesn't.
+// sendTelegram waits out Telegram's "too many requests" a few times, and a network blip
+// that kept the request from going out: neither sent the message, so trying again can't
+// duplicate it. Waits stop at shutdown (ctx); requests use sendCtx, which doesn't.
 func (r *Runner) sendTelegram(ctx, sendCtx context.Context, m tg.Message) error {
 	for attempt := 0; ; attempt++ {
 		_, err := r.Telegram.Send(sendCtx, m)
 		var apiErr *tg.APIError
-		if attempt == 3 || !errors.As(err, &apiErr) || apiErr.Status != 429 {
+		var notSent *tg.NotSentError
+		var wait time.Duration
+		switch {
+		case err == nil || attempt == 3:
+			return err
+		case errors.As(err, &apiErr) && apiErr.Status == 429:
+			wait = time.Duration(min(max(apiErr.RetryAfter, 1), 30)) * time.Second
+		case errors.As(err, &notSent):
+			wait = time.Duration(5<<attempt) * time.Second
+		default:
 			return err
 		}
-		if sleepErr := r.sleep(ctx, time.Duration(min(max(apiErr.RetryAfter, 1), 30))*time.Second); sleepErr != nil {
+		if sleepErr := r.sleep(ctx, wait); sleepErr != nil {
 			return errors.Join(err, sleepErr)
 		}
 	}

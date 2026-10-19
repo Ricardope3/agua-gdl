@@ -139,6 +139,9 @@ func run(log *slog.Logger) error {
 	}
 
 	var client *wa.Client
+	if cfg.TGWebhookSecret != "" {
+		bot.SignButtons(cfg.TGWebhookSecret) // before the reminders, which carry answer buttons
+	}
 	b := &bot.Bot{Store: db, Schedule: sched, Zones: zones, Colonias: cols,
 		BaseURL: cfg.BaseURL, PhoneNumberID: cfg.WAPhoneNumberID, ReminderHour: cfg.ReminderHour,
 		RemindersOn: cfg.RemindersEnabled, NightCap: cfg.DailyCap, Now: time.Now, Log: log}

@@ -10,7 +10,9 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/http/httptrace"
 	"net/url"
+	"sync/atomic"
 )
 
 type Client struct {
@@ -38,12 +40,24 @@ func (e *APIError) Permanent() bool {
 
 func (e *APIError) Error() string { return fmt.Sprintf("tg: %d: %.200s", e.Status, e.Description) }
 
+// NotSentError is a request that never reached Telegram: resolving, connecting or the TLS
+// handshake failed, so sending it again can't deliver a message twice.
+type NotSentError struct{ Err error }
+
+func (e *NotSentError) Error() string { return e.Err.Error() }
+func (e *NotSentError) Unwrap() error { return e.Err }
+
+// Rejected reports that nothing was sent, like a refusal: the attempt may be retried.
+func (e *NotSentError) Rejected() bool { return true }
+
 // Call invokes a Bot API method and decodes its result into out, if given.
 func (c *Client) Call(ctx context.Context, method string, params, out any) error {
 	body, err := json.Marshal(params)
 	if err != nil {
 		return err
 	}
+	var connected atomic.Bool
+	ctx = httptrace.WithClientTrace(ctx, &httptrace.ClientTrace{GotConn: func(httptrace.GotConnInfo) { connected.Store(true) }})
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, c.BaseURL+"/bot"+c.Token+"/"+method, bytes.NewReader(body))
 	if err != nil {
 		return errors.New("tg: bad request URL") // the URL holds the token: never echo it
@@ -54,6 +68,9 @@ func (c *Client) Call(ctx context.Context, method string, params, out any) error
 		var ue *url.Error
 		if errors.As(err, &ue) {
 			err = ue.Err
+		}
+		if !connected.Load() {
+			err = &NotSentError{Err: err} // no connection, so no request
 		}
 		return fmt.Errorf("tg: %s: %w", method, err)
 	}
