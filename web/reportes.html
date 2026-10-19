@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Hay agua en tu colonia? · Agua GDL</title>
+<meta name="description" content="Mapa de reportes de vecinos: cómo está el agua en cada colonia de Guadalajara en las últimas 24 horas. Reporta la tuya en tres toques, sin cuenta y de forma anónima.">
+<link rel="canonical" href="https://aguagdl.com/reportes">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aguagdl.com/reportes">
+<meta property="og:title" content="¿Hay agua en tu colonia? Reportes de vecinos en Guadalajara">
+<meta property="og:description" content="Cómo está el agua en cada colonia en las últimas 24 horas, según los vecinos. Reporta la tuya: sin cuenta y anónimo. El agua de Guadalajara llega sucia y racionada; no lo arregla un acueducto privado, lo arregla sanear los ríos.">
+<meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#06141d" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
+<style>
+:root {
+  --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
+  --brand: #0284c7; --brand-deep: #0369a1; --link: #0369a1; --on-brand: #ffffff;
+  --primary: #0284c7; --on-primary: #ffffff; --ring: #0284c766;
+  --shadow: 0 1px 2px rgb(3 105 161 / .08);
+  --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --warn: #8a5a00; --warn-bg: #fff3d6;
+  --dry: #d1352c; --low: #d79a00; --ok: #2b9150; --none: #c9d8e2;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #06141d; --surface: #0a1c28; --subtle: #0c3149; --fg: #f0f9ff; --muted: #9bb8ca; --line: #18384d;
+    --link: #7dd3fc; --primary: #0ea5e9; --on-primary: #ffffff; --ring: #38bdf866; --brand: #0ea5e9; --brand-deep: #0284c7;
+    --warn: #ffd27a; --warn-bg: #3a2c10;
+    --dry: #f06a61; --low: #f2b84b; --ok: #5cc98a; --none: #2a4558;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+[hidden] { display: none !important }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased }
+a { color: var(--link); text-underline-offset: 3px }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); border-radius: 6px }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px }
+header.top { position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px; background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); margin: 0 -16px 20px; padding: 12px 16px }
+.brand { display: inline-flex; align-items: center; gap: 8px; color: var(--fg); text-decoration: none; font-weight: 600; font-size: 1rem; letter-spacing: -.01em }
+.brand img { width: 20px; height: auto }
+.site-nav { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; margin: 0 -6px }
+.site-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 8px; color: var(--muted); font-size: .9rem; font-weight: 500; text-decoration: none; white-space: nowrap }
+.site-nav a:hover { color: var(--fg); background: var(--subtle) }
+@media (max-width: 980px) { .site-nav .i { display: none } }
+@media (max-width: 720px) { .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center } .site-nav a { flex: 1 1 22%; justify-content: center } }
+@media (max-width: 560px) { header.top { position: static; padding: 8px 16px } .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center; gap: 2px } .site-nav a { flex: 1 1 22%; justify-content: center; padding: 4px; font-size: .82rem; line-height: 1.35 } .site-nav .i { display: none } }
+h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.08; letter-spacing: -.03em; font-weight: 700; margin: 12px 0 10px; text-wrap: balance }
+.lede { font-size: 1.05rem; color: var(--muted); margin: 0 0 16px; max-width: 64ch }
+.i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
+.i { --ic: var(--brand) }
+.i:has(use[href$="#map-pin"]) { --ic: #e11d48 }
+.i:has(use[href$="#send"]) { --ic: #229ed9 }
+@media (prefers-color-scheme: dark) { .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#send"]) { --ic: #2aabee } }
+.site-nav .i, p > .i, h2 > .i { color: var(--ic) }
+.button { display: inline-flex; align-items: center; gap: 6px; background: var(--primary); color: var(--on-primary); font: inherit; font-weight: 500; font-size: .95rem; text-decoration: none; padding: 10px 16px; border: 1px solid transparent; border-radius: 8px; box-shadow: var(--shadow); cursor: pointer; transition: background .15s }
+.button:hover { background: var(--brand-deep) }
+.button:disabled { opacity: .6; cursor: progress }
+.button.alt { background: color-mix(in srgb, var(--brand) 12%, var(--surface)); color: var(--link); border: 1.5px solid var(--brand) }
+.button.alt:hover { background: color-mix(in srgb, var(--brand) 22%, var(--surface)) }
+.button .i { color: inherit }
+.note { margin: 10px 0 0; font-size: .92rem; color: var(--muted); max-width: 80ch }
+.finder { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; margin: 0 0 12px }
+.search { position: relative; flex: 1 1 320px; min-width: 0 }
+.search label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap }
+.search input { width: 100%; font: inherit; font-size: 1.05rem; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 40px 12px 42px; box-shadow: var(--shadow) }
+.search input:focus-visible { border-color: var(--brand) }
+.search > .i { position: absolute; left: 14px; top: 15px; color: var(--muted) }
+.search .clear { position: absolute; right: 6px; top: 7px; width: 36px; height: 36px; display: grid; place-items: center; font: inherit; color: var(--muted); background: none; border: 0; border-radius: 8px; cursor: pointer }
+.search .clear:hover { color: var(--fg); background: var(--subtle) }
+.suggest { position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 1100; margin: 0; padding: 4px; list-style: none; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 24px rgb(3 14 22 / .18); max-height: 320px; overflow: auto }
+.suggest li { padding: 8px 10px; border-radius: 8px; cursor: pointer; line-height: 1.35 }
+.suggest li[aria-selected="true"], .suggest li:hover { background: var(--subtle) }
+.suggest .sub { display: block; color: var(--muted); font-size: .85rem }
+.mapwrap { position: relative }
+.bigmap { height: clamp(420px, 70vh, 740px); border-radius: 12px; border: 1px solid var(--line); background: var(--subtle) }
+.bigmap:focus-visible { outline: 3px solid var(--brand) }
+@media (prefers-color-scheme: dark) { .bigmap .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) } .bigmap.leaflet-container { background: #0c1e2c } }
+.map-label { background: var(--surface); color: var(--fg); border: 1px solid var(--line); font: 600 13px/1.3 var(--font); box-shadow: var(--shadow); padding: 6px 8px }
+.map-label::before { display: none }
+.map-label .sub { display: block; font-weight: 500; color: var(--muted) }
+.donut { background: none; border: 0 }
+.donut svg { display: block; filter: drop-shadow(0 1px 2px rgb(3 14 22 / .35)) }
+.pin { background: var(--surface); border: 3px solid var(--fg); border-radius: 50%; width: 16px; height: 16px; box-shadow: var(--shadow) }
+.card { position: absolute; z-index: 1200; top: 12px; left: 12px; width: min(380px, calc(100% - 24px)); max-height: calc(100% - 24px); overflow: auto; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; box-shadow: 0 10px 30px rgb(3 14 22 / .22) }
+@media (max-width: 760px) { .card { top: auto; bottom: 10px; left: 10px; width: calc(100% - 20px); max-height: 62% } }
+.card h2 { margin: 0 32px 2px 0; font-size: 1.3rem; line-height: 1.2; letter-spacing: -.02em; color: var(--link); text-transform: uppercase }
+.card .where { margin: 0 0 12px; color: var(--muted) }
+.card .close { position: absolute; top: 10px; right: 10px; width: 34px; height: 34px; display: grid; place-items: center; font: inherit; color: var(--muted); background: none; border: 0; border-radius: 8px; cursor: pointer }
+.card .close:hover { color: var(--fg); background: var(--subtle) }
+.card .none { margin: 0 0 12px; color: var(--muted) }
+.card .thanks { margin: 12px 0 0; padding: 10px 12px; border-radius: 10px; background: color-mix(in srgb, var(--ok) 14%, var(--surface)); border-left: 5px solid var(--ok); font-weight: 500 }
+.card .fail { margin: 10px 0 0; padding: 10px 12px; border-radius: 10px; background: var(--warn-bg); border-left: 5px solid var(--warn) }
+.rbar { display: flex; height: 10px; border-radius: 5px; overflow: hidden; background: var(--none); margin: 6px 0 8px }
+.rbar span { display: block; height: 100% }
+.rbar .s { background: var(--dry) } .rbar .b { background: var(--low) } .rbar .c { background: var(--ok) }
+.split { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0; padding: 0; list-style: none; font-size: .95rem }
+.split li { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap }
+.split b { font-variant-numeric: tabular-nums }
+.split small { color: var(--muted) }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--dc) }
+.dry { --dc: var(--dry) } .low { --dc: var(--low) } .ok { --dc: var(--ok) } .nodata { --dc: var(--none) }
+.quality { margin: 8px 0 0; font-size: .9rem; color: var(--muted) }
+.report { margin: 14px 0 0; border-top: 1px solid var(--line); padding-top: 14px; display: grid; gap: 12px }
+.report fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 8px }
+.report legend { font-weight: 600; margin: 0 0 4px; padding: 0 }
+.opts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px }
+.opt { position: relative; display: grid; gap: 2px; justify-items: center; text-align: center; padding: 10px 6px; border: 1.5px solid var(--line); border-radius: 12px; cursor: pointer; font-weight: 600; line-height: 1.25; background: var(--surface) }
+.opt small { font-weight: 400; color: var(--muted); font-size: .8rem }
+.opt .dot { width: 14px; height: 14px; margin-bottom: 4px }
+.opt input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer }
+.opt:has(input:checked) { border-color: var(--dc); background: color-mix(in srgb, var(--dc) 14%, var(--surface)) }
+.opt:has(input:focus-visible) { box-shadow: 0 0 0 3px var(--ring) }
+.checks { display: flex; flex-wrap: wrap; gap: 6px 14px }
+.checks label { display: inline-flex; align-items: center; gap: 6px; font-size: .95rem; cursor: pointer }
+.checks input { width: 17px; height: 17px; margin: 0; accent-color: var(--primary) }
+.report fieldset:disabled { opacity: .45 }
+.report .small { margin: 0; font-size: .85rem; color: var(--muted) }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; justify-content: center; margin: 10px 0 0; padding: 0; list-style: none; font-size: .95rem }
+.legend li { display: inline-flex; align-items: center; gap: 7px }
+.legend .dot { width: 14px; height: 14px; border: 1px solid rgb(0 0 0 / .2) }
+section { padding: 30px 0 8px }
+h2.sec { font-size: 1.4rem; line-height: 1.2; margin: 0 0 12px; letter-spacing: -.02em; font-weight: 600; text-wrap: balance }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; box-shadow: var(--shadow) }
+.headline { font-size: 1.25rem; font-weight: 700; margin: 0 }
+.headline b { font-variant-numeric: tabular-nums }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 14px 0 0 }
+@media (max-width: 560px) { .tiles { grid-template-columns: 1fr } }
+.tile { background: var(--subtle); border-radius: 12px; padding: 12px 14px }
+.tile b { display: block; font-size: 1.6rem; line-height: 1.1; font-variant-numeric: tabular-nums }
+.tile span { color: var(--muted); font-size: .9rem }
+.cta { margin: 16px 0 0; padding-top: 16px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between }
+.cta p { margin: 0; max-width: 52ch }
+.cta strong { display: block; font-size: 1.1rem }
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--surface) }
+table { border-collapse: collapse; width: 100%; min-width: 440px; font-size: .95rem }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line) }
+tr:last-child td { border-bottom: 0 }
+thead th { font-size: .8rem; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); background: var(--subtle) }
+td.n { font-variant-numeric: tabular-nums }
+td.few { color: var(--muted) }
+ul.plain { padding-left: 1.3em; margin: 0 0 14px }
+ul.plain li { margin: 0 0 8px; max-width: 70ch }
+footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .85rem }
+footer p { margin: 0 0 8px; max-width: 70ch }
+</style>
+<script src="/theme.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
+    <nav class="site-nav" aria-label="Secciones">
+      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#bell"/></svg>Avisos</a>
+      <a href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg>Mi zona</a>
+      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#newspaper"/></svg>Noticias</a>
+      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#landmark"/></svg>Congreso</a>
+      <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#bar-chart"/></svg>Cuentas</a>
+      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#droplet"/></svg>Contaminación</a>
+      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#heart"/></svg>Antisionismo</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>¿Hay agua en tu colonia?</h1>
+    <p class="lede">Lo que reportan los vecinos en las últimas 24 horas. Toca tu colonia para ver cómo está y reportar la tuya: sin cuenta, anónimo y en tres toques. No son datos oficiales.</p>
+
+    <div class="finder">
+      <form class="search" id="buscar" role="search">
+        <label for="q">Busca tu colonia, municipio o código postal</label>
+        <svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#search"/></svg>
+        <input id="q" name="q" type="search" autocomplete="off" spellcheck="false" placeholder="Por ejemplo: Oblatos o 44700" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugerencias">
+        <button class="clear" type="button" id="limpiar" aria-label="Borrar la búsqueda" hidden><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        <ul class="suggest" id="sugerencias" role="listbox" aria-label="Colonias encontradas" hidden></ul>
+      </form>
+      <button class="button" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg>Usar mi ubicación</button>
+    </div>
+
+    <div class="mapwrap">
+      <div id="mapa" class="bigmap" role="region" aria-label="Mapa de reportes de agua por colonia" tabindex="0"></div>
+      <aside id="ficha" class="card" aria-live="polite" hidden></aside>
+    </div>
+    <ul class="legend" aria-label="Colores del mapa">
+      <li><span class="dot dry"></span>Mayoría sin agua</li>
+      <li><span class="dot low"></span>Baja presión o mixto</li>
+      <li><span class="dot ok"></span>Mayoría con agua</li>
+      <li><span class="dot nodata"></span>Sin reportes</li>
+    </ul>
+    <p class="note" id="estado" aria-live="polite">Cargando el mapa de colonias…</p>
+
+    <section aria-labelledby="resumen">
+      <div class="panel">
+        <h2 class="headline" id="resumen"><b id="total">—</b> <span id="total-txt">reportes de agua en las últimas 24 horas</span></h2>
+        <div class="rbar" id="barra" aria-hidden="true"><span class="s"></span><span class="b"></span><span class="c"></span></div>
+        <ul class="split" id="reparto"></ul>
+        <div class="tiles">
+          <div class="tile"><b id="t-colonias">—</b><span id="t-colonias-txt">colonias con reportes</span></div>
+          <div class="tile"><b id="t-secas">—</b><span id="t-secas-txt">colonias con mayoría sin agua</span></div>
+          <div class="tile"><b id="t-historico">—</b><span id="t-historico-txt">reportes desde que abrió el mapa</span></div>
+        </div>
+        <p class="note" id="actualizado"></p>
+        <div class="cta">
+          <p><strong>¿Cómo está el agua en tu colonia?</strong>Tu reporte ayuda a ver dónde falta y a exigir que se atienda.</p>
+          <button class="button" type="button" id="reportar"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg>Reportar mi colonia</button>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="bot">
+      <h2 class="sec" id="bot">Lo que responden en el bot de Telegram</h2>
+      <p class="note" style="margin-top:0">Los avisos de <a href="/avisos">Agua GDL en Telegram</a> preguntan «¿Ahorita tienes agua?», y REPORTAR pregunta cómo regresó el agua después del corte. Esto respondieron en las últimas 24 horas, por zona de la rotación. <span id="bot-min"></span></p>
+      <div class="tablewrap"><table>
+        <thead><tr><th scope="col">Zona</th><th scope="col">Respuestas</th><th scope="col">Sin agua</th><th scope="col">Baja presión</th><th scope="col">Con agua</th><th scope="col">Turbia</th></tr></thead>
+        <tbody id="bot-filas"><tr><td colspan="6" class="few">Cargando…</td></tr></tbody>
+      </table></div>
+    </section>
+
+    <section aria-labelledby="como">
+      <h2 class="sec" id="como">Cómo funciona</h2>
+      <ul class="plain">
+        <li><strong>Es anónimo.</strong> De cada reporte guardamos la colonia, tu respuesta, si sale turbia, con olor o con sedimento, y la hora. No guardamos tu nombre, tu teléfono, tu ubicación ni tu dirección IP; tu ubicación solo se usa en tu navegador para encontrar tu colonia.</li>
+        <li><strong>Para evitar abusos</strong>, el servidor recuerda por una hora, solo en memoria, cuántos reportes llegan de cada conexión: hasta 3 por colonia y 20 en total por hora.</li>
+        <li><strong>Son reportes de vecinos, no mediciones ni análisis de laboratorio.</strong> Reporta más quien no tiene agua, así que el mapa muestra dónde falta, no cuánta ciudad está sin agua.</li>
+        <li><strong>Las colonias y sus contornos</strong> son los del <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa de la rotación del SIAPA</a>. Para saber tu zona y tus días de corte, ve <a href="/mapa">el mapa de la rotación</a>.</li>
+        <li>Si no tienes agua, pide una pipa al SIAPA por WhatsApp (SIAPABOT 33 51 64 44 40) o al 073, y repórtalo ahí también: si no se reporta, no queda registro.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con el Gobierno de Jalisco.</p>
+    <p><a href="/">Inicio</a> · <a href="/mapa">Mapa de la rotación</a> · <a href="/avisos">Avisos</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
+  </footer>
+</div>
+<script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script src="/mapa.js"></script>
+<script>
+(() => {
+  "use strict";
+  const M = window.aguaMapa;
+  const API = (() => {
+    const o = new URLSearchParams(location.search).get("api");
+    try {
+      const u = new URL(o);
+      if (u.hostname === "localhost" || u.hostname === "127.0.0.1") return u.origin;
+    } catch {}
+    return "https://api.aguagdl.com";
+  })();
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const phone = () => matchMedia("(max-width: 760px)").matches;
+  const { norm } = M;
+  const $ = (id) => document.getElementById(id);
+  function el(tag, attrs, ...kids) {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs || {})) n.setAttribute(k, v);
+    n.append(...kids.filter((k) => k != null && k !== false));
+    return n;
+  }
+  const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const COLORS = { dry: css("--dry"), low: css("--low"), ok: css("--ok"), none: css("--none"), ink: css("--fg"), surface: css("--surface"), muted: css("--muted") };
+  const keyOf = (p) => `${p.n}|${p.m}|${p.cp}`;
+  const fmt = (n) => n.toLocaleString("es-MX");
+  const pct = (n, t) => t ? Math.round(100 * n / t) : 0;
+  const totalOf = (c) => c.sin_agua + c.baja + c.con_agua;
+  // statusOf: the colour a colonia gets: most say no water, most say water, or anything in between.
+  const statusOf = (c) => !c ? null : 2 * c.sin_agua > totalOf(c) ? "dry" : 2 * c.con_agua > totalOf(c) ? "ok" : "low";
+  const timeES = (iso) => new Date(iso).toLocaleTimeString("es-MX", { hour: "numeric", minute: "2-digit", timeZone: "America/Mexico_City" });
+  function ago(iso) {
+    const min = Math.max(0, Math.round((Date.now() - Date.parse(iso)) / 60000));
+    if (min < 1) return "hace un momento";
+    if (min < 60) return `hace ${min} min`;
+    const h = Math.round(min / 60);
+    return `hace ${h} ${h === 1 ? "hora" : "horas"}`;
+  }
+
+  const status = $("estado");
+  const say = (...kids) => status.replaceChildren(...kids);
+  async function call(path, opts) {
+    const timeout = typeof AbortSignal.timeout === "function" ? { signal: AbortSignal.timeout(15000) } : {};
+    const res = await fetch(API + path, { ...timeout, ...opts });
+    if (!res.ok) { const e = new Error("HTTP " + res.status); e.status = res.status; throw e; }
+    return res.json();
+  }
+
+  // The zoom buttons go top right: the colonia card opens top left.
+  const map = L.map("mapa", { preferCanvas: true, zoomSnap: 0.25, zoomControl: false });
+  L.control.zoom({ position: "topright" }).addTo(map);
+  M.tiles(L, map);
+  map.setView([20.66, -103.37], 11);
+
+  let byKey = new Map();      // colonia key → its counts in the last 24 h
+  let summary = null;
+
+  Promise.all([M.load(), call("/v1/reportes").catch(() => null)])
+    .then(([data, s]) => build(data, s))
+    .catch(() => say("No pudimos cargar el mapa. Intenta de nuevo en unos minutos."));
+
+  function build({ colonias, zonas }, first) {
+    const features = new Map();   // key → the colonia's outlines (a few colonias have several)
+    for (const f of colonias) {
+      const k = keyOf(f.properties);
+      if (!features.has(k)) features.set(k, []);
+      features.get(k).push(f);
+    }
+    const zoneColors = M.COLORS[aguaDark() ? "dark" : "light"];
+    const zoneLayer = L.geoJSON({ type: "FeatureCollection", features: zonas }, {
+      interactive: false,
+      style: (f) => ({ color: zoneColors[f.properties.z], weight: 1.5, dashArray: "5 4", fill: false, opacity: 0.7 }),
+    }).addTo(map);
+    const home = zoneLayer.getBounds().pad(0.04);
+    map.fitBounds(home);
+    const styleOf = (f) => {
+      const c = byKey.get(keyOf(f.properties));
+      const s = statusOf(c);
+      if (!s) return { color: COLORS.muted, weight: 0.4, opacity: 0.5, fillColor: COLORS.none, fillOpacity: 0.06 };
+      return { color: COLORS[s], weight: 1, opacity: 0.9, fillColor: COLORS[s], fillOpacity: Math.min(0.65, 0.3 + 0.07 * totalOf(c)) };
+    };
+    let closedAt = 0;
+    const layer = L.geoJSON({ type: "FeatureCollection", features: colonias }, {
+      renderer: L.canvas({ padding: 0.5 }),
+      style: styleOf,
+      onEachFeature: (f, l) => {
+        l.bindTooltip(() => {
+          const c = byKey.get(keyOf(f.properties));
+          return el("span", {}, `${f.properties.n} · ${f.properties.m}`,
+            el("span", { class: "sub" }, c ? `${totalOf(c)} ${totalOf(c) === 1 ? "reporte" : "reportes"} en 24 h` : "Sin reportes en 24 h"));
+        }, { sticky: true, className: "map-label" });
+        l.on("click", () => { if (Date.now() - closedAt > 500) select(f, { fit: false }); });
+      },
+    }).addTo(map);
+
+    // Rings with the count, like a donut chart of the answers, over the colonias with reports.
+    const markers = L.layerGroup().addTo(map);
+    function donut(c) {
+      const t = totalOf(c), R = 15, C = 2 * Math.PI * R;
+      let off = 0, segs = "";
+      for (const [k, color] of [["sin_agua", COLORS.dry], ["baja", COLORS.low], ["con_agua", COLORS.ok]]) {
+        const len = C * c[k] / t;
+        if (!len) continue;
+        segs += `<circle r="${R}" cx="20" cy="20" fill="none" stroke="${color}" stroke-width="6" stroke-dasharray="${len} ${C - len}" stroke-dashoffset="${-off}" transform="rotate(-90 20 20)"/>`;
+        off += len;
+      }
+      const n = t > 99 ? "99+" : String(t);
+      return `<svg viewBox="0 0 40 40" width="40" height="40" aria-hidden="true"><circle r="12" cx="20" cy="20" fill="${COLORS.surface}"/>${segs}<text x="20" y="24" text-anchor="middle" font-family="system-ui, sans-serif" font-size="${n.length > 2 ? 10 : 12}" font-weight="700" fill="${COLORS.ink}">${n}</text></svg>`;
+    }
+    function drawMarkers() {
+      markers.clearLayers();
+      const show = map.getZoom() >= 13 || byKey.size <= 60;
+      if (!show) return;
+      for (const [k, c] of byKey) {
+        const fs = features.get(k);
+        if (!fs) continue;
+        const center = L.geoJSON(fs[0]).getBounds().getCenter();
+        const m = L.marker(center, { icon: L.divIcon({ className: "donut", html: donut(c), iconSize: [40, 40] }), keyboard: false, title: `${fs[0].properties.n}: ${totalOf(c)} reportes` });
+        m.on("click", () => select(fs[0]));
+        markers.addLayer(m);
+      }
+    }
+    map.on("zoomend", drawMarkers);
+
+    function apply(s) {
+      if (!s) return;
+      summary = s;
+      byKey = new Map(s.colonias.map((c) => [`${c.n}|${c.m}|${c.cp}`, c]));
+      layer.setStyle(styleOf);
+      drawMarkers();
+      renderSummary(s);
+      if (selected) renderCard(selected);
+    }
+
+    // The colonia card: its reports in the last 24 h and the form to add one.
+    const card = $("ficha");
+    let selected = null;
+    let marks = [];
+    function clearSelection() {
+      selected = null;
+      closedAt = Date.now();
+      for (const g of marks) g.remove();
+      marks = [];
+      card.hidden = true;
+      card.replaceChildren();
+      history.replaceState(null, "", location.pathname + (location.search.includes("api=") ? `?api=${encodeURIComponent(API)}` : ""));
+    }
+    function select(f, { fit = true, form = false } = {}) {
+      selected = f;
+      for (const g of marks) g.remove();
+      const all = features.get(keyOf(f.properties)) || [f];
+      const gj = { type: "FeatureCollection", features: all.map((x) => ({ type: "Feature", geometry: x.geometry, properties: {} })) };
+      marks = [
+        L.geoJSON(gj, { interactive: false, style: { color: COLORS.surface, weight: 8, fill: false } }).addTo(map),
+        L.geoJSON(gj, { interactive: false, style: { color: COLORS.ink, weight: 3.5, fill: false } }).addTo(map),
+      ];
+      if (fit) {
+        const pad = phone() ? { paddingTopLeft: [24, 24], paddingBottomRight: [24, Math.round(map.getSize().y * 0.6)] } : { paddingTopLeft: [410, 24], paddingBottomRight: [24, 24] };
+        const opts = { ...pad, maxZoom: 15, animate: !reduced, duration: 0.7 };
+        const b = marks[1].getBounds();
+        if (reduced) map.fitBounds(b, opts); else map.flyToBounds(b, opts);
+      }
+      renderCard(f, form);
+      const p = f.properties;
+      const q = new URLSearchParams({ q: p.n, m: p.m, cp: p.cp });
+      if (location.search.includes("api=")) q.set("api", API);
+      history.replaceState(null, "", `${location.pathname}?${q}`);
+    }
+
+    // A report from this browser stays marked for an hour, so the card thanks instead of asking again.
+    const SEEN = 60 * 60 * 1000;
+    const seenKey = (k) => `reporte:${k}`;
+    const reportedAt = (k) => { try { return Number(localStorage.getItem(seenKey(k))) || 0; } catch { return 0; } };
+    const remember = (k) => { try { localStorage.setItem(seenKey(k), String(Date.now())); } catch {} };
+
+    function countsBlock(c) {
+      const t = totalOf(c);
+      const bar = el("div", { class: "rbar", "aria-hidden": "true" });
+      for (const [k, cls] of [["sin_agua", "s"], ["baja", "b"], ["con_agua", "c"]]) {
+        const s = el("span", { class: cls });
+        s.style.width = `${100 * c[k] / t}%`;
+        bar.append(s);
+      }
+      const q = [["turbia", "turbia"], ["olor", "con olor"], ["sedimento", "con sedimento o color raro"]].filter(([k]) => c[k]).map(([k, w]) => `${c[k]} ${w}`);
+      return [
+        el("p", { style: "margin:0;font-weight:600" }, `${fmt(t)} ${t === 1 ? "reporte" : "reportes"} en las últimas 24 horas`),
+        bar,
+        el("ul", { class: "split" },
+          el("li", {}, el("span", { class: "dot dry" }), "Sin agua ", el("b", {}, fmt(c.sin_agua))),
+          el("li", {}, el("span", { class: "dot low" }), "Baja presión ", el("b", {}, fmt(c.baja))),
+          el("li", {}, el("span", { class: "dot ok" }), "Con agua ", el("b", {}, fmt(c.con_agua)))),
+        q.length ? el("p", { class: "quality" }, `Cuando sale: ${M.joinES(q)}.`) : null,
+        c.ultimo ? el("p", { class: "quality" }, `Último reporte: ${ago(c.ultimo)}.`) : null,
+      ];
+    }
+
+    function renderCard(f, openForm) {
+      const p = f.properties;
+      const k = keyOf(p);
+      const c = byKey.get(k);
+      const close = el("button", { type: "button", class: "close", "aria-label": "Cerrar" }, M.cross());
+      close.addEventListener("click", clearSelection);
+      const kids = [close, el("h2", {}, p.n), el("p", { class: "where" }, `${p.m}${p.cp ? ` · C.P. ${p.cp}` : ""} · ${M.label(p)}`)];
+      if (c) kids.push(...countsBlock(c));
+      else kids.push(el("p", { class: "none" }, "Nadie ha reportado esta colonia en las últimas 24 horas."));
+      const when = reportedAt(k);
+      if (Date.now() - when < 2 * 60 * 1000) {
+        kids.push(el("p", { class: "thanks" }, "¡Gracias! Tu reporte ya está en el mapa."));
+      } else if (Date.now() - when < SEEN) {
+        kids.push(el("p", { class: "thanks" }, `Ya reportaste esta colonia ${ago(new Date(when).toISOString())}. ¡Gracias!`));
+      } else if (openForm) {
+        kids.push(form(f));
+      } else {
+        const b = el("button", { type: "button", class: "button", style: "margin-top:12px" }, "Reportar esta colonia");
+        b.addEventListener("click", () => { renderCard(f, true); const first = card.querySelector('input[name="estado"]'); if (first) first.focus(); });
+        kids.push(b);
+      }
+      card.replaceChildren(...kids);
+      card.hidden = false;
+    }
+
+    function form(f) {
+      const p = f.properties;
+      const opt = (value, cls, title, sub) => el("label", { class: `opt ${cls}` }, el("input", { type: "radio", name: "estado", value, required: "" }), el("span", { class: "dot" }), title, el("small", {}, sub));
+      const check = (name, text) => el("label", {}, el("input", { type: "checkbox", name }), text);
+      const quality = el("fieldset", {}, el("legend", {}, "¿Cómo sale? (opcional)"),
+        el("div", { class: "checks" }, check("turbia", "Turbia"), check("olor", "Con olor"), check("sedimento", "Con sedimento o color raro")));
+      const send = el("button", { type: "submit", class: "button" }, "Enviar reporte");
+      const msg = el("p", { class: "fail", role: "alert", hidden: "" });
+      const fm = el("form", { class: "report" },
+        el("fieldset", {}, el("legend", {}, "¿Cómo está el agua ahorita?"),
+          el("div", { class: "opts" }, opt("sin_agua", "dry", "Sin agua", "No sale nada"), opt("baja", "low", "Baja presión", "Sale poca"), opt("con_agua", "ok", "Con agua", "Sale normal"))),
+        quality, el("div", {}, send), msg,
+        el("p", { class: "small" }, "Es anónimo: guardamos la colonia, tu respuesta y la hora. ", el("a", { href: "/privacidad" }, "Aviso de privacidad"), "."));
+      fm.addEventListener("change", () => {
+        const dry = fm.elements.estado.value === "sin_agua";
+        quality.disabled = dry;
+        if (dry) for (const n of ["turbia", "olor", "sedimento"]) fm.elements[n].checked = false;
+      });
+      fm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const estado = fm.elements.estado.value;
+        if (!estado) { msg.textContent = "Elige si tienes agua, poca o nada."; msg.hidden = false; return; }
+        send.disabled = true;
+        msg.hidden = true;
+        try {
+          const c = await call("/v1/reportes", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ n: p.n, m: p.m, cp: p.cp, estado, turbia: fm.elements.turbia.checked, olor: fm.elements.olor.checked, sedimento: fm.elements.sedimento.checked }),
+          });
+          remember(keyOf(p));
+          byKey.set(keyOf(p), c);
+          layer.setStyle(styleOf);
+          drawMarkers();
+          renderCard(f);
+          call("/v1/reportes").then(apply).catch(() => {});
+        } catch (err) {
+          send.disabled = false;
+          msg.textContent = err.status === 429 ? "Ya llegaron varios reportes seguidos desde tu conexión. Intenta en una hora."
+            : err.status === 503 ? "Llegaron demasiados reportes en la última hora. Intenta de nuevo más tarde."
+            : err.status ? "No pudimos guardar tu reporte. Intenta de nuevo en unos minutos."
+            : "No pudimos enviar tu reporte. Revisa tu conexión e intenta de nuevo.";
+          msg.hidden = false;
+        }
+      });
+      return fm;
+    }
+
+    function renderSummary(s) {
+      const t = s.total;
+      $("total").textContent = fmt(t);
+      $("total-txt").textContent = t === 1 ? "reporte de agua en las últimas 24 horas" : "reportes de agua en las últimas 24 horas";
+      const bar = $("barra");
+      bar.children[0].style.width = `${pct(s.sin_agua, t)}%`;
+      bar.children[1].style.width = `${pct(s.baja, t)}%`;
+      bar.children[2].style.width = t ? `${100 - pct(s.sin_agua, t) - pct(s.baja, t)}%` : "0%";
+      $("reparto").replaceChildren(
+        el("li", {}, el("span", { class: "dot dry" }), "Sin agua ", el("b", {}, fmt(s.sin_agua)), el("small", {}, `${pct(s.sin_agua, t)} %`)),
+        el("li", {}, el("span", { class: "dot low" }), "Baja presión ", el("b", {}, fmt(s.baja)), el("small", {}, `${pct(s.baja, t)} %`)),
+        el("li", {}, el("span", { class: "dot ok" }), "Con agua ", el("b", {}, fmt(s.con_agua)), el("small", {}, `${pct(s.con_agua, t)} %`)));
+      const tile = (id, n, one, many) => { $(id).textContent = fmt(n); $(`${id}-txt`).textContent = n === 1 ? one : many; };
+      tile("t-colonias", s.colonias_con_reportes, "colonia con reportes", "colonias con reportes");
+      tile("t-secas", s.mayormente_sin_agua, "colonia con mayoría sin agua", "colonias con mayoría sin agua");
+      tile("t-historico", s.historico, "reporte desde que abrió el mapa", "reportes desde que abrió el mapa");
+      $("actualizado").textContent = t ? `Actualizado a las ${timeES(s.updated)}`.replace(/\.?$/, ".") : "Todavía no hay reportes en las últimas 24 horas. Sé la primera persona en reportar tu colonia.";
+      $("bot-min").textContent = `El detalle se muestra desde ${s.bot.min} respuestas por zona, para que nadie pueda ser identificado.`;
+      const rows = s.bot.zonas.map((z) => z.detalle
+        ? el("tr", {}, el("td", {}, `Zona ${z.zone}`), el("td", { class: "n" }, fmt(z.respuestas)), el("td", { class: "n" }, fmt(z.detalle.sin_agua)), el("td", { class: "n" }, fmt(z.detalle.baja)), el("td", { class: "n" }, fmt(z.detalle.con_agua)), el("td", { class: "n" }, fmt(z.detalle.turbia)))
+        : el("tr", {}, el("td", {}, `Zona ${z.zone}`), el("td", { class: "n" }, fmt(z.respuestas)), el("td", { class: "few", colspan: "4" }, "Todavía pocas respuestas")));
+      $("bot-filas").replaceChildren(...(rows.length ? rows : [el("tr", {}, el("td", { colspan: "6", class: "few" }, "Todavía no hay respuestas en las últimas 24 horas."))]));
+    }
+
+    if (first) { apply(first); say(""); }
+    else say("No pudimos cargar los reportes. El mapa funciona; intenta de nuevo en unos minutos.");
+    setInterval(() => { if (!document.hidden) call("/v1/reportes").then(apply).catch(() => {}); }, 120000);
+
+    // Search over name, municipio and postal code, in the browser.
+    const input = $("q"), clear = $("limpiar"), list = $("sugerencias"), formSearch = $("buscar");
+    const index = colonias.map((f) => ({ f, key: norm(`${f.properties.n} ${f.properties.m} ${f.properties.cp}`), name: norm(f.properties.n), cp: f.properties.cp }));
+    function matches(q) {
+      const nq = norm(q);
+      if (!nq) return [];
+      const tokens = nq.split(" ");
+      const hits = index.filter((it) => tokens.every((t) => it.key.includes(t)));
+      const rank = (it) => (it.name === nq ? 0 : it.cp === nq ? 1 : it.name.startsWith(nq) ? 2 : it.key.startsWith(nq) ? 3 : 4);
+      hits.sort((a, b) => rank(a) - rank(b) || a.name.localeCompare(b.name) || a.f.properties.m.localeCompare(b.f.properties.m));
+      const seen = new Set();
+      return hits.map((it) => it.f).filter((f) => { const k = keyOf(f.properties); if (seen.has(k)) return false; seen.add(k); return true; });
+    }
+    let options = [], active = -1;
+    function closeList() {
+      list.hidden = true;
+      list.replaceChildren();
+      input.setAttribute("aria-expanded", "false");
+      input.removeAttribute("aria-activedescendant");
+      options = [];
+      active = -1;
+    }
+    function pick(f) {
+      input.value = f.properties.n;
+      closeList();
+      select(f, { form: wantsForm });
+      wantsForm = false;
+      if (phone()) input.blur();
+    }
+    function setActive(i) {
+      active = i;
+      [...list.children].forEach((li, k) => li.setAttribute("aria-selected", String(k === i)));
+      if (i >= 0) { input.setAttribute("aria-activedescendant", list.children[i].id); list.children[i].scrollIntoView({ block: "nearest" }); }
+      else input.removeAttribute("aria-activedescendant");
+    }
+    function suggest() {
+      const q = input.value.trim();
+      clear.hidden = !q;
+      options = matches(q).slice(0, 8);
+      if (!options.length) { closeList(); return; }
+      list.replaceChildren(...options.map((f, i) => {
+        const p = f.properties;
+        const c = byKey.get(keyOf(p));
+        const li = el("li", { role: "option", id: `op-${i}`, "aria-selected": "false" }, el("strong", {}, p.n),
+          el("span", { class: "sub" }, `${p.m}${p.cp ? ` · C.P. ${p.cp}` : ""} · ${c ? `${totalOf(c)} ${totalOf(c) === 1 ? "reporte" : "reportes"} hoy` : "sin reportes"}`));
+        li.addEventListener("mousedown", (e) => e.preventDefault());
+        li.addEventListener("click", () => pick(f));
+        return li;
+      }));
+      list.hidden = false;
+      input.setAttribute("aria-expanded", "true");
+      setActive(-1);
+    }
+    input.addEventListener("input", suggest);
+    input.addEventListener("focus", () => { if (input.value.trim()) suggest(); });
+    input.addEventListener("blur", () => setTimeout(closeList, 150));
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown" && options.length) { e.preventDefault(); setActive((active + 1) % options.length); }
+      else if (e.key === "ArrowUp" && options.length) { e.preventDefault(); setActive((active - 1 + options.length) % options.length); }
+      else if (e.key === "Escape") { if (list.hidden && selected) clearSelection(); else closeList(); }
+    });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && e.target !== input && selected) clearSelection(); });
+    formSearch.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const q = input.value.trim();
+      if (!q) { input.focus(); return; }
+      const f = active >= 0 ? options[active] : matches(q)[0];
+      if (f) { pick(f); return; }
+      closeList();
+      say(`No encontramos «${q}» en el mapa del SIAPA. Revisa cómo se escribe, prueba con tu código postal o toca tu colonia en el mapa.`);
+    });
+    clear.addEventListener("click", () => { input.value = ""; clear.hidden = true; closeList(); clearSelection(); input.focus(); });
+
+    // Location: the colonia under the visitor, found in the browser; nothing is sent anywhere.
+    const locBtn = $("ubicacion");
+    let pin = null;
+    let wantsForm = false;
+    function locate(thenForm) {
+      if (!("geolocation" in navigator)) { say("Tu navegador no permite compartir tu ubicación. Busca tu colonia por nombre."); return; }
+      locBtn.disabled = true;
+      say("Buscando tu ubicación… Si tu navegador te pide permiso, toca «Permitir».");
+      let settled = false;
+      const giveUp = setTimeout(() => { if (settled) return; settled = true; locBtn.disabled = false; say("No pudimos obtener tu ubicación. Busca tu colonia por nombre."); }, 25000);
+      navigator.geolocation.getCurrentPosition((pos) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(giveUp);
+        locBtn.disabled = false;
+        const { latitude: lat, longitude: lon } = pos.coords;
+        const here = L.latLng(lat, lon);
+        if (pin) pin.setLatLng(here); else pin = L.marker(here, { icon: L.divIcon({ className: "pin", iconSize: [16, 16] }), keyboard: false, interactive: false }).addTo(map);
+        const inside = colonias.filter((f) => M.contains(f, [lon, lat]));
+        const f = inside.find((c) => c.properties.z) || inside[0];
+        if (f) { select(f, { form: thenForm }); say("Tu ubicación está en ", el("strong", {}, f.properties.n), `, ${f.properties.m}.`); return; }
+        clearSelection();
+        map.flyTo(here, 15, { animate: !reduced });
+        say("Tu ubicación no está en ninguna colonia del mapa del SIAPA. Busca tu colonia por nombre o tócala en el mapa.");
+      }, (err) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(giveUp);
+        locBtn.disabled = false;
+        say(err.code === 1 ? "No diste permiso para usar tu ubicación. Busca tu colonia por nombre o tócala en el mapa." : "No pudimos obtener tu ubicación. Busca tu colonia por nombre.");
+      }, { enableHighAccuracy: false, timeout: 20000, maximumAge: 60000 });
+    }
+    locBtn.addEventListener("click", () => locate(false));
+    $("reportar").addEventListener("click", () => {
+      if (selected) { renderCard(selected, true); $("mapa").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" }); return; }
+      wantsForm = true;
+      $("mapa").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
+      if ("geolocation" in navigator) locate(true);
+      else { input.focus(); say("Busca tu colonia o tócala en el mapa para reportarla."); }
+    });
+
+    // ?q=colonia&m=municipio&cp=postal code opens on that colonia (the card sets it, so links can
+    // be shared); the postal code tells apart same-named colonias in one municipio.
+    const params = new URLSearchParams(location.search);
+    const preset = (params.get("q") || "").trim().slice(0, 80);
+    if (preset) {
+      const hits = matches(preset);
+      const m = params.get("m"), cp = params.get("cp");
+      const same = (f) => norm(f.properties.n) === norm(preset) && (!m || norm(f.properties.m) === norm(m));
+      const best = (cp && hits.find((f) => same(f) && f.properties.cp === cp)) || hits.find(same) || hits[0];
+      if (best) { input.value = best.properties.n; clear.hidden = false; select(best); }
+    }
+  }
+})();
+</script>
+</body>
+</html>

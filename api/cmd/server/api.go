@@ -4,11 +4,13 @@ import (
 	"context"
 	"crypto/hmac"
 	"encoding/json"
+	"errors"
 	"io"
 	"log/slog"
 	"net"
 	"net/http"
 	"net/netip"
+	"net/url"
 	"strconv"
 	"strings"
 	"sync"
@@ -21,6 +23,7 @@ import (
 	"aguagdl/api/internal/store"
 	"aguagdl/api/internal/tg"
 	"aguagdl/api/internal/wa"
+	"aguagdl/api/internal/webreports"
 )
 
 type api struct {
@@ -33,6 +36,7 @@ type api struct {
 	verifyToken string
 	tgSecret    string // empty = Telegram off
 	minShown    int
+	reports     *webreports.Board // the map on /reportes; nil = off
 	log         *slog.Logger
 
 	resultsMu   sync.Mutex
@@ -61,6 +65,11 @@ func (a *api) routes() http.Handler {
 	mux.HandleFunc("GET /v1/zone", a.zoneAt)
 	mux.HandleFunc("GET /v1/colonias", a.coloniaSearch)
 	mux.HandleFunc("GET /v1/results", a.results)
+	if a.reports != nil {
+		mux.HandleFunc("GET /v1/reportes", a.reportesGet)
+		mux.HandleFunc("POST /v1/reportes", a.reportesPost)
+		mux.HandleFunc("OPTIONS /v1/reportes", a.reportesOptions)
+	}
 	if len(a.appSecret) > 0 {
 		mux.HandleFunc("GET /wa/webhook", a.verify)
 		mux.HandleFunc("POST /wa/webhook", a.webhook)
@@ -225,6 +234,68 @@ func (a *api) cachedResults(ctx context.Context) ([]store.Result, error) {
 	}
 	a.resultsRows, a.resultsAt = rows, time.Now()
 	return rows, nil
+}
+
+// reportesGet serves the map's numbers: the day's reports by colonia, the totals and the bot's
+// answers by zone. They come from memory, so traffic here doesn't wake Neon.
+func (a *api) reportesGet(w http.ResponseWriter, _ *http.Request) {
+	writeJSON(w, a.reports.Summary(), "public, max-age=30")
+}
+
+type reportIn struct {
+	Name      string `json:"n"`
+	Municipio string `json:"m"`
+	CP        string `json:"cp"`
+	Status    string `json:"estado"`
+	Turbia    bool   `json:"turbia"`
+	Olor      bool   `json:"olor"`
+	Sedimento bool   `json:"sedimento"`
+}
+
+// reportesPost takes a report from the map. Only the site's own pages may send one; the
+// address only counts toward the hourly limits, in memory.
+func (a *api) reportesPost(w http.ResponseWriter, r *http.Request) {
+	if !reportOrigin(r.Header.Get("Origin")) {
+		http.Error(w, "forbidden", http.StatusForbidden)
+		return
+	}
+	var in reportIn
+	if err := json.NewDecoder(io.LimitReader(r.Body, 2048)).Decode(&in); err != nil {
+		http.Error(w, "bad request", http.StatusBadRequest)
+		return
+	}
+	c, err := a.reports.Add(limitKey(clientIP(r)), in.Name, in.Municipio, in.CP, in.Status, in.Turbia, in.Olor, in.Sedimento)
+	switch {
+	case errors.Is(err, webreports.ErrTooMany):
+		w.Header().Set("Retry-After", "3600")
+		http.Error(w, "too many reports", http.StatusTooManyRequests)
+		return
+	case errors.Is(err, webreports.ErrBusy):
+		w.Header().Set("Retry-After", "600")
+		http.Error(w, "too many reports this hour", http.StatusServiceUnavailable)
+		return
+	case err != nil:
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	writeJSON(w, c, "no-store")
+}
+
+// reportesOptions answers the browser's preflight for the JSON POST.
+func (a *api) reportesOptions(w http.ResponseWriter, _ *http.Request) {
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Set("Access-Control-Max-Age", "86400")
+	w.WriteHeader(http.StatusNoContent)
+}
+
+// reportOrigin accepts the site and local copies of it (pages served on localhost).
+func reportOrigin(origin string) bool {
+	if origin == "https://aguagdl.com" {
+		return true
+	}
+	u, err := url.Parse(origin)
+	return err == nil && u.Scheme == "http" && (u.Hostname() == "localhost" || u.Hostname() == "127.0.0.1")
 }
 
 func (a *api) verify(w http.ResponseWriter, r *http.Request) {

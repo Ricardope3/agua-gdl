@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"io"
 	"log/slog"
 	"net/http"
@@ -18,6 +19,7 @@ import (
 	"aguagdl/api/internal/geo"
 	"aguagdl/api/internal/rotation"
 	"aguagdl/api/internal/store"
+	"aguagdl/api/internal/webreports"
 )
 
 func TestV1ErrorsAllowAnyOrigin(t *testing.T) {
@@ -233,5 +235,69 @@ func TestTelegramSecretWithoutTokenIsIgnored(t *testing.T) {
 	c, err := loadConfig()
 	if err != nil || c.TGWebhookSecret != "" {
 		t.Fatalf("a secret without a token must not route the webhook: %q, %v", c.TGWebhookSecret, err)
+	}
+}
+
+type memReports struct{ saved []store.WebReport }
+
+func (m *memReports) SaveWebReports(_ context.Context, rs []store.WebReport) error {
+	m.saved = append(m.saved, rs...)
+	return nil
+}
+func (m *memReports) WebReportsSince(context.Context, time.Time) ([]store.WebReport, error) {
+	return nil, nil
+}
+func (m *memReports) CountWebReports(context.Context) (int, error) { return 0, nil }
+func (m *memReports) BotAnswersSince(context.Context, time.Time) ([]store.BotAnswer, error) {
+	return nil, nil
+}
+
+func TestReportsFromTheMap(t *testing.T) {
+	loc, _ := time.LoadLocation("America/Mexico_City")
+	board, err := webreports.New(&memReports{}, data.ColoniasMapa, 10, loc, time.Now, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	if err != nil {
+		t.Fatal(err)
+	}
+	h := (&api{reports: board}).routes()
+	post := func(origin, body string) *httptest.ResponseRecorder {
+		req := httptest.NewRequest(http.MethodPost, "/v1/reportes", strings.NewReader(body))
+		req.Header.Set("Content-Type", "application/json")
+		req.Header.Set("Fly-Client-IP", "203.0.113.7")
+		if origin != "" {
+			req.Header.Set("Origin", origin)
+		}
+		rec := httptest.NewRecorder()
+		h.ServeHTTP(rec, req)
+		return rec
+	}
+	ok := `{"n":"1 DE MAYO","m":"Guadalajara","cp":"44940","estado":"sin_agua"}`
+	for _, origin := range []string{"", "https://evil.example", "http://aguagdl.com.evil.example"} {
+		if rec := post(origin, ok); rec.Code != http.StatusForbidden {
+			t.Errorf("origin %q: status %d", origin, rec.Code)
+		}
+	}
+	if rec := post("https://aguagdl.com", `{"n":"NO EXISTE","m":"Guadalajara","cp":"1","estado":"sin_agua"}`); rec.Code != http.StatusBadRequest {
+		t.Errorf("unknown colonia: %d", rec.Code)
+	}
+	for i := range 3 {
+		rec := post("https://aguagdl.com", ok)
+		var c webreports.Colonia
+		if rec.Code != http.StatusOK || json.Unmarshal(rec.Body.Bytes(), &c) != nil || c.SinAgua != i+1 || rec.Header().Get("Access-Control-Allow-Origin") != "*" {
+			t.Fatalf("report %d: %d %s", i+1, rec.Code, rec.Body)
+		}
+	}
+	if rec := post("http://localhost:8771", ok); rec.Code != http.StatusTooManyRequests || rec.Header().Get("Retry-After") == "" {
+		t.Errorf("a fourth report for the colonia from one address within the hour: %d", rec.Code)
+	}
+	rec := httptest.NewRecorder()
+	h.ServeHTTP(rec, httptest.NewRequest(http.MethodOptions, "/v1/reportes", nil))
+	if rec.Code != http.StatusNoContent || !strings.Contains(rec.Header().Get("Access-Control-Allow-Methods"), "POST") || rec.Header().Get("Access-Control-Allow-Headers") != "Content-Type" {
+		t.Errorf("preflight: %d %v", rec.Code, rec.Header())
+	}
+	rec = httptest.NewRecorder()
+	h.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/v1/reportes", nil))
+	var s webreports.Summary
+	if rec.Code != http.StatusOK || json.Unmarshal(rec.Body.Bytes(), &s) != nil || s.Total != 3 || s.Colonias != 1 || rec.Header().Get("Cache-Control") != "public, max-age=30" {
+		t.Errorf("summary: %d %s", rec.Code, rec.Body)
 	}
 }

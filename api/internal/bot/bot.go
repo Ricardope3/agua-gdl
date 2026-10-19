@@ -561,7 +561,11 @@ func (b *Bot) saveWater(ctx context.Context, r User, zone int, date, answer stri
 	if !kept {
 		return b.text(ctx, r, msgReportClosed)
 	}
-	return b.text(ctx, r, waterAnswers[i].thanks)
+	text := waterAnswers[i].thanks
+	if answer != "si" {
+		text += msgReportMap(b.BaseURL)
+	}
+	return b.text(ctx, r, text)
 }
 
 func (b *Bot) text(ctx context.Context, r User, body string) error {

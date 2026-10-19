@@ -326,16 +326,18 @@ func TestWaterAnswersToTheReminder(t *testing.T) {
 	h.say(t, "/start z5")
 	s, _ := h.sub(t)
 	h.store.Reminders[fmt.Sprintf("%d/2026-10-20", s.ID)] = true // Monday's reminder for Tuesday and Wednesday
-	if m := h.press(t, "A:5:2026-10-20:no"); !strings.Contains(m.Text, "SIAPABOT") || !strings.Contains(m.Text, "073") {
-		t.Errorf("«No» must say how to get a pipa: %s", m.Text)
+	if m := h.press(t, "A:5:2026-10-20:no"); !strings.Contains(m.Text, "SIAPABOT") || !strings.Contains(m.Text, "073") || !strings.Contains(m.Text, "https://aguagdl.test/reportes") {
+		t.Errorf("«No» must say how to get a pipa and link the map of reports: %s", m.Text)
 	}
-	h.press(t, "A:5:2026-10-20:poca")
+	if m := h.press(t, "A:5:2026-10-20:poca"); !strings.Contains(m.Text, "https://aguagdl.test/reportes") {
+		t.Errorf("«Poca» links the map of reports: %s", m.Text)
+	}
 	if len(h.store.Water) != 1 || h.store.Water[0].Answer != "poca" || h.store.Water[0].Zone != 5 {
 		t.Fatalf("one answer per cut, the latest: %+v", h.store.Water)
 	}
 	loc, _ := time.LoadLocation("America/Mexico_City")
 	h.bot.Now = func() time.Time { return time.Date(2026, 10, 21, 18, 0, 0, 0, loc) }
-	if m := h.press(t, "A:5:2026-10-20:si"); !strings.Contains(m.Text, "Gracias") || h.store.Water[0].Answer != "si" {
+	if m := h.press(t, "A:5:2026-10-20:si"); !strings.Contains(m.Text, "Gracias") || strings.Contains(m.Text, "/reportes") || h.store.Water[0].Answer != "si" {
 		t.Errorf("answers stay open until the run's last day: %s %+v", m.Text, h.store.Water)
 	}
 	h.bot.Now = func() time.Time { return time.Date(2026, 10, 22, 8, 0, 0, 0, loc) }

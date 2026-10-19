@@ -24,6 +24,7 @@ import (
 	"aguagdl/api/internal/store"
 	"aguagdl/api/internal/tg"
 	"aguagdl/api/internal/wa"
+	"aguagdl/api/internal/webreports"
 )
 
 type config struct {
@@ -162,6 +163,20 @@ func run(log *slog.Logger) error {
 	}
 	go purge(ctx, db, sched, log)
 
+	// The map on /reportes keeps the day's reports in memory and saves them every quarter hour.
+	reports, err := webreports.New(db, data.ColoniasMapa, cfg.MinShown, loc, time.Now, log)
+	if err != nil {
+		return err
+	}
+	if err := reports.Load(ctx); err != nil {
+		return fmt.Errorf("web reports: %w", err)
+	}
+	reportsDone := make(chan struct{})
+	go func() {
+		reports.Run(ctx, 15*time.Minute)
+		close(reportsDone)
+	}()
+
 	runnerDone := make(chan struct{})
 	if cfg.RemindersEnabled || cfg.TGRemindersEnabled {
 		r := &reminders.Runner{Store: db, Schedule: sched,
@@ -186,21 +201,31 @@ func run(log *slog.Logger) error {
 
 	a := &api{bot: b, db: db, sched: sched, zones: zones, cols: cols,
 		appSecret: []byte(cfg.WAAppSecret), verifyToken: cfg.WAVerifyToken, tgSecret: cfg.TGWebhookSecret,
-		minShown: cfg.MinShown, log: log}
+		minShown: cfg.MinShown, reports: reports, log: log}
 	srv := &http.Server{Addr: ":" + cfg.Port, Handler: a.routes(),
 		ReadHeaderTimeout: 10 * time.Second, ReadTimeout: 15 * time.Second,
 		WriteTimeout: 30 * time.Second, IdleTimeout: 60 * time.Second}
+	served := make(chan struct{})
 	go func() {
 		<-ctx.Done()
 		shutdown, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
 		srv.Shutdown(shutdown)
+		close(served)
 	}()
 	log.Info("listening", "port", cfg.Port, "whatsapp", cfg.WAToken != "", "reminders", cfg.RemindersEnabled, "telegram", cfg.TGToken != "", "telegram_reminders", cfg.TGRemindersEnabled)
 	if err := srv.ListenAndServe(); !errors.Is(err, http.ErrServerClosed) {
 		return err
 	}
-	// Let a reminder that is being sent finish and be recorded before the pool closes.
+	// Save the map's last reports once no request can add one, and let a reminder that is being
+	// sent finish and be recorded, before the pool closes.
+	<-served
+	<-reportsDone
+	flush, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	if err := reports.Flush(flush); err != nil {
+		log.Error("web reports not saved at shutdown", "err", err)
+	}
 	<-runnerDone
 	return nil
 }

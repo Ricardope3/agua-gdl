@@ -1112,3 +1112,47 @@ func TestNoticeAnswersAndTheReturnQuestion(t *testing.T) {
 		t.Fatalf("an uncertain attempt is never resent: %+v %v", again, err)
 	}
 }
+
+func TestWebReportsAndBotAnswers(t *testing.T) {
+	db := testDB(t)
+	ctx := context.Background()
+	now := time.Now().Truncate(time.Second)
+	batch := []WebReport{
+		{Colonia: "1 DE MAYO|Guadalajara|44940", Status: "sin_agua", At: now.Add(-30 * time.Hour)},
+		{Colonia: "1 DE MAYO|Guadalajara|44940", Status: "baja", Turbia: true, At: now.Add(-time.Hour)},
+		{Colonia: "12 DE DICIEMBRE|Zapopan|45068", Status: "con_agua", Olor: true, Sedimento: true, At: now},
+	}
+	if err := db.SaveWebReports(ctx, batch); err != nil {
+		t.Fatal(err)
+	}
+	if err := db.SaveWebReports(ctx, []WebReport{{Colonia: "X|Y|1", Status: "seca", At: now}}); err == nil {
+		t.Fatal("an unknown answer must be refused")
+	}
+	got, err := db.WebReportsSince(ctx, now.Add(-24*time.Hour))
+	if err != nil || len(got) != 2 || got[0].Status != "baja" || !got[0].Turbia || !got[1].Olor || !got[1].At.Equal(now) {
+		t.Fatalf("the last day's reports, oldest first: %+v %v", got, err)
+	}
+	if n, err := db.CountWebReports(ctx); err != nil || n != 3 {
+		t.Fatalf("all-time count: %d %v", n, err)
+	}
+	s := testSubscriber(t, db)
+	cut := time.Date(2026, 10, 19, 0, 0, 0, 0, time.UTC)
+	if _, err := db.SendReminder(ctx, s, cut, []int{s.Zone}, nil, func(Subscriber) (string, error) { return "", nil }); err != nil {
+		t.Fatal(err)
+	}
+	if kept, err := db.SaveWater(ctx, s.ID, s.Zone, cut, "no"); err != nil || !kept {
+		t.Fatalf("water answer: %v %v", kept, err)
+	}
+	if err := db.SaveReport(ctx, s.ID, s.Zone, cut.AddDate(0, 0, -3), "turbia"); err != nil {
+		t.Fatal(err)
+	}
+	answers, err := db.BotAnswersSince(ctx, now.Add(-24*time.Hour))
+	if err != nil || len(answers) != 2 {
+		t.Fatalf("both kinds of answer, by zone: %+v %v", answers, err)
+	}
+	for _, a := range answers {
+		if a.Zone != s.Zone || a.Count != 1 || (a.Answer != "no" && a.Answer != "turbia") {
+			t.Errorf("answer: %+v", a)
+		}
+	}
+}

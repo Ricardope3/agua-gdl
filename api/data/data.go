@@ -17,3 +17,9 @@ var Rotation []byte
 //
 //go:embed otras_colonias.json
 var OtrasColonias []byte
+
+// ColoniasMapa lists each colonia on /reportes once as [name, municipio, postal code, zones],
+// generated from web/colonias_siapa.topo.json by pipelines/mapa_colonias.py.
+//
+//go:embed colonias_mapa.json
+var ColoniasMapa []byte

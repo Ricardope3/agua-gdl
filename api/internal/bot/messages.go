@@ -274,6 +274,11 @@ func msgFollowUp(days []time.Time, zone int) string {
 Cuéntanos cómo está ahora 👇`, zone, rotation.DatesES(days))
 }
 
+// msgReportMap points whoever answered «No» or «Poca» to the map of neighbours' reports.
+func msgReportMap(base string) string {
+	return "\n\n🗺️ Mira y reporta cómo está el agua en tu colonia: " + base + "/reportes"
+}
+
 // AvisosChange tells a zone's Telegram subscribers, once, about the notice two days before each
 // cut. It lists the zone's cuts for the coming week: a block already under way when the change is
 // deployed got the old reminder, which named only its first day.
