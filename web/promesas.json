@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-10-17",
+  "actualizado": "2026-10-18",
   "replica": {"enviada": "2026-10-17", "cierra": "2026-10-26T23:59"},
   "promesas": [
     {
@@ -608,7 +608,11 @@
     {"a": "Comisión Estatal de Derechos Humanos Jalisco", "folio": "140293226000184", "fecha": "2026-10-17", "tema": "la aceptación y el cumplimiento de la Recomendación 10/2026, y de la 10/2022", "estado": "en proceso; el plazo para responder vence el 29 de octubre"},
     {"a": "Secretaría de la Hacienda Pública", "folio": "142042226003448", "fecha": "2026-10-17", "tema": "la APP del acueducto (la opinión de la CONAGUA, las propuestas de empresas, los estudios de factibilidad y capacidad de pago, y si el contrato se registrará como obligación)", "estado": "en proceso; el plazo para responder vence el 29 de octubre"},
     {"a": "Comisión Estatal del Agua", "folio": "140239726000218", "fecha": "2026-10-17", "tema": "la APP del acueducto (la opinión de la CONAGUA, las propuestas de empresas, los estudios de factibilidad y capacidad de pago, y si el contrato se registrará como obligación)", "estado": "en proceso; el plazo para responder vence el 29 de octubre"},
-    {"a": "CONAGUA", "folio": "340009400276526", "fecha": "2026-10-17", "tema": "la APP del acueducto (la opinión de la CONAGUA, las propuestas de empresas, los estudios de factibilidad y capacidad de pago, y si el contrato se registrará como obligación)", "estado": "en proceso; el plazo para responder vence el 18 de noviembre"}
+    {"a": "CONAGUA", "folio": "340009400276526", "fecha": "2026-10-17", "tema": "la APP del acueducto (la opinión de la CONAGUA, las propuestas de empresas, los estudios de factibilidad y capacidad de pago, y si el contrato se registrará como obligación)", "estado": "en proceso; el plazo para responder vence el 18 de noviembre"},
+    {"a": "SIAPA", "folio": "140279226001095", "fecha": "2026-10-18", "tema": "las pipas: las solicitudes de agua en pipa desde el 28 de julio, cuántas pipas propias y rentadas operan, las cisternas y potabilizadoras portátiles, los puntos de abastecimiento y lo que han costado", "estado": "en proceso; el plazo para responder vence el 29 de octubre"},
+    {"a": "SIAPA", "folio": "140279226001096", "fecha": "2026-10-18", "tema": "los informes mensuales del SIAPA al Congreso que pide el Decreto 30216/LXIV/26, las listas mensuales de colonias con descuento y cuánto se ha descontado", "estado": "en proceso; el plazo para responder vence el 29 de octubre"},
+    {"a": "Secretaría de Gestión Integral del Agua, por la Coordinación General Estratégica de Gestión del Territorio", "folio": "142042126005499", "fecha": "2026-10-18", "tema": "la presa Las Pintas (la orden de dejar de usarla, los caudales que llegaban a la planta de Miravalle, el programa de limpieza, el plan de remediación y los análisis del agua)", "estado": "en proceso; el plazo para responder vence el 29 de octubre"},
+    {"a": "Secretaría de Gestión Integral del Agua, por la Coordinación General Estratégica de Gestión del Territorio", "folio": "142042126005500", "fecha": "2026-10-18", "tema": "la APP del acueducto (la opinión de la CONAGUA, las propuestas de empresas, los estudios de factibilidad y capacidad de pago, y si el contrato se registrará como obligación)", "estado": "en proceso; el plazo para responder vence el 29 de octubre"}
   ],
   "correcciones": []
 }
