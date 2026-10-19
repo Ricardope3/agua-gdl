@@ -50,6 +50,9 @@ func TestNextAndPrevCut(t *testing.T) {
 	s := load(t, data.Rotation)
 	got := s.NextCuts(4, day(s, "2026-10-13"), 3)
 	want := []string{"2026-10-15", "2026-10-19", "2026-10-22"}
+	if len(got) != len(want) {
+		t.Fatalf("next = %v, want %v", got, want)
+	}
 	for i, d := range got {
 		if d.Format(DateLayout) != want[i] {
 			t.Errorf("next[%d] = %s, want %s", i, d.Format(DateLayout), want[i])

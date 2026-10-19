@@ -1,6 +1,8 @@
 // Command tgsetup points the Telegram bot at the server and sets its Spanish profile:
 // name, descriptions and command menu. Run it once after creating the bot in @BotFather
 // and deploying with TG_TOKEN and TG_WEBHOOK_SECRET, and again after changing this file.
+// A re-run keeps the updates Telegram holds for the webhook: messages people sent meanwhile,
+// and those whose replies were refused and wait for redelivery. -drop-pending discards them.
 //
 //	cd api
 //	TG_TOKEN='…' TG_WEBHOOK_SECRET='…' go run ./cmd/tgsetup
@@ -47,14 +49,15 @@ var commands = []command{
 
 func main() {
 	url := flag.String("url", "https://api.aguagdl.com/tg/webhook", "webhook URL")
+	dropPending := flag.Bool("drop-pending", false, "discard the updates Telegram holds for the webhook")
 	flag.Parse()
-	if err := run(*url); err != nil {
+	if err := run(*url, *dropPending); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
 }
 
-func run(url string) error {
+func run(url string, dropPending bool) error {
 	token, secret := os.Getenv("TG_TOKEN"), os.Getenv("TG_WEBHOOK_SECRET")
 	if token == "" || secret == "" {
 		return errors.New("set TG_TOKEN and TG_WEBHOOK_SECRET (the same values as in Fly)")
@@ -70,7 +73,7 @@ func run(url string) error {
 		{"setMyDescription", map[string]string{"description": description}},
 		{"setMyCommands", map[string]any{"commands": commands}},
 		{"setWebhook", map[string]any{"url": url, "secret_token": secret, "max_connections": 10,
-			"allowed_updates": []string{"message", "callback_query", "my_chat_member"}, "drop_pending_updates": true}},
+			"allowed_updates": []string{"message", "callback_query", "my_chat_member"}, "drop_pending_updates": dropPending}},
 	}
 	for _, s := range steps {
 		if err := c.Call(ctx, s.method, s.params, nil); err != nil {

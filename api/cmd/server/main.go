@@ -84,6 +84,15 @@ func loadConfig() (config, error) {
 			}
 		}
 	}
+	switch {
+	case c.ReminderHour < 0 || c.CatchUpUntil > 23 || c.ReminderHour >= c.CatchUpUntil:
+		// Otherwise the catch-up, and every retry of a night's run, would never happen.
+		return c, fmt.Errorf("REMINDER_HOUR (%d) and CATCH_UP_UNTIL_HOUR (%d) must be hours from 0 to 23, the first before the second", c.ReminderHour, c.CatchUpUntil)
+	case c.DailyCap < 0 || c.MonthlyCap < 0:
+		return c, fmt.Errorf("DAILY_CAP (%d) and MONTHLY_CAP (%d) can't be negative", c.DailyCap, c.MonthlyCap)
+	case c.MinShown < 1:
+		return c, fmt.Errorf("MIN_REPORTS_SHOWN (%d) must be at least 1", c.MinShown)
+	}
 	return c, nil
 }
 

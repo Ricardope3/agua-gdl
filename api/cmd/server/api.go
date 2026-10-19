@@ -7,6 +7,7 @@ import (
 	"errors"
 	"io"
 	"log/slog"
+	"math"
 	"net"
 	"net/http"
 	"net/netip"
@@ -48,8 +49,8 @@ type resultsStore interface {
 	Results(ctx context.Context, since time.Time, minReports int) ([]store.Result, error)
 }
 
-// resultsTTL is how long /v1/results reuses one query, so traffic to /resultados
-// can't keep Neon awake and use up its compute hours.
+// resultsTTL is how long /v1/results reuses one query, so traffic can't keep Neon
+// awake and use up its compute hours.
 const resultsTTL = 5 * time.Minute
 
 type zoneInfo struct {
@@ -176,7 +177,7 @@ func (a *api) zonesList(w http.ResponseWriter, _ *http.Request) {
 func (a *api) zoneAt(w http.ResponseWriter, r *http.Request) {
 	lat, err1 := strconv.ParseFloat(r.URL.Query().Get("lat"), 64)
 	lon, err2 := strconv.ParseFloat(r.URL.Query().Get("lon"), 64)
-	if err1 != nil || err2 != nil || lat < -90 || lat > 90 || lon < -180 || lon > 180 {
+	if err1 != nil || err2 != nil || math.IsNaN(lat) || math.IsNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180 {
 		http.Error(w, "lat and lon required", http.StatusBadRequest)
 		return
 	}
@@ -236,8 +237,8 @@ func (a *api) cachedResults(ctx context.Context) ([]store.Result, error) {
 	return rows, nil
 }
 
-// reportesGet serves the map's numbers: the day's reports by colonia, the totals and the bot's
-// answers by zone. They come from memory, so traffic here doesn't wake Neon.
+// reportesGet serves the map's numbers: the day's reports by colonia, the totals, the bot's
+// answers by zone and the week. They come from memory, so traffic here doesn't wake Neon.
 func (a *api) reportesGet(w http.ResponseWriter, r *http.Request) {
 	raw, gz, err := a.reports.SummaryJSON()
 	if err != nil {

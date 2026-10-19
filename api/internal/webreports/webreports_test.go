@@ -10,6 +10,7 @@ import (
 	"os"
 	"path/filepath"
 	"slices"
+	"sync"
 	"testing"
 	"time"
 
@@ -309,7 +310,10 @@ func TestWeekComparesReportsWithTheCalendar(t *testing.T) {
 			{Colonia: "20 DE NOVIEMBRE|Tonalá|45404", Day: day(18), Answer: "sin_agua", Count: 2}, // outside the rotation
 			{Colonia: "OBLATOS|Guadalajara|44360", Day: day(10), Answer: "sin_agua", Count: 50},   // before the week
 		},
-		botDays: []store.DayCount{{Zone: 3, Day: day(16), Answer: "no", Count: 3}, {Zone: 3, Day: day(16), Answer: "si", Count: 1}},
+		botDays: []store.DayCount{
+			{Zone: 3, Day: day(16), Answer: "no", Count: 3}, {Zone: 3, Day: day(16), Answer: "si", Count: 1},
+			{Zone: 3, Day: day(17), Answer: "no", Count: 3},
+		},
 	}
 	b := board(t, st, clock)
 	b.Cuts = func(zone int, d time.Time) bool { // zone 3 is cut on Wednesdays and Saturdays
@@ -329,12 +333,104 @@ func TestWeekComparesReportsWithTheCalendar(t *testing.T) {
 	if fri := z3.Days[4]; fri.Total != 10 || fri.Detail == nil || fri.Detail.SinAgua != 9 || fri.Detail.ConAgua != 1 {
 		t.Fatalf("Friday, no cut: the map's reports and the bot's answers together: %+v", fri)
 	}
-	if w.Dry.OnCut != 8 || w.Dry.OffCut != 9 {
-		t.Fatalf("«sin agua» on cut days and on other days: %+v", w.Dry)
+	if w.Dry.OnCut != 8 || w.Dry.OffCut != 6 {
+		t.Fatalf("the map's «sin agua» on cut days and on other days; the bot asks only on evenings that aren't cut days, so its answers stay out: %+v", w.Dry)
 	}
 	if out := w.Zones[7]; out.Zone != 0 || out.Days[6].Total != 2 || out.Days[6].Detail != nil {
 		t.Fatalf("outside the rotation, below the minimum only the number shows: %+v", out)
 	}
+}
+
+func TestWeekHidesASplitWithFewBotAnswers(t *testing.T) {
+	clock := start(t) // Sunday 18 October: the week starts on Monday 12
+	day := func(d int) time.Time { return time.Date(2026, 10, d, 0, 0, 0, 0, time.UTC) }
+	const oblatos = "OBLATOS|Guadalajara|44360" // zone 3
+	st := &fakeStore{
+		webDays: []store.DayCount{
+			{Colonia: oblatos, Day: day(14), Answer: "con_agua", Count: 3},
+			{Colonia: oblatos, Day: day(15), Answer: "con_agua", Count: 2},
+			{Colonia: oblatos, Day: day(16), Answer: "con_agua", Count: 3},
+		},
+		botDays: []store.DayCount{
+			{Zone: 3, Day: day(13), Answer: "no", Count: 3},
+			{Zone: 3, Day: day(14), Answer: "no", Count: 3},
+			{Zone: 3, Day: day(15), Answer: "no", Count: 1},
+		},
+	}
+	b := board(t, st, clock) // the minimum is 3
+	if err := b.Load(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	w := b.Summary().Week
+	days := w.Zones[2].Days
+	if thu := days[3]; thu.Total != 3 || thu.Detail != nil {
+		t.Fatalf("Thursday: two map reports and one answer reach the minimum, but the map's are public by colonia, so the split would give the answer away: %+v", thu)
+	}
+	for i, why := range map[int]string{1: "the bot's answers alone", 2: "both, each reaching the minimum", 4: "the map's reports alone"} {
+		if days[i].Detail == nil {
+			t.Errorf("%s, %s: the split shows", w.Days[i], why)
+		}
+	}
+}
+
+func TestAddressesAreForgottenAfterAnHour(t *testing.T) {
+	loc, _ := time.LoadLocation("America/Mexico_City")
+	var mu sync.Mutex
+	clock := time.Date(2026, 10, 18, 20, 0, 0, 0, loc)
+	now := func() time.Time { mu.Lock(); defer mu.Unlock(); return clock }
+	advance := func(d time.Duration) { mu.Lock(); defer mu.Unlock(); clock = clock.Add(d) }
+	b, err := New(&fakeStore{}, data.ColoniasMapa, 3, loc, now, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	if err != nil {
+		t.Fatal(err)
+	}
+	b.forgetEvery = time.Millisecond
+	add := func() {
+		t.Helper()
+		if _, err := b.Add("2001:db8:1:1::/64", "1 DE MAYO", "Guadalajara", "44940", "sin_agua", false, false, false); err != nil {
+			t.Fatal(err)
+		}
+	}
+	held := func() (keys, times int) {
+		b.mu.Lock()
+		defer b.mu.Unlock()
+		for _, ts := range b.hits {
+			keys, times = keys+1, times+len(ts)
+		}
+		return keys, times
+	}
+	wait := func(keys, times int, why string) {
+		t.Helper()
+		for deadline := time.Now().Add(5 * time.Second); ; time.Sleep(time.Millisecond) {
+			k, n := held()
+			if k == keys && n == times {
+				return
+			}
+			if time.Now().After(deadline) {
+				t.Fatalf("%s: the limits hold %d times under %d keys, want %d under %d", why, n, k, times, keys)
+			}
+		}
+	}
+	add()
+	advance(30 * time.Minute)
+	add()
+	ctx, cancel := context.WithCancel(context.Background())
+	done := make(chan struct{})
+	go func() {
+		b.Run(ctx, time.Hour)
+		close(done)
+	}()
+	defer func() {
+		cancel()
+		<-done
+	}()
+	time.Sleep(20 * time.Millisecond)
+	if k, n := held(); k != 4 || n != 8 {
+		t.Fatalf("within the hour the /64, its colonia, its /56 and its /48 hold both reports: %d times under %d keys", n, k)
+	}
+	advance(30 * time.Minute)
+	wait(4, 4, "the first report is an hour old")
+	advance(30 * time.Minute)
+	wait(0, 0, "both reports are an hour old, and nobody sent another")
 }
 
 func TestColoniaListMatchesTheMap(t *testing.T) {

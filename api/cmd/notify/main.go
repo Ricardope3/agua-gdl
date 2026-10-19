@@ -2,9 +2,9 @@
 // SIAPA changes that zone's days. Update api/data/rotation.json and deploy first, so
 // the reminders follow the new days; the days in the message come from that file.
 //
-// It only reports what it would send unless -send is given. Re-running with the same
-// -zone and -from reaches only the subscribers who haven't received it, so it's safe
-// to run again after the daily or monthly cap stops it.
+// It only reports what it would send, without changing the database, unless -send is
+// given. Re-running with the same -zone and -from reaches only the subscribers who
+// haven't received it, so it's safe to run again after the daily or monthly cap stops it.
 //
 //	cd api
 //	DATABASE_URL='…' go run ./cmd/notify -zone 4 -from 2026-11-02
@@ -101,19 +101,12 @@ func run(channel string, zone int, from string, send bool) error {
 		Template: "cambio_rotacion", Language: env("WA_LANGUAGE", "es_MX"),
 		Params: []string{strconv.Itoa(zone), rotation.DaysES(sched.Weekdays(zone)), rotation.DateES(start)},
 	}
-	url := os.Getenv("DATABASE_URL")
-	if url == "" {
-		return errors.New("set DATABASE_URL")
-	}
 	ctx := context.Background()
-	db, err := store.Open(ctx, url)
+	db, err := connect(ctx, send)
 	if err != nil {
 		return err
 	}
 	defer db.Close()
-	if err := db.Migrate(ctx); err != nil {
-		return err
-	}
 	due, err := db.NoticeRecipients(ctx, channel, zone, n.Key)
 	if err != nil {
 		return err
@@ -181,19 +174,12 @@ func runTomorrow(zone int, send bool) error {
 			return fmt.Errorf("%s: %w", name, err)
 		}
 	}
-	url := os.Getenv("DATABASE_URL")
-	if url == "" {
-		return errors.New("set DATABASE_URL")
-	}
 	ctx := context.Background()
-	db, err := store.Open(ctx, url)
+	db, err := connect(ctx, send)
 	if err != nil {
 		return err
 	}
 	defer db.Close()
-	if err := db.Migrate(ctx); err != nil {
-		return err
-	}
 	now := time.Now()
 	r := &reminders.Runner{Store: db, Schedule: sched, DailyCap: caps["DAILY_CAP"], MonthlyCap: caps["MONTHLY_CAP"],
 		Interval: 100 * time.Millisecond, Now: time.Now, Log: slog.New(slog.NewTextHandler(os.Stderr, nil))}
@@ -235,19 +221,12 @@ func runAvisos(send bool) error {
 	if err != nil {
 		return err
 	}
-	url := os.Getenv("DATABASE_URL")
-	if url == "" {
-		return errors.New("set DATABASE_URL")
-	}
 	ctx := context.Background()
-	db, err := store.Open(ctx, url)
+	db, err := connect(ctx, send)
 	if err != nil {
 		return err
 	}
 	defer db.Close()
-	if err := db.Migrate(ctx); err != nil {
-		return err
-	}
 	// Each zone's message lists its cuts from tomorrow through the next week.
 	tomorrow := sched.Day(time.Now()).AddDate(0, 0, 1)
 	texts := map[int]string{}
@@ -286,6 +265,26 @@ func runAvisos(send bool) error {
 	}
 	fmt.Printf("sent %d\n", total)
 	return err
+}
+
+// connect opens DATABASE_URL. Only a run that sends migrates it: a dry run, perhaps from a
+// checkout with a newer migration, must not change the database under the running server.
+func connect(ctx context.Context, send bool) (*store.DB, error) {
+	url := os.Getenv("DATABASE_URL")
+	if url == "" {
+		return nil, errors.New("set DATABASE_URL")
+	}
+	db, err := store.Open(ctx, url)
+	if err != nil {
+		return nil, err
+	}
+	if send {
+		if err := db.Migrate(ctx); err != nil {
+			db.Close()
+			return nil, err
+		}
+	}
+	return db, nil
 }
 
 func env(name, def string) string {

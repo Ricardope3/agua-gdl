@@ -962,7 +962,12 @@ func TestAcceptedReplyIsNeverResent(t *testing.T) {
 	db := testDB(t)
 	ctx := context.Background()
 	if err := db.ProcessInbound(ctx, "tg:1", func(tx BotStore) error {
-		return tx.QueueReply(ctx, "tg:1", Telegram, "1", "", []byte(`"hi"`))
+		for _, body := range []string{`"hi"`, `"next"`} {
+			if err := tx.QueueReply(ctx, "tg:1", Telegram, "1", "", []byte(body)); err != nil {
+				return err
+			}
+		}
+		return nil
 	}); err != nil {
 		t.Fatal(err)
 	}
@@ -972,20 +977,49 @@ func TestAcceptedReplyIsNeverResent(t *testing.T) {
 		create trigger block_delete before delete on pending_reply execute function block_delete()`); err != nil {
 		t.Fatal(err)
 	}
-	sent := 0
-	send := func([]byte) error { sent++; return nil }
-	if err := db.SendReplies(ctx, "tg:1", send); err == nil {
-		t.Fatal("the failed delete must be reported")
+	var sent []string
+	send := func(body []byte) error { sent = append(sent, string(body)); return nil }
+	if err := db.SendReplies(ctx, "tg:1", send); err == nil || len(sent) != 1 {
+		t.Fatalf("the failed delete must be reported, before the next reply goes: sent %v, %v", sent, err)
 	}
 	if _, err := db.pool.Exec(ctx, `drop trigger block_delete on pending_reply`); err != nil {
 		t.Fatal(err)
 	}
-	if err := db.SendReplies(ctx, "tg:1", send); err != nil || sent != 1 {
-		t.Fatalf("the accepted reply stays claimed, never resent: sent %d, %v", sent, err)
+	if err := db.SendReplies(ctx, "tg:1", send); err != nil || fmt.Sprint(sent) != `["hi" "next"]` {
+		t.Fatalf("the accepted reply stays claimed, never resent, and the next delivery sends the rest: sent %v, %v", sent, err)
 	}
 	var n int
 	if err := db.pool.QueryRow(ctx, `select count(*) from pending_reply where claimed_at is not null`).Scan(&n); err != nil || n != 1 {
 		t.Fatalf("the claim stays until the purge: %d %v", n, err)
+	}
+}
+
+func TestReplyRefusedAtTheDeadlineIsReleased(t *testing.T) {
+	db := testDB(t)
+	ctx := context.Background()
+	if err := db.ProcessInbound(ctx, "tg:1", func(tx BotStore) error {
+		for _, body := range []string{`"one"`, `"two"`} {
+			if err := tx.QueueReply(ctx, "tg:1", Telegram, "1", "", []byte(body)); err != nil {
+				return err
+			}
+		}
+		return nil
+	}); err != nil {
+		t.Fatal(err)
+	}
+	// The webhook's deadline passes before the request could go out, so nothing was sent.
+	webhook, expire := context.WithCancel(ctx)
+	notSent := errors.New("dial: context canceled")
+	if err := db.SendReplies(webhook, "tg:1", func([]byte) error { expire(); return notSent }); !errors.Is(err, notSent) {
+		t.Fatal(err)
+	}
+	var claimed int
+	if err := db.pool.QueryRow(ctx, `select count(*) from pending_reply where claimed_at is not null`).Scan(&claimed); err != nil || claimed != 0 {
+		t.Fatalf("the replies must be released even though the webhook's context is done: %d claimed, %v", claimed, err)
+	}
+	var sent []string
+	if err := db.SendReplies(ctx, "tg:1", func(body []byte) error { sent = append(sent, string(body)); return nil }); err != nil || fmt.Sprint(sent) != `["one" "two"]` {
+		t.Fatalf("the next delivery sends both: %v %v", sent, err)
 	}
 }
 

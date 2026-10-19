@@ -18,8 +18,9 @@ type gone interface{ Gone() bool }
 // A crash or an ambiguous HTTP failure leaves a visible unresolved attempt;
 // it must not be retried automatically, since it may have been accepted.
 // Only attempts explicitly rejected are retried by a later run.
-// zones are the zones cut on cutDate: a subscriber who moved between two of them
-// mid-batch still gets the reminder, for the zone they're in now.
+// zones are the zones the reminder is for (the nightly run's: those whose block of cuts
+// starts on cutDate): a subscriber who moved between two of them mid-batch still gets the
+// reminder, for the zone they're in now.
 // A nil budget means no caps, as on Telegram.
 func (db *DB) SendReminder(ctx context.Context, s Subscriber, cutDate time.Time, zones []int, budget *Budget, send func(Subscriber) (string, error)) (attempted bool, err error) {
 	reminderID, err := db.reserve(ctx, budget, `insert into reminder (subscriber_id, zone, cut_date, status, channel)

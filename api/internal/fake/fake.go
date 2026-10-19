@@ -34,19 +34,19 @@ type Store struct {
 	Now        func() time.Time // stamps subscriptions and attempts; see NewStore
 	FailDue    int              // DueSubscribers fails this many times, like a database waking up
 	Notices    map[string]bool
-	NoticeErrs map[string]bool      // notice attempts whose outcome is unknown, keyed like Notices
+	NoticeErrs map[string]bool      // notice attempts that need review, uncertain or refused, keyed like Notices
 	Replies    map[string][]Pending // queued replies by inbound message ID
 	nextID     int64
 }
 
-// NewStore's clock is stopped before every test's date, so whatever is subscribed before
-// a test sets Now is old, whenever the test runs.
 // Pending is a queued reply and its recipient.
 type Pending struct {
 	Channel, UserID, Phone string
 	Body                   []byte
 }
 
+// NewStore's clock is stopped before every test's date, so whatever is subscribed before
+// a test sets Now is old, whenever the test runs.
 func NewStore() *Store {
 	start := time.Date(2026, 10, 1, 12, 0, 0, 0, time.FixedZone("CST", -6*60*60))
 	return &Store{Subs: map[string]store.Subscriber{}, SeenIDs: map[string]bool{}, Reminders: map[string]bool{},
@@ -271,13 +271,17 @@ func (s *Store) SendReminder(ctx context.Context, sub store.Subscriber, d time.T
 	if s.overBudget(budget) {
 		return false, store.ErrOverBudget
 	}
-	s.Reminders[k], s.SentAt[k] = true, s.Now()
+	s.Reminders[k] = true
+	if current.Channel == store.WhatsApp {
+		s.SentAt[k] = s.Now() // only WhatsApp's attempts count against the caps
+	}
 	wamid, err := send(current)
 	var rejected interface{ Rejected() bool }
 	var gone interface{ Gone() bool }
 	switch {
 	case errors.As(err, &gone) && gone.Gone():
 		delete(s.Subs, Key(current.Channel, current.UserID))
+		delete(s.Unresolved, k)
 	case errors.As(err, &rejected) && rejected.Rejected():
 		delete(s.Reminders, k)
 		delete(s.SentAt, k)
@@ -286,7 +290,6 @@ func (s *Store) SendReminder(ctx context.Context, sub store.Subscriber, d time.T
 		s.Unresolved[k] = d.Format("2006-01-02")
 	case current.Channel != store.WhatsApp:
 		delete(s.Unresolved, k)
-		delete(s.SentAt, k) // only WhatsApp sends count against the caps
 	default:
 		delete(s.Unresolved, k)
 		s.Wamids[wamid] = true
@@ -336,26 +339,37 @@ func (s *Store) NoticeRecipients(_ context.Context, channel string, zone int, k 
 	return out, nil
 }
 
+// SendNotice mirrors store.DB.SendNotice: the attempt's latest outcome decides whether it
+// needs review, as the notice row's status does.
 func (s *Store) SendNotice(_ context.Context, sub store.Subscriber, k string, budget *store.Budget, send func(store.Subscriber) (string, error)) (bool, error) {
 	nk := fmt.Sprintf("%d/%s", sub.ID, k)
 	current, ok := s.Subs[Key(sub.Channel, sub.UserID)]
-	if !ok || current.Zone != sub.Zone || s.Notices[nk] {
+	if !ok || current.ID != sub.ID || current.Zone != sub.Zone || s.Notices[nk] {
 		return false, nil
 	}
 	if s.overBudget(budget) {
 		return false, store.ErrOverBudget
 	}
-	s.Notices[nk], s.SentAt[fmt.Sprintf("%d/notice/%s", sub.ID, k)] = true, s.Now()
+	s.Notices[nk] = true
+	sent := fmt.Sprintf("%d/notice/%s", sub.ID, k)
+	if current.Channel == store.WhatsApp {
+		s.SentAt[sent] = s.Now()
+	}
 	_, err := send(current)
 	var rejected interface{ Rejected() bool }
 	var gone interface{ Gone() bool }
-	if errors.As(err, &gone) && gone.Gone() {
+	switch {
+	case errors.As(err, &gone) && gone.Gone():
 		delete(s.Subs, Key(current.Channel, current.UserID))
-	} else if errors.As(err, &rejected) && rejected.Rejected() {
+		delete(s.NoticeErrs, nk)
+	case errors.As(err, &rejected) && rejected.Rejected():
 		delete(s.Notices, nk)
-		delete(s.SentAt, fmt.Sprintf("%d/notice/%s", sub.ID, k))
-	} else if err != nil {
+		delete(s.SentAt, sent)
 		s.NoticeErrs[nk] = true
+	case err != nil:
+		s.NoticeErrs[nk] = true
+	default:
+		delete(s.NoticeErrs, nk)
 	}
 	return true, err
 }

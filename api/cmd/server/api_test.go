@@ -96,6 +96,21 @@ func TestZoneLookupIsNotCached(t *testing.T) {
 	}
 }
 
+func TestZoneLookupNeedsRealCoordinates(t *testing.T) {
+	zones, err := geo.Load(data.Zonas)
+	if err != nil {
+		t.Fatal(err)
+	}
+	h := (&api{zones: zones, sched: testSchedule(t)}).routes()
+	for _, q := range []string{"lat=NaN&lon=NaN", "lat=20.6767&lon=nan", "lat=Inf&lon=-103.3475", "lat=20.6767&lon=-Infinity"} {
+		rec := httptest.NewRecorder()
+		h.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/v1/zone?"+q, nil))
+		if rec.Code != http.StatusBadRequest {
+			t.Errorf("%s: status %d, body %s", q, rec.Code, rec.Body.String())
+		}
+	}
+}
+
 type countingResults struct{ calls int }
 
 func (c *countingResults) Results(context.Context, time.Time, int) ([]store.Result, error) {
@@ -236,6 +251,37 @@ func TestTelegramSecretWithoutTokenIsIgnored(t *testing.T) {
 	c, err := loadConfig()
 	if err != nil || c.TGWebhookSecret != "" {
 		t.Fatalf("a secret without a token must not route the webhook: %q, %v", c.TGWebhookSecret, err)
+	}
+}
+
+func TestConfigChecksTheNumbers(t *testing.T) {
+	t.Setenv("DATABASE_URL", "postgres://x")
+	t.Setenv("PUBLIC_BASE_URL", "https://aguagdl.test")
+	for _, name := range []string{"WA_TOKEN", "TG_TOKEN", "REMINDER_HOUR", "CATCH_UP_UNTIL_HOUR", "DAILY_CAP", "MONTHLY_CAP", "MIN_REPORTS_SHOWN"} {
+		t.Setenv(name, "")
+	}
+	if c, err := loadConfig(); err != nil || c.ReminderHour != 20 || c.CatchUpUntil != 22 || c.MinShown != 10 {
+		t.Fatalf("the defaults: %+v %v", c, err)
+	}
+	t.Run("in range", func(t *testing.T) {
+		for name, v := range map[string]string{"REMINDER_HOUR": "0", "CATCH_UP_UNTIL_HOUR": "23", "DAILY_CAP": "0", "MONTHLY_CAP": "0", "MIN_REPORTS_SHOWN": "1"} {
+			t.Setenv(name, v)
+		}
+		if _, err := loadConfig(); err != nil {
+			t.Fatal(err)
+		}
+	})
+	for _, c := range []struct{ name, value string }{
+		{"REMINDER_HOUR", "-1"}, {"REMINDER_HOUR", "22"}, {"REMINDER_HOUR", "24"},
+		{"CATCH_UP_UNTIL_HOUR", "20"}, {"CATCH_UP_UNTIL_HOUR", "24"},
+		{"DAILY_CAP", "-1"}, {"MONTHLY_CAP", "-1"}, {"MIN_REPORTS_SHOWN", "0"},
+	} {
+		t.Run(c.name+"="+c.value, func(t *testing.T) {
+			t.Setenv(c.name, c.value)
+			if _, err := loadConfig(); err == nil || !strings.Contains(err.Error(), c.name) {
+				t.Errorf("want an error that names %s: %v", c.name, err)
+			}
+		})
 	}
 }
 

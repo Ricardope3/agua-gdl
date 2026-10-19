@@ -47,12 +47,12 @@ func (db *DB) QueueReply(ctx context.Context, inboundID, channel, userID, phone 
 	return err
 }
 
-// SendReplies sends inboundID's queued replies in order. Each reply is claimed in its
-// own committed transaction before the request, and forgotten once send returns nil, so
+// SendReplies sends inboundID's queued replies in order. One statement claims them all
+// and commits before the first request, and each is forgotten once send returns nil, so
 // a reply the provider accepted is never sent again even if forgetting it fails or the
-// process dies: the claim stays until the daily purge. At the first error it releases
-// that reply and the rest for the next delivery of the message. A concurrent delivery
-// finds nothing to claim meanwhile.
+// process dies: its claim stays until the daily purge. When a send fails, or forgetting a
+// sent reply does, it releases the replies not yet sent for the next delivery of the
+// message. A concurrent delivery finds nothing to claim meanwhile.
 func (db *DB) SendReplies(ctx context.Context, inboundID string, send func(body []byte) error) error {
 	rows, err := db.pool.Query(ctx, `update pending_reply set claimed_at = now() where id in (
 			select id from pending_reply where inbound_hash = $1 and claimed_at is null for update skip locked)
@@ -73,17 +73,26 @@ func (db *DB) SendReplies(ctx context.Context, inboundID string, send func(body 
 		return err
 	}
 	slices.SortFunc(replies, func(a, b pending) int { return cmp.Compare(a.id, b.id) })
+	release := func(unsent []pending) error {
+		if len(unsent) == 0 {
+			return nil
+		}
+		ids := make([]int64, 0, len(unsent))
+		for _, p := range unsent {
+			ids = append(ids, p.id)
+		}
+		// The failure may be ctx's own deadline, the webhook's.
+		ctx, cancel := context.WithTimeout(context.WithoutCancel(ctx), 5*time.Second)
+		defer cancel()
+		_, err := db.pool.Exec(ctx, `update pending_reply set claimed_at = null where id = any($1::bigint[])`, ids)
+		return err
+	}
 	for i, p := range replies {
 		if sendErr := send(p.body); sendErr != nil {
-			ids := make([]int64, 0, len(replies)-i)
-			for _, rest := range replies[i:] {
-				ids = append(ids, rest.id)
-			}
-			_, err := db.pool.Exec(ctx, `update pending_reply set claimed_at = null where id = any($1::bigint[])`, ids)
-			return errors.Join(sendErr, err)
+			return errors.Join(sendErr, release(replies[i:]))
 		}
 		if _, err := db.pool.Exec(ctx, `delete from pending_reply where id = $1`, p.id); err != nil {
-			return err
+			return errors.Join(err, release(replies[i+1:]))
 		}
 	}
 	return nil

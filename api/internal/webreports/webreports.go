@@ -47,13 +47,13 @@ const (
 	// /64s doesn't multiply the limits.
 	perNet56PerHour = 40
 	perNet48PerHour = 100
-	// perColoniaAllPerHour caps one colonia's reports from everyone: plenty to show how it is,
-	// and a ceiling for anyone trying to set its colour.
+	// perColoniaAllPerHour bounds one colonia's reports from everyone in an hour: plenty to
+	// show how it is. Once it's full the colonia takes none, from anyone, until the oldest of
+	// them are an hour old.
 	perColoniaAllPerHour = 30
-	// maxPerHour caps everyone's reports together.
+	// maxPerHour caps everyone's reports together. Each report adds at most four keys to the
+	// limits, which Run forgets after the hour, so it also bounds the memory they use.
 	maxPerHour = 5_000
-	// maxTracked bounds the memory the limits use; past it, new addresses wait.
-	maxTracked = 50_000
 	// maxPending bounds the reports held while the database is unreachable.
 	maxPending = 20_000
 	summaryTTL = 30 * time.Second
@@ -62,6 +62,8 @@ const (
 	botTTL = 30 * time.Minute
 	// weekDays is how far back the week compares the reports with SIAPA's calendar.
 	weekDays = 7
+	// forgetEvery is how often Run drops what the limits hold from over an hour ago.
+	forgetEvery = time.Minute
 )
 
 const dateLayout = "2006-01-02"
@@ -94,6 +96,18 @@ func (c *Counts) add(status string) {
 		c.Baja++
 	case "con_agua":
 		c.ConAgua++
+	}
+}
+
+// addN counts n of the map's reports or the bot's answers with one answer.
+func (c *Counts) addN(answer string, n int) {
+	switch answer {
+	case "sin_agua", "no", "no_regreso":
+		c.SinAgua += n
+	case "baja", "poca":
+		c.Baja += n
+	case "con_agua", "si", "normal", "turbia":
+		c.ConAgua += n
 	}
 }
 
@@ -146,13 +160,18 @@ type Summary struct {
 // and answered in the bot, to see whether the water goes only on the days the calendar says.
 // A map report counts for its colonia's main zone; zone 0 is colonias outside the rotation.
 type Week struct {
-	Days  []string   `json:"dias"` // oldest first
-	Min   int        `json:"min"`  // reports a day needs before its split shows
+	Days []string `json:"dias"` // oldest first
+	// Min is how many reports a day needs before its split shows, and how many of the bot's
+	// answers if it has any: the map's reports are public by colonia, so subtracting them
+	// would give a few answers away.
+	Min   int        `json:"min"`
 	Zones []WeekZone `json:"zonas"`
-	Dry   struct {
+	// The map's «sin agua» in zones 1 to 7, on their cut days and on other days. The bot's
+	// answers stay out: it asks only on evenings that aren't its zone's cut days.
+	Dry struct {
 		OnCut  int `json:"en_corte"`
 		OffCut int `json:"fuera_de_corte"`
-	} `json:"sin_agua"` // «sin agua» in zones 1 to 7, on their cut days and on other days
+	} `json:"sin_agua"`
 }
 
 type WeekZone struct {
@@ -173,12 +192,13 @@ type colonia struct {
 
 // Board holds the recent reports and the limits. Its methods are safe for concurrent use.
 type Board struct {
-	store    Store
-	minShown int
-	loc      *time.Location
-	now      func() time.Time
-	log      *slog.Logger
-	colonias map[string]colonia
+	store       Store
+	minShown    int
+	loc         *time.Location
+	now         func() time.Time
+	log         *slog.Logger
+	colonias    map[string]colonia
+	forgetEvery time.Duration
 
 	mu        sync.Mutex
 	recent    []store.WebReport // the window's reports, oldest first
@@ -203,7 +223,8 @@ func New(st Store, coloniasJSON []byte, minShown int, loc *time.Location, now fu
 	if err := json.Unmarshal(coloniasJSON, &rows); err != nil {
 		return nil, fmt.Errorf("colonias_mapa.json: %w", err)
 	}
-	b := &Board{store: st, minShown: minShown, loc: loc, now: now, log: log, colonias: map[string]colonia{}, hits: map[string][]time.Time{}}
+	b := &Board{store: st, minShown: minShown, loc: loc, now: now, log: log, colonias: map[string]colonia{},
+		forgetEvery: forgetEvery, hits: map[string][]time.Time{}}
 	for _, r := range rows {
 		zone, _ := strconv.Atoi(strings.Split(r[3], ",")[0])
 		b.colonias[Key(r[0], r[1], r[2])] = colonia{r[0], r[1], r[2], zone}
@@ -281,18 +302,6 @@ func (b *Board) lastHour(now time.Time) int {
 
 // allow applies the hourly limits to addr. Called with mu held.
 func (b *Board) allow(addr, key string, now time.Time) bool {
-	recent := func(ts []time.Time) []time.Time {
-		return slices.DeleteFunc(ts, func(t time.Time) bool { return now.Sub(t) >= time.Hour })
-	}
-	if len(b.hits) >= maxTracked {
-		for k, ts := range b.hits {
-			if ts = recent(ts); len(ts) == 0 {
-				delete(b.hits, k)
-			} else {
-				b.hits[k] = ts
-			}
-		}
-	}
 	type limit struct {
 		key string
 		max int
@@ -306,12 +315,9 @@ func (b *Board) allow(addr, key string, now time.Time) bool {
 			limits = append(limits, limit{"n:" + wide, n.max})
 		}
 	}
-	if _, known := b.hits[limits[0].key]; !known && len(b.hits) >= maxTracked {
-		return false
-	}
 	kept := make([][]time.Time, len(limits))
 	for i, l := range limits {
-		if kept[i] = recent(b.hits[l.key]); len(kept[i]) >= l.max {
+		if kept[i] = inLastHour(b.hits[l.key], now); len(kept[i]) >= l.max {
 			return false
 		}
 	}
@@ -319,6 +325,26 @@ func (b *Board) allow(addr, key string, now time.Time) bool {
 		b.hits[l.key] = append(kept[i], now)
 	}
 	return true
+}
+
+// inLastHour keeps the times less than an hour old.
+func inLastHour(ts []time.Time, now time.Time) []time.Time {
+	return slices.DeleteFunc(ts, func(t time.Time) bool { return now.Sub(t) >= time.Hour })
+}
+
+// forget drops what the limits hold from over an hour ago, so no address, nor the colonias it
+// reported, stays in memory much longer than that.
+func (b *Board) forget() {
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	now := b.now()
+	for k, ts := range b.hits {
+		if ts = inLastHour(ts, now); len(ts) == 0 {
+			delete(b.hits, k)
+		} else {
+			b.hits[k] = ts
+		}
+	}
 }
 
 // coloniaLastHour counts everyone's reports for one colonia in the last hour. Called with mu held.
@@ -562,51 +588,51 @@ func (b *Board) loadWeek(ctx context.Context, now time.Time) (*Week, error) {
 		days[d] = i
 		w.Days = append(w.Days, d)
 	}
-	counts := map[int]*[weekDays]Counts{}
-	add := func(zone int, day time.Time, answer string, n int) {
+	// A day keeps the map's reports apart from the bot's answers, which its split and the
+	// share of «sin agua» treat differently.
+	type cell struct{ web, bot Counts }
+	cells := map[int]*[weekDays]cell{}
+	at := func(zone int, day time.Time) *cell {
 		i, ok := days[day.Format(dateLayout)]
 		if !ok {
-			return
+			return nil
 		}
-		if counts[zone] == nil {
-			counts[zone] = &[weekDays]Counts{}
+		if cells[zone] == nil {
+			cells[zone] = &[weekDays]cell{}
 		}
-		c := &counts[zone][i]
-		switch answer {
-		case "sin_agua", "no", "no_regreso":
-			c.SinAgua += n
-		case "baja", "poca":
-			c.Baja += n
-		case "con_agua", "si", "normal", "turbia":
-			c.ConAgua += n
-		}
+		return &cells[zone][i]
 	}
 	for _, r := range web {
 		if col, ok := b.colonias[r.Colonia]; ok {
-			add(col.zone, r.Day, r.Answer, r.Count)
+			if c := at(col.zone, r.Day); c != nil {
+				c.web.addN(r.Answer, r.Count)
+			}
 		}
 	}
 	for _, r := range bot {
-		add(r.Zone, r.Day, r.Answer, r.Count)
+		if c := at(r.Zone, r.Day); c != nil {
+			c.bot.addN(r.Answer, r.Count)
+		}
 	}
 	for _, zone := range []int{1, 2, 3, 4, 5, 6, 7, 0} {
 		wz := WeekZone{Zone: zone, Cuts: make([]bool, weekDays), Days: make([]DayCell, weekDays)}
 		for i := range weekDays {
-			var c Counts
-			if counts[zone] != nil {
-				c = counts[zone][i]
+			var c cell
+			if cells[zone] != nil {
+				c = cells[zone][i]
 			}
+			all := Counts{c.web.SinAgua + c.bot.SinAgua, c.web.Baja + c.bot.Baja, c.web.ConAgua + c.bot.ConAgua}
 			wz.Cuts[i] = zone > 0 && b.Cuts != nil && b.Cuts(zone, first.AddDate(0, 0, i))
-			wz.Days[i].Total = c.total()
-			if c.total() > 0 && c.total() >= b.minShown {
-				wz.Days[i].Detail = &c
+			wz.Days[i].Total = all.total()
+			if all.total() > 0 && all.total() >= b.minShown && (c.bot.total() == 0 || c.bot.total() >= b.minShown) {
+				wz.Days[i].Detail = &all
 			}
 			switch {
 			case zone == 0:
 			case wz.Cuts[i]:
-				w.Dry.OnCut += c.SinAgua
+				w.Dry.OnCut += c.web.SinAgua
 			default:
-				w.Dry.OffCut += c.SinAgua
+				w.Dry.OffCut += c.web.SinAgua
 			}
 		}
 		w.Zones = append(w.Zones, wz)
@@ -614,9 +640,25 @@ func (b *Board) loadWeek(ctx context.Context, now time.Time) (*Week, error) {
 	return w, nil
 }
 
-// Run writes the reports every interval until ctx ends. The server flushes once more after it
-// stops taking requests.
+// Run works until ctx ends: every minute it forgets what the limits hold from over an hour
+// ago, and every interval it saves the new reports and, while someone looks at the map,
+// reloads the bot's answers and the week. The server flushes once more after it stops taking
+// requests.
 func (b *Board) Run(ctx context.Context, every time.Duration) {
+	var forgetting sync.WaitGroup
+	defer forgetting.Wait()
+	forgetting.Go(func() {
+		t := time.NewTicker(b.forgetEvery)
+		defer t.Stop()
+		for {
+			select {
+			case <-ctx.Done():
+				return
+			case <-t.C:
+				b.forget()
+			}
+		}
+	})
 	t := time.NewTicker(every)
 	defer t.Stop()
 	for {

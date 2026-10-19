@@ -63,7 +63,9 @@ type Runner struct {
 
 const maxConsecutiveFailures = 5
 
-// Run sends tonight's reminders every day at Hour. Persisted attempts are never automatically resent.
+// Run sends tonight's reminders every day at Hour. An attempt is made again, until
+// CatchUpUntil, only if it was refused, so nothing was delivered; one that may have been
+// delivered never is.
 func (r *Runner) Run(ctx context.Context) {
 	if h := r.Now().In(r.Schedule.Location()).Hour(); h >= r.Hour && h < r.CatchUpUntil {
 		r.runOnce(ctx)
