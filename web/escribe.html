@@ -9,7 +9,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aguagdl.com/escribe">
 <meta property="og:title" content="Escribe al Congreso de Jalisco sobre el agua">
-<meta property="og:description" content="El agua de Guadalajara llega sucia y racionada; no lo arregla un acueducto privado, lo arregla sanear los ríos. Escríbele a las 38 diputaciones desde tu cuenta; Agua GDL no ve ni guarda nada.">
+<meta property="og:description" content="El agua de Guadalajara llega sucia y racionada; no lo arregla un acueducto privado, lo arregla sanear los ríos. Escríbeles a las 38 diputaciones desde tu cuenta; Agua GDL no ve ni guarda nada.">
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary">
@@ -247,13 +247,13 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
             <div class="mail-row"><label for="asunto">Asunto</label><input id="asunto" value="Petición ciudadana: voten en contra de la APP del acueducto Chapala–Guadalajara"></div>
             <div class="mail-text">
               <p class="auto" id="saludo"></p>
-              <textarea id="texto" aria-label="Texto del correo">Como habitante de Jalisco, le pido que vote en contra del contrato de asociación público-privada (APP) que el Ejecutivo propone para que la Comisión Estatal del Agua construya y opere el acueducto sustituto Chapala–Guadalajara. El agua no debe quedar en manos de una empresa privada.
+              <textarea id="texto" aria-label="Texto del correo">Como habitante de Jalisco, le pido que vote en contra del contrato de asociación público-privada (APP) que el Ejecutivo propone para que la Comisión Estatal del Agua contrate a una empresa privada que construya y opere el acueducto sustituto Chapala–Guadalajara. El agua no debe quedar en manos de una empresa privada.
 
 Mis razones:
 
-1. No se han publicado los estudios actualizados, que la propia iniciativa reconoce como indispensables antes de elegir una alternativa.
+1. No se han publicado los estudios actualizados del proyecto.
 2. No se conocen la matriz de riesgos, el análisis de valor por dinero ni el desglose de los pagos entre inversión, costo financiero y operación.
-3. Los pagos, de hasta 39,689 o 48,296 millones de pesos, superan más de tres veces la inversión de 11,922 millones. En los hechos sería deuda, porque se pagaría con dinero del Estado.
+3. Según las cifras que presentaron diputaciones de oposición, los pagos llegarían a 39,689 millones de pesos en 20 años o a 48,296 millones en 25, más de tres veces la inversión de 11,922 millones. En los hechos sería deuda, porque se pagaría con dinero del Estado.
 
 El agua es un derecho humano y su gestión debe ser pública y transparente. Daré seguimiento al sentido del voto de cada integrante del Congreso en este tema y lo compartiré con mi comunidad.
 
@@ -319,7 +319,7 @@ Atentamente,</textarea>
     <section aria-labelledby="x">
       <h2 id="x" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#x"/></svg></span>Publícalo también en X</h2>
       <p>Un post para cada diputación que tiene cuenta en X. Cada botón abre X con «Dip. @cuenta,» y este texto, que puedes cambiar:</p>
-      <textarea id="post" class="post" maxlength="257">le pido que vote en contra de la APP del acueducto Chapala–Guadalajara: el agua no se privatiza. ¿Hasta $48 mil millones por una obra de $11.9 mil millones, sin estudios publicados? Estaré pendiente de su voto. #ElAguaEsUnDerecho</textarea>
+      <textarea id="post" class="post" maxlength="257">le pido que vote en contra de la APP del acueducto Chapala–Guadalajara: el agua no se privatiza. ¿Pagar hasta $48 mil millones, según la oposición, por una obra de $11.9 mil millones, sin estudios publicados? Estaré pendiente de su voto. #ElAguaEsUnDerecho</textarea>
       <p class="note" id="post-cuenta"></p>
       <div class="actions">
         <a class="button" id="siguiente-x" href="#" rel="noopener" target="_blank"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#x"/></svg>Publicar</a>
@@ -327,6 +327,7 @@ Atentamente,</textarea>
       </div>
       <p class="note" id="progreso-x"></p>
       <p class="note" id="progreso-fb"></p>
+      <p class="note" id="estado-redes" aria-live="polite"></p>
       <p class="note">Usamos solo las cuentas que cada diputación publica en su perfil del Congreso: 32 tienen X y 35 tienen Facebook. Messenger no deja poner el texto por adelantado, así que el botón lo copia y abre el chat: solo pégalo y envíalo.</p>
     </section>
     </div>
@@ -334,9 +335,10 @@ Atentamente,</textarea>
     <div class="panel" role="tabpanel" id="p-lista" aria-labelledby="t-lista">
     <section aria-labelledby="uno">
       <h2 id="uno" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#users"/></svg></span>Las 38 diputaciones</h2>
-      <p>También puedes escribirle a cualquiera en el orden que quieras. Las que ya escribiste se marcan con <svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#check"/></svg> en este dispositivo.</p>
+      <p>También puedes escribirle a cualquiera en el orden que quieras. Las diputaciones a las que ya les escribiste se marcan con <svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#check"/></svg> en este dispositivo.</p>
       <ul class="people" id="personas"></ul>
-      <p class="note">Correos, teléfonos, distritos y cuentas publicados por el Congreso del Estado de Jalisco en el perfil de cada diputación (revisados el 15 de octubre de 2026). «Llamar» marca el conmutador y luego la extensión. Si alguno rebota, avísanos a <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>.</p>
+      <p class="note" id="estado-lista" aria-live="polite"></p>
+      <p class="note">Correos, teléfonos, distritos y cuentas publicados por el Congreso del Estado de Jalisco en el perfil de cada diputación (revisados el 15 de octubre de 2026). «Llamar» marca el teléfono de su perfil y luego su extensión. Si alguno rebota, avísanos a <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>.</p>
     </section>
     </div>
 
@@ -353,7 +355,7 @@ Atentamente,</textarea>
     <section class="genocide" aria-labelledby="porque-palestina">
       <h2 id="porque-palestina" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#heart"/></svg></span>Contra el genocidio, el colonialismo y el sionismo</h2>
       <p class="lead-claim"><strong>Israel está cometiendo un genocidio contra el pueblo palestino en Gaza. Por eso nos oponemos a cualquier negocio con Israel y con sus empresas, empezando por el agua.</strong></p>
-      <p>No es sólo nuestra opinión. Lo concluyeron:</p>
+      <p>No es solo nuestra opinión. Lo concluyeron:</p>
       <ul>
         <li><strong>La Asociación Internacional de Investigadores del Genocidio</strong>, la principal organización académica del tema, en agosto de 2025 (<a href="https://genocidescholars.org/wp-content/uploads/2025/08/IAGS-Resolution-on-Gaza-FINAL.pdf" rel="noopener" target="_blank">resolución IAGS</a>).</li>
         <li><strong>La Comisión de Investigación de la ONU</strong> sobre Palestina, en septiembre de 2025 (<a href="https://www.un.org/unispal/document/commission-of-inquiry-report-genocide-in-gaza-a-hrc-60-crp-3/" rel="noopener" target="_blank">ONU</a>).</li>
@@ -366,7 +368,7 @@ Atentamente,</textarea>
       <ul>
         <li><strong>Mekorot y México.</strong> La Conagua firmó acuerdos con Mekorot en 2013 y amplió la colaboración en 2015 (<a href="https://www.gob.mx/conagua/prensa/firman-mexico-e-israel-acuerdo-para-la-remediacion-de-acuiferos" rel="noopener" target="_blank">Conagua, 2013</a>, <a href="https://www.cmic.org.mx/comisiones/Sectoriales/infraestructurahidraulica/normatividad/Boletines%20de%20CONAGUA/2015/NOVIEMBRE/Comunicado%20de%20prensa%20No%20%20753-15%20%282%29.pdf" rel="noopener" target="_blank">Conagua, 2015</a>); según el diario israelí Globes, un exasesor de Netanyahu podría cobrar millones por gestionarlos (<a href="https://en.globes.co.il/en/article-netanyahu-advisor-makes-millions-on-mekorot-mexico-deal-1000941278" rel="noopener" target="_blank">Globes</a>).</li>
         <li><strong>La ONU la señala.</strong> Mekorot está en la base de datos de la ONU de empresas con actividades en los asentamientos israelíes en territorio palestino ocupado, por el uso del agua (<a href="https://www.ecoi.net/en/file/local/2024766/A_HRC_43_71_E.pdf" rel="noopener" target="_blank">ONU, A/HRC/43/71</a>).</li>
-        <li><strong>Agua desigual.</strong> Amnistía Internacional documentó en 2009 que una persona palestina en Cisjordania apenas llegaba a 70 litros al día, contra más de 300 en Israel (<a href="https://www.amnesty.eu/news/troubled-waters-palestinians-denied-fair-access-to-water/" rel="noopener" target="_blank">Amnistía</a>); B'Tselem documentó en 2007 que Mekorot reducía el agua a comunidades palestinas en verano para abastecer a los asentamientos (<a href="https://www.btselem.org/water/20071028_hebron_area" rel="noopener" target="_blank">B'Tselem</a>).</li>
+        <li><strong>Agua desigual.</strong> Amnistía Internacional documentó en 2009 que en los territorios palestinos ocupados una persona palestina apenas llegaba a 70 litros al día, contra más de 300 en Israel (<a href="https://www.amnesty.eu/news/troubled-waters-palestinians-denied-fair-access-to-water/" rel="noopener" target="_blank">Amnistía</a>); B'Tselem documentó en 2007 que Mekorot reducía el agua a comunidades palestinas en verano para abastecer a los asentamientos (<a href="https://www.btselem.org/water/20071028_hebron_area" rel="noopener" target="_blank">B'Tselem</a>).</li>
         <li><strong>Gaza.</strong> Israel cortó el 9 de octubre de 2023 el agua que llegaba a Gaza por tubería desde Israel (<a href="https://www.hrw.org/report/2024/12/19/extermination-and-acts-genocide/israel-deliberately-depriving-palestinians-gaza" rel="noopener" target="_blank">HRW</a>). La Corte Internacional de Justicia ordenó a Israel permitir el agua y los servicios básicos (<a href="https://www.icj-cij.org/node/203854" rel="noopener" target="_blank">CIJ</a>).</li>
         <li><strong>Otros ya rompieron.</strong> La empresa de agua neerlandesa Vitens terminó su cooperación con Mekorot en 2013 (<a href="https://www.alhaq.org/advocacy/6691.html" rel="noopener" target="_blank">Al-Haq</a>), y en Argentina, donde Mekorot tiene convenios con varias provincias, hay protestas contra su expansión (<a href="https://www.aljazeera.com/news/2023/11/24/amid-gaza-war-activists-in-argentina-aim-to-expel-israeli-water-company" rel="noopener" target="_blank">Al Jazeera</a>).</li>
       </ul>
@@ -381,7 +383,7 @@ Atentamente,</textarea>
         <li><strong>Pagaríamos varias veces la obra.</strong> La inversión es de 11,922 millones de pesos; los pagos a la empresa llegarían hasta 39,689 millones en 20 años o 48,296 millones en 25, según las cifras que presentó la oposición en el Congreso (<a href="https://concienciapublica.com.mx/2026/10/13/oposicion-rechaza-privatizar-acueducto-chapala-guadalajara-costaria-hasta-48-mil-millones-de-pesos/" rel="noopener" target="_blank">Conciencia Pública</a>).</li>
         <li><strong>Es deuda, aunque no se llame así.</strong> Son pagos obligatorios del presupuesto estatal durante dos décadas, que comprometen a los próximos gobiernos.</li>
         <li><strong>Sin estudios ni transparencia.</strong> No se han publicado los estudios actualizados, la matriz de riesgos ni el desglose de pagos. El gobernador dijo en julio que cuatro empresas ya habían presentado propuestas, pero no se sabe cuáles (<a href="https://www.aztecajalisco.com/local/inversionistas-presentan-propuestas-para-acueducto-chapala-guadalajara/" rel="noopener" target="_blank">Azteca Jalisco</a>).</li>
-        <li><strong>El agua es un derecho, no un negocio.</strong> La presidenta Claudia Sheinbaum también rechazó el esquema por ser, en los hechos, una privatización (<a href="https://www.informador.mx/jalisco/pablo-lemus-asegura-que-no-se-privatizara-el-agua-de-guadalajara-20261014-0023.html" rel="noopener" target="_blank">El Informador</a>).</li>
+        <li><strong>El agua es un derecho, no un negocio.</strong> La presidenta Claudia Sheinbaum dijo que su administración no está de acuerdo con un esquema de financiamiento privado que, a su juicio, implicaría privatizar el servicio: «Con lo que no estamos de acuerdo es apoyar la privatización del servicio del agua» (<a href="https://www.informador.mx/jalisco/pablo-lemus-asegura-que-no-se-privatizara-el-agua-de-guadalajara-20261014-0023.html" rel="noopener" target="_blank">El Informador</a>).</li>
       </ul>
     </section>
 
@@ -389,8 +391,8 @@ Atentamente,</textarea>
       <h2 id="porque-sanear" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#droplet"/></svg></span>Primero, sanear el agua</h2>
       <p>El problema de hoy no es que falte un acueducto: es que el agua llega contaminada. El sistema que se cerró en octubre recibe descargas de aguas residuales a lo largo del canal Las Pintas, y el Río Santiago lleva décadas envenenado por descargas industriales. Lee <a href="/contamina">quién contamina el agua</a>.</p>
       <ul>
-        <li><strong>El acueducto cuesta más que toda la estrategia de Jalisco para el Río Santiago de 2019 a 2024.</strong> Jalisco reporta 7,333 millones de pesos en esos seis años, sumando saneamiento, salud (incluidos hospitales), medio ambiente y otros programas (<a href="https://riosantiago.jalisco.gob.mx/wp-content/uploads/2024/07/Presupuesto-Integral-de-la-Estrategia-Revivamos-el-Rio-Santiago-2024pdf.pdf" rel="noopener" target="_blank">Gobierno de Jalisco</a>), y la Semarnat prevé unos 7,000 millones para 2026–2030 (<a href="https://www.informador.mx/jalisco/Preven-7-mil-millones-de-pesos-para-sanear-el-Rio-Santiago-20250211-0126.html" rel="noopener" target="_blank">El Informador</a>). Sólo la inversión del acueducto es de 11,922 millones, y los pagos de la APP serían varias veces más.</li>
-        <li><strong>Hay obras más baratas para el agua sucia de hoy.</strong> El propio Plan Integral del Agua estima 1,197 millones para el sistema La Calera: una tubería y una estación de bombeo que llevarían el agua de la presa La Calera a la potabilizadora Los Agaves, en Tlajomulco, y al acueducto Chapala–Guadalajara, para depender menos de la presa Las Pintas y del canal abierto del Sistema Antiguo (<a href="https://planintegraldelagua.jalisco.gob.mx/pdf/an-0014.pdf" rel="noopener" target="_blank">ficha oficial</a>). La primera etapa de Los Agaves abrió en noviembre de 2024 (<a href="https://www.cronica.com.mx/estados/2024/11/26/jalisco-inaugura-la-planta-potabilizadora-los-agaves-en-tlajomulco/" rel="noopener" target="_blank">Crónica</a>).</li>
+        <li><strong>El acueducto cuesta más que toda la estrategia de Jalisco para el Río Santiago de 2019 a 2024.</strong> Jalisco reporta 7,333 millones de pesos en esos seis años, sumando saneamiento, salud (incluidos hospitales), medio ambiente y otros programas (<a href="https://riosantiago.jalisco.gob.mx/wp-content/uploads/2024/07/Presupuesto-Integral-de-la-Estrategia-Revivamos-el-Rio-Santiago-2024pdf.pdf" rel="noopener" target="_blank">Gobierno de Jalisco</a>), y la Semarnat prevé unos 7,000 millones para 2026–2030 (<a href="https://www.informador.mx/jalisco/Preven-7-mil-millones-de-pesos-para-sanear-el-Rio-Santiago-20250211-0126.html" rel="noopener" target="_blank">El Informador</a>). Solo la inversión del acueducto es de 11,922 millones, y según las cifras que presentó la oposición en el Congreso los pagos de la APP serían de 3.3 a 4.1 veces esa cantidad (<a href="https://concienciapublica.com.mx/2026/10/13/oposicion-rechaza-privatizar-acueducto-chapala-guadalajara-costaria-hasta-48-mil-millones-de-pesos/" rel="noopener" target="_blank">Conciencia Pública</a>).</li>
+        <li><strong>Hay obras más baratas para el agua sucia de hoy.</strong> El propio Plan Integral del Agua estima 1,197 millones para todo el sistema La Calera, que llevaría el agua de la presa La Calera a la potabilizadora Los Agaves, en Tlajomulco, y al acueducto Chapala–Guadalajara, para depender menos del último tramo del Sistema Antiguo, que va a cielo abierto. La primera etapa, una tubería de 6.7 kilómetros de La Calera a Los Agaves, se construyó en 2025 con 441 millones; la etapa de 2026, la estación de bombeo y la conexión con el tanque del acueducto, es de 756 millones (<a href="https://planintegraldelagua.jalisco.gob.mx/pdf/an-0014.pdf" rel="noopener" target="_blank">ficha oficial</a>). La primera etapa de Los Agaves abrió en noviembre de 2024 (<a href="https://www.cronica.com.mx/estados/2024/11/26/jalisco-inaugura-la-planta-potabilizadora-los-agaves-en-tlajomulco/" rel="noopener" target="_blank">Crónica</a>).</li>
         <li><strong>Un tubo nuevo no limpia el lago.</strong> Chapala recibe la contaminación del río Lerma; sin detener las descargas, el acueducto llevaría a la ciudad la misma agua.</li>
       </ul>
     </section>
@@ -498,13 +500,20 @@ Atentamente,</textarea>
   // One panel at a time; the hash keeps the chosen tab on reload and in shared links.
   const TABS = [...document.querySelectorAll("[data-tab]")].map((b) => b.dataset.tab);
   function showTab(name) {
-    if (!TABS.includes(name)) name = TABS[0];
+    // A link to a heading inside a tab (/escribe#porque-app) opens that tab and scrolls to it.
+    const target = name && !TABS.includes(name) ? document.getElementById(name) : null;
+    const panel = target && target.closest("[role=tabpanel]");
+    const tab = panel ? panel.id.slice(2) : TABS.includes(name) ? name : TABS[0];
     for (const t of TABS) {
-      $(`p-${t}`).hidden = t !== name;
-      $(`t-${t}`).setAttribute("aria-selected", String(t === name));
+      $(`p-${t}`).hidden = t !== tab;
+      $(`t-${t}`).setAttribute("aria-selected", String(t === tab));
     }
-    if (location.hash.slice(1) !== name) history.replaceState(null, "", `#${name}`);
-    if (name === "correo") fit();
+    if (tab === "correo") fit();
+    if (panel) {
+      target.scrollIntoView();
+      return;
+    }
+    if (location.hash.slice(1) !== tab) history.replaceState(null, "", `#${tab}`);
   }
   document.querySelectorAll("[data-tab]").forEach((b) => b.addEventListener("click", () => showTab(b.dataset.tab)));
   showTab(location.hash.slice(1));
@@ -583,8 +592,9 @@ Atentamente,</textarea>
 
   // The same one-by-one stepping for X posts and Messenger chats, each with its own progress.
   const xUrl = (handle) => `https://x.com/intent/tweet?text=${q(`Dip. @${handle}, ${$("post").value.trim()}`)}`;
-  const copyChat = (name) => copy(`Dip. ${name}, ${$("post").value.replace(/\s*#\S+/g, "").trim()}`,
-    `Copiamos el mensaje para ${name}: pégalo en el chat de Messenger.`);
+  // where is the status line of the tab the button is in.
+  const copyChat = (name, where) => copy(`Dip. ${name}, ${$("post").value.replace(/\s*#\S+/g, "").trim()}`,
+    `Copiamos el mensaje para ${name}: pégalo en el chat de Messenger.`, where);
   function stepper(key, field, btnId, progressId, verb, url, onOpen, attr) {
     const people = DIPUTADOS.filter((d) => d[field]);
     let done = new Set();
@@ -616,7 +626,7 @@ Atentamente,</textarea>
   }
   const socials = [
     stepper("escribe-x", 2, "siguiente-x", "progreso-x", ["x", "Publicar para"], (d) => xUrl(d[2]), () => {}, "x"),
-    stepper("escribe-messenger", 3, "siguiente-fb", "progreso-fb", ["message-circle", "Messenger a"], (d) => `https://m.me/${d[3]}`, (d) => copyChat(d[0]), "fb"),
+    stepper("escribe-messenger", 3, "siguiente-fb", "progreso-fb", ["message-circle", "Messenger a"], (d) => `https://m.me/${d[3]}`, (d) => copyChat(d[0], "estado-redes"), "fb"),
   ];
 
   const list = $("personas");
@@ -668,7 +678,7 @@ Atentamente,</textarea>
       chat.rel = "noopener";
       chat.target = "_blank";
       chat.dataset.fb = fb;
-      chat.addEventListener("click", () => { copyChat(name); socials[1].mark(fb); });
+      chat.addEventListener("click", () => { copyChat(name, "estado-lista"); socials[1].mark(fb); });
       links.append(chat);
     }
     const phone = document.createElement("a");
@@ -695,12 +705,12 @@ Atentamente,</textarea>
     refresh();
   });
 
-  async function copy(text, done) {
+  async function copy(text, done, where = "estado") {
     try {
       await navigator.clipboard.writeText(text);
-      $("estado").textContent = done;
+      $(where).textContent = done;
     } catch {
-      $("estado").textContent = "No se pudo copiar. Selecciona el texto y cópialo a mano.";
+      $(where).textContent = "No se pudo copiar. Selecciona el texto y cópialo a mano.";
     }
   }
   $("copiar-correos").addEventListener("click", () => copy(all.join(", "), `Copiamos los ${all.length} correos: pégalos en «Para».`));

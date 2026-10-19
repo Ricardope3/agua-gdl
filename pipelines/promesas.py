@@ -33,7 +33,7 @@ ORDER = list(VERDICTS)
 STEPS = {"cumplido": "Cumplido", "declarado": "Declarado, sin prueba independiente", "en_disputa": "En disputa", "incumplido": "No se cumplió", "pendiente": "Pendiente"}
 NEEDS_EVIDENCE = {"cumplido", "declarado", "en_disputa", "incumplido"}
 SECTIONS = {"app": "A. El acueducto (APP)", "gobierno": "B. Los demás compromisos"}
-BANNED = re.compile(r"\b(miente|mintio|mintieron|engana|engano|enganaron|traiciono|traicionaron)\b")
+BANNED = re.compile(r"\b(miente|mienten|mintio|mintieron|mintiendo|mentira|mentiras|engana|enganan|enganando|engano|enganaron|traiciono|traicionaron)\b")
 MONTHS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
 TODAY = datetime.datetime.now(zoneinfo.ZoneInfo("America/Mexico_City")).date()
 
@@ -63,8 +63,8 @@ def date(s, where, future_ok=False):
 def source(src, where):
     if not str(src.get("url", "")).startswith("https://"):
         fail(f"{where}: URL must start with https:// ({src.get('url')!r})")
-    if not DRAFTS and not str(src.get("archive") or "").startswith("https://") and src.get("captura") != "privada":
-        fail(f"{where}: {src.get('url')} has no archive snapshot (or \"captura\": \"privada\" with a copy in the notes repo)")
+    if not DRAFTS and not str(src.get("archive") or "").startswith("https://web.archive.org/") and src.get("captura") != "privada":
+        fail(f"{where}: {src.get('url')} has no archive.org snapshot (or \"captura\": \"privada\" with a copy in the notes repo)")
     if not src.get("medio"):
         fail(f"{where}: source without medio")
     if src.get("fecha"):
@@ -141,7 +141,7 @@ def validate(data):
             for ev in s.get("evidencia", []):
                 source(ev, f"{where} paso {i}")
         verdict = p.get("veredicto")
-        if verdict == "se_contradice" and not (doc.get("citas") and doc.get("fuentes")):
+        if verdict == "se_contradice" and not (any(str(c.get("texto", "")).strip() for c in doc.get("citas", [])) and doc.get("fuentes")):
             fail(f"{where}: «Se contradice» needs the document's exact words and its link")
         if verdict == "incumplida":
             core = next((s for s in steps if s.get("core")), {})
@@ -158,7 +158,7 @@ def validate(data):
             quoted = is_quote(path, p, text)
             if not quoted and BANNED.search(plain(text)):
                 fail(f"{where}.{path}: wording that claims intent («miente», «engañó»…) outside a quote")
-            if "israel" in plain(text) and not (quoted or path == "nota"):
+            if "israel" in plain(text) and not quoted:
                 fail(f"{where}.{path}: the word israelí may appear only in the quote (AGENTS.md rule)")
     for c in data.get("correcciones", []):
         date(c.get("fecha"), "correcciones")
