@@ -131,11 +131,11 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 
     <div class="summary" id="simplificado">
       <h2 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#shield-check"/></svg></span>Aviso de privacidad simplificado</h2>
-      <p>Luis Ricardo Espinoza Rodríguez, con domicilio en Blvd. Jardín Real #430, C.P. 45136, Zapopan, Jalisco, México, es responsable de la iniciativa ciudadana <strong>Agua GDL</strong> y del tratamiento de tus datos: el identificador de tu chat de Telegram, la zona de la rotación del SIAPA que eliges y tus reportes sobre cómo regresó el agua. No pedimos datos sensibles.</p>
-      <p>Los usamos solo para avisarte de cada corte de agua en tu zona (dos días antes y la noche antes), preguntarte si tienes agua, contestar tus mensajes y registrar tus reportes. No tenemos otros fines: no vendemos ni compartimos tus datos y no los usamos para publicidad ni propaganda política o electoral.</p>
+      <p>Luis Ricardo Espinoza Rodríguez, con domicilio en Blvd. Jardín Real #430, C.P. 45136, Zapopan, Jalisco, México, es responsable de la iniciativa ciudadana <strong>Agua GDL</strong> y del tratamiento de tus datos: tu identificador de usuario de Telegram, la zona de la rotación del SIAPA que eliges y lo que nos respondes sobre si tienes agua y cómo regresó. No pedimos datos sensibles.</p>
+      <p>Los usamos solo para avisarte dos días antes de los cortes de tu zona y la noche antes (una vez por tanda cuando los cortes van seguidos), preguntarte si tienes agua, contestar tus mensajes, registrar tus reportes y publicar resultados y estadísticas anónimas por zona y por día. No tenemos otros fines: no vendemos tus datos, no los usamos para publicidad ni propaganda política o electoral, y solo los compartimos con los proveedores que operan el servicio o con una autoridad que los pida conforme a la ley (<a href="#compartir">punto 4</a>).</p>
       <p>Para dejar de recibir avisos y borrar tus datos, escribe <strong>BAJA</strong> en el chat cuando quieras (también puedes bloquear el bot). Consulta el <a href="#integral">aviso integral</a> abajo o escríbenos a <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>.</p>
       <p><strong>Mapa de reportes:</strong> si reportas en <a href="/reportes">aguagdl.com/reportes</a>, sin cuenta, solo guardamos la colonia, tu respuesta y la hora. Es anónimo: no guardamos tu ubicación ni tu dirección IP.</p>
-      <p><strong>WhatsApp:</strong> Agua GDL dejó de funcionar por WhatsApp el 15 de octubre de 2026. Si te suscribiste por WhatsApp, borraremos tu número, el identificador que WhatsApp asigna a tu cuenta y tu zona a más tardar el 14 de noviembre de 2026. Si quieres que lo hagamos antes, escríbenos a <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>.</p>
+      <p><strong>WhatsApp:</strong> Agua GDL dejó de funcionar por WhatsApp el 15 de octubre de 2026. Ese mismo día borramos el número, el identificador de WhatsApp y la zona de todas las personas que se suscribieron por ahí.</p>
     </div>
 
     <h2 class="integral" id="integral">Aviso de privacidad integral</h2>
@@ -149,15 +149,17 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     <section aria-labelledby="datos">
       <h3 id="datos">2. Qué datos guardamos</h3>
       <ul>
-        <li>El <strong>identificador numérico de tu chat</strong> de Telegram con Agua GDL. Telegram no nos da tu número de teléfono.</li>
-        <li>Si te suscribiste por WhatsApp antes del 15 de octubre de 2026: tu <strong>número de WhatsApp</strong> y el identificador que WhatsApp asigna a tu cuenta, hasta que los borremos (ver el punto 5).</li>
+        <li>Tu <strong>identificador de usuario de Telegram</strong> (un número), que también identifica tu chat con Agua GDL. Telegram no nos da tu número de teléfono.</li>
         <li>La <strong>zona</strong> de la rotación del SIAPA que eliges (de la 1 a la 7).</li>
         <li>La <strong>fecha y hora</strong> en que te suscribiste o cambiaste de zona. Es el registro de tu consentimiento.</li>
-        <li>Tus <strong>reportes</strong>: la fecha del corte, tu zona, tu respuesta y cuándo la diste (por ejemplo, «Baja presión», o si todavía tenías agua antes del corte).</li>
+        <li>Tus <strong>reportes y respuestas</strong>: la fecha del corte, tu zona, tu respuesta y cuándo la diste (por ejemplo, si todavía tenías agua antes del corte, o «Poca presión» después).</li>
         <li>Si reportas en el <a href="/reportes">mapa de reportes</a>, sin cuenta: la <strong>colonia</strong>, tu respuesta (sin agua, baja presión o con agua), si sale turbia, con olor o con sedimento, y la hora. Estos reportes no se ligan a ninguna suscripción ni a ninguna persona.</li>
-        <li>Un <strong>registro de los avisos</strong> que te enviamos: fecha del corte, zona, la app y si se entregó. Del identificador de cada mensaje de WhatsApp guardamos solo una huella cifrada (hash), que no permite conocer tu número.</li>
+        <li>Un <strong>registro de los avisos</strong> que te enviamos: fecha del corte, zona, la app, cuándo lo enviamos y si se entregó.</li>
+        <li>Las <strong>respuestas del bot</strong> mientras se envían: cada una se guarda con tu identificador, su texto y la hora, para no perderla si Telegram no la acepta a la primera, y se borra en cuanto sale (ver el punto 5). Su texto puede repetir lo que escribiste, por ejemplo el nombre de una colonia que no encontramos.</li>
+        <li>Una <strong>huella (hash) del identificador de cada mensaje</strong> que recibimos, para no procesar dos veces el mismo mensaje.</li>
+        <li>Si te suscribiste por WhatsApp: tu número, el identificador que WhatsApp asigna a tu cuenta y tu zona los borramos el 15 de octubre de 2026, cuando terminó el servicio por WhatsApp. Quedan, sin forma de ligarlos a ti, tus reportes y el registro de los avisos que te enviamos, que incluye si se entregaron o se leyeron y una huella (hash) del identificador de cada mensaje, que no permite conocer tu número.</li>
       </ul>
-      <p><strong>No guardamos</strong> tu nombre de perfil, tu foto, tu ubicación ni el texto de tus mensajes. Si nos mandas tu ubicación o el nombre de tu colonia, los usamos solo para calcular tu zona en ese momento y los descartamos. Telegram nos envía con cada mensaje tu nombre de perfil, tu nombre de usuario y el idioma de tu app; tampoco los guardamos. No pedimos datos personales sensibles.</p>
+      <p><strong>No guardamos</strong> tu nombre de perfil, tu foto, tu ubicación ni el texto de tus mensajes, salvo lo que repita una respuesta del bot mientras se envía. Si nos mandas tu ubicación o el nombre de tu colonia, los usamos solo para calcular tu zona en ese momento y los descartamos. Telegram nos envía con cada mensaje tu nombre de perfil, tu nombre de usuario y el idioma de tu app; tampoco los guardamos. No pedimos datos personales sensibles.</p>
     </section>
 
     <section aria-labelledby="finalidades">
@@ -165,12 +167,12 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       <p>Usamos tus datos solo para estas finalidades, todas necesarias para el servicio que pediste:</p>
       <ul>
         <li>Registrar tu suscripción y tu zona.</li>
-        <li>Enviarte por Telegram un aviso dos días antes de cada corte en tu zona y otro la noche antes (si los cortes de tu zona tienen uno o ningún día de por medio, uno solo por tanda) y, si el SIAPA cambia el calendario, un aviso del cambio.</li>
-        <li>Preguntarte si todavía tienes agua y usar tu respuesta para avisarte mejor: si nos dices que ya no tienes, no te mandamos el aviso de la noche antes y después te preguntamos si ya regresó.</li>
+        <li>Enviarte los avisos por Telegram: te avisamos dos días antes de los cortes de tu zona y otra vez la noche antes. Si tu zona tiene cortes seguidos (con uno o ningún día de por medio), te avisamos una vez por tanda, antes del primero. Si el SIAPA cambia el calendario, también te avisamos del cambio.</li>
+        <li>Preguntarte si todavía tienes agua y usar tu respuesta para avisarte mejor. Si nos dices que ya no tienes agua, no te mandamos el aviso de la noche antes. Si nos dices que no tienes o que tienes poca, después de la tanda te preguntamos si ya regresó, salvo que esa noche te llegue el aviso de la siguiente, que ya te pregunta si tienes agua.</li>
         <li>Contestar los mensajes que nos mandes (zona, ayuda, baja).</li>
-        <li>Registrar tus reportes y publicar resultados por zona y por fecha, sin nombres ni números y solo cuando haya suficientes reportes para que nadie pueda ser identificado.</li>
         <li>Revisar que los avisos lleguen y no se dupliquen.</li>
-        <li>Mostrar en el <a href="/reportes">mapa de reportes</a> cuántos reportes hay por colonia en las últimas 24 horas y, por zona, lo que responden en el bot, solo cuando haya suficientes respuestas para que nadie pueda ser identificado.</li>
+        <li>Registrar tus reportes y tus respuestas y publicar resultados por zona y por día, sin nombres ni identificadores: cuántos hubo se ve siempre, y cuántos fueron con agua, poca o sin agua, solo cuando hay suficientes para que nadie pueda ser identificado.</li>
+        <li>Mostrar en el <a href="/reportes">mapa de reportes</a> cuántos reportes hay por colonia en las últimas 24 horas y qué dicen y, por zona, esos resultados del bot: cuántas respuestas hubo en las últimas 24 horas y, junto con los reportes del mapa, cada día de la última semana.</li>
       </ul>
       <p>No tenemos finalidades secundarias ni que requieran un consentimiento adicional. Nunca usaremos tus datos para publicidad, encuestas, campañas ni propaganda política o electoral, y no te escribiremos sobre otros temas.</p>
     </section>
@@ -193,12 +195,14 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       <h3 id="plazos">5. Cuánto tiempo los guardamos</h3>
       <ul>
         <li>Tu identificador de Telegram y tu zona: mientras sigas suscrito. Si escribes <strong>BAJA</strong> o bloqueas el bot, los borramos en ese momento.</li>
-        <li>Los números e identificadores de WhatsApp y sus zonas: a más tardar el 14 de noviembre de 2026, porque el servicio por WhatsApp terminó el 15 de octubre de 2026.</li>
-        <li>Cuando termine la rotación del SIAPA y dejemos de enviar avisos, borraremos los números, identificadores y zonas de todas las personas suscritas en un plazo de 30 días.</li>
-        <li>Tus reportes y el registro de avisos: al borrarse tu suscripción se desligan de ti y quedan solo la zona, la fecha y la respuesta o el estado de entrega, sin forma de saber de quién eran. Los conservamos así para las estadísticas.</li>
+        <li>Los números e identificadores de WhatsApp y sus zonas: los borramos el 15 de octubre de 2026, cuando terminó el servicio por WhatsApp.</li>
+        <li>Cuando termine la rotación del SIAPA y dejemos de enviar avisos, borraremos los identificadores y las zonas de todas las personas suscritas en un plazo de 30 días.</li>
+        <li>Tus reportes, tus respuestas y el registro de avisos: al borrarse tu suscripción se desligan de ti y quedan solo la zona, la fecha y la hora, la app y la respuesta o el estado de entrega (en los avisos por WhatsApp, también la huella del identificador de cada mensaje), sin forma de saber de quién eran. Los conservamos así para las estadísticas.</li>
         <li>Los reportes del mapa: son anónimos desde que llegan y los conservamos para las estadísticas. Para limitar los repetidos, el servidor recuerda por una hora, solo en memoria, cuántos reportes llegan de cada dirección IP; no la guarda en la base de datos ni en sus registros.</li>
-        <li>Las huellas cifradas de los mensajes que recibimos, que sirven para no procesar dos veces el mismo mensaje: 7 días.</li>
-        <li>Respaldos: guardamos copias cifradas de la base de datos para no perderla y las borramos al terminar la rotación. El proveedor de la base de datos también guarda un historial corto para recuperarla, que se reemplaza solo.</li>
+        <li>Las direcciones IP de quienes usan las páginas que consultan nuestro servidor (como «¿Qué zona me toca?» o el mapa de reportes): para que nadie lo sature, el servidor cuenta, solo en memoria y por periodos de un minuto, cuántas peticiones llegan de cada una; no las guarda en la base de datos ni en sus registros.</li>
+        <li>Las respuestas del bot: se borran en cuanto se envían. Si por algún error una se queda guardada, la borra la limpieza diaria en cuanto tiene más de un día, así que no dura más de unos dos días. Si escribes <strong>BAJA</strong> o bloqueas el bot, también borramos las que tengas pendientes.</li>
+        <li>Las huellas (hash) de los identificadores de los mensajes que recibimos, que sirven para no procesar dos veces el mismo mensaje: las borra la limpieza diaria en cuanto tienen más de 7 días.</li>
+        <li>Respaldos: no hacemos copias de la base de datos. El proveedor de la base de datos guarda un historial corto para recuperarla, que se reemplaza solo.</li>
       </ul>
     </section>
 
@@ -214,9 +218,9 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       <p>También puedes enviar tu solicitud a <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>, que atiende Luis Ricardo Espinoza Rodríguez. Incluye:</p>
       <ul>
         <li>tu nombre y un medio para responderte;</li>
-        <li>la cuenta de Telegram o, si te suscribiste antes por WhatsApp, el número de que se trata;</li>
+        <li>la cuenta de Telegram de que se trata;</li>
         <li>qué derecho quieres ejercer y sobre qué datos (si es una corrección, cuál);</li>
-        <li>lo que acredite tu identidad o la de tu representante. Para no pedirte más datos de los necesarios, te diremos en nuestra respuesta cómo comprobar que el número es tuyo.</li>
+        <li>lo que acredite tu identidad o la de tu representante. Para no pedirte más datos de los necesarios, te diremos en nuestra respuesta cómo comprobar que la cuenta es tuya.</li>
       </ul>
       <p>Te responderemos en un máximo de 20 días hábiles y, si procede, lo haremos efectivo dentro de los 15 días hábiles siguientes. Cada plazo puede ampliarse una sola vez por un periodo igual, y te avisaremos si eso pasa.</p>
     </section>
