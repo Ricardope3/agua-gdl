@@ -29,6 +29,6 @@
   "sha256": "d5879d25b488a42070b781d74136722ccc21c850aa14e51a874730da93b2b747",
   "bytes": 864,
   "last_modified": null,
-  "comment": "The cut days per zone and hand-made colonia zone changes SIAPA edits from its /admin panel since 16 Oct 2026; its page builds the calendar from it (no-store, not cached by the CDN). Its sha256 leaves out «actualizado»."
+  "comment": "The cut days per zone and hand-made colonia zone changes SIAPA edits from its /admin panel (last saved 16 Oct 2026); the page's calendar module (assets/calendario-*.js) fetches it with no-store, so index.html doesn't change when the days do. Its sha256 leaves out «actualizado»."
  }
 }
