@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"compress/gzip"
 	"context"
 	"encoding/json"
 	"io"
@@ -293,6 +294,15 @@ func TestReportsFromTheMap(t *testing.T) {
 	h.ServeHTTP(rec, httptest.NewRequest(http.MethodOptions, "/v1/reportes", nil))
 	if rec.Code != http.StatusNoContent || !strings.Contains(rec.Header().Get("Access-Control-Allow-Methods"), "POST") || rec.Header().Get("Access-Control-Allow-Headers") != "Content-Type" {
 		t.Errorf("preflight: %d %v", rec.Code, rec.Header())
+	}
+	req := httptest.NewRequest(http.MethodGet, "/v1/reportes", nil)
+	req.Header.Set("Accept-Encoding", "gzip")
+	rec = httptest.NewRecorder()
+	h.ServeHTTP(rec, req)
+	zr, err := gzip.NewReader(rec.Body)
+	var zipped webreports.Summary
+	if err != nil || rec.Header().Get("Content-Encoding") != "gzip" || json.NewDecoder(zr).Decode(&zipped) != nil || zipped.Total != 3 {
+		t.Errorf("gzipped summary: %v %v %+v", err, rec.Header(), zipped)
 	}
 	rec = httptest.NewRecorder()
 	h.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/v1/reportes", nil))

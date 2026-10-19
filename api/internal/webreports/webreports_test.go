@@ -135,6 +135,51 @@ func TestLimitsPerAddress(t *testing.T) {
 	}
 }
 
+func TestIPv6NetworksShareTheirLimits(t *testing.T) {
+	clock := start(t)
+	b := board(t, &fakeStore{}, clock)
+	var rows [][4]string
+	if err := json.Unmarshal(data.ColoniasMapa, &rows); err != nil {
+		t.Fatal(err)
+	}
+	// Four /56s of one /48, each with 256 /64s that try 20 reports apiece.
+	accepted := map[int]int{}
+	for net := range 4 {
+		for sub := range 256 {
+			addr := fmt.Sprintf("2001:db8:7:%x%02x::/64", net, sub)
+			for i := range 20 {
+				r := rows[(net*256*20+sub*20+i)%len(rows)]
+				if _, err := b.Add(addr, r[0], r[1], r[2], "con_agua", false, false, false); err == nil {
+					accepted[net]++
+				}
+			}
+		}
+	}
+	if accepted[0] != perNet56PerHour || accepted[0]+accepted[1]+accepted[2]+accepted[3] != perNet48PerHour {
+		t.Fatalf("a /56 gets %d an hour and a /48 %d, however many /64s: %v", perNet56PerHour, perNet48PerHour, accepted)
+	}
+}
+
+func TestColoniaCapForEveryone(t *testing.T) {
+	clock := start(t)
+	b := board(t, &fakeStore{}, clock)
+	for i := range perColoniaAllPerHour {
+		if _, err := b.Add(fmt.Sprint("10.1.0.", i), "1 DE MAYO", "Guadalajara", "44940", "con_agua", false, false, false); err != nil {
+			t.Fatalf("report %d: %v", i+1, err)
+		}
+	}
+	if _, err := b.Add("10.1.1.1", "1 DE MAYO", "Guadalajara", "44940", "sin_agua", false, false, false); !errors.Is(err, ErrColoniaFull) {
+		t.Fatalf("one report too many for the colonia from anyone: %v", err)
+	}
+	if _, err := b.Add("10.1.1.1", "12 DE DICIEMBRE", "Zapopan", "45068", "sin_agua", false, false, false); err != nil {
+		t.Fatalf("other colonias still take reports: %v", err)
+	}
+	*clock = clock.Add(time.Hour)
+	if _, err := b.Add("10.1.1.1", "1 DE MAYO", "Guadalajara", "44940", "sin_agua", false, false, false); err != nil {
+		t.Fatalf("an hour later: %v", err)
+	}
+}
+
 func TestCapForEveryone(t *testing.T) {
 	clock := start(t)
 	b := board(t, &fakeStore{}, clock)

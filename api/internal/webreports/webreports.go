@@ -6,6 +6,8 @@
 package webreports
 
 import (
+	"bytes"
+	"compress/gzip"
 	"context"
 	"encoding/json"
 	"errors"
@@ -37,6 +39,13 @@ const (
 	perColoniaPerHour     = 3
 	perIPv4PerHour        = 100
 	perIPv4ColoniaPerHour = 10
+	// The IPv6 networks a home or a provider gets (a /56, a /48) share these, so holding many
+	// /64s doesn't multiply the limits.
+	perNet56PerHour = 40
+	perNet48PerHour = 100
+	// perColoniaAllPerHour caps one colonia's reports from everyone: plenty to show how it is,
+	// and a ceiling for anyone trying to set its colour.
+	perColoniaAllPerHour = 30
 	// maxPerHour caps everyone's reports together.
 	maxPerHour = 5_000
 	// maxTracked bounds the memory the limits use; past it, new addresses wait.
@@ -53,6 +62,7 @@ var (
 	ErrBadStatus      = errors.New("unknown status")
 	ErrTooMany        = errors.New("too many reports from this address")
 	ErrBusy           = errors.New("too many reports this hour")
+	ErrColoniaFull    = errors.New("too many reports for this colonia this hour")
 )
 
 // Key is how a colonia is named in reports: "name|municipio|postal code".
@@ -142,6 +152,7 @@ type Board struct {
 	hits      map[string][]time.Time
 	cached    *Summary
 	cachedAt  time.Time
+	raw, gz   []byte // cached encoded, plain and gzipped
 	bot       []store.BotAnswer
 	botAt     time.Time
 	botWanted bool
@@ -200,6 +211,9 @@ func (b *Board) Add(addr, name, municipio, cp, status string, turbia, olor, sedi
 	if b.lastHour(now) >= maxPerHour {
 		return Colonia{}, ErrBusy
 	}
+	if b.coloniaLastHour(key, now) >= perColoniaAllPerHour {
+		return Colonia{}, ErrColoniaFull
+	}
 	if !b.allow(addr, key, now) {
 		return Colonia{}, ErrTooMany
 	}
@@ -235,18 +249,53 @@ func (b *Board) allow(addr, key string, now time.Time) bool {
 			}
 		}
 	}
-	hourly, perColonia := perAddressPerHour, perColoniaPerHour
-	if ipv4(addr) {
-		hourly, perColonia = perIPv4PerHour, perIPv4ColoniaPerHour
+	type limit struct {
+		key string
+		max int
 	}
-	a, c := "a:"+addr, "c:"+addr+"|"+key
-	as, cs := recent(b.hits[a]), recent(b.hits[c])
-	_, known := b.hits[a]
-	if (!known && len(b.hits) >= maxTracked) || len(as) >= hourly || len(cs) >= perColonia {
+	limits := []limit{{"a:" + addr, perAddressPerHour}, {"c:" + addr + "|" + key, perColoniaPerHour}}
+	if ipv4(addr) {
+		limits = []limit{{"a:" + addr, perIPv4PerHour}, {"c:" + addr + "|" + key, perIPv4ColoniaPerHour}}
+	}
+	for _, n := range []struct{ bits, max int }{{56, perNet56PerHour}, {48, perNet48PerHour}} {
+		if wide, ok := network(addr, n.bits); ok {
+			limits = append(limits, limit{"n:" + wide, n.max})
+		}
+	}
+	if _, known := b.hits[limits[0].key]; !known && len(b.hits) >= maxTracked {
 		return false
 	}
-	b.hits[a], b.hits[c] = append(as, now), append(cs, now)
+	kept := make([][]time.Time, len(limits))
+	for i, l := range limits {
+		if kept[i] = recent(b.hits[l.key]); len(kept[i]) >= l.max {
+			return false
+		}
+	}
+	for i, l := range limits {
+		b.hits[l.key] = append(kept[i], now)
+	}
 	return true
+}
+
+// coloniaLastHour counts everyone's reports for one colonia in the last hour. Called with mu held.
+func (b *Board) coloniaLastHour(key string, now time.Time) int {
+	n := 0
+	for i := len(b.recent) - 1; i >= 0 && now.Sub(b.recent[i].At) < time.Hour; i-- {
+		if b.recent[i].Colonia == key {
+			n++
+		}
+	}
+	return n
+}
+
+// network returns the IPv6 network of the given size that a client's /64 belongs to.
+func network(addr string, bits int) (string, bool) {
+	p, err := netip.ParsePrefix(addr)
+	if err != nil || !p.Addr().Is6() {
+		return "", false
+	}
+	n, err := p.Addr().Prefix(bits)
+	return n.String(), err == nil
 }
 
 // ipv4 reports whether addr is an IPv4 address rather than an IPv6 /64.
@@ -294,12 +343,38 @@ func (c *Colonia) tally(r store.WebReport, loc *time.Location) {
 
 // Summary is the map's numbers, reused for summaryTTL.
 func (b *Board) Summary() Summary {
-	now := b.now()
 	b.mu.Lock()
 	defer b.mu.Unlock()
+	return *b.summary(b.now())
+}
+
+// SummaryJSON is the summary encoded, plain and gzipped, once per summary rather than once
+// per request.
+func (b *Board) SummaryJSON() (raw, gz []byte, err error) {
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	s := b.summary(b.now())
+	if b.raw == nil {
+		raw, err := json.Marshal(s)
+		if err != nil {
+			return nil, nil, err
+		}
+		var buf bytes.Buffer
+		w := gzip.NewWriter(&buf)
+		w.Write(raw)
+		if err := w.Close(); err != nil {
+			return nil, nil, err
+		}
+		b.raw, b.gz = raw, buf.Bytes()
+	}
+	return b.raw, b.gz, nil
+}
+
+// summary returns the cached summary, or builds it. Called with mu held.
+func (b *Board) summary(now time.Time) *Summary {
 	b.botWanted = true
 	if b.cached != nil && now.Sub(b.cachedAt) < summaryTTL {
-		return *b.cached
+		return b.cached
 	}
 	b.trim(now)
 	s := Summary{Updated: now.In(b.loc).Truncate(time.Minute).Format(time.RFC3339), Hours: int(Window / time.Hour), AllTime: b.allTime, Reports: []Colonia{}}
@@ -331,8 +406,8 @@ func (b *Board) Summary() Summary {
 	})
 	s.Total, s.Colonias = s.Counts.total(), len(s.Reports)
 	s.Bot.Hours, s.Bot.Min, s.Bot.Zones = int(Window/time.Hour), b.minShown, b.botZones()
-	b.cached, b.cachedAt = &s, now
-	return s
+	b.cached, b.cachedAt, b.raw, b.gz = &s, now, nil, nil
+	return &s
 }
 
 func cmpStrings(a, b string) int {

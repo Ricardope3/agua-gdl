@@ -238,8 +238,21 @@ func (a *api) cachedResults(ctx context.Context) ([]store.Result, error) {
 
 // reportesGet serves the map's numbers: the day's reports by colonia, the totals and the bot's
 // answers by zone. They come from memory, so traffic here doesn't wake Neon.
-func (a *api) reportesGet(w http.ResponseWriter, _ *http.Request) {
-	writeJSON(w, a.reports.Summary(), "public, max-age=30")
+func (a *api) reportesGet(w http.ResponseWriter, r *http.Request) {
+	raw, gz, err := a.reports.SummaryJSON()
+	if err != nil {
+		a.log.Error("reportes", "err", err)
+		http.Error(w, "internal error", http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.Header().Set("Cache-Control", "public, max-age=30")
+	w.Header().Set("Vary", "Accept-Encoding")
+	if strings.Contains(r.Header.Get("Accept-Encoding"), "gzip") {
+		w.Header().Set("Content-Encoding", "gzip")
+		raw = gz
+	}
+	w.Write(raw)
 }
 
 type reportIn struct {
@@ -273,6 +286,10 @@ func (a *api) reportesPost(w http.ResponseWriter, r *http.Request) {
 	case errors.Is(err, webreports.ErrBusy):
 		w.Header().Set("Retry-After", "600")
 		http.Error(w, "too many reports this hour", http.StatusServiceUnavailable)
+		return
+	case errors.Is(err, webreports.ErrColoniaFull):
+		w.Header().Set("Retry-After", "900")
+		http.Error(w, "colonia: too many reports this hour", http.StatusTooManyRequests)
 		return
 	case err != nil:
 		http.Error(w, err.Error(), http.StatusBadRequest)
