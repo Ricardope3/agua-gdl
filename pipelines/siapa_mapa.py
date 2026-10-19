@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Build web/colonias_siapa.topo.json from the data behind SIAPA's rotation map.
+"""Build web/colonias_siapa.topo.json, and its copy api/data/colonias_siapa.topo.json that the API
+looks zones up in, from the data behind SIAPA's rotation map.
 
 Usage: python3 pipelines/siapa_mapa.py [--input rotacion-siapa.topo.json] [--ajustes ajustes.json]
                                        [--out web/colonias_siapa.topo.json] [--fetched YYYY-MM-DD]
@@ -40,6 +41,7 @@ PREFIXES = ("COLONIA ", "COL ", "FRACCIONAMIENTO ", "FRACC ", "FRAC ")
 MUNICIPIO_ALIAS = {"SAN PEDRO TLAQUEPAQUE": "TLAQUEPAQUE", "GDL": "GUADALAJARA"}
 DAY_KEYS = {"lunes": "mon", "martes": "tue", "miercoles": "wed", "jueves": "thu", "viernes": "fri", "sabado": "sat", "domingo": "sun"}
 SAMPLES = 900  # grid points per colonia when estimating the share of its area in each zone
+BORDER = 15  # under this share in a zone, a colonia only touches it (web/mapa.js BORDER)
 
 
 def fold(s):
@@ -193,7 +195,7 @@ def main():
             if shares:
                 rounded = {k: max(1, round(v)) if v > 0 else 0 for k, v in shares.items()}
                 props["p"] = ",".join(f"{k}:{rounded[k]}" for k in sorted(rounded, key=lambda k: -shares[k]))
-                if min(shares.values()) < 10 and len(shares) == len(z):
+                if min(shares.values()) < BORDER and len(shares) == len(z):
                     border += 1
                 elif len(shares) == len(z):
                     split += 1
@@ -204,11 +206,15 @@ def main():
               "objects": {"colonias": {"type": "GeometryCollection", "geometries": colonias},
                           "zonas": {"type": "GeometryCollection", "geometries": zonas_out}},
               "meta": {"source": TOPO_URL, "fetched": args.fetched}}
-    with open(args.out, "w", encoding="utf-8") as f:
-        json.dump(result, f, ensure_ascii=False, separators=(",", ":"))
-        f.write("\n")
+    text = json.dumps(result, ensure_ascii=False, separators=(",", ":")) + "\n"
+    outs = [args.out]
+    if Path(args.out).resolve() == (ROOT / "web" / "colonias_siapa.topo.json").resolve():
+        outs.append(ROOT / "api" / "data" / "colonias_siapa.topo.json")  # go:embed can't reach web/
+    for out in outs:
+        with open(out, "w", encoding="utf-8") as f:
+            f.write(text)
     print(f"{args.out}: {len(colonias)} colonias ({with_zone} in a zone), {matched} on SIAPA's list, {differs} with other zones there; "
-          f"{split + border} in several zones ({border} only touch a border, under 10 % in the other zone); {len(topo['arcs'])} arcs")
+          f"{split + border} in several zones ({border} only touch a border, under {BORDER} % in the other zone, as web/mapa.js counts them); {len(topo['arcs'])} arcs")
 
     with open(ROOT / "api" / "data" / "rotation.json", encoding="utf-8") as f:
         rotation = json.load(f)["zones"]

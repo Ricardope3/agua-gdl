@@ -127,8 +127,8 @@ func TestTelegramColoniaButtonsAndLocation(t *testing.T) {
 		t.Errorf("button press not answered: %v", h.tg.Answered)
 	}
 	h.update(t, tg.Update{Message: &tg.InboundMessage{Chat: tg.Chat{ID: 777, Type: "private"}, Location: &tg.Location{Latitude: 20.6597, Longitude: -103.3496}}})
-	if s, ok := h.sub(t); !ok || s.Zone == 0 {
-		t.Errorf("location: %+v", s)
+	if s, ok := h.sub(t); !ok || s.Zone != 3 {
+		t.Errorf("a location in zone 3 moves the subscription there: %+v", s)
 	}
 }
 

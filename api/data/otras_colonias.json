@@ -33,7 +33,9 @@
  {
   "name": "5 DE NOVIEMBRE",
   "municipio": "ZAPOPAN",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "8 DE JULIO",
@@ -273,7 +275,8 @@
   "name": "ANEXO 18 DE MARZO",
   "municipio": "GUADALAJARA",
   "zones": [
-   1
+   1,
+   5
   ]
  },
  {
@@ -361,7 +364,9 @@
  {
   "name": "ARROYO SECO",
   "municipio": "TLAQUEPAQUE",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "ARROYO SECO",
@@ -371,9 +376,7 @@
  {
   "name": "ARTESANOS",
   "municipio": "TLAQUEPAQUE",
-  "zones": [
-   5
-  ]
+  "zones": []
  },
  {
   "name": "ARTESANOS (SAGRADA FAMILIA Y/O JESUS)",
@@ -487,12 +490,16 @@
  {
   "name": "BARRIO NUEVO",
   "municipio": "TONALÁ",
-  "zones": []
+  "zones": [
+   4
+  ]
  },
  {
   "name": "BARRIOS UNIDOS INTERCOLONIAS",
   "municipio": "TLAQUEPAQUE",
-  "zones": []
+  "zones": [
+   4
+  ]
  },
  {
   "name": "BASE AEREA MILITAR NO 5",
@@ -708,7 +715,9 @@
  {
   "name": "CAMICHINES",
   "municipio": "TLAQUEPAQUE",
-  "zones": []
+  "zones": [
+   4
+  ]
  },
  {
   "name": "CAMICHINES II",
@@ -840,7 +849,9 @@
  {
   "name": "CHAPALITA ORIENTE",
   "municipio": "ZAPOPAN",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "CIHUALPILLI",
@@ -860,12 +871,16 @@
  {
   "name": "CITALA 3",
   "municipio": "ZAPOPAN",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "CITALA CD JARDIN",
   "municipio": "ZAPOPAN",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "CIUDAD BUGAMBILIAS",
@@ -1014,7 +1029,9 @@
  {
   "name": "COLONIA LAS BARRANQUITAS",
   "municipio": "TONALÁ",
-  "zones": []
+  "zones": [
+   4
+  ]
  },
  {
   "name": "COLONOS DE COYULA",
@@ -1564,7 +1581,9 @@
  {
   "name": "EDUCADORES JALISCIENSES",
   "municipio": "TONALÁ",
-  "zones": []
+  "zones": [
+   4
+  ]
  },
  {
   "name": "EJIDO ZALATITAN",
@@ -1680,7 +1699,9 @@
  {
   "name": "EL FORTIN 2DA SECC",
   "municipio": "ZAPOPAN",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "EL HUIZACHE 1RO",
@@ -1852,7 +1873,8 @@
   "name": "EL SAUZ",
   "municipio": "GUADALAJARA",
   "zones": [
-   6
+   6,
+   5
   ]
  },
  {
@@ -1895,7 +1917,9 @@
  {
   "name": "EL VERDE ( PLANETARIO)",
   "municipio": "GUADALAJARA",
-  "zones": []
+  "zones": [
+   3
+  ]
  },
  {
   "name": "EL VIGIA",
@@ -1991,7 +2015,9 @@
  {
   "name": "FIDEL VELAZQUEZ",
   "municipio": "GUADALAJARA",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "FIDEL VELAZQUEZ",
@@ -2082,7 +2108,9 @@
  {
   "name": "GEO VILLAS LOS OLIVOS II",
   "municipio": "TLAQUEPAQUE",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "GEO VILLAS LOS OLIVOS III",
@@ -2141,7 +2169,9 @@
  {
   "name": "HACIENDA DE VIDRIO",
   "municipio": "TLAQUEPAQUE",
-  "zones": []
+  "zones": [
+   4
+  ]
  },
  {
   "name": "HACIENDA DEL CAMICHIN 8470",
@@ -2227,16 +2257,14 @@
  {
   "name": "HELIODORO HERNANDEZ LOZA",
   "municipio": "GUADALAJARA",
-  "zones": [
-   3
-  ]
+  "zones": []
  },
  {
   "name": "HERNANDEZ ROMO",
   "municipio": "GUADALAJARA",
   "zones": [
-   2,
-   3
+   3,
+   2
   ]
  },
  {
@@ -2277,7 +2305,9 @@
  {
   "name": "HUENTITAN EL ALTO",
   "municipio": "GUADALAJARA",
-  "zones": []
+  "zones": [
+   3
+  ]
  },
  {
   "name": "HUENTITAN EL BAJO",
@@ -2336,7 +2366,9 @@
  {
   "name": "INFONAVIT ESTADIO",
   "municipio": "GUADALAJARA",
-  "zones": []
+  "zones": [
+   3
+  ]
  },
  {
   "name": "INFONAVIT INDEPENDENCIA",
@@ -2346,7 +2378,9 @@
  {
   "name": "INFONAVIT LA SOLEDAD",
   "municipio": "TONALÁ",
-  "zones": []
+  "zones": [
+   4
+  ]
  },
  {
   "name": "INFONAVIT TONALA (RIO NILO)",
@@ -2542,7 +2576,9 @@
  {
   "name": "JARDINES DEL ROSARIO",
   "municipio": "TONALÁ",
-  "zones": []
+  "zones": [
+   4
+  ]
  },
  {
   "name": "JARDINES DEL TAPATIO",
@@ -2579,7 +2615,9 @@
  {
   "name": "JARDINES VALLARTA",
   "municipio": "ZAPOPAN",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "JAZMIN",
@@ -2618,7 +2656,9 @@
  {
   "name": "JUAN MANUEL VALLARTA",
   "municipio": "ZAPOPAN",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "LA ALBERCA",
@@ -2937,7 +2977,9 @@
  {
   "name": "LA LOMA ALTA",
   "municipio": "ZAPOPAN",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "LA MAGDALENA",
@@ -2977,7 +3019,8 @@
   "name": "LA MEZQUITERA",
   "municipio": "TLAQUEPAQUE",
   "zones": [
-   5
+   5,
+   6
   ]
  },
  {
@@ -3019,8 +3062,8 @@
   "name": "LA PENAL",
   "municipio": "GUADALAJARA",
   "zones": [
-   2,
-   3
+   3,
+   2
   ]
  },
  {
@@ -3200,7 +3243,9 @@
  {
   "name": "LAS ARBOLEDAS",
   "municipio": "ZAPOPAN",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "LAS BOVEDAS",
@@ -3232,7 +3277,9 @@
  {
   "name": "LAS FUENTES",
   "municipio": "ZAPOPAN",
-  "zones": []
+  "zones": [
+   5
+  ]
  },
  {
   "name": "LAS GABRIELAS",
@@ -3345,7 +3392,9 @@
  {
   "name": "LE PARC",
   "municipio": "ZAPOPAN",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "LEONES",
@@ -3395,7 +3444,8 @@
   "name": "LOMA BONITA EJIDAL",
   "municipio": "TLAQUEPAQUE",
   "zones": [
-   6
+   6,
+   5
   ]
  },
  {
@@ -3905,7 +3955,9 @@
  {
   "name": "LOS PERIODISTAS",
   "municipio": "ZAPOPAN",
-  "zones": []
+  "zones": [
+   5
+  ]
  },
  {
   "name": "LOS PERONES",
@@ -4142,13 +4194,16 @@
  {
   "name": "MIRAFLORES",
   "municipio": "TLAQUEPAQUE",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "MIRAVALLE",
   "municipio": "TLAQUEPAQUE",
   "zones": [
-   5
+   5,
+   3
   ]
  },
  {
@@ -4275,17 +4330,23 @@
  {
   "name": "MONTEVERDE",
   "municipio": "ZAPOPAN",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "MONTEVERDE II",
   "municipio": "ZAPOPAN",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "MONTEVERDE III",
   "municipio": "ZAPOPAN",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "MONTICELLO",
@@ -4574,7 +4635,9 @@
  {
   "name": "PARQUES DEL BOSQUE",
   "municipio": "TLAQUEPAQUE",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "PARQUES DEL CENTINELA",
@@ -4706,7 +4769,9 @@
  {
   "name": "PIRAMIDES",
   "municipio": "ZAPOPAN",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "PLACITA DEL SOL",
@@ -4837,9 +4902,7 @@
  {
   "name": "PRADERAS TONALLAN",
   "municipio": "TONALÁ",
-  "zones": [
-   4
-  ]
+  "zones": []
  },
  {
   "name": "PRADO ARBOLEDAS",
@@ -4992,7 +5055,9 @@
  {
   "name": "PUERTA DEL TULE",
   "municipio": "ZAPOPAN",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "PUERTA DEL VALLE",
@@ -5241,7 +5306,9 @@
  {
   "name": "RESIDENCIAL DE LA BARRANCA",
   "municipio": "GUADALAJARA",
-  "zones": []
+  "zones": [
+   3
+  ]
  },
  {
   "name": "RESIDENCIAL DEL VALLE",
@@ -5282,8 +5349,8 @@
   "name": "RINCON DE LA AGUA AZUL",
   "municipio": "GUADALAJARA",
   "zones": [
-   5,
-   7
+   7,
+   5
   ]
  },
  {
@@ -5351,7 +5418,9 @@
  {
   "name": "RIVERAS DE SAN SEBASTIANITO",
   "municipio": "TLAQUEPAQUE",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "ROBERTO OROZCO",
@@ -5422,7 +5491,9 @@
  {
   "name": "SAN EUGENIO",
   "municipio": "GUADALAJARA",
-  "zones": []
+  "zones": [
+   3
+  ]
  },
  {
   "name": "SAN FRANCISCO",
@@ -5513,7 +5584,8 @@
   "name": "SAN JUAN DE DIOS II",
   "municipio": "GUADALAJARA",
   "zones": [
-   2
+   2,
+   1
   ]
  },
  {
@@ -5604,7 +5676,9 @@
  {
   "name": "SANTA EDUWIGES",
   "municipio": "GUADALAJARA",
-  "zones": []
+  "zones": [
+   5
+  ]
  },
  {
   "name": "SANTA ELENA ALCALDE",
@@ -5665,7 +5739,9 @@
  {
   "name": "SANTA MARIA TEQUEPEXPAN",
   "municipio": "TLAQUEPAQUE",
-  "zones": []
+  "zones": [
+   5
+  ]
  },
  {
   "name": "SANTA MONICA DE LOS CHORRITOS",
@@ -5940,7 +6016,9 @@
  {
   "name": "TONALA",
   "municipio": "TONALÁ",
-  "zones": []
+  "zones": [
+   4
+  ]
  },
  {
   "name": "TONALA CENTRO",
@@ -5982,7 +6060,9 @@
  {
   "name": "UNIDAD CADETE FCO MARQUEZ",
   "municipio": "ZAPOPAN",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "UNIDAD HABITACIONAL LIC SATURNINO CORONADO ORGANISTA",
@@ -6051,12 +6131,17 @@
  {
   "name": "VALLARTA NORTE",
   "municipio": "GUADALAJARA",
-  "zones": []
+  "zones": [
+   6
+  ]
  },
  {
   "name": "VALLARTA PONIENTE",
   "municipio": "GUADALAJARA",
-  "zones": []
+  "zones": [
+   6,
+   5
+  ]
  },
  {
   "name": "VALLARTA SAN JORGE",
@@ -6185,7 +6270,9 @@
  {
   "name": "VERDE VALLE",
   "municipio": "TLAQUEPAQUE",
-  "zones": []
+  "zones": [
+   5
+  ]
  },
  {
   "name": "VIA NOVA",
@@ -6205,7 +6292,9 @@
  {
   "name": "VICTORIA",
   "municipio": "GUADALAJARA",
-  "zones": []
+  "zones": [
+   5
+  ]
  },
  {
   "name": "VIGUSA",

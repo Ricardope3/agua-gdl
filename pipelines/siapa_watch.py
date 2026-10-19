@@ -2,10 +2,11 @@
 
 Usage: python siapa_watch.py [--update] [siapa_sources.json]
 
-Prints a Markdown report. The KML is also converted with siapa_zonas.py and
-compared with api/data/zonas.geojson, and the cut days in ajustes.php (what
-SIAPA edits from its admin panel; its page shows them) are compared with
-api/data/rotation.json: a difference counts as a change until the repo matches. Writes changed=true|false and a
+Prints a Markdown report. SIAPA's map (rotacion-siapa.topo.json, which its page draws since
+16 Oct 2026; the old Google My Maps KML and calendar image are commented out there) is compared
+with web/colonias_siapa.topo.json, and the cut days in ajustes.php (what SIAPA edits from its
+admin panel; its page shows them) with api/data/rotation.json: a difference in either counts
+as a change until the repo matches. Writes changed=true|false and a
 fingerprint of the live hashes to $GITHUB_OUTPUT when it's set. Exits 1 only
 when a source can't be fetched. --update rewrites the baseline with what's
 live now and drops the comment of every source that changed.
@@ -25,12 +26,9 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE))
-import siapa_zonas  # noqa: E402
-
-GEOJSON = HERE.parent / "api" / "data" / "zonas.geojson"
+MAP = HERE.parent / "web" / "colonias_siapa.topo.json"
 ROTATION = HERE.parent / "api" / "data" / "rotation.json"
-KML = "zonas.kml"
+TOPO = "rotacion-siapa.topo.json"
 AJUSTES = "ajustes.php"
 DAYS = {"lunes": "mon", "martes": "tue", "miercoles": "wed", "jueves": "thu", "viernes": "fri", "sabado": "sat", "domingo": "sun"}
 DIAS = {v: k.replace("miercoles", "miércoles").replace("sabado", "sábado") for k, v in DAYS.items()}
@@ -40,11 +38,10 @@ MAX_BYTES = 20 * 1024 * 1024
 RETRY_DELAY = 20
 GDL = timezone(timedelta(hours=-6))
 HINTS = {
-    "index.html": "Compara los días y el texto de la página con `api/data/rotation.json`.",
-    "calendario.webp": "Compara el calendario con `api/data/rotation.json`.",
+    "index.html": "Revisa el texto de la página (los días de corte están en `ajustes.php`; el mapa, en `rotacion-siapa.topo.json`).",
     "colonias_siapa.pdf": "Revisa que el PDF nuevo esté completo antes de regenerar `api/data/colonias.json` con `pipelines/siapa_colonias.py`.",
-    KML: "Regenera las zonas: `curl -sL '{url}' -o zonas.kml && python3 pipelines/siapa_zonas.py zonas.kml api/data/zonas.geojson` y revisa el diff.",
-    AJUSTES: "El SIAPA cambió días de corte o zonas de colonias desde su panel. Si cambiaron los días, corrige `api/data/rotation.json` (con `checked` y `checked_by`), corre `go run ./cmd/calendars` desde `api/` y avisa a las zonas con `cmd/notify`. Si cambiaron colonias, regenera `web/colonias_siapa.topo.json` con `pipelines/siapa_mapa.py` y `api/data/colonias_mapa.json` con `pipelines/mapa_colonias.py`.",
+    TOPO: "El SIAPA cambió su mapa. Regenéralo con `python3 pipelines/siapa_mapa.py` (escribe `web/colonias_siapa.topo.json` y su copia en `api/data`, que usa el bot para ubicar zonas) y luego `python3 pipelines/mapa_colonias.py`; revisa el diff.",
+    AJUSTES: "El SIAPA cambió días de corte o zonas de colonias desde su panel. Si cambiaron los días, corrige `api/data/rotation.json` (con `checked` y `checked_by`), corre `go run ./cmd/calendars` desde `api/` y avisa a las zonas con `cmd/notify -channel tg`. Si cambiaron colonias, `pipelines/siapa_mapa.py` todavía no aplica esos cambios a mano: revísalos en el mapa del SIAPA.",
 }
 
 
@@ -75,26 +72,35 @@ def short(sha):
     return f"`{sha[:12]}`" if sha else "—"
 
 
-def zones_report(kml):
+def map_report(body):
+    """SIAPA's map against web/colonias_siapa.topo.json: (text, differs)."""
     try:
-        live = siapa_zonas.convert(kml)
-    except Exception as e:
-        return f"**La conversión del KML falló:** {code(e, 200)}"
-    with open(GEOJSON, encoding="utf-8") as f:
-        repo = json.load(f)
-
-    def count(fc):
-        return f"{len(fc['features'])} zonas, {sum(len(f['geometry']['coordinates']) for f in fc['features'])} polígonos"
-
-    if live == repo:
-        return f"El KML convertido es igual a `api/data/zonas.geojson` ({count(live)})."
-    old = {f["properties"]["zona"]: f["geometry"] for f in repo["features"]}
-    new = {f["properties"]["zona"]: f["geometry"] for f in live["features"]}
-    diff = sorted(z for z in old.keys() | new.keys() if old.get(z) != new.get(z))
-    return (
-        f"**El KML convertido difiere de `api/data/zonas.geojson`.** "
-        f"KML: {count(live)}; repo: {count(repo)}. Zonas distintas: {', '.join(diff)}."
-    )
+        live = json.loads(body)
+        with open(MAP, encoding="utf-8") as f:
+            repo = json.load(f)
+        zones = lambda topo: {  # noqa: E731
+            (p["n"], p["m"], str(p.get("cp", ""))): p.get("z", "")
+            for p in (g["properties"] for g in topo["objects"]["colonias"]["geometries"])}
+        old, new = zones(repo), zones(live)
+        shapes = (live["arcs"], live["transform"], len(live["objects"]["zonas"]["geometries"])) == (
+            repo["arcs"], repo["transform"], len(repo["objects"]["zonas"]["geometries"]))
+    except (ValueError, KeyError, TypeError) as e:
+        return f"**No se pudo leer el mapa del SIAPA:** {code(e, 200)}", True
+    added, gone = sorted(new.keys() - old.keys()), sorted(old.keys() - new.keys())
+    moved = sorted(k for k in old.keys() & new.keys() if old[k] != new[k])
+    if not (added or gone or moved) and shapes:
+        return f"El mapa del SIAPA es igual a `web/colonias_siapa.topo.json` ({len(new):,} colonias).", False
+    name = lambda k: code(f"{k[0]} ({k[1]})", 60)  # noqa: E731
+    parts = []
+    if moved:
+        parts.append(f"{len(moved)} con otras zonas, como " + ", ".join(f"{name(k)} {old[k] or '—'} → {new[k] or '—'}" for k in moved[:5]))
+    if added:
+        parts.append(f"{len(added)} nuevas, como " + ", ".join(name(k) for k in added[:5]))
+    if gone:
+        parts.append(f"{len(gone)} quitadas, como " + ", ".join(name(k) for k in gone[:5]))
+    if not shapes:
+        parts.append("cambiaron contornos o zonas")
+    return f"**El mapa del SIAPA difiere de `web/colonias_siapa.topo.json`:** {'; '.join(parts)}.", True
 
 
 def ajustes_sha(body):
@@ -119,7 +125,7 @@ def days_report(body):
     with open(ROTATION, encoding="utf-8") as f:
         repo = json.load(f)["zones"]
     moved = f" Colonias con la zona cambiada a mano: {moved}." if moved else ""
-    diff = sorted(z for z in live.keys() | repo.keys() if live.get(z) != repo.get(z))
+    diff = sorted(z for z in live.keys() | repo.keys() if sorted(live.get(z, [])) != sorted(repo.get(z, [])))
     if not diff:
         return f"Los días de corte de `{AJUSTES}` son iguales a `api/data/rotation.json` en las {len(live)} zonas.{moved}", False
     names = lambda days: ", ".join(DIAS[d] for d in days) or "ninguno"  # noqa: E731
@@ -134,7 +140,7 @@ def main(args):
     with open(path, encoding="utf-8") as f:
         sources = json.load(f)
 
-    rows, changed, errors, live, zones, days = [], [], [], {}, None, None
+    rows, changed, errors, live, mapa, days = [], [], [], {}, None, None
     for name, s in sources.items():
         link = f"[{name}]({s['url']})"
         try:
@@ -145,9 +151,9 @@ def main(args):
             continue
         sha = ajustes_sha(body) if name == AJUSTES else hashlib.sha256(body).hexdigest()
         live[name] = {"sha256": sha, "bytes": len(body), "last_modified": modified}
-        if name == KML:
-            zones = zones_report(body)
         differs = False
+        if name == TOPO:
+            mapa, differs = map_report(body)
         if name == AJUSTES:
             days, differs = days_report(body)
         old_lm = s.get("last_modified")
@@ -170,8 +176,8 @@ def main(args):
         "|---|---|---|---|---|",
         *rows,
     ]
-    if zones:
-        out += ["", "### Zonas", "", zones]
+    if mapa:
+        out += ["", "### Mapa", "", mapa]
     if days:
         out += ["", "### Días de corte", "", days]
     notes = [f"- `{n}`: {sources[n]['comment']}" for n in changed if sources[n].get("comment")]

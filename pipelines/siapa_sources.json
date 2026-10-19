@@ -5,12 +5,6 @@
   "bytes": 21569,
   "last_modified": "Fri, 16 Oct 2026 17:12:34 GMT"
  },
- "calendario.webp": {
-  "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/img/calendario.webp",
-  "sha256": "0b7f527ca2a7156a19120b9ce9777e2578e5e7f7bd534f8429276a8e16cc185d",
-  "bytes": 28552,
-  "last_modified": "Fri, 16 Oct 2026 11:41:18 GMT"
- },
  "colonias_siapa.pdf": {
   "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/pdf/colonias_siapa.pdf",
   "sha256": "fb472e7409ede54b471e1c5cd8d350823f10244587ecbe69d34e00ff259f2918",
@@ -18,17 +12,18 @@
   "last_modified": "Fri, 16 Oct 2026 11:41:18 GMT",
   "comment": "SIAPA's 13 Oct 2026 reissue (23 pages) with truncated columns (zone 6 Tlaquepaque/Zapopan). api/data/colonias.json comes from the 12 Oct PDF (34 pages, 621 colonias); don't regenerate it from this file."
  },
- "zonas.kml": {
-  "url": "https://www.google.com/maps/d/kml?mid=1AJ1jEcf4YzgRPw5r9yBXkZOoFMfoB6Y&forcekml=1",
-  "sha256": "2c49527ba4d519030cfbfd4f1348c7d12ce83de2760acb876db3f4194b805b0c",
-  "bytes": 162084,
-  "last_modified": null
- },
  "ajustes.php": {
   "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/api/ajustes.php",
   "sha256": "d5879d25b488a42070b781d74136722ccc21c850aa14e51a874730da93b2b747",
   "bytes": 864,
   "last_modified": null,
   "comment": "The cut days per zone and hand-made colonia zone changes SIAPA edits from its /admin panel (last saved 16 Oct 2026); the page's calendar module (assets/calendario-*.js) fetches it with no-store, so index.html doesn't change when the days do. Its sha256 leaves out «actualizado»."
+ },
+ "rotacion-siapa.topo.json": {
+  "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/geo/rotacion-siapa.topo.json",
+  "sha256": "2c3792954a5b9a3ce67e75410ba73125341a0bb75e573a0104e99457866ec52b",
+  "bytes": 821853,
+  "last_modified": "Fri, 16 Oct 2026 15:25:44 GMT",
+  "comment": "The map SIAPA's page draws since 16 Oct 2026 (colonias with the zones SIAPA gives them, and the 7 zone polygons); web/colonias_siapa.topo.json and the bot's zone lookup are built from it by pipelines/siapa_mapa.py."
  }
 }
