@@ -11,6 +11,7 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"net/netip"
 	"slices"
 	"sort"
 	"sync"
@@ -29,9 +30,13 @@ type Store interface {
 const (
 	// Window is how far back the map counts reports.
 	Window = 24 * time.Hour
-	// A client address may send this many reports an hour, and this many for one colonia.
-	perAddressPerHour = 20
-	perColoniaPerHour = 3
+	// A client address may send this many reports an hour, and this many for one colonia. An
+	// IPv6 client comes as its /64; an IPv4 address gets more, since carriers and home providers
+	// share one among many customers.
+	perAddressPerHour     = 20
+	perColoniaPerHour     = 3
+	perIPv4PerHour        = 100
+	perIPv4ColoniaPerHour = 10
 	// maxPerHour caps everyone's reports together.
 	maxPerHour = 5_000
 	// maxTracked bounds the memory the limits use; past it, new addresses wait.
@@ -230,14 +235,24 @@ func (b *Board) allow(addr, key string, now time.Time) bool {
 			}
 		}
 	}
+	hourly, perColonia := perAddressPerHour, perColoniaPerHour
+	if ipv4(addr) {
+		hourly, perColonia = perIPv4PerHour, perIPv4ColoniaPerHour
+	}
 	a, c := "a:"+addr, "c:"+addr+"|"+key
 	as, cs := recent(b.hits[a]), recent(b.hits[c])
 	_, known := b.hits[a]
-	if (!known && len(b.hits) >= maxTracked) || len(as) >= perAddressPerHour || len(cs) >= perColoniaPerHour {
+	if (!known && len(b.hits) >= maxTracked) || len(as) >= hourly || len(cs) >= perColonia {
 		return false
 	}
 	b.hits[a], b.hits[c] = append(as, now), append(cs, now)
 	return true
+}
+
+// ipv4 reports whether addr is an IPv4 address rather than an IPv6 /64.
+func ipv4(addr string) bool {
+	a, err := netip.ParseAddr(addr)
+	return err == nil && a.Unmap().Is4()
 }
 
 // trim drops reports older than the window. Called with mu held.

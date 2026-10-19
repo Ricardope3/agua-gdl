@@ -87,42 +87,52 @@ func TestAddChecksTheColoniaAndTheAnswer(t *testing.T) {
 }
 
 func TestLimitsPerAddress(t *testing.T) {
-	clock := start(t)
-	b := board(t, &fakeStore{}, clock)
-	add := func(addr, name, mun, cp string) error {
-		_, err := b.Add(addr, name, mun, cp, "sin_agua", false, false, false)
-		return err
-	}
-	for i := range perColoniaPerHour {
-		if err := add("1.1.1.1", "1 DE MAYO", "Guadalajara", "44940"); err != nil {
-			t.Fatalf("report %d: %v", i+1, err)
-		}
-	}
-	if err := add("1.1.1.1", "1 DE MAYO", "Guadalajara", "44940"); !errors.Is(err, ErrTooMany) {
-		t.Fatalf("a fourth report for one colonia within the hour: %v", err)
-	}
-	if err := add("9.9.9.9", "1 DE MAYO", "Guadalajara", "44940"); err != nil {
-		t.Fatalf("another address can still report it: %v", err)
-	}
-	*clock = clock.Add(time.Hour)
-	if err := add("1.1.1.1", "1 DE MAYO", "Guadalajara", "44940"); err != nil {
-		t.Fatalf("an hour later it can report again: %v", err)
-	}
 	var rows [][4]string
 	if err := json.Unmarshal(data.ColoniasMapa, &rows); err != nil {
 		t.Fatal(err)
 	}
-	n := 0
-	for _, r := range rows[1:] {
-		if err := add("5.5.5.5", r[0], r[1], r[2]); err != nil {
-			if !errors.Is(err, ErrTooMany) || n != perAddressPerHour {
-				t.Fatalf("after %d reports: %v", n, err)
-			}
-			return
+	for _, tc := range []struct {
+		addr, other, fresh string
+		perColonia, hourly int
+	}{
+		{"2001:db8:1:1::/64", "2001:db8:1:9::/64", "2001:db8:1:5::/64", perColoniaPerHour, perAddressPerHour},
+		{"1.1.1.1", "9.9.9.9", "5.5.5.5", perIPv4ColoniaPerHour, perIPv4PerHour}, // shared by many customers
+	} {
+		clock := start(t)
+		b := board(t, &fakeStore{}, clock)
+		add := func(addr, name, mun, cp string) error {
+			_, err := b.Add(addr, name, mun, cp, "sin_agua", false, false, false)
+			return err
 		}
-		n++
+		for i := range tc.perColonia {
+			if err := add(tc.addr, "1 DE MAYO", "Guadalajara", "44940"); err != nil {
+				t.Fatalf("%s, report %d: %v", tc.addr, i+1, err)
+			}
+		}
+		if err := add(tc.addr, "1 DE MAYO", "Guadalajara", "44940"); !errors.Is(err, ErrTooMany) {
+			t.Fatalf("%s: one report too many for one colonia within the hour: %v", tc.addr, err)
+		}
+		if err := add(tc.other, "1 DE MAYO", "Guadalajara", "44940"); err != nil {
+			t.Fatalf("another address can still report it: %v", err)
+		}
+		*clock = clock.Add(time.Hour)
+		if err := add(tc.addr, "1 DE MAYO", "Guadalajara", "44940"); err != nil {
+			t.Fatalf("%s: an hour later it can report again: %v", tc.addr, err)
+		}
+		n := 0
+		for _, r := range rows[1:] {
+			if err := add(tc.fresh, r[0], r[1], r[2]); err != nil {
+				if !errors.Is(err, ErrTooMany) || n != tc.hourly {
+					t.Fatalf("%s: after %d reports: %v", tc.fresh, n, err)
+				}
+				break
+			}
+			n++
+		}
+		if n != tc.hourly {
+			t.Fatalf("%s must not report without limit: %d reports", tc.fresh, n)
+		}
 	}
-	t.Fatal("one address must not report without limit")
 }
 
 func TestCapForEveryone(t *testing.T) {

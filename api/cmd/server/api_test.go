@@ -262,7 +262,7 @@ func TestReportsFromTheMap(t *testing.T) {
 	post := func(origin, body string) *httptest.ResponseRecorder {
 		req := httptest.NewRequest(http.MethodPost, "/v1/reportes", strings.NewReader(body))
 		req.Header.Set("Content-Type", "application/json")
-		req.Header.Set("Fly-Client-IP", "203.0.113.7")
+		req.Header.Set("Fly-Client-IP", "2001:db8::7")
 		if origin != "" {
 			req.Header.Set("Origin", origin)
 		}

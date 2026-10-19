@@ -101,6 +101,13 @@ h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.08; letter-spacing: -
 .card .none { margin: 0 0 12px; color: var(--muted) }
 .card .thanks { margin: 12px 0 0; padding: 10px 12px; border-radius: 10px; background: color-mix(in srgb, var(--ok) 14%, var(--surface)); border-left: 5px solid var(--ok); font-weight: 500 }
 .card .fail { margin: 10px 0 0; padding: 10px 12px; border-radius: 10px; background: var(--warn-bg); border-left: 5px solid var(--warn) }
+.share { margin: 12px 0 0; padding: 12px 0 0; border-top: 1px solid var(--line) }
+.share p { margin: 0 0 10px; font-size: .95rem; line-height: 1.45 }
+.share-buttons { display: flex; flex-wrap: wrap; gap: 8px }
+.share-buttons .button { padding: 8px 12px; font-size: .9rem }
+.button.wa { background: #117a43 }
+.button.wa:hover { background: #0d6236 }
+.share input { width: 100%; margin: 8px 0 0; font: inherit; font-size: .85rem; color: var(--fg); background: var(--subtle); border: 1px solid var(--line); border-radius: 8px; padding: 8px }
 .rbar { display: flex; height: 10px; border-radius: 5px; overflow: hidden; background: var(--none); margin: 6px 0 8px }
 .rbar span { display: block; height: 100% }
 .rbar .s { background: var(--dry) } .rbar .b { background: var(--low) } .rbar .c { background: var(--ok) }
@@ -229,7 +236,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       <h2 class="sec" id="como">Cómo funciona</h2>
       <ul class="plain">
         <li><strong>Es anónimo.</strong> De cada reporte guardamos la colonia, tu respuesta, si sale turbia, con olor o con sedimento, y la hora. No guardamos tu nombre, tu teléfono, tu ubicación ni tu dirección IP; tu ubicación solo se usa en tu navegador para encontrar tu colonia.</li>
-        <li><strong>Para evitar abusos</strong>, el servidor recuerda por una hora, solo en memoria, cuántos reportes llegan de cada conexión: hasta 3 por colonia y 20 en total por hora.</li>
+        <li><strong>Para evitar abusos</strong>, el servidor recuerda por una hora, solo en memoria, cuántos reportes llegan de cada conexión, con un límite por colonia y por hora. El límite es más alto donde muchas casas o celulares comparten la misma dirección de internet.</li>
         <li><strong>Son reportes de vecinos, no mediciones ni análisis de laboratorio.</strong> Reporta más quien no tiene agua, así que el mapa muestra dónde falta, no cuánta ciudad está sin agua.</li>
         <li><strong>Las colonias y sus contornos</strong> son los del <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa de la rotación del SIAPA</a>. Para saber tu zona y tus días de corte, ve <a href="/mapa">el mapa de la rotación</a>.</li>
         <li>Si no tienes agua, pide una pipa al SIAPA por WhatsApp (SIAPABOT 33 51 64 44 40) o al 073, y repórtalo ahí también: si no se reporta, no queda registro.</li>
@@ -260,6 +267,19 @@ footer p { margin: 0 0 8px; max-width: 70ch }
   const phone = () => matchMedia("(max-width: 760px)").matches;
   const { norm } = M;
   const $ = (id) => document.getElementById(id);
+  const icon = (name) => {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("class", "i");
+    svg.setAttribute("aria-hidden", "true");
+    const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    use.setAttribute("href", `/icons.svg?v=4#${name}`);
+    svg.append(use);
+    return svg;
+  };
+  // SIAPA writes names in capitals: «LOMAS DE LA PRIMAVERA II» reads «Lomas de la Primavera II».
+  const SMALL = new Set(["de", "del", "la", "las", "los", "el", "y", "e"]);
+  const nice = (name) => name.toLowerCase().split(" ").map((w, i) =>
+    /^(i{1,3}|iv|vi{0,3}|ix|x)$/.test(w) ? w.toUpperCase() : i && SMALL.has(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
   function el(tag, attrs, ...kids) {
     const n = document.createElement(tag);
     for (const [k, v] of Object.entries(attrs || {})) n.setAttribute(k, v);
@@ -451,9 +471,9 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       else kids.push(el("p", { class: "none" }, "Nadie ha reportado esta colonia en las últimas 24 horas."));
       const when = reportedAt(k);
       if (Date.now() - when < 2 * 60 * 1000) {
-        kids.push(el("p", { class: "thanks" }, "¡Gracias! Tu reporte ya está en el mapa."));
+        kids.push(el("p", { class: "thanks" }, "¡Gracias! Tu reporte ya está en el mapa."), share(p));
       } else if (Date.now() - when < SEEN) {
-        kids.push(el("p", { class: "thanks" }, `Ya reportaste esta colonia ${ago(new Date(when).toISOString())}. ¡Gracias!`));
+        kids.push(el("p", { class: "thanks" }, `Ya reportaste esta colonia ${ago(new Date(when).toISOString())}. ¡Gracias!`), share(p));
       } else if (openForm) {
         kids.push(form(f));
       } else {
@@ -463,6 +483,38 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       }
       card.replaceChildren(...kids);
       card.hidden = false;
+    }
+
+    // After a report, the colonia's link to pass on: the map is only as good as its reports.
+    function share(p) {
+      const url = `https://aguagdl.com/reportes?${new URLSearchParams({ q: p.n, m: p.m, cp: p.cp })}`;
+      const text = `¿Hay agua en ${nice(p.n)}? Mira y reporta cómo está el agua en tu colonia, sin cuenta y anónimo:`;
+      const wa = el("a", { class: "button wa", href: `https://wa.me/?text=${encodeURIComponent(`${text} ${url}`)}`, target: "_blank", rel: "noopener" }, icon("message-circle"), "WhatsApp");
+      const fb = el("a", { class: "button alt", href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, target: "_blank", rel: "noopener" }, "Facebook");
+      const box = el("div", { class: "share" },
+        el("p", {}, el("strong", {}, "Pásalo a tus vecinos."), " Entre más reportes, más claro se ve dónde falta el agua."),
+        el("div", { class: "share-buttons" }, wa, fb));
+      if (navigator.share) {
+        const more = el("button", { type: "button", class: "button alt" }, "Más opciones");
+        more.addEventListener("click", () => navigator.share({ title: "¿Hay agua en tu colonia?", text, url }).catch(() => {}));
+        box.lastChild.append(more);
+      } else {
+        const copy = el("button", { type: "button", class: "button alt" }, icon("copy"), "Copiar enlace");
+        copy.addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(url);
+            copy.replaceChildren(icon("check"), "Enlace copiado");
+            setTimeout(() => copy.replaceChildren(icon("copy"), "Copiar enlace"), 2000);
+          } catch {
+            const field = el("input", { type: "text", readonly: "", value: url, "aria-label": "Enlace para compartir" });
+            box.append(field);
+            field.select();
+            copy.remove();
+          }
+        });
+        box.lastChild.append(copy);
+      }
+      return box;
     }
 
     function form(f) {
