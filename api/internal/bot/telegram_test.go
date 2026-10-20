@@ -58,7 +58,7 @@ func (h *tgHarness) sub(t *testing.T) (store.Subscriber, bool) {
 func TestTelegramStartAsksForLocation(t *testing.T) {
 	h := newTGHarness(t, "2026-10-14 10:00")
 	m := h.say(t, "/start")
-	if m.ChatID != 777 || m.ParseMode != "HTML" || !strings.Contains(m.Text, "Te aviso por Telegram") || !strings.Contains(m.Text, "<b>Agua GDL</b>") {
+	if m.ChatID != 777 || m.ParseMode != "HTML" || !strings.Contains(m.Text, "te aviso por Telegram") || !strings.Contains(m.Text, "<b>Agua GDL</b>") || !strings.Contains(m.Text, "https://aguagdl.test/reportes") {
 		t.Errorf("welcome: %+v", m)
 	}
 	kb, ok := m.ReplyMarkup.(tg.ReplyKeyboard)
@@ -397,7 +397,7 @@ func TestWaterAnswersToTheReminder(t *testing.T) {
 	h.say(t, "/start z5")
 	s, _ := h.sub(t)
 	h.store.Reminders[fmt.Sprintf("%d/2026-10-20", s.ID)] = true // Monday's reminder for Tuesday and Wednesday
-	if m := h.press(t, "A:5:2026-10-20:no"); !strings.Contains(m.Text, "SIAPABOT") || !strings.Contains(m.Text, "073") || !strings.Contains(m.Text, "https://aguagdl.test/reportes") {
+	if m := h.press(t, "A:5:2026-10-20:no"); !strings.Contains(m.Text, "33 3668 2482") || !strings.Contains(m.Text, "https://aguagdl.test/pipas") || !strings.Contains(m.Text, "https://aguagdl.test/reportes") {
 		t.Errorf("«No» must say how to get a pipa and link the map of reports: %s", m.Text)
 	}
 	if m := h.press(t, "A:5:2026-10-20:poca"); !strings.Contains(m.Text, "https://aguagdl.test/reportes") {
@@ -473,7 +473,7 @@ func TestAnswersOpenWithTheNotice(t *testing.T) {
 	h.say(t, "/start z5")
 	s, _ := h.sub(t)
 	h.store.Notices[fmt.Sprintf("%d/previo:2026-10-20", s.ID)] = true
-	if m := h.press(t, "A:5:2026-10-20:no"); !strings.Contains(m.Text, "SIAPABOT") || len(h.store.Water) != 1 {
+	if m := h.press(t, "A:5:2026-10-20:no"); !strings.Contains(m.Text, "33 3668 2482") || len(h.store.Water) != 1 {
 		t.Fatalf("an answer to the notice counts: %s %+v", m.Text, h.store.Water)
 	}
 	loc, _ := time.LoadLocation("America/Mexico_City")

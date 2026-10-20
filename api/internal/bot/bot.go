@@ -207,7 +207,7 @@ func (b *Bot) onText(ctx context.Context, r User, body string) error {
 	case slices.Contains(reportWords, n):
 		return b.reportLastCut(ctx, r)
 	case slices.Contains(pipaWords, n):
-		return b.text(ctx, r, msgPipa)
+		return b.text(ctx, r, msgPipa(b.BaseURL))
 	case slices.Contains(writeWords, n) && r.Channel == store.Telegram:
 		return b.text(ctx, r, msgWrite(b.BaseURL))
 	case zoneRe.MatchString(n):
@@ -639,6 +639,9 @@ func (b *Bot) saveWater(ctx context.Context, r User, zone int, date, answer, sig
 		return b.text(ctx, r, msgReportClosed)
 	}
 	text := waterAnswers[i].thanks
+	if answer == "no" {
+		text += "\n\n" + msgPipa(b.BaseURL)
+	}
 	if answer != "si" {
 		text += msgReportMap(b.BaseURL)
 	}

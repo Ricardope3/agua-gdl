@@ -89,7 +89,7 @@ func (b *Bot) onCommand(ctx context.Context, r User, text string) error {
 	case "reportar":
 		return b.reportLastCut(ctx, r)
 	case "pipa":
-		return b.text(ctx, r, msgPipa)
+		return b.text(ctx, r, msgPipa(b.BaseURL))
 	case "escribe":
 		return b.text(ctx, r, msgWrite(b.BaseURL))
 	case "baja":

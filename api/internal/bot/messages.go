@@ -29,9 +29,10 @@ func msgWelcome(base, channel string) string {
 	}
 	return `¡Hola! 👋 Soy *Agua GDL*.
 
-Te aviso por ` + appName(channel) + ` de los cortes de agua de tu zona por la rotación del SIAPA: ` + whenES(channel) + ` 💧
+🗺️ ¿Hay agua en tu colonia? Mira lo que reportan tus vecinos y reporta la tuya, sin registrarte: ` + base + `/reportes
+🚚 ¿Sin agua? Escribe *PIPA* y te digo cómo pedir una.
 
-Para empezar, mándame una de estas:
+🔔 También te aviso por ` + appName(channel) + ` de los cortes de agua de tu zona por la rotación del SIAPA: ` + whenES(channel) + `. Para recibir los avisos, mándame una de estas:
 📍 Tu *ubicación* (` + how + `)
 🏘️ El *nombre de tu colonia*, por ejemplo: _Las Juntas_
 🔢 Tu zona, por ejemplo: *ZONA 4*
@@ -56,10 +57,11 @@ func msgHelp(base, channel string) string {
 	}
 	return `Esto es lo que puedo hacer 💧
 
+🗺️ Mira y reporta cómo está el agua en tu colonia: ` + base + `/reportes
 📍 Manda tu *ubicación* o el *nombre de tu colonia*: te digo tu zona y te suscribo a sus avisos
 🔢 *ZONA 1* a *ZONA 7*: suscribirte o cambiar de zona
 📝 *REPORTAR*: contar cómo regresó el agua después del último corte
-🚚 *PIPA*: cómo pedir una pipa al SIAPA
+🚚 *PIPA*: cómo pedir una pipa
 ` + write + `🛑 *BAJA*: dejar de recibir avisos y borrar tus datos
 
 🗺️ Mapa oficial del SIAPA: ` + MapURL + `
@@ -119,12 +121,15 @@ Mándame tu 📍 *ubicación* para saber cuál te toca, o elige tu zona si ya la
 const msgPickZoneAtPoint = "Tu ubicación queda en el límite entre zonas 🤔 Elige la tuya o revisa el mapa del SIAPA 👇"
 
 // Contacts as published on rotaciondeserviciosiapa.jalisco.gob.mx (checked 14 Oct 2026).
-const msgPipa = `🚚 Para pedir una *pipa* o reportar que no te llega el agua, contacta al SIAPA:
+// msgPipa gives SIAPA's own line for a free pipa (siapa.gob.mx/medios-para-solicitar-una-pipa,
+// checked 20 Oct 2026); the municipios' lines, with their sources, are on /pipas.
+func msgPipa(base string) string {
+	return `🚚 Para pedir una *pipa* gratis, llama al SIAPATEL: *33 3668 2482* o *073*, las 24 horas. Ten a la mano tu domicilio y tu número de cuenta del SIAPA.
 
-💬 WhatsApp SIAPABOT: 33 51 64 44 40
-☎️ SIAPATEL: 073
+Zapopan, Tlaquepaque y Tonalá también tienen líneas propias: ` + base + `/pipas
 
 Agua GDL no es del SIAPA y no puede mandar pipas.`
+}
 
 func msgWrite(base string) string {
 	return `✉️ Pídeles a las y los 38 diputados del Congreso de Jalisco que voten en contra del contrato APP del acueducto Chapala–Guadalajara, por correo, X o Messenger desde tu propia cuenta. Ahí también puedes firmar la solicitud de Contraloría Social en el IEPC:
@@ -173,7 +178,7 @@ const msgThanks = "🙏 ¡Gracias! Tu reporte ayuda a ver cómo está tu zona."
 var waterAnswers = []struct{ key, title, thanks string }{
 	{"si", "✅ Sí", "🙏 ¡Gracias! Aprovecha para llenar tu tinaco y tus garrafones mientras tengas agua."},
 	{"poca", "🟡 Poca", "🙏 ¡Gracias! Llena lo que puedas mientras salga."},
-	{"no", "❌ No", "🙏 Gracias por avisarnos: nos ayuda a avisar con más tiempo.\n\n" + msgPipa},
+	{"no", "❌ No", "🙏 Gracias por avisarnos: nos ayuda a avisar con más tiempo."},
 }
 
 var reportAnswers = []struct{ key, title string }{
@@ -218,7 +223,7 @@ func msgSubscribed(i subscribedInfo) string {
 	default:
 		b.WriteString("🔔 Por ahora no hay más cortes programados en tu zona.\n")
 	}
-	fmt.Fprintf(&b, "\n📝 Después de cada corte escribe *REPORTAR* para contar cómo regresó el agua.\nEscribe *ZONA 1* a *ZONA 7* para cambiar de zona o *BAJA* para dejar de recibir avisos.\n🔒 Guardamos %s, tu zona y tus reportes. Todo lo que guardamos: %s/privacidad", storedID(i.channel), i.base)
+	fmt.Fprintf(&b, "\n🗺️ ¿Cómo está el agua en tu colonia? Repórtalo y mira la de tus vecinos: %s/reportes\nEscribe *ZONA 1* a *ZONA 7* para cambiar de zona o *BAJA* para dejar de recibir avisos.\n🔒 Guardamos %s, tu zona y tus reportes. Todo lo que guardamos: %s/privacidad", i.base, storedID(i.channel), i.base)
 	return b.String()
 }
 

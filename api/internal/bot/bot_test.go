@@ -163,7 +163,7 @@ func TestEdgeTexts(t *testing.T) {
 	if got := h.send(t, text("zapopan")); got != msgMunicipio("Zapopan") {
 		t.Errorf("unexpected:\n%s", got)
 	}
-	if got := h.send(t, text("Pipa")); got != msgPipa {
+	if got := h.send(t, text("Pipa")); got != msgPipa("https://aguagdl.test") {
 		t.Errorf("unexpected:\n%s", got)
 	}
 	if got := h.send(t, text(strings.Repeat("agua ", 20))); got != msgHelp(h.bot.BaseURL, store.WhatsApp) {
