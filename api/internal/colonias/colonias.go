@@ -111,7 +111,7 @@ func fold(s string) string {
 	for _, r := range s {
 		if unicode.IsLetter(r) || unicode.IsDigit(r) {
 			b.WriteRune(r)
-		} else {
+		} else if !unicode.Is(unicode.Mn, r) { // a decomposed accent belongs to its letter
 			b.WriteByte(' ')
 		}
 	}

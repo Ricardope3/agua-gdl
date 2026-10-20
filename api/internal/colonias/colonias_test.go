@@ -13,6 +13,8 @@ func TestNormalize(t *testing.T) {
 		"fracc. jardines del sauz": "JARDINES DEL SAUZ",
 		"  Tonalá ":                "TONALA",
 		"Colón":                    "COLON",
+		"Colo\u0301n Industrial":   "COLON INDUSTRIAL", // accents typed as separate marks
+		"Pen\u0303a":               "PENA",
 	}
 	for in, want := range cases {
 		if got := Normalize(in); got != want {
