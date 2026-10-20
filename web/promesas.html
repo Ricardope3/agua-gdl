@@ -717,14 +717,16 @@ footer p { margin: 0 0 8px; max-width: 70ch }
   }
   for (const a of document.querySelectorAll(".copy")) {
     a.addEventListener("click", async (e) => {
+      e.preventDefault(); // before the await, or the link has already jumped to the card
       const url = `${location.origin}${location.pathname}#${a.dataset.id}`;
       try {
         await navigator.clipboard.writeText(url);
-        e.preventDefault();
         history.replaceState(null, "", `#${a.dataset.id}`);
         a.textContent = "Enlace copiado";
         setTimeout(() => { a.textContent = "Copiar enlace"; }, 2000);
-      } catch {}
+      } catch {
+        location.hash = a.dataset.id;
+      }
     });
   }
 })();
