@@ -25,7 +25,7 @@ const (
 	shortDescription = "El agua es un derecho. Exígelo. Reporta tu colonia, pide una pipa y recibe avisos de los cortes del SIAPA. Sin partido."
 	description      = `El agua es un derecho. Exígelo.
 
-Reporta cómo está el agua en tu colonia: cada reporte es una prueba de dónde falla el gobierno, y cada lunes mandamos el conteo al SIAPA, a la CEA, a los municipios, al Congreso y a la CEDHJ. ¿Sin agua? Te digo cómo pedir una pipa. Y te aviso gratis dos días antes de los cortes de tu zona y la noche antes.
+Reporta cómo está el agua en tu colonia: cada reporte es una prueba de dónde falla el gobierno. Exígele a quien le toca que lo arregle: https://aguagdl.com/exige. ¿Sin agua? Te digo cómo pedir una pipa. Y te aviso gratis dos días antes de los cortes de tu zona y la noche antes.
 
 Iniciativa ciudadana: no es del SIAPA ni del gobierno y no tiene partido. Toca «Iniciar».
 

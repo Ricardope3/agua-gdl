@@ -2,7 +2,7 @@ Sitio estático de aguagdl.com, sin paso de build. `index.html` es la página de
 
 `exige.html` («Exígele a quien le toca», /exige; «Exige» en el menú) arma un mensaje con tu colonia, tu municipio y lo que pasa (sin agua, poca presión o agua sucia), y lo mandas tú desde tu correo, X o Facebook al gobernador, al SIAPA, a la CEA y a tu presidencia municipal; cada contacto lleva su fuente oficial y la fecha en que se revisó. Agua GDL no ve ni guarda nada.
 
-`informes.html` («El conteo de cada semana», /informes) lista los conteos de cada lunes que escribe `api/cmd/informe` en `semana/<lunes>.html` y `.csv`; no los edites a mano.
+El conteo semanal (`informes.html`, con los conteos que escribe `api/cmd/informe` en `semana/<lunes>.html`) se quitó el 20 oct 2026 hasta que haya suficientes reportes; la página está en el historial de git (`cf999bf`).
 
 Publicado en https://aguagdl.com con Cloudflare Pages (sin comando de build, carpeta de salida `web`); cada push a `main` lo vuelve a publicar. Las visitas se cuentan con Cloudflare Web Analytics (sin cookies; se activa en la pestaña Metrics del proyecto de Pages y Cloudflare inserta el script; `_headers` lo permite en la CSP y el aviso de privacidad lo describe en el punto 7). `www.aguagdl.com` redirige a `aguagdl.com` con una regla de Cloudflare.
 
