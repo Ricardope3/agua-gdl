@@ -29,7 +29,10 @@ func msgWelcome(base, channel string) string {
 	}
 	return `¡Hola! 👋 Soy *Agua GDL*.
 
-🗺️ ¿Hay agua en tu colonia? Mira lo que reportan tus vecinos y reporta la tuya, sin registrarte: ` + base + `/reportes
+*El agua es un derecho. Exígelo.*
+
+🗺️ ¿Hay agua en tu colonia? Reporta la tuya, sin registrarte: cada reporte es una prueba de dónde falla el gobierno. Mira lo que reportan tus vecinos: ` + base + `/reportes
+📢 Exígele a quien le toca que lo arregle: ` + base + `/exige
 🚚 ¿Sin agua? Escribe *PIPA* y te digo cómo pedir una.
 
 🔔 También te aviso por ` + appName(channel) + ` de los cortes de agua de tu zona por la rotación del SIAPA: ` + whenES(channel) + `. Para recibir los avisos, mándame una de estas:
@@ -58,6 +61,7 @@ func msgHelp(base, channel string) string {
 	return `Esto es lo que puedo hacer 💧
 
 🗺️ Mira y reporta cómo está el agua en tu colonia: ` + base + `/reportes
+📢 Exígele a quien le toca que lo arregle: ` + base + `/exige
 📍 Manda tu *ubicación* o el *nombre de tu colonia*: te digo tu zona y te suscribo a sus avisos
 🔢 *ZONA 1* a *ZONA 7*: suscribirte o cambiar de zona
 📝 *REPORTAR*: contar cómo regresó el agua después del último corte
@@ -135,6 +139,10 @@ func msgWrite(base string) string {
 	return `✉️ Pídeles a las y los 38 diputados del Congreso de Jalisco que voten en contra del contrato APP del acueducto Chapala–Guadalajara, por correo, X o Messenger desde tu propia cuenta. Ahí también puedes firmar la solicitud de Contraloría Social en el IEPC:
 
 ` + base + `/escribe
+
+📢 Y exígele al gobernador, al SIAPA, a la CEA y a tu presidencia municipal que arreglen el agua de tu colonia:
+
+` + base + `/exige
 
 Agua GDL no envía el correo ni guarda tus datos, y escribimos a todas las diputaciones por igual.`
 }
@@ -223,7 +231,7 @@ func msgSubscribed(i subscribedInfo) string {
 	default:
 		b.WriteString("🔔 Por ahora no hay más cortes programados en tu zona.\n")
 	}
-	fmt.Fprintf(&b, "\n🗺️ ¿Cómo está el agua en tu colonia? Repórtalo y mira la de tus vecinos: %s/reportes\nEscribe *ZONA 1* a *ZONA 7* para cambiar de zona o *BAJA* para dejar de recibir avisos.\n🔒 Guardamos %s, tu zona y tus reportes. Todo lo que guardamos: %s/privacidad", i.base, storedID(i.channel), i.base)
+	fmt.Fprintf(&b, "\n🗺️ ¿Cómo está el agua en tu colonia? Repórtalo y mira la de tus vecinos: %s/reportes\n📢 Exígele a quien le toca que lo arregle: %[1]s/exige\nEscribe *ZONA 1* a *ZONA 7* para cambiar de zona o *BAJA* para dejar de recibir avisos.\n🔒 Guardamos %s, tu zona y tus reportes. Todo lo que guardamos: %s/privacidad", i.base, storedID(i.channel), i.base)
 	return b.String()
 }
 
@@ -297,9 +305,9 @@ func msgFollowUp(days []time.Time, zone int) string {
 Cuéntanos cómo está ahora 👇`, zone, rotation.DatesES(days))
 }
 
-// msgReportMap points whoever answered «No» or «Poca» to the map of neighbours' reports.
+// msgReportMap points whoever answered «No» or «Poca» to the map of neighbours' reports and to /exige.
 func msgReportMap(base string) string {
-	return "\n\n🗺️ Mira y reporta cómo está el agua en tu colonia: " + base + "/reportes"
+	return "\n\n🗺️ Mira y reporta cómo está el agua en tu colonia: " + base + "/reportes\n📢 Exígele a quien le toca que lo arregle: " + base + "/exige"
 }
 
 // AvisosChange tells a zone's Telegram subscribers, once, about the notice two days before each

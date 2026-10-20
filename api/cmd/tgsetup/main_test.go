@@ -7,6 +7,7 @@ import (
 	"path"
 	"strings"
 	"testing"
+	"unicode/utf8"
 )
 
 // telegramAPI answers every Bot API call with an empty success and keeps its parameters.
@@ -36,5 +37,14 @@ func TestRerunsKeepTheUpdatesTelegramHolds(t *testing.T) {
 		if got := calls["setWebhook"]["drop_pending_updates"]; got != drop {
 			t.Errorf("-drop-pending=%v: setWebhook sent drop_pending_updates=%v", drop, got)
 		}
+	}
+}
+
+func TestDescriptionsFitTelegram(t *testing.T) {
+	if n := utf8.RuneCountInString(shortDescription); n > 120 {
+		t.Errorf("short description has %d characters; Telegram takes 120", n)
+	}
+	if n := utf8.RuneCountInString(description); n > 512 {
+		t.Errorf("description has %d characters; Telegram takes 512", n)
 	}
 }

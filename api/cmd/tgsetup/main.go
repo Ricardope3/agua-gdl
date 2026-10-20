@@ -22,14 +22,14 @@ import (
 
 const (
 	name             = "Agua GDL"
-	shortDescription = "Aviso gratis dos días antes de los cortes de agua del SIAPA en tu zona y la noche antes. Ciudadano, sin partido."
-	description      = `Te aviso gratis dos días antes de los cortes de agua del SIAPA en tu zona y otra vez la noche antes (una vez por tanda si van seguidos). Zona metropolitana de Guadalajara.
+	shortDescription = "El agua es un derecho. Exígelo. Reporta tu colonia, pide una pipa y recibe avisos de los cortes del SIAPA. Sin partido."
+	description      = `El agua es un derecho. Exígelo.
 
-Iniciativa ciudadana: no es del SIAPA ni del gobierno y no tiene partido.
+Reporta cómo está el agua en tu colonia: cada reporte es una prueba de dónde falla el gobierno, y cada lunes mandamos el conteo al SIAPA, a la CEA, a los municipios, al Congreso y a la CEDHJ. ¿Sin agua? Te digo cómo pedir una pipa. Y te aviso gratis dos días antes de los cortes de tu zona y la noche antes.
 
-Toca «Iniciar» y mándame tu ubicación, tu colonia o tu zona.
+Iniciativa ciudadana: no es del SIAPA ni del gobierno y no tiene partido. Toca «Iniciar».
 
-El agua de Guadalajara llega sucia y racionada; no lo arregla un acueducto privado, lo arregla sanear los ríos. Más en https://aguagdl.com
+Más en https://aguagdl.com
 Aviso de privacidad: https://aguagdl.com/privacidad`
 )
 
