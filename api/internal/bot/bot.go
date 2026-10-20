@@ -360,7 +360,11 @@ func (b *Bot) greet(ctx context.Context, r User) error {
 			return err
 		}
 		if ok {
-			return b.reply(ctx, r, Reply{Text: b.subscribedText(r.Channel, s.Zone, false), CloseKeyboard: true})
+			text, err := b.subscribedText(ctx, s, false)
+			if err != nil {
+				return err
+			}
+			return b.reply(ctx, r, Reply{Text: text, CloseKeyboard: true})
 		}
 	}
 	return b.welcome(ctx, r)
@@ -386,7 +390,16 @@ func (b *Bot) subscribe(ctx context.Context, r User, zone int) error {
 	if err := b.Store.Subscribe(ctx, r.Channel, r.ID, r.Phone, zone); err != nil {
 		return err
 	}
-	return b.reply(ctx, r, Reply{Text: b.subscribedText(r.Channel, zone, true), CloseKeyboard: true})
+	// A zone change keeps the subscription, and with it an answer that skips a reminder.
+	s, _, err := b.Store.Subscriber(ctx, r.Channel, r.ID)
+	if err != nil {
+		return err
+	}
+	text, err := b.subscribedText(ctx, s, true)
+	if err != nil {
+		return err
+	}
+	return b.reply(ctx, r, Reply{Text: text, CloseKeyboard: true})
 }
 
 // nightFull reports whether putting r in zone would make some night's reminders
@@ -422,6 +435,9 @@ func (b *Bot) nightFull(ctx context.Context, r User, zone int) (bool, error) {
 }
 
 func (b *Bot) welcome(ctx context.Context, r User) error {
+	if b.Schedule.Expired(b.Now()) {
+		return b.text(ctx, r, msgRotationOver(b.BaseURL)) // nothing left to subscribe to
+	}
 	return b.reply(ctx, r, Reply{Text: msgWelcome(b.BaseURL, r.Channel), AskLocation: true})
 }
 
@@ -432,7 +448,15 @@ func (b *Bot) remindersOn(channel string) bool {
 	return b.RemindersOn
 }
 
-func (b *Bot) subscribedText(channel string, zone int, fresh bool) string {
+// noWater reports whether subscription id said it has no water before the block starting on
+// start, which skips the block's evening-before reminder.
+func (b *Bot) noWater(ctx context.Context, id int64, start time.Time) (bool, error) {
+	ids, err := b.Store.NoWater(ctx, start)
+	return ids[id], err
+}
+
+func (b *Bot) subscribedText(ctx context.Context, s store.Subscriber, fresh bool) (string, error) {
+	channel, zone := s.Channel, s.Zone
 	now := b.Now()
 	today := b.Schedule.Day(now)
 	tomorrow := today.AddDate(0, 0, 1)
@@ -442,15 +466,24 @@ func (b *Bot) subscribedText(channel string, zone int, fresh bool) string {
 		hour: rotation.HourES(b.ReminderHour),
 	}
 	tonight := b.remindersOn(channel) && now.In(b.Schedule.Location()).Hour() < b.ReminderHour
-	// No reminder comes tonight for tomorrow's cut once tonight's run has passed, or when
-	// tomorrow continues a block; nor for the rest of the block under way: warn here.
-	if b.Schedule.IsCut(zone, tomorrow) && !(tonight && b.Schedule.StartsBlock(zone, tomorrow)) {
+	remindedTonight := tonight && b.Schedule.StartsBlock(zone, tomorrow)
+	if remindedTonight {
+		dry, err := b.noWater(ctx, s.ID, tomorrow)
+		if err != nil {
+			return "", err
+		}
+		remindedTonight = !dry
+	}
+	// No reminder comes tonight for tomorrow's cut once tonight's run has passed, when tomorrow
+	// continues a block or to whoever has no water; nor for the rest of the block under way:
+	// warn here.
+	if b.Schedule.IsCut(zone, tomorrow) && !remindedTonight {
 		info.cutTomorrow = b.Schedule.Block(zone, tomorrow)
 	} else if block := b.Schedule.Block(zone, today); len(block) > 1 {
 		info.cutsLeft = block[1:]
 	}
 	// The next message is a block's notice two days before (Telegram only), else its reminder
-	// the evening before, whichever is still ahead.
+	// the evening before, whichever is still ahead; the reminder skips whoever has no water.
 	for _, cut := range b.Schedule.NextCuts(zone, tomorrow, 14) {
 		if !b.Schedule.StartsBlock(zone, cut) {
 			continue
@@ -463,6 +496,15 @@ func (b *Bot) subscribedText(channel string, zone int, fresh bool) string {
 		if i < 0 {
 			continue
 		}
+		if i == len(evenings)-1 {
+			dry, err := b.noWater(ctx, s.ID, cut)
+			if err != nil {
+				return "", err
+			}
+			if dry {
+				continue
+			}
+		}
 		info.nextReminder = rotation.DateES(evenings[i])
 		if evenings[i].Equal(today) {
 			info.nextReminder = "hoy"
@@ -470,7 +512,7 @@ func (b *Bot) subscribedText(channel string, zone int, fresh bool) string {
 		info.nextCut = b.Schedule.Block(zone, cut)
 		break
 	}
-	return msgSubscribed(info)
+	return msgSubscribed(info), nil
 }
 
 func (b *Bot) unsubscribe(ctx context.Context, r User) error {

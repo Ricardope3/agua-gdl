@@ -261,6 +261,10 @@ func TestNoSubscriptionsAfterTheRetentionDeadline(t *testing.T) {
 	if _, ok := h.sub(t); ok {
 		t.Fatal("subscribed after the retention deadline")
 	}
+	m := h.say(t, "/start")
+	if _, asks := m.ReplyMarkup.(tg.ReplyKeyboard); asks || !strings.Contains(m.Text, "ya terminó") {
+		t.Fatalf("/start says the rotation is over instead of asking for a location: %+v", m)
+	}
 }
 
 func TestReportKeepsTheZoneOfTheCut(t *testing.T) {
@@ -429,6 +433,38 @@ func TestOnlyTheRemindedSubscriptionCanAnswer(t *testing.T) {
 	}
 	if len(h.store.Water) != 1 {
 		t.Fatalf("BAJA and subscribing again must not add answers: %+v", h.store.Water)
+	}
+}
+
+func TestNoReminderPromisedToWhoeverHasNoWater(t *testing.T) {
+	h := newTGHarness(t, "2026-10-18 21:00") // Sunday: the notice for zone 5's Tuesday block went out at 8 p.m.
+	h.say(t, "/start z5")
+	s, _ := h.sub(t)
+	h.store.Notices[fmt.Sprintf("%d/previo:2026-10-20", s.ID)] = true
+	h.press(t, "A:5:2026-10-20:no")
+	loc, _ := time.LoadLocation("America/Mexico_City")
+	h.bot.Now = func() time.Time { return time.Date(2026, 10, 19, 10, 0, 0, 0, loc) }
+	m := h.say(t, "hola")
+	for _, want := range []string{"<b>Mañana martes 20 de octubre</b> hay corte", "Próximo aviso: <b>jueves 22 de octubre, 8 p. m.</b> (corte del sábado 24 de octubre)"} {
+		if !strings.Contains(m.Text, want) {
+			t.Errorf("tonight's reminder skips whoever answered «No»: missing %q in:\n%s", want, m.Text)
+		}
+	}
+	h.press(t, "A:5:2026-10-20:si")
+	if m := h.say(t, "hola"); !strings.Contains(m.Text, "Próximo aviso: <b>hoy, 8 p. m.</b>") || strings.Contains(m.Text, "¡Ojo!") {
+		t.Errorf("after «Sí» tonight's reminder comes:\n%s", m.Text)
+	}
+
+	// A zone change keeps the answer: zone 7's block starts on Saturday, as zone 3's cut does.
+	h = newTGHarness(t, "2026-10-22 21:00")
+	h.say(t, "/start z3")
+	s, _ = h.sub(t)
+	h.store.Notices[fmt.Sprintf("%d/previo:2026-10-24", s.ID)] = true
+	h.press(t, "A:3:2026-10-24:no")
+	h.bot.Now = func() time.Time { return time.Date(2026, 10, 23, 10, 0, 0, 0, loc) }
+	m = h.say(t, "zona 7")
+	if s, _ := h.sub(t); s.Zone != 7 || strings.Contains(m.Text, "Próximo aviso: <b>hoy") || !strings.Contains(m.Text, "<b>Mañana sábado 24 de octubre</b> hay corte") {
+		t.Errorf("no reminder is promised after a zone change either:\n%s", m.Text)
 	}
 }
 
