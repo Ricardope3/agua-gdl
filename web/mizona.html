@@ -9,7 +9,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aguagdl.com/mizona">
 <meta property="og:title" content="¿Qué zona me toca? Rotación de agua del SIAPA">
-<meta property="og:description" content="Tu zona y tus próximos días de racionamiento, con tu ubicación o tu colonia. El agua de Guadalajara llega sucia y racionada; no lo arregla un acueducto privado, lo arregla sanear los ríos.">
+<meta property="og:description" content="Tu zona y tus próximos días de racionamiento, con tu ubicación o tu colonia. El agua es un derecho. Exígelo.">
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary">
@@ -187,7 +187,7 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 .site-nav a[aria-current="page"] .i { color: inherit }
 li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .i { --ic: var(--brand) }
-.i:has(use[href$="#bell"]) { --ic: #d97706 }
+.i:has(use[href$="#bell"]), .i:has(use[href$="#megaphone"]) { --ic: #d97706 }
 .i:has(use[href$="#map-pin"]) { --ic: #e11d48 }
 .i:has(use[href$="#landmark"]) { --ic: #7c3aed }
 .i:has(use[href$="#heart"]) { --ic: #dc2626 }
@@ -197,9 +197,9 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .i:has(use[href$="#pen-line"]) { --ic: #ea580c }
 .i:has(use[href$="#calendar"]) { --ic: #4f46e5 }
 .i:has(use[href$="#send"]) { --ic: #229ed9 }
-@media (prefers-color-scheme: dark) { .i:has(use[href$="#bell"]) { --ic: #fbbf24 } .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#landmark"]) { --ic: #a78bfa } .i:has(use[href$="#heart"]) { --ic: #f87171 } .i:has(use[href$="#check"]) { --ic: #4ade80 } .i:has(use[href$="#shield-check"]) { --ic: #4ade80 } .i:has(use[href$="#mail"]) { --ic: #2dd4bf } .i:has(use[href$="#pen-line"]) { --ic: #fb923c } .i:has(use[href$="#calendar"]) { --ic: #818cf8 } .i:has(use[href$="#send"]) { --ic: #2aabee } }
+@media (prefers-color-scheme: dark) { .i:has(use[href$="#bell"]), .i:has(use[href$="#megaphone"]) { --ic: #fbbf24 } .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#landmark"]) { --ic: #a78bfa } .i:has(use[href$="#heart"]) { --ic: #f87171 } .i:has(use[href$="#check"]) { --ic: #4ade80 } .i:has(use[href$="#shield-check"]) { --ic: #4ade80 } .i:has(use[href$="#mail"]) { --ic: #2dd4bf } .i:has(use[href$="#pen-line"]) { --ic: #fb923c } .i:has(use[href$="#calendar"]) { --ic: #818cf8 } .i:has(use[href$="#send"]) { --ic: #2aabee } }
 .site-nav .i, li > .i, p > .i, summary > .i, h3 > .i { color: var(--ic) }
-.ih .i-badge:has(use[href$="#bell"]) { background: #d97706 }
+.ih .i-badge:has(use[href$="#bell"]), .ih .i-badge:has(use[href$="#megaphone"]) { background: #d97706 }
 .ih .i-badge:has(use[href$="#map-pin"]) { background: #e11d48 }
 .ih .i-badge:has(use[href$="#landmark"]) { background: #7c3aed }
 .ih .i-badge:has(use[href$="#heart"]) { background: #dc2626 }
@@ -216,14 +216,14 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   <header class="top">
     <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
     <nav class="site-nav" aria-label="Secciones">
-      <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#users"/></svg>¿Hay agua?</a>
-      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#bell"/></svg>Avisos</a>
-      <a href="/mizona" aria-current="page"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg>Mi zona</a>
-      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#newspaper"/></svg>Noticias</a>
-      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#landmark"/></svg>Congreso</a>
-      <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#bar-chart"/></svg>Cuentas</a>
-      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#droplet"/></svg>Contaminación</a>
-      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#heart"/></svg>Antisionismo</a>
+      <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg>¿Hay agua?</a>
+      <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exige</a>
+      <a href="/mizona" aria-current="page"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Mi zona</a>
+      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg>Noticias</a>
+      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#landmark"/></svg>Congreso</a>
+      <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg>Cuentas</a>
+      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Contaminación</a>
+      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#heart"/></svg>Antisionismo</a>
     </nav>
   </header>
 
@@ -233,7 +233,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 
     <div class="finder">
       <div class="locate">
-        <button class="button glow solid" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg>Usar mi ubicación</button>
+        <button class="button glow solid" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Usar mi ubicación</button>
         <p class="note"><strong>Recomendado:</strong> usa el mapa de zonas del SIAPA, no los nombres de colonias. Solo la usamos para encontrar tu zona; no la guardamos.</p>
       </div>
       <p class="or">o</p>
@@ -244,7 +244,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
             <input id="colonia" name="q" type="search" autocomplete="off" spellcheck="false" placeholder="Por ejemplo: Las Juntas" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugerencias">
             <ul class="suggest" id="sugerencias" role="listbox" aria-label="Colonias encontradas" hidden></ul>
           </div>
-          <button class="button" type="submit"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#search"/></svg>Buscar</button>
+          <button class="button" type="submit"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#search"/></svg>Buscar</button>
         </div>
       </form>
       <p class="note">Los nombres vienen de la lista del SIAPA y muchas veces no coinciden con Google Maps. <a href="#lista">Por qué</a>.</p>
@@ -255,7 +255,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     <div id="resultado" aria-live="polite" tabindex="-1"></div>
 
     <section aria-labelledby="ojo">
-      <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#info"/></svg></span>Ten en cuenta</h2>
+      <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#info"/></svg></span>Ten en cuenta</h2>
       <div class="warn callout" id="lista">
         <svg class="trace" aria-hidden="true"><rect width="100%" height="100%" rx="10" pathLength="1"/></svg>
         <h3>La lista de colonias del SIAPA y su mapa no siempre coinciden</h3>
@@ -309,7 +309,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     svg.setAttribute("class", "i");
     svg.setAttribute("aria-hidden", "true");
     const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-    use.setAttribute("href", `/icons.svg?v=4#${name}`);
+    use.setAttribute("href", `/icons.svg?v=5#${name}`);
     svg.append(use);
     return svg;
   };

@@ -9,7 +9,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aguagdl.com/pipas">
 <meta property="og:title" content="¿Sin agua? Cómo pedir una pipa">
-<meta property="og:description" content="Los teléfonos y WhatsApp oficiales del SIAPA y de Guadalajara, Zapopan, Tlaquepaque y Tonalá para pedir una pipa, con su fuente. El agua de Guadalajara llega sucia y racionada; no lo arregla un acueducto privado, lo arregla sanear los ríos.">
+<meta property="og:description" content="Los teléfonos y WhatsApp oficiales del SIAPA y de Guadalajara, Zapopan, Tlaquepaque y Tonalá para pedir una pipa, con su fuente. El agua es un derecho. Exígelo.">
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary">
@@ -108,7 +108,7 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 .site-nav a[aria-current="page"] .i { color: inherit }
 li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .i { --ic: var(--brand) }
-.i:has(use[href$="#bell"]) { --ic: #d97706 }
+.i:has(use[href$="#bell"]), .i:has(use[href$="#megaphone"]) { --ic: #d97706 }
 .i:has(use[href$="#map-pin"]) { --ic: #e11d48 }
 .i:has(use[href$="#landmark"]) { --ic: #7c3aed }
 .i:has(use[href$="#heart"]) { --ic: #dc2626 }
@@ -118,9 +118,9 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .i:has(use[href$="#pen-line"]) { --ic: #ea580c }
 .i:has(use[href$="#calendar"]) { --ic: #4f46e5 }
 .i:has(use[href$="#send"]) { --ic: #229ed9 }
-@media (prefers-color-scheme: dark) { .i:has(use[href$="#bell"]) { --ic: #fbbf24 } .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#landmark"]) { --ic: #a78bfa } .i:has(use[href$="#heart"]) { --ic: #f87171 } .i:has(use[href$="#check"]) { --ic: #4ade80 } .i:has(use[href$="#shield-check"]) { --ic: #4ade80 } .i:has(use[href$="#mail"]) { --ic: #2dd4bf } .i:has(use[href$="#pen-line"]) { --ic: #fb923c } .i:has(use[href$="#calendar"]) { --ic: #818cf8 } .i:has(use[href$="#send"]) { --ic: #2aabee } }
+@media (prefers-color-scheme: dark) { .i:has(use[href$="#bell"]), .i:has(use[href$="#megaphone"]) { --ic: #fbbf24 } .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#landmark"]) { --ic: #a78bfa } .i:has(use[href$="#heart"]) { --ic: #f87171 } .i:has(use[href$="#check"]) { --ic: #4ade80 } .i:has(use[href$="#shield-check"]) { --ic: #4ade80 } .i:has(use[href$="#mail"]) { --ic: #2dd4bf } .i:has(use[href$="#pen-line"]) { --ic: #fb923c } .i:has(use[href$="#calendar"]) { --ic: #818cf8 } .i:has(use[href$="#send"]) { --ic: #2aabee } }
 .site-nav .i, li > .i, p > .i, summary > .i, h3 > .i { color: var(--ic) }
-.ih .i-badge:has(use[href$="#bell"]) { background: #d97706 }
+.ih .i-badge:has(use[href$="#bell"]), .ih .i-badge:has(use[href$="#megaphone"]) { background: #d97706 }
 .ih .i-badge:has(use[href$="#map-pin"]) { background: #e11d48 }
 .ih .i-badge:has(use[href$="#landmark"]) { background: #7c3aed }
 .ih .i-badge:has(use[href$="#heart"]) { background: #dc2626 }
@@ -137,14 +137,14 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   <header class="top">
     <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
     <nav class="site-nav" aria-label="Secciones">
-      <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#users"/></svg>¿Hay agua?</a>
-      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#bell"/></svg>Avisos</a>
-      <a href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg>Mi zona</a>
-      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#newspaper"/></svg>Noticias</a>
-      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#landmark"/></svg>Congreso</a>
-      <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#bar-chart"/></svg>Cuentas</a>
-      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#droplet"/></svg>Contaminación</a>
-      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#heart"/></svg>Antisionismo</a>
+      <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg>¿Hay agua?</a>
+      <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exige</a>
+      <a href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Mi zona</a>
+      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg>Noticias</a>
+      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#landmark"/></svg>Congreso</a>
+      <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg>Cuentas</a>
+      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Contaminación</a>
+      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#heart"/></svg>Antisionismo</a>
     </nav>
   </header>
 
@@ -153,7 +153,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     <p class="lede">Aquí están los teléfonos y WhatsApp oficiales del SIAPA y de tu municipio, cada uno con su fuente. Agua GDL es una iniciativa ciudadana: no es del SIAPA ni del gobierno y no puede mandar pipas.</p>
 
     <div class="signup">
-      <h2 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#phone"/></svg></span>Al SIAPA</h2>
+      <h2 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#phone"/></svg></span>Al SIAPA</h2>
       <p><a class="tel" href="tel:+523336682482">33 3668 2482</a> o <a class="tel" href="tel:073">073</a></p>
       <p>Es SIAPATEL. El SIAPA dice: «Si te quedas sin agua, solicita una pipa gratuita», y que atiende «las 24 horas del día».</p>
       <ul>
@@ -165,7 +165,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     </div>
 
     <section aria-labelledby="municipios">
-      <h2 id="municipios" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg></span>En tu municipio</h2>
+      <h2 id="municipios" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg></span>En tu municipio</h2>
       <div class="options">
         <div class="signup">
           <h3>Guadalajara</h3>
@@ -195,18 +195,18 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     </section>
 
     <section aria-labelledby="derecho">
-      <h2 id="derecho" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#shield-check"/></svg></span>Es tu derecho</h2>
+      <h2 id="derecho" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#shield-check"/></svg></span>Es tu derecho</h2>
       <p>Cuando te reducen el agua por escasez, la Ley del Agua de Jalisco te da derecho a «Exigir a las autoridades el suministro de agua potable, única y exclusivamente para uso habitacional», «mediante la dotación gratuita a través de pipas, carros tanques, hidrantes provisionales o públicos», «considerando la disponibilidad de los recursos» del ayuntamiento o del organismo del agua (<a href="https://congresoweb.congresojal.gob.mx/bibliotecavirtual/legislacion/Leyes/Documentos_PDF-Leyes/Ley%20del%20Agua%20para%20el%20Estado%20y%20sus%20Municipios-300626.pdf" rel="noopener">artículo 90, fracción VI</a>).</p>
     </section>
 
     <section aria-labelledby="reporta">
-      <h2 id="reporta" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#users"/></svg></span>Y repórtalo en el mapa</h2>
+      <h2 id="reporta" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg></span>Y repórtalo en el mapa</h2>
       <p>Cuenta en el <a href="/reportes">mapa de los vecinos</a> que no tienes agua: sin cuenta y anónimo. Si no se reporta, no queda registro.</p>
-      <a class="button glow" href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg>Reportar mi colonia</a>
+      <a class="button glow" href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Reportar mi colonia</a>
     </section>
 
     <section aria-labelledby="ojo">
-      <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#info"/></svg></span>Ten en cuenta</h2>
+      <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#info"/></svg></span>Ten en cuenta</h2>
       <ul>
         <li>Revisamos estos números el 20 de octubre de 2026 en las páginas enlazadas. Si alguno ya no funciona, avísanos a <span class="number">soporte@aguagdl.com</span>.</li>
         <li>Zapopan y Tonalá no dicen en sus anuncios si sus pipas cuestan; las del SIAPA y las de Guadalajara son gratuitas.</li>

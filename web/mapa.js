@@ -217,7 +217,7 @@ window.aguaMapa = (() => {
     svg.setAttribute("class", "i");
     svg.setAttribute("aria-hidden", "true");
     const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-    use.setAttribute("href", `/icons.svg?v=4#${name}`);
+    use.setAttribute("href", `/icons.svg?v=5#${name}`);
     svg.append(use);
     return svg;
   };

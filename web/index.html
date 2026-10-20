@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="facebook-domain-verification" content="li0vsm7edv0afccxodm5t0jvyiw0za">
-<title>Agua GDL · La crisis del agua en Guadalajara</title>
-<meta name="description" content="El agua de Guadalajara llega sucia y racionada; no lo arregla un acueducto privado, lo arregla sanear los ríos. Reporta si hay agua en tu colonia y mira lo que reportan tus vecinos; tu zona de la rotación del SIAPA y sus días, avisos gratis y cómo exigir al Congreso.">
+<title>Agua GDL · El agua es un derecho. Exígelo.</title>
+<meta name="description" content="El agua es un derecho. Exígelo. En Guadalajara llega sucia y racionada: reporta cómo está el agua en tu colonia, mira lo que reportan tus vecinos y exígele a quien le toca que lo arregle. Y pídele al Congreso que vote no al acueducto privado.">
 <link rel="canonical" href="https://aguagdl.com/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aguagdl.com/">
-<meta property="og:title" content="Agua GDL · La crisis del agua en Guadalajara">
-<meta property="og:description" content="El agua de Guadalajara llega sucia y racionada; no lo arregla un acueducto privado, lo arregla sanear los ríos. ¿Tienes agua hoy? Repórtalo y mira lo que reportan tus vecinos, colonia por colonia.">
+<meta property="og:title" content="Agua GDL · El agua es un derecho. Exígelo.">
+<meta property="og:description" content="En Guadalajara el agua llega sucia y racionada. Reporta tu colonia: cada reporte es una prueba de dónde falla el gobierno. Y exígele a quien le toca que lo arregle; no lo arregla un acueducto privado, lo arregla sanear los ríos.">
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary">
@@ -122,7 +122,7 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 .site-nav a[aria-current="page"] .i { color: inherit }
 li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .i { --ic: var(--brand) }
-.i:has(use[href$="#bell"]) { --ic: #d97706 }
+.i:has(use[href$="#bell"]), .i:has(use[href$="#megaphone"]) { --ic: #d97706 }
 .i:has(use[href$="#map-pin"]) { --ic: #e11d48 }
 .i:has(use[href$="#landmark"]) { --ic: #7c3aed }
 .i:has(use[href$="#heart"]) { --ic: #dc2626 }
@@ -132,9 +132,9 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .i:has(use[href$="#pen-line"]) { --ic: #ea580c }
 .i:has(use[href$="#calendar"]) { --ic: #4f46e5 }
 .i:has(use[href$="#send"]) { --ic: #229ed9 }
-@media (prefers-color-scheme: dark) { .i:has(use[href$="#bell"]) { --ic: #fbbf24 } .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#landmark"]) { --ic: #a78bfa } .i:has(use[href$="#heart"]) { --ic: #f87171 } .i:has(use[href$="#check"]) { --ic: #4ade80 } .i:has(use[href$="#shield-check"]) { --ic: #4ade80 } .i:has(use[href$="#mail"]) { --ic: #2dd4bf } .i:has(use[href$="#pen-line"]) { --ic: #fb923c } .i:has(use[href$="#calendar"]) { --ic: #818cf8 } .i:has(use[href$="#send"]) { --ic: #2aabee } }
+@media (prefers-color-scheme: dark) { .i:has(use[href$="#bell"]), .i:has(use[href$="#megaphone"]) { --ic: #fbbf24 } .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#landmark"]) { --ic: #a78bfa } .i:has(use[href$="#heart"]) { --ic: #f87171 } .i:has(use[href$="#check"]) { --ic: #4ade80 } .i:has(use[href$="#shield-check"]) { --ic: #4ade80 } .i:has(use[href$="#mail"]) { --ic: #2dd4bf } .i:has(use[href$="#pen-line"]) { --ic: #fb923c } .i:has(use[href$="#calendar"]) { --ic: #818cf8 } .i:has(use[href$="#send"]) { --ic: #2aabee } }
 .site-nav .i, li > .i, p > .i, summary > .i, h3 > .i { color: var(--ic) }
-.ih .i-badge:has(use[href$="#bell"]) { background: #d97706 }
+.ih .i-badge:has(use[href$="#bell"]), .ih .i-badge:has(use[href$="#megaphone"]) { background: #d97706 }
 .ih .i-badge:has(use[href$="#map-pin"]) { background: #e11d48 }
 .ih .i-badge:has(use[href$="#landmark"]) { background: #7c3aed }
 .ih .i-badge:has(use[href$="#heart"]) { background: #dc2626 }
@@ -208,6 +208,39 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .hero5 .ztiles .skeleton { height: 56px }
 .mapband { display: grid; gap: 14px; margin: 0 0 40px }
 @media (min-width: 720px) { .hero5 { grid-template-columns: 1.1fr 1fr; align-items: start } .mapband { grid-template-columns: 1.2fr 1fr; align-items: start } }
+.hero5 .side { display: grid; gap: 14px; align-content: start }
+.vs { margin: 8px 0 44px }
+.vs h2 { font-size: clamp(1.5rem, 3.6vw, 2.1rem); line-height: 1.15; letter-spacing: -.02em; margin: 0 0 18px; text-wrap: balance }
+.vs-grid { display: grid; gap: 14px }
+@media (min-width: 760px) { .vs-grid { grid-template-columns: 1fr 1.3fr; align-items: start } .promesa { position: sticky; top: 112px } }
+.vs-col { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 18px }
+.vs-col h3 { margin: 0 0 14px; font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted) }
+.promesa { border-top: 4px solid var(--brand) }
+.realidad { border-top: 4px solid var(--alarm) }
+.promesa blockquote { margin: 0 0 14px; padding: 0 0 0 12px; border-left: 3px solid var(--line); font-size: 1.05rem; line-height: 1.45 }
+.vs-facts { list-style: none; margin: 0 0 18px; padding: 0; display: grid; grid-template-columns: max-content 1fr; gap: 12px 14px; align-items: baseline }
+.vs-facts li { display: contents }
+.vs-facts strong { font-size: 1.5rem; font-weight: 700; letter-spacing: -.03em; line-height: 1.1; color: var(--alarm); white-space: nowrap }
+.vs-facts span { color: var(--muted); font-size: .92rem; line-height: 1.4 }
+@media (max-width: 480px) { .vs-facts { grid-template-columns: 1fr; gap: 2px } .vs-facts span { margin-bottom: 10px } }
+.realidad h4 { margin: 0 0 10px; font-size: .95rem }
+.posts + h4 { margin-top: 18px }
+.posts { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px }
+.posts li { margin: 0; padding: 10px 12px; background: var(--bg); border: 1px solid var(--line); border-left: 3px solid var(--alarm); border-radius: 10px }
+.posts q { display: block; quotes: "«" "»"; line-height: 1.45 }
+.posts .who { display: block; margin-top: 4px; color: var(--muted); font-size: .82rem }
+.vs .note { color: var(--muted); font-size: .82rem; margin: 12px 0 0 }
+.vs .via { color: var(--muted); font-size: .85rem; margin: 4px 0 0 }
+.vs .buttons { margin-top: 18px }
+.dice { display: grid; gap: 12px; margin: 16px 0 }
+@media (min-width: 760px) { .dice { grid-template-columns: 1fr 1fr } }
+.dice > div { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--brand); border-radius: 12px; box-shadow: var(--shadow); padding: 14px 16px }
+.dice > div:last-child { border-top-color: var(--alarm) }
+.dice h3 { margin: 0 0 8px; font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted) }
+.dice p { margin: 0; line-height: 1.45 }
+.dice .via { margin: 6px 0 0; font-size: .85rem; color: var(--muted) }
+:root { --alarm: #dc2626 }
+@media (prefers-color-scheme: dark) { :root { --alarm: #f87171 } }
 </style>
 <script src="/theme.js"></script>
 </head>
@@ -216,67 +249,107 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   <header class="top">
     <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
     <nav class="site-nav" aria-label="Secciones">
-      <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#users"/></svg>¿Hay agua?</a>
-      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#bell"/></svg>Avisos</a>
-      <a href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg>Mi zona</a>
-      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#newspaper"/></svg>Noticias</a>
-      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#landmark"/></svg>Congreso</a>
-      <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#bar-chart"/></svg>Cuentas</a>
-      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#droplet"/></svg>Contaminación</a>
-      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#heart"/></svg>Antisionismo</a>
+      <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg>¿Hay agua?</a>
+      <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exige</a>
+      <a href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Mi zona</a>
+      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg>Noticias</a>
+      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#landmark"/></svg>Congreso</a>
+      <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg>Cuentas</a>
+      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Contaminación</a>
+      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#heart"/></svg>Antisionismo</a>
     </nav>
   </header>
 
   <main>
     <div class="hero5">
       <div>
-        <h1>¿Tienes agua hoy?</h1>
-        <p class="lede">El agua de Guadalajara <mark>llega sucia y racionada</mark>; no lo arregla un acueducto privado, lo arregla sanear los ríos. Reporta cómo está el agua en tu colonia y mira lo que reportan tus vecinos: sin cuenta y anónimo.</p>
+        <h1>El agua es un derecho. Exígelo.</h1>
+        <p class="lede">El <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">SIAPA</a> dijo «por máximo un día»; hay vecinos con <a href="https://www.nmas.com.mx/jalisco/sociedad/colonias-limitrofes-entre-tlaquepaque-y-guadalajara-carecen-de-agua/" rel="noopener">semanas sin agua</a>. Reporta tu colonia: <mark>cada reporte es una prueba</mark> de dónde falla el gobierno, y con ella le exigimos que lo arregle. Sin cuenta y anónimo.</p>
         <p class="pulse" id="pulse" aria-live="polite" hidden></p>
         <form class="quick" action="/reportes" method="get" role="search">
           <label for="q">Tu colonia</label>
           <input type="hidden" name="reportar" value="1">
           <div class="row">
             <input id="q" name="q" type="search" autocomplete="off" placeholder="Por ejemplo: Las Juntas" required maxlength="80">
-            <button class="button glow" type="submit"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg>Reportar mi colonia</button>
+            <button class="button glow" type="submit"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Reportar mi colonia</button>
           </div>
-          <p class="or">o <a href="/reportes">mira el mapa de reportes</a>. ¿Sin agua? <a href="/pipas">Pide una pipa</a>. ¿Tus días de corte? <a href="/mizona">Busca tu zona</a>.</p>
+          <p class="or">o <a href="/reportes">mira el mapa de reportes</a>. ¿Sin agua hoy? <a href="/pipas">Pide una pipa</a>. Y <a href="/exige">exígele a quien le toca</a>.</p>
         </form>
       </div>
       <div class="side">
-        <h2>Así va la semana, según el SIAPA</h2>
-        <p class="today" id="today" aria-live="polite"></p>
-      <ul class="ztiles" id="ztiles"><li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li></ul>
-      </div>
-    </div>
-    <div class="mapband">
-      <div class="hero-side">
-        <figure class="hero-fig">
-          <div class="hero-mapimg">
-            <img src="/zonas.svg?v=4" alt="Mapa de las 7 zonas de la rotación del SIAPA" width="800" height="454">
-            <a class="button map-open" href="/mapa"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg>Ver mapa detallado</a>
-          </div>
-          <figcaption class="note">El SIAPA raciona el agua en más de 600 colonias hasta marzo de 2027. Fuente: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa de la rotación del SIAPA</a>. Agua GDL no es del SIAPA.</figcaption>
-        </figure>
-      </div>
-      <div class="hero-side">
-        <a class="aviso" href="/avisos">
-          <span class="aviso-head"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#bell"/></svg></span>Te mandamos un mensaje antes de que te corten el agua</span>
-          <span class="aviso-time">8 p.&nbsp;m.</span>
-          <span class="aviso-text">Un mensaje por <span class="nw"><svg class="tg" aria-hidden="true"><use href="/icons.svg?v=4#telegram"/></svg> Telegram</span> o una alerta en tu calendario dos días antes de los cortes de tu zona y la noche antes (una vez por tanda cuando los cortes van seguidos).</span>
-          <span class="button">Recibir avisos</span>
-        </a>
         <a class="aviso" href="/escribe">
-          <span class="aviso-head"><span class="i-badge" style="background:#7c3aed"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#landmark"/></svg></span>Que el Congreso vote no a privatizar el agua</span>
+          <span class="aviso-head"><span class="i-badge" style="background:#7c3aed"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#landmark"/></svg></span>Que el Congreso vote no a privatizar el agua</span>
           <span class="aviso-time">$48,296 M</span>
           <span class="aviso-text">pagaría el Estado, como máximo, a una empresa privada en 25 años, según la oposición en el Congreso. Escríbeles a las 38 diputaciones para que voten en contra.</span>
           <span class="button">Escribir al Congreso</span>
         </a>
+        <a class="aviso" href="/exige">
+          <span class="aviso-head"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg></span>Exígele a quien le toca que arregle el agua</span>
+          <span class="aviso-time">1&nbsp;día</span>
+          <span class="aviso-text">es lo más que iba a durar cada racionamiento, según el SIAPA. Si en tu colonia no se cumple, exígeselo al gobernador, al SIAPA, a la CEA y a tu presidencia municipal, desde tu correo, X o Facebook.</span>
+          <span class="button">Exigir</span>
+        </a>
       </div>
     </div>
+    <section class="vs" aria-labelledby="vs">
+      <h2 id="vs">El SIAPA prometió un día. Hay vecinos con semanas sin agua.</h2>
+      <div class="vs-grid">
+        <div class="vs-col promesa">
+          <h3>Lo que prometió el SIAPA</h3>
+          <blockquote>«Cada zona tendrá de 2 a 3 racionamientos por semana <mark>por máximo un día</mark>»</blockquote>
+          <blockquote>«<mark>No serán cortes totales.</mark> Los racionamientos consistirán en una disminución de la presión»</blockquote>
+          <blockquote>«Esto significará menos agua pero de mejor calidad.»</blockquote>
+          <blockquote>«Se contará con suministro de pipas de agua y plantas potabilizadoras en las zonas afectadas.»</blockquote>
+          <p class="via">Fuente: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">la página de la rotación del SIAPA</a>, revisada el 20 de octubre.</p>
+        </div>
+        <div class="vs-col realidad">
+          <h3>Lo que está pasando</h3>
+          <ul class="vs-facts">
+            <li><strong>728</strong><span>registros de colonias «que estuvieron recibiendo baja presión o bien tuvieron suspensión del servicio» en los primeros cuatro días, según el director de la CEA (<a href="https://jalisco.quadratin.com.mx/sucesos/tandeo-deja-sin-agua-a-270-colonias-de-la-zona-metropolitana-de-guadalajara/" rel="noopener">Quadratín</a>)</span></li>
+            <li><strong>94</strong><span>colonias sin agua o con un caudal mínimo, el 15 % de las 627 de la rotación, reconoció la CEA según <a href="https://siker.com.mx/zmg/94-colonias-se-quedan-sin-agua-o-reciben-caudal-minimo-tras-inicio-de-rotacion-en-la-zmg/" rel="noopener">Siker</a></span></li>
+            <li><strong>3 semanas</strong><span>sin agua en Lomas del Paradero y Prados del Nilo, según <a href="https://www.nmas.com.mx/jalisco/sociedad/colonias-limitrofes-entre-tlaquepaque-y-guadalajara-carecen-de-agua/" rel="noopener">N+</a></span></li>
+          </ul>
+          <h4>En las noticias</h4>
+          <ul class="posts">
+            <li><q>Se registra una manifestación para exigir el servicio de agua en la colonia Polanquito en Guadalajara; afirman que llevan 12 días sin el líquido.</q><span class="who">Telediario Guadalajara · 19 de octubre · <a href="https://x.com/TelediarioGDL/status/2112353564915798349" rel="noopener">en X</a></span></li>
+            <li><q>Vecinos de la colonia Polanquito en Guadalajara mantienen bloqueado el cruce de Avenida 8 de Julio y Reyes Heroles ante la falta de agua en sus hogares y el incumplimiento en fechas del tandeo.</q><span class="who">Radio Fórmula Jalisco · 19 de octubre · <a href="https://x.com/FormulaJalisco/status/2112380974579249273" rel="noopener">en X</a></span></li>
+          </ul>
+          <h4>Lo que publican los vecinos</h4>
+          <ul class="posts">
+            <li><q>Desde la semana pasada la colonia El Rosario de Guadalajara(zona 3) están sin agua, no solo miércoles y sábado como dicen sus rotaciones</q><span class="who">El Rosario, Guadalajara · 19 de octubre · <a href="https://x.com/oOAniuxOo/status/2112192620617498989" rel="noopener">en X</a></span></li>
+            <li><q>ya tenemos 6 días sin agua y SIAPA desvía llamadas […] porque según eran 3 días solamente de tandeos de agua</q><span class="who">Jardines de Guadalupe, Zapopan · 19 de octubre · <a href="https://x.com/garamda74/status/2112334276134142279" rel="noopener">en X</a></span></li>
+            <li><q>tenemos al menos 16 días sin agua y ni siquiera puedo hacer reporte porque no entran las llamadas</q><span class="who">Santa Rosa y Santa Cecilia, Guadalajara · 19 de octubre · <a href="https://x.com/Izkallii/status/2112258094591787242" rel="noopener">en X</a></span></li>
+            <li><q>ya son 14 días en Chapalita inn Zapopan, hasta cuándo nos van a poner agua?? esos no son tandeos!!</q><span class="who">Chapalita Inn, Zapopan · 19 de octubre · <a href="https://x.com/AlmilliR/status/2112172566726975632" rel="noopener">en X</a></span></li>
+            <li><q>en zona 5 Guadalajara colonia jardines del sur llevamos mas de una semana sin agua; de que sirve su esquema si ni siquiera son competentes para respetarlo?</q><span class="who">Jardines del Sur, Guadalajara · 19 de octubre · <a href="https://x.com/NeloAngelo/status/2112185620647051515" rel="noopener">en X</a></span></li>
+            <li><q>Colonia Oblatos y San Felipe de Jesús en Guadalajara, sin agua desde hace 8 días. No están respetando los tandeos</q><span class="who">Oblatos, Guadalajara · 19 de octubre · <a href="https://x.com/GinaZVa/status/2112331930121171142" rel="noopener">en X</a></span></li>
+            <li><q>Una semana sin agua, y quién si tiene está contaminada.</q><span class="who">Cuenta de la colonia Arcos de Guadalupe, Zapopan · 19 de octubre · <a href="https://x.com/arcosdguadalupe/status/2112295715342799099" rel="noopener">en X</a></span></li>
+            <li><q>Ciudad Granja, Zapopan 11 dias sin agua....levantas reporte de apoyo en Zapopan para pipa...te dan folio y no dan tiempo de respuesta</q><span class="who">Ciudad Granja, Zapopan · 20 de octubre · <a href="https://x.com/barone_721/status/2112556848289042537" rel="noopener">en X</a></span></li>
+            <li><q>En Tlaquepaque centro ya van 12 días sin agua</q><span class="who">Centro, Tlaquepaque · 20 de octubre · <a href="https://x.com/DavielGtzB/status/2112560720865075701" rel="noopener">en X</a></span></li>
+            <li><q>Tonalá el día de hoy cumplimos 10 días sin agua.</q><span class="who">Tonalá · 17 de octubre · <a href="https://x.com/RHrenandez666/status/2111475150436856123" rel="noopener">en X</a></span></li>
+          </ul>
+          <p class="note">Publicaciones públicas en X, citadas tal cual: son el testimonio de cada quien, no datos oficiales. No ponemos los nombres de las personas; el enlace lleva a cada publicación.</p>
+        </div>
+      </div>
+      <div class="buttons">
+        <a class="button glow" href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>¿Te pasa lo mismo? Repórtalo</a>
+        <a class="button alt" href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exígele a quien le toca</a>
+      </div>
+    </section>
     <section class="congreso" aria-labelledby="congreso">
-      <h2 id="congreso" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#landmark"/></svg></span>Que el Congreso vote no a privatizar el agua</h2>
+      <h2 id="congreso" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#landmark"/></svg></span>Que el Congreso vote no a privatizar el agua</h2>
       <p>El Gobierno de Jalisco quiere que una empresa privada construya y opere el nuevo acueducto de Chapala a Guadalajara, y pagarle durante 20 o 25 años. El Congreso decide. Pídele a tu diputación que no lo apruebe sin estudios actualizados, sin saber cuánto se pagará cada año ni quién carga con los riesgos.</p>
+      <div class="dice">
+        <div>
+          <h3>Lo que dice el gobernador</h3>
+          <p>«… no se privatizará el servicio …»</p>
+          <p class="via"><a href="https://x.com/PabloLemusN/status/2107612364849782850" rel="noopener">Pablo Lemus en X</a>, 6 de octubre</p>
+        </div>
+        <div>
+          <h3>Lo que dice su iniciativa</h3>
+          <p>Autoriza a la Comisión Estatal del Agua a «construir, mantener, rehabilitar y operar el acueducto sustituto Chapala-Guadalajara, bajo un modelo de asociación público-privada».</p>
+          <p class="via">Así la describe <a href="https://www.unotv.com/estados/jalisco/acueducto-chapala-guadalajara-iniciativa-de-lemus-llegara-al-congreso-de-jalisco-este-15-de-octubre/" rel="noopener">UnoTV</a>, 15 de octubre</p>
+        </div>
+      </div>
       <ul class="facts">
         <li><strong>$11,922 millones</strong><span>cuesta la obra, según <a href="https://udgtv.com/noticias/jalisco-pide-aval-para-acueducto-de-casi-12-mil-mdp/334017" rel="noopener">la iniciativa</a></span></li>
         <li><strong>hasta $48,296 millones</strong><span>pagaría el Estado en 25 años, según <a href="https://concienciapublica.com.mx/2026/10/13/oposicion-rechaza-privatizar-acueducto-chapala-guadalajara-costaria-hasta-48-mil-millones-de-pesos/" rel="noopener">la oposición en el Congreso</a></span></li>
@@ -284,45 +357,50 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       </ul>
       <p>Desde tu propia cuenta, en unos minutos: un correo a cada diputación, un post en X o un mensaje por Messenger. Agua GDL no ve ni guarda nada.</p>
       <div class="buttons">
-        <a class="button" href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#mail"/></svg>Escribir al Congreso</a>
-        <a class="button alt" href="https://firmale.iepcjalisco.mx/mecanismo/comision-estatal-del-vej21bkjvl" rel="noopener" target="_blank"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#pen-line"/></svg>Firmar la solicitud en el IEPC</a>
+        <a class="button" href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#mail"/></svg>Escribir al Congreso</a>
+        <a class="button alt" href="https://firmale.iepcjalisco.mx/mecanismo/comision-estatal-del-vej21bkjvl" rel="noopener" target="_blank"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#pen-line"/></svg>Firmar la solicitud en el IEPC</a>
       </div>
     </section>
     <section aria-labelledby="mas">
       <h2 id="mas">También puedes</h2>
       <ul class="cards">
         <li class="card">
-          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#newspaper"/></svg></span>Leer la crisis al día</h3>
+          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#phone"/></svg></span>Pedir una pipa</h3>
+          <p>Los teléfonos y WhatsApp oficiales del SIAPA y de tu municipio, cada uno con su fuente.</p>
+          <a href="/pipas">¿Sin agua? Pide una pipa</a>
+        </li>
+        <li class="card">
+          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg></span>Leer la crisis al día</h3>
           <p>Los cortes, la marcha, las personas detenidas y el acueducto privado, con sus fuentes.</p>
           <a href="/noticias">Noticias</a>
         </li>
         <li class="card">
-          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#droplet"/></svg></span>Ver quién contamina el agua</h3>
+          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg></span>Ver quién contamina el agua</h3>
           <p>Las 39 empresas en los registros oficiales de descargas al Río Santiago y el daño a la salud, con sus fuentes.</p>
           <a href="/contamina">¿Quién contamina?</a>
         </li>
         <li class="card">
-          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#calendar"/></svg></span>Saber tu zona y tus días de corte</h3>
-          <p>Escribe tu colonia o usa tu ubicación y te decimos tu zona de la rotación y tus próximos cortes, según el calendario del SIAPA.</p>
-          <a href="/mizona">¿Qué zona me toca?</a>
+          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg></span>Ver lo que prometieron</h3>
+          <p>Cada promesa del gobierno sobre el agua, junto a la ley o el documento oficial, con fuentes y plazos.</p>
+          <a href="/promesas">Las promesas</a>
         </li>
       </ul>
     </section>
     <section class="why" aria-labelledby="por-que">
-      <h2 id="por-que" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#heart"/></svg></span>Por qué</h2>
-      <p>Queremos que la información sobre el agua en Guadalajara sea fácil de consultar y de comprobar: cuándo hay corte, si el calendario se cumple y qué datos públicos existen.</p>
-      <p>Empezamos con los avisos de la rotación; ahora también hay un <a href="/mapa">mapa de la rotación</a> colonia por colonia, un <a href="/reportes">mapa de reportes de vecinos</a> y <a href="/promesas">las promesas del acueducto frente a los documentos</a>. Vendrán más herramientas hechas con datos abiertos.</p>
+      <h2 id="por-que" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#heart"/></svg></span>Por qué</h2>
+      <p>El agua es un derecho, y en Guadalajara no se está cumpliendo. Queremos que sea fácil comprobarlo y exigirlo: dónde falta el agua, a quién le toca arreglarlo y qué prometió.</p>
+      <p>Juntamos los reportes de los vecinos en un <a href="/reportes">mapa</a>, y <a href="/informes">cada lunes publicamos el conteo de la semana</a> y se lo mandamos al SIAPA, a la CEA, a los municipios, al Congreso y a la CEDHJ. También puedes <a href="/exige">exigir por tu cuenta</a> y ver <a href="/promesas">las promesas del acueducto frente a los documentos</a>.</p>
       <ul class="values">
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#check"/></svg>Gratuito</li>
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#check"/></svg>Sin anuncios</li>
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#check"/></svg>No oficial</li>
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#check"/></svg>Sin partido</li>
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#check"/></svg>No guardamos tu nombre ni tu teléfono</li>
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#check"/></svg>Código abierto</li>
+        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#check"/></svg>Gratuito</li>
+        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#check"/></svg>Sin anuncios</li>
+        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#check"/></svg>No oficial</li>
+        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#check"/></svg>Sin partido</li>
+        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#check"/></svg>No guardamos tu nombre ni tu teléfono</li>
+        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#check"/></svg>Código abierto</li>
       </ul>
     </section>
     <section class="contact" aria-labelledby="contacto">
-      <h2 id="contacto" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#mail"/></svg></span>Contacto</h2>
+      <h2 id="contacto" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#mail"/></svg></span>Contacto</h2>
       <p>¿Tienes dudas o datos sobre el agua en tu colonia, o quieres ayudar? Si eres de una organización vecinal o civil que trabaja por el agua, también nos encantaría hablar.</p>
       <a class="email" href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>
     </section>
@@ -330,11 +408,9 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 
   <footer>
     <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con el Gobierno de Jalisco.</p>
-    <p>La información oficial de la rotación está en <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">rotaciondeserviciosiapa.jalisco.gob.mx</a>.</p>
-    <p><a href="/mizona">¿Qué zona me toca?</a> · <a href="/escribe">Escribe al Congreso</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a></p>
+    <p><a href="/exige">Exígele a quien le toca</a> · <a href="/escribe">Escribe al Congreso</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a></p>
   </footer>
 </div>
-<script src="/mapa.js"></script>
 <script>
 (() => {
   const API = (() => {
@@ -359,39 +435,6 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     pulse.replaceChildren(...kids);
     pulse.hidden = false;
   }).catch(() => {});
-  const today = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Mexico_City" }).format(new Date());
-  const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00Z"); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
-  const tomorrow = addDays(today, 1);
-  const dayES = (iso) => new Intl.DateTimeFormat("es-MX", { timeZone: "UTC", weekday: "long", day: "numeric", month: "short" }).format(new Date(iso + "T12:00:00Z")).replace(".", "");
-  const whenES = (iso) => iso === today ? "hoy" : iso === tomorrow ? "mañana" : dayES(iso);
-  const nextCut = (z) => z.next.find((d) => d >= today);
-  const joinES = (a) => a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + " y " + a[a.length - 1];
-  const zonesP = fetch(API + "/v1/zones").then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); });
-
-  // The tiles take each zone's colour from the map (mapa.js), light and dark; CSS picks one.
-  const COLORS = window.aguaMapa ? window.aguaMapa.COLORS : { light: {}, dark: {} };
-  const list = document.getElementById("ztiles");
-  const head = document.getElementById("today");
-  zonesP.then((zones) => {
-    list.replaceChildren(...zones.map((z) => {
-      const d = nextCut(z);
-      const li = document.createElement("li");
-      const a = document.createElement("a");
-      a.href = "/mizona";
-      a.className = "ztile" + (d === today ? " hot" : d === tomorrow ? " warm" : "");
-      if (COLORS.light[z.zone]) a.style.setProperty("--zl", COLORS.light[z.zone]);
-      if (COLORS.dark[z.zone]) a.style.setProperty("--zd", COLORS.dark[z.zone]);
-      const b = document.createElement("b"); b.textContent = `Zona ${z.zone}`;
-      const w = document.createElement("span"); w.className = "when"; w.textContent = !d ? "sin fecha" : d === today && z.next.includes(tomorrow) ? "hoy y mañana" : whenES(d);
-      const s = document.createElement("small"); s.textContent = joinES(z.days);
-      a.append(b, w, s); li.append(a); return li;
-    }));
-    // Zones 5 and 7 are cut two days in a row, so tomorrow can't be judged by the next cut alone.
-    const hot = zones.filter((z) => z.next.includes(today)).map((z) => z.zone);
-    const warm = zones.filter((z) => z.next.includes(tomorrow)).map((z) => z.zone);
-    const pill = (cls, text) => { const p = document.createElement("span"); p.className = "pill " + cls; p.textContent = text; return p; };
-    head.replaceChildren(...[hot.length ? pill("hot", `Hoy: zona${hot.length > 1 ? "s" : ""} ${joinES(hot)}`) : null, warm.length ? pill("warm", `Mañana: zona${warm.length > 1 ? "s" : ""} ${joinES(warm)}`) : null].filter(Boolean));
-  }).catch(() => { list.hidden = true; head.textContent = "No pudimos cargar el calendario. Búscalo en «Mi zona»."; });
 })();
 </script>
 </body>

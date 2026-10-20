@@ -9,7 +9,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aguagdl.com/mapa">
 <meta property="og:title" content="Mapa de la rotación de agua del SIAPA, colonia por colonia">
-<meta property="og:description" content="Toca tu colonia o búscala por nombre o código postal: su zona y sus días de racionamiento. El agua de Guadalajara llega sucia y racionada; no lo arregla un acueducto privado, lo arregla sanear los ríos.">
+<meta property="og:description" content="Toca tu colonia o búscala por nombre o código postal: su zona y sus días de racionamiento. El agua es un derecho. Exígelo.">
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary">
@@ -133,14 +133,14 @@ footer p { margin: 0 0 8px; max-width: 70ch }
   <header class="top">
     <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
     <nav class="site-nav" aria-label="Secciones">
-      <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#users"/></svg>¿Hay agua?</a>
-      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#bell"/></svg>Avisos</a>
-      <a href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg>Mi zona</a>
-      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#newspaper"/></svg>Noticias</a>
-      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#landmark"/></svg>Congreso</a>
-      <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#bar-chart"/></svg>Cuentas</a>
-      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#droplet"/></svg>Contaminación</a>
-      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#heart"/></svg>Antisionismo</a>
+      <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg>¿Hay agua?</a>
+      <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exige</a>
+      <a href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Mi zona</a>
+      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg>Noticias</a>
+      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#landmark"/></svg>Congreso</a>
+      <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg>Cuentas</a>
+      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Contaminación</a>
+      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#heart"/></svg>Antisionismo</a>
     </nav>
   </header>
 
@@ -151,12 +151,12 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     <div class="finder">
       <form class="search" id="buscar" role="search">
         <label for="q">Busca tu colonia, municipio o código postal</label>
-        <svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#search"/></svg>
+        <svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#search"/></svg>
         <input id="q" name="q" type="search" autocomplete="off" spellcheck="false" placeholder="Por ejemplo: Americana Guadalajara o 44100" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugerencias">
         <button class="clear" type="button" id="limpiar" aria-label="Borrar la búsqueda" hidden><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
         <ul class="suggest" id="sugerencias" role="listbox" aria-label="Colonias encontradas" hidden></ul>
       </form>
-      <button class="button" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg>Usar mi ubicación</button>
+      <button class="button" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Usar mi ubicación</button>
     </div>
 
     <div class="mapwrap">
@@ -169,7 +169,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     <noscript><p class="note">Esta página necesita JavaScript. Consulta tu zona en el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa oficial del SIAPA</a>.</p></noscript>
 
     <section aria-labelledby="ojo">
-      <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#info"/></svg></span>Ten en cuenta</h2>
+      <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#info"/></svg></span>Ten en cuenta</h2>
       <ul class="plain">
         <li><strong>El mapa da la zona por el contorno de la colonia</strong>, igual que el mapa del SIAPA. Su <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/pdf/colonias_siapa.pdf" rel="noopener">lista de 621 colonias</a> a veces dice otra zona: cuando pasa, aquí te mostramos las dos. En <a href="/mizona">Mi zona</a> puedes buscar por el nombre de la lista.</li>
         <li><strong>Las colonias con borde punteado</strong> quedan repartidas entre dos o más zonas. Mira de qué lado del límite entre zonas queda tu casa o usa tu ubicación. Si una colonia solo toca el límite de otra zona, te lo decimos así: su zona es una, y solo quienes viven junto a ese límite deben estar al pendiente de la otra.</li>
@@ -219,7 +219,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     svg.setAttribute("class", "i");
     svg.setAttribute("aria-hidden", "true");
     const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-    use.setAttribute("href", `/icons.svg?v=4#${name}`);
+    use.setAttribute("href", `/icons.svg?v=5#${name}`);
     svg.append(use);
     return svg;
   };

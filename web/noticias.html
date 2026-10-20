@@ -9,7 +9,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aguagdl.com/noticias">
 <meta property="og:title" content="La crisis del agua en Guadalajara, al día">
-<meta property="og:description" content="El agua de Guadalajara llega sucia y racionada; no lo arregla un acueducto privado, lo arregla sanear los ríos. La crisis al día, con fuentes: cortes, represión, detenidos y el acueducto privado.">
+<meta property="og:description" content="El agua es un derecho. Exígelo. La crisis al día, con fuentes: cortes, represión, detenidos y el acueducto privado.">
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary">
@@ -108,7 +108,7 @@ tbody tr:last-child td { border-bottom: 0 }
 .site-nav a[aria-current="page"] .i { color: inherit }
 li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .i { --ic: var(--brand) }
-.i:has(use[href$="#bell"]) { --ic: #d97706 }
+.i:has(use[href$="#bell"]), .i:has(use[href$="#megaphone"]) { --ic: #d97706 }
 .i:has(use[href$="#map-pin"]) { --ic: #e11d48 }
 .i:has(use[href$="#landmark"]) { --ic: #7c3aed }
 .i:has(use[href$="#heart"]) { --ic: #dc2626 }
@@ -118,9 +118,9 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .i:has(use[href$="#pen-line"]) { --ic: #ea580c }
 .i:has(use[href$="#calendar"]) { --ic: #4f46e5 }
 .i:has(use[href$="#send"]) { --ic: #229ed9 }
-@media (prefers-color-scheme: dark) { .i:has(use[href$="#bell"]) { --ic: #fbbf24 } .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#landmark"]) { --ic: #a78bfa } .i:has(use[href$="#heart"]) { --ic: #f87171 } .i:has(use[href$="#check"]) { --ic: #4ade80 } .i:has(use[href$="#shield-check"]) { --ic: #4ade80 } .i:has(use[href$="#mail"]) { --ic: #2dd4bf } .i:has(use[href$="#pen-line"]) { --ic: #fb923c } .i:has(use[href$="#calendar"]) { --ic: #818cf8 } .i:has(use[href$="#send"]) { --ic: #2aabee } }
+@media (prefers-color-scheme: dark) { .i:has(use[href$="#bell"]), .i:has(use[href$="#megaphone"]) { --ic: #fbbf24 } .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#landmark"]) { --ic: #a78bfa } .i:has(use[href$="#heart"]) { --ic: #f87171 } .i:has(use[href$="#check"]) { --ic: #4ade80 } .i:has(use[href$="#shield-check"]) { --ic: #4ade80 } .i:has(use[href$="#mail"]) { --ic: #2dd4bf } .i:has(use[href$="#pen-line"]) { --ic: #fb923c } .i:has(use[href$="#calendar"]) { --ic: #818cf8 } .i:has(use[href$="#send"]) { --ic: #2aabee } }
 .site-nav .i, li > .i, p > .i, summary > .i, h3 > .i { color: var(--ic) }
-.ih .i-badge:has(use[href$="#bell"]) { background: #d97706 }
+.ih .i-badge:has(use[href$="#bell"]), .ih .i-badge:has(use[href$="#megaphone"]) { background: #d97706 }
 .ih .i-badge:has(use[href$="#map-pin"]) { background: #e11d48 }
 .ih .i-badge:has(use[href$="#landmark"]) { background: #7c3aed }
 .ih .i-badge:has(use[href$="#heart"]) { background: #dc2626 }
@@ -295,14 +295,14 @@ body.has-actbar { padding-bottom: 76px }
   <header class="top">
     <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
     <nav class="site-nav" aria-label="Secciones">
-      <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#users"/></svg>¿Hay agua?</a>
-      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#bell"/></svg>Avisos</a>
-      <a href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg>Mi zona</a>
-      <a href="/noticias" aria-current="page"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#newspaper"/></svg>Noticias</a>
-      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#landmark"/></svg>Congreso</a>
-      <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#bar-chart"/></svg>Cuentas</a>
-      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#droplet"/></svg>Contaminación</a>
-      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#heart"/></svg>Antisionismo</a>
+      <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg>¿Hay agua?</a>
+      <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exige</a>
+      <a href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Mi zona</a>
+      <a href="/noticias" aria-current="page"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg>Noticias</a>
+      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#landmark"/></svg>Congreso</a>
+      <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg>Cuentas</a>
+      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Contaminación</a>
+      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#heart"/></svg>Antisionismo</a>
     </nav>
   </header>
 
@@ -340,8 +340,8 @@ body.has-actbar { padding-bottom: 76px }
     </section>
     <section aria-labelledby="testimonios">
       <div class="sec-head">
-        <h2 id="testimonios" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#user"/></svg></span>Lo que vivieron los detenidos</h2>
-        <span class="warn"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#info"/></svg>Contiene relatos de tortura</span>
+        <h2 id="testimonios" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#user"/></svg></span>Lo que vivieron los detenidos</h2>
+        <span class="warn"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#info"/></svg>Contiene relatos de tortura</span>
       </div>
       <p class="note vnote">Personas detenidas el 11 de octubre cuentan con su nombre lo que les hicieron policías al detenerlas y dentro de Casa Jalisco. Las citas son textuales, de los medios que las entrevistaron.</p>
       <div class="testimonies">
@@ -403,8 +403,8 @@ body.has-actbar { padding-bottom: 76px }
 
     <section aria-labelledby="videos">
       <div class="sec-head">
-        <h2 id="videos" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#video"/></svg></span>Lo que grabaron</h2>
-        <span class="warn"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#info"/></svg>Contiene imágenes de violencia policial</span>
+        <h2 id="videos" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#video"/></svg></span>Lo que grabaron</h2>
+        <span class="warn"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#info"/></svg>Contiene imágenes de violencia policial</span>
       </div>
       <p class="note vnote">Videos de medios, organizaciones y periodistas el 11 de octubre y los días siguientes. Se cargan desde YouTube, X o TikTok sólo cuando tocas uno.</p>
       <div class="vgrid">
@@ -443,7 +443,7 @@ body.has-actbar { padding-bottom: 76px }
 
     <section aria-labelledby="dobleplaza">
       <div class="alert">
-        <span class="warn"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#shield-check"/></svg>Captados en video</span>
+        <span class="warn"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#shield-check"/></svg>Captados en video</span>
         <h3 id="dobleplaza">Golpeadores y corruptos: los dos policías que agredieron a manifestantes tienen doble plaza ilegal</h3>
         <p>En la marcha, dos policías estatales golpearon a manifestantes: fueron «captados en video agrediendo a ciudadanos», según <a href="https://www.nmas.com.mx/seguridad/llevan-a-policias-estatales-a-asuntos-internos-por-abuso-de-autoridad-en-manifestacionagua-suicia-guadalajara/" rel="noopener" target="_blank">N+</a>, y uno de ellos «fue señalado por haber participado en agresiones particularmente violentas contra los asistentes», publicó <a href="https://www.posta.com.mx/mexico/marcha-por-el-agua-en-jalisco-identifican-a-dos-policias-por-presunto-uso-excesivo-de-la-fuerza/vl2266713" rel="noopener" target="_blank">Posta</a>. La Secretaría de Seguridad los mandó a Asuntos Internos el miércoles (<a href="https://x.com/TelediarioGDL/status/2110382196494078407" rel="noopener" target="_blank">Telediario</a> difundió el video de su llegada) y, hasta el 16 de octubre, no había anunciado ninguna sanción.</p>
         <p>Además, los dos «están dados de alta también como empleados en la Policía de Guadalajara, lo que está prohibido por ley», publicó <a href="https://www.mural.com.mx/dobletean-puesto-2-policias-estatales/ar3295911" rel="noopener" target="_blank">Mural</a> el 16 de octubre. Estar en dos corporaciones a la vez cuando la ley lo prohíbe es corrupción.</p>
@@ -458,7 +458,7 @@ body.has-actbar { padding-bottom: 76px }
 
     <section aria-labelledby="cronologia">
       <div class="sec-head">
-        <h2 id="cronologia" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#newspaper"/></svg></span>Día por día</h2>
+        <h2 id="cronologia" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg></span>Día por día</h2>
         <p>Última actualización: 20 de octubre de 2026</p>
       </div>
       <div class="filters" role="group" aria-label="Filtrar noticias">
@@ -602,7 +602,7 @@ body.has-actbar { padding-bottom: 76px }
 
     <section aria-labelledby="voces">
       <div class="sec-head">
-        <h2 id="voces" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#users"/></svg></span>Lo que dicen</h2>
+        <h2 id="voces" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg></span>Lo que dicen</h2>
         <p>Cada cita enlaza a su fuente o a la publicación original</p>
       </div>
       <h3 class="qgroup">Organizaciones, academia y sociedad</h3>

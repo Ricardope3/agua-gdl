@@ -9,7 +9,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aguagdl.com/reportes">
 <meta property="og:title" content="¿Hay agua en tu colonia? Reportes de vecinos en Guadalajara">
-<meta property="og:description" content="Cómo está el agua en cada colonia en las últimas 24 horas, según los vecinos. Reporta la tuya: sin cuenta y anónimo. El agua de Guadalajara llega sucia y racionada; no lo arregla un acueducto privado, lo arregla sanear los ríos.">
+<meta property="og:description" content="Cómo está el agua en cada colonia en las últimas 24 horas, según los vecinos. Reporta la tuya, sin cuenta y anónimo: cada reporte es una prueba, y cada lunes mandamos el conteo al gobierno. El agua es un derecho. Exígelo.">
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary">
@@ -104,6 +104,7 @@ h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.08; letter-spacing: -
 .card .fail { margin: 10px 0 0; padding: 10px 12px; border-radius: 10px; background: var(--warn-bg); border-left: 5px solid var(--warn) }
 .share { margin: 12px 0 0; padding: 12px 0 0; border-top: 1px solid var(--line) }
 .share p { margin: 0 0 10px; font-size: .95rem; line-height: 1.45 }
+.card .exige { margin: 12px 0 0; padding: 12px 0 0; border-top: 1px solid var(--line); font-size: .95rem; line-height: 1.45 }
 .share-buttons { display: flex; flex-wrap: wrap; gap: 8px }
 .share-buttons .button { padding: 8px 12px; font-size: .9rem }
 .button.wa { background: #117a43 }
@@ -184,30 +185,30 @@ footer p { margin: 0 0 8px; max-width: 70ch }
   <header class="top">
     <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
     <nav class="site-nav" aria-label="Secciones">
-      <a href="/reportes" aria-current="page"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#users"/></svg>¿Hay agua?</a>
-      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#bell"/></svg>Avisos</a>
-      <a href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg>Mi zona</a>
-      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#newspaper"/></svg>Noticias</a>
-      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#landmark"/></svg>Congreso</a>
-      <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#bar-chart"/></svg>Cuentas</a>
-      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#droplet"/></svg>Contaminación</a>
-      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#heart"/></svg>Antisionismo</a>
+      <a href="/reportes" aria-current="page"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg>¿Hay agua?</a>
+      <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exige</a>
+      <a href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Mi zona</a>
+      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg>Noticias</a>
+      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#landmark"/></svg>Congreso</a>
+      <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg>Cuentas</a>
+      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Contaminación</a>
+      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#heart"/></svg>Antisionismo</a>
     </nav>
   </header>
 
   <main>
     <h1>¿Hay agua en tu colonia?</h1>
-    <p class="lede">Lo que reportan los vecinos en las últimas 24 horas. Toca tu colonia para ver cómo está y reportar la tuya: sin cuenta, anónimo y en cuatro toques. No son datos oficiales.</p>
+    <p class="lede">Lo que reportan los vecinos en las últimas 24 horas. Toca tu colonia para ver cómo está y reportar la tuya: sin cuenta, anónimo y en cuatro toques. Cada reporte es una prueba: <a href="/informes">cada lunes publicamos el conteo de la semana</a> y se lo mandamos al SIAPA, a la CEA, a los municipios, al Congreso y a la CEDHJ. No son datos oficiales.</p>
 
     <div class="finder">
       <form class="search" id="buscar" role="search">
         <label for="q">Busca tu colonia, municipio o código postal</label>
-        <svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#search"/></svg>
+        <svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#search"/></svg>
         <input id="q" name="q" type="search" autocomplete="off" spellcheck="false" placeholder="Por ejemplo: Oblatos o 44700" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugerencias">
         <button class="clear" type="button" id="limpiar" aria-label="Borrar la búsqueda" hidden><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
         <ul class="suggest" id="sugerencias" role="listbox" aria-label="Colonias encontradas" hidden></ul>
       </form>
-      <button class="button" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg>Usar mi ubicación</button>
+      <button class="button" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Usar mi ubicación</button>
     </div>
 
     <div class="mapwrap">
@@ -235,7 +236,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         <p class="note" id="actualizado"></p>
         <div class="cta">
           <p><strong>¿Cómo está el agua en tu colonia?</strong>Tu reporte ayuda a ver dónde falta y a exigir que se atienda.</p>
-          <button class="button" type="button" id="reportar"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=4#map-pin"/></svg>Reportar mi colonia</button>
+          <button class="button" type="button" id="reportar"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Reportar mi colonia</button>
         </div>
       </div>
     </section>
@@ -303,7 +304,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     svg.setAttribute("class", "i");
     svg.setAttribute("aria-hidden", "true");
     const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-    use.setAttribute("href", `/icons.svg?v=4#${name}`);
+    use.setAttribute("href", `/icons.svg?v=5#${name}`);
     svg.append(use);
     return svg;
   };
@@ -515,9 +516,9 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       else kids.push(el("p", { class: "none" }, summary ? "Nadie ha reportado esta colonia en las últimas 24 horas." : "No pudimos cargar los reportes de esta colonia."));
       const when = reportedAt(k);
       if (Date.now() - when < 2 * 60 * 1000) {
-        kids.push(el("p", { class: "thanks" }, "¡Gracias! Tu reporte ya está en el mapa."), share(p));
+        kids.push(el("p", { class: "thanks" }, "¡Gracias! Tu reporte ya está en el mapa."), share(p), exige(p));
       } else if (Date.now() - when < SEEN) {
-        kids.push(el("p", { class: "thanks" }, `Ya reportaste esta colonia ${ago(new Date(when).toISOString())}. ¡Gracias!`), share(p));
+        kids.push(el("p", { class: "thanks" }, `Ya reportaste esta colonia ${ago(new Date(when).toISOString())}. ¡Gracias!`), share(p), exige(p));
       } else if (openForm) {
         kids.push(form(f));
       } else {
@@ -530,13 +531,18 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     }
 
     // After a report, the colonia's link to pass on: the map is only as good as its reports.
+    function exige(p) {
+      const href = `/exige?${new URLSearchParams({ q: p.n, m: p.m, cp: p.cp })}`;
+      return el("p", { class: "exige" }, el("strong", {}, "Y exígele a quien le toca. "), el("a", { href }, "Mándale tu caso al gobernador, al SIAPA, a la CEA y a tu presidencia municipal"), ".");
+    }
+
     function share(p) {
       const url = `https://aguagdl.com/reportes?${new URLSearchParams({ q: p.n, m: p.m, cp: p.cp })}`;
       const text = `¿Hay agua en ${nice(p.n)}? Mira y reporta cómo está el agua en tu colonia, sin cuenta y anónimo:`;
       const wa = el("a", { class: "button wa", href: `https://wa.me/?text=${encodeURIComponent(`${text} ${url}`)}`, target: "_blank", rel: "noopener" }, icon("message-circle"), "WhatsApp");
       const fb = el("a", { class: "button alt", href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, target: "_blank", rel: "noopener" }, "Facebook");
       const box = el("div", { class: "share" },
-        el("p", {}, el("strong", {}, "Pásalo a tus vecinos."), " Entre más reportes, más claro se ve dónde falta el agua."),
+        el("p", {}, el("strong", {}, "Pásalo a tus vecinos."), " Entre más reportes, más clara la prueba de dónde falta el agua."),
         el("div", { class: "share-buttons" }, wa, fb));
       if (navigator.share) {
         const more = el("button", { type: "button", class: "button alt" }, "Más opciones");

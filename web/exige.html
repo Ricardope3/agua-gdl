@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exígele a quien le toca · Agua GDL</title>
+<meta name="description" content="El agua es un derecho. Mándale tu caso al gobernador, al SIAPA, a la CEA y a tu presidencia municipal desde tu correo, X o Facebook. Agua GDL no ve ni guarda nada.">
+<link rel="canonical" href="https://aguagdl.com/exige">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aguagdl.com/exige">
+<meta property="og:title" content="El agua es un derecho. Exígelo.">
+<meta property="og:description" content="¿Sin agua, con poca presión o agua sucia? Mándale tu caso al gobernador, al SIAPA, a la CEA y a tu presidencia municipal desde tu cuenta, en unos minutos.">
+<meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#06141d" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<style>
+:root {
+  --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
+  --brand: #0284c7; --brand-deep: #0369a1; --link: #0369a1; --on-brand: #ffffff;
+  --primary: #0284c7; --on-primary: #ffffff; --ring: #0284c766;
+  --shadow: 0 1px 2px rgb(3 105 161 / .08);
+  --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #06141d; --surface: #0a1c28; --subtle: #0c3149; --fg: #f0f9ff; --muted: #9bb8ca; --line: #18384d;
+    --link: #7dd3fc; --primary: #0ea5e9; --on-primary: #ffffff; --ring: #38bdf866; --brand: #0ea5e9; --brand-deep: #0284c7;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 var(--font) }
+a { color: var(--link) }
+a:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; border-radius: 4px }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 20px }
+header.top { padding: 20px 0 }
+.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; font-weight: 800; font-size: 1.25rem; letter-spacing: -.01em }
+.brand img { width: 30px; height: auto }
+h1 { font-size: clamp(2rem, 6vw, 3rem); line-height: 1.08; letter-spacing: -.02em; margin: 20px 0 16px; text-wrap: balance }
+.signup { background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--brand); border-radius: 10px; padding: 20px }
+.button { display: inline-block; background: var(--brand-deep); color: var(--on-brand); font-weight: 700; font-size: 1.1rem; text-decoration: none; padding: 13px 22px; border-radius: 8px }
+.button:hover { background: var(--brand) }
+.consent { margin: 16px 0 0; font-size: .95rem }
+.options { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; align-items: start }
+.signup h2 { font-size: 1.25rem; margin: 0 0 8px }
+.signup > p:not(.consent):not(.alt) { margin: 0 0 16px; color: var(--muted) }
+.buttons { display: flex; flex-wrap: wrap; gap: 10px }
+.number { font-weight: 700; color: var(--fg); white-space: nowrap }
+.tel { font-size: 1.35rem; font-weight: 700; letter-spacing: -.01em; white-space: nowrap; text-decoration: none }
+.tel:hover { text-decoration: underline }
+.via { font-size: .9rem; color: var(--muted); margin: 10px 0 0 }
+.signup p { margin: 0 0 8px }
+.alt { margin: 12px 0 0; font-size: .95rem; color: var(--muted) }
+.lede { font-size: 1.15rem; color: var(--muted); margin: 0 0 28px; max-width: 60ch }
+section { padding: 36px 0 8px }
+h2 { font-size: 1.5rem; line-height: 1.2; margin: 0 0 14px; letter-spacing: -.01em }
+ol, ul { padding-left: 1.3em; margin: 0 0 14px }
+li { margin: 0 0 8px }
+section p { margin: 0 0 14px; max-width: 65ch }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0 }
+dt { font-weight: 800; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .95rem; padding-top: 2px }
+dd { margin: 0 }
+footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .9rem }
+footer p { margin: 0 0 8px; max-width: 70ch }
+body { font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased }
+a { text-underline-offset: 3px }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); border-radius: 6px }
+.wrap { padding: 0 16px }
+header.top { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); margin: 0 -16px 20px; padding: 12px 16px }
+.brand { gap: 8px; font-weight: 600; font-size: 1rem }
+.brand img { width: 20px }
+h1 { letter-spacing: -.03em; font-weight: 700 }
+h2 { font-weight: 600; letter-spacing: -.02em }
+.lede { font-size: 1.05rem }
+.button { display: inline-flex; align-items: center; gap: 6px; background: var(--primary); color: var(--on-primary); font-weight: 500; font-size: .95rem; padding: 10px 18px; border: 1px solid transparent; border-radius: 8px; box-shadow: var(--shadow); transition: background .15s }
+.button:hover { background: var(--brand-deep) }
+.button.glow { border: 2px solid transparent; background: linear-gradient(var(--primary), var(--primary)) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100%; animation: glow 3s linear infinite; box-shadow: 0 0 8px rgb(139 92 246 / .3), 0 0 16px 2px rgb(14 165 233 / .22) }
+.button.glow:hover { background: linear-gradient(var(--brand-deep), var(--brand-deep)) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100% }
+@keyframes glow { from { background-position: 0 0, 0% 0 } to { background-position: 0 0, 150% 0 } }
+@media (prefers-reduced-motion: reduce) { .button.glow { animation: none } }
+.signup, .finder, .notice, .summary { border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; box-shadow: var(--shadow) }
+.card, .zone, .msg, .empty, .choice, .values li { box-shadow: var(--shadow) }
+.search input, .filter select { border: 1px solid var(--line); box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s }
+.search input:focus-visible, .filter select:focus-visible { border-color: var(--brand) }
+footer { font-size: .85rem }
+.i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
+h2.ih, h3.ih { display: flex; align-items: center; gap: 10px }
+.ih .i-badge { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--subtle); color: var(--brand); flex-shrink: 0 }
+h3.ih .i-badge { width: 28px; height: 28px }
+.steps li .i { color: var(--ic); margin-right: 4px }
+header.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px }
+.site-nav { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; margin: 0 -6px }
+.site-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 8px; color: var(--muted); font-size: .9rem; font-weight: 500; text-decoration: none; white-space: nowrap }
+.site-nav a:hover { color: var(--fg); background: var(--subtle) }
+.site-nav a[aria-current="page"] { color: var(--link); background: var(--subtle) }
+@media (max-width: 980px) { .site-nav .i { display: none } }
+@media (max-width: 760px) { .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center } .site-nav a { flex: 1 1 22%; justify-content: center } }
+@media (max-width: 560px) { header.top { position: static; padding: 8px 16px } .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center; gap: 2px } .site-nav a { flex: 1 1 22%; justify-content: center; padding: 4px; font-size: .82rem; line-height: 1.35 } .site-nav .i { display: none } }
+.ih .i-badge { background: var(--brand); color: var(--on-primary) }
+.site-nav .i { color: var(--brand) }
+.site-nav a[aria-current="page"] .i { color: inherit }
+li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
+.i { --ic: var(--brand) }
+.i:has(use[href$="#bell"]), .i:has(use[href$="#megaphone"]) { --ic: #d97706 }
+.i:has(use[href$="#map-pin"]) { --ic: #e11d48 }
+.i:has(use[href$="#landmark"]) { --ic: #7c3aed }
+.i:has(use[href$="#heart"]) { --ic: #dc2626 }
+.i:has(use[href$="#check"]) { --ic: #16a34a }
+.i:has(use[href$="#shield-check"]) { --ic: #16a34a }
+.i:has(use[href$="#mail"]) { --ic: #0d9488 }
+.i:has(use[href$="#pen-line"]) { --ic: #ea580c }
+.i:has(use[href$="#calendar"]) { --ic: #4f46e5 }
+.i:has(use[href$="#send"]) { --ic: #229ed9 }
+@media (prefers-color-scheme: dark) { .i:has(use[href$="#bell"]), .i:has(use[href$="#megaphone"]) { --ic: #fbbf24 } .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#landmark"]) { --ic: #a78bfa } .i:has(use[href$="#heart"]) { --ic: #f87171 } .i:has(use[href$="#check"]) { --ic: #4ade80 } .i:has(use[href$="#shield-check"]) { --ic: #4ade80 } .i:has(use[href$="#mail"]) { --ic: #2dd4bf } .i:has(use[href$="#pen-line"]) { --ic: #fb923c } .i:has(use[href$="#calendar"]) { --ic: #818cf8 } .i:has(use[href$="#send"]) { --ic: #2aabee } }
+.site-nav .i, li > .i, p > .i, summary > .i, h3 > .i { color: var(--ic) }
+.ih .i-badge:has(use[href$="#bell"]), .ih .i-badge:has(use[href$="#megaphone"]) { background: #d97706 }
+.ih .i-badge:has(use[href$="#map-pin"]) { background: #e11d48 }
+.ih .i-badge:has(use[href$="#landmark"]) { background: #7c3aed }
+.ih .i-badge:has(use[href$="#heart"]) { background: #dc2626 }
+.ih .i-badge:has(use[href$="#check"]) { background: #16a34a }
+.ih .i-badge:has(use[href$="#shield-check"]) { background: #16a34a }
+.ih .i-badge:has(use[href$="#mail"]) { background: #0d9488 }
+.ih .i-badge:has(use[href$="#pen-line"]) { background: #ea580c }
+.ih .i-badge:has(use[href$="#calendar"]) { background: #4f46e5 }
+.fields { display: grid; gap: 0 14px }
+@media (min-width: 640px) { .fields { grid-template-columns: 1fr 1fr } }
+#caso label, .block { display: grid; gap: 6px; font-weight: 600; font-size: .95rem; margin: 0 0 14px }
+#caso input[type="text"], #caso select, .block input, .block textarea { font: inherit; font-weight: 400; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; box-shadow: var(--shadow); width: 100%; min-width: 0 }
+.block textarea { resize: vertical; line-height: 1.5 }
+fieldset { border: 0; margin: 0 0 14px; padding: 0; min-width: 0 }
+legend { font-weight: 600; font-size: .95rem; margin: 0 0 8px; padding: 0 }
+#caso label.opt { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-weight: 400; margin: 0 0 8px }
+label.opt input[type="number"] { font: inherit; width: 4.5em; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 4px 8px }
+.pick label { font-weight: 400; margin-right: 12px; white-space: nowrap }
+.estado { min-height: 1.4em; color: var(--muted); font-size: .9rem; margin: 8px 0 0 }
+.cargo h3 { margin: 0 0 2px; font-size: 1.05rem }
+.cargo .quien { margin: 0 0 12px; color: var(--muted) }
+.todos { margin-top: 16px }
+.tuit { white-space: pre-wrap; color: var(--muted); font-size: .92rem }
+button.button { font: inherit; font-weight: 500; font-size: .95rem; cursor: pointer }
+.button.alt { background: var(--surface); color: var(--link); border: 1px solid var(--line) }
+.button.alt:hover { background: var(--subtle) }
+.sinx { color: var(--muted); font-size: .9rem; margin: 0 }
+</style>
+<script src="/theme.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
+    <nav class="site-nav" aria-label="Secciones">
+      <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg>¿Hay agua?</a>
+      <a href="/exige" aria-current="page"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exige</a>
+      <a href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Mi zona</a>
+      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg>Noticias</a>
+      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#landmark"/></svg>Congreso</a>
+      <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg>Cuentas</a>
+      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Contaminación</a>
+      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#heart"/></svg>Antisionismo</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Exígele a quien le toca</h1>
+    <p class="lede">El agua es un derecho: lo dice el <a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf" rel="noopener">artículo 4 de la Constitución</a>. Si en tu colonia no llega, llega sucia o sin presión, mándale tu caso al gobernador, al SIAPA, a la CEA y a tu presidencia municipal. Lo mandas tú, desde tu correo, X o Facebook; Agua GDL no ve ni guarda nada.</p>
+
+    <form class="signup" id="caso" autocomplete="off">
+      <h2 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg></span>1. Tu caso</h2>
+      <div class="fields">
+        <label>Tu colonia<input id="colonia" type="text" maxlength="80" placeholder="Por ejemplo: Las Juntas"></label>
+        <label>Municipio<select id="municipio">
+          <option value="">Elige tu municipio</option>
+          <option>Guadalajara</option>
+          <option>Zapopan</option>
+          <option>San Pedro Tlaquepaque</option>
+          <option>Tonalá</option>
+          <option>Tlajomulco de Zúñiga</option>
+          <option>El Salto</option>
+          <option>Zapotlanejo</option>
+          <option>Ixtlahuacán de los Membrillos</option>
+          <option>Juanacatlán</option>
+        </select></label>
+      </div>
+      <fieldset>
+        <legend>¿Qué pasa?</legend>
+        <label class="opt"><input type="radio" name="pasa" value="sin" checked> No llega el agua desde hace <input id="dias" type="number" min="1" max="99" inputmode="numeric" placeholder="3" aria-label="Días sin agua"> días</label>
+        <label class="opt"><input type="radio" name="pasa" value="presion"> Llega con muy poca presión</label>
+        <label class="opt"><input type="radio" name="pasa" value="sucia"> Llega sucia o con mal olor</label>
+      </fieldset>
+      <label>Tu nombre, para firmar (si quieres)<input id="nombre" type="text" maxlength="80"></label>
+    </form>
+
+    <section aria-labelledby="mensaje-h">
+      <h2 id="mensaje-h" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#pen-line"/></svg></span>2. Revisa el mensaje</h2>
+      <p>Lo armamos con tu caso y puedes cambiarlo. Cada correo empieza con el saludo a quien va dirigido.</p>
+      <label class="block">Asunto<input id="asunto" type="text" maxlength="120"></label>
+      <label class="block">Mensaje<textarea id="cuerpo" rows="15"></textarea></label>
+      <div class="buttons">
+        <button class="button alt" type="button" id="copiar"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#copy"/></svg>Copiar mensaje</button>
+        <button class="button alt" type="button" id="rehacer" hidden>Volver a armarlo con mi caso</button>
+      </div>
+      <p class="estado" id="estado" aria-live="polite"></p>
+    </section>
+
+    <section aria-labelledby="manda-h">
+      <h2 id="manda-h" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#send"/></svg></span>3. Mándalo</h2>
+      <p class="pick">Abrir el correo con: <label><input type="radio" name="via" value="app" checked> mi app de correo</label> <label><input type="radio" name="via" value="gmail"> Gmail</label></p>
+      <div class="options" id="cargos"></div>
+      <div class="signup todos" id="todos" hidden>
+        <h3>A todos en X</h3>
+        <p class="tuit" id="tuit-texto"></p>
+        <a class="button" id="tuit" href="https://x.com" target="_blank" rel="noopener">Publicar en X</a>
+      </div>
+    </section>
+
+    <section aria-labelledby="porque">
+      <h2 id="porque" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#landmark"/></svg></span>¿Por qué a ellos?</h2>
+      <ul>
+        <li><strong>Tu presidencia municipal.</strong> La Constitución pone a cargo de los municipios el «agua potable, drenaje, alcantarillado, tratamiento y disposición de sus aguas residuales» (<a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf" rel="noopener">artículo 115, fracción III</a>).</li>
+        <li><strong>El SIAPA.</strong> Es el organismo que da el servicio de agua en Guadalajara, Zapopan, Tlaquepaque y Tonalá (<a href="https://www.ceajalisco.gob.mx/contenido/directorio_organismos_operadores_est/Director%20de%20Organismo%20Operador%20Estatal_archivos/sheet001.html" rel="noopener">CEA</a>) y el que publica el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">calendario de la rotación</a>.</li>
+        <li><strong>La CEA.</strong> La Comisión Estatal del Agua es del Gobierno de Jalisco: su director da las cifras de la rotación (<a href="https://jalisco.quadratin.com.mx/sucesos/tandeo-deja-sin-agua-a-270-colonias-de-la-zona-metropolitana-de-guadalajara/" rel="noopener">Quadratín</a>) y la iniciativa del acueducto la autoriza a contratarlo (<a href="https://www.unotv.com/estados/jalisco/acueducto-chapala-guadalajara-iniciativa-de-lemus-llegara-al-congreso-de-jalisco-este-15-de-octubre/" rel="noopener">UnoTV</a>).</li>
+        <li><strong>El gobernador.</strong> El Gobierno de Jalisco presentó la rotación con el SIAPA (<a href="https://www.siapa.gob.mx/prensa/presenta-gobierno-de-jalisco-programa-de-rotacion-del-servicio-de-agua-limpia-y-sitio-para" rel="noopener">boletín del SIAPA, 15 de octubre</a>).</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="reporta">
+      <h2 id="reporta" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg></span>Y repórtalo en el mapa</h2>
+      <p>Cada reporte es una prueba: <a href="/informes">cada lunes publicamos el conteo de la semana</a> por colonia y se lo mandamos al SIAPA, a la CEA, a los municipios, al Congreso y a la CEDHJ. Sin cuenta y anónimo.</p>
+      <a class="button glow" href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Reportar mi colonia</a>
+    </section>
+
+    <section aria-labelledby="ojo">
+      <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#info"/></svg></span>Ten en cuenta</h2>
+      <ul>
+        <li>El mensaje se arma en tu navegador y lo mandas tú desde tu cuenta: Agua GDL no lo ve ni lo guarda.</li>
+        <li>Sacamos cada correo y cada cuenta de las páginas oficiales enlazadas en cada tarjeta y los revisamos el 20 de octubre de 2026. Si alguno ya no funciona, avísanos a <span class="number">soporte@aguagdl.com</span>.</li>
+        <li>Le escribimos a quien tiene el cargo, sea del partido que sea. Agua GDL no tiene partido.</li>
+        <li>¿Quieres ir más allá? Presenta una queja ante la Comisión Estatal de Derechos Humanos Jalisco: <span class="number">quejas@cedhj.org.mx</span>, su <a href="https://cedhj.org.mx/queja" rel="noopener">formulario</a> o el <a href="tel:+523336691100">33 3669 1100</a> (<a href="https://cedhj.org.mx/" rel="noopener">CEDHJ</a>).</li>
+        <li>¿Lo tuyo es el acueducto privado? <a href="/escribe">Escríbele al Congreso</a>.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con el Gobierno de Jalisco.</p>
+    <p><a href="/">Inicio</a> · <a href="/reportes">¿Hay agua en tu colonia?</a> · <a href="/mizona">¿Qué zona me toca?</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
+  </footer>
+</div>
+<script>
+(() => {
+  // Each contact comes from the official page in `fuente`, checked on the date in «Ten en cuenta».
+  // `solo` limits an office to the municipios it serves.
+  const CARGOS = [{"cargo": "Gobernador de Jalisco", "nombre": "Jesús Pablo Lemus Navarro", "saludo": "Gobernador Jesús Pablo Lemus Navarro:", "email": "pablo.lemus@jalisco.gob.mx", "x": "PabloLemusN", "fb": "https://www.facebook.com/GobiernoJalisco/", "fuente": "https://transparencia.jalisco.gob.mx/informacion/contenido/85/141", "medio": "directorio del Despacho del Gobernador"}, {"cargo": "SIAPA", "nombre": "Ismael Jáuregui Castañeda, director general", "saludo": "Ismael Jáuregui Castañeda, director general del SIAPA:", "email": "siapatel@siapa.gob.mx,contraloria@siapa.gob.mx", "x": "siapagdl", "fb": "https://www.facebook.com/siapagdl", "fuente": "https://www.siapa.gob.mx/quejas-y-sugerencias", "medio": "SIAPA, quejas y sugerencias", "solo": ["Guadalajara", "Zapopan", "San Pedro Tlaquepaque", "Tonalá"]}, {"cargo": "Comisión Estatal del Agua (CEA)", "nombre": "Luis Enrique Barboza Niño, director general", "saludo": "Luis Enrique Barboza Niño, director general de la Comisión Estatal del Agua:", "email": "luis.barboza@ceajalisco.gob.mx", "fb": "https://www.facebook.com/profile.php?id=215893778571033", "fuente": "https://www.ceajalisco.gob.mx/contenido/directorio/directorio%20web_archivos/sheet001.html", "medio": "directorio de la CEA"}];
+  const MUNICIPIOS = {"Guadalajara": {"cargo": "Presidencia municipal de Guadalajara", "nombre": "Verónica Delgadillo García", "saludo": "Presidenta municipal Verónica Delgadillo García:", "email": "vero@guadalajara.gob.mx", "x": "VeroDelgadilloG", "fb": "https://www.facebook.com/VeroDelgadilloG", "fuente": "https://transparenciagdl.guadalajara.gob.mx/sites/default/files/html/directorio_sujeto_obligado.html", "medio": "directorio del Ayuntamiento de Guadalajara"}, "Zapopan": {"cargo": "Presidencia municipal de Zapopan", "nombre": "Juan José Frangie Saade", "saludo": "Presidente municipal Juan José Frangie Saade:", "email": "juan.frangie@zapopan.gob.mx", "x": "zapopangob", "fb": "https://www.facebook.com/ZapopanGob/", "fuente": "https://www.zapopan.gob.mx/gobierno/contacto-gobierno/", "medio": "Gobierno de Zapopan, contacto"}, "San Pedro Tlaquepaque": {"cargo": "Gobierno de San Pedro Tlaquepaque", "nombre": "El Ayuntamiento no publica el correo de la presidencia; escríbele por sus cuentas oficiales.", "x": "gobtlaquepaque", "fb": "https://www.facebook.com/tlaquepaquegob", "fuente": "https://tlaquepaque.gob.mx/", "medio": "Gobierno de San Pedro Tlaquepaque"}, "Tonalá": {"cargo": "Presidencia municipal de Tonalá", "nombre": "Sergio Armando Chávez Dávalos", "saludo": "Presidente municipal Sergio Armando Chávez Dávalos:", "email": "secretariaparticular@tonala.gob.mx", "x": "gobierno_tonala", "fb": "https://www.facebook.com/gobiernotonala/", "fuente": "https://tonala.gob.mx/portal/presidente/", "medio": "Gobierno de Tonalá, el presidente"}, "Tlajomulco de Zúñiga": {"cargo": "Presidencia municipal de Tlajomulco", "nombre": "Gerardo Quirino Velázquez Chávez", "saludo": "Presidente municipal Gerardo Quirino Velázquez Chávez:", "email": "gqvelazquez@tlajomulco.gob.mx", "x": "GerardoQuirinoV", "fb": "https://www.facebook.com/GerardoQuirino.V/", "fuente": "https://tlajomulco.gob.mx/presidencia", "medio": "Gobierno de Tlajomulco, presidencia"}, "El Salto": {"cargo": "Presidencia municipal de El Salto", "nombre": "María Elena Farías Villafán", "saludo": "Presidenta municipal María Elena Farías Villafán:", "email": "nena.farias@elsalto.gob.mx", "fb": "https://www.facebook.com/AytoElSalto", "fuente": "https://directorio.elsalto.gob.mx/division/615f01ad4e36bb2cbc7f6478", "medio": "directorio del Ayuntamiento de El Salto"}};
+  const $ = (id) => document.getElementById(id);
+  const q = encodeURIComponent;
+  const el = (tag, attrs, ...kids) => {
+    const e = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs || {})) if (v != null) e.setAttribute(k, v);
+    e.append(...kids);
+    return e;
+  };
+  const icon = (name) => {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("class", "i");
+    svg.setAttribute("aria-hidden", "true");
+    const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    use.setAttribute("href", `/icons.svg?v=5#${name}`);
+    svg.append(use);
+    return svg;
+  };
+  const form = $("caso"), asunto = $("asunto"), cuerpo = $("cuerpo"), estado = $("estado"), rehacer = $("rehacer");
+  let editado = false;
+
+  // /reportes links here with its colonia: ?q=name&m=municipio&cp=…
+  const params = new URLSearchParams(location.search);
+  const nice = (s) => s.toLocaleLowerCase("es-MX").replace(/(^|[\s(.\-/])(\p{L})/gu, (m, a, b) => a + b.toLocaleUpperCase("es-MX"));
+  if (params.get("q")) $("colonia").value = nice(params.get("q")).slice(0, 80);
+  const enlace = params.get("m") || "";
+  const opcion = [...$("municipio").options].find((o) => o.value && enlace.startsWith(o.value));
+  if (opcion) $("municipio").value = opcion.value;
+
+  function caso() {
+    const colonia = $("colonia").value.trim(), municipio = $("municipio").value;
+    return {
+      pasa: form.elements.pasa.value,
+      dias: Math.min(99, Math.max(0, parseInt($("dias").value, 10) || 0)),
+      colonia, municipio,
+      lugar: [colonia, municipio].filter(Boolean).join(", ") || "mi colonia",
+      donde: colonia || municipio || "mi colonia",
+      nombre: $("nombre").value.trim(),
+    };
+  }
+  const dias = (n) => `${n} ${n === 1 ? "día" : "días"}`;
+  function situacion(c) {
+    if (c.pasa === "presion") return "El agua llega con muy poca presión.";
+    if (c.pasa === "sucia") return "El agua llega sucia o con mal olor.";
+    return c.dias ? `Llevamos ${dias(c.dias)} sin agua.` : "No nos llega el agua.";
+  }
+  function armarAsunto(c) {
+    if (c.pasa === "presion") return `Agua sin presión en ${c.donde}`;
+    if (c.pasa === "sucia") return `Agua sucia en ${c.donde}`;
+    return c.dias ? `${dias(c.dias)} sin agua en ${c.donde}` : `Sin agua en ${c.donde}`;
+  }
+  function armarCuerpo(c) {
+    const promesa = c.pasa === "sucia"
+      ? "El SIAPA dijo que la rotación significaría «menos agua pero de mejor calidad». En mi casa no es así."
+      : "El SIAPA anunció racionamientos «por máximo un día» y dijo que «no serán cortes totales». En mi colonia no se está cumpliendo.";
+    return `Le escribo desde ${c.lugar}. ${situacion(c)}
+
+${promesa}
+
+El agua es un derecho. El artículo 4 de la Constitución dice: «Toda persona tiene derecho al acceso, disposición y saneamiento de agua para consumo personal y doméstico en forma suficiente, salubre, aceptable y asequible». Le pido:
+
+1. Que el agua llegue a mi colonia como se anunció y, mientras no llegue, que manden pipas.
+2. Que el agua que llegue sea limpia.
+3. Que publiquen cuánta agua llega a cada zona y a qué horas.
+
+Atentamente,
+${c.nombre ? c.nombre + "\n" : ""}${c.lugar}`;
+  }
+  function corto(c) {
+    const s = c.pasa === "presion" ? `En ${c.donde} el agua llega sin presión.`
+      : c.pasa === "sucia" ? `En ${c.donde} el agua llega sucia.`
+      : c.dias ? `Llevamos ${dias(c.dias)} sin agua en ${c.donde}.` : `No nos llega el agua en ${c.donde}.`;
+    return `${s} El agua es un derecho: exijo que lo arreglen. aguagdl.com/exige`;
+  }
+  const destinos = (c) => [...CARGOS.filter((d) => !d.solo || d.solo.includes(c.municipio)), MUNICIPIOS[c.municipio]].filter(Boolean);
+
+  async function copiar(texto, listo) {
+    try {
+      await navigator.clipboard.writeText(texto);
+      estado.textContent = listo;
+    } catch {
+      estado.textContent = "No pudimos copiarlo: selecciona el mensaje y cópialo a mano.";
+    }
+  }
+
+  function tarjeta(d, c) {
+    const gmail = document.querySelector('input[name="via"]:checked').value === "gmail";
+    const texto = `${d.saludo}\n\n${cuerpo.value}`;
+    const botones = el("div", { class: "buttons" });
+    if (d.email) {
+      const href = gmail
+        ? `https://mail.google.com/mail/?view=cm&fs=1&to=${q(d.email)}&su=${q(asunto.value)}&body=${q(texto)}`
+        : `mailto:${d.email}?subject=${q(asunto.value)}&body=${q(texto)}`;
+      botones.append(el("a", { class: "button", href, target: gmail ? "_blank" : null, rel: gmail ? "noopener" : null }, icon("mail"), "Correo"));
+    }
+    if (d.x) botones.append(el("a", { class: "button alt", href: `https://x.com/intent/tweet?text=${q(`@${d.x} ${corto(c)}`)}`, target: "_blank", rel: "noopener" }, "X"));
+    if (d.fb) {
+      const fb = el("a", { class: "button alt", href: d.fb, target: "_blank", rel: "noopener" }, "Facebook");
+      fb.addEventListener("click", () => copiar(corto(c), "Copiamos tu mensaje: pégalo en un comentario o en un mensaje a su página."));
+      botones.append(fb);
+    }
+    return el("div", { class: "signup cargo" },
+      el("h3", {}, d.cargo), el("p", { class: "quien" }, d.nombre), botones,
+      el("p", { class: "via" }, "Fuente: ", el("a", { href: d.fuente, rel: "noopener" }, d.medio)));
+  }
+
+  function render() {
+    const c = caso();
+    if (!editado) {
+      asunto.value = armarAsunto(c);
+      cuerpo.value = armarCuerpo(c);
+    }
+    const lista = destinos(c);
+    $("cargos").replaceChildren(...lista.map((d) => tarjeta(d, c)));
+    if (!MUNICIPIOS[c.municipio]) $("cargos").append(el("p", { class: "sinx" }, c.municipio
+      ? `Todavía no tenemos los contactos oficiales de la presidencia municipal de ${c.municipio}.`
+      : "Elige tu municipio para escribirle también a tu presidencia municipal."));
+    const handles = lista.filter((d) => d.x).map((d) => `@${d.x}`);
+    $("todos").hidden = handles.length < 2;
+    const tuit = `${handles.join(" ")} ${corto(c)}`;
+    $("tuit-texto").textContent = tuit;
+    $("tuit").href = `https://x.com/intent/tweet?text=${q(tuit)}`;
+  }
+
+  form.addEventListener("input", render);
+  form.addEventListener("submit", (e) => e.preventDefault());
+  for (const r of document.querySelectorAll('input[name="via"]')) r.addEventListener("change", render);
+  for (const f of [asunto, cuerpo]) f.addEventListener("input", () => { editado = true; rehacer.hidden = false; render(); });
+  rehacer.addEventListener("click", () => { editado = false; rehacer.hidden = true; render(); });
+  $("copiar").addEventListener("click", () => copiar(`${asunto.value}\n\n${cuerpo.value}`, "Copiamos el asunto y el mensaje."));
+  $("dias").addEventListener("focus", () => { form.elements.pasa.value = "sin"; });
+  render();
+})();
+</script>
+</body>
+</html>
