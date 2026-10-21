@@ -267,6 +267,12 @@ header.top { margin-bottom: 0; position: static }
 .mosaic a:hover img { transform: scale(1.04) }
 .mosaic .lbl { position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 6px 4px; background: linear-gradient(transparent, rgb(0 0 0 / .75)); color: #fff; font-size: .7rem; font-weight: 600; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
 .mosaic .more { position: absolute; inset: 0; display: grid; place-items: center; background: rgb(0 0 0 / .55); color: #fff; font-weight: 700; font-size: 1.1rem }
+.report-cta { position: absolute; z-index: 1150; top: 12px; right: 12px; width: min(300px, calc(100% - 24px)); padding: 14px 16px; border-radius: 14px; background: var(--surface); border: 2px solid var(--primary); box-shadow: 0 0 0 4px var(--ring), 0 10px 26px rgb(3 14 22 / .3); animation: llama 2s ease-in-out 3 }
+.report-cta p { margin: 0 0 10px; font-size: .95rem; line-height: 1.35 }
+.report-cta .button { width: 100%; justify-content: center; font-size: 1rem; padding: 11px 14px }
+@keyframes llama { 50% { box-shadow: 0 0 0 10px color-mix(in srgb, var(--primary) 25%, transparent), 0 10px 26px rgb(3 14 22 / .3) } }
+@media (prefers-reduced-motion: reduce) { .report-cta { animation: none } }
+@media (max-width: 760px) { .report-cta { top: 66px; left: 8px; right: 8px; width: auto; padding: 8px 10px; display: flex; align-items: center; gap: 10px } .report-cta p { margin: 0; font-size: .82rem } .report-cta .button { width: auto; flex-shrink: 0; font-size: .88rem; padding: 8px 10px } }
 .marco { position: absolute; inset: 0; z-index: 1000; pointer-events: none; transition: opacity .15s }
 .marco.moving { opacity: 0 }
 .ftile { position: absolute; display: block; overflow: hidden; pointer-events: auto; border-radius: 10px; border: 3px solid var(--surface); background: var(--surface); box-shadow: 0 3px 10px rgb(3 14 22 / .4); text-decoration: none; color: var(--fg); transition: transform .15s; animation: fin .3s both }
@@ -322,6 +328,10 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         <button class="button iconbtn" type="button" id="ubicacion" aria-label="Usar mi ubicación" title="Usar mi ubicación"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg></button>
       </div>
       <aside id="ficha" class="card" aria-live="polite" hidden></aside>
+      <div class="report-cta" id="reporta" hidden>
+        <p><strong>¿Cómo está el agua en <span id="reporta-col"></span>?</strong> Repórtalo en 4 toques, sin cuenta.</p>
+        <button class="button" type="button" id="reporta-btn"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Reportar esta colonia</button>
+      </div>
       <section class="overview" id="resumen-mapa" aria-labelledby="titulo">
         <div class="ov-top">
           <h1 id="titulo">¿Hay agua en tu colonia?</h1>
@@ -699,6 +709,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       marks = [];
       card.hidden = true;
       stage.classList.remove("has-card");
+      $("reporta").hidden = true;
       setOverview(wantOpen);
       card.replaceChildren();
       history.replaceState(null, "", location.pathname + (location.search.includes("api=") ? `?api=${encodeURIComponent(API)}` : ""));
@@ -750,7 +761,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
           p.vista && p.tipo !== "comentario" ? null : el("q", {}, p.cita.length > 120 ? `${p.cita.slice(0, 118)}…` : p.cita),
           p.dias ? el("span", { class: "fdias" }, daysWord(p.dias)) : null);
       });
-      const blocked = () => [card, document.querySelector(".float-search"), document.querySelector(".leaflet-control-zoom")]
+      const blocked = () => [card, $("reporta"), document.querySelector(".float-search"), document.querySelector(".leaflet-control-zoom")]
         .filter((n) => n && n.offsetParent).map((n) => n.getBoundingClientRect());
       function draw() {
         frame.replaceChildren();
@@ -861,6 +872,15 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       card.hidden = false;
       stage.classList.add("has-card");
       setOverview(false);
+      // The selected colonia's report button, top right where the summary was, while the form isn't open.
+      const done = Date.now() - reportedAt(k) < SEEN;
+      $("reporta").hidden = done || !!openForm;
+      $("reporta-col").textContent = nice(p.n);
+      $("reporta-btn").onclick = () => {
+        renderCard(f, true);
+        const fm = card.querySelector("form.report");
+        if (fm) { fm.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "nearest" }); const first = fm.querySelector('input[name="estado"]'); if (first) first.focus({ preventScroll: true }); }
+      };
     }
 
     // The colonia's publications: the most days they give, how many sources say so, and each post
