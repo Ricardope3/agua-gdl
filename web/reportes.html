@@ -728,10 +728,12 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         L.geoJSON(gj, { interactive: false, style: { color: COLORS.ink, weight: 3.5, fill: false } }).addTo(map),
       ];
       const e = ev.get(keyOf(f.properties));
-      if (e) marks.push(surround(all, e.posts));
+      // Many publications: the colonia moves to the right and they fill the map beside the card as a wall.
+      const wall = !!e && !phone() && e.posts.length >= 8;
+      if (e) marks.push(surround(all, e.posts, wall));
       if (fit) {
         // Room around the outline for the publications that surround it.
-        const pad = phone() ? { paddingTopLeft: [130, 170], paddingBottomRight: [130, Math.round(map.getSize().y * 0.66) + 100] } : { paddingTopLeft: [450 + 225, 175], paddingBottomRight: [225, 175] };
+        const pad = phone() ? { paddingTopLeft: [130, 170], paddingBottomRight: [130, Math.round(map.getSize().y * 0.66) + 100] } : wall ? { paddingTopLeft: [Math.round(map.getSize().x * 0.62), 110], paddingBottomRight: [40, 50] } : { paddingTopLeft: [450 + 225, 175], paddingBottomRight: [225, 175] };
         const opts = { ...pad, maxZoom: 15, animate: !reduced, duration: 0.7 };
         const b = marks[1].getBounds();
         if (reduced) map.fitBounds(b, opts); else map.flyToBounds(b, opts);
@@ -748,7 +750,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     // Tiles go where they fit: never off the map or under the card, search or zoom buttons.
     const frame = el("div", { class: "marco", "aria-hidden": "true" });
     stage.append(frame);
-    function surround(feats, posts) {
+    function surround(feats, posts, wall) {
       // Pictures first: a comment shows the picture of the post it was written under, with its own words.
       // News coverage first, each article as its headline, then the pictures, then the words alone.
       const seenNews = new Set();
@@ -780,6 +782,20 @@ footer p { margin: 0 0 8px; max-width: 70ch }
           !hits.some((h) => x < h.r && x + W > h.l && y < h.b && y + H > h.t) &&
           !placed.some((q) => x < q.x + W + G && x + W + G > q.x && y < q.y + H + G && y + H + G > q.y);
         let i = 0;
+        if (wall) {
+          // Rows of tiles between the card and the colonia, top to bottom; the rest ring the outline.
+          const cr = card.hidden ? 0 : card.getBoundingClientRect().right - box.left;
+          const l = Math.max(12, cr + 12), r = nw.x - 2 * G;
+          for (let y = 8; y + H <= box.height - 24 && i < tiles.length; y += H + G) {
+            for (let x = l; x + W <= r && i < tiles.length; x += W + G) {
+              if (!free(x, y)) continue;
+              placed.push({ x, y });
+              const t = tiles[i++];
+              t.style.cssText = `left:${x}px;top:${y}px;width:${W}px;height:${H}px`;
+              frame.append(t);
+            }
+          }
+        }
         for (let ring = 0; ring < 6 && i < tiles.length; ring++) {
           const x0 = nw.x - G - (W + G) * (ring + 1), y0 = nw.y - G - (H + G) * (ring + 1);
           const x1 = se.x + G + (W + G) * ring, y1 = se.y + G + (H + G) * ring;
