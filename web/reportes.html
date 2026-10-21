@@ -277,6 +277,11 @@ header.top { margin-bottom: 0; position: static }
 @keyframes llama { 50% { box-shadow: 0 0 0 10px color-mix(in srgb, var(--primary) 25%, transparent), 0 10px 26px rgb(3 14 22 / .3) } }
 @media (prefers-reduced-motion: reduce) { .report-cta { animation: none } }
 @media (max-width: 760px) { .report-cta { top: 66px; left: 8px; right: 8px; width: auto; padding: 8px 10px; display: flex; align-items: center; gap: 10px } .report-cta p { margin: 0; font-size: .82rem } .report-cta .button { width: auto; flex-shrink: 0; font-size: .88rem; padding: 8px 10px } }
+path.vivo { animation: vivo 1.6s ease-in-out infinite }
+path.vivo-onda { animation: onda 1.6s ease-out infinite }
+@keyframes vivo { 50% { fill-opacity: .42; stroke-width: 7px } }
+@keyframes onda { 0% { stroke-width: 4px; stroke-opacity: .9 } 100% { stroke-width: 34px; stroke-opacity: 0 } }
+@media (prefers-reduced-motion: reduce) { path.vivo, path.vivo-onda { animation: none } path.vivo-onda { stroke-opacity: 0 } }
 .marco { position: absolute; inset: 0; z-index: 1000; pointer-events: none; transition: opacity .15s }
 .marco.moving { opacity: 0 }
 .ftile { position: absolute; display: block; overflow: hidden; pointer-events: auto; border-radius: 10px; border: 3px solid var(--surface); background: var(--surface); box-shadow: 0 3px 10px rgb(3 14 22 / .4); text-decoration: none; color: var(--fg); transition: transform .15s; animation: fin .3s both }
@@ -726,16 +731,20 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       marks = [
         // A wide halo and the report button's orange-red, so the colonia stands out among the coloured ones.
         L.geoJSON(gj, { interactive: false, style: { color: COLORS.surface, weight: 12, opacity: 0.95, fill: false } }).addTo(map),
-        L.geoJSON(gj, { interactive: false, style: { color: "#e4572e", weight: 5, fill: true, fillColor: "#e4572e", fillOpacity: 0.18 } }).addTo(map),
+        // Drawn as SVG so CSS can make it beat: a glowing fill and a ring that keeps spreading out, like a live signal.
+        L.geoJSON(gj, { interactive: false, renderer: liveRenderer, style: { color: "#e4572e", weight: 5, fill: true, fillColor: "#e4572e", fillOpacity: 0.2, className: "vivo" } }).addTo(map),
+        L.geoJSON(gj, { interactive: false, renderer: liveRenderer, style: { color: "#e4572e", weight: 4, fill: false, className: "vivo-onda" } }).addTo(map),
       ];
       const e = ev.get(keyOf(f.properties));
       // Many publications: the colonia moves to the right and they fill the map beside the card as a wall.
       const wall = !!e && !phone() && e.posts.length >= 8;
+      // The colonias with the most publications sit further out to the side, zoomed out further.
+      const top = wall && e.posts.length >= TOP;
       if (e) marks.push(surround(all, e.posts, wall));
       if (fit) {
         // Room around the outline for the publications that surround it.
-        const pad = phone() ? { paddingTopLeft: [130, 170], paddingBottomRight: [130, Math.round(map.getSize().y * 0.66) + 100] } : wall ? { paddingTopLeft: [Math.round(map.getSize().x * 0.72), 300], paddingBottomRight: [50, 60] } : { paddingTopLeft: [450 + 225, 175], paddingBottomRight: [225, 175] };
-        const opts = { ...pad, maxZoom: wall ? 14 : 15, animate: !reduced, duration: 0.7 };
+        const pad = phone() ? { paddingTopLeft: [130, 170], paddingBottomRight: [130, Math.round(map.getSize().y * 0.66) + 100] } : top ? { paddingTopLeft: [Math.round(map.getSize().x * 0.8), 290], paddingBottomRight: [30, 40] } : wall ? { paddingTopLeft: [Math.round(map.getSize().x * 0.72), 300], paddingBottomRight: [50, 60] } : { paddingTopLeft: [450 + 225, 175], paddingBottomRight: [225, 175] };
+        const opts = { ...pad, maxZoom: top ? 13.5 : wall ? 14 : 15, animate: !reduced, duration: 0.7 };
         const b = marks[1].getBounds();
         if (reduced) map.fitBounds(b, opts); else map.flyToBounds(b, opts);
       }
@@ -827,6 +836,10 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       draw();
       return { remove() { map.off("movestart zoomstart", hide); map.off("moveend zoomend", show); window.removeEventListener("resize", show); frame.replaceChildren(); } };
     }
+
+    const liveRenderer = L.svg({ padding: 0.5 });
+    // The fifth-highest count of publications: colonias at or above it are the top five (ties included).
+    const TOP = [...ev.values()].map((x) => x.posts.length).sort((a, b) => b - a)[4] || Infinity;
 
     // theme.js says the visitor switched the theme: the canvas, the rings and the outline take its colours.
     document.addEventListener("tema", () => {
