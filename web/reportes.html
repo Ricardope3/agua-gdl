@@ -774,7 +774,11 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         const nw = map.latLngToContainerPoint(b.getNorthWest()), se = map.latLngToContainerPoint(b.getSouthEast());
         const W = phone() ? 120 : 210, H = phone() ? 90 : 158, G = 8;
         const hits = blocked().map((r) => ({ l: r.left - box.left - G, t: r.top - box.top - G, r: r.right - box.left + G, b: r.bottom - box.top + G }));
-        const free = (x, y) => x >= 4 && y >= 4 && x + W <= box.width - 4 && y + H <= box.height - 24 && !hits.some((h) => x < h.r && x + W > h.l && y < h.b && y + H > h.t);
+        // Every tile placed so far blocks its spot too, so rings and sides never overlap.
+        const placed = [];
+        const free = (x, y) => x >= 4 && y >= 4 && x + W <= box.width - 4 && y + H <= box.height - 24 &&
+          !hits.some((h) => x < h.r && x + W > h.l && y < h.b && y + H > h.t) &&
+          !placed.some((q) => x < q.x + W + G && x + W + G > q.x && y < q.y + H + G && y + H + G > q.y);
         let i = 0;
         for (let ring = 0; ring < 6 && i < tiles.length; ring++) {
           const x0 = nw.x - G - (W + G) * (ring + 1), y0 = nw.y - G - (H + G) * (ring + 1);
@@ -790,6 +794,8 @@ footer p { margin: 0 0 8px; max-width: 70ch }
           const left = tiles.length - i;
           for (let j = 0; j < take; j++) {
             const [x, y] = open[left >= open.length ? j : Math.floor(j * open.length / take)];
+            if (!free(x, y)) continue;
+            placed.push({ x, y });
             const t = tiles[i++];
             t.style.cssText = `left:${x}px;top:${y}px;width:${W}px;height:${H}px`;
             frame.append(t);
