@@ -724,8 +724,9 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       const all = features.get(keyOf(f.properties)) || [f];
       const gj = { type: "FeatureCollection", features: all.map((x) => ({ type: "Feature", geometry: x.geometry, properties: {} })) };
       marks = [
-        L.geoJSON(gj, { interactive: false, style: { color: COLORS.surface, weight: 8, fill: false } }).addTo(map),
-        L.geoJSON(gj, { interactive: false, style: { color: COLORS.ink, weight: 3.5, fill: false } }).addTo(map),
+        // A wide halo and the report button's orange-red, so the colonia stands out among the coloured ones.
+        L.geoJSON(gj, { interactive: false, style: { color: COLORS.surface, weight: 12, opacity: 0.95, fill: false } }).addTo(map),
+        L.geoJSON(gj, { interactive: false, style: { color: "#e4572e", weight: 5, fill: true, fillColor: "#e4572e", fillOpacity: 0.18 } }).addTo(map),
       ];
       const e = ev.get(keyOf(f.properties));
       // Many publications: the colonia moves to the right and they fill the map beside the card as a wall.
@@ -733,8 +734,8 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       if (e) marks.push(surround(all, e.posts, wall));
       if (fit) {
         // Room around the outline for the publications that surround it.
-        const pad = phone() ? { paddingTopLeft: [130, 170], paddingBottomRight: [130, Math.round(map.getSize().y * 0.66) + 100] } : wall ? { paddingTopLeft: [Math.round(map.getSize().x * 0.62), 110], paddingBottomRight: [40, 50] } : { paddingTopLeft: [450 + 225, 175], paddingBottomRight: [225, 175] };
-        const opts = { ...pad, maxZoom: 15, animate: !reduced, duration: 0.7 };
+        const pad = phone() ? { paddingTopLeft: [130, 170], paddingBottomRight: [130, Math.round(map.getSize().y * 0.66) + 100] } : wall ? { paddingTopLeft: [Math.round(map.getSize().x * 0.72), 300], paddingBottomRight: [50, 60] } : { paddingTopLeft: [450 + 225, 175], paddingBottomRight: [225, 175] };
+        const opts = { ...pad, maxZoom: wall ? 14 : 15, animate: !reduced, duration: 0.7 };
         const b = marks[1].getBounds();
         if (reduced) map.fitBounds(b, opts); else map.flyToBounds(b, opts);
       }
@@ -783,7 +784,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
           !placed.some((q) => x < q.x + W + G && x + W + G > q.x && y < q.y + H + G && y + H + G > q.y);
         let i = 0;
         if (wall) {
-          // Rows of tiles between the card and the colonia, top to bottom; the rest ring the outline.
+          // Rows of tiles between the card and the colonia, top to bottom; none cover the colonia.
           const cr = card.hidden ? 0 : card.getBoundingClientRect().right - box.left;
           const l = Math.max(12, cr + 12), r = nw.x - 2 * G;
           for (let y = 8; y + H <= box.height - 24 && i < tiles.length; y += H + G) {
@@ -796,7 +797,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
             }
           }
         }
-        for (let ring = 0; ring < 6 && i < tiles.length; ring++) {
+        for (let ring = 0; ring < (wall ? 0 : 6) && i < tiles.length; ring++) {
           const x0 = nw.x - G - (W + G) * (ring + 1), y0 = nw.y - G - (H + G) * (ring + 1);
           const x1 = se.x + G + (W + G) * ring, y1 = se.y + G + (H + G) * ring;
           const spots = [];
@@ -835,7 +836,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       drawMarkers();
       if (marks.length) {
         marks[0].setStyle({ color: COLORS.surface });
-        marks[1].setStyle({ color: COLORS.ink });
+
       }
     });
 
