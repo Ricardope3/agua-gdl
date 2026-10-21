@@ -13,8 +13,7 @@
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#06141d" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -53,6 +52,7 @@ header.top { position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wr
 .site-nav { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; margin: 0 -6px }
 .site-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 8px; color: var(--muted); font-size: .9rem; font-weight: 500; text-decoration: none; white-space: nowrap }
 .site-nav a:hover { color: var(--fg); background: var(--subtle) }
+.site-nav a[aria-current="page"] { color: var(--link); background: var(--subtle) }
 @media (max-width: 980px) { .site-nav .i { display: none } }
 @media (max-width: 760px) { .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center } .site-nav a { flex: 1 1 22%; justify-content: center } }
 @media (max-width: 560px) { header.top { position: static; padding: 8px 16px } .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center; gap: 2px } .site-nav a { flex: 1 1 22%; justify-content: center; padding: 4px; font-size: .82rem; line-height: 1.35 } .site-nav .i { display: none } }
@@ -60,10 +60,14 @@ h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.08; letter-spacing: -
 .lede { font-size: 1.05rem; color: var(--muted); margin: 0 0 16px; max-width: 64ch }
 .i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
 .i { --ic: var(--brand) }
+.i:has(use[href$="#megaphone"]) { --ic: #d97706 }
+.i:has(use[href$="#landmark"]) { --ic: #7c3aed }
+.i:has(use[href$="#heart"]) { --ic: #dc2626 }
 .i:has(use[href$="#map-pin"]) { --ic: #e11d48 }
 .i:has(use[href$="#send"]) { --ic: #229ed9 }
-@media (prefers-color-scheme: dark) { .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#send"]) { --ic: #2aabee } }
+@media (prefers-color-scheme: dark) { .i:has(use[href$="#megaphone"]) { --ic: #fbbf24 } .i:has(use[href$="#landmark"]) { --ic: #a78bfa } .i:has(use[href$="#heart"]) { --ic: #f87171 } .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#send"]) { --ic: #2aabee } }
 .site-nav .i, p > .i, h2 > .i { color: var(--ic) }
+.site-nav a[aria-current="page"] .i { color: inherit }
 .button { display: inline-flex; align-items: center; gap: 6px; background: var(--primary); color: var(--on-primary); font: inherit; font-weight: 500; font-size: .95rem; text-decoration: none; padding: 10px 16px; border: 1px solid transparent; border-radius: 8px; box-shadow: var(--shadow); cursor: pointer; transition: background .15s }
 .button:hover { background: var(--brand-deep) }
 .button:disabled { opacity: .6; cursor: progress }
@@ -259,7 +263,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       <h2 class="sec" id="bot">Lo que responden en el bot de Telegram</h2>
       <p class="note" style="margin-top:0">Los avisos de <a href="/avisos">Agua GDL en Telegram</a> preguntan «¿Ahorita tienes agua?», y REPORTAR pregunta cómo regresó el agua después del corte. Esto respondieron en las últimas 24 horas, por zona de la rotación. <span id="bot-min"></span></p>
       <div class="tablewrap"><table>
-        <thead><tr><th scope="col">Zona</th><th scope="col">Respuestas</th><th scope="col">Sin agua</th><th scope="col">Baja presión</th><th scope="col">Con agua</th><th scope="col">Turbia</th></tr></thead>
+        <thead><tr><th scope="col">Zona</th><th scope="col">Respuestas</th><th scope="col">Sin agua</th><th scope="col">Baja presión</th><th scope="col">Con agua</th><th scope="col">Turbia o con olor</th></tr></thead>
         <tbody id="bot-filas"><tr><td colspan="6" class="few">Cargando…</td></tr></tbody>
       </table></div>
     </section>
@@ -278,7 +282,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
 
   <footer>
     <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con el Gobierno de Jalisco.</p>
-    <p><a href="/">Inicio</a> · <a href="/mapa">Mapa de la rotación</a> · <a href="/avisos">Avisos</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
+    <p><a href="/">Inicio</a> · <a href="/mapa">Mapa de la rotación</a> · <a href="/avisos">Recibir avisos</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
   </footer>
 </div>
 <script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
@@ -353,6 +357,16 @@ footer p { margin: 0 0 8px; max-width: 70ch }
 
   let byKey = new Map();      // colonia key → its counts in the last 24 h
   let summary = null;
+
+  // The privacy notice promises only the last hour's reports: older marks go, even if the map never loads.
+  try {
+    const old = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith("reporte:") && !(Date.now() - Number(localStorage.getItem(k)) < 60 * 60 * 1000)) old.push(k);
+    }
+    for (const k of old) localStorage.removeItem(k);
+  } catch {}
 
   Promise.all([M.load(), call("/v1/reportes").catch(() => null)])
     .then(([data, s]) => build(data, s))
@@ -474,15 +488,6 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     const mine = new Map(); // this visit's reports, in case the browser blocks storage
     const reportedAt = (k) => { let at = mine.get(k) || 0; try { at = Math.max(at, Number(localStorage.getItem(seenKey(k))) || 0); } catch {} return at; };
     const remember = (k) => { mine.set(k, Date.now()); try { localStorage.setItem(seenKey(k), String(Date.now())); } catch {} };
-    // The privacy notice promises only the last hour's reports: older marks go.
-    try {
-      const old = [];
-      for (let i = 0; i < localStorage.length; i++) {
-        const k = localStorage.key(i);
-        if (k && k.startsWith(seenKey("")) && !(Date.now() - Number(localStorage.getItem(k)) < SEEN)) old.push(k);
-      }
-      for (const k of old) localStorage.removeItem(k);
-    } catch {}
 
     function countsBlock(c) {
       const t = totalOf(c);
@@ -511,7 +516,11 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       const c = byKey.get(k);
       const close = el("button", { type: "button", class: "close", "aria-label": "Cerrar" }, M.cross());
       close.addEventListener("click", clearSelection);
-      const kids = [close, el("h2", {}, p.n), el("p", { class: "where" }, `${p.m}${p.cp ? ` · C.P. ${p.cp}` : ""} · ${M.label(p)}`)];
+      // SIAPA's list sometimes gives other zones than its map, as /mapa says.
+      const zs = M.zones(p).all, ls = M.zonesOf(p.l || "");
+      const where = !zs.length && ls.length ? "Sin zona en el mapa del SIAPA" : M.label(p);
+      const kids = [close, el("h2", {}, p.n), el("p", { class: "where" }, `${p.m}${p.cp ? ` · C.P. ${p.cp}` : ""} · ${where}`)];
+      if (ls.length && ls.join() !== [...zs].sort().join()) kids.push(el("p", { class: "where" }, `La lista de colonias del SIAPA la pone en ${M.theZones(ls)}.`));
       if (c) kids.push(...countsBlock(c));
       else kids.push(el("p", { class: "none" }, summary ? "Nadie ha reportado esta colonia en las últimas 24 horas." : "No pudimos cargar los reportes de esta colonia."));
       const when = reportedAt(k);
@@ -579,7 +588,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         el("fieldset", {}, el("legend", {}, "¿Cómo está el agua ahorita?"),
           el("div", { class: "opts" }, opt("sin_agua", "dry", "Sin agua", "No sale nada"), opt("baja", "low", "Baja presión", "Sale poca"), opt("con_agua", "ok", "Con agua", "Sale normal"))),
         quality, el("div", {}, send), msg,
-        el("p", { class: "small" }, "Es anónimo: guardamos la colonia, tu respuesta y la hora. ", el("a", { href: "/privacidad" }, "Aviso de privacidad"), "."));
+        el("p", { class: "small" }, "Es anónimo: guardamos la colonia, tu respuesta, si sale turbia, con olor o con sedimento, y la hora. ", el("a", { href: "/privacidad" }, "Aviso de privacidad"), "."));
       fm.addEventListener("change", () => {
         const dry = fm.elements.estado.value === "sin_agua";
         quality.disabled = dry;
@@ -612,6 +621,9 @@ footer p { margin: 0 0 8px; max-width: 70ch }
             : err.status === 429 && body === "too many reports" ? "Ya llegaron varios reportes seguidos desde tu conexión. Intenta en una hora."
             : err.status === 429 ? "Llegaron muchas consultas seguidas desde tu conexión. Espera un minuto e intenta de nuevo."
             : err.status === 503 ? "Llegaron demasiados reportes en la última hora. Intenta de nuevo más tarde."
+            : err.status === 403 ? "Solo podemos recibir reportes desde aguagdl.com/reportes."
+            : err.status === 400 && /colonia/.test(body) ? "Todavía no podemos recibir reportes de esta colonia. Avísanos a soporte@aguagdl.com."
+            : err.status === 400 ? "No pudimos guardar tu reporte. Si vuelve a pasar, avísanos a soporte@aguagdl.com."
             : err.status ? "No pudimos guardar tu reporte. Intenta de nuevo en unos minutos."
             : "No pudimos enviar tu reporte. Revisa tu conexión e intenta de nuevo.";
           msg.hidden = false;
@@ -660,7 +672,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
           return el("td", { class: `${cls}${cut ? " cut" : ""}`, title: `${DOW_LONG[d.getUTCDay()]} ${d.getUTCDate()}: ${said}${cut ? "; día de corte" : ""}` }, t ? fmt(t) : "–");
         })));
       $("semana-tabla").replaceChildren($("semana-tabla").querySelector("caption"), el("thead", {}, head), el("tbody", {}, ...rows));
-      $("semana-min").textContent = `Menos de ${w.min} reportes: solo el número`;
+      $("semana-min").textContent = `Menos de ${w.min} reportes, o entre 1 y ${w.min - 1} respuestas del bot: solo el número`;
       const dry = w.sin_agua.en_corte + w.sin_agua.fuera_de_corte;
       $("fuera").replaceChildren(...(dry >= 20
         ? [el("b", {}, `${pct(w.sin_agua.fuera_de_corte, dry)} %`), ` de los reportes «sin agua» del mapa en la última semana (${fmt(w.sin_agua.fuera_de_corte)} de ${fmt(dry)}) llegaron en días sin corte en su zona.`]
@@ -676,9 +688,10 @@ footer p { margin: 0 0 8px; max-width: 70ch }
 
     // Search over name, municipio and postal code, in the browser.
     const input = $("q"), clear = $("limpiar"), list = $("sugerencias"), formSearch = $("buscar");
-    const index = colonias.map((f) => ({ f, key: norm(`${f.properties.n} ${f.properties.m} ${f.properties.cp}`), name: norm(f.properties.n), cp: f.properties.cp }));
+    const index = colonias.map((f) => ({ f, key: norm(`${f.properties.n} ${f.properties.m} ${f.properties.cp}`), name: M.fold(f.properties.n), cp: f.properties.cp }));
+    // Like the API's search: "Col."/"Fracc." dropped, and "GDL" for Guadalajara.
     function matches(q) {
-      const nq = norm(q);
+      const nq = M.fold(q).split(" ").map((t) => (t === "GDL" ? "GUADALAJARA" : t)).join(" ");
       if (!nq) return [];
       const tokens = nq.split(" ");
       const hits = index.filter((it) => tokens.every((t) => it.key.includes(t)));
@@ -797,7 +810,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     if (preset) {
       const hits = matches(preset);
       const m = params.get("m"), cp = params.get("cp");
-      const same = (f) => norm(f.properties.n) === norm(preset) && (!m || norm(f.properties.m) === norm(m));
+      const same = (f) => M.fold(f.properties.n) === M.fold(preset) && (!m || norm(f.properties.m) === norm(m));
       const exact = hits.filter(same);
       const best = (cp && exact.find((f) => f.properties.cp === cp)) || (exact.length === 1 || m ? exact[0] : null) || (hits.length === 1 ? hits[0] : null);
       wantsForm = params.get("reportar") === "1";

@@ -13,8 +13,7 @@
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#06141d" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -241,7 +240,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         <label for="colonia">Escribe el nombre de tu colonia</label>
         <div class="search">
           <div class="field">
-            <input id="colonia" name="q" type="search" autocomplete="off" spellcheck="false" placeholder="Por ejemplo: Las Juntas" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugerencias">
+            <input id="colonia" name="q" type="search" maxlength="80" autocomplete="off" spellcheck="false" placeholder="Por ejemplo: Las Juntas" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugerencias">
             <ul class="suggest" id="sugerencias" role="listbox" aria-label="Colonias encontradas" hidden></ul>
           </div>
           <button class="button" type="submit"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#search"/></svg>Buscar</button>
@@ -259,9 +258,9 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       <div class="warn callout" id="lista">
         <svg class="trace" aria-hidden="true"><rect width="100%" height="100%" rx="10" pathLength="1"/></svg>
         <h3>La lista de colonias del SIAPA y su mapa no siempre coinciden</h3>
-        <p>Comparamos la <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/pdf/colonias_siapa.pdf" rel="noopener">lista de 621 colonias</a> del SIAPA con el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa</a> que publica desde el 16 de octubre, el mismo que ves aquí:</p>
+        <p>Comparamos la <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/pdf/colonias_siapa.pdf" rel="noopener">lista de colonias</a> que el SIAPA publicó el 12 de octubre (621; la CEA dice que la rotación abarca 627) con el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa</a> que publica desde el 16 de octubre, el mismo que ves aquí:</p>
         <ul>
-          <li><strong>274 colonias de la lista</strong> no aparecen con ese nombre en el mapa: son secciones, nombres antiguos o con otra ortografía, como JARDÍN DE LOS ESCRITORES o NUEVO FRACCIONAMIENTO. Para ellas te damos los días de la lista.</li>
+          <li><strong>271 colonias de la lista</strong> no aparecen con ese nombre en el mapa: son secciones, nombres antiguos o con otra ortografía, como JARDÍN DE LOS ESCRITORES o NUEVO FRACCIONAMIENTO. Para ellas te damos los días de la lista.</li>
           <li><strong>Hay colonias repetidas con zonas distintas:</strong> SAN FELIPE 2 SECCIÓN está en la zona 2 y SAN FELIPE SEGUNDA SECCIÓN en la zona 3.</li>
           <li><strong>Colonias partidas entre municipios:</strong> la lista pone CHAPALITA en la zona 5 en Guadalajara y en la 6 en Zapopan, y CIUDAD DEL SOL en la 5 en Tlaquepaque y en la 6 en Zapopan. En el mapa quedan en las dos zonas, así que aquí les mostramos las dos.</li>
           <li><strong>En 43 colonias</strong> el mapa da otras zonas o más zonas que la lista, como ANALCO (zona 2 en la lista; 1 y 2 en el mapa), y <strong>en 11</strong> la lista da más zonas que el mapa, como LAS CONCHAS (2 y 6 en la lista; solo la 2 en el mapa).</li>
@@ -405,7 +404,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       el("p", { class: "note" }, "Cada día de racionamiento de la zona, con alertas a las 8 p. m. dos días antes y la noche antes de cada tanda de cortes. No guardamos ningún dato tuyo."),
       el("p", { class: "note" }, el("strong", {}, "En iPhone, «agregar con alerta» "), "copia los días a tu calendario con la alerta incluida (ábrelo en Safari y toca «Agregar todo»). No se actualiza: si el SIAPA cambia el calendario lo avisaremos aquí y en el bot, y tendrás que borrarlos y agregarlos otra vez."),
       el("p", { class: "note" }, el("strong", {}, "«Suscribirme» "), "se actualiza solo, pero al suscribirte desactiva «Eliminar alertas» o no te llegará el aviso. Si ya te suscribiste: Ajustes › Apps › Calendario › Cuentas › Calendarios suscritos › Agua GDL › desactiva «Eliminar alertas»."),
-      el("p", { class: "note" }, el("strong", {}, "En Android: "), "Google Calendar no usa las alertas de los calendarios suscritos. En la app, abre Configuración › Agua GDL › Notificaciones de eventos de todo el día y agrega una el día anterior a las 8 p. m."));
+      el("p", { class: "note" }, el("strong", {}, "En Android: "), "Google Calendar no usa las alertas de los calendarios suscritos. En la app, abre Configuración › Agua GDL › Notificaciones de eventos de todo el día y agrega una el día anterior a las 8 p. m. (y otra dos días antes, si la quieres). Google Calendar las usa en cada día de corte, no solo en el primero de cada tanda."));
   }
 
   function zoneCard(z) {
@@ -598,7 +597,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         const differs = ls.length && ls.join() !== [...z.all].sort().join();
         place(M.card({ ...cardOpts, title: p.n, subtitle: municipio(p.m) + (p.cp ? ` · C.P. ${p.cp}` : ""), sentence: M.describe(p), main: z.main, side: z.border,
           extra: differs ? ls.filter((zone) => !z.all.includes(zone)) : [],
-          extraNote: differs ? `La lista de colonias del SIAPA la pone en ${M.theZones(ls)}. El mapa y la lista no siempre coinciden: ${z.all.length ? "prepárate para los días de las dos" : "prepárate para esos días"}.` : null,
+          extraNote: differs ? `La lista de colonias del SIAPA la pone en ${M.theZones(ls)}. El mapa y la lista no siempre coinciden: ${z.all.length ? `prepárate para los días de ${new Set([...z.all, ...ls]).size > 2 ? "todas" : "las dos"}` : "prepárate para esos días"}.` : null,
           color: drawn.color }));
         drawn.clearHighlights();
         const g = drawn.highlight(f);
@@ -819,7 +818,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       return;
     }
     cancelSuggestions();
-    const q = input.value.trim();
+    const q = input.value.trim().slice(0, 80);
     if (!q) {
       show(msg("Escribe el nombre de tu colonia."));
       return;

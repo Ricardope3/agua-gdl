@@ -13,8 +13,7 @@
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#06141d" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -58,10 +57,13 @@ h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.08; letter-spacing: -
 .lede { font-size: 1.05rem; color: var(--muted); margin: 0 0 16px; max-width: 64ch }
 .i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
 .i { --ic: var(--brand) }
+.i:has(use[href$="#megaphone"]) { --ic: #d97706 }
+.i:has(use[href$="#landmark"]) { --ic: #7c3aed }
+.i:has(use[href$="#heart"]) { --ic: #dc2626 }
 .i:has(use[href$="#map-pin"]) { --ic: #e11d48 }
 .i:has(use[href$="#calendar"]) { --ic: #4f46e5 }
 .i:has(use[href$="#send"]) { --ic: #229ed9 }
-@media (prefers-color-scheme: dark) { .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#calendar"]) { --ic: #818cf8 } .i:has(use[href$="#send"]) { --ic: #2aabee } }
+@media (prefers-color-scheme: dark) { .i:has(use[href$="#megaphone"]) { --ic: #fbbf24 } .i:has(use[href$="#landmark"]) { --ic: #a78bfa } .i:has(use[href$="#heart"]) { --ic: #f87171 } .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#calendar"]) { --ic: #818cf8 } .i:has(use[href$="#send"]) { --ic: #2aabee } }
 .site-nav .i, p > .i, h2 > .i { color: var(--ic) }
 .site-nav a[aria-current="page"] .i { color: inherit }
 .button { display: inline-flex; align-items: center; gap: 6px; background: var(--primary); color: var(--on-primary); font: inherit; font-weight: 500; font-size: .95rem; text-decoration: none; padding: 10px 16px; border: 1px solid transparent; border-radius: 8px; box-shadow: var(--shadow); cursor: pointer; transition: background .15s }
@@ -171,7 +173,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     <section aria-labelledby="ojo">
       <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#info"/></svg></span>Ten en cuenta</h2>
       <ul class="plain">
-        <li><strong>El mapa da la zona por el contorno de la colonia</strong>, igual que el mapa del SIAPA. Su <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/pdf/colonias_siapa.pdf" rel="noopener">lista de 621 colonias</a> a veces dice otra zona: cuando pasa, aquí te mostramos las dos. En <a href="/mizona">Mi zona</a> puedes buscar por el nombre de la lista.</li>
+        <li><strong>El mapa da la zona por el contorno de la colonia</strong>, igual que el mapa del SIAPA. Su <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/pdf/colonias_siapa.pdf" rel="noopener">lista de colonias</a> a veces dice otra zona: cuando pasa, aquí te mostramos también la de la lista. En <a href="/mizona">Mi zona</a> puedes buscar por el nombre de la lista.</li>
         <li><strong>Las colonias con borde punteado</strong> quedan repartidas entre dos o más zonas. Mira de qué lado del límite entre zonas queda tu casa o usa tu ubicación. Si una colonia solo toca el límite de otra zona, te lo decimos así: su zona es una, y solo quienes viven junto a ese límite deben estar al pendiente de la otra.</li>
         <li>Según el SIAPA, cada zona tiene de 2 a 3 racionamientos por semana «por máximo un día» y «no serán cortes totales». Vecinos nos cuentan que en sus colonias el agua se va desde antes y tarda más en volver.</li>
         <li>Agua GDL es una iniciativa ciudadana: no es del SIAPA ni del gobierno y no tiene partido. Tu ubicación solo se usa en tu navegador para encontrar tu colonia: no nos llega ni la guardamos. Las calles del mapa vienen de OpenStreetMap, que ve qué parte del mapa se carga.</li>
@@ -181,7 +183,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
 
   <footer>
     <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con el Gobierno de Jalisco.</p>
-    <p><a href="/">Inicio</a> · <a href="/mizona">Mi zona</a> · <a href="/avisos">Avisos</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
+    <p><a href="/">Inicio</a> · <a href="/mizona">¿Qué zona me toca?</a> · <a href="/avisos">Recibir avisos</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
   </footer>
 </div>
 <script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
@@ -337,7 +339,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         main: z.main,
         side: z.border,
         extra: differs ? ls.filter((zone) => !z.all.includes(zone)) : [],
-        extraNote: differs ? `La lista de colonias del SIAPA la pone en ${M.theZones(ls)}. El mapa y la lista no siempre coinciden: ${z.all.length ? "prepárate para los días de las dos" : "prepárate para esos días"}.` : null,
+        extraNote: differs ? `La lista de colonias del SIAPA la pone en ${M.theZones(ls)}. El mapa y la lista no siempre coinciden: ${z.all.length ? `prepárate para los días de ${new Set([...z.all, ...ls]).size > 2 ? "todas" : "las dos"}` : "prepárate para esos días"}.` : null,
         days: daysText,
         next: nextCut,
         dateES,
@@ -381,9 +383,10 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     const clear = $("limpiar");
     const list = $("sugerencias");
     const form = $("buscar");
-    const index = colonias.map((f) => ({ f, key: norm(`${f.properties.n} ${f.properties.m} ${f.properties.cp}`), name: norm(f.properties.n), cp: f.properties.cp }));
+    const index = colonias.map((f) => ({ f, key: norm(`${f.properties.n} ${f.properties.m} ${f.properties.cp}`), name: M.fold(f.properties.n), cp: f.properties.cp }));
+    // Like the API's search: "Col."/"Fracc." dropped, and "GDL" for Guadalajara.
     function matches(q) {
-      const nq = norm(q);
+      const nq = M.fold(q).split(" ").map((t) => (t === "GDL" ? "GUADALAJARA" : t)).join(" ");
       if (!nq) return [];
       const tokens = nq.split(" ");
       const hits = index.filter((it) => tokens.every((t) => it.key.includes(t)));
@@ -516,7 +519,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     if (preset) {
       const hits = matches(preset);
       const m = params.get("m"), cp = params.get("cp");
-      const same = (f) => norm(f.properties.n) === norm(preset) && (!m || norm(f.properties.m) === norm(m));
+      const same = (f) => M.fold(f.properties.n) === M.fold(preset) && (!m || norm(f.properties.m) === norm(m));
       const best = (cp && hits.find((f) => same(f) && f.properties.cp === cp)) || hits.find(same) || hits[0];
       if (best) {
         input.value = best.properties.n;

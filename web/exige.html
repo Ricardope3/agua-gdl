@@ -13,8 +13,7 @@
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#06141d" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -169,7 +168,7 @@ button.button { font: inherit; font-weight: 500; font-size: .95rem; cursor: poin
 
   <main>
     <h1>Exígele a quien le toca</h1>
-    <p class="lede">El agua es un derecho: lo dice el <a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf" rel="noopener">artículo 4 de la Constitución</a>. Si en tu colonia no llega, llega sucia o sin presión, mándale tu caso al gobernador, al SIAPA, a la CEA y a tu presidencia municipal. Lo mandas tú, desde tu correo, X o Facebook; Agua GDL no ve ni guarda nada.</p>
+    <p class="lede">El agua es un derecho: lo dice el <a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf" rel="noopener">artículo 4 de la Constitución</a>. Si en tu colonia no llega, llega sucia o sin presión, mándale tu caso al gobernador, a la CEA, a tu presidencia municipal y, en Guadalajara, Zapopan, Tlaquepaque y Tonalá, al SIAPA. Lo mandas tú, desde tu correo, X o Facebook; Agua GDL no ve ni guarda nada.</p>
 
     <form class="signup" id="caso" autocomplete="off">
       <h2 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg></span>1. Tu caso</h2>
@@ -309,17 +308,17 @@ button.button { font: inherit; font-weight: 500; font-size: .95rem; cursor: poin
     if (c.pasa === "sucia") return `Agua sucia en ${c.donde}`;
     return c.dias ? `${dias(c.dias)} sin agua en ${c.donde}` : `Sin agua en ${c.donde}`;
   }
+  // SIAPA's promises only reach the municipios it serves.
+  const enSiapa = (c) => !c.municipio || CARGOS.find((d) => d.cargo === "SIAPA").solo.includes(c.municipio);
   function armarCuerpo(c) {
     const promesa = c.pasa === "sucia"
       ? "El SIAPA dijo que la rotación significaría «menos agua pero de mejor calidad». En mi casa no es así."
       : "El SIAPA anunció racionamientos «por máximo un día» y dijo que «no serán cortes totales». En mi colonia no se está cumpliendo.";
     return `Le escribo desde ${c.lugar}. ${situacion(c)}
 
-${promesa}
+${enSiapa(c) ? promesa + "\n\n" : ""}El agua es un derecho. El artículo 4 de la Constitución dice: «Toda persona tiene derecho al acceso, disposición y saneamiento de agua para consumo personal y doméstico en forma suficiente, salubre, aceptable y asequible». Le pido:
 
-El agua es un derecho. El artículo 4 de la Constitución dice: «Toda persona tiene derecho al acceso, disposición y saneamiento de agua para consumo personal y doméstico en forma suficiente, salubre, aceptable y asequible». Le pido:
-
-1. Que el agua llegue a mi colonia como se anunció y, mientras no llegue, que manden pipas.
+1. Que el agua llegue a mi colonia${enSiapa(c) ? " como se anunció" : ""} y, mientras no llegue, que manden pipas.
 2. Que el agua que llegue sea limpia.
 3. Que publiquen cuánta agua llega a cada zona y a qué horas.
 

@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-10-18",
+  "actualizado": "2026-10-20",
   "replica": {"enviada": "2026-10-17", "cierra": "2026-10-26T23:59"},
   "promesas": [
     {
@@ -376,7 +376,7 @@
       "plazo": {"fecha": "2026-12-15", "tipo": "explicito", "texto": "La obligación del decreto vence el 15 de diciembre de 2026. El apoyo durante la rotación lo seguimos hasta el 31 de marzo de 2027."},
       "pasos": [
         {
-          "texto": "Hay un canal gratuito para pedir pipas: SIAPATEL 33 3668 2482 o 073, de lunes a domingo de 8:00 a 20:00.",
+          "texto": "Hay un canal gratuito para pedir pipas: SIAPATEL 33 3668 2482 o 073.",
           "estado": "cumplido",
           "evidencia": [{"url": "https://www.informador.mx/jalisco/siapa-lemus-anuncia-rotacion-del-agua-en-guadalajara-inicia-el-15-de-octubre-20261012-0187.html", "archive": "https://web.archive.org/web/20261017135044/https://www.informador.mx/jalisco/siapa-lemus-anuncia-rotacion-del-agua-en-guadalajara-inicia-el-15-de-octubre-20261012-0187.html", "medio": "El Informador", "fecha": "2026-10-12"}]
         },

@@ -1,6 +1,6 @@
 Sitio estático de aguagdl.com, sin paso de build. `index.html` es la página de inicio: «El agua es un derecho. Exígelo.», el reporte de tu colonia, pedirle al Congreso que vote no al acueducto privado y, frente a frente, lo que prometió el SIAPA y lo que está pasando (cifras de la CEA, noticias y publicaciones de vecinos en X, cada una con su enlace; de las personas solo la colonia y la fecha). Nada de la rotación: eso está en /mizona, /mapa y /avisos.
 
-`exige.html` («Exígele a quien le toca», /exige; «Exige» en el menú) arma un mensaje con tu colonia, tu municipio y lo que pasa (sin agua, poca presión o agua sucia), y lo mandas tú desde tu correo, X o Facebook al gobernador, al SIAPA, a la CEA y a tu presidencia municipal; cada contacto lleva su fuente oficial y la fecha en que se revisó. Agua GDL no ve ni guarda nada.
+`exige.html` («Exígele a quien le toca», /exige; «Exige» en el menú) arma un mensaje con tu colonia, tu municipio y lo que pasa (sin agua, poca presión o agua sucia), y lo mandas tú desde tu correo, X o Facebook al gobernador, a la CEA, a tu presidencia municipal y, en Guadalajara, Zapopan, Tlaquepaque y Tonalá, al SIAPA (solo ahí el mensaje cita sus promesas); cada contacto lleva su fuente oficial y la fecha en que se revisó. Agua GDL no ve ni guarda nada.
 
 El conteo semanal (`informes.html`, con los conteos que escribe `api/cmd/informe` en `semana/<lunes>.html`) se quitó el 20 oct 2026 hasta que haya suficientes reportes; la página está en el historial de git (`cf999bf`).
 
@@ -17,3 +17,5 @@ Publicado en https://aguagdl.com con Cloudflare Pages (sin comando de build, car
 `noticias.html` («Noticias») es la crisis al día, curada a mano: cifras del encabezado, la marcha próxima, videos que se abren en un reproductor modal y se cargan de YouTube/TikTok/X solo al tocarlos (las miniaturas están en `img/videos/`, bajadas una vez de cada plataforma, para no contactar a nadie al abrir la página), el «Día por día» filtrable (cada `<article>` lleva `data-tags`: `represion`, `justicia`, `agua`, `acueducto`, `protesta`) y «Lo que dicen». Cada nota enlaza a su fuente; actualiza la fecha de «Última actualización» al editarla.
 
 `promesas.html` («Lo que prometieron del acueducto»; «Cuentas» en el menú) pone cada promesa del gobierno sobre el agua junto a la ley o el documento oficial. Sus tarjetas y su gráfica se generan desde `promesas.json` con `python3 pipelines/promesas.py`; no las edites a mano.
+
+`theme.js` (en el `<head>` de cada página) pone el botón de tema claro u oscuro; el claro es el predeterminado. También cambia el color de la barra del navegador, así que cada página lleva un solo `<meta name="theme-color" content="#ffffff">`, sin `media`.
