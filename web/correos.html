@@ -4,13 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#06141d">
 <title>Correos por enviar · Agua GDL</title>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/logo.svg" type="image/svg+xml">
 <style>
 :root {
-  --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
-  --brand: #0284c7; --brand-deep: #0369a1; --link: #0369a1; --ok: #15803d; --ring: #0284c766;
+  --bg: #06141d; --surface: #0a1c28; --subtle: #0c3149; --fg: #f0f9ff; --muted: #9bb8ca; --line: #18384d;
+  --brand: #0ea5e9; --brand-deep: #0369a1; --link: #7dd3fc; --ok: #4ade80; --warn: #fbbf24; --ring: #38bdf866;
+  color-scheme: dark;
   --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 * { box-sizing: border-box }
@@ -41,13 +43,13 @@ dt { color: var(--muted); font-size: .9rem; padding-top: 1px }
 dd { margin: 0; overflow-wrap: anywhere }
 .addr { user-select: all; font-weight: 600 }
 .acts { display: flex; flex-wrap: wrap; gap: 8px }
-.acts button, .acts a { font: inherit; font-weight: 700; padding: 10px 16px; border-radius: 8px; border: 1px solid var(--brand-deep); background: var(--surface); color: var(--brand-deep); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center }
-.acts .main { background: var(--brand-deep); color: #fff }
-.acts .main:hover { background: var(--brand) }
+.acts button, .acts a { font: inherit; font-weight: 700; padding: 10px 16px; border-radius: 8px; border: 1px solid var(--brand); background: var(--surface); color: var(--link); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center }
+.acts .main { background: var(--brand-deep); border-color: var(--brand-deep); color: #fff }
+.acts .main:hover { background: #0377b5 }
 .acts .done-btn { border-color: var(--ok); color: var(--ok) }
 .status { min-height: 1.55em; margin: 10px 0 0; font-size: .95rem }
 .status.ok { color: var(--ok) }
-.status.bad { color: #b45309 }
+.status.bad { color: var(--warn) }
 pre { white-space: pre-wrap; overflow-wrap: anywhere; font: 15px/1.5 var(--font); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; margin: 14px 0 0 }
 .listo { margin: 0; font-weight: 600; color: var(--ok) }
 h3 { font-size: 1rem; margin: 24px 0 8px }
