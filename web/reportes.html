@@ -737,6 +737,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     }
     function select(f, { fit = true, form = false } = {}) {
       selected = f;
+      selZoom = fit ? null : map.getZoom();
       for (const g of marks) g.remove();
       const all = features.get(keyOf(f.properties)) || [f];
       const gj = { type: "FeatureCollection", features: all.map((x) => ({ type: "Feature", geometry: x.geometry, properties: {} })) };
@@ -860,6 +861,14 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     }
 
     const liveRenderer = L.svg({ padding: 0.5 });
+    // Zooming far out from a selected colonia means the visitor has moved on: it closes, frame and all.
+    let selZoom = null;
+    map.on("zoomend", () => {
+      if (!selected) return;
+      const z = map.getZoom();
+      if (selZoom == null || z > selZoom) selZoom = z;
+      else if (z < Math.min(12, selZoom - 2)) clearSelection();
+    });
     // The fifth-highest count of publications: colonias at or above it are the top five (ties included).
     const TOP = [...ev.values()].map((x) => x.posts.length).sort((a, b) => b - a)[4] || Infinity;
 
