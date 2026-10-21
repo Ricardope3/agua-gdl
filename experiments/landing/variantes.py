@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Variants of the landing page, to compare ordering, placement and style: writes web/v1.html …
-web/v5.html (noindex, with a bar to switch between them and the current landing) from the
-pieces of web/index.html, so each carries its copy, quotes and sources as they are. Change a
-variant here and run it again; a piece index.html no longer has stops it.
+"""Variants of the landing page, to compare ordering and placement in one style: writes
+web/v1.html … web/v5.html (noindex, with a bar to switch between them and the current landing)
+from the pieces of web/index.html, so each carries its copy, quotes and sources as they are.
+All five share STYLE, v1's newspaper look (serif headlines, quotes and figures, rules in ink);
+each adds its own layout. Change a variant here and run it again; a piece index.html no longer
+has stops it.
 
 Usage, from the repo root: python3 -I experiments/landing/variantes.py
 """
@@ -76,13 +78,39 @@ def vs(facts=True):
             f'<div class="vs-grid">\n{PROMESA}\n{realidad(facts)}\n</div>\n{VS_BUTTONS}\n    </section>\n')
 
 
-NAMES = {1: "Promesa contra realidad", 2: "Acciones primero", 3: "Cartel", 4: "Datos en vivo", 5: "Lo esencial"}
+NAMES = {1: "Promesa contra realidad", 2: "Acciones primero", 3: "Alerta y cifras", 4: "Datos en vivo", 5: "Lo esencial"}
 
 BAR_CSS = """
 .variant-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin: 0 -16px; padding: 6px 16px; background: #1c1400; color: #fde68a; font-size: .78rem }
 .variant-bar strong { margin-right: 4px }
 .variant-bar a { color: #fde68a; text-decoration: none; padding: 2px 8px; border-radius: 999px; border: 1px solid #fde68a55 }
 .variant-bar a[aria-current="page"] { background: #fde68a; color: #1c1400; font-weight: 700 }
+"""
+
+# v1's newspaper look, shared: serif headlines, quotes and figures; the promise against what is
+# happening set flat between rules in ink; neighbours' words marked by a red rule.
+STYLE = """
+:root { --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif }
+main h1, main h2, .v5-more > summary { font-family: var(--serif); font-weight: 700; letter-spacing: -.015em }
+main h1 { line-height: 1.03 }
+main .lede { color: var(--fg) }
+.kicker { margin: 0 0 12px; font-family: var(--font); color: var(--alarm); font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase }
+.vs-grid { gap: 0; border-top: 3px solid var(--fg); border-bottom: 1px solid var(--fg) }
+.vs-col { background: none; border: 0; border-radius: 0; box-shadow: none; padding: 20px 0 }
+.vs-col h3 { margin: 0 0 14px; color: var(--alarm); letter-spacing: .12em }
+.promesa h3 { color: var(--muted) }
+@media (min-width: 760px) { .vs-grid > :first-child { padding-right: 28px } .vs-grid > :last-child { border-left: 1px solid var(--line); padding-left: 28px } }
+.promesa blockquote { font-family: var(--serif); font-style: italic; font-size: 1.22rem; line-height: 1.38; border: 0; padding: 0; margin: 0 0 16px }
+.promesa blockquote mark { font-style: normal }
+.vs-facts { grid-template-columns: 1fr; gap: 0; margin: 0 0 4px }
+.vs-facts li { display: block; padding: 0 0 18px; margin: 0 0 18px; border-bottom: 1px solid var(--line) }
+.vs-facts li:last-child { border: 0; margin: 0; padding: 0 }
+.vs-facts strong { display: block; font-family: var(--serif); font-size: clamp(2.6rem, 9vw, 3.6rem); line-height: 1; letter-spacing: -.02em; margin: 0 0 6px }
+.vs-facts span { font-size: .95rem; margin: 0 }
+.realidad h4 { margin: 22px 0 10px; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--alarm) }
+.posts { display: block }
+.posts li { margin: 0 0 12px; background: none; border: 0; border-left: 2px solid var(--alarm); border-radius: 0; padding: 2px 0 2px 14px }
+.posts q { font-family: var(--serif); font-size: 1.08rem }
 """
 
 
@@ -95,76 +123,60 @@ def bar(n):
 
 def page(n, css, main, script=SCRIPT, after=""):
     head = re.sub(r"<title>.*?</title>", f'<title>Agua GDL · Variante {n}: {NAMES[n]}</title>\n<meta name="robots" content="noindex">', HEAD, count=1, flags=re.S)
-    html = (head + BAR_CSS + css + "</style>" + HEAD_END + "</head>\n<body>\n<div class=\"wrap\">\n" + bar(n) + HEADER
+    html = (head + BAR_CSS + STYLE + css + "</style>" + HEAD_END + "</head>\n<body>\n<div class=\"wrap\">\n" + bar(n) + HEADER
             + "\n  <main>\n" + main + "  </main>\n\n" + FOOTER + "</div>\n" + after + script + "</body>\n</html>\n")
     (WEB / f"v{n}.html").write_text(html, encoding="utf-8")
 
 
 # v1: what SIAPA promised against what is happening is the hero, set like a newspaper page.
 page(1, """
-.v1 { --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif }
 .v1-hero { padding: 14px 0 34px }
-.kicker { margin: 0 0 12px; color: var(--alarm); font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase }
-.v1 h1 { font-family: var(--serif); font-size: clamp(2.2rem, 6.6vw, 4rem); line-height: 1.03; letter-spacing: -.015em; max-width: 21ch; margin: 0 0 26px }
-.v1-cols { display: grid; border-top: 3px solid var(--fg); border-bottom: 1px solid var(--fg) }
-.v1 .vs-col { background: none; border: 0; border-radius: 0; box-shadow: none; padding: 20px 0; position: static }
-.v1 .vs-col h3 { margin: 0 0 14px; color: var(--alarm); letter-spacing: .12em }
-.v1 .promesa h3 { color: var(--muted) }
-.v1 .promesa blockquote { font-family: var(--serif); font-style: italic; font-size: 1.22rem; line-height: 1.38; border: 0; padding: 0; margin: 0 0 16px }
-.v1 .promesa blockquote mark { font-style: normal }
-.v1 .vs-facts { grid-template-columns: 1fr; gap: 0; margin: 0 }
-.v1 .vs-facts li { display: block; padding: 0 0 18px; margin: 0 0 18px; border-bottom: 1px solid var(--line) }
-.v1 .vs-facts li:last-child { border: 0; margin: 0; padding: 0 }
-.v1 .vs-facts strong { display: block; font-family: var(--serif); font-size: clamp(2.6rem, 9vw, 3.6rem); line-height: 1; letter-spacing: -.02em; margin: 0 0 6px }
-.v1 .vs-facts span { font-size: .95rem }
-@media (min-width: 760px) { .v1-cols { grid-template-columns: 1fr 1fr } .v1-cols > :first-child { padding-right: 28px } .v1-cols > :last-child { border-left: 1px solid var(--line); padding-left: 28px } }
+.v1-hero h1 { font-size: clamp(2.2rem, 6.6vw, 4rem); max-width: 21ch; margin: 0 0 26px }
+.v1-cols .promesa { position: static }
+@media (min-width: 760px) { .v1-cols { grid-template-columns: 1fr 1fr } }
 .v1-act { margin: 0 0 8px; padding: 26px 0; border-top: 0 }
-.v1-act h2 { font-family: var(--serif); font-size: clamp(1.6rem, 4.4vw, 2.2rem); margin: 0 0 10px }
-.v1-act .lede { color: var(--fg) }
+.v1-act h2 { font-size: clamp(1.6rem, 4.4vw, 2.2rem); margin: 0 0 10px }
 .v1-wall { padding: 30px 0 36px; border-top: 3px solid var(--fg) }
-.v1-wall h2 { font-family: var(--serif); font-size: 1.6rem; margin: 0 0 18px }
+.v1-wall h2 { font-size: 1.6rem; margin: 0 0 18px }
 .v1-wall .cols { columns: 2 300px; column-gap: 28px }
 .v1-wall h4 { break-after: avoid; margin: 0 0 10px; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--alarm) }
-.v1-wall .posts { display: block; margin: 0 0 18px }
-.v1-wall .posts li { break-inside: avoid; margin: 0 0 12px; background: none; border: 0; border-left: 2px solid var(--alarm); border-radius: 0; padding: 2px 0 2px 14px }
-.v1-wall .posts q { font-family: var(--serif); font-size: 1.08rem }
+.v1-wall .posts { margin: 0 0 18px }
+.v1-wall .posts li { break-inside: avoid }
 .v1-wall .note { color: var(--muted); font-size: .82rem; margin: 6px 0 0 }
 .v1-boxes { display: grid; gap: 12px; margin: 0 0 40px }
 @media (min-width: 860px) { .v1-boxes { grid-template-columns: repeat(3, 1fr) } }
-.v1 .congreso h2, .v1 section > h2 { font-family: var(--serif) }
-""", f"""    <div class="v1 v1-hero">
+""", f"""    <div class="v1-hero">
       <p class="kicker">{text(H1)}</p>
       <h1>{VS_TITLE}</h1>
-      <div class="v1-cols">
+      <div class="vs-grid v1-cols">
 {PROMESA}
 <div class="vs-col realidad">{REALIDAD_H3}{FACTS}</div>
       </div>
     </div>
-    <section class="v1 v1-act" aria-labelledby="tuya">
+    <section class="v1-act" aria-labelledby="tuya">
       <h2 id="tuya">¿Y en tu colonia?</h2>
       {LEDE}
       {PULSE}
       {FORM}
     </section>
-    <section class="v1 v1-wall" aria-labelledby="dicen">
+    <section class="v1-wall" aria-labelledby="dicen">
       <h2 id="dicen">Lo que se publica</h2>
       <div class="cols">{NEWS}{NEIGHBOURS}</div>
       {POSTS_NOTE}
       {VS_BUTTONS}
     </section>
-    <div class="v1 v1-boxes">{ALERTA}{EXIGE_BOX}{CONGRESO_BOX}</div>
-    <div class="v1">
-{CONGRESO}{MAS}{WHY}{CONTACT}    </div>
-""")
+    <div class="v1-boxes">{ALERTA}{EXIGE_BOX}{CONGRESO_BOX}</div>
+{CONGRESO}{MAS}{WHY}{CONTACT}""")
 
 # v2: the three things to do up top; on phones they stay in a bar at the bottom.
 page(2, """
 .v2-hero { padding: 16px 0 6px; max-width: 780px }
+.v2-hero h1 { font-size: clamp(2.2rem, 6.6vw, 4rem) }
 .v2-hero .pulse { margin-top: 12px }
 .v2-actions { display: grid; gap: 12px; margin: 22px 0 22px }
 @media (min-width: 900px) { .v2-actions { grid-template-columns: 1.35fr 1fr 1fr; align-items: stretch } }
 .v2-report { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid #e11d48; border-radius: 12px; box-shadow: var(--shadow); padding: 14px 16px }
-.v2-report h2 { font-size: 1.1rem; margin: 0 0 10px }
+.v2-report h2 { font-size: 1.3rem; margin: 0 0 10px }
 .v2-report .ih .i-badge { width: 28px; height: 28px; background: #e11d48 }
 .v2-report .quick { background: none; border: 0; box-shadow: none; padding: 0; margin: 0 }
 .v2-report .quick label { font-weight: 500; color: var(--muted); font-size: .9rem }
@@ -202,57 +214,45 @@ page(2, """
 </nav>
 """)
 
-# v3: a protest poster: the alarm on top, a dark hero with the motto, neighbours' words rolling by.
+# v3: the alarm first, the motto as a headline, neighbours' words rolling by, then the figures.
 ticker = "".join(f"<li><b>«{q}»</b> {who}</li>" for q, who in POSTS)
 page(3, """
-.v3-alarm { margin: 0 0 0; }
-.v3-alarm .alerta { margin: 0 -16px; border: 0; border-radius: 0; padding: 12px 16px; background: #b91c1c; color: #fff; box-shadow: 0 0 0 100vmax #b91c1c; clip-path: inset(0 -100vmax); font-size: .95rem }
-.v3-alarm .alerta .alerta-head { color: #fff; font-size: 1.05rem }
-.v3-alarm .alerta-i { background: #fff; color: #b91c1c }
-.v3-alarm .alerta a { color: #fff }
-.v3-poster { background: #0b1220; color: #f8fafc; box-shadow: 0 0 0 100vmax #0b1220; clip-path: inset(0 -100vmax); padding: 40px 0 38px }
-.v3-poster h1 { font-size: clamp(2.7rem, 11.5vw, 6.2rem); line-height: .93; font-weight: 900; text-transform: uppercase; letter-spacing: -.04em; max-width: 11ch; margin: 0 0 24px }
-.v3-poster h1 mark { background: #fcd34d; color: #1c1400; font-weight: 900; padding: 0 .1em; border-radius: 6px }
-.v3-poster .lede { color: #cbd5e1; font-size: 1.12rem; max-width: 58ch }
-.v3-poster .lede a { color: #7dd3fc }
-.v3-poster .pulse { color: #e2e8f0 }
-.v3-poster .quick { background: #111a2e; border-color: #22314d; border-top-color: #fcd34d; box-shadow: none; max-width: 640px }
-.v3-poster .quick label { color: #f8fafc }
-.v3-poster .quick .or { color: #94a3b8 }
-.v3-poster .quick .or a { color: #7dd3fc }
-.v3-ticker { overflow: hidden; margin: 0 -16px; border-bottom: 2px solid var(--fg); background: var(--surface) }
-.v3-ticker ul { display: flex; gap: 40px; width: max-content; margin: 0; padding: 13px 16px; list-style: none; animation: v3-roll 120s linear infinite }
-.v3-ticker li { white-space: nowrap; color: var(--muted); font-size: .92rem }
-.v3-ticker li b { color: var(--fg); font-weight: 600 }
+.v3-alarm { padding: 16px 0 0 }
+.v3-alarm .alerta { font-size: .95rem }
+.v3-alarm .alerta .alerta-head { font-size: 1.05rem }
+.v3-hero { padding: 26px 0 30px }
+.v3-hero h1 { font-size: clamp(2.6rem, 9.5vw, 5rem); max-width: 14ch; margin: 0 0 20px }
+.v3-hero h1 .red { color: var(--alarm) }
+.v3-hero .quick { max-width: 640px }
+.v3-ticker { overflow: hidden; border-top: 3px solid var(--fg); border-bottom: 1px solid var(--fg) }
+.v3-ticker ul { display: flex; gap: 40px; width: max-content; margin: 0; padding: 12px 0; list-style: none; animation: v3-roll 120s linear infinite }
+.v3-ticker li { white-space: nowrap; color: var(--muted); font-size: .88rem }
+.v3-ticker li b { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 1.08rem; color: var(--fg) }
 .v3-ticker:hover ul { animation-play-state: paused }
 @keyframes v3-roll { to { transform: translateX(-50%) } }
 @media (prefers-reduced-motion: reduce) { .v3-ticker { overflow-x: auto } .v3-ticker ul { animation: none } }
-.v3-numbers { padding: 36px 0 40px; border-top: 0 }
-.v3-numbers h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin: 0 0 18px }
-.v3-numbers .vs-facts { grid-template-columns: 1fr; gap: 26px; margin: 0 }
-.v3-numbers .vs-facts li { display: block }
-.v3-numbers .vs-facts strong { display: block; font-size: clamp(3.2rem, 13vw, 5.6rem); font-weight: 900; letter-spacing: -.05em; line-height: .9; margin: 0 0 8px }
-.v3-numbers .vs-facts span { font-size: 1rem; color: var(--fg) }
-@media (min-width: 760px) { .v3-numbers .vs-facts { grid-template-columns: repeat(3, 1fr); gap: 32px } }
-.v3 .vs h2 { font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 900; text-transform: uppercase; letter-spacing: -.03em; line-height: 1 }
-.v3 .promesa blockquote { font-size: 1.15rem; font-weight: 600 }
+.v3-numbers { padding: 30px 0 36px; border-top: 0 }
+.v3-numbers .vs-facts strong { font-size: clamp(3rem, 11vw, 4.8rem) }
+@media (min-width: 760px) {
+  .v3-numbers .vs-facts { grid-template-columns: repeat(3, 1fr) }
+  .v3-numbers .vs-facts li { border: 0; margin: 0; padding: 0 22px; border-left: 1px solid var(--line) }
+  .v3-numbers .vs-facts li:first-child { border-left: 0; padding-left: 0 }
+}
 .v3-calls { display: grid; gap: 12px; margin: 0 0 40px }
 @media (min-width: 760px) { .v3-calls { grid-template-columns: 1fr 1fr } }
 """, f"""    <div class="v3-alarm">{ALERTA}</div>
-    <div class="v3-poster">
-      {H1.replace("Exígelo.", "<mark>Exígelo.</mark>")}
+    <div class="v3-hero">
+      {H1.replace("Exígelo.", '<span class="red">Exígelo.</span>')}
       {LEDE}
       {FORM}
       {PULSE}
     </div>
     <div class="v3-ticker" aria-hidden="true"><ul>{ticker}{ticker}</ul></div>
     <section class="v3-numbers" aria-labelledby="cifras">
-      <h2 id="cifras">En números</h2>
+      <h2 class="kicker" id="cifras">En números</h2>
       {FACTS}
     </section>
-    <div class="v3">
-{vs(facts=False)}    </div>
-    <div class="v3-calls">{EXIGE_BOX}{CONGRESO_BOX}</div>
+{vs(facts=False)}    <div class="v3-calls">{EXIGE_BOX}{CONGRESO_BOX}</div>
 {CONGRESO}{MAS}{WHY}{CONTACT}""")
 
 # v4: the numbers lead, live: this map's last day and what outlets and neighbours publish.
@@ -306,24 +306,25 @@ V4_SCRIPT = SCRIPT.split("  // What neighbours reported", 1)[0] + r"""  const fm
 page(4, """
 .v4-hero { display: grid; gap: 22px; padding: 16px 0 30px }
 @media (min-width: 860px) { .v4-hero { grid-template-columns: 1fr 1.05fr; align-items: center; gap: 36px } }
-.v4-board { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0 }
-.v4-tile { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; box-shadow: var(--shadow) }
-.v4-tile b { display: block; font-size: clamp(1.8rem, 6.2vw, 2.5rem); font-weight: 700; letter-spacing: -.035em; line-height: 1.05; font-variant-numeric: tabular-nums }
-.v4-tile span { display: block; margin-top: 4px; color: var(--muted); font-size: .85rem; line-height: 1.35 }
-.v4-tile.wide { grid-column: 1 / -1; background: color-mix(in srgb, var(--alarm) 8%, var(--surface)); border-color: color-mix(in srgb, var(--alarm) 30%, var(--line)); border-top: 3px solid var(--alarm) }
-.v4-tile.wide b { color: var(--alarm); font-size: clamp(2.6rem, 9vw, 3.6rem) }
-.v4-tile.wide span { color: var(--fg); font-size: .98rem }
-.v4-board > :last-child:nth-child(even) { grid-column: 1 / -1 }
+.v4-hero h1 { font-size: clamp(2.2rem, 6.6vw, 3.8rem) }
+.v4-board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; border-top: 3px solid var(--fg); border-bottom: 1px solid var(--fg) }
+.v4-tile { margin: 0; padding: 14px 10px 14px 0 }
+.v4-tile b { display: block; font-family: var(--serif); font-size: clamp(1.7rem, 5.6vw, 2.4rem); font-weight: 700; letter-spacing: -.02em; line-height: 1.05; font-variant-numeric: tabular-nums }
+.v4-tile span { display: block; margin-top: 6px; color: var(--muted); font-size: .82rem; line-height: 1.35 }
+.v4-tile:not(.wide) + .v4-tile { border-left: 1px solid var(--line); padding-left: 14px }
+.v4-tile.wide { grid-column: 1 / -1; padding: 16px 0 18px; border-bottom: 1px solid var(--line) }
+.v4-tile.wide b { color: var(--alarm); font-size: clamp(3.2rem, 12vw, 4.8rem); line-height: 1 }
+.v4-tile.wide span { color: var(--fg); font-size: 1rem }
 .v4-top { padding: 30px 0 34px }
 .v4-top h2 { margin: 0 0 6px }
 .v4-top > p { margin: 0 0 16px; color: var(--muted); font-size: .9rem }
-.v4-list { list-style: none; margin: 0 0 14px; padding: 0; display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)) }
-.v4-list a { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 12px; align-items: center; padding: 10px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; color: var(--fg); text-decoration: none; box-shadow: var(--shadow) }
-.v4-list a:hover { border-color: var(--alarm) }
-.v4-list span { grid-row: 1 / span 2; min-width: 4.4em; padding: 6px 8px; border-radius: 999px; background: var(--alarm); color: #fff; font-weight: 700; font-size: .85rem; text-align: center; white-space: nowrap }
-@media (prefers-color-scheme: dark) { .v4-list span { color: #2d0b10 } }
-.v4-list strong { font-size: .98rem; line-height: 1.25 }
-.v4-list small { color: var(--muted); font-size: .8rem }
+.v4-list { list-style: none; margin: 0 0 14px; padding: 0; columns: 2 300px; column-gap: 32px; border-top: 3px solid var(--fg) }
+.v4-list li { break-inside: avoid; border-bottom: 1px solid var(--line) }
+.v4-list a { display: grid; grid-template-columns: 1fr auto; column-gap: 12px; align-items: baseline; padding: 10px 0; color: var(--fg); text-decoration: none }
+.v4-list a:hover strong { text-decoration: underline; text-underline-offset: 3px }
+.v4-list strong { grid-column: 1; grid-row: 1; font-family: var(--serif); font-size: 1.15rem; line-height: 1.25 }
+.v4-list small { grid-column: 1; grid-row: 2; color: var(--muted); font-size: .8rem }
+.v4-list span { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-family: var(--serif); font-size: 1.3rem; font-weight: 700; color: var(--alarm); white-space: nowrap }
 .v4-report { padding: 30px 0 }
 .v4-report h2 { margin: 0 }
 .v4-report .quick { margin-top: 14px }
@@ -359,23 +360,22 @@ folded = "".join(f'    <details class="v5-more"><summary>{title}</summary><div>{
 page(5, """
 .v5 { max-width: 680px; margin: 0 auto }
 .v5-hero { padding: 30px 0 18px }
-.v5-hero h1 { font-size: clamp(2.4rem, 8.5vw, 3.6rem); margin: 0 0 14px }
-.v5 .quick { background: none; border: 0; box-shadow: none; padding: 0; margin: 22px 0 0 }
-.v5 .quick label { font-size: 1.05rem }
-.v5 .quick input { font-size: 1.1rem; padding: 13px 14px }
-.v5 .quick .button { padding: 13px 20px; font-size: 1rem }
-.v5 .pulse { font-weight: 500; color: var(--muted) }
-.v5 .pulse b { color: var(--fg) }
+.v5-hero h1 { font-size: clamp(2.4rem, 8.5vw, 3.8rem); margin: 0 0 14px }
+.v5 .quick input { font-size: 1.05rem; padding: 12px 14px }
+.v5 .pulse { font-weight: 500 }
 .v5-boxes { display: grid; gap: 10px; margin: 8px 0 14px }
 .v5 .alerta { margin: 0 0 26px }
 .v5-more { border-top: 1px solid var(--line) }
-.v5-more:last-of-type { border-bottom: 1px solid var(--line); margin-bottom: 8px }
-.v5-more > summary { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 18px 0; cursor: pointer; list-style: none; font-size: 1.15rem; font-weight: 600; line-height: 1.3 }
+.v5-more:first-of-type { border-top: 3px solid var(--fg) }
+.v5-more:last-of-type { border-bottom: 1px solid var(--fg); margin-bottom: 8px }
+.v5-more > summary { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 18px 0; cursor: pointer; list-style: none; font-size: 1.35rem; line-height: 1.25 }
 .v5-more > summary::-webkit-details-marker { display: none }
-.v5-more > summary::after { content: "+"; flex-shrink: 0; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--subtle); color: var(--link); font-size: 1.2rem; font-weight: 600 }
+.v5-more > summary::after { content: "+"; flex-shrink: 0; font-family: var(--serif); font-size: 1.8rem; font-weight: 400; line-height: 1; color: var(--alarm) }
 .v5-more[open] > summary::after { content: "−" }
 .v5-more > div { padding: 0 0 26px }
 .v5-more .vs-grid { grid-template-columns: 1fr }
+.v5-more .vs-grid > :last-child { border-left: 0; padding-left: 0; border-top: 1px solid var(--line) }
+.v5-more .vs-grid > :first-child { padding-right: 0 }
 .v5-more .promesa { position: static }
 .v5 .contact { border-top: 0 }
 """, f"""    <div class="v5">

@@ -253,42 +253,49 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .variant-bar a { color: #fde68a; text-decoration: none; padding: 2px 8px; border-radius: 999px; border: 1px solid #fde68a55 }
 .variant-bar a[aria-current="page"] { background: #fde68a; color: #1c1400; font-weight: 700 }
 
-.v1 { --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif }
+:root { --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif }
+main h1, main h2, .v5-more > summary { font-family: var(--serif); font-weight: 700; letter-spacing: -.015em }
+main h1 { line-height: 1.03 }
+main .lede { color: var(--fg) }
+.kicker { margin: 0 0 12px; font-family: var(--font); color: var(--alarm); font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase }
+.vs-grid { gap: 0; border-top: 3px solid var(--fg); border-bottom: 1px solid var(--fg) }
+.vs-col { background: none; border: 0; border-radius: 0; box-shadow: none; padding: 20px 0 }
+.vs-col h3 { margin: 0 0 14px; color: var(--alarm); letter-spacing: .12em }
+.promesa h3 { color: var(--muted) }
+@media (min-width: 760px) { .vs-grid > :first-child { padding-right: 28px } .vs-grid > :last-child { border-left: 1px solid var(--line); padding-left: 28px } }
+.promesa blockquote { font-family: var(--serif); font-style: italic; font-size: 1.22rem; line-height: 1.38; border: 0; padding: 0; margin: 0 0 16px }
+.promesa blockquote mark { font-style: normal }
+.vs-facts { grid-template-columns: 1fr; gap: 0; margin: 0 0 4px }
+.vs-facts li { display: block; padding: 0 0 18px; margin: 0 0 18px; border-bottom: 1px solid var(--line) }
+.vs-facts li:last-child { border: 0; margin: 0; padding: 0 }
+.vs-facts strong { display: block; font-family: var(--serif); font-size: clamp(2.6rem, 9vw, 3.6rem); line-height: 1; letter-spacing: -.02em; margin: 0 0 6px }
+.vs-facts span { font-size: .95rem; margin: 0 }
+.realidad h4 { margin: 22px 0 10px; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--alarm) }
+.posts { display: block }
+.posts li { margin: 0 0 12px; background: none; border: 0; border-left: 2px solid var(--alarm); border-radius: 0; padding: 2px 0 2px 14px }
+.posts q { font-family: var(--serif); font-size: 1.08rem }
+
 .v1-hero { padding: 14px 0 34px }
-.kicker { margin: 0 0 12px; color: var(--alarm); font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase }
-.v1 h1 { font-family: var(--serif); font-size: clamp(2.2rem, 6.6vw, 4rem); line-height: 1.03; letter-spacing: -.015em; max-width: 21ch; margin: 0 0 26px }
-.v1-cols { display: grid; border-top: 3px solid var(--fg); border-bottom: 1px solid var(--fg) }
-.v1 .vs-col { background: none; border: 0; border-radius: 0; box-shadow: none; padding: 20px 0; position: static }
-.v1 .vs-col h3 { margin: 0 0 14px; color: var(--alarm); letter-spacing: .12em }
-.v1 .promesa h3 { color: var(--muted) }
-.v1 .promesa blockquote { font-family: var(--serif); font-style: italic; font-size: 1.22rem; line-height: 1.38; border: 0; padding: 0; margin: 0 0 16px }
-.v1 .promesa blockquote mark { font-style: normal }
-.v1 .vs-facts { grid-template-columns: 1fr; gap: 0; margin: 0 }
-.v1 .vs-facts li { display: block; padding: 0 0 18px; margin: 0 0 18px; border-bottom: 1px solid var(--line) }
-.v1 .vs-facts li:last-child { border: 0; margin: 0; padding: 0 }
-.v1 .vs-facts strong { display: block; font-family: var(--serif); font-size: clamp(2.6rem, 9vw, 3.6rem); line-height: 1; letter-spacing: -.02em; margin: 0 0 6px }
-.v1 .vs-facts span { font-size: .95rem }
-@media (min-width: 760px) { .v1-cols { grid-template-columns: 1fr 1fr } .v1-cols > :first-child { padding-right: 28px } .v1-cols > :last-child { border-left: 1px solid var(--line); padding-left: 28px } }
+.v1-hero h1 { font-size: clamp(2.2rem, 6.6vw, 4rem); max-width: 21ch; margin: 0 0 26px }
+.v1-cols .promesa { position: static }
+@media (min-width: 760px) { .v1-cols { grid-template-columns: 1fr 1fr } }
 .v1-act { margin: 0 0 8px; padding: 26px 0; border-top: 0 }
-.v1-act h2 { font-family: var(--serif); font-size: clamp(1.6rem, 4.4vw, 2.2rem); margin: 0 0 10px }
-.v1-act .lede { color: var(--fg) }
+.v1-act h2 { font-size: clamp(1.6rem, 4.4vw, 2.2rem); margin: 0 0 10px }
 .v1-wall { padding: 30px 0 36px; border-top: 3px solid var(--fg) }
-.v1-wall h2 { font-family: var(--serif); font-size: 1.6rem; margin: 0 0 18px }
+.v1-wall h2 { font-size: 1.6rem; margin: 0 0 18px }
 .v1-wall .cols { columns: 2 300px; column-gap: 28px }
 .v1-wall h4 { break-after: avoid; margin: 0 0 10px; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--alarm) }
-.v1-wall .posts { display: block; margin: 0 0 18px }
-.v1-wall .posts li { break-inside: avoid; margin: 0 0 12px; background: none; border: 0; border-left: 2px solid var(--alarm); border-radius: 0; padding: 2px 0 2px 14px }
-.v1-wall .posts q { font-family: var(--serif); font-size: 1.08rem }
+.v1-wall .posts { margin: 0 0 18px }
+.v1-wall .posts li { break-inside: avoid }
 .v1-wall .note { color: var(--muted); font-size: .82rem; margin: 6px 0 0 }
 .v1-boxes { display: grid; gap: 12px; margin: 0 0 40px }
 @media (min-width: 860px) { .v1-boxes { grid-template-columns: repeat(3, 1fr) } }
-.v1 .congreso h2, .v1 section > h2 { font-family: var(--serif) }
 </style>
 <script src="/theme.js"></script>
 </head>
 <body>
 <div class="wrap">
-  <div class="variant-bar"><strong>Prueba · v1: Promesa contra realidad</strong><a href="/">Actual</a><a href="/v1" title="Promesa contra realidad" aria-current="page">v1</a><a href="/v2" title="Acciones primero">v2</a><a href="/v3" title="Cartel">v3</a><a href="/v4" title="Datos en vivo">v4</a><a href="/v5" title="Lo esencial">v5</a></div>
+  <div class="variant-bar"><strong>Prueba · v1: Promesa contra realidad</strong><a href="/">Actual</a><a href="/v1" title="Promesa contra realidad" aria-current="page">v1</a><a href="/v2" title="Acciones primero">v2</a><a href="/v3" title="Alerta y cifras">v3</a><a href="/v4" title="Datos en vivo">v4</a><a href="/v5" title="Lo esencial">v5</a></div>
   <header class="top">
     <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
     <nav class="site-nav" aria-label="Secciones">
@@ -304,10 +311,10 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   </header>
 
   <main>
-    <div class="v1 v1-hero">
+    <div class="v1-hero">
       <p class="kicker">El agua es un derecho. Exígelo.</p>
       <h1>El SIAPA prometió un día. Hay vecinos con semanas sin agua.</h1>
-      <div class="v1-cols">
+      <div class="vs-grid v1-cols">
 <div class="vs-col promesa">
           <h3>Lo que prometió el SIAPA</h3>
           <blockquote>«Cada zona tendrá de 2 a 3 racionamientos por semana <mark>por máximo un día</mark>»</blockquote>
@@ -323,7 +330,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
           </ul></div>
       </div>
     </div>
-    <section class="v1 v1-act" aria-labelledby="tuya">
+    <section class="v1-act" aria-labelledby="tuya">
       <h2 id="tuya">¿Y en tu colonia?</h2>
       <p class="lede">El <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">SIAPA</a> dijo «por máximo un día»; hay vecinos con <a href="https://www.nmas.com.mx/jalisco/sociedad/colonias-limitrofes-entre-tlaquepaque-y-guadalajara-carecen-de-agua/" rel="noopener">semanas sin agua</a>. Reporta tu colonia: <mark>cada reporte es una prueba</mark> de dónde falla el gobierno, y con ella puedes exigirle que lo arregle. Sin cuenta y anónimo.</p>
       <p class="pulse" id="pulse" aria-live="polite" hidden></p>
@@ -337,7 +344,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
           <p class="or">o <a href="/reportes">mira el mapa de reportes</a>. ¿Sin agua hoy? <a href="/pipas">Pide una pipa</a>. Y <a href="/exige">exígele a quien le toca</a>.</p>
         </form>
     </section>
-    <section class="v1 v1-wall" aria-labelledby="dicen">
+    <section class="v1-wall" aria-labelledby="dicen">
       <h2 id="dicen">Lo que se publica</h2>
       <div class="cols"><h4>En las noticias</h4>
           <ul class="posts">
@@ -362,7 +369,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         <a class="button alt" href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exígele a quien le toca</a>
       </div>
     </section>
-    <div class="v1 v1-boxes"><div class="alerta">
+    <div class="v1-boxes"><div class="alerta">
           <p class="alerta-head"><span class="alerta-i" aria-hidden="true">!</span><span>El SIAPA dijo <span class="nw">«no serán cortes totales».</span><br>No es cierto.</span></p>
           <p>La propia CEA reconoció <a href="https://siker.com.mx/zmg/94-colonias-se-quedan-sin-agua-o-reciben-caudal-minimo-tras-inicio-de-rotacion-en-la-zmg/" rel="noopener">94 colonias sin agua o con un caudal mínimo</a>.</p>
         </div><a class="aviso" href="/exige">
@@ -376,7 +383,6 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
           <span class="aviso-text">pagaría el Estado, como máximo, a una empresa privada en 25 años, según la oposición en el Congreso. Escríbeles a las 38 diputaciones para que voten en contra.</span>
           <span class="button">Escribir al Congreso</span>
         </a></div>
-    <div class="v1">
     <section class="congreso" aria-labelledby="congreso">
       <h2 id="congreso" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#landmark"/></svg></span>Que el Congreso vote no a privatizar el agua</h2>
       <p>El Gobierno de Jalisco quiere que una empresa privada construya y opere el nuevo acueducto de Chapala a Guadalajara, y pagarle durante 20 o 25 años. El Congreso decide. Pídele a tu diputación que no lo apruebe sin estudios actualizados, sin saber cuánto se pagará en total cada año ni quién carga con los riesgos.</p>
@@ -446,7 +452,6 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       <p>¿Tienes dudas o datos sobre el agua en tu colonia, o quieres ayudar? Si eres de una organización vecinal o civil que trabaja por el agua, también nos encantaría hablar.</p>
       <a class="email" href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>
     </section>
-    </div>
   </main>
 
   <footer>
