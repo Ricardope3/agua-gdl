@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-10-20",
+ "actualizado": "2026-10-21",
  "desde": "2026-10-12",
  "regla": {
   "reacciones": 5,
@@ -2420,6 +2420,764 @@
     "reacciones": 13,
     "comentarios": 7,
     "al": "2026-10-20"
+   }
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "El Informador",
+   "url": "https://www.informador.mx/jalisco/compramos-hasta-seis-garrafones-cuando-no-hay-agua-tapatios-resienten-tandeos-piden-soluciones-ante-la-escasez-20261017-0057.html",
+   "fecha": "2026-10-17",
+   "colonias": [
+    "OBRERA|Guadalajara|44150"
+   ],
+   "lugar": "Obrera, Guadalajara",
+   "cita": "desde hace dos semanas ha enfrentado baja presión y cortes totales en el servicio del agua",
+   "dias": 14,
+   "eco": null
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Quadratín Jalisco",
+   "url": "https://jalisco.quadratin.com.mx/principal/tlaquepaque-instala-60-cisternas-y-despliega-32-pipas-ante-la-falta-de-agua/",
+   "fecha": "2026-10-15",
+   "colonias": [
+    "ALFREDO BARBA|San Pedro Tlaquepaque|45580"
+   ],
+   "lugar": "Alfredo Barba, Tlaquepaque",
+   "cita": "vecino de la colonia Alfredo Barba, señaló que llevaba 12 días sin agua",
+   "dias": 12,
+   "eco": null
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "La BCSA (retoma a Mural)",
+   "url": "https://labcsa.org/2026/10/20/suman-quejas-por-desabasto-pese-a-tandeos/",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "SAN JUAN DE DIOS|Guadalajara|44360"
+   ],
+   "lugar": "San Juan de Dios, Guadalajara",
+   "cita": "Habitantes del barrio de San Juan de Dios se quejaron de que no tienen agua desde hace 15 días;",
+   "dias": 15,
+   "eco": null
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "La BCSA (retoma a Mural)",
+   "url": "https://labcsa.org/2026/10/20/suman-quejas-por-desabasto-pese-a-tandeos/",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "REAL VALLARTA|Zapopan|45020"
+   ],
+   "lugar": "Real Vallarta, Zapopan",
+   "cita": "en el Fraccionamiento Real Vallarta, llevan una semana.",
+   "dias": 7,
+   "eco": null
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "La BCSA (retoma a Mural)",
+   "url": "https://labcsa.org/2026/10/20/suman-quejas-por-desabasto-pese-a-tandeos/",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "PRADOS VALLARTA|Zapopan|45020"
+   ],
+   "lugar": "Unidad Habitacional Oblatos y Prados Vallarta",
+   "cita": "En la Unidad Habitacional Oblatos carecen del servicio desde el sábado, lo mismo que en Prados Vallarta.",
+   "dias": null,
+   "eco": null
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "La BCSA (retoma a Mural)",
+   "url": "https://labcsa.org/2026/10/20/suman-quejas-por-desabasto-pese-a-tandeos/",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "CENTRO|San Pedro Tlaquepaque|45500"
+   ],
+   "lugar": "Tlaquepaque Centro",
+   "cita": "En Tlaquepaque Centro llevan ya una semana, según vecinos.",
+   "dias": 7,
+   "eco": null
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "N+",
+   "url": "https://www.nmas.com.mx/jalisco/sociedad/vecinos-de-guadalajara-y-zapopan-protestan-por-falta-de-agua-bloquean-avenidas/",
+   "fecha": "2026-10-21",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Ciudad Granja, Zapopan",
+   "cita": "Al filo de las 18 horas, vecinos de la colonia Ciudad Granja bloquearon por segundo día consecutivo la avenida Vallarta a la altura de la Glorieta de los Pirules. Aseguraron que tienen más de 15 días sin recibir el vital líquido.",
+   "dias": 15,
+   "bloqueo": true,
+   "eco": null
+  },
+  {
+   "fuente": "medio",
+   "red": "x",
+   "quien": "Tráfico ZMG",
+   "url": "https://x.com/Trafico_ZMG/status/2110542004098634118",
+   "fecha": "2026-10-14",
+   "colonias": [
+    "VISTAS DEL PEDREGAL|Tonalá|45429"
+   ],
+   "lugar": "Vistas del Pedregal, Tonalá",
+   "cita": "Vecinos de la colonia Vistas del Pedregal, en Tonalá, denuncian que llevan más de cinco días sin suministro de agua potable",
+   "dias": 5,
+   "eco": {
+    "al": "2026-10-21",
+    "reacciones": 7,
+    "comentarios": 4
+   }
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "N+",
+   "url": "https://www.nmas.com.mx/jalisco/sociedad/vecinos-de-guadalajara-y-zapopan-protestan-por-falta-de-agua-bloquean-avenidas/",
+   "fecha": "2026-10-21",
+   "colonias": [
+    "SANTA CECILIA|Guadalajara|44700"
+   ],
+   "lugar": "Santa Cecilia, Guadalajara",
+   "cita": "Santa Cecilia y San Onofre no tienen ni una sola gota de agua y cuando llega es de mala calidad.",
+   "dias": null,
+   "bloqueo": true,
+   "eco": null
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "UnoTV",
+   "url": "https://www.unotv.com/estados/jalisco/tandeos-agua-jalisco-guadalajara-cortes-anticipados-siapa/",
+   "fecha": "2026-10-17",
+   "colonias": [
+    "SAN ANDRES|Guadalajara|44810"
+   ],
+   "lugar": "San Andrés, Guadalajara",
+   "cita": "Vecinos de San Andrés y Dionisio Rodríguez aseguran que enfrentan problemas de abastecimiento desde el 4 de octubre.",
+   "dias": null,
+   "eco": null
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "UnoTV",
+   "url": "https://www.unotv.com/estados/jalisco/tandeos-agua-jalisco-guadalajara-cortes-anticipados-siapa/",
+   "fecha": "2026-10-17",
+   "colonias": [
+    "BELISARIO DOMINGUEZ|Guadalajara|44320"
+   ],
+   "lugar": "Belisario Domínguez, Guadalajara",
+   "cita": "Las afectaciones se reportan en colonias como Belisario Domínguez, San Andrés, Dionisio Rodríguez, Villa Fontana y Las Terrazas, donde algunas familias llevan varios días sin agua potable.",
+   "dias": null,
+   "eco": null
+  },
+  {
+   "fuente": "medio",
+   "red": "x",
+   "quien": "Telediario Guadalajara",
+   "url": "https://x.com/TelediarioGDL/status/2112713606668157243",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Ciudad Granja, Zapopan",
+   "cita": "Vecinos de Ciudad Granja realizan bloqueo en Avenida Vallarta, Zapopan, exigiendo un servicio digno tras sumar más de 10 días sin agua",
+   "dias": 10,
+   "bloqueo": true,
+   "eco": {
+    "al": "2026-10-21",
+    "reacciones": 8,
+    "comentarios": 0,
+    "compartidos": 4
+   }
+  },
+  {
+   "fuente": "medio",
+   "red": "x",
+   "quien": "Imagen TV Guadalajara",
+   "url": "https://x.com/ImagenTVGDL/status/2112780368797442167",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Ciudad Granja, Zapopan",
+   "cita": "Habitantes de Ciudad Granja, en #Zapopan, bloquearon avenida Vallarta tras 13 días sin #agua.",
+   "dias": 13,
+   "bloqueo": true,
+   "eco": {
+    "al": "2026-10-21",
+    "reacciones": 5,
+    "comentarios": 0
+   }
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/EriMtor/status/2110719031644958958",
+   "fecha": "2026-10-15",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Ciudad Granja, Zapopan",
+   "cita": "#ciudadgranja de qué sirven los tandeos si no se respetan? Mañana nos toca y llevamos desde el domingo sin agua.",
+   "dias": null,
+   "eco": {
+    "al": "2026-10-21",
+    "reacciones": 22,
+    "comentarios": 4,
+    "compartidos": 11
+   }
+  },
+  {
+   "fuente": "medio",
+   "red": "x",
+   "quien": "Tráfico ZMG",
+   "url": "https://x.com/Trafico_ZMG/status/2111240860797141179",
+   "fecha": "2026-10-16",
+   "colonias": [
+    "SANTA CECILIA|Guadalajara|44700"
+   ],
+   "lugar": "Santa Cecilia, Guadalajara",
+   "cita": "Habitantes de la colonia Santa Cecilia, en Guadalajara, denuncian que llevan más de una semana sin servicio de agua potable",
+   "dias": 7,
+   "eco": {
+    "al": "2026-10-21",
+    "reacciones": 266,
+    "comentarios": 51
+   }
+  },
+  {
+   "fuente": "medio",
+   "red": "x",
+   "quien": "Tráfico ZMG",
+   "url": "https://x.com/Trafico_ZMG/status/2111496965535989865",
+   "fecha": "2026-10-17",
+   "colonias": [
+    "VISTAS DEL PEDREGAL|Tonalá|45429"
+   ],
+   "lugar": "Autopista Guadalajara-Zapotlanejo, a la altura de Mismaloya (Vistas del Pedregal, Tonalá)",
+   "cita": "Se registra un bloqueo total a la circulación sobre la Autopista Guadalajara-Zapotlanejo, a la altura de Mismaloya, en sentido hacia Zapotlanejo.",
+   "dias": null,
+   "bloqueo": true,
+   "eco": {
+    "al": "2026-10-21",
+    "reacciones": 310,
+    "comentarios": 20
+   }
+  },
+  {
+   "fuente": "medio",
+   "red": "x",
+   "quien": "Tráfico ZMG",
+   "url": "https://x.com/Trafico_ZMG/status/2110777791277130173",
+   "fecha": "2026-10-15",
+   "colonias": [
+    "SUTAJ|Guadalajara|44840"
+   ],
+   "lugar": "SUTAJ, Guadalajara",
+   "cita": "Vecinos de la colonia SUTAJ, en Guadalajara, reportan que no cuentan con servicio de agua",
+   "dias": null,
+   "eco": {
+    "al": "2026-10-21",
+    "reacciones": 7,
+    "comentarios": 2
+   }
+  },
+  {
+   "fuente": "medio",
+   "red": "x",
+   "quien": "Tráfico ZMG",
+   "url": "https://x.com/Trafico_ZMG/status/2112355018930057394",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "DR VALENTIN GOMEZ FARIAS|Guadalajara|44940"
+   ],
+   "lugar": "Av. 8 de Julio y Av. Jesús Reyes Heroles, Dr. Valentín Gómez Farías, Guadalajara",
+   "cita": "Manifestantes protestan por la falta de agua en el cruce de avenida 8 de Julio y avenida Jesús Reyes Heroles, en la colonia Dr. Valentín Gómez Farías.",
+   "dias": null,
+   "bloqueo": true,
+   "eco": {
+    "al": "2026-10-21",
+    "reacciones": 279,
+    "comentarios": 13
+   }
+  },
+  {
+   "fuente": "medio",
+   "red": "x",
+   "quien": "Tráfico ZMG",
+   "url": "https://x.com/Trafico_ZMG/status/2112705535971623421",
+   "fecha": "2026-10-21",
+   "colonias": [
+    "DR VALENTIN GOMEZ FARIAS|Guadalajara|44940"
+   ],
+   "lugar": "Av. 8 de Julio y Jesús Reyes Heroles, Guadalajara",
+   "cita": "Se registra una nueva manifestación en el cruce de avenida 8 de Julio y Jesús Reyes Heroles, debido a inconformidades relacionadas con el servicio de agua potable.",
+   "dias": null,
+   "bloqueo": true,
+   "eco": {
+    "al": "2026-10-21",
+    "reacciones": 156,
+    "comentarios": 8
+   }
+  },
+  {
+   "fuente": "medio",
+   "red": "x",
+   "quien": "Tráfico ZMG",
+   "url": "https://x.com/Trafico_ZMG/status/2112353618049323222",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Av. Vallarta, Glorieta de los Pirules, Ciudad Granja, Zapopan",
+   "cita": "Se registra una manifestación que mantiene bloqueados todos los carriles de avenida Vallarta, en ambos sentidos, a la altura de la Glorieta de los Pirules, en la colonia Ciudad Granja.",
+   "dias": null,
+   "bloqueo": true,
+   "eco": {
+    "al": "2026-10-21",
+    "reacciones": 657,
+    "comentarios": 22
+   }
+  },
+  {
+   "fuente": "medio",
+   "red": "x",
+   "quien": "Tráfico ZMG",
+   "url": "https://x.com/Trafico_ZMG/status/2110083456373846249",
+   "fecha": "2026-10-13",
+   "colonias": [
+    "LOS OLIVOS|Zapopan|45030"
+   ],
+   "lugar": "Los Olivos y Nueva Primavera, Zapopan",
+   "cita": "Reportan malas condiciones del agua en las colonias Los Olivos y Nueva Primavera, en Zapopan.",
+   "dias": null,
+   "eco": {
+    "al": "2026-10-21",
+    "reacciones": 76,
+    "comentarios": 20
+   }
+  },
+  {
+   "fuente": "medio",
+   "red": "x",
+   "quien": "Tráfico ZMG",
+   "url": "https://x.com/Trafico_ZMG/status/2110178223313314158",
+   "fecha": "2026-10-14",
+   "colonias": [
+    "ALBEREDA RESIDENCIAL|Tlajomulco de Zúñiga|45694"
+   ],
+   "lugar": "Carretera a El Salto, Albereda Residencial",
+   "cita": "el tráfico se encuentra detenido tras varias horas por una manifestación de vecinos por la falta de agua",
+   "dias": null,
+   "bloqueo": true,
+   "eco": {
+    "al": "2026-10-21",
+    "reacciones": 2,
+    "comentarios": 0
+   }
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/JuanCa_Mora/status/2112184790644613179",
+   "fecha": "2026-10-19",
+   "colonias": [
+    "CHAPALITA INN|Zapopan|45037"
+   ],
+   "lugar": "Chapalita Inn, Zapopan",
+   "cita": "En Chapalita Inn / Exitmex vamos para 10 días sin una gta de agua",
+   "dias": 10,
+   "eco": {
+    "al": "2026-10-21",
+    "reacciones": 9,
+    "comentarios": 1,
+    "compartidos": 2
+   }
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/calamarisol/status/2112300159241736625",
+   "fecha": "2026-10-19",
+   "colonias": [
+    "AMERICANA|Guadalajara|44100"
+   ],
+   "lugar": "Calle Cruz Verde, límites de Col. Americana y Capilla de Jesús, Guadalajara",
+   "cita": "vecinos de la Calle Cruz Verde en los límites de Col Americana y Capilla de Jesús no tenemos agua desde la semana pasada.",
+   "dias": null,
+   "eco": {
+    "al": "2026-10-21",
+    "reacciones": 10,
+    "comentarios": 1
+   }
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/jack1ro/status/2110773436402299121",
+   "fecha": "2026-10-15",
+   "colonias": [
+    "COLINAS DE LAS AGUILAS|Zapopan|45080"
+   ],
+   "lugar": "Colinas de las Águilas, Zapopan",
+   "cita": "Desde el martes no tenemos agua en colinas de las Águilas, se adelantó la rotación?, porque hoy es jueves y sigue sin caer agua",
+   "dias": 2,
+   "eco": {
+    "al": "2026-10-21",
+    "reacciones": 5,
+    "comentarios": 1
+   }
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/omargeorg/status/2110615954275352668",
+   "fecha": "2026-10-15",
+   "colonias": [
+    "JARDINES DEL SUR|Guadalajara|44950"
+   ],
+   "lugar": "Jardines del Sur, Guadalajara",
+   "cita": "Desde hoy nos quedamos sin agua en Jardines del sur @siapagdl",
+   "dias": null,
+   "eco": {
+    "al": "2026-10-21",
+    "reacciones": 9,
+    "comentarios": 1
+   }
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "Meganoticias GDL",
+   "url": "https://www.facebook.com/reel/1022982324133620/",
+   "fecha": "2026-10-16",
+   "colonias": [
+    "LA NORMAL|Guadalajara|44200"
+   ],
+   "lugar": "La Normal, Guadalajara",
+   "cita": "Vecinos de la colonia La Normal, en Guadalajara, reportaron baja presión, mal olor y agua de color café desde días antes del inicio oficial de los tandeos",
+   "dias": null,
+   "eco": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "Grupo «Colonia Atlas VIP ⭐️ (Ventas, Servicios y Chismesito)»",
+   "url": "https://www.facebook.com/groups/250049295558371/posts/2256835638213050/",
+   "fecha": "2026-10-18",
+   "colonias": [
+    "ATLAS|Guadalajara|44870"
+   ],
+   "lugar": "Atlas, cerca de la Prepa 4",
+   "cita": "Buenos días colonia , alguien más no tiene agua por la prepa 4 ? Tengo sin agua desde el lunes alguien más con la misma sitúacion",
+   "dias": null,
+   "eco": {
+    "al": "2026-10-21",
+    "reacciones": 9,
+    "comentarios": 22
+   }
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid02T2A5hWDTZ2CKcMa2JLpghZGPB6ub2eGXZCEmtFpXrz2DJSvy6QmiuxXyevEYQpGjl",
+    "eco": {
+     "reacciones": 77,
+     "comentarios": 172,
+     "compartidos": 4,
+     "al": "2026-10-21"
+    }
+   },
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid02T2A5hWDTZ2CKcMa2JLpghZGPB6ub2eGXZCEmtFpXrz2DJSvy6QmiuxXyevEYQpGjl?comment_id=1046359915124910",
+   "fecha": "2026-10-21",
+   "colonias": [
+    "JARDINES DEL SUR|Guadalajara|44950"
+   ],
+   "lugar": "Jardines del Sur, Guadalajara",
+   "cita": "zona 5 (jardines del sur) tenemos más de una semana sin agua",
+   "dias": 7,
+   "eco": {
+    "al": "2026-10-21",
+    "reacciones": 1,
+    "comentarios": 0
+   }
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid02T2A5hWDTZ2CKcMa2JLpghZGPB6ub2eGXZCEmtFpXrz2DJSvy6QmiuxXyevEYQpGjl",
+    "eco": {
+     "reacciones": 77,
+     "comentarios": 172,
+     "compartidos": 4,
+     "al": "2026-10-21"
+    }
+   },
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid02T2A5hWDTZ2CKcMa2JLpghZGPB6ub2eGXZCEmtFpXrz2DJSvy6QmiuxXyevEYQpGjl?comment_id=1624571215788248",
+   "fecha": "2026-10-21",
+   "colonias": [
+    "CENTRO|San Pedro Tlaquepaque|45500"
+   ],
+   "lugar": "Tlaquepaque Centro",
+   "cita": "Siapa Gdl mentira Tlaquepaque Centro tenemos 3 semanas sin agua",
+   "dias": 21,
+   "eco": {
+    "al": "2026-10-21",
+    "reacciones": 0,
+    "comentarios": 0
+   }
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid02T2A5hWDTZ2CKcMa2JLpghZGPB6ub2eGXZCEmtFpXrz2DJSvy6QmiuxXyevEYQpGjl",
+    "eco": {
+     "reacciones": 77,
+     "comentarios": 172,
+     "compartidos": 4,
+     "al": "2026-10-21"
+    }
+   },
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid02T2A5hWDTZ2CKcMa2JLpghZGPB6ub2eGXZCEmtFpXrz2DJSvy6QmiuxXyevEYQpGjl?comment_id=1915693479840702",
+   "fecha": "2026-10-21",
+   "colonias": [
+    "MIRAMAR|Zapopan|45060"
+   ],
+   "lugar": "Miramar, Zapopan",
+   "cita": "Colonia miramar un mes sin agua",
+   "dias": 30,
+   "eco": {
+    "al": "2026-10-21",
+    "reacciones": 0,
+    "comentarios": 0
+   }
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "La BCSA (retoma a Mural)",
+   "url": "https://labcsa.org/2026/10/20/suman-quejas-por-desabasto-pese-a-tandeos/",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "GUADALAJARA ORIENTE|Guadalajara|44700"
+   ],
+   "lugar": "Guadalajara Oriente, Guadalajara",
+   "cita": "en la Colonia Guadalajara Oriente, no pudieron acudir a clases el pasado jueves y viernes",
+   "dias": null,
+   "eco": null
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "UnoTV",
+   "url": "https://www.unotv.com/estados/jalisco/tandeos-agua-jalisco-guadalajara-cortes-anticipados-siapa/",
+   "fecha": "2026-10-17",
+   "colonias": [
+    "LAS TERRAZAS|San Pedro Tlaquepaque|45610"
+   ],
+   "lugar": "Las Terrazas, Tlaquepaque",
+   "cita": "En San Pedro Tlaquepaque, habitantes de Las Terrazas afirman que llevan alrededor de diez días sin agua.",
+   "dias": 10,
+   "eco": null
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "UnoTV",
+   "url": "https://www.unotv.com/estados/jalisco/tandeos-agua-jalisco-guadalajara-cortes-anticipados-siapa/",
+   "fecha": "2026-10-17",
+   "colonias": [
+    "VILLA FONTANA|San Pedro Tlaquepaque|45615"
+   ],
+   "lugar": "Villa Fontana",
+   "cita": "En Villa Fontana, los cortes ya suman cinco días, según los vecinos.",
+   "dias": 5,
+   "eco": null
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "UnoTV",
+   "url": "https://www.unotv.com/estados/jalisco/tandeos-agua-jalisco-guadalajara-cortes-anticipados-siapa/",
+   "fecha": "2026-10-17",
+   "colonias": [
+    "MIRAMAR|Zapopan|45060"
+   ],
+   "lugar": "Miramar, Zapopan",
+   "cita": "En Miramar, Zapopan, las interrupciones comenzaron desde el fin de semana",
+   "dias": null,
+   "eco": null
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "La Silla Rota",
+   "url": "https://lasillarota.com/estados/2026/10/16/crisis-del-agua-colonias-de-jalisco-reportan10-dias-sin-suministro-533383.html",
+   "fecha": "2026-10-16",
+   "colonias": [
+    "MIRAMAR|Zapopan|45060"
+   ],
+   "lugar": "Miramar, Zapopan",
+   "cita": "En Miramar, Zapopan, habitantes reportaron que el suministro se interrumpió desde el domingo por la tarde, mientras que en Ciudad Granja también señalaron deficiencias en el servicio.",
+   "dias": null,
+   "eco": null
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "La Silla Rota",
+   "url": "https://lasillarota.com/estados/2026/10/16/crisis-del-agua-colonias-de-jalisco-reportan10-dias-sin-suministro-533383.html",
+   "fecha": "2026-10-16",
+   "colonias": [
+    "SAN VICENTE|Guadalajara|44330"
+   ],
+   "lugar": "San Vicente, Guadalajara",
+   "cita": "En San Vicente, vecinos solicitaron la intervención del SIAPA, pues afirmaron que llevaban varios días sin agua, pese a que el calendario oficial contempla para la Zona 3 una rotación los miércoles y sábados.",
+   "dias": null,
+   "eco": null
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "La Silla Rota",
+   "url": "https://lasillarota.com/estados/2026/10/16/crisis-del-agua-colonias-de-jalisco-reportan10-dias-sin-suministro-533383.html",
+   "fecha": "2026-10-16",
+   "colonias": [
+    "ATLAS|Guadalajara|44870"
+   ],
+   "lugar": "Atlas, Guadalajara",
+   "cita": "La colonia Atlas, en Guadalajara, también enfrenta un servicio irregular. De acuerdo con los testimonios, en ocasiones apenas sale un hilo de agua, insuficiente para llenar los depósitos domésticos.",
+   "dias": null,
+   "eco": null
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "La Silla Rota",
+   "url": "https://lasillarota.com/estados/2026/10/16/crisis-del-agua-colonias-de-jalisco-reportan10-dias-sin-suministro-533383.html",
+   "fecha": "2026-10-16",
+   "colonias": [
+    "VICENTE GUERRERO|Guadalajara|44330"
+   ],
+   "lugar": "Vicente Guerrero, Guadalajara",
+   "cita": "“Muy negra y muy hedionda, huele a drenaje”",
+   "dias": null,
+   "eco": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid02T2A5hWDTZ2CKcMa2JLpghZGPB6ub2eGXZCEmtFpXrz2DJSvy6QmiuxXyevEYQpGjl",
+    "eco": {
+     "reacciones": 77,
+     "comentarios": 172,
+     "compartidos": 4,
+     "al": "2026-10-21"
+    }
+   },
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid02T2A5hWDTZ2CKcMa2JLpghZGPB6ub2eGXZCEmtFpXrz2DJSvy6QmiuxXyevEYQpGjl?comment_id=2184692515416144",
+   "fecha": "2026-10-21",
+   "colonias": [
+    "JARDINES DE GUADALUPE|Guadalajara|44740"
+   ],
+   "lugar": "Jardines de Guadalupe, Guadalajara",
+   "cita": "Mentira la famosa rotación,. En Jardines de Guadalupe 15 días sin agua",
+   "dias": 15,
+   "eco": {
+    "reacciones": 5,
+    "comentarios": 7,
+    "al": "2026-10-21"
+   }
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid02T2A5hWDTZ2CKcMa2JLpghZGPB6ub2eGXZCEmtFpXrz2DJSvy6QmiuxXyevEYQpGjl",
+    "eco": {
+     "reacciones": 77,
+     "comentarios": 172,
+     "compartidos": 4,
+     "al": "2026-10-21"
+    }
+   },
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid02T2A5hWDTZ2CKcMa2JLpghZGPB6ub2eGXZCEmtFpXrz2DJSvy6QmiuxXyevEYQpGjl?comment_id=1121477817005223",
+   "fecha": "2026-10-21",
+   "colonias": [
+    "SAN VICENTE|Guadalajara|44330"
+   ],
+   "lugar": "San Vicente, Guadalajara",
+   "cita": "San vicente y alrededores 15 días sin una gota de agua",
+   "dias": 15,
+   "eco": {
+    "reacciones": 0,
+    "comentarios": 0,
+    "al": "2026-10-21"
+   }
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid02T2A5hWDTZ2CKcMa2JLpghZGPB6ub2eGXZCEmtFpXrz2DJSvy6QmiuxXyevEYQpGjl",
+    "eco": {
+     "reacciones": 77,
+     "comentarios": 172,
+     "compartidos": 4,
+     "al": "2026-10-21"
+    }
+   },
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid02T2A5hWDTZ2CKcMa2JLpghZGPB6ub2eGXZCEmtFpXrz2DJSvy6QmiuxXyevEYQpGjl?comment_id=1785070272533053",
+   "fecha": "2026-10-21",
+   "colonias": [
+    "SANTA CECILIA|Guadalajara|44700"
+   ],
+   "lugar": "Santa Cecilia, Guadalajara",
+   "cita": "Sta cecilia un mes sin agua",
+   "dias": 30,
+   "eco": {
+    "reacciones": 0,
+    "comentarios": 0,
+    "al": "2026-10-21"
    }
   }
  ]
