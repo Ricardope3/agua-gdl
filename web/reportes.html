@@ -269,16 +269,17 @@ header.top { margin-bottom: 0; position: static }
 .mosaic .more { position: absolute; inset: 0; display: grid; place-items: center; background: rgb(0 0 0 / .55); color: #fff; font-weight: 700; font-size: 1.1rem }
 .marco { position: absolute; inset: 0; z-index: 1000; pointer-events: none; transition: opacity .15s }
 .marco.moving { opacity: 0 }
-.ftile { position: absolute; display: block; overflow: hidden; pointer-events: auto; border-radius: 6px; border: 2px solid var(--surface); background: var(--surface); box-shadow: 0 3px 10px rgb(3 14 22 / .4); text-decoration: none; color: var(--fg); transition: transform .15s; animation: fin .3s both }
+.ftile { position: absolute; display: block; overflow: hidden; pointer-events: auto; border-radius: 10px; border: 3px solid var(--surface); background: var(--surface); box-shadow: 0 3px 10px rgb(3 14 22 / .4); text-decoration: none; color: var(--fg); transition: transform .15s; animation: fin .3s both }
 @keyframes fin { from { opacity: 0; transform: scale(.85) } }
 @media (prefers-reduced-motion: reduce) { .ftile { animation: none; transition: none } }
-.ftile:hover { transform: scale(1.7); z-index: 5 }
+.ftile:hover { transform: scale(1.25); z-index: 5 }
 .ftile img { width: 100%; height: 100%; object-fit: cover; display: block }
-.ftile.txt { padding: 4px 6px; border-left: 4px solid var(--s3) }
-.ftile.txt q { display: block; font-size: 10px; line-height: 1.25; quotes: "«" "»"; overflow: hidden; height: 100% }
-.ftile.over q { position: absolute; left: 0; right: 0; bottom: 0; height: auto; max-height: 100%; padding: 12px 5px 3px; background: linear-gradient(transparent, rgb(0 0 0 / .8)); color: #fff; font-size: 9.5px; line-height: 1.2; display: block; quotes: "«" "»" }
+.ftile.txt { padding: 8px 10px; border-left: 5px solid var(--s3) }
+.ftile.txt q { display: block; font-size: 14px; line-height: 1.3; quotes: "«" "»"; overflow: hidden; height: 100% }
+.ftile.over q { position: absolute; left: 0; right: 0; bottom: 0; height: auto; max-height: 100%; padding: 22px 8px 6px; background: linear-gradient(transparent, rgb(0 0 0 / .85)); color: #fff; font-size: 13px; line-height: 1.25; display: block; quotes: "«" "»" }
 .ftile.over .fdias { top: 2px; bottom: auto }
-.fdias { position: absolute; right: 2px; bottom: 2px; padding: 0 4px; border-radius: 4px; background: var(--s3); color: var(--s3-ink); font: 700 10px/1.5 var(--font) }
+.fdias { position: absolute; right: 5px; bottom: 5px; padding: 1px 7px; border-radius: 6px; background: var(--s3); color: var(--s3-ink); font: 700 13px/1.5 var(--font) }
+@media (max-width: 760px) { .ftile.txt q, .ftile.over q { font-size: 11px } .fdias { font-size: 11px } }
 footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .85rem }
 footer p { margin: 0 0 8px; max-width: 70ch }
 </style>
@@ -708,7 +709,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       if (e) marks.push(surround(all, e.posts));
       if (fit) {
         // Room around the outline for the publications that surround it.
-        const pad = phone() ? { paddingTopLeft: [80, 130], paddingBottomRight: [80, Math.round(map.getSize().y * 0.66) + 60] } : { paddingTopLeft: [450 + 220, 170], paddingBottomRight: [220, 170] };
+        const pad = phone() ? { paddingTopLeft: [130, 170], paddingBottomRight: [130, Math.round(map.getSize().y * 0.66) + 100] } : { paddingTopLeft: [450 + 225, 175], paddingBottomRight: [225, 175] };
         const opts = { ...pad, maxZoom: 15, animate: !reduced, duration: 0.7 };
         const b = marks[1].getBounds();
         if (reduced) map.fitBounds(b, opts); else map.flyToBounds(b, opts);
@@ -733,7 +734,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         const who = p.tipo === "comentario" ? "Vecino en Facebook" : p.fuente === "medio" || p.quien ? p.quien : "Vecino";
         return el("a", { class: !p.vista ? "ftile txt" : p.tipo === "comentario" ? "ftile over" : "ftile", href: p.url, target: "_blank", rel: "noopener nofollow", tabindex: "-1", title: `${who} · ${dateES(p.fecha)}: «${p.cita}»` },
           p.vista ? el("img", { src: `/${p.vista}`, alt: "", decoding: "async" }) : null,
-          p.vista && p.tipo !== "comentario" ? null : el("q", {}, p.cita.length > 64 ? `${p.cita.slice(0, 62)}…` : p.cita),
+          p.vista && p.tipo !== "comentario" ? null : el("q", {}, p.cita.length > 120 ? `${p.cita.slice(0, 118)}…` : p.cita),
           p.dias ? el("span", { class: "fdias" }, daysWord(p.dias)) : null);
       });
       const blocked = () => [card, document.querySelector(".float-search"), document.querySelector(".leaflet-control-zoom")]
@@ -743,7 +744,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         const box = stage.getBoundingClientRect();
         const b = outline.getBounds();
         const nw = map.latLngToContainerPoint(b.getNorthWest()), se = map.latLngToContainerPoint(b.getSouthEast());
-        const W = phone() ? 66 : 96, H = phone() ? 50 : 72, G = 6;
+        const W = phone() ? 120 : 210, H = phone() ? 90 : 158, G = 8;
         const hits = blocked().map((r) => ({ l: r.left - box.left - G, t: r.top - box.top - G, r: r.right - box.left + G, b: r.bottom - box.top + G }));
         const free = (x, y) => x >= 4 && y >= 4 && x + W <= box.width - 4 && y + H <= box.height - 24 && !hits.some((h) => x < h.r && x + W > h.l && y < h.b && y + H > h.t);
         let i = 0;
