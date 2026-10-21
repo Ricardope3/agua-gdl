@@ -523,7 +523,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       try {
         data = await loadMap();
       } catch {
-        box.replaceChildren(el("p", { class: "note" }, "No pudimos cargar el mapa. Revisa tu zona en el ", mapLink(), "."), card ? cards(card.zones.map((z) => zones.get(z)).filter(Boolean)) : null);
+        box.replaceChildren(el("p", { class: "note" }, "No pudimos cargar el mapa. Revisa tu zona en el ", mapLink(), "."), ...(card ? [cards(card.zones.map((z) => zones.get(z)).filter(Boolean))] : []));
         return;
       }
       if (!box.isConnected) return;
@@ -568,10 +568,16 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       const picks = new Map();
       for (const [c, fs] of found) for (const f of fs) picks.set(f, c);
       let shownCard = null;
+      // A tapped colonia's outline goes with its card; the searched colonias keep theirs.
+      let tappedMark = null;
+      const unmark = () => {
+        if (tappedMark) tappedMark.remove();
+        tappedMark = null;
+      };
       const closeCard = () => {
         if (shownCard) shownCard.remove();
         shownCard = null;
-        drawn.clearHighlights();
+        unmark();
       };
       // Only a searched colonia's map has the calendar details below it.
       const cardOpts = { days, next: (z) => nextCut(zones, z), dateES: lowerDate, links: (z) => [telegramLink(z), calendarLink(z)],
@@ -599,9 +605,9 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
           extra: differs ? ls.filter((zone) => !z.all.includes(zone)) : [],
           extraNote: differs ? `La lista de colonias del SIAPA la pone en ${M.theZones(ls)}. El mapa y la lista no siempre coinciden: ${z.all.length ? `prepárate para los días de ${new Set([...z.all, ...ls]).size > 2 ? "todas" : "las dos"}` : "prepárate para esos días"}.` : null,
           color: drawn.color }));
-        drawn.clearHighlights();
-        const g = drawn.highlight(f);
-        fitTo(g.getBounds(), true);
+        unmark();
+        tappedMark = drawn.highlight(f);
+        fitTo(tappedMark.getBounds(), true);
       };
       const drawn = M.draw(L, map, data, {
         dark: aguaDark(),
@@ -721,7 +727,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
             : nums.length === 1
               ? el("span", {}, "Ese punto está en la ", el("strong", {}, `zona ${nums[0]}`), ". Abajo están sus días.")
               : `Ese punto queda en el límite entre las zonas ${joinES(nums)}. Abajo están sus días.`);
-          tapped.replaceChildren(nums.length ? cards(r.zones) : null);
+          tapped.replaceChildren(...(nums.length ? [cards(r.zones)] : []));
         } catch {
           if (mine === taps) answer.replaceChildren("No pudimos consultar la zona de ese punto. Intenta de nuevo.");
         }
@@ -733,8 +739,10 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   // showColonia: the map with the colonia outlined and its card floating over it, then the
   // calendar details for its zones.
   function showColonia(c, zones) {
-    const back = lastChoices && lastChoices.length > 1 ? el("p", {}, el("button", { type: "button", class: "linklike" }, "← Ver las otras colonias")) : null;
-    if (back) back.firstChild.addEventListener("click", () => showChoices(lastChoices, zones));
+    // The list that led here: typing in the box replaces lastChoices with its suggestions.
+    const choices = lastChoices;
+    const back = choices && choices.length > 1 ? el("p", {}, el("button", { type: "button", class: "linklike" }, "← Ver las otras colonias")) : null;
+    if (back) back.firstChild.addEventListener("click", () => showChoices(choices, zones));
     const details = c.zones.map((z) => el("div", { class: "zone" }, el("h3", { class: "ih" }, badge("calendar"), `Calendario de la zona ${z}`), calendarLinks(z)));
     show(mapBlock([c], zones, false, c), ...details, discountNote(), back);
   }
@@ -913,7 +921,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         const res = await fetch(API + "/v1/colonias?q=" + encodeURIComponent(q.slice(0, 80)), { signal: ctl.signal });
         if (!res.ok) throw new Error("HTTP " + res.status);
         const r = await res.json();
-        if (pending === ctl && input.value.trim() === q) suggest(r);
+        // Not once the box has lost focus: the list would open over the results.
+        if (pending === ctl && input.value.trim() === q && document.activeElement === input) suggest(r);
       } catch {
         // A failed or superseded request leaves the list as it was: the search button still works.
       }

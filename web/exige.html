@@ -387,7 +387,8 @@ ${c.nombre ? c.nombre + "\n" : ""}${c.lugar}`;
   for (const f of [asunto, cuerpo]) f.addEventListener("input", () => { editado = true; rehacer.hidden = false; render(); });
   rehacer.addEventListener("click", () => { editado = false; rehacer.hidden = true; render(); });
   $("copiar").addEventListener("click", () => copiar(`${asunto.value}\n\n${cuerpo.value}`, "Copiamos el asunto y el mensaje."));
-  $("dias").addEventListener("focus", () => { form.elements.pasa.value = "sin"; });
+  // Setting the radio from code fires no input event, so the message follows by hand.
+  $("dias").addEventListener("focus", () => { if (form.elements.pasa.value !== "sin") { form.elements.pasa.value = "sin"; render(); } });
   render();
 })();
 </script>

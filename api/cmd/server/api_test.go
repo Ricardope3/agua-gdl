@@ -144,12 +144,19 @@ func TestResultsQueryTheDatabaseOncePerFiveMinutes(t *testing.T) {
 
 func TestV1IsRateLimitedPerClient(t *testing.T) {
 	h := (&api{}).routes()
-	get := func(path, ip string) *httptest.ResponseRecorder {
-		req := httptest.NewRequest(http.MethodGet, path, nil)
+	do := func(method, path, ip string) *httptest.ResponseRecorder {
+		req := httptest.NewRequest(method, path, nil)
 		req.Header.Set("Fly-Client-IP", ip)
 		rec := httptest.NewRecorder()
 		h.ServeHTTP(rec, req)
 		return rec
+	}
+	get := func(path, ip string) *httptest.ResponseRecorder { return do(http.MethodGet, path, ip) }
+	for range v1PerMinute + 1 {
+		do(http.MethodOptions, "/v1/reportes", "3.3.3.3")
+	}
+	if get("/v1/nope", "3.3.3.3").Code == http.StatusTooManyRequests {
+		t.Fatal("preflights don't count")
 	}
 	for range v1PerMinute {
 		if get("/v1/nope", "1.1.1.1").Code == http.StatusTooManyRequests {
@@ -162,6 +169,9 @@ func TestV1IsRateLimitedPerClient(t *testing.T) {
 	}
 	if get("/v1/nope", "2.2.2.2").Code == http.StatusTooManyRequests {
 		t.Fatal("another client must not be limited")
+	}
+	if do(http.MethodOptions, "/v1/reportes", "1.1.1.1").Code == http.StatusTooManyRequests {
+		t.Fatal("a limited client's preflight still passes, so the browser shows the POST's 429")
 	}
 	if get("/healthz", "1.1.1.1").Code != http.StatusOK {
 		t.Fatal("only /v1 is limited")

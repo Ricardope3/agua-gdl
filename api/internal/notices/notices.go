@@ -56,7 +56,8 @@ func Send(ctx context.Context, st Store, snd Sender, n Notice, dailyCap, monthly
 }
 
 // SendTelegram reaches every pending Telegram subscriber of n.Zone with text, which may use
-// WhatsApp-style *bold*, and a button to SIAPA's map. Telegram has no caps.
+// WhatsApp-style *bold*, and a button to SIAPA's map. Telegram has no caps, and its "too many
+// requests" is waited out (tg.Retry), as the nightly run does.
 func SendTelegram(ctx context.Context, st Store, tel TelegramSender, n Notice, text string, interval time.Duration, log *slog.Logger) (int, error) {
 	return send(ctx, st, store.Telegram, n, interval, func() *store.Budget { return nil }, log, func(current store.Subscriber) (string, error) {
 		m, err := bot.TelegramMessage(current.UserID, bot.Reply{Text: text})
@@ -64,9 +65,21 @@ func SendTelegram(ctx context.Context, st Store, tel TelegramSender, n Notice, t
 			return "", err
 		}
 		m.ReplyMarkup = tg.InlineKeyboard{InlineKeyboard: [][]tg.InlineButton{{{Text: "🗺️ Mapa del SIAPA", URL: bot.MapURL}}}}
-		_, err = tel.Send(ctx, m)
-		return "", err
+		return "", tg.Retry(func() error {
+			_, err := tel.Send(ctx, m)
+			return err
+		}, func(d time.Duration) error { return sleep(ctx, d) })
 	})
+}
+
+// sleep waits d, or until ctx ends; tests replace it.
+var sleep = func(ctx context.Context, d time.Duration) error {
+	select {
+	case <-ctx.Done():
+		return ctx.Err()
+	case <-time.After(d):
+		return nil
+	}
 }
 
 func send(ctx context.Context, st Store, channel string, n Notice, interval time.Duration, budget func() *store.Budget, log *slog.Logger, deliver func(store.Subscriber) (string, error)) (sent int, err error) {

@@ -399,9 +399,16 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     return n;
   }
   const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-  const COLORS = { dry: css("--dry"), low: css("--low"), ok: css("--ok"), none: css("--none"), ink: css("--fg"), surface: css("--surface"), muted: css("--muted") };
-  // Days without water: 0 is "no days given", then 1–2, 3–6, 7–13 and 14 or more, each with its ink.
-  const SEV = [0, 1, 2, 3, 4].map((i) => ({ c: css(`--s${i}`), k: i ? css(`--s${i}-ink`) : COLORS.ink }));
+  // The map's canvas needs the colours themselves, read again when the visitor switches the theme.
+  let COLORS, SEV;
+  const palette = () => {
+    COLORS = { dry: css("--dry"), low: css("--low"), ok: css("--ok"), none: css("--none"), ink: css("--fg"), surface: css("--surface"), muted: css("--muted") };
+    // Days without water: 0 is "no days given", then 1–2, 3–6, 7–13 and 14 or more.
+    SEV = [0, 1, 2, 3, 4].map((i) => css(`--s${i}`));
+  };
+  palette();
+  // Badges take the variables, each level with its ink, so they follow the theme by themselves.
+  const sevVars = (s) => `--c:var(--s${s});--k:var(${s ? `--s${s}-ink` : "--fg"})`;
   const sevOf = (d) => d == null ? 0 : d <= 2 ? 1 : d <= 6 ? 2 : d <= 13 ? 3 : 4;
   const keyOf = (p) => `${p.n}|${p.m}|${p.cp}`;
   const fmt = (n) => n.toLocaleString("es-MX");
@@ -500,11 +507,8 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       if (!features.has(k)) features.set(k, []);
       features.get(k).push(f);
     }
-    const zoneColors = M.COLORS[aguaDark() ? "dark" : "light"];
-    const zoneLayer = L.geoJSON({ type: "FeatureCollection", features: zonas }, {
-      interactive: false,
-      style: (f) => ({ color: zoneColors[f.properties.z], weight: 1.5, dashArray: "5 4", fill: false, opacity: 0.7 }),
-    }).addTo(map);
+    const zoneStyle = (f) => ({ color: M.COLORS[aguaDark() ? "dark" : "light"][f.properties.z], weight: 1.5, dashArray: "5 4", fill: false, opacity: 0.7 });
+    const zoneLayer = L.geoJSON({ type: "FeatureCollection", features: zonas }, { interactive: false, style: zoneStyle }).addTo(map);
     const home = zoneLayer.getBounds().pad(0.04);
     map.fitBounds(home);
     // A colonia with publications takes the colour of the most days they give (dashed when none gives
@@ -514,8 +518,8 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       const e = ev.get(k);
       if (e) {
         const s = sevOf(e.dias);
-        return s ? { color: SEV[s].c, weight: 1.2, opacity: 0.95, dashArray: null, fillColor: SEV[s].c, fillOpacity: 0.62 }
-          : { color: SEV[0].c, weight: 1.8, opacity: 0.95, dashArray: "4 3", fillColor: SEV[0].c, fillOpacity: 0.2 };
+        return s ? { color: SEV[s], weight: 1.2, opacity: 0.95, dashArray: null, fillColor: SEV[s], fillOpacity: 0.62 }
+          : { color: SEV[0], weight: 1.8, opacity: 0.95, dashArray: "4 3", fillColor: SEV[0], fillOpacity: 0.2 };
       }
       const c = byKey.get(k);
       const s = statusOf(c);
@@ -564,7 +568,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         if (!fs) continue;
         const s = sevOf(e.dias), size = s ? (far ? 21 : 26) : (far ? 11 : 14);
         const m = L.marker(L.geoJSON(fs[0]).getBounds().getCenter(), {
-          icon: L.divIcon({ className: far ? "sev far" : "sev", html: `<span style="--c:${SEV[s].c};--k:${SEV[s].k}">${s ? e.dias : ""}</span>`, iconSize: [size, size] }),
+          icon: L.divIcon({ className: far ? "sev far" : "sev", html: `<span style="${sevVars(s)}">${s ? e.dias : ""}</span>`, iconSize: [size, size] }),
           keyboard: false, zIndexOffset: 1000 + (e.dias || 0), title: `${fs[0].properties.n}: ${evLine(e)}`,
         });
         m.on("click", () => select(fs[0]));
@@ -631,6 +635,18 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       history.replaceState(null, "", `${location.pathname}?${q}`);
     }
 
+    // theme.js says the visitor switched the theme: the canvas, the rings and the outline take its colours.
+    document.addEventListener("tema", () => {
+      palette();
+      zoneLayer.setStyle(zoneStyle);
+      layer.setStyle(styleOf);
+      drawMarkers();
+      if (marks.length) {
+        marks[0].setStyle({ color: COLORS.surface });
+        marks[1].setStyle({ color: COLORS.ink });
+      }
+    });
+
     // A report from this browser stays marked for an hour, so the card thanks instead of asking again.
     const SEEN = 60 * 60 * 1000;
     const seenKey = (k) => `reporte:${k}`;
@@ -694,7 +710,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     // quoted with who published it, where, when and its reactions (none of it names a private person).
     function evidenceBlock(e) {
       const s = sevOf(e.dias);
-      const badge = el("span", { class: s ? "sevb" : "sevb nodays", style: `--c:${SEV[s].c};--k:${SEV[s].k}` }, s ? daysWord(e.dias) : "sin días");
+      const badge = el("span", { class: s ? "sevb" : "sevb nodays", style: sevVars(s) }, s ? daysWord(e.dias) : "sin días");
       const head = el("p", { class: "ev-head" }, badge, el("strong", {}, s ? `Hasta ${daysWord(e.dias)} sin agua` : "Sin agua, sin días contados"));
       const src = [plural(e.fuentes, "fuente", "fuentes distintas"), e.medios ? (e.medios === 1 ? "lo reporta un medio" : `lo reportan ${e.medios} medios`) : null, `la más reciente del ${dateES(e.ultima, true)}`].filter(Boolean).join(" · ");
       const list = el("ol", { class: "posts" }, ...e.posts.map(post));
@@ -835,10 +851,10 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       tile("t-historico", s.historico, "reporte desde que abrió el mapa", "reportes desde que abrió el mapa");
       const at = timeES(s.updated);
       $("actualizado").textContent = t ? `Actualizado ${/^1:/.test(at) ? "a la" : "a las"} ${at}`.replace(/\.?$/, ".") : "Todavía no hay reportes en las últimas 24 horas. Sé la primera persona en reportar tu colonia.";
-      $("bot-min").textContent = `El detalle se muestra desde ${s.bot.min} respuestas por zona, para que nadie pueda ser identificado.`;
+      $("bot-min").textContent = `El detalle se muestra desde ${s.bot.min} respuestas por zona, para que nadie pueda ser identificado. También se oculta si, al restarle la semana de arriba, se vería el de menos de ${s.bot.min}.`;
       const rows = s.bot.zonas.map((z) => z.detalle
         ? el("tr", {}, el("td", {}, `Zona ${z.zone}`), el("td", { class: "n" }, fmt(z.respuestas)), el("td", { class: "n" }, fmt(z.detalle.sin_agua)), el("td", { class: "n" }, fmt(z.detalle.baja)), el("td", { class: "n" }, fmt(z.detalle.con_agua)), el("td", { class: "n" }, fmt(z.detalle.turbia)))
-        : el("tr", {}, el("td", {}, `Zona ${z.zone}`), el("td", { class: "n" }, fmt(z.respuestas)), el("td", { class: "few", colspan: "4" }, "Todavía pocas respuestas")));
+        : el("tr", {}, el("td", {}, `Zona ${z.zone}`), el("td", { class: "n" }, fmt(z.respuestas)), el("td", { class: "few", colspan: "4" }, z.respuestas >= s.bot.min ? "Detalle oculto por ahora" : "Todavía pocas respuestas")));
       $("bot-filas").replaceChildren(...(rows.length ? rows : [el("tr", {}, el("td", { colspan: "6", class: "few" }, "Todavía no hay respuestas en las últimas 24 horas."))]));
       $("semana-sec").hidden = !s.semana; // an API without the week (or before its deploy) hides it
       if (s.semana) renderWeek(s.semana);
@@ -912,7 +928,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     function rankRow({ e, f }) {
       const p = f.properties, s = sevOf(e.dias);
       const b = el("button", { type: "button", class: "row" },
-        el("span", { class: s ? "sevb" : "sevb nodays", style: `--c:${SEV[s].c};--k:${SEV[s].k}` }, s ? daysWord(e.dias) : "sin días"),
+        el("span", { class: s ? "sevb" : "sevb nodays", style: sevVars(s) }, s ? daysWord(e.dias) : "sin días"),
         el("span", { class: "what" }, el("strong", {}, nice(p.n)), el("small", {}, `${p.m} · ${M.label(p)}`)),
         el("span", { class: "meta" }, [plural(e.fuentes, "fuente", "fuentes"), e.medios ? plural(e.medios, "medio", "medios") : null].filter(Boolean).join(" · "),
           el("small", {}, `${dateES(e.ultima)}${e.eco ? ` · ${plural(e.eco, "interacción", "interacciones")}` : ""}`)));

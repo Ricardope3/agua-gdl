@@ -124,7 +124,8 @@ type Colonia struct {
 }
 
 // ZoneAnswers is what the bot's subscribers in a zone answered in the window. The detail is
-// shown only from MinShown answers, as the privacy notice promises for reports.
+// shown only from MinShown answers, as the privacy notice promises for reports, and only
+// when the week's days can't be subtracted from it to show fewer (see windowSafe).
 type ZoneAnswers struct {
 	Zone    int       `json:"zone"`
 	Answers int       `json:"respuestas"`
@@ -172,6 +173,13 @@ type Week struct {
 		OnCut  int `json:"en_corte"`
 		OffCut int `json:"fuera_de_corte"`
 	} `json:"sin_agua"`
+	last map[int]lastDays // by zone, for the bot's 24-hour split
+}
+
+// lastDays is a zone's bot answers yesterday and today, and whether yesterday shows its split.
+type lastDays struct {
+	yesterday, today int
+	yesterdayShown   bool
 }
 
 type WeekZone struct {
@@ -519,12 +527,25 @@ func (b *Board) botZones() []ZoneAnswers {
 	for _, z := range zones {
 		c := byZone[z]
 		za := ZoneAnswers{Zone: z, Answers: c.total()}
-		if za.Answers >= b.minShown {
+		if za.Answers >= b.minShown && b.windowSafe(z, za.Answers) {
 			za.Detail = c
 		}
 		out = append(out, za)
 	}
 	return out
+}
+
+// windowSafe reports whether a zone's split over the window can show beside the week's, which
+// shows yesterday and today apart: the window holds today's answers and the end of yesterday's,
+// so subtracting the days from it must not leave fewer than minShown answers. Called with mu held.
+func (b *Board) windowSafe(zone, answers int) bool {
+	if b.week == nil {
+		return true
+	}
+	ok := func(n int) bool { return n <= 0 || n >= b.minShown }
+	d := b.week.last[zone]
+	late := answers - d.today // yesterday's answers inside the window
+	return ok(d.today) && ok(late) && (!d.yesterdayShown || ok(d.yesterday-late))
 }
 
 // Flush writes the reports not yet in Postgres. On failure they stay for the next try.
@@ -581,7 +602,7 @@ func (b *Board) loadWeek(ctx context.Context, now time.Time) (*Week, error) {
 	if err != nil {
 		return nil, err
 	}
-	w := &Week{Min: b.minShown}
+	w := &Week{Min: b.minShown, last: map[int]lastDays{}}
 	days := map[string]int{}
 	for i := range weekDays {
 		d := first.AddDate(0, 0, i).Format(dateLayout)
@@ -634,6 +655,9 @@ func (b *Board) loadWeek(ctx context.Context, now time.Time) (*Week, error) {
 			default:
 				w.Dry.OffCut += c.web.SinAgua
 			}
+		}
+		if zc := cells[zone]; zc != nil {
+			w.last[zone] = lastDays{zc[weekDays-2].bot.total(), zc[weekDays-1].bot.total(), wz.Days[weekDays-2].Detail != nil}
 		}
 		w.Zones = append(w.Zones, wz)
 	}

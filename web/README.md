@@ -18,4 +18,4 @@ Publicado en https://aguagdl.com con Cloudflare Pages (sin comando de build, car
 
 `promesas.html` («Lo que prometieron del acueducto»; «Cuentas» en el menú) pone cada promesa del gobierno sobre el agua junto a la ley o el documento oficial. Sus tarjetas y su gráfica se generan desde `promesas.json` con `python3 pipelines/promesas.py`; no las edites a mano.
 
-`theme.js` (en el `<head>` de cada página) pone el botón de tema claro u oscuro; el claro es el predeterminado. También cambia el color de la barra del navegador, así que cada página lleva un solo `<meta name="theme-color" content="#ffffff">`, sin `media`.
+`theme.js` (en el `<head>` de cada página) pone el botón de tema claro u oscuro; el claro es el predeterminado. También cambia el color de la barra del navegador, así que cada página lleva un solo `<meta name="theme-color" content="#ffffff">`, sin `media`. Al cambiar de tema lanza el evento `tema` en `document`, con el que /reportes vuelve a pintar su mapa.

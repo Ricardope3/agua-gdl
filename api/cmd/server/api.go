@@ -82,7 +82,9 @@ func (a *api) routes() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if strings.HasPrefix(r.URL.Path, "/v1/") {
 			w.Header().Set("Access-Control-Allow-Origin", "*")
-			if !limit.allow(clientIP(r), time.Now()) {
+			// A refused preflight fails the browser's fetch with no status, so the page couldn't say
+			// to wait a minute; preflights don't touch the database and don't count.
+			if r.Method != http.MethodOptions && !limit.allow(clientIP(r), time.Now()) {
 				w.Header().Set("Retry-After", "60")
 				http.Error(w, "too many requests", http.StatusTooManyRequests)
 				return

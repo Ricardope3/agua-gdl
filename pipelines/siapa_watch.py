@@ -78,22 +78,31 @@ def map_report(body):
         live = json.loads(body)
         with open(MAP, encoding="utf-8") as f:
             repo = json.load(f)
-        zones = lambda topo: {  # noqa: E731
-            (p["n"], p["m"], str(p.get("cp", ""))): p.get("z", "")
-            for p in (g["properties"] for g in topo["objects"]["colonias"]["geometries"])}
-        old, new = zones(repo), zones(live)
-        shapes = (live["arcs"], live["transform"], len(live["objects"]["zonas"]["geometries"])) == (
-            repo["arcs"], repo["transform"], len(repo["objects"]["zonas"]["geometries"]))
-    except (ValueError, KeyError, TypeError) as e:
+        # Every piece as siapa_mapa.py copies it: a colonia drawn in several pieces can have other
+        # zones in each, and the bot looks zones up by piece.
+        pieces = lambda topo: [(  # noqa: E731
+            (p["n"].strip(), p["m"].strip(), str(p.get("cp", "")).strip()),
+            ",".join(str(z) for z in sorted(int(z) for z in str(p.get("z", "")).split(",") if z.strip())),
+            g["type"], g["arcs"]) for g in topo["objects"]["colonias"]["geometries"] for p in [g["properties"]]]
+        zonas = lambda topo: sorted((int(g["properties"]["z"]), g["type"], g["arcs"]) for g in topo["objects"]["zonas"]["geometries"])  # noqa: E731
+        ours, theirs = pieces(repo), pieces(live)
+        shapes = (live["arcs"], live["transform"], [p[2:] for p in theirs], zonas(live)) == (
+            repo["arcs"], repo["transform"], [p[2:] for p in ours], zonas(repo))
+    except (ValueError, KeyError, TypeError, AttributeError) as e:
         return f"**No se pudo leer el mapa del SIAPA:** {code(e, 200)}", True
+    old, new = {}, {}
+    for found, by_key in ((ours, old), (theirs, new)):
+        for key, zones, *_ in found:
+            by_key.setdefault(key, []).append(zones)
     added, gone = sorted(new.keys() - old.keys()), sorted(old.keys() - new.keys())
     moved = sorted(k for k in old.keys() & new.keys() if old[k] != new[k])
     if not (added or gone or moved) and shapes:
         return f"El mapa del SIAPA es igual a `web/colonias_siapa.topo.json` ({len(new):,} colonias).", False
     name = lambda k: code(f"{k[0]} ({k[1]})", 60)  # noqa: E731
+    zs = lambda v: " + ".join(z or "—" for z in v)  # noqa: E731
     parts = []
     if moved:
-        parts.append(f"{len(moved)} con otras zonas, como " + ", ".join(f"{name(k)} {old[k] or '—'} → {new[k] or '—'}" for k in moved[:5]))
+        parts.append(f"{len(moved)} con otras zonas, como " + ", ".join(f"{name(k)} {zs(old[k])} → {zs(new[k])}" for k in moved[:5]))
     if added:
         parts.append(f"{len(added)} nuevas, como " + ", ".join(name(k) for k in added[:5]))
     if gone:
@@ -109,7 +118,7 @@ def ajustes_sha(body):
         data = json.loads(body)
         data.pop("actualizado", None)
         body = json.dumps(data, sort_keys=True, ensure_ascii=False).encode()
-    except ValueError:
+    except (ValueError, TypeError, AttributeError):  # not JSON, or not an object: days_report says so
         pass
     return hashlib.sha256(body).hexdigest()
 

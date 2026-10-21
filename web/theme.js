@@ -57,6 +57,7 @@
       choice = aguaDark() ? "light" : "dark";
       try { localStorage.setItem(KEY, choice); } catch {}
       apply();
+      document.dispatchEvent(new Event("tema")); // for pages that drew with the old colours
     });
     header.append(btn);
     apply();

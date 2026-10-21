@@ -13,6 +13,7 @@ import (
 	"net/http/httptrace"
 	"net/url"
 	"sync/atomic"
+	"time"
 )
 
 type Client struct {
@@ -49,6 +50,31 @@ func (e *NotSentError) Unwrap() error { return e.Err }
 
 // Rejected reports that nothing was sent, like a refusal: the attempt may be retried.
 func (e *NotSentError) Rejected() bool { return true }
+
+// Retry calls send until it works, waiting out "too many requests" and a request that never
+// reached Telegram up to three times: neither sent the message, so trying again can't duplicate
+// it. Any other error, or one from sleep (e.g. at shutdown), ends it.
+func Retry(send func() error, sleep func(time.Duration) error) error {
+	for attempt := 0; ; attempt++ {
+		err := send()
+		var apiErr *APIError
+		var notSent *NotSentError
+		var wait time.Duration
+		switch {
+		case err == nil || attempt == 3:
+			return err
+		case errors.As(err, &apiErr) && apiErr.Status == http.StatusTooManyRequests:
+			wait = time.Duration(min(max(apiErr.RetryAfter, 1), 30)) * time.Second
+		case errors.As(err, &notSent):
+			wait = time.Duration(5<<attempt) * time.Second
+		default:
+			return err
+		}
+		if sleepErr := sleep(wait); sleepErr != nil {
+			return errors.Join(err, sleepErr)
+		}
+	}
+}
 
 // Call invokes a Bot API method and decodes its result into out, if given.
 func (c *Client) Call(ctx context.Context, method string, params, out any) error {

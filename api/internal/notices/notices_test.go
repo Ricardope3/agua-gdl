@@ -3,6 +3,7 @@ package notices
 import (
 	"context"
 	"errors"
+	"fmt"
 	"io"
 	"log/slog"
 	"testing"
@@ -66,6 +67,35 @@ func TestSendTelegramReachesOnlyTelegramOnce(t *testing.T) {
 	}
 	if len(tel.Sent) != 1 || tel.Sent[0].ChatID != 777 || tel.Sent[0].Text != "⚠️ <b>Cambio</b>" {
 		t.Fatalf("sent %+v", tel.Sent)
+	}
+}
+
+type busyTelegram struct {
+	fake.Telegram
+	busy int // the first sends get Telegram's 429
+}
+
+func (b *busyTelegram) Send(ctx context.Context, m tg.Message) (int64, error) {
+	if b.busy > 0 {
+		b.busy--
+		return 0, &tg.APIError{Status: 429, Description: "Too Many Requests: retry after 2", RetryAfter: 2}
+	}
+	return b.Telegram.Send(ctx, m)
+}
+
+func TestSendTelegramWaitsOutTooManyRequests(t *testing.T) {
+	ctx := context.Background()
+	st, tel := fake.NewStore(), &busyTelegram{busy: 3}
+	for i := range 7 {
+		st.Subscribe(ctx, store.Telegram, fmt.Sprint(700+i), "", 4)
+	}
+	var slept time.Duration
+	wait := sleep
+	sleep = func(_ context.Context, d time.Duration) error { slept += d; return nil }
+	t.Cleanup(func() { sleep = wait })
+	sent, err := SendTelegram(ctx, st, tel, Notice{Zone: 4, Key: "k"}, "hola", 0, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	if sent != 7 || err != nil || len(tel.Sent) != 7 || slept != 6*time.Second {
+		t.Fatalf("429s are waited out, not counted as failures: sent %d, err %v, slept %s", sent, err, slept)
 	}
 }
 

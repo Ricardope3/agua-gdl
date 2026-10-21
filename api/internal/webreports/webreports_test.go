@@ -373,6 +373,44 @@ func TestWeekHidesASplitWithFewBotAnswers(t *testing.T) {
 	}
 }
 
+func TestBotSplitCantBeSubtractedFromTheWeek(t *testing.T) {
+	clock := start(t)
+	*clock = clock.Add(3 * time.Hour) // Sunday 18 October, 23:00: the window starts on Saturday at 23:00
+	day := func(d int) time.Time { return time.Date(2026, 10, d, 0, 0, 0, 0, time.UTC) }
+	st := &fakeStore{
+		bot: []store.BotAnswer{
+			{Zone: 1, Answer: "no", Count: 2}, {Zone: 1, Answer: "poca", Count: 2}, {Zone: 1, Answer: "si", Count: 1},
+			{Zone: 2, Answer: "no", Count: 3}, {Zone: 2, Answer: "si", Count: 3},
+			{Zone: 3, Answer: "no", Count: 5}, {Zone: 3, Answer: "si", Count: 1},
+		},
+		botDays: []store.DayCount{
+			// zone 1: Saturday's two «no» came after 23:00, inside the window
+			{Zone: 1, Day: day(17), Answer: "no", Count: 2}, {Zone: 1, Day: day(18), Answer: "poca", Count: 2}, {Zone: 1, Day: day(18), Answer: "si", Count: 1},
+			{Zone: 2, Day: day(17), Answer: "no", Count: 3}, {Zone: 2, Day: day(18), Answer: "si", Count: 3},
+			// zone 3: one answer today, and one of Saturday's before the window
+			{Zone: 3, Day: day(17), Answer: "no", Count: 6}, {Zone: 3, Day: day(18), Answer: "si", Count: 1},
+		},
+	}
+	b := board(t, st, clock) // the minimum is 3
+	if err := b.Load(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	s := b.Summary()
+	if today := s.Week.Zones[0].Days[6]; today.Detail == nil {
+		t.Fatalf("zone 1's Sunday shows its split: %+v", today)
+	}
+	z := s.Bot.Zones
+	if len(z) != 3 || z[0].Answers != 5 || z[0].Detail != nil {
+		t.Fatalf("zone 1: the window minus Sunday's split would show Saturday's two answers: %+v", z[0])
+	}
+	if z[1].Detail == nil {
+		t.Fatalf("zone 2: Saturday's and Sunday's answers each reach the minimum: %+v", z[1])
+	}
+	if z[2].Detail != nil {
+		t.Fatalf("zone 3: the window minus Saturday's split would show Sunday's answer: %+v", z[2])
+	}
+}
+
 func TestAddressesAreForgottenAfterAnHour(t *testing.T) {
 	loc, _ := time.LoadLocation("America/Mexico_City")
 	var mu sync.Mutex
