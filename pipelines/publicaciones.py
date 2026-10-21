@@ -7,7 +7,7 @@
     python3 pipelines/publicaciones.py --imagenes download each post's preview image ("vista") (an article's og:image,
                                                   an X post's photo or video poster, a Facebook post's
                                                   og:image) into web/fuentes/, 480 px JPEG (macOS sips), then
-                                                  validate and write. Comments get none; "vista": null marks
+                                                  validate and write. A comment gets its post's image; "vista": null marks
                                                   a logo or stock picture removed by hand, so it stays out.
 
 Each entry quotes a news outlet ("medio") or neighbours ("vecinos") saying a colonia has no water, with
@@ -32,6 +32,7 @@ import pathlib
 import re
 import sys
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 import zoneinfo
@@ -272,15 +273,26 @@ def fetch_images(doc, again=False):
         sys.exit("publicaciones: --imagenes needs macOS sips to resize")
     got = 0
     for p in doc.get("publicaciones") or []:
-        if p.get("tipo") == "comentario" or ("vista" in p and not again):
+        if "vista" in p and not again:
             continue
-        url = p["url"]
+        # A comment shows the picture of the post it was written under.
+        url = p["en"]["url"] if p.get("tipo") == "comentario" else p["url"]
+        red = "facebook" if p.get("tipo") == "comentario" else p["red"]
         name = f"fuentes/{hashlib.sha1(url.encode()).hexdigest()[:12]}.jpg"
         if (WEB / name).is_file():
             p["vista"] = name
             continue
         try:
-            src = x_image(url) if p["red"] == "x" else og_image(url, "facebookexternalhit/1.1") if p["red"] == "facebook" else og_image(url)
+            if red == "x":
+                src = x_image(url)
+            elif red == "facebook":
+                src = og_image(url, "facebookexternalhit/1.1")
+            else:
+                try:
+                    src = og_image(url)
+                except urllib.error.HTTPError:
+                    # Some outlets refuse scripts; the Wayback Machine's copy carries the same og:image.
+                    src = og_image(f"https://web.archive.org/web/2026id_/{url}")
             if not src or not src.startswith("https://") or re.search(r"(logo|favicon|default|placeholder)", src, re.I):
                 print(f"  {url}: no image", file=sys.stderr)
                 continue

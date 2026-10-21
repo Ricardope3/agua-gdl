@@ -276,6 +276,8 @@ header.top { margin-bottom: 0; position: static }
 .ftile img { width: 100%; height: 100%; object-fit: cover; display: block }
 .ftile.txt { padding: 4px 6px; border-left: 4px solid var(--s3) }
 .ftile.txt q { display: block; font-size: 10px; line-height: 1.25; quotes: "«" "»"; overflow: hidden; height: 100% }
+.ftile.over q { position: absolute; left: 0; right: 0; bottom: 0; height: auto; max-height: 100%; padding: 12px 5px 3px; background: linear-gradient(transparent, rgb(0 0 0 / .8)); color: #fff; font-size: 9.5px; line-height: 1.2; display: block; quotes: "«" "»" }
+.ftile.over .fdias { top: 2px; bottom: auto }
 .fdias { position: absolute; right: 2px; bottom: 2px; padding: 0 4px; border-radius: 4px; background: var(--s3); color: var(--s3-ink); font: 700 10px/1.5 var(--font) }
 footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .85rem }
 footer p { margin: 0 0 8px; max-width: 70ch }
@@ -724,13 +726,14 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     const frame = el("div", { class: "marco", "aria-hidden": "true" });
     stage.append(frame);
     function surround(feats, posts) {
-      const seen = new Set();
-      const items = [...posts.filter((p) => p.vista && !seen.has(p.vista) && seen.add(p.vista)), ...posts.filter((p) => !p.vista)].slice(0, 60);
+      // Pictures first: a comment shows the picture of the post it was written under, with its own words.
+      const items = [...posts.filter((p) => p.vista), ...posts.filter((p) => !p.vista)].slice(0, 60);
       const outline = L.geoJSON({ type: "FeatureCollection", features: feats.map((x) => ({ type: "Feature", geometry: x.geometry, properties: {} })) });
       const tiles = items.map((p) => {
         const who = p.tipo === "comentario" ? "Vecino en Facebook" : p.fuente === "medio" || p.quien ? p.quien : "Vecino";
-        return el("a", { class: p.vista ? "ftile" : "ftile txt", href: p.url, target: "_blank", rel: "noopener nofollow", tabindex: "-1", title: `${who} · ${dateES(p.fecha)}: «${p.cita}»` },
-          p.vista ? el("img", { src: `/${p.vista}`, alt: "", decoding: "async" }) : el("q", {}, p.cita.length > 64 ? `${p.cita.slice(0, 62)}…` : p.cita),
+        return el("a", { class: !p.vista ? "ftile txt" : p.tipo === "comentario" ? "ftile over" : "ftile", href: p.url, target: "_blank", rel: "noopener nofollow", tabindex: "-1", title: `${who} · ${dateES(p.fecha)}: «${p.cita}»` },
+          p.vista ? el("img", { src: `/${p.vista}`, alt: "", decoding: "async" }) : null,
+          p.vista && p.tipo !== "comentario" ? null : el("q", {}, p.cita.length > 64 ? `${p.cita.slice(0, 62)}…` : p.cita),
           p.dias ? el("span", { class: "fdias" }, daysWord(p.dias)) : null);
       });
       const blocked = () => [card, document.querySelector(".float-search"), document.querySelector(".leaflet-control-zoom")]
@@ -752,9 +755,12 @@ footer p { margin: 0 0 8px; max-width: 70ch }
           for (let y = y0 + H + G; y <= y1; y += H + G) spots.push([x1, y]);           // right, down
           for (let x = x1 - W - G; x >= x0; x -= W + G) spots.push([x, y1]);           // bottom, right to left
           for (let y = y1 - H - G; y > y0; y -= H + G) spots.push([x0, y]);            // left, up
-          for (const [x, y] of spots) {
-            if (i >= tiles.length) break;
-            if (!free(x, y)) continue;
+          // Spread this ring's share of tiles evenly around it, so they surround the colonia.
+          const open = spots.filter(([x, y]) => free(x, y));
+          const take = Math.min(open.length, tiles.length - i);
+          const left = tiles.length - i;
+          for (let j = 0; j < take; j++) {
+            const [x, y] = open[left >= open.length ? j : Math.floor(j * open.length / take)];
             const t = tiles[i++];
             t.style.cssText = `left:${x}px;top:${y}px;width:${W}px;height:${H}px`;
             frame.append(t);
