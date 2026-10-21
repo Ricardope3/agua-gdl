@@ -9,6 +9,11 @@
                                                   og:image) into web/fuentes/, 480 px JPEG (macOS sips), then
                                                   validate and write. A comment gets its post's image; "vista": null marks
                                                   a logo or stock picture removed by hand, so it stays out.
+    python3 pipelines/publicaciones.py --capturas  screenshot the top of each news article (its headline, as the
+                                                  outlet shows it) with headless Chrome into web/fuentes/ as
+                                                  "captura", and keep its og:title as "titular"; then validate
+                                                  and write. Check the pictures: a cookie banner or an ad can
+                                                  cover the headline (set "captura": null to leave it out).
 
 Each entry quotes a news outlet ("medio") or neighbours ("vecinos") saying a colonia has no water, with
 its link, date and SIAPA colonias. Neighbours' posts count only with at least regla.reacciones reactions
@@ -42,6 +47,8 @@ DATA = root / "web/publicaciones.json"
 COLONIAS = root / "api/data/colonias_mapa.json"
 WEB = root / "web"
 IMAGEN = re.compile(r"^fuentes/[0-9a-f]{12}\.jpg$")
+CAPTURA = re.compile(r"^fuentes/[0-9a-f]{12}-t\.jpg$")
+CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 TODAY = datetime.datetime.now(zoneinfo.ZoneInfo("America/Mexico_City")).date()
 FUENTES = {"medio", "vecinos"}
 REDES = {"facebook", "x", "web"}
@@ -132,6 +139,10 @@ def validate(doc):
             fail(f"{where}: bloqueo is true or absent")
         if p.get("vista") is not None and not (isinstance(p["vista"], str) and IMAGEN.match(p["vista"]) and (WEB / p["vista"]).is_file()):
             fail(f"{where}: vista is null (no useful image) or fuentes/<12 hex>.jpg, in web/")
+        if p.get("captura") is not None and not (isinstance(p["captura"], str) and CAPTURA.match(p["captura"]) and (WEB / p["captura"]).is_file()):
+            fail(f"{where}: captura is null or fuentes/<12 hex>-t.jpg, in web/")
+        if "titular" in p and not (red == "web" and isinstance(p["titular"], str) and 0 < len(p["titular"]) <= 300):
+            fail(f"{where}: titular is a news article's headline, 1 to 300 characters")
         eco = p.get("eco")
         check_eco(eco, where)
         # A comment counts by the thread it is in: the post's reactions and comments meet the rule.
@@ -313,21 +324,80 @@ def fetch_images(doc, again=False):
     return got
 
 
+def headline(url):
+    try:
+        text = get(url).decode("utf-8", "replace")
+    except (OSError, ValueError):
+        return None
+    for prop in ("og:title", "twitter:title"):
+        for m in re.finditer(r"<meta\b[^>]*>", text, re.I):
+            tag = m.group(0)
+            if re.search(r'(?:property|name)\s*=\s*["\']' + re.escape(prop) + r'["\']', tag, re.I):
+                c = re.search(r'content\s*=\s*["\']([^"\']+)', tag, re.I)
+                if c:
+                    return html.unescape(c.group(1)).strip()[:300]
+    return None
+
+
+def fetch_captures(doc):
+    if not pathlib.Path(CHROME).exists() or not shutil.which("sips"):
+        sys.exit("publicaciones: --capturas needs Google Chrome and macOS sips")
+    (WEB / "fuentes").mkdir(exist_ok=True)
+    done = {}
+    got = 0
+    for p in doc.get("publicaciones") or []:
+        if p.get("red") != "web" or "captura" in p:
+            continue
+        url = p["url"]
+        if url not in done:
+            name = f"fuentes/{hashlib.sha1(url.encode()).hexdigest()[:12]}-t.jpg"
+            if not (WEB / name).is_file():
+                # Chrome may still be writing its profile when killed, so the folder goes without complaint.
+                tmp = tempfile.mkdtemp()
+                try:
+                    shot = pathlib.Path(tmp) / "shot.png"
+                    try:
+                        subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--mute-audio",
+                                        "--window-size=1280,900", "--virtual-time-budget=9000", f"--user-data-dir={tmp}/u",
+                                        f"--screenshot={shot}", url], capture_output=True, timeout=60)
+                    except subprocess.TimeoutExpired:
+                        pass
+                    if shot.is_file():
+                        subprocess.run(["sips", "-s", "format", "jpeg", "-s", "formatOptions", "72", "-Z", "720", str(shot), "--out", str(WEB / name)], capture_output=True)
+                finally:
+                    shutil.rmtree(tmp, ignore_errors=True)
+            if (WEB / name).is_file():
+                got += 1
+                done[url] = (name, headline(url))
+            else:
+                print(f"  {url}: no screenshot", file=sys.stderr)
+                done[url] = (None, headline(url))
+        name, title = done[url]
+        if name:
+            p["captura"] = name
+        if title:
+            p["titular"] = title
+    return got
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true", help="validate only; write nothing")
     ap.add_argument("--eco", action="store_true", help="refresh the X posts' likes and replies, then write")
     ap.add_argument("--imagenes", action="store_true", help="download the posts' preview images, then write")
+    ap.add_argument("--capturas", action="store_true", help="screenshot the news articles' headlines, then write")
     args = ap.parse_args()
     doc = json.loads(DATA.read_text())
     if args.eco and not args.check:
         print(f"publicaciones: {refresh_x(doc)} X posts changed")
+    if args.capturas and not args.check:
+        print(f"publicaciones: {fetch_captures(doc)} headline screenshots")
     if args.imagenes and not args.check:
         print(f"publicaciones: {fetch_images(doc)} images downloaded")
     validate(doc)
     if errors:
         sys.exit("publicaciones: " + "\n  ".join(["invalid data:", *errors]))
-    if (args.eco or args.imagenes) and not args.check:
+    if (args.eco or args.imagenes or args.capturas) and not args.check:
         DATA.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
     pubs = doc["publicaciones"]
     cols = {k for p in pubs for k in p["colonias"]}

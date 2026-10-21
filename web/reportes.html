@@ -278,6 +278,12 @@ header.top { margin-bottom: 0; position: static }
 .ftile.txt q { display: block; font-size: 14px; line-height: 1.3; quotes: "«" "»"; overflow: hidden; height: 100% }
 .ftile.over q { position: absolute; left: 0; right: 0; bottom: 0; height: auto; max-height: 100%; padding: 22px 8px 6px; background: linear-gradient(transparent, rgb(0 0 0 / .85)); color: #fff; font-size: 13px; line-height: 1.25; display: block; quotes: "«" "»" }
 .ftile.over .fdias { top: 2px; bottom: auto }
+.ftile.news { background: #fbfaf7; color: #111 }
+.ftile.news img { object-position: top; opacity: .35 }
+.ftile.news .nw { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; gap: 4px; padding: 8px 10px; background: linear-gradient(rgb(251 250 247 / .1), rgb(251 250 247 / .92) 45%) }
+.ftile.news small { font: 700 10px/1.2 var(--font); letter-spacing: .06em; text-transform: uppercase; color: #9b1c0c }
+.ftile.news b { font: 700 15px/1.18 Georgia, "Times New Roman", serif; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden }
+@media (max-width: 760px) { .ftile.news b { font-size: 11px; -webkit-line-clamp: 4 } .ftile.news small { font-size: 8px } }
 .fdias { position: absolute; right: 5px; bottom: 5px; padding: 1px 7px; border-radius: 6px; background: var(--s3); color: var(--s3-ink); font: 700 13px/1.5 var(--font) }
 @media (max-width: 760px) { .ftile.txt q, .ftile.over q { font-size: 11px } .fdias { font-size: 11px } }
 footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .85rem }
@@ -500,7 +506,8 @@ footer p { margin: 0 0 8px; max-width: 70ch }
   }
 
   // The zoom buttons go bottom right: the summary sits top right and the colonia card top left.
-  const map = L.map("mapa", { preferCanvas: true, zoomSnap: 0.25, zoomControl: false });
+  // Trackpad pinches send small wheel steps: fewer pixels per level make each pinch zoom further.
+  const map = L.map("mapa", { preferCanvas: true, zoomSnap: 0.25, zoomControl: false, wheelPxPerZoomLevel: 22, wheelDebounceTime: 20 });
   L.control.zoom({ position: "bottomright" }).addTo(map);
   M.tiles(L, map);
   map.setView([20.66, -103.37], 11);
@@ -620,7 +627,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
             e ? el("span", { class: "sub" }, evLine(e)) : null,
             c ? el("span", { class: "sub" }, `${totalOf(c)} ${totalOf(c) === 1 ? "reporte" : "reportes"} en este mapa en 24 h`) : summary && !e ? el("span", { class: "sub" }, "Sin reportes en 24 h") : null);
         }, { sticky: true, className: "map-label" });
-        l.on("click", () => { if (Date.now() - closedAt > 500) select(f, { fit: false }); });
+        l.on("click", () => { if (Date.now() - closedAt > 500) select(f); });
       },
     }).addTo(map);
 
@@ -728,9 +735,15 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     stage.append(frame);
     function surround(feats, posts) {
       // Pictures first: a comment shows the picture of the post it was written under, with its own words.
-      const items = [...posts.filter((p) => p.vista), ...posts.filter((p) => !p.vista)].slice(0, 60);
+      // News coverage first, each article as its headline, then the pictures, then the words alone.
+      const seenNews = new Set();
+      const news = posts.filter((p) => p.red === "web" && p.titular && !seenNews.has(p.url) && seenNews.add(p.url)).map((p) => ({ ...p, headline: true }));
+      const items = [...news, ...posts.filter((p) => p.vista), ...posts.filter((p) => !p.vista)].slice(0, 60);
       const outline = L.geoJSON({ type: "FeatureCollection", features: feats.map((x) => ({ type: "Feature", geometry: x.geometry, properties: {} })) });
       const tiles = items.map((p) => {
+        if (p.headline) return el("a", { class: "ftile news", href: p.url, target: "_blank", rel: "noopener nofollow", tabindex: "-1", title: `${p.quien} · ${dateES(p.fecha)}: ${p.titular}` },
+          p.captura ? el("img", { src: `/${p.captura}`, alt: "", decoding: "async" }) : null,
+          el("span", { class: "nw" }, el("small", {}, `${p.quien} · ${dateES(p.fecha)}`), el("b", {}, p.titular)));
         const who = p.tipo === "comentario" ? "Vecino en Facebook" : p.fuente === "medio" || p.quien ? p.quien : "Vecino";
         return el("a", { class: !p.vista ? "ftile txt" : p.tipo === "comentario" ? "ftile over" : "ftile", href: p.url, target: "_blank", rel: "noopener nofollow", tabindex: "-1", title: `${who} · ${dateES(p.fecha)}: «${p.cita}»` },
           p.vista ? el("img", { src: `/${p.vista}`, alt: "", decoding: "async" }) : null,
