@@ -308,6 +308,11 @@ path.vivo-onda { animation: onda 1.6s ease-out infinite }
 .ftile.cmt.fb .c-body { background: #f0f2f5; border-radius: 12px; padding: 6px 9px }
 .ftile.cmt .c-en { margin-top: auto; font-size: 10px; color: #65676b; padding-right: 54px }
 .ftile.cmt.xp { border-left: 0 }
+.ftile.cmt .c-post { position: relative; flex: none; display: block; height: 22%; margin: -8px -9px 0; overflow: hidden; border-bottom: 1px solid #dadde1 }
+.ftile.cmt .c-post img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.8) }
+.ftile.cmt .c-post small { position: absolute; left: 6px; bottom: 4px; padding: 1px 6px; border-radius: 4px; background: rgb(0 0 0 / .65); color: #fff; font-size: 9.5px; font-weight: 600 }
+.ftile.cmt.ctx .c-body { -webkit-line-clamp: 3 }
+@media (prefers-color-scheme: dark) { .ftile.cmt .c-post { border-color: #3e4042 } }
 .ftile.cmt.xp .c-head small::before { content: "𝕏 "; color: #050505; font-weight: 700 }
 @media (prefers-color-scheme: dark) { .ftile.cmt { background: #242526; color: #e4e6eb } .ftile.cmt.fb .c-body { background: #3a3b3c } .ftile.cmt .c-head small, .ftile.cmt .c-en { color: #b0b3b8 } .ftile.cmt.xp { background: #000 } .ftile.cmt.xp .c-head small::before { color: #e7e9ea } }
 @media (max-width: 760px) { .ftile.cmt .c-body { font-size: 10px; -webkit-line-clamp: 3 } .ftile.cmt .c-av { width: 18px; height: 18px } .ftile.cmt .c-en { display: none } }
@@ -786,13 +791,15 @@ footer p { margin: 0 0 8px; max-width: 70ch }
           el("span", { class: "nw" }, el("small", {}, `${p.quien} · ${dateES(p.fecha)}`), el("b", {}, p.titular)));
         const who = p.tipo === "comentario" ? "Vecino en Facebook" : p.fuente === "medio" || p.quien ? p.quien : "Vecino";
         // Words without a picture look like what they are, a comment or a post, with the neighbour unnamed.
-        if (!p.vista && (p.tipo === "comentario" || p.fuente === "vecinos")) {
+        // A comment always shows as the comment itself, under a strip of the post it answers.
+        if (p.tipo === "comentario" || (!p.vista && p.fuente === "vecinos")) {
           const fb = p.red === "facebook";
-          return el("a", { class: `ftile cmt ${fb ? "fb" : "xp"}`, href: p.url, target: "_blank", rel: "noopener nofollow", tabindex: "-1", title: `${who} · ${dateES(p.fecha)}: «${p.cita}»` },
+          return el("a", { class: `ftile cmt ${fb ? "fb" : "xp"}${p.vista ? " ctx" : ""}`, href: p.url, target: "_blank", rel: "noopener nofollow", tabindex: "-1", title: `${who} · ${dateES(p.fecha)}: «${p.cita}»` },
+            p.vista ? el("span", { class: "c-post" }, el("img", { src: `/${p.vista}`, alt: "", decoding: "async" }), el("small", {}, p.en ? p.en.quien : "")) : null,
             el("span", { class: "c-head" }, el("span", { class: "c-av", "aria-hidden": "true" }),
               el("span", {}, el("b", {}, p.quien && !p.tipo ? p.quien : "Vecina o vecino"), el("small", {}, `${fb ? (p.tipo === "comentario" ? "Comentario en Facebook" : "Facebook") : "Publicación en X"} · ${dateES(p.fecha)}`))),
             el("span", { class: "c-body" }, p.cita.length > 150 ? `${p.cita.slice(0, 148)}…` : p.cita),
-            p.tipo === "comentario" ? el("span", { class: "c-en" }, `En la publicación de ${p.en.quien}`) : null,
+            p.tipo === "comentario" && !p.vista ? el("span", { class: "c-en" }, `En la publicación de ${p.en.quien}`) : null,
             p.dias ? el("span", { class: "fdias" }, daysWord(p.dias)) : null);
         }
         return el("a", { class: !p.vista ? "ftile txt" : p.tipo === "comentario" ? "ftile over" : "ftile", href: p.url, target: "_blank", rel: "noopener nofollow", tabindex: "-1", title: `${who} · ${dateES(p.fecha)}: «${p.cita}»` },
