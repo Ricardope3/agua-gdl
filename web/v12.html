@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="facebook-domain-verification" content="li0vsm7edv0afccxodm5t0jvyiw0za">
-<title>Agua GDL · Variante 6: Mapa a lo ancho</title>
+<title>Agua GDL · Variante 12: Toda la ciudad</title>
 <meta name="robots" content="noindex">
 <meta name="description" content="El agua es un derecho. Exígelo. En Guadalajara llega sucia y racionada: reporta cómo está el agua en tu colonia, mira lo que reportan tus vecinos y exígele a quien le toca que lo arregle. Y pídele al Congreso que vote no al acueducto privado.">
 <link rel="canonical" href="https://aguagdl.com/">
@@ -255,14 +255,19 @@ main .lede { color: var(--fg) }
 .kicker { margin: 0 0 12px; font-family: var(--font); color: var(--alarm); font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase }
 .headline { padding: 10px 0 16px }
 .headline h1 { font-size: clamp(1.9rem, 4.4vw, 2.9rem); max-width: 34ch; margin: 0 }
+html, body { overflow-x: clip }
+@media (min-width: 1100px) {
+  .wrap { max-width: 1320px }
+  main > :not(.maphero), .maphero .mapnote, .wrap > footer { max-width: 928px; margin-left: auto; margin-right: auto }
+}
 .maphero { margin: 4px 0 30px }
-.mapframe-box { position: relative; height: min(78vh, 780px); min-height: 460px; border: 1px solid var(--fg); border-radius: 4px; overflow: hidden; background: var(--subtle) }
+.mapframe-box { position: relative; width: 100vw; margin-left: calc(50% - 50vw); height: min(88vh, 920px); min-height: 460px; border-block: 1px solid var(--fg); overflow: hidden; background: var(--subtle) }
 .mapframe-box::before { content: "Cargando el mapa…"; position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: .9rem }
 .mapframe { position: relative; display: block; width: 100%; height: 100%; border: 0; opacity: 0; transition: opacity .3s }
 .mapframe.ready { opacity: 1 }
 .mapnote { margin: 8px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.45 }
 .mapnote a { white-space: nowrap; font-weight: 600 }
-@media (max-width: 760px) { .mapframe-box { height: 72vh; min-height: 430px; margin: 0 -16px; border-radius: 0; border-inline: 0 } }
+@media (max-width: 760px) { .mapframe-box { height: 80vh; min-height: 430px } }
 .vs-grid { gap: 0; border-top: 3px solid var(--fg); border-bottom: 1px solid var(--fg) }
 .vs-col { background: none; border: 0; border-radius: 0; box-shadow: none; padding: 20px 0 }
 .vs-col h3 { margin: 0 0 14px; color: var(--alarm); letter-spacing: .12em }
@@ -297,20 +302,12 @@ main .lede { color: var(--fg) }
 .variant-bar strong { margin-right: 4px }
 .variant-bar a { color: #fde68a; text-decoration: none; padding: 2px 8px; border-radius: 999px; border: 1px solid #fde68a55 }
 .variant-bar a[aria-current="page"] { background: #fde68a; color: #1c1400; font-weight: 700 }
-
-html, body { overflow-x: clip }
-.maphero .mapframe-box { width: 100vw; margin-left: calc(50% - 50vw); margin-right: 0; height: min(88vh, 920px); border-inline: 0; border-radius: 0 }
-@media (max-width: 760px) { .maphero .mapframe-box { height: 80vh } }
-@media (min-width: 1100px) {
-  .wrap { max-width: 1320px }
-  main > :not(.maphero), .maphero .mapnote, .wrap > footer { max-width: 928px; margin-left: auto; margin-right: auto }
-}
 </style>
 <script src="/theme.js"></script>
 </head>
 <body>
 <div class="wrap">
-  <div class="variant-bar"><strong>Prueba · v6: Mapa a lo ancho</strong><a href="/">Actual</a><a href="/v6" title="Mapa a lo ancho" aria-current="page">v6</a><a href="/v7" title="Portada">v7</a><a href="/v8" title="Mapa con lista">v8</a><a href="/v9" title="Tu colonia primero">v9</a><a href="/v10" title="Breve">v10</a></div>
+  <div class="variant-bar"><strong>Prueba · v12: Toda la ciudad</strong><a href="/">Actual</a><a href="/v11" title="Mapa primero">v11</a><a href="/v12" title="Toda la ciudad" aria-current="page">v12</a><a href="/v13" title="La más publicada">v13</a><a href="/v14" title="Mapa con lista">v14</a><a href="/v15" title="Tu colonia primero">v15</a></div>
   <header class="top">
     <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
     <nav class="site-nav" aria-label="Secciones">
@@ -331,8 +328,8 @@ html, body { overflow-x: clip }
       <h1>El SIAPA prometió un día. Hay vecinos con semanas sin agua.</h1>
     </div>
     <div class="maphero">
-      <div class="mapframe-box"><iframe class="mapframe" src="/reportes?q=CIUDAD+GRANJA&amp;m=Zapopan&amp;cp=45010" title="Mapa de lo que publican medios y vecinos, colonia por colonia"></iframe></div>
-      <p class="mapnote" data-colonia="CIUDAD GRANJA|Zapopan|45010" data-nombre="Ciudad Granja, Zapopan"><span>Ciudad Granja, en Zapopan, en el mapa de lo que publican medios y vecinos.</span> <a href="/reportes?q=CIUDAD+GRANJA&amp;m=Zapopan&amp;cp=45010">Abrir el mapa completo</a></p>
+      <div class="mapframe-box"><iframe class="mapframe" src="/reportes" title="Mapa de lo que publican medios y vecinos, colonia por colonia"></iframe></div>
+      <p class="mapnote"><span>Cada colonia toma el color de los días sin agua que dicen sus publicaciones. Toca la tuya para ver qué se ha publicado y reportarla.</span> <a href="/reportes">Abrir el mapa completo</a></p>
     </div>
     <div class="vs-grid contrast">
       <div class="vs-col promesa">

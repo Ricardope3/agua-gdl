@@ -4,8 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="facebook-domain-verification" content="li0vsm7edv0afccxodm5t0jvyiw0za">
-<title>Agua GDL · Variante 8: Mapa con lista</title>
-<meta name="robots" content="noindex">
+<title>Agua GDL · El agua es un derecho. Exígelo.</title>
 <meta name="description" content="El agua es un derecho. Exígelo. En Guadalajara llega sucia y racionada: reporta cómo está el agua en tu colonia, mira lo que reportan tus vecinos y exígele a quien le toca que lo arregle. Y pídele al Congreso que vote no al acueducto privado.">
 <link rel="canonical" href="https://aguagdl.com/">
 <meta property="og:type" content="website">
@@ -292,29 +291,11 @@ main .lede { color: var(--fg) }
 .wall .note { color: var(--muted); font-size: .82rem; margin: 6px 0 0 }
 .boxes { display: grid; gap: 12px; margin: 0 0 40px }
 @media (min-width: 860px) { .boxes { grid-template-columns: repeat(3, 1fr) } }
-
-.variant-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin: 0 -16px; padding: 6px 16px; background: #1c1400; color: #fde68a; font-size: .78rem }
-.variant-bar strong { margin-right: 4px }
-.variant-bar a { color: #fde68a; text-decoration: none; padding: 2px 8px; border-radius: 999px; border: 1px solid #fde68a55 }
-.variant-bar a[aria-current="page"] { background: #fde68a; color: #1c1400; font-weight: 700 }
-
-.hot { padding: 0 0 30px; border-top: 0 }
-.hot h2 { font-size: 1.4rem; margin: 0 0 4px }
-.hot > p { margin: 0 0 12px; color: var(--muted); font-size: .9rem }
-.hot-list { list-style: none; margin: 0; padding: 0; columns: 2 280px; column-gap: 28px; border-top: 3px solid var(--fg) }
-.hot-list li { break-inside: avoid; border-bottom: 1px solid var(--line) }
-.hot-list button { display: grid; grid-template-columns: 1fr auto; column-gap: 12px; align-items: center; width: 100%; padding: 10px 0 10px 10px; border: 0; border-left: 3px solid transparent; background: none; color: var(--fg); font: inherit; text-align: left; cursor: pointer }
-.hot-list button:hover strong { text-decoration: underline; text-underline-offset: 3px }
-.hot-list button[aria-pressed="true"] { border-left-color: var(--alarm); background: color-mix(in srgb, var(--alarm) 7%, transparent) }
-.hot-list strong { grid-column: 1; font-family: var(--serif); font-size: 1.12rem; line-height: 1.25 }
-.hot-list small { grid-column: 1; color: var(--muted); font-size: .8rem }
-.hot-list span { grid-column: 2; grid-row: 1 / span 2; color: var(--alarm); font-family: var(--serif); font-weight: 700; font-size: 1.05rem; white-space: nowrap }
 </style>
 <script src="/theme.js"></script>
 </head>
 <body>
 <div class="wrap">
-  <div class="variant-bar"><strong>Prueba · v8: Mapa con lista</strong><a href="/">Actual</a><a href="/v6" title="Mapa a lo ancho">v6</a><a href="/v7" title="Portada">v7</a><a href="/v8" title="Mapa con lista" aria-current="page">v8</a><a href="/v9" title="Tu colonia primero">v9</a><a href="/v10" title="Breve">v10</a></div>
   <header class="top">
     <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
     <nav class="site-nav" aria-label="Secciones">
@@ -338,11 +319,6 @@ main .lede { color: var(--fg) }
       <div class="mapframe-box"><iframe class="mapframe" src="/reportes?q=CIUDAD+GRANJA&amp;m=Zapopan&amp;cp=45010" title="Mapa de lo que publican medios y vecinos, colonia por colonia"></iframe></div>
       <p class="mapnote" data-colonia="CIUDAD GRANJA|Zapopan|45010" data-nombre="Ciudad Granja, Zapopan"><span>Ciudad Granja, en Zapopan, en el mapa de lo que publican medios y vecinos.</span> <a href="/reportes?q=CIUDAD+GRANJA&amp;m=Zapopan&amp;cp=45010">Abrir el mapa completo</a></p>
     </div>
-    <section class="hot" aria-labelledby="hot-h" hidden>
-      <h2 id="hot-h">Las colonias con más publicaciones</h2>
-      <p>Según lo que publican medios y vecinos. Toca una para verla en el mapa.</p>
-      <ol class="hot-list" id="hot"></ol>
-    </section>
     <div class="vs-grid contrast">
       <div class="vs-col promesa">
         <h3>Lo que prometió el SIAPA</h3>
@@ -554,47 +530,6 @@ main .lede { color: var(--fg) }
     const n = count.get(note.dataset.colonia) || 0, most = Math.max(...count.values());
     const alone = [...count.values()].filter((v) => v === most).length === 1;
     if (n) note.firstChild.textContent = `${n} ${n === 1 ? "publicación" : "publicaciones"} de medios y vecinos sobre la falta de agua en ${note.dataset.nombre}${n === most && alone ? ": más que en ninguna otra colonia" : ""}.`;
-  }).catch(() => {});
-})();
-</script>
-<script>
-(() => {
-  const f = document.querySelector(".mapframe"), note = document.querySelector(".mapnote"), list = document.getElementById("hot");
-  const api = new URLSearchParams(location.search).get("api");
-  const SMALL = new Set(["de", "del", "la", "las", "los", "el", "y", "e"]);
-  const nice = (name) => name.toLowerCase().split(" ").map((w, i) => /^(i{1,3}|iv|vi{0,3}|ix|x)$/.test(w) ? w.toUpperCase() : i && SMALL.has(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
-  fetch("/publicaciones.json").then((r) => (r.ok ? r.json() : null)).then((doc) => {
-    if (!doc) return;
-    const count = new Map(), days = new Map();
-    for (const p of doc.publicaciones) for (const k of p.colonias) {
-      count.set(k, (count.get(k) || 0) + 1);
-      if (p.dias != null) days.set(k, Math.max(days.get(k) || 0, p.dias));
-    }
-    const top = [...count].sort((a, b) => b[1] - a[1] || (days.get(b[0]) || 0) - (days.get(a[0]) || 0)).slice(0, 8);
-    const buttons = top.map(([k, n]) => {
-      const [name, m, cp] = k.split("|"), d = days.get(k);
-      const b = document.createElement("button"), strong = document.createElement("strong"), small = document.createElement("small"), span = document.createElement("span");
-      b.type = "button";
-      b.setAttribute("aria-pressed", String(k === note.dataset.colonia));
-      strong.textContent = nice(name);
-      small.textContent = m + (d ? ` · hasta ${d} ${d === 1 ? "día" : "días"} sin agua` : "");
-      span.textContent = `${n} ${n === 1 ? "publicación" : "publicaciones"}`;
-      b.append(strong, small, span);
-      b.addEventListener("click", () => {
-        for (const x of buttons) x.setAttribute("aria-pressed", String(x === b));
-        const q = new URLSearchParams({ q: name, m, cp });
-        note.lastElementChild.href = "/reportes?" + q;
-        note.dataset.colonia = k;
-        note.dataset.nombre = `${nice(name)}, ${m}`;
-        note.firstElementChild.textContent = `${n} ${n === 1 ? "publicación" : "publicaciones"} de medios y vecinos sobre la falta de agua en ${nice(name)}, ${m}.`;
-        if (api) q.set("api", api);
-        f.classList.remove("ready");
-        f.src = "/reportes?" + q;
-      });
-      return b;
-    });
-    list.replaceChildren(...buttons.map((b) => { const li = document.createElement("li"); li.append(b); return li; }));
-    document.querySelector(".hot").hidden = !buttons.length;
   }).catch(() => {});
 })();
 </script>

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Variants of the landing page, to compare one idea at a time against it: writes web/v6.html …
-web/v10.html (noindex, with a bar to switch between them and the current landing) from the blocks
+"""Variants of the landing page, to compare one idea at a time against it: writes web/v11.html …
+web/v15.html (noindex, with a bar to switch between them and the current landing) from the blocks
 of web/index.html, so each carries the landing's copy, quotes, sources, style and scripts and only
-moves, widens, folds or wires them differently. The landing is the 21 Oct 2026 round's v1; that
-round's generator and pages are in git history (web/v1.html … v5.html, now redirected to /).
+moves, retargets or wires them differently. The landing is the 21 Oct 2026 rounds' v1 and then v6;
+those rounds' pages are in git history (web/v1.html … v10.html, now redirected to /).
 Change a variant here and run it again; a block index.html no longer has stops it.
 
 Usage, from the repo root: python3 -I experiments/landing/variantes.py
@@ -60,16 +60,6 @@ def grab(pattern, text=SRC):
     return m.group(0)
 
 
-def text(markup):
-    return " ".join(re.sub(r"<[^>]+>", "", markup).split())
-
-
-def split(section):
-    """A section's heading text and what follows the heading."""
-    m = re.match(r"\s*<section[^>]*>\s*<h2[^>]*>(.*?)</h2>(.*)</section>\s*$", section, re.S)
-    return text(m.group(1)), m.group(2)
-
-
 B = Blocks(SRC).found
 try:
     HEADLINE, MAP, CONTRAST, YOURS, WALL, BOXES = (B[k] for k in ("headline", "maphero", "vs-grid contrast", "yours", "wall", "boxes"))
@@ -81,10 +71,18 @@ HEAD_END = AFTER_STYLE.split("</head>", 1)[0]
 HEADER = grab(r'  <header class="top">.*?</header>\n')
 FOOTER = grab(r"  <footer>.*?</footer>\n")
 SCRIPTS = re.search(r"</footer>\n</div>\n(<script>.*)</body>", SRC, re.S).group(1)
-V = re.search(r"/icons\.svg\?v=(\d+)", SRC).group(1)
 
 
-NAMES = {6: "Mapa a lo ancho", 7: "Portada", 8: "Mapa con lista", 9: "Tu colonia primero", 10: "Breve"}
+def map_on(src, href, note):
+    """The landing's map block opening src, its link going to href, with its own note (and no
+    colonia for the landing's script to count)."""
+    m = re.sub(r' data-(colonia|nombre)="[^"]*"', "", MAP)
+    m = re.sub(r'src="/reportes[^"]*"', f'src="{src}"', m)
+    m = re.sub(r'href="/reportes[^"]*"', f'href="{href}"', m)
+    return re.sub(r"<span>.*?</span>", f"<span>{note}</span>", m, count=1)
+
+
+NAMES = {11: "Mapa primero", 12: "Toda la ciudad", 13: "La más publicada", 14: "Mapa con lista", 15: "Tu colonia primero"}
 
 BAR_CSS = """
 .variant-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin: 0 -16px; padding: 6px 16px; background: #1c1400; color: #fde68a; font-size: .78rem }
@@ -92,18 +90,6 @@ BAR_CSS = """
 .variant-bar a { color: #fde68a; text-decoration: none; padding: 2px 8px; border-radius: 999px; border: 1px solid #fde68a55 }
 .variant-bar a[aria-current="page"] { background: #fde68a; color: #1c1400; font-weight: 700 }
 """
-
-FOLDS_CSS = """
-.fold { border-top: 1px solid var(--line) }
-.fold:first-of-type { border-top: 3px solid var(--fg) }
-.fold:last-of-type { border-bottom: 1px solid var(--fg); margin-bottom: 8px }
-.fold > summary { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 18px 0; cursor: pointer; list-style: none; font-family: var(--serif); font-size: 1.35rem; font-weight: 700; line-height: 1.25 }
-.fold > summary::-webkit-details-marker { display: none }
-.fold > summary::after { content: "+"; flex-shrink: 0; font-family: var(--serif); font-size: 1.8rem; font-weight: 400; line-height: 1; color: var(--alarm) }
-.fold[open] > summary::after { content: "−" }
-.fold > div { padding: 0 0 26px }
-"""
-
 
 def bar(n):
     current = ' aria-current="page"'
@@ -119,37 +105,52 @@ def page(n, css, main, script=""):
     (WEB / f"v{n}.html").write_text(out, encoding="utf-8")
 
 
-# v6: the map edge to edge and taller, and v7's menu on one row across wide screens; the rest
-# keeps the landing's column.
-page(6, """
-html, body { overflow-x: clip }
-.maphero .mapframe-box { width: 100vw; margin-left: calc(50% - 50vw); margin-right: 0; height: min(88vh, 920px); border-inline: 0; border-radius: 0 }
-@media (max-width: 760px) { .maphero .mapframe-box { height: 80vh } }
-@media (min-width: 1100px) {
-  .wrap { max-width: 1320px }
-  main > :not(.maphero), .maphero .mapnote, .wrap > footer { max-width: 928px; margin-left: auto; margin-right: auto }
-}
-""", HEADLINE + MAP + CONTRAST + YOURS + WALL + BOXES + CONGRESO + MAS + WHY + CONTACT)
+REST = CONTRAST + YOURS + WALL + BOXES + CONGRESO + MAS + WHY + CONTACT
+NICE = r"""  const SMALL = new Set(["de", "del", "la", "las", "los", "el", "y", "e"]);
+  const nice = (name) => name.toLowerCase().split(" ").map((w, i) => /^(i{1,3}|iv|vi{0,3}|ix|x)$/.test(w) ? w.toUpperCase() : i && SMALL.has(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+"""
 
-# v7: a front page on wide screens: the headline and the promise against the figures on the left,
-# the map on the right; phones keep the landing's order.
-page(7, """
-@media (min-width: 1100px) {
-  .wrap { max-width: 1320px }
-  main > :not(.frontpage) { max-width: 928px; margin-left: auto; margin-right: auto }
-  .frontpage { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.55fr); grid-template-areas: "head map" "contrast map"; column-gap: 32px; align-items: start; margin: 0 0 30px }
-  .frontpage > .headline { grid-area: head }
-  .frontpage > .maphero { grid-area: map; margin: 14px 0 0 }
-  .frontpage > .contrast { grid-area: contrast; grid-template-columns: 1fr; margin: 0 }
-  .frontpage .contrast > :first-child { padding-right: 0 }
-  .frontpage .contrast > :last-child { border-left: 0; padding-left: 0; border-top: 1px solid var(--line) }
-  .frontpage .mapframe-box { height: min(calc(100vh - 120px), 900px); min-height: 600px }
-  .frontpage .headline h1 { font-size: clamp(2.2rem, 3.4vw, 3rem) }
-}
-""", '    <div class="frontpage">\n' + HEADLINE + MAP + CONTRAST + "    </div>\n" + YOURS + WALL + BOXES + CONGRESO + MAS + WHY + CONTACT)
+# v11: the map first, filling the screen under the menu; the headline after it.
+page(11, """
+header.top { margin-bottom: 0 }
+.maphero { margin: 0 0 22px }
+.maphero .mapframe-box { height: calc(100dvh - 110px); border-top: 0 }
+@media (min-width: 1100px) { .maphero .mapframe-box { height: calc(100dvh - 62px) } }
+.headline { padding-top: 6px }
+""", MAP + HEADLINE + REST)
 
-# v8: under the map, the colonias with the most publications; a tap shows one in the map.
-page(8, """
+# v12: the map on the whole city instead of one colonia.
+page(12, "", HEADLINE + map_on("/reportes", "/reportes", "Cada colonia toma el color de los días sin agua que dicen sus publicaciones. Toca la tuya para ver qué se ha publicado y reportarla.") + REST)
+
+# v13: the map opens on whichever colonia has the most publications when the page loads.
+page(13, "", HEADLINE + map_on("about:blank", "/reportes", "Buscando la colonia con más publicaciones…") + REST, script=r"""<script>
+(() => {
+  const f = document.querySelector(".mapframe"), note = document.querySelector(".mapnote");
+  const api = new URLSearchParams(location.search).get("api");
+""" + NICE + r"""  const open = (params) => {
+    if (api) params.set("api", api);
+    f.classList.remove("ready");
+    f.src = "/reportes?" + params;
+  };
+  fetch("/publicaciones.json").then((r) => (r.ok ? r.json() : null)).then((doc) => {
+    const count = new Map();
+    for (const p of doc.publicaciones) for (const k of p.colonias) count.set(k, (count.get(k) || 0) + 1);
+    const ranked = [...count].sort((a, b) => b[1] - a[1]);
+    const [k, n] = ranked[0], tied = ranked.filter(([, c]) => c === n).length > 1;
+    const [name, m, cp] = k.split("|"), q = new URLSearchParams({ q: name, m, cp });
+    note.lastElementChild.href = "/reportes?" + q;
+    note.firstElementChild.textContent = `${nice(name)}, ${m}, es ${tied ? "una de las colonias" : "la colonia"} con más publicaciones de medios y vecinos sobre la falta de agua: ${n}.`;
+    open(q);
+  }).catch(() => {
+    note.firstElementChild.textContent = "Cada colonia toma el color de los días sin agua que dicen sus publicaciones.";
+    open(new URLSearchParams());
+  });
+})();
+</script>
+""")
+
+# v14: under the map, the colonias with the most publications; a tap shows one in the map.
+page(14, """
 .hot { padding: 0 0 30px; border-top: 0 }
 .hot h2 { font-size: 1.4rem; margin: 0 0 4px }
 .hot > p { margin: 0 0 12px; color: var(--muted); font-size: .9rem }
@@ -166,13 +167,11 @@ page(8, """
       <p>Según lo que publican medios y vecinos. Toca una para verla en el mapa.</p>
       <ol class="hot-list" id="hot"></ol>
     </section>
-""" + CONTRAST + YOURS + WALL + BOXES + CONGRESO + MAS + WHY + CONTACT, script=r"""<script>
+""" + REST, script=r"""<script>
 (() => {
   const f = document.querySelector(".mapframe"), note = document.querySelector(".mapnote"), list = document.getElementById("hot");
   const api = new URLSearchParams(location.search).get("api");
-  const SMALL = new Set(["de", "del", "la", "las", "los", "el", "y", "e"]);
-  const nice = (name) => name.toLowerCase().split(" ").map((w, i) => /^(i{1,3}|iv|vi{0,3}|ix|x)$/.test(w) ? w.toUpperCase() : i && SMALL.has(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
-  fetch("/publicaciones.json").then((r) => (r.ok ? r.json() : null)).then((doc) => {
+""" + NICE + r"""  fetch("/publicaciones.json").then((r) => (r.ok ? r.json() : null)).then((doc) => {
     if (!doc) return;
     const count = new Map(), days = new Map();
     for (const p of doc.publicaciones) for (const k of p.colonias) {
@@ -209,9 +208,9 @@ page(8, """
 </script>
 """)
 
-# v9: the colonia search right under the headline; it opens the visitor's colonia in the map
+# v15: the colonia search right under the headline; it opens the visitor's colonia in the map
 # below, with its report form, instead of leaving the page.
-page(9, """
+page(15, """
 .yours { padding: 6px 0 22px }
 .yours h2 { font-size: clamp(1.4rem, 3.6vw, 1.8rem) }
 .maphero { scroll-margin-top: 90px }
@@ -235,18 +234,5 @@ page(9, """
 })();
 </script>
 """)
-
-# v10: the headline, the map, the promise against the figures and the search; the rest folded.
-folded = "".join(f'    <details class="fold"><summary>{title}</summary><div>{body}</div></details>\n'
-                 for title, body in (split(WALL), split(CONGRESO), split(MAS), split(WHY)))
-page(10, FOLDS_CSS + """
-.fold .wall, .fold section { border-top: 0; padding: 0 }
-.fold .cols { columns: 2 300px; column-gap: 28px }
-.fold h4 { break-after: avoid; margin: 0 0 10px; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--alarm) }
-.fold .posts { margin: 0 0 18px }
-.fold .posts li { break-inside: avoid }
-.fold .note { color: var(--muted); font-size: .82rem; margin: 6px 0 0 }
-.contact { border-top: 0 }
-""", HEADLINE + MAP + CONTRAST + YOURS + BOXES + folded + CONTACT)
 
 print(f"wrote {', '.join(f'web/v{n}.html' for n in NAMES)} from web/index.html")
