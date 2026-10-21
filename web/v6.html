@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="facebook-domain-verification" content="li0vsm7edv0afccxodm5t0jvyiw0za">
-<title>Agua GDL · Variante 4: Datos en vivo</title>
+<title>Agua GDL · Variante 6: Mapa a lo ancho</title>
 <meta name="robots" content="noindex">
 <meta name="description" content="El agua es un derecho. Exígelo. En Guadalajara llega sucia y racionada: reporta cómo está el agua en tu colonia, mira lo que reportan tus vecinos y exígele a quien le toca que lo arregle. Y pídele al Congreso que vote no al acueducto privado.">
 <link rel="canonical" href="https://aguagdl.com/">
@@ -248,16 +248,21 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 :root { --alarm: #dc2626 }
 @media (prefers-color-scheme: dark) { :root { --alarm: #f87171 } }
 
-.variant-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin: 0 -16px; padding: 6px 16px; background: #1c1400; color: #fde68a; font-size: .78rem }
-.variant-bar strong { margin-right: 4px }
-.variant-bar a { color: #fde68a; text-decoration: none; padding: 2px 8px; border-radius: 999px; border: 1px solid #fde68a55 }
-.variant-bar a[aria-current="page"] { background: #fde68a; color: #1c1400; font-weight: 700 }
-
 :root { --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif }
-main h1, main h2, .v5-more > summary { font-family: var(--serif); font-weight: 700; letter-spacing: -.015em }
+main h1, main h2 { font-family: var(--serif); font-weight: 700; letter-spacing: -.015em }
 main h1 { line-height: 1.03 }
 main .lede { color: var(--fg) }
 .kicker { margin: 0 0 12px; font-family: var(--font); color: var(--alarm); font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase }
+.headline { padding: 10px 0 16px }
+.headline h1 { font-size: clamp(1.9rem, 4.4vw, 2.9rem); max-width: 34ch; margin: 0 }
+.maphero { margin: 4px 0 30px }
+.mapframe-box { position: relative; height: min(78vh, 780px); min-height: 460px; border: 1px solid var(--fg); border-radius: 4px; overflow: hidden; background: var(--subtle) }
+.mapframe-box::before { content: "Cargando el mapa…"; position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: .9rem }
+.mapframe { position: relative; display: block; width: 100%; height: 100%; border: 0; opacity: 0; transition: opacity .3s }
+.mapframe.ready { opacity: 1 }
+.mapnote { margin: 8px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.45 }
+.mapnote a { white-space: nowrap; font-weight: 600 }
+@media (max-width: 760px) { .mapframe-box { height: 72vh; min-height: 430px; margin: 0 -16px; border-radius: 0; border-inline: 0 } }
 .vs-grid { gap: 0; border-top: 3px solid var(--fg); border-bottom: 1px solid var(--fg) }
 .vs-col { background: none; border: 0; border-radius: 0; box-shadow: none; padding: 20px 0 }
 .vs-col h3 { margin: 0 0 14px; color: var(--alarm); letter-spacing: .12em }
@@ -270,52 +275,38 @@ main .lede { color: var(--fg) }
 .vs-facts li:last-child { border: 0; margin: 0; padding: 0 }
 .vs-facts strong { display: block; font-family: var(--serif); font-size: clamp(2.6rem, 9vw, 3.6rem); line-height: 1; letter-spacing: -.02em; margin: 0 0 6px }
 .vs-facts span { font-size: .95rem; margin: 0 }
-.realidad h4 { margin: 22px 0 10px; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--alarm) }
+.contrast { margin: 0 0 8px }
+.contrast .promesa { position: static }
+@media (min-width: 760px) { .contrast { grid-template-columns: 1fr 1fr } }
+.yours { margin: 0 0 8px; padding: 26px 0; border-top: 0 }
+.yours h2 { font-size: clamp(1.6rem, 4.4vw, 2.2rem); margin: 0 0 10px }
 .posts { display: block }
 .posts li { margin: 0 0 12px; background: none; border: 0; border-left: 2px solid var(--alarm); border-radius: 0; padding: 2px 0 2px 14px }
 .posts q { font-family: var(--serif); font-size: 1.08rem }
-.maphero { margin: 4px 0 30px }
-.mapframe-box { position: relative; height: min(78vh, 780px); min-height: 460px; border: 1px solid var(--fg); border-radius: 4px; overflow: hidden; background: var(--subtle) }
-.mapframe-box::before { content: "Cargando el mapa…"; position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: .9rem }
-.mapframe { position: relative; display: block; width: 100%; height: 100%; border: 0; opacity: 0; transition: opacity .3s }
-.mapframe.ready { opacity: 1 }
-.mapnote { margin: 8px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.45 }
-.mapnote a { white-space: nowrap; font-weight: 600 }
-@media (max-width: 760px) { .mapframe-box { height: 72vh; min-height: 430px; margin: 0 -16px; border-radius: 0; border-inline: 0 } }
+.wall { padding: 30px 0 36px; border-top: 3px solid var(--fg) }
+.wall h2 { font-size: 1.6rem; margin: 0 0 18px }
+.wall .cols { columns: 2 300px; column-gap: 28px }
+.wall h4 { break-after: avoid; margin: 0 0 10px; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--alarm) }
+.wall .posts { margin: 0 0 18px }
+.wall .posts li { break-inside: avoid }
+.wall .note { color: var(--muted); font-size: .82rem; margin: 6px 0 0 }
+.boxes { display: grid; gap: 12px; margin: 0 0 40px }
+@media (min-width: 860px) { .boxes { grid-template-columns: repeat(3, 1fr) } }
 
-.v4-title { padding: 10px 0 16px }
-.v4-title h1 { font-size: clamp(2rem, 5.4vw, 3.3rem); margin: 0 }
-.v4-hero { display: grid; gap: 22px; padding: 0 0 30px }
-@media (min-width: 860px) { .v4-hero { grid-template-columns: 1fr 1.05fr; align-items: center; gap: 36px } }
-.v4-board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; border-top: 3px solid var(--fg); border-bottom: 1px solid var(--fg) }
-.v4-tile { margin: 0; padding: 14px 10px 14px 0 }
-.v4-tile b { display: block; font-family: var(--serif); font-size: clamp(1.7rem, 5.6vw, 2.4rem); font-weight: 700; letter-spacing: -.02em; line-height: 1.05; font-variant-numeric: tabular-nums }
-.v4-tile span { display: block; margin-top: 6px; color: var(--muted); font-size: .82rem; line-height: 1.35 }
-.v4-tile:not(.wide) + .v4-tile { border-left: 1px solid var(--line); padding-left: 14px }
-.v4-tile.wide { grid-column: 1 / -1; padding: 16px 0 18px; border-bottom: 1px solid var(--line) }
-.v4-tile.wide b { color: var(--alarm); font-size: clamp(3.2rem, 12vw, 4.8rem); line-height: 1 }
-.v4-tile.wide span { color: var(--fg); font-size: 1rem }
-.v4-top { padding: 30px 0 34px }
-.v4-top h2 { margin: 0 0 6px }
-.v4-top > p { margin: 0 0 16px; color: var(--muted); font-size: .9rem }
-.v4-list { list-style: none; margin: 0 0 14px; padding: 0; columns: 2 300px; column-gap: 32px; border-top: 3px solid var(--fg) }
-.v4-list li { break-inside: avoid; border-bottom: 1px solid var(--line) }
-.v4-list a { display: grid; grid-template-columns: 1fr auto; column-gap: 12px; align-items: baseline; padding: 10px 0; color: var(--fg); text-decoration: none }
-.v4-list a:hover strong { text-decoration: underline; text-underline-offset: 3px }
-.v4-list strong { grid-column: 1; grid-row: 1; font-family: var(--serif); font-size: 1.15rem; line-height: 1.25 }
-.v4-list small { grid-column: 1; grid-row: 2; color: var(--muted); font-size: .8rem }
-.v4-list span { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-family: var(--serif); font-size: 1.3rem; font-weight: 700; color: var(--alarm); white-space: nowrap }
-.v4-report { padding: 30px 0 }
-.v4-report h2 { margin: 0 }
-.v4-report .quick { margin-top: 14px }
-.v4-row { display: grid; gap: 12px; margin: 0 0 40px }
-@media (min-width: 860px) { .v4-row { grid-template-columns: repeat(3, 1fr) } }
+.variant-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin: 0 -16px; padding: 6px 16px; background: #1c1400; color: #fde68a; font-size: .78rem }
+.variant-bar strong { margin-right: 4px }
+.variant-bar a { color: #fde68a; text-decoration: none; padding: 2px 8px; border-radius: 999px; border: 1px solid #fde68a55 }
+.variant-bar a[aria-current="page"] { background: #fde68a; color: #1c1400; font-weight: 700 }
+
+html, body { overflow-x: clip }
+.maphero .mapframe-box { width: 100vw; margin-left: calc(50% - 50vw); margin-right: 0; height: min(88vh, 920px); border-inline: 0; border-radius: 0 }
+@media (max-width: 760px) { .maphero .mapframe-box { height: 80vh } }
 </style>
 <script src="/theme.js"></script>
 </head>
 <body>
 <div class="wrap">
-  <div class="variant-bar"><strong>Prueba · v4: Datos en vivo</strong><a href="/">Actual</a><a href="/v1" title="Promesa contra realidad">v1</a><a href="/v2" title="Acciones primero">v2</a><a href="/v3" title="Alerta y cifras">v3</a><a href="/v4" title="Datos en vivo" aria-current="page">v4</a><a href="/v5" title="Lo esencial">v5</a></div>
+  <div class="variant-bar"><strong>Prueba · v6: Mapa a lo ancho</strong><a href="/">Actual</a><a href="/v6" title="Mapa a lo ancho" aria-current="page">v6</a><a href="/v7" title="Portada">v7</a><a href="/v8" title="Mapa con lista">v8</a><a href="/v9" title="Tu colonia primero">v9</a><a href="/v10" title="Breve">v10</a></div>
   <header class="top">
     <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
     <nav class="site-nav" aria-label="Secciones">
@@ -331,97 +322,92 @@ main .lede { color: var(--fg) }
   </header>
 
   <main>
-    <div class="v4-title"><h1>El agua es un derecho. Exígelo.</h1></div>
+    <div class="headline">
+      <p class="kicker">El agua es un derecho. Exígelo.</p>
+      <h1>El SIAPA prometió un día. Hay vecinos con semanas sin agua.</h1>
+    </div>
     <div class="maphero">
-      <div class="mapframe-box"><iframe class="mapframe" src="/reportes" title="Mapa de lo que publican medios y vecinos, colonia por colonia"></iframe></div>
-      <p class="mapnote"><span>Cada colonia toma el color de los días sin agua que dicen sus publicaciones. Toca la tuya para ver qué se ha publicado y reportarla.</span> <a href="/reportes">Abrir el mapa completo</a></p>
+      <div class="mapframe-box"><iframe class="mapframe" src="/reportes?q=CIUDAD+GRANJA&amp;m=Zapopan&amp;cp=45010" title="Mapa de lo que publican medios y vecinos, colonia por colonia"></iframe></div>
+      <p class="mapnote" data-colonia="CIUDAD GRANJA|Zapopan|45010" data-nombre="Ciudad Granja, Zapopan"><span>Ciudad Granja, en Zapopan, en el mapa de lo que publican medios y vecinos.</span> <a href="/reportes?q=CIUDAD+GRANJA&amp;m=Zapopan&amp;cp=45010">Abrir el mapa completo</a></p>
     </div>
-    <div class="v4-hero">
-      <div>
-        <p class="lede">El <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">SIAPA</a> dijo «por máximo un día»; hay vecinos con <a href="https://www.nmas.com.mx/jalisco/sociedad/colonias-limitrofes-entre-tlaquepaque-y-guadalajara-carecen-de-agua/" rel="noopener">semanas sin agua</a>. Reporta tu colonia: <mark>cada reporte es una prueba</mark> de dónde falla el gobierno, y con ella puedes exigirle que lo arregle. Sin cuenta y anónimo.</p>
+    <div class="vs-grid contrast">
+      <div class="vs-col promesa">
+        <h3>Lo que prometió el SIAPA</h3>
+        <blockquote>«Cada zona tendrá de 2 a 3 racionamientos por semana <mark>por máximo un día</mark>»</blockquote>
+        <blockquote>«<mark>No serán cortes totales.</mark> Los racionamientos consistirán en una disminución de la presión»</blockquote>
+        <blockquote>«Esto significará menos agua pero de mejor calidad.»</blockquote>
+        <blockquote>«Se contará con suministro de pipas de agua y plantas potabilizadoras en las zonas afectadas.»</blockquote>
+        <p class="via">Fuente: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">la página de la rotación del SIAPA</a>, revisada el 20 de octubre.</p>
       </div>
-      <div class="v4-board" aria-live="polite">
-        <p class="v4-tile wide" id="t-semana"><b>…</b><span>colonias llevan una semana o más sin agua, según medios y vecinos</span></p>
-        <p class="v4-tile" id="t-medio" hidden><b></b><span></span></p>
-        <p class="v4-tile" id="t-total" hidden><b></b><span></span></p>
-        <p class="v4-tile" id="t-sin" hidden><b></b><span></span></p>
+      <div class="vs-col realidad">
+        <h3>Lo que está pasando</h3>
+        <ul class="vs-facts">
+          <li><strong>728</strong><span>registros de colonias «que estuvieron recibiendo baja presión o bien tuvieron suspensión del servicio» en los primeros cuatro días, según el director de la CEA (<a href="https://jalisco.quadratin.com.mx/sucesos/tandeo-deja-sin-agua-a-270-colonias-de-la-zona-metropolitana-de-guadalajara/" rel="noopener">Quadratín</a>)</span></li>
+          <li><strong>94</strong><span>colonias sin agua o con un caudal mínimo, el 15 % de las 627 de la rotación, reconoció la CEA según <a href="https://siker.com.mx/zmg/94-colonias-se-quedan-sin-agua-o-reciben-caudal-minimo-tras-inicio-de-rotacion-en-la-zmg/" rel="noopener">Siker</a></span></li>
+          <li><strong>3 semanas</strong><span>sin agua en Lomas del Paradero y Prados del Nilo, según <a href="https://www.nmas.com.mx/jalisco/sociedad/colonias-limitrofes-entre-tlaquepaque-y-guadalajara-carecen-de-agua/" rel="noopener">N+</a></span></li>
+        </ul>
       </div>
     </div>
-    <section class="v4-top" id="top-sec" aria-labelledby="top-h" hidden>
-      <h2 id="top-h">Donde más días llevan sin agua</h2>
-      <p>Según lo que publican medios y vecinos. Cada colonia tiene sus fuentes en <a href="/reportes">el mapa</a>.</p>
-      <ol class="v4-list" id="top"></ol>
-    </section>
-    <section class="v4-report" aria-labelledby="tuya">
+    <section class="yours" aria-labelledby="tuya">
       <h2 id="tuya">¿Y en tu colonia?</h2>
+      <p class="lede">El <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">SIAPA</a> dijo «por máximo un día»; hay vecinos con <a href="https://www.nmas.com.mx/jalisco/sociedad/colonias-limitrofes-entre-tlaquepaque-y-guadalajara-carecen-de-agua/" rel="noopener">semanas sin agua</a>. Reporta tu colonia: <mark>cada reporte es una prueba</mark> de dónde falla el gobierno, y con ella puedes exigirle que lo arregle. Sin cuenta y anónimo.</p>
+      <p class="pulse" id="pulse" aria-live="polite" hidden></p>
       <form class="quick" action="/reportes" method="get" role="search">
-          <label for="q">Tu colonia</label>
-          <input type="hidden" name="reportar" value="1">
-          <div class="row">
-            <input id="q" name="q" type="search" autocomplete="off" placeholder="Por ejemplo: Las Juntas" required maxlength="80">
-            <button class="button glow" type="submit"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Reportar mi colonia</button>
-          </div>
-          <p class="or">o <a href="/reportes">mira el mapa de reportes</a>. ¿Sin agua hoy? <a href="/pipas">Pide una pipa</a>. Y <a href="/exige">exígele a quien le toca</a>.</p>
-        </form>
+        <label for="q">Tu colonia</label>
+        <input type="hidden" name="reportar" value="1">
+        <div class="row">
+          <input id="q" name="q" type="search" autocomplete="off" placeholder="Por ejemplo: Las Juntas" required maxlength="80">
+          <button class="button glow" type="submit"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Reportar mi colonia</button>
+        </div>
+        <p class="or">o <a href="/reportes">mira el mapa de reportes</a>. ¿Sin agua hoy? <a href="/pipas">Pide una pipa</a>. Y <a href="/exige">exígele a quien le toca</a>.</p>
+      </form>
     </section>
-    <div class="v4-row"><div class="alerta">
-          <p class="alerta-head"><span class="alerta-i" aria-hidden="true">!</span><span>El SIAPA dijo <span class="nw">«no serán cortes totales».</span><br>No es cierto.</span></p>
-          <p>La propia CEA reconoció <a href="https://siker.com.mx/zmg/94-colonias-se-quedan-sin-agua-o-reciben-caudal-minimo-tras-inicio-de-rotacion-en-la-zmg/" rel="noopener">94 colonias sin agua o con un caudal mínimo</a>.</p>
-        </div><a class="aviso" href="/exige">
-          <span class="aviso-head"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg></span>Exígele a quien le toca que arregle el agua</span>
-          <span class="aviso-time">1&nbsp;día</span>
-          <span class="aviso-text">es lo más que iba a durar cada racionamiento, según el SIAPA. Si en tu colonia no se cumple, exígeselo al gobernador, al SIAPA, a la CEA y a tu presidencia municipal, desde tu correo, X o Facebook.</span>
-          <span class="button">Exigir</span>
-        </a><a class="aviso" href="/escribe">
-          <span class="aviso-head"><span class="i-badge" style="background:#7c3aed"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#landmark"/></svg></span>Que el Congreso vote no a privatizar el agua</span>
-          <span class="aviso-time">$48,296 M</span>
-          <span class="aviso-text">pagaría el Estado, como máximo, a una empresa privada en 25 años, según la oposición en el Congreso. Escríbeles a las 38 diputaciones para que voten en contra.</span>
-          <span class="button">Escribir al Congreso</span>
-        </a></div>
-    <section class="vs" aria-labelledby="vs">
-      <h2 id="vs">El SIAPA prometió un día. Hay vecinos con semanas sin agua.</h2>
-      <div class="vs-grid">
-        <div class="vs-col promesa">
-          <h3>Lo que prometió el SIAPA</h3>
-          <blockquote>«Cada zona tendrá de 2 a 3 racionamientos por semana <mark>por máximo un día</mark>»</blockquote>
-          <blockquote>«<mark>No serán cortes totales.</mark> Los racionamientos consistirán en una disminución de la presión»</blockquote>
-          <blockquote>«Esto significará menos agua pero de mejor calidad.»</blockquote>
-          <blockquote>«Se contará con suministro de pipas de agua y plantas potabilizadoras en las zonas afectadas.»</blockquote>
-          <p class="via">Fuente: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">la página de la rotación del SIAPA</a>, revisada el 20 de octubre.</p>
-        </div>
-        <div class="vs-col realidad">
-          <h3>Lo que está pasando</h3>
-          <ul class="vs-facts">
-            <li><strong>728</strong><span>registros de colonias «que estuvieron recibiendo baja presión o bien tuvieron suspensión del servicio» en los primeros cuatro días, según el director de la CEA (<a href="https://jalisco.quadratin.com.mx/sucesos/tandeo-deja-sin-agua-a-270-colonias-de-la-zona-metropolitana-de-guadalajara/" rel="noopener">Quadratín</a>)</span></li>
-            <li><strong>94</strong><span>colonias sin agua o con un caudal mínimo, el 15 % de las 627 de la rotación, reconoció la CEA según <a href="https://siker.com.mx/zmg/94-colonias-se-quedan-sin-agua-o-reciben-caudal-minimo-tras-inicio-de-rotacion-en-la-zmg/" rel="noopener">Siker</a></span></li>
-            <li><strong>3 semanas</strong><span>sin agua en Lomas del Paradero y Prados del Nilo, según <a href="https://www.nmas.com.mx/jalisco/sociedad/colonias-limitrofes-entre-tlaquepaque-y-guadalajara-carecen-de-agua/" rel="noopener">N+</a></span></li>
-          </ul>
-          <h4>En las noticias</h4>
-          <ul class="posts">
-            <li><q>Se registra una manifestación para exigir el servicio de agua en la colonia Polanquito en Guadalajara; afirman que llevan 12 días sin el líquido.</q><span class="who">Telediario Guadalajara · 19 de octubre · <a href="https://x.com/TelediarioGDL/status/2112353564915798349" rel="noopener">en X</a></span></li>
-            <li><q>Vecinos de la colonia Polanquito en Guadalajara mantienen bloqueado el cruce de Avenida 8 de Julio y Reyes Heroles ante la falta de agua en sus hogares y el incumplimiento en fechas del tandeo.</q><span class="who">Radio Fórmula Jalisco · 19 de octubre · <a href="https://x.com/FormulaJalisco/status/2112380974579249273" rel="noopener">en X</a></span></li>
-          </ul>
-          <h4>Lo que publican los vecinos</h4>
-          <ul class="posts">
-            <li><q>Desde la semana pasada la colonia El Rosario de Guadalajara(zona 3) están sin agua, no solo miércoles y sábado como dicen sus rotaciones</q><span class="who">El Rosario, Guadalajara · 19 de octubre · <a href="https://x.com/oOAniuxOo/status/2112192620617498989" rel="noopener">en X</a></span></li>
-            <li><q>ya tenemos 6 días sin agua y SIAPA desvía llamadas […] porque según eran 3 días solamente de tandeos de agua</q><span class="who">Jardines de Guadalupe, Zapopan · 19 de octubre · <a href="https://x.com/garamda74/status/2112334276134142279" rel="noopener">en X</a></span></li>
-            <li><q>tenemos al menos 16 días sin agua y ni siquiera puedo hacer reporte porque no entran las llamadas</q><span class="who">Santa Rosa y Santa Cecilia, Guadalajara · 19 de octubre · <a href="https://x.com/Izkallii/status/2112258094591787242" rel="noopener">en X</a></span></li>
-            <li><q>ya son 14 días en Chapalita inn Zapopan, hasta cuándo nos van a poner agua?? esos no son tandeos!!</q><span class="who">Chapalita Inn, Zapopan · 19 de octubre · <a href="https://x.com/AlmilliR/status/2112172566726975632" rel="noopener">en X</a></span></li>
-            <li><q>en zona 5 Guadalajara colonia jardines del sur llevamos mas de una semana sin agua; de que sirve su esquema si ni siquiera son competentes para respetarlo?</q><span class="who">Jardines del Sur, Guadalajara · 19 de octubre · <a href="https://x.com/NeloAngelo/status/2112185620647051515" rel="noopener">en X</a></span></li>
-            <li><q>Colonia Oblatos y San Felipe de Jesús en Guadalajara, sin agua desde hace 8 días. No están respetando los tandeos</q><span class="who">Oblatos, Guadalajara · 19 de octubre · <a href="https://x.com/GinaZVa/status/2112331930121171142" rel="noopener">en X</a></span></li>
-            <li><q>Una semana sin agua, y quién si tiene está contaminada.</q><span class="who">Cuenta de la colonia Arcos de Guadalupe, Zapopan · 19 de octubre · <a href="https://x.com/arcosdguadalupe/status/2112295715342799099" rel="noopener">en X</a></span></li>
-            <li><q>Ciudad Granja, Zapopan 11 dias sin agua....levantas reporte de apoyo en Zapopan para pipa...te dan folio y no dan tiempo de respuesta</q><span class="who">Ciudad Granja, Zapopan · 20 de octubre · <a href="https://x.com/barone_721/status/2112556848289042537" rel="noopener">en X</a></span></li>
-            <li><q>En Tlaquepaque centro ya van 12 días sin agua</q><span class="who">Centro, Tlaquepaque · 20 de octubre · <a href="https://x.com/DavielGtzB/status/2112560720865075701" rel="noopener">en X</a></span></li>
-            <li><q>Tonalá el día de hoy cumplimos 10 días sin agua.</q><span class="who">Tonalá · 17 de octubre · <a href="https://x.com/RHrenandez666/status/2111475150436856123" rel="noopener">en X</a></span></li>
-          </ul>
-          <p class="note">Publicaciones públicas en X, citadas tal cual: son el testimonio de cada quien, no datos oficiales. No ponemos los nombres de las personas; el enlace lleva a cada publicación.</p>
-        </div>
+    <section class="wall" aria-labelledby="dicen">
+      <h2 id="dicen">Lo que se publica</h2>
+      <div class="cols">
+        <h4>En las noticias</h4>
+        <ul class="posts">
+          <li><q>Se registra una manifestación para exigir el servicio de agua en la colonia Polanquito en Guadalajara; afirman que llevan 12 días sin el líquido.</q><span class="who">Telediario Guadalajara · 19 de octubre · <a href="https://x.com/TelediarioGDL/status/2112353564915798349" rel="noopener">en X</a></span></li>
+          <li><q>Vecinos de la colonia Polanquito en Guadalajara mantienen bloqueado el cruce de Avenida 8 de Julio y Reyes Heroles ante la falta de agua en sus hogares y el incumplimiento en fechas del tandeo.</q><span class="who">Radio Fórmula Jalisco · 19 de octubre · <a href="https://x.com/FormulaJalisco/status/2112380974579249273" rel="noopener">en X</a></span></li>
+        </ul>
+        <h4>Lo que publican los vecinos</h4>
+        <ul class="posts">
+          <li><q>Desde la semana pasada la colonia El Rosario de Guadalajara(zona 3) están sin agua, no solo miércoles y sábado como dicen sus rotaciones</q><span class="who">El Rosario, Guadalajara · 19 de octubre · <a href="https://x.com/oOAniuxOo/status/2112192620617498989" rel="noopener">en X</a></span></li>
+          <li><q>ya tenemos 6 días sin agua y SIAPA desvía llamadas […] porque según eran 3 días solamente de tandeos de agua</q><span class="who">Jardines de Guadalupe, Zapopan · 19 de octubre · <a href="https://x.com/garamda74/status/2112334276134142279" rel="noopener">en X</a></span></li>
+          <li><q>tenemos al menos 16 días sin agua y ni siquiera puedo hacer reporte porque no entran las llamadas</q><span class="who">Santa Rosa y Santa Cecilia, Guadalajara · 19 de octubre · <a href="https://x.com/Izkallii/status/2112258094591787242" rel="noopener">en X</a></span></li>
+          <li><q>ya son 14 días en Chapalita inn Zapopan, hasta cuándo nos van a poner agua?? esos no son tandeos!!</q><span class="who">Chapalita Inn, Zapopan · 19 de octubre · <a href="https://x.com/AlmilliR/status/2112172566726975632" rel="noopener">en X</a></span></li>
+          <li><q>en zona 5 Guadalajara colonia jardines del sur llevamos mas de una semana sin agua; de que sirve su esquema si ni siquiera son competentes para respetarlo?</q><span class="who">Jardines del Sur, Guadalajara · 19 de octubre · <a href="https://x.com/NeloAngelo/status/2112185620647051515" rel="noopener">en X</a></span></li>
+          <li><q>Colonia Oblatos y San Felipe de Jesús en Guadalajara, sin agua desde hace 8 días. No están respetando los tandeos</q><span class="who">Oblatos, Guadalajara · 19 de octubre · <a href="https://x.com/GinaZVa/status/2112331930121171142" rel="noopener">en X</a></span></li>
+          <li><q>Una semana sin agua, y quién si tiene está contaminada.</q><span class="who">Cuenta de la colonia Arcos de Guadalupe, Zapopan · 19 de octubre · <a href="https://x.com/arcosdguadalupe/status/2112295715342799099" rel="noopener">en X</a></span></li>
+          <li><q>Ciudad Granja, Zapopan 11 dias sin agua....levantas reporte de apoyo en Zapopan para pipa...te dan folio y no dan tiempo de respuesta</q><span class="who">Ciudad Granja, Zapopan · 20 de octubre · <a href="https://x.com/barone_721/status/2112556848289042537" rel="noopener">en X</a></span></li>
+          <li><q>En Tlaquepaque centro ya van 12 días sin agua</q><span class="who">Centro, Tlaquepaque · 20 de octubre · <a href="https://x.com/DavielGtzB/status/2112560720865075701" rel="noopener">en X</a></span></li>
+          <li><q>Tonalá el día de hoy cumplimos 10 días sin agua.</q><span class="who">Tonalá · 17 de octubre · <a href="https://x.com/RHrenandez666/status/2111475150436856123" rel="noopener">en X</a></span></li>
+        </ul>
       </div>
+      <p class="note">Publicaciones públicas en X, citadas tal cual: son el testimonio de cada quien, no datos oficiales. No ponemos los nombres de las personas; el enlace lleva a cada publicación.</p>
       <div class="buttons">
         <a class="button glow" href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>¿Te pasa lo mismo? Repórtalo</a>
         <a class="button alt" href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exígele a quien le toca</a>
       </div>
     </section>
+    <div class="boxes">
+      <div class="alerta">
+        <p class="alerta-head"><span class="alerta-i" aria-hidden="true">!</span><span>El SIAPA dijo <span class="nw">«no serán cortes totales».</span><br>No es cierto.</span></p>
+        <p>La propia CEA reconoció <a href="https://siker.com.mx/zmg/94-colonias-se-quedan-sin-agua-o-reciben-caudal-minimo-tras-inicio-de-rotacion-en-la-zmg/" rel="noopener">94 colonias sin agua o con un caudal mínimo</a>.</p>
+      </div>
+      <a class="aviso" href="/exige">
+        <span class="aviso-head"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg></span>Exígele a quien le toca que arregle el agua</span>
+        <span class="aviso-time">1&nbsp;día</span>
+        <span class="aviso-text">es lo más que iba a durar cada racionamiento, según el SIAPA. Si en tu colonia no se cumple, exígeselo al gobernador, al SIAPA, a la CEA y a tu presidencia municipal, desde tu correo, X o Facebook.</span>
+        <span class="button">Exigir</span>
+      </a>
+      <a class="aviso" href="/escribe">
+        <span class="aviso-head"><span class="i-badge" style="background:#7c3aed"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#landmark"/></svg></span>Que el Congreso vote no a privatizar el agua</span>
+        <span class="aviso-time">$48,296 M</span>
+        <span class="aviso-text">pagaría el Estado, como máximo, a una empresa privada en 25 años, según la oposición en el Congreso. Escríbeles a las 38 diputaciones para que voten en contra.</span>
+        <span class="button">Escribir al Congreso</span>
+      </a>
+    </div>
     <section class="congreso" aria-labelledby="congreso">
       <h2 id="congreso" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#landmark"/></svg></span>Que el Congreso vote no a privatizar el agua</h2>
       <p>El Gobierno de Jalisco quiere que una empresa privada construya y opere el nuevo acueducto de Chapala a Guadalajara, y pagarle durante 20 o 25 años. El Congreso decide. Pídele a tu diputación que no lo apruebe sin estudios actualizados, sin saber cuánto se pagará en total cada año ni quién carga con los riesgos.</p>
@@ -508,50 +494,20 @@ main .lede { color: var(--fg) }
     } catch {}
     return "https://api.aguagdl.com";
   })();
-  const fmt = (n) => n.toLocaleString("es-MX");
-  const show = (id, value, label) => {
-    const t = document.getElementById(id);
-    t.querySelector("b").textContent = value;
-    t.querySelector("span").textContent = label;
-    t.hidden = false;
-  };
+  // What neighbours reported in the last day, under the question.
   fetch(API + "/v1/reportes").then((r) => (r.ok ? r.json() : null)).then((s) => {
     if (!s || !s.total) return;
-    show("t-total", fmt(s.total), `${s.total === 1 ? "reporte llegó" : "reportes llegaron"} a este mapa en las últimas 24 horas, de ${fmt(s.colonias_con_reportes)} ${s.colonias_con_reportes === 1 ? "colonia" : "colonias"}`);
-    show("t-sin", `${Math.round(100 * s.sin_agua / s.total)} %`, "de esos reportes dicen que no hay agua");
+    const pct = (n, t) => Math.round(100 * n / t);
+    const pulse = document.getElementById("pulse");
+    const kids = [`En las últimas 24 horas ${s.total === 1 ? "llegó" : "llegaron"} `, Object.assign(document.createElement("b"), { textContent: s.total.toLocaleString("es-MX") }),
+      ` ${s.total === 1 ? "reporte" : "reportes"} de ${s.colonias_con_reportes.toLocaleString("es-MX")} ${s.colonias_con_reportes === 1 ? "colonia" : "colonias"}: `,
+      Object.assign(document.createElement("b"), { textContent: `${pct(s.sin_agua, s.total)} %` }), " sin agua."];
+    // The week's split counts only the map's reports: the bot asks on evenings without a cut.
+    const w = s.semana, dry = w ? w.sin_agua.en_corte + w.sin_agua.fuera_de_corte : 0;
+    if (dry >= 20) kids.push(` En la última semana, ${pct(w.sin_agua.fuera_de_corte, dry)} % de los reportes «sin agua» del mapa llegaron en días sin corte en su zona.`);
+    pulse.replaceChildren(...kids);
+    pulse.hidden = false;
   }).catch(() => {});
-  // The same counts as /reportes: each colonia's most days, from what outlets and neighbours publish.
-  const SMALL = new Set(["de", "del", "la", "las", "los", "el", "y", "e"]);
-  const nice = (name) => name.toLowerCase().split(" ").map((w, i) => /^(i{1,3}|iv|vi{0,3}|ix|x)$/.test(w) ? w.toUpperCase() : i && SMALL.has(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
-  fetch("/publicaciones.json").then((r) => (r.ok ? r.json() : null)).then((doc) => {
-    if (!doc) throw new Error("no publications");
-    const days = new Map(), latest = new Map(), count = new Map();
-    for (const p of doc.publicaciones) for (const k of p.colonias) {
-      if (p.dias != null) days.set(k, Math.max(days.get(k) || 0, p.dias));
-      if (!latest.has(k) || p.fecha > latest.get(k)) latest.set(k, p.fecha);
-      count.set(k, (count.get(k) || 0) + 1);
-    }
-    const week = [...days.values()].filter((d) => d >= 7).length;
-    show("t-semana", fmt(week), `${week === 1 ? "colonia lleva" : "colonias llevan"} una semana o más sin agua, según medios y vecinos`);
-    const news = Math.max(0, ...doc.publicaciones.filter((p) => p.fuente === "medio" && p.dias).map((p) => p.dias));
-    if (news) show("t-medio", `${news} ${news === 1 ? "día" : "días"}`, "es lo más largo sin agua que reporta un medio");
-    const top = [...days].sort((a, b) => b[1] - a[1] || count.get(b[0]) - count.get(a[0]) || latest.get(b[0]).localeCompare(latest.get(a[0]))).slice(0, 6);
-    const list = document.getElementById("top");
-    list.replaceChildren(...top.map(([k, d]) => {
-      const [n, m, cp] = k.split("|");
-      const a = document.createElement("a");
-      a.href = "/reportes?" + new URLSearchParams({ q: n, m, cp });
-      const name = document.createElement("strong"), where = document.createElement("small"), badge = document.createElement("span");
-      name.textContent = nice(n);
-      where.textContent = m;
-      badge.textContent = `${d} ${d === 1 ? "día" : "días"}`;
-      a.append(badge, name, where);
-      const li = document.createElement("li");
-      li.append(a);
-      return li;
-    }));
-    document.getElementById("top-sec").hidden = !top.length;
-  }).catch(() => { document.getElementById("t-semana").hidden = true; });
 })();
 </script>
 <script>
@@ -584,7 +540,7 @@ main .lede { color: var(--fg) }
     for (const p of doc.publicaciones) for (const k of p.colonias) count.set(k, (count.get(k) || 0) + 1);
     const n = count.get(note.dataset.colonia) || 0, most = Math.max(...count.values());
     const alone = [...count.values()].filter((v) => v === most).length === 1;
-    if (n) note.firstChild.textContent = `${n} ${n === 1 ? "publicación" : "publicaciones"} de medios y vecinos sobre la falta de agua en Ciudad Granja, Zapopan${n === most && alone ? ": más que en ninguna otra colonia" : ""}.`;
+    if (n) note.firstChild.textContent = `${n} ${n === 1 ? "publicación" : "publicaciones"} de medios y vecinos sobre la falta de agua en ${note.dataset.nombre}${n === most && alone ? ": más que en ninguna otra colonia" : ""}.`;
   }).catch(() => {});
 })();
 </script>
