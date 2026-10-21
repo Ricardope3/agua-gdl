@@ -743,7 +743,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       if (e) marks.push(surround(all, e.posts, wall));
       if (fit) {
         // Room around the outline for the publications that surround it.
-        const pad = phone() ? { paddingTopLeft: [130, 170], paddingBottomRight: [130, Math.round(map.getSize().y * 0.66) + 100] } : top ? { paddingTopLeft: [Math.round(map.getSize().x * 0.8), 290], paddingBottomRight: [30, 40] } : wall ? { paddingTopLeft: [Math.round(map.getSize().x * 0.72), 300], paddingBottomRight: [50, 60] } : { paddingTopLeft: [450 + 225, 175], paddingBottomRight: [225, 175] };
+        const pad = phone() ? { paddingTopLeft: [130, 170], paddingBottomRight: [130, Math.round(map.getSize().y * 0.66) + 100] } : wall ? { paddingTopLeft: [map.getSize().x - 24 - Math.round(Math.min(top ? 230 : 320, map.getSize().x * (top ? 0.15 : 0.22))), 290], paddingBottomRight: [24, 40] } : { paddingTopLeft: [450 + 225, 175], paddingBottomRight: [225, 175] };
         const opts = { ...pad, maxZoom: top ? 13.5 : wall ? 14 : 15, animate: !reduced, duration: 0.7 };
         const b = marks[1].getBounds();
         if (reduced) map.fitBounds(b, opts); else map.flyToBounds(b, opts);
