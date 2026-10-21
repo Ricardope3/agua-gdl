@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Correos por enviar · Agua GDL</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<style>
+:root {
+  --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
+  --brand: #0284c7; --brand-deep: #0369a1; --link: #0369a1; --ok: #15803d; --ring: #0284c766;
+  --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.55 var(--font); -webkit-font-smoothing: antialiased }
+a { color: var(--link); text-underline-offset: 3px }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); border-radius: 6px }
+.wrap { max-width: 820px; margin: 0 auto; padding: 0 16px 64px }
+header { display: flex; align-items: center; gap: 8px; padding: 14px 0; margin-bottom: 20px; border-bottom: 1px solid var(--line); font-weight: 600 }
+header img { width: 20px; height: auto }
+h1 { font-size: clamp(1.6rem, 5vw, 2.2rem); line-height: 1.1; letter-spacing: -.02em; margin: 0 0 8px }
+.lede { color: var(--muted); margin: 0 0 20px; max-width: 65ch }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px }
+.tabs button { font: inherit; font-weight: 600; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer }
+.tabs button[aria-selected="true"] { background: var(--brand-deep); border-color: var(--brand-deep); color: #fff }
+.fecha { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; background: var(--subtle); border-radius: 10px; padding: 12px 14px; margin: 0 0 16px }
+.fecha label { font-weight: 600 }
+.fecha input { font: inherit; padding: 4px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--fg) }
+.fecha small { flex-basis: 100%; color: var(--muted) }
+.card { background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--brand); border-radius: 10px; padding: 16px 18px; margin: 0 0 16px }
+.card.sent { border-left-color: var(--ok) }
+.count { display: flex; align-items: center; gap: 10px; margin: 0 0 6px; color: var(--muted); font-size: .9rem }
+.count progress { flex: 1; max-width: 220px; height: 8px; accent-color: var(--brand) }
+.card h2 { font-size: 1.3rem; line-height: 1.25; letter-spacing: -.01em; margin: 0 }
+.meta { color: var(--muted); margin: 0 0 12px; font-size: .9rem }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; margin: 0 0 14px }
+dt { color: var(--muted); font-size: .9rem; padding-top: 1px }
+dd { margin: 0; overflow-wrap: anywhere }
+.addr { user-select: all; font-weight: 600 }
+.acts { display: flex; flex-wrap: wrap; gap: 8px }
+.acts button, .acts a { font: inherit; font-weight: 700; padding: 10px 16px; border-radius: 8px; border: 1px solid var(--brand-deep); background: var(--surface); color: var(--brand-deep); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center }
+.acts .main { background: var(--brand-deep); color: #fff }
+.acts .main:hover { background: var(--brand) }
+.acts .done-btn { border-color: var(--ok); color: var(--ok) }
+.status { min-height: 1.55em; margin: 10px 0 0; font-size: .95rem }
+.status.ok { color: var(--ok) }
+.status.bad { color: #b45309 }
+pre { white-space: pre-wrap; overflow-wrap: anywhere; font: 15px/1.5 var(--font); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; margin: 14px 0 0 }
+.listo { margin: 0; font-weight: 600; color: var(--ok) }
+h3 { font-size: 1rem; margin: 24px 0 8px }
+.lista { list-style: none; padding: 0; margin: 0; border: 1px solid var(--line); border-radius: 10px; background: var(--surface) }
+.lista li { display: grid; grid-template-columns: auto 1fr auto; gap: 2px 10px; align-items: center; padding: 8px 12px; border-top: 1px solid var(--line) }
+.lista li:first-child { border-top: 0 }
+.lista li.cur { background: var(--subtle) }
+.lista input { width: 18px; height: 18px; accent-color: var(--ok); margin: 0 }
+.lista .who { font: inherit; text-align: left; background: none; border: 0; padding: 0; color: var(--link); cursor: pointer }
+.lista .who .name { text-decoration: underline; text-underline-offset: 3px }
+.lista .who small { display: block; color: var(--muted); overflow-wrap: anywhere }
+.lista .when { color: var(--ok); font-size: .85rem; white-space: nowrap }
+.reset { font: inherit; font-size: .9rem; background: none; border: 0; padding: 0; margin: 10px 0 0; color: var(--muted); text-decoration: underline; cursor: pointer }
+.nota { color: var(--muted); font-size: .9rem; margin: 16px 0 0; max-width: 70ch }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><img src="/logo.svg" alt=""> Agua GDL</header>
+<h1>Correos por enviar</h1>
+<p class="lede">Uno por uno desde soporte@aguagdl.com. «Abrir en Zoho Mail» pone el destinatario y el asunto, y también copia el mensaje: pégalo en el cuerpo, revisa y envía. Después toca «Ya lo envié». Las marcas se guardan solo en este navegador.</p>
+
+<div class="tabs" role="tablist">
+  <button type="button" role="tab" id="t-dip" data-tab="dip">Diputaciones</button>
+  <button type="button" role="tab" id="t-org" data-tab="org">CEPAD, CUDJ y CLADEM</button>
+</div>
+
+<section id="p-dip" role="tabpanel" aria-labelledby="t-dip">
+  <div class="fecha">
+    <label>Fecha límite y día del Votómetro <input type="date" id="fecha"></label>
+    <label>a las <input type="time" id="hora"></label>
+    <small id="fecha-nota"></small>
+  </div>
+  <div class="card" data-card></div>
+  <h3>Las 38 diputaciones</h3>
+  <ol class="lista" data-list></ol>
+  <button type="button" class="reset" data-reset>Borrar las marcas de esta lista</button>
+  <p class="nota">Cada dirección es el correo institucional de su perfil en congresojal.gob.mx (la misma lista que /escribe). Un correo por diputación, nunca en copia.</p>
+</section>
+
+<section id="p-org" role="tabpanel" aria-labelledby="t-org" hidden>
+  <div class="card" data-card></div>
+  <h3>Lista</h3>
+  <ol class="lista" data-list></ol>
+  <button type="button" class="reset" data-reset>Borrar las marcas de esta lista</button>
+  <p class="nota">cudj@iteso.mx es el correo de su convocatoria. contacto@cepad.org.mx es el que el CEPAD da «para proyectos o colaboraciones» en cepad.org.mx/quienes-somos (revisado el 20 de octubre). CLADEM no publica un correo de CLADEM Jalisco en cladem.org, así que a ellas el mensaje va por X.</p>
+</section>
+</div>
+
+<script>
+(() => {
+  "use strict";
+  // [nombre, correo institucional, partido, distrito (0 = representación proporcional)], de la lista de /escribe (perfiles en congresojal.gob.mx)
+  const DIPUTADOS = [
+    ["Adriana Gabriela Medina Ortiz", "adriana.medina@congresojal.gob.mx", "MC", 12],
+    ["Alberto Alfaro García", "alberto.alfaro@congresojal.gob.mx", "PVEM", 16],
+    ["Alejandra Margarita Giadans Valenzuela", "alejandra.giadans@congresojal.gob.mx", "MC", 0],
+    ["Alejandro Barragán Sánchez", "alejandro.barragan@congresojal.gob.mx", "Morena", 19],
+    ["Alondra Getsemany Fausto de León", "alondra.fausto@congresojal.gob.mx", "PRI", 0],
+    ["Ana Fernanda Hernández Sanmiguel", "anafer.hernandez@congresojal.gob.mx", "MC", 8],
+    ["Brenda Guadalupe Carrera García", "brenda.carrera@congresojal.gob.mx", "PVEM", 0],
+    ["Claudia Murguía Torres", "claudia.murguia@congresojal.gob.mx", "PAN", 0],
+    ["César Octavio Madrigal Díaz", "cesar.madrigal@congresojal.gob.mx", "PAN", 0],
+    ["Edgar Enrique Velázquez González", "enrique.velazquez@congresojal.gob.mx", "Hagamos", 18],
+    ["Emmanuel Alejandro Puerto Covarrubias", "alejandro.puerto@congresojal.gob.mx", "Morena", 0],
+    ["Isaías Cortés Berumen", "isaias.cortes@congresojal.gob.mx", "PAN", 0],
+    ["Itzcoatl Tonatiuh Bravo Padilla", "tonatiuh.bravo@congresojal.gob.mx", "Hagamos", 11],
+    ["Itzul Barrera Rodríguez", "itzul.barrera@congresojal.gob.mx", "Morena", 9],
+    ["José Aurelio Fonseca Olivares", "aurelio.fonseca@congresojal.gob.mx", "PRI", 15],
+    ["José Guadalupe Buenrostro Martínez", "jose.buenrostro@congresojal.gob.mx", "PVEM", 17],
+    ["José Luis Tostado Bastidas", "joseluis.tostado@congresojal.gob.mx", "MC", 0],
+    ["Julio César Hurtado Luna", "julio.hurtado@congresojal.gob.mx", "PAN", 2],
+    ["Laura Gabriela Cárdenas Rodríguez", "gaby.cardenas@congresojal.gob.mx", "MC", 6],
+    ["Leonardo Almaguer Castañeda", "leonardo.almaguer@congresojal.gob.mx", "PT", 13],
+    ["Luis Octavio Vidrio Martínez", "luis.vidrio@congresojal.gob.mx", "MC", 0],
+    ["Marco Tulio Moya Díaz", "marco.moya@congresojal.gob.mx", "PAN", 3],
+    ["Mariana Casillas Guerrero", "mariana.casillas@congresojal.gob.mx", "Futuro", 14],
+    ["Marta Estela Arizmendi Fombona", "marta.arizmendi@congresojal.gob.mx", "Morena", 7],
+    ["Martín Franco Cuevas", "martin.franco@congresojal.gob.mx", "Morena", 0],
+    ["María Candelaria Ochoa Ávalos", "candelaria.ochoa@congresojal.gob.mx", "Morena", 0],
+    ["María Elisa Bravo Navarro", "maria.bravo@congresojal.gob.mx", "MC", 0],
+    ["María del Refugio Camarena Jáuregui", "cuquis.camarena@congresojal.gob.mx", "PRI", 0],
+    ["Miguel De La Rosa Figueroa", "miguel.delarosa@congresojal.gob.mx", "Morena", 0],
+    ["Montserrat Pérez Cisneros", "montserrat.perez@congresojal.gob.mx", "MC", 0],
+    ["Mónica Paola Magaña Mendoza", "monica.magana@congresojal.gob.mx", "MC", 10],
+    ["Norma López Ramírez", "norma.lopez@congresojal.gob.mx", "Morena", 0],
+    ["Omar Enrique Cervantes Rivera", "omar.cervantes@congresojal.gob.mx", "MC", 0],
+    ["Sergio Miguel Martín Castellanos", "sergio.martin@congresojal.gob.mx", "PT", 1],
+    ["Tonantzin Elusay Cárdenas Méndez", "tonantzin.cardenas@congresojal.gob.mx", "Futuro", 4],
+    ["Valeria Guadalupe Ávila Gutiérrez", "valeria.avila@congresojal.gob.mx", "Hagamos", 20],
+    ["Verónica Magdalena Jiménez Vázquez", "veronica.jimenez@congresojal.gob.mx", "MC", 0],
+    ["Yussara Elizabeth Canales González", "yussara.canales@congresojal.gob.mx", "PVEM", 5],
+  ];
+  const DAYS = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+  const MONTHS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+  const DEFAULTS = { fecha: "2026-10-26", hora: "10:00" };
+  const $ = (id) => document.getElementById(id);
+
+  const KEY = "correos-envios";
+  const state = { sent: {}, current: {}, tab: "dip", ...DEFAULTS };
+  try { Object.assign(state, JSON.parse(localStorage.getItem(KEY) || "{}")); } catch {}
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {} };
+
+  const day = () => {
+    const [y, m, d] = (state.fecha || DEFAULTS.fecha).split("-").map(Number);
+    return new Date(y, m - 1, d);
+  };
+  const longDay = () => { const d = day(); return `${DAYS[d.getDay()]} ${d.getDate()} de ${MONTHS[d.getMonth()]}`; };
+  const shortDay = () => { const d = day(); return `${DAYS[d.getDay()]} ${d.getDate()}`; };
+  const hour = () => state.hora || DEFAULTS.hora;
+
+  const dipBody = (name) => `Dip. ${name}:
+
+Soy Ricardo Espinoza, de Agua GDL (aguagdl.com), un proyecto ciudadano sin partido. El ${longDay()} publicaremos el Votómetro: la postura pública de las 38 diputaciones sobre la iniciativa del Ejecutivo para autorizar el contrato del acueducto Chapala–Guadalajara (APP/CMRO), cada una con su fuente.
+
+¿Cuál es su postura? A favor, en contra, con condiciones (¿cuáles?) o aún no la define.
+
+Basta con una o dos frases, o un enlace. Publicaremos su respuesta tal cual, con fecha. Si no responde antes del ${shortDay()} a las ${hour()}, su ficha mostrará lo que haya dicho en público, o «Sin postura pública».
+
+Para que lo sepa: Agua GDL pide que no se apruebe esta APP; el Votómetro aplica la misma regla a todas las diputaciones.
+
+Gracias,
+Ricardo Espinoza
+Agua GDL · soporte@aguagdl.com`;
+
+  const ORG_BODY = `Hola:
+
+Soy Ricardo Espinoza, de Agua GDL (aguagdl.com), una iniciativa ciudadana, no oficial y sin partido, sobre la crisis del agua en Guadalajara. Vi su convocatoria para documentar violaciones a derechos humanos durante y después de la marcha del 11 de octubre.
+
+En aguagdl.com/noticias reunimos, con su fuente, lo que se ha publicado: testimonios con nombre de cinco personas detenidas, 23 videos de medios, organizaciones y periodistas, una cronología día por día y las declaraciones de autoridades y organizaciones. Todo es público y pueden usarlo libremente. Si les sirve, puedo compartirles los archivos y enlaces ordenados por fecha y plataforma.
+
+Desde el 17 de octubre la página enlaza su convocatoria y el correo cudj@iteso.mx, para que quien vio o vivió abusos sepa a dónde mandar sus testimonios. Si prefieren otro texto, otro contacto o que no lo enlacemos, lo cambio.
+
+Si publican un informe o un comunicado, con gusto lo enlazamos. Y si encuentran algún error en lo que tenemos, les agradezco que me lo digan: corregimos y lo anotamos.
+
+Gracias por el trabajo que están haciendo.
+
+Ricardo Espinoza
+soporte@aguagdl.com · aguagdl.com`;
+
+  const X_BODY = "Hola. Somos Agua GDL (aguagdl.com), iniciativa ciudadana sin partido. En aguagdl.com/noticias reunimos con fuente testimonios, 23 videos y la cronología del 11 de octubre; es público y pueden usarlo. Ya enlazamos su convocatoria y cudj@iteso.mx. Si quieren el material ordenado o cambiar el texto, escríbannos a soporte@aguagdl.com.";
+
+  const SECTIONS = {
+    dip: DIPUTADOS.map(([name, email, party, district]) => ({
+      id: email, to: [email], title: `Dip. ${name}`,
+      meta: `${party} · ${district ? `distrito ${district}` : "representación proporcional"}`,
+      subject: "¿Cuál es su postura sobre la APP del acueducto Chapala–Guadalajara?", body: () => dipBody(name),
+    })),
+    org: [
+      { id: "cudj-cepad", to: ["cudj@iteso.mx", "contacto@cepad.org.mx"], title: "CUDJ del ITESO y CEPAD",
+        meta: "Un correo a los dos: la convocatoria la firman juntos, con CLADEM Jalisco.",
+        subject: "Material verificable de la marcha del 11 de octubre · Agua GDL", body: () => ORG_BODY },
+      { id: "cladem-x", x: "clademjalc", title: "CLADEM Jalisco, por X",
+        meta: "No publica correo: mándale este texto por mensaje directo a @clademjalc.", body: () => X_BODY },
+    ],
+  };
+
+  const q = encodeURIComponent;
+  // Zoho fills the recipients and subject from the link, never the body, and refuses very long links.
+  const zoho = (item) => "https://mail.zoho.com/zm/comp.do?ct=" + q(`mailto:${item.to.join(",")}?subject=${q(item.subject)}`);
+  const when = (iso) => {
+    const d = new Date(iso);
+    return `${d.getDate()} ${MONTHS[d.getMonth()].slice(0, 3)}, ${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+  };
+  const el = (tag, props = {}, ...kids) => {
+    const node = Object.assign(document.createElement(tag), props);
+    node.append(...kids);
+    return node;
+  };
+
+  // The copy runs synchronously first so it lands before the Zoho tab takes the focus.
+  function copySync(text) {
+    const t = el("textarea", { value: text, readOnly: true });
+    t.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+    document.body.append(t);
+    t.select();
+    t.setSelectionRange(0, text.length);
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch {}
+    t.remove();
+    return ok;
+  }
+  async function copy(text) {
+    if (navigator.clipboard) {
+      try { await navigator.clipboard.writeText(text); return true; } catch {}
+    }
+    return copySync(text);
+  }
+
+  const sentCount = (key) => SECTIONS[key].filter((it) => state.sent[it.id]).length;
+  const firstUnsent = (key, from = 0) => {
+    const items = SECTIONS[key];
+    for (let k = 0; k < items.length; k++) {
+      const i = (from + k) % items.length;
+      if (!state.sent[items[i].id]) return i;
+    }
+    return -1;
+  };
+  const currentIndex = (key) => {
+    const i = state.current[key];
+    return Number.isInteger(i) && i >= 0 && i < SECTIONS[key].length ? i : Math.max(firstUnsent(key), 0);
+  };
+
+  function say(panel, text, kind) {
+    const s = panel.querySelector(".status");
+    if (!s) return;
+    s.textContent = text;
+    s.className = `status ${kind || ""}`;
+  }
+
+  function render(key) {
+    const panel = $(`p-${key}`);
+    const items = SECTIONS[key];
+    const i = currentIndex(key);
+    const item = items[i];
+    const done = sentCount(key);
+    const card = panel.querySelector("[data-card]");
+    const allDone = done === items.length && !Number.isInteger(state.current[key]);
+    card.classList.toggle("sent", !!state.sent[item.id]);
+
+    const count = el("p", { className: "count" },
+      allDone ? `Llevas ${done} de ${items.length}` : `${item.x ? "Mensaje" : "Correo"} ${i + 1} de ${items.length} · llevas ${done}`,
+      el("progress", { max: items.length, value: done }));
+    if (allDone) {
+      card.replaceChildren(count, el("p", { className: "listo" }, `¡Listo! Ya enviaste los ${items.length}. Toca uno de la lista para verlo otra vez.`));
+    } else {
+      const fields = el("dl");
+      if (item.to) {
+        fields.append(el("dt", {}, "Para"), el("dd", {}, ...item.to.flatMap((a, n) => [n ? ", " : "", el("span", { className: "addr" }, a)])));
+        fields.append(el("dt", {}, "Asunto"), el("dd", {}, item.subject));
+      } else {
+        fields.append(el("dt", {}, "En X"), el("dd", {}, el("span", { className: "addr" }, `@${item.x}`)));
+      }
+      const copyBtn = el("button", { type: "button", textContent: "Copiar mensaje" });
+      const open = el("a", { className: "main", target: "_blank", rel: "noopener",
+        href: item.x ? `https://x.com/${item.x}` : zoho(item),
+        textContent: item.x ? `Abrir @${item.x} en X` : "Abrir en Zoho Mail" });
+      const sent = el("button", { type: "button", className: "done-btn",
+        textContent: state.sent[item.id] ? "Ir al siguiente sin enviar" : "Ya lo envié: siguiente" });
+      const status = el("p", { className: "status" });
+      status.setAttribute("role", "status");
+      const body = item.body();
+      copyBtn.addEventListener("click", async () => {
+        const ok = await copy(body);
+        say(panel, ok ? `Copiamos el mensaje para ${item.title}.` : "No se pudo copiar: selecciona el texto de abajo y cópialo.", ok ? "ok" : "bad");
+      });
+      open.addEventListener("click", () => {
+        const ok = copySync(body);
+        if (!ok && navigator.clipboard) navigator.clipboard.writeText(body).catch(() => {});
+        say(panel, ok ? `Copiamos el mensaje para ${item.title}: pégalo ${item.x ? "en el chat" : "en el cuerpo del correo"} y envía.`
+          : "Abrimos la ventana, pero quizá no se copió el mensaje: usa «Copiar mensaje».", ok ? "ok" : "bad");
+      });
+      sent.addEventListener("click", () => {
+        if (!state.sent[item.id]) state.sent[item.id] = new Date().toISOString();
+        const next = firstUnsent(key, i + 1);
+        if (next < 0) delete state.current[key]; else state.current[key] = next;
+        save();
+        refresh();
+        panel.querySelector("[data-card]").scrollIntoView({ block: "nearest" });
+      });
+      card.replaceChildren(count, el("h2", {}, item.title), el("p", { className: "meta" }, item.meta), fields,
+        el("div", { className: "acts" }, copyBtn, open, sent), status, el("pre", {}, body));
+      if (state.sent[item.id]) {
+        status.textContent = `Enviado el ${when(state.sent[item.id])}.`;
+        status.className = "status ok";
+      }
+    }
+
+    const list = panel.querySelector("[data-list]");
+    list.replaceChildren(...items.map((it, n) => {
+      const box = el("input", { type: "checkbox", checked: !!state.sent[it.id], title: "Enviado" });
+      box.setAttribute("aria-label", `${it.title}: enviado`);
+      box.addEventListener("change", () => {
+        if (box.checked) state.sent[it.id] = new Date().toISOString(); else delete state.sent[it.id];
+        save();
+        refresh();
+      });
+      const who = el("button", { type: "button", className: "who" }, el("span", { className: "name" }, `${n + 1}. ${it.title}`),
+        el("small", {}, it.to ? it.to.join(", ") : `@${it.x} en X`));
+      who.addEventListener("click", () => {
+        state.current[key] = n;
+        save();
+        refresh();
+        card.scrollIntoView({ block: "start", behavior: "smooth" });
+      });
+      return el("li", { className: !allDone && n === i ? "cur" : "" }, box, who,
+        el("span", { className: "when" }, state.sent[it.id] ? `✓ ${when(state.sent[it.id])}` : ""));
+    }));
+    $(`t-${key}`).textContent = `${key === "dip" ? "Diputaciones" : "CEPAD, CUDJ y CLADEM"} · ${done}/${items.length}`;
+  }
+
+  // The deadline is in every deputy's text, so it stays fixed once the first one went out.
+  function renderDate() {
+    const locked = sentCount("dip") > 0;
+    $("fecha").value = state.fecha;
+    $("hora").value = state.hora;
+    $("fecha").disabled = $("hora").disabled = locked;
+    $("fecha-nota").textContent = locked
+      ? `Fija porque ya enviaste correos con ella: «El ${longDay()} publicaremos el Votómetro» y «antes del ${shortDay()} a las ${hour()}».`
+      : `El mensaje dirá «El ${longDay()} publicaremos el Votómetro» y «antes del ${shortDay()} a las ${hour()}».`;
+  }
+  for (const id of ["fecha", "hora"]) {
+    $(id).addEventListener("change", () => {
+      state[id] = $(id).value || DEFAULTS[id];
+      save();
+      refresh();
+    });
+  }
+
+  for (const key of Object.keys(SECTIONS)) {
+    const reset = $(`p-${key}`).querySelector("[data-reset]");
+    let armed = false;
+    reset.addEventListener("click", () => {
+      if (!armed) {
+        armed = true;
+        reset.textContent = "¿Seguro? Toca otra vez para borrar las marcas";
+        setTimeout(() => { armed = false; reset.textContent = "Borrar las marcas de esta lista"; }, 4000);
+        return;
+      }
+      for (const it of SECTIONS[key]) delete state.sent[it.id];
+      delete state.current[key];
+      armed = false;
+      reset.textContent = "Borrar las marcas de esta lista";
+      save();
+      refresh();
+    });
+  }
+
+  function showTab(key) {
+    state.tab = SECTIONS[key] ? key : "dip";
+    for (const k of Object.keys(SECTIONS)) {
+      $(`p-${k}`).hidden = k !== state.tab;
+      $(`t-${k}`).setAttribute("aria-selected", String(k === state.tab));
+    }
+    save();
+  }
+  document.querySelectorAll("[data-tab]").forEach((b) => b.addEventListener("click", () => showTab(b.dataset.tab)));
+
+  function refresh() {
+    renderDate();
+    for (const key of Object.keys(SECTIONS)) render(key);
+  }
+  showTab(state.tab);
+  refresh();
+})();
+</script>
+</body>
+</html>
