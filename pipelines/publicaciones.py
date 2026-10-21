@@ -4,6 +4,11 @@
     python3 pipelines/publicaciones.py --check    same; for CI. Writes nothing.
     python3 pipelines/publicaciones.py --eco      refresh the likes and replies of the X posts through X's
                                                   public embed endpoint (no login), then validate and write
+    python3 pipelines/publicaciones.py --imagenes download each post's preview image ("vista") (an article's og:image,
+                                                  an X post's photo or video poster, a Facebook post's
+                                                  og:image) into web/fuentes/, 480 px JPEG (macOS sips), then
+                                                  validate and write. Comments get none; "vista": null marks
+                                                  a logo or stock picture removed by hand, so it stays out.
 
 Each entry quotes a news outlet ("medio") or neighbours ("vecinos") saying a colonia has no water, with
 its link, date and SIAPA colonias. Neighbours' posts count only with at least regla.reacciones reactions
@@ -15,6 +20,11 @@ vecinos …»), or empty. Facebook's numbers can't be refreshed without a login;
 were read ("al").
 """
 import argparse
+import hashlib
+import html
+import shutil
+import subprocess
+import tempfile
 import datetime
 import json
 import math
@@ -29,6 +39,8 @@ import zoneinfo
 root = pathlib.Path(__file__).resolve().parent.parent
 DATA = root / "web/publicaciones.json"
 COLONIAS = root / "api/data/colonias_mapa.json"
+WEB = root / "web"
+IMAGEN = re.compile(r"^fuentes/[0-9a-f]{12}\.jpg$")
 TODAY = datetime.datetime.now(zoneinfo.ZoneInfo("America/Mexico_City")).date()
 FUENTES = {"medio", "vecinos"}
 REDES = {"facebook", "x", "web"}
@@ -117,6 +129,8 @@ def validate(doc):
                 fail(f"{where}: desde after fecha")
         if "bloqueo" in p and p["bloqueo"] is not True:
             fail(f"{where}: bloqueo is true or absent")
+        if p.get("vista") is not None and not (isinstance(p["vista"], str) and IMAGEN.match(p["vista"]) and (WEB / p["vista"]).is_file()):
+            fail(f"{where}: vista is null (no useful image) or fuentes/<12 hex>.jpg, in web/")
         eco = p.get("eco")
         check_eco(eco, where)
         # A comment counts by the thread it is in: the post's reactions and comments meet the rule.
@@ -215,18 +229,93 @@ def refresh_x(doc):
     return changed
 
 
+def get(url, ua="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130 Safari/537.36"):
+    req = urllib.request.Request(url, headers={"User-Agent": ua, "Accept-Language": "es-MX,es;q=0.9"})
+    with urllib.request.urlopen(req, timeout=25) as r:
+        return r.read(8_000_000)
+
+
+def og_image(url, ua=None):
+    page = get(url, ua) if ua else get(url)
+    text = page.decode("utf-8", "replace")
+    for prop in ("og:image", "twitter:image", "og:image:url", "twitter:image:src"):
+        for m in re.finditer(r"<meta\b[^>]*>", text, re.I):
+            tag = m.group(0)
+            if re.search(r'(?:property|name)\s*=\s*["\']' + re.escape(prop) + r'["\']', tag, re.I):
+                c = re.search(r'content\s*=\s*["\']([^"\']+)', tag, re.I)
+                if c:
+                    return urllib.parse.urljoin(url, html.unescape(c.group(1)))
+    return None
+
+
+def x_image(url):
+    m = X_URL.match(url)
+    q = urllib.parse.urlencode({"id": m.group(2), "token": token(m.group(2)), "lang": "es"})
+    t = json.loads(get(f"https://cdn.syndication.twimg.com/tweet-result?{q}", "aguagdl-publicaciones"))
+    for d in t.get("mediaDetails") or []:
+        if d.get("media_url_https"):
+            return d["media_url_https"] + "?name=small"
+    if (t.get("video") or {}).get("poster"):
+        return t["video"]["poster"]
+    vals = ((t.get("card") or {}).get("binding_values") or {})
+    for k in ("thumbnail_image_large", "summary_photo_image_large", "photo_image_full_size_large", "thumbnail_image"):
+        u = ((vals.get(k) or {}).get("image_value") or {}).get("url")
+        if u:
+            return u
+    return None
+
+
+def fetch_images(doc, again=False):
+    out = WEB / "fuentes"
+    out.mkdir(exist_ok=True)
+    if not shutil.which("sips"):
+        sys.exit("publicaciones: --imagenes needs macOS sips to resize")
+    got = 0
+    for p in doc.get("publicaciones") or []:
+        if p.get("tipo") == "comentario" or ("vista" in p and not again):
+            continue
+        url = p["url"]
+        name = f"fuentes/{hashlib.sha1(url.encode()).hexdigest()[:12]}.jpg"
+        if (WEB / name).is_file():
+            p["vista"] = name
+            continue
+        try:
+            src = x_image(url) if p["red"] == "x" else og_image(url, "facebookexternalhit/1.1") if p["red"] == "facebook" else og_image(url)
+            if not src or not src.startswith("https://") or re.search(r"(logo|favicon|default|placeholder)", src, re.I):
+                print(f"  {url}: no image", file=sys.stderr)
+                continue
+            data = get(src)
+        except (OSError, ValueError) as e:
+            print(f"  {url}: no image ({e})", file=sys.stderr)
+            continue
+        with tempfile.TemporaryDirectory() as tmp:
+            raw = pathlib.Path(tmp) / "raw"
+            raw.write_bytes(data)
+            r = subprocess.run(["sips", "-Z", "480", "-s", "format", "jpeg", "-s", "formatOptions", "68", str(raw), "--out", str(WEB / name)], capture_output=True)
+        if r.returncode or not (WEB / name).is_file():
+            print(f"  {url}: not an image", file=sys.stderr)
+            continue
+        p["vista"] = name
+        got += 1
+        time.sleep(0.3)
+    return got
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true", help="validate only; write nothing")
     ap.add_argument("--eco", action="store_true", help="refresh the X posts' likes and replies, then write")
+    ap.add_argument("--imagenes", action="store_true", help="download the posts' preview images, then write")
     args = ap.parse_args()
     doc = json.loads(DATA.read_text())
     if args.eco and not args.check:
         print(f"publicaciones: {refresh_x(doc)} X posts changed")
+    if args.imagenes and not args.check:
+        print(f"publicaciones: {fetch_images(doc)} images downloaded")
     validate(doc)
     if errors:
         sys.exit("publicaciones: " + "\n  ".join(["invalid data:", *errors]))
-    if args.eco and not args.check:
+    if (args.eco or args.imagenes) and not args.check:
         DATA.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
     pubs = doc["publicaciones"]
     cols = {k for p in pubs for k in p["colonias"]}

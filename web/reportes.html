@@ -217,6 +217,60 @@ table.week td.cut { box-shadow: inset 0 0 0 2.5px var(--fg) }
 @media (max-width: 560px) { .rank .row { grid-template-columns: 5.2em minmax(0, 1fr); } .rank .meta { grid-column: 2; text-align: left } }
 ul.plain { padding-left: 1.3em; margin: 0 0 14px }
 ul.plain li { margin: 0 0 8px; max-width: 70ch }
+/* The map fills the screen under the header, like a map app; the rest of the page follows below it. */
+header.top { margin-bottom: 0; position: static }
+.stage { position: relative; height: calc(100dvh - var(--hh, 64px) - 28px); min-height: 520px; scroll-margin-top: 0 }
+.stage .bigmap { height: 100%; border-radius: 0; border: 0; border-bottom: 1px solid var(--line) }
+.float-search { position: absolute; z-index: 1150; top: 12px; left: 12px; width: min(420px, calc(100% - 76px)); display: flex; gap: 8px }
+.float-search .search { flex: 1 }
+.float-search .search input { box-shadow: 0 4px 16px rgb(3 14 22 / .18) }
+.iconbtn { width: 50px; height: 50px; padding: 0; justify-content: center; box-shadow: 0 4px 16px rgb(3 14 22 / .18) }
+.iconbtn .i { width: 1.3em; height: 1.3em }
+.stage .card { top: 74px; width: min(420px, calc(100% - 24px)); max-height: calc(100% - 86px) }
+.overview { position: absolute; z-index: 1100; left: 50%; bottom: 16px; transform: translateX(-50%); width: min(560px, calc(100% - 24px)); max-height: calc(100% - 90px); overflow: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 6px 18px 16px; box-shadow: 0 10px 30px rgb(3 14 22 / .25) }
+.stage.has-card .overview { left: auto; right: 16px; transform: none; width: auto; padding-bottom: 6px }
+.overview h1 { font-size: 1.15rem; margin: 2px 0 6px; letter-spacing: -.02em }
+.overview.closed h1 { display: none }
+.overview.closed .ov-head { font-size: .95rem }
+.overview.closed #ov-cuerpo { display: none }
+.ov-toggle { display: flex; align-items: center; gap: 4px; margin: 0 auto; padding: 4px 10px; border: 0; background: none; color: var(--muted); font: inherit; font-size: .88rem; font-weight: 600; cursor: pointer }
+.overview.closed .ov-toggle svg { transform: rotate(180deg) }
+.ov-head { margin: 0; font-weight: 700; font-size: 1.02rem; line-height: 1.35 }
+.ov-head b { font-variant-numeric: tabular-nums }
+.overview .tiles { margin-top: 10px; gap: 8px }
+.overview .tile { padding: 8px 12px }
+.overview .tile b { font-size: 1.35rem }
+.overview .tile span { font-size: .82rem; line-height: 1.3; display: block }
+@media (max-width: 560px) { .overview .tiles { grid-template-columns: repeat(3, minmax(0, 1fr)) } }
+.overview .note { font-size: .85rem; margin-top: 8px }
+.overview .note:empty { display: none }
+.sevbar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; margin: 10px 0 6px; background: var(--none) }
+.sevbar span { display: block; height: 100% }
+.sevbar .nodays { background: repeating-linear-gradient(135deg, var(--s0) 0 3px, color-mix(in srgb, var(--s0) 25%, var(--surface)) 3px 6px) }
+.sevkey { display: flex; flex-wrap: wrap; gap: 2px 12px; margin: 0; padding: 0; list-style: none; font-size: .84rem }
+.sevkey li { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap }
+.sevkey b { font-variant-numeric: tabular-nums }
+.button.wide { width: 100%; justify-content: center; margin-top: 12px; padding: 12px 16px; font-size: 1rem }
+.ov-more { display: block; margin-top: 10px; text-align: center; font-size: .9rem; font-weight: 600 }
+@media (max-width: 760px) {
+  .stage { height: calc(100dvh - var(--hh, 110px)); min-height: 460px }
+  .float-search { top: 8px; left: 8px; width: calc(100% - 16px) }
+  .stage .card { top: auto; bottom: 8px; left: 8px; width: calc(100% - 16px); max-height: 66% }
+  .stage.has-card .overview { display: none }
+  .overview { bottom: 8px; width: calc(100% - 16px); max-height: 58%; padding: 4px 14px 12px }
+  .stage .leaflet-top.leaflet-right { top: 62px }
+}
+/* The sources' own preview images, saved on aguagdl.com (pipelines/publicaciones.py --imagenes). */
+.mosaic { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; margin: 10px 0 0; border-radius: 10px; overflow: hidden }
+.mosaic.n1 { grid-template-columns: 1fr }
+.mosaic.n2, .mosaic.n4 { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+.mosaic a { position: relative; display: block; aspect-ratio: 4 / 3; background: var(--subtle); overflow: hidden }
+.mosaic.n1 a { aspect-ratio: 16 / 9 }
+.mosaic.big a:first-child { grid-column: span 2; grid-row: span 2 }
+.mosaic img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .2s }
+.mosaic a:hover img { transform: scale(1.04) }
+.mosaic .lbl { position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 6px 4px; background: linear-gradient(transparent, rgb(0 0 0 / .75)); color: #fff; font-size: .7rem; font-weight: 600; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
+.mosaic .more { position: absolute; inset: 0; display: grid; place-items: center; background: rgb(0 0 0 / .55); color: #fff; font-weight: 700; font-size: 1.1rem }
 footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .85rem }
 footer p { margin: 0 0 8px; max-width: 70ch }
 </style>
@@ -238,52 +292,44 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     </nav>
   </header>
 
+  </div>
   <main>
-    <h1>¿Hay agua en tu colonia?</h1>
-    <p class="lede">El SIAPA prometió que cada corte duraría «por máximo un día». El mapa muestra cuántos días llevan sin agua las colonias, según lo que publican los medios y los vecinos en Facebook y X, cada publicación con su enlace, y los reportes que se hacen aquí. Toca tu colonia para verlos y reportar la tuya: sin cuenta y anónimo. No son datos oficiales.</p>
-
-    <div class="finder">
-      <form class="search" id="buscar" role="search">
-        <label for="q">Busca tu colonia, municipio o código postal</label>
-        <svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#search"/></svg>
-        <input id="q" name="q" type="search" autocomplete="off" spellcheck="false" placeholder="Por ejemplo: Oblatos o 44700" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugerencias">
-        <button class="clear" type="button" id="limpiar" aria-label="Borrar la búsqueda" hidden><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-        <ul class="suggest" id="sugerencias" role="listbox" aria-label="Colonias encontradas" hidden></ul>
-      </form>
-      <button class="button" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Usar mi ubicación</button>
-    </div>
-
-    <div class="mapwrap">
+    <div class="stage" id="escenario">
       <div id="mapa" class="bigmap" role="region" aria-label="Mapa de reportes de agua por colonia" tabindex="0"></div>
-      <aside id="ficha" class="card" aria-live="polite" hidden></aside>
-    </div>
-    <p class="legend-title">Días sin agua según medios y vecinos (lo más largo que reportan en cada colonia)</p>
-    <ul class="legend" aria-label="Colores del mapa">
-      <li><span class="sw" style="--c:var(--s1)"></span>1 o 2 días</li>
-      <li><span class="sw" style="--c:var(--s2)"></span>3 a 6 días</li>
-      <li><span class="sw" style="--c:var(--s3)"></span>1 a 2 semanas</li>
-      <li><span class="sw" style="--c:var(--s4)"></span>2 semanas o más</li>
-      <li><span class="sw nodays"></span>Sin agua, sin días contados</li>
-    </ul>
-    <ul class="legend small" aria-label="Reportes de este mapa">
-      <li>Reportes de este mapa en 24 horas:</li>
-      <li><span class="dot dry"></span>Mayoría sin agua</li>
-      <li><span class="dot low"></span>Baja presión o mixto</li>
-      <li><span class="dot ok"></span>Mayoría con agua</li>
-    </ul>
-    <p class="note" id="estado" aria-live="polite">Cargando el mapa de colonias…</p>
-
-    <section aria-labelledby="pruebas">
-      <div class="panel">
-        <h2 class="headline" id="pruebas">Cargando lo que publican medios y vecinos…</h2>
-        <p class="note" id="pruebas-nota"></p>
-        <div class="tiles">
-          <div class="tile"><b id="p-colonias">—</b><span id="p-colonias-txt">colonias sin agua según medios y vecinos</span></div>
-          <div class="tile"><b id="p-medios">—</b><span id="p-medios-txt">publicaciones de medios</span></div>
-          <div class="tile"><b id="p-max">—</b><span id="p-max-txt">lo más largo que reportan</span></div>
-        </div>
+      <div class="float-search">
+        <form class="search" id="buscar" role="search">
+          <label for="q">Busca tu colonia, municipio o código postal</label>
+          <svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#search"/></svg>
+          <input id="q" name="q" type="search" autocomplete="off" spellcheck="false" placeholder="Busca tu colonia o C.P." role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugerencias">
+          <button class="clear" type="button" id="limpiar" aria-label="Borrar la búsqueda" hidden><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+          <ul class="suggest" id="sugerencias" role="listbox" aria-label="Colonias encontradas" hidden></ul>
+        </form>
+        <button class="button iconbtn" type="button" id="ubicacion" aria-label="Usar mi ubicación" title="Usar mi ubicación"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg></button>
       </div>
-    </section>
+      <aside id="ficha" class="card" aria-live="polite" hidden></aside>
+      <section class="overview" id="resumen-mapa" aria-labelledby="titulo">
+        <button type="button" class="ov-toggle" id="ocultar" aria-expanded="true" aria-controls="ov-cuerpo">Ocultar <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <h1 id="titulo">¿Hay agua en tu colonia?</h1>
+        <p class="ov-head" id="pruebas">Cargando lo que publican medios y vecinos…</p>
+        <div id="ov-cuerpo">
+          <div class="sevbar" id="sevbar" aria-hidden="true"></div>
+          <ul class="sevkey" id="sevkey" aria-label="Colores del mapa: días sin agua según medios y vecinos"></ul>
+          <div class="tiles">
+            <div class="tile"><b id="p-colonias">—</b><span id="p-colonias-txt">colonias sin agua según medios y vecinos</span></div>
+            <div class="tile"><b id="p-medios">—</b><span id="p-medios-txt">publicaciones de medios</span></div>
+            <div class="tile"><b id="p-max">—</b><span id="p-max-txt">lo más largo que reportan</span></div>
+          </div>
+          <p class="note" id="pruebas-nota"></p>
+          <p class="note" id="ov-24h"></p>
+          <p class="note" id="estado" aria-live="polite">Cargando el mapa de colonias…</p>
+          <button class="button wide" type="button" id="reportar"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Reportar mi colonia</button>
+          <a class="ov-more" href="#lista">Ver la lista de colonias y cómo funciona ↓</a>
+        </div>
+      </section>
+    </div>
+
+    <div class="wrap">
+    <p class="lede" style="margin-top:24px">El SIAPA prometió que cada corte duraría «por máximo un día». El mapa muestra cuántos días llevan sin agua las colonias, según lo que publican los medios y los vecinos en Facebook y X, cada publicación con su enlace e imagen, y los reportes que se hacen aquí. Toca tu colonia para verlos y reportar la tuya: sin cuenta y anónimo. No son datos oficiales.</p>
 
     <section aria-labelledby="lista">
       <h2 class="sec" id="lista">Las colonias con más días sin agua</h2>
@@ -310,10 +356,12 @@ footer p { margin: 0 0 8px; max-width: 70ch }
           <div class="tile"><b id="t-historico">—</b><span id="t-historico-txt">reportes desde que abrió el mapa</span></div>
         </div>
         <p class="note" id="actualizado"></p>
-        <div class="cta">
-          <p><strong>¿Cómo está el agua en tu colonia?</strong>Tu reporte ayuda a ver dónde falta y a exigir que se atienda.</p>
-          <button class="button" type="button" id="reportar"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Reportar mi colonia</button>
-        </div>
+        <ul class="legend small" aria-label="Reportes de este mapa" style="justify-content:flex-start">
+          <li>En el mapa, los anillos:</li>
+          <li><span class="dot dry"></span>Mayoría sin agua</li>
+          <li><span class="dot low"></span>Baja presión o mixto</li>
+          <li><span class="dot ok"></span>Mayoría con agua</li>
+        </ul>
       </div>
     </section>
 
@@ -344,6 +392,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       <h2 class="sec" id="como">Cómo funciona</h2>
       <ul class="plain">
         <li><strong>Las publicaciones.</strong> Buscamos en las notas de los medios, en Facebook, incluidos los grupos públicos de colonias, y en X lo que se publica desde el 12 de octubre sobre colonias sin agua. De los medios va todo lo que nombra una colonia, y va primero en cada ficha. De los vecinos, solo publicaciones con al menos 5 reacciones y 1 comentario, o comentarios en publicaciones así. Citamos sus palabras con la fecha y el enlace, y cada colonia toma el número de días más alto que dicen.</li>
+        <li><strong>Las imágenes</strong> son la vista previa que cada nota o publicación comparte (su foto o el cuadro de su video). Guardamos una copia pequeña en aguagdl.com, así tu navegador no se conecta a Facebook, a X ni a los medios para verlas; tocarlas abre la publicación. Las notas y publicaciones de solo texto no tienen imagen.</li>
         <li><strong>Contamos fuentes, no «me gusta».</strong> Mucho eco no prueba que algo sea cierto: en Twitter, las noticias falsas tenían 70 % más probabilidad de ser retuiteadas que las verdaderas (<a href="https://doi.org/10.1126/science.aap9559" rel="noopener">Vosoughi, Roy y Aral, 2018</a>). Por eso el color sale de los días que dicen las publicaciones, y la confianza, de cuántas fuentes distintas lo dicen y de si lo reporta un medio; varias publicaciones de la misma cuenta, página o grupo cuentan como una sola fuente. El eco (reacciones, comentarios y veces compartida) se muestra aparte.</li>
         <li><strong>No publicamos nombres de personas.</strong> De los vecinos mostramos la colonia, la fecha y el enlace a lo que publicaron; de los medios y los grupos públicos, su nombre. Si una publicación es tuya y quieres que la quitemos, escríbenos a <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>.</li>
         <li><strong>Faltan colonias.</strong> Publica más quien tiene internet y usa redes: en México usa internet el 88.9 % de las personas en zonas urbanas y el 75.2 % en zonas rurales (<a href="https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/endutih/ENDUTIH_25.pdf" rel="noopener">INEGI, ENDUTIH 2025</a>), y los anuncios de X llegan al 12.4 % de la población, contra 70.7 % de los de Facebook (<a href="https://datareportal.com/reports/digital-2026-mexico" rel="noopener">DataReportal, 2026</a>). Que una colonia no aparezca no quiere decir que tenga agua.</li>
@@ -354,8 +403,10 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         <li>Si no tienes agua, <a href="/pipas">pide una pipa</a> al SIAPA o a tu municipio, y repórtalo aquí también: si no se reporta, no queda registro.</li>
       </ul>
     </section>
+    </div>
   </main>
 
+  <div class="wrap">
   <footer>
     <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con el Gobierno de Jalisco.</p>
     <p><a href="/">Inicio</a> · <a href="/mapa">Mapa de la rotación</a> · <a href="/avisos">Recibir avisos</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
@@ -445,6 +496,27 @@ footer p { margin: 0 0 8px; max-width: 70ch }
   L.control.zoom({ position: "topright" }).addTo(map);
   M.tiles(L, map);
   map.setView([20.66, -103.37], 11);
+
+  // The map takes the screen below the header, whose height changes as the menu wraps.
+  const stage = $("escenario"), top = document.querySelector("header.top");
+  const fitStage = () => { document.documentElement.style.setProperty("--hh", `${top.offsetHeight}px`); map.invalidateSize(); };
+  if (window.ResizeObserver) new ResizeObserver(fitStage).observe(top);
+  fitStage();
+  const ov = $("resumen-mapa"), hide = $("ocultar");
+  const setOverview = (open) => {
+    ov.classList.toggle("closed", !open);
+    hide.setAttribute("aria-expanded", String(open));
+    hide.firstChild.textContent = open ? "Ocultar " : "Ver resumen ";
+  };
+  let wantOpen = true;
+  hide.addEventListener("click", () => {
+    wantOpen = ov.classList.contains("closed");
+    setOverview(wantOpen);
+    try { localStorage.setItem("resumen-oculto", wantOpen ? "" : "1"); } catch {}
+  });
+  try { if (localStorage.getItem("resumen-oculto") === "1") wantOpen = false; } catch {}
+  if (phone()) wantOpen = false;
+  setOverview(wantOpen);
 
   let byKey = new Map();      // colonia key → its counts in the last 24 h
   let summary = null;
@@ -610,6 +682,8 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       for (const g of marks) g.remove();
       marks = [];
       card.hidden = true;
+      stage.classList.remove("has-card");
+      setOverview(wantOpen);
       card.replaceChildren();
       history.replaceState(null, "", location.pathname + (location.search.includes("api=") ? `?api=${encodeURIComponent(API)}` : ""));
     }
@@ -623,7 +697,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         L.geoJSON(gj, { interactive: false, style: { color: COLORS.ink, weight: 3.5, fill: false } }).addTo(map),
       ];
       if (fit) {
-        const pad = phone() ? { paddingTopLeft: [24, 24], paddingBottomRight: [24, Math.round(map.getSize().y * 0.6)] } : { paddingTopLeft: [410, 24], paddingBottomRight: [24, 24] };
+        const pad = phone() ? { paddingTopLeft: [24, 24], paddingBottomRight: [24, Math.round(map.getSize().y * 0.66)], paddingTopLeft: [24, 70] } : { paddingTopLeft: [450, 80], paddingBottomRight: [24, 24] };
         const opts = { ...pad, maxZoom: 15, animate: !reduced, duration: 0.7 };
         const b = marks[1].getBounds();
         if (reduced) map.fitBounds(b, opts); else map.flyToBounds(b, opts);
@@ -704,6 +778,8 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       }
       card.replaceChildren(...kids);
       card.hidden = false;
+      stage.classList.add("has-card");
+      setOverview(false);
     }
 
     // The colonia's publications: the most days they give, how many sources say so, and each post
@@ -714,7 +790,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       const head = el("p", { class: "ev-head" }, badge, el("strong", {}, s ? `Hasta ${daysWord(e.dias)} sin agua` : "Sin agua, sin días contados"));
       const src = [plural(e.fuentes, "fuente", "fuentes distintas"), e.medios ? (e.medios === 1 ? "lo reporta un medio" : `lo reportan ${e.medios} medios`) : null, `la más reciente del ${dateES(e.ultima, true)}`].filter(Boolean).join(" · ");
       const list = el("ol", { class: "posts" }, ...e.posts.map(post));
-      const box = el("div", { class: "ev" }, head, el("p", { class: "ev-src" }, src), list);
+      const box = el("div", { class: "ev" }, head, el("p", { class: "ev-src" }, src), mosaic(e.posts), list);
       const SHOWN = 3;
       if (e.posts.length > SHOWN) {
         [...list.children].slice(SHOWN).forEach((li) => { li.hidden = true; });
@@ -723,6 +799,23 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         box.append(more);
       }
       return box;
+    }
+    // The colonia's sources at a glance: one tile per preview image, each opening its publication.
+    function mosaic(posts) {
+      const seen = new Set(), pics = posts.filter((p) => p.vista && !seen.has(p.vista) && seen.add(p.vista));
+      if (!pics.length) return null;
+      const MAX = 6, shown = pics.slice(0, MAX);
+      const n = shown.length;
+      const grid = el("div", { class: `mosaic n${n}${n === 3 || n >= 5 ? " big" : ""}`, role: "list", "aria-label": "Imágenes de las publicaciones" });
+      shown.forEach((p, i) => {
+        const who = p.fuente === "medio" || p.quien ? p.quien : "Vecinos";
+        const a = el("a", { href: p.url, target: "_blank", rel: "noopener nofollow", role: "listitem", title: `${who} · ${dateES(p.fecha)}: «${p.cita}»` },
+          el("img", { src: `/${p.vista}`, alt: `Imagen de la publicación de ${who} del ${dateES(p.fecha, true)}`, loading: "lazy", decoding: "async" }),
+          el("span", { class: "lbl" }, `${who} · ${dateES(p.fecha)}`));
+        if (i === MAX - 1 && pics.length > MAX) a.append(el("span", { class: "more" }, `+${pics.length - MAX + 1}`));
+        grid.append(a);
+      });
+      return grid;
     }
     function post(p) {
       const net = p.red === "x" ? "X" : p.red === "facebook" ? "Facebook" : "Nota";
@@ -849,6 +942,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       tile("t-colonias", s.colonias_con_reportes, "colonia con reportes", "colonias con reportes");
       tile("t-secas", s.mayormente_sin_agua, "colonia con mayoría sin agua", "colonias con mayoría sin agua");
       tile("t-historico", s.historico, "reporte desde que abrió el mapa", "reportes desde que abrió el mapa");
+      $("ov-24h").textContent = t ? `Y ${plural(t, "reporte", "reportes")} en este mapa en las últimas 24 horas, en ${plural(s.colonias_con_reportes, "colonia", "colonias")}.` : "";
       const at = timeES(s.updated);
       $("actualizado").textContent = t ? `Actualizado ${/^1:/.test(at) ? "a la" : "a las"} ${at}`.replace(/\.?$/, ".") : "Todavía no hay reportes en las últimas 24 horas. Sé la primera persona en reportar tu colonia.";
       $("bot-min").textContent = `El detalle se muestra desde ${s.bot.min} respuestas por zona, para que nadie pueda ser identificado. También se oculta si, al restarle la semana de arriba, se vería el de menos de ${s.bot.min}.`;
@@ -893,7 +987,12 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       const week = all.filter((e) => e.dias >= 7).length;
       $("pruebas").replaceChildren(el("b", {}, fmt(week)), ` ${week === 1 ? "colonia" : "colonias"} con una semana o más sin agua, según lo que publican medios y vecinos`);
       const n = pubs.publicaciones.length, medios = pubs.publicaciones.filter((x) => x.fuente === "medio").length;
-      $("pruebas-nota").textContent = `El SIAPA prometió racionamientos «por máximo un día». Son ${plural(n, "publicación", "publicaciones")} del ${dateES(pubs.desde, true)} al ${dateES(pubs.actualizado, true)}: ${fmt(medios)} de medios, en sus notas, Facebook y X, y ${fmt(n - medios)} de vecinos con eco en redes. Abajo, cómo las elegimos.`;
+      $("pruebas-nota").textContent = `El SIAPA prometió racionamientos «por máximo un día». Son ${plural(n, "publicación", "publicaciones")} del ${dateES(pubs.desde, true)} al ${dateES(pubs.actualizado, true)}: ${fmt(medios)} de medios, en sus notas, Facebook y X, y ${fmt(n - medios)} de vecinos con eco en redes. Toca una colonia para ver sus publicaciones.`;
+      // The bar splits the colonias by the most days their posts give, and doubles as the map's key.
+      const steps = [[1, "1 o 2 días"], [2, "3 a 6 días"], [3, "1 a 2 semanas"], [4, "2 semanas o más"], [0, "sin días contados"]];
+      const per = steps.map(([s]) => all.filter((e) => sevOf(e.dias) === s).length);
+      $("sevbar").replaceChildren(...steps.map(([s], i) => per[i] ? el("span", { class: s ? "" : "nodays", style: `width:${100 * per[i] / all.length}%;background:${s ? `var(--s${s})` : ""}` }) : null).filter(Boolean));
+      $("sevkey").replaceChildren(...steps.map(([s, w], i) => el("li", {}, el("span", { class: s ? "sw" : "sw nodays", style: `--c:var(--s${s})` }), w, " ", el("b", {}, fmt(per[i])))));
       $("p-colonias").textContent = fmt(ev.size);
       $("p-colonias-txt").textContent = ev.size === 1 ? "colonia sin agua según medios y vecinos" : "colonias sin agua según medios y vecinos";
       $("p-medios").textContent = fmt(medios);
@@ -904,7 +1003,8 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       if (max) {
         const names = [...new Set(byNews.filter((x) => x.dias === max).flatMap((x) => x.colonias.map((k) => nice(k.split("|")[0]))))];
         $("p-max").textContent = daysWord(max);
-        $("p-max-txt").textContent = `lo más largo que reportan los medios: ${M.joinES(names)}`;
+        $("p-max-txt").textContent = "lo más largo que reporta un medio";
+        $("p-max").parentElement.title = M.joinES(names);
       }
       renderRanking();
     }
@@ -932,7 +1032,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         el("span", { class: "what" }, el("strong", {}, nice(p.n)), el("small", {}, `${p.m} · ${M.label(p)}`)),
         el("span", { class: "meta" }, [plural(e.fuentes, "fuente", "fuentes"), e.medios ? plural(e.medios, "medio", "medios") : null].filter(Boolean).join(" · "),
           el("small", {}, `${dateES(e.ultima)}${e.eco ? ` · ${plural(e.eco, "interacción", "interacciones")}` : ""}`)));
-      b.addEventListener("click", () => { select(f); $("mapa").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" }); });
+      b.addEventListener("click", () => { stage.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }); select(f); });
       return el("li", {}, b);
     }
     for (const b of document.querySelectorAll(".sorter .chip")) {
@@ -1061,9 +1161,9 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     }
     locBtn.addEventListener("click", () => locate(false));
     $("reportar").addEventListener("click", () => {
-      if (selected) { renderCard(selected, true); $("mapa").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" }); return; }
+      if (selected) { renderCard(selected, true); stage.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }); return; }
       wantsForm = true;
-      $("mapa").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
+      stage.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
       if ("geolocation" in navigator) locate(true);
       else { input.focus(); say("Busca tu colonia o tócala en el mapa para reportarla."); }
     });

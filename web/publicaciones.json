@@ -19,7 +19,8 @@
    "cita": "Vecinos de la colonia Arcos de Guadalupe se quejaron de tener una semana sin agua y donde sí hay está contaminada",
    "dias": 7,
    "de": "https://x.com/arcosdguadalupe/status/2112295715342799099",
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/034c9eb3ca91.jpg"
   },
   {
    "fuente": "medio",
@@ -34,7 +35,8 @@
    "cita": "Los habitantes señalaron que llevan más de 10 días sin agua",
    "dias": 10,
    "bloqueo": true,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/ad47a490a821.jpg"
   },
   {
    "fuente": "medio",
@@ -50,7 +52,8 @@
    "dias": 12,
    "desde": "2026-10-08",
    "bloqueo": true,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/ef64e80bba3e.jpg"
   },
   {
    "fuente": "medio",
@@ -64,7 +67,8 @@
    "lugar": "Guadalajara Oriente",
    "cita": "La falta de agua es general en toda la colonia Guadalajara Oriente y empezó desde hace dos semanas, muchos antes del inicio de los tandeos.",
    "dias": 14,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/1c98847fc976.jpg"
   },
   {
    "fuente": "medio",
@@ -79,7 +83,8 @@
    "cita": "Los manifestantes denunciaron que llevan hasta 11 días sin servicio",
    "dias": 11,
    "bloqueo": true,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/6348af3a83df.jpg"
   },
   {
    "fuente": "medio",
@@ -96,7 +101,8 @@
    "cita": "Son vecinos de colonias como Polanquito, Polanco Oriente, Francisco Villa y sus alrededores al sur […] de Guadalajara. Bloquearon las avenidas 8 de Julio y Reyes Heroles, pues se aseguraron que […] desde hace 15 días no reciben agua en sus hogares.",
    "dias": 15,
    "bloqueo": true,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/40989bd9a8d4.jpg"
   },
   {
    "fuente": "medio",
@@ -111,7 +117,8 @@
    "cita": "Ayer por la tarde se manifestaron habitantes en el cruce de Avenida 8 de Julio y Jesús Reyes Heroles, en la Colonia Valentín Gómez Farías, por la falta de agua.",
    "dias": null,
    "bloqueo": true,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/0edeb6ec584b.jpg"
   },
   {
    "fuente": "medio",
@@ -125,7 +132,8 @@
    "lugar": "Centro de Tlaquepaque",
    "cita": "En Tlaquepaque Centro llevan ya una semana, según vecinos.",
    "dias": 7,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/0edeb6ec584b.jpg"
   },
   {
    "fuente": "medio",
@@ -140,7 +148,8 @@
    "cita": "En la Unidad Habitacional Oblatos carecen del servicio desde el sábado, lo mismo que en Prados Vallarta.",
    "dias": 3,
    "desde": "2026-10-17",
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/0edeb6ec584b.jpg"
   },
   {
    "fuente": "medio",
@@ -154,7 +163,8 @@
    "lugar": "Fraccionamiento Real Vallarta, Zapopan",
    "cita": "en el Fraccionamiento Real Vallarta, llevan una semana",
    "dias": 7,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/0edeb6ec584b.jpg"
   },
   {
    "fuente": "medio",
@@ -168,7 +178,8 @@
    "lugar": "San Juan de Dios, Guadalajara",
    "cita": "Habitantes del barrio de San Juan de Dios se quejaron de que no tienen agua desde hace 15 días",
    "dias": 15,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/0edeb6ec584b.jpg"
   },
   {
    "fuente": "medio",
@@ -188,7 +199,8 @@
     "comentarios": 2,
     "compartidos": 23,
     "al": "2026-10-20"
-   }
+   },
+   "vista": "fuentes/1eaf1666aedc.jpg"
   },
   {
    "fuente": "medio",
@@ -208,7 +220,8 @@
     "comentarios": 0,
     "compartidos": 3,
     "al": "2026-10-20"
-   }
+   },
+   "vista": null
   },
   {
    "fuente": "medio",
@@ -228,7 +241,8 @@
     "comentarios": 17,
     "compartidos": 18,
     "al": "2026-10-20"
-   }
+   },
+   "vista": "fuentes/008fb99889ac.jpg"
   },
   {
    "fuente": "medio",
@@ -248,7 +262,8 @@
     "comentarios": 85,
     "compartidos": 37,
     "al": "2026-10-20"
-   }
+   },
+   "vista": "fuentes/dfe7d9305880.jpg"
   },
   {
    "fuente": "medio",
@@ -269,7 +284,8 @@
     "comentarios": 8,
     "compartidos": 14,
     "al": "2026-10-20"
-   }
+   },
+   "vista": "fuentes/bd1b7265f9e2.jpg"
   },
   {
    "fuente": "vecinos",
@@ -290,7 +306,8 @@
     "compartidos": 232,
     "al": "2026-10-20"
    },
-   "nota": "Facebook marca la imagen de esta publicación como hecha con IA; aquí citamos solo el texto."
+   "nota": "Facebook marca la imagen de esta publicación como hecha con IA; aquí citamos solo el texto.",
+   "vista": "fuentes/2355c4f597e3.jpg"
   },
   {
    "fuente": "vecinos",
@@ -311,7 +328,8 @@
     "comentarios": 105,
     "compartidos": 2,
     "al": "2026-10-20"
-   }
+   },
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -859,7 +877,8 @@
    "cita": "Habitantes de la colonia Polanquito, Guadalajara y sectores aledaños se manifestaron sobre la avenida 8 de Julio, en su cruce con la avenida Jesús Reyes Heroles […] ante la desesperación de acumular hasta tres semanas sin recibir una sola gota en sus grifos.",
    "dias": 21,
    "bloqueo": true,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/422957c912d2.jpg"
   },
   {
    "fuente": "medio",
@@ -891,7 +910,8 @@
    "lugar": "Lomas del Paradero y Prados del Nilo, entre Guadalajara y Tlaquepaque",
    "cita": "Vecinos de Lomas del Paradero y Prados del Nilo, […] se desesperan luego de tres semanas sin agua en sus tuberías.",
    "dias": 21,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/a3db849b132c.jpg"
   },
   {
    "fuente": "medio",
@@ -905,7 +925,8 @@
    "lugar": "San Juan de Dios, Guadalajara",
    "cita": "el activista citó el caso de una paciente con daño renal en la colonia San Juan de Dios que acumulaba 20 días sin suministro regular",
    "dias": 20,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/3db829d13fff.jpg"
   },
   {
    "fuente": "medio",
@@ -924,7 +945,8 @@
     "reacciones": 9,
     "comentarios": 0,
     "al": "2026-10-20"
-   }
+   },
+   "vista": null
   },
   {
    "fuente": "medio",
@@ -943,7 +965,8 @@
     "comentarios": 0,
     "compartidos": 1,
     "al": "2026-10-20"
-   }
+   },
+   "vista": "fuentes/0c674a3dc95d.jpg"
   },
   {
    "fuente": "medio",
@@ -962,7 +985,8 @@
     "comentarios": 8,
     "compartidos": 6,
     "al": "2026-10-20"
-   }
+   },
+   "vista": "fuentes/91c5930dde05.jpg"
   },
   {
    "fuente": "medio",
@@ -1003,7 +1027,8 @@
     "comentarios": 89,
     "compartidos": 65,
     "al": "2026-10-20"
-   }
+   },
+   "vista": "fuentes/70e8635cd13c.jpg"
   },
   {
    "fuente": "vecinos",
@@ -1025,7 +1050,8 @@
     "compartidos": 41,
     "al": "2026-10-20"
    },
-   "nota": "Es el texto de una imagen que Facebook marca como hecha con IA."
+   "nota": "Es el texto de una imagen que Facebook marca como hecha con IA.",
+   "vista": "fuentes/c8cb7b8b4655.jpg"
   },
   {
    "fuente": "vecinos",
@@ -1045,7 +1071,8 @@
     "reacciones": 25,
     "comentarios": 4,
     "al": "2026-10-20"
-   }
+   },
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -1135,7 +1162,8 @@
     "reacciones": 37,
     "comentarios": 1,
     "al": "2026-10-20"
-   }
+   },
+   "vista": "fuentes/e6d580ca4b05.jpg"
   },
   {
    "fuente": "vecinos",
@@ -1353,7 +1381,8 @@
     "reacciones": 32,
     "comentarios": 1,
     "al": "2026-10-20"
-   }
+   },
+   "vista": "fuentes/9ad3460b9343.jpg"
   },
   {
    "fuente": "vecinos",
@@ -1515,7 +1544,8 @@
    "lugar": "Santa Cecilia, Oblatos, San Juan Bosco, Jardines de la Paz y Lomas del Paradero, Guadalajara",
    "cita": "La escasez también concentra quejas en Santa Cecilia, Oblatos, San Juan Bosco, Jardines de la Paz y Lomas del Paradero. Vecinos señalaron varios días sin suministro, incluso antes del inicio oficial de los tandeos.",
    "dias": null,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/abb7de6b980f.jpg"
   },
   {
    "fuente": "medio",
@@ -1529,7 +1559,8 @@
    "lugar": "San Juan de Dios, Guadalajara",
    "cita": "La zona de San Juan de Dios, en Guadalajara, ha estado sin agua desde hace más de dos semanas",
    "dias": 14,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/2059203d98db.jpg"
   },
   {
    "fuente": "vecinos",
@@ -1550,7 +1581,8 @@
     "comentarios": 10,
     "compartidos": 3,
     "al": "2026-10-20"
-   }
+   },
+   "vista": "fuentes/12a90a3d5efc.jpg"
   },
   {
    "fuente": "vecinos",
@@ -1571,7 +1603,8 @@
     "comentarios": 49,
     "compartidos": 5,
     "al": "2026-10-20"
-   }
+   },
+   "vista": "fuentes/d2439e63bdc6.jpg"
   },
   {
    "fuente": "vecinos",
@@ -2008,7 +2041,8 @@
     "comentarios": 449,
     "compartidos": 74,
     "al": "2026-10-20"
-   }
+   },
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -2334,7 +2368,8 @@
    "lugar": "Moderna, Guadalajara",
    "cita": "Los vecinos de la colonia Moderna, en Guadalajara, confirmaron que se quedaron sin agua días antes de que comenzara el esquema de rotación del Siapa",
    "dias": null,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/38ae0724be32.jpg"
   },
   {
    "fuente": "medio",
@@ -2352,7 +2387,8 @@
    "cita": "Entre las colonias señaladas por vecinos se encuentran Bugambilias Country y Las Águilas, en Zapopan, así como Oblatos, Blanco y Cuéllar y Valle del Álamo, en Guadalajara, cuyos habitantes reportan que, hasta este jueves 15 de octubre, no habían recuperado el suministro.",
    "dias": 5,
    "desde": "2026-10-10",
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/5a79011530f6.jpg"
   },
   {
    "fuente": "medio",
@@ -2366,7 +2402,8 @@
    "lugar": "Alfredo Barba, Tlaquepaque",
    "cita": "En la colonia Alfredo Barba, […] señaló que lleva 12 días sin agua y que las fallas en el servicio son recurrentes.",
    "dias": 12,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/5e468ebee375.jpg"
   },
   {
    "fuente": "vecinos",
@@ -2420,7 +2457,8 @@
     "reacciones": 13,
     "comentarios": 7,
     "al": "2026-10-20"
-   }
+   },
+   "vista": null
   },
   {
    "fuente": "medio",
@@ -2434,7 +2472,8 @@
    "lugar": "Obrera, Guadalajara",
    "cita": "desde hace dos semanas ha enfrentado baja presión y cortes totales en el servicio del agua",
    "dias": 14,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/fb29dc00b79f.jpg"
   },
   {
    "fuente": "medio",
@@ -2448,7 +2487,8 @@
    "lugar": "Alfredo Barba, Tlaquepaque",
    "cita": "vecino de la colonia Alfredo Barba, señaló que llevaba 12 días sin agua",
    "dias": 12,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/09a31c9d6cb5.jpg"
   },
   {
    "fuente": "medio",
@@ -2519,7 +2559,8 @@
    "cita": "Al filo de las 18 horas, vecinos de la colonia Ciudad Granja bloquearon por segundo día consecutivo la avenida Vallarta a la altura de la Glorieta de los Pirules. Aseguraron que tienen más de 15 días sin recibir el vital líquido.",
    "dias": 15,
    "bloqueo": true,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/c1a35e45be99.jpg"
   },
   {
    "fuente": "medio",
@@ -2537,7 +2578,8 @@
     "al": "2026-10-21",
     "reacciones": 7,
     "comentarios": 4
-   }
+   },
+   "vista": null
   },
   {
    "fuente": "medio",
@@ -2552,7 +2594,8 @@
    "cita": "Santa Cecilia y San Onofre no tienen ni una sola gota de agua y cuando llega es de mala calidad.",
    "dias": null,
    "bloqueo": true,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/c1a35e45be99.jpg"
   },
   {
    "fuente": "medio",
@@ -2566,7 +2609,8 @@
    "lugar": "San Andrés, Guadalajara",
    "cita": "Vecinos de San Andrés y Dionisio Rodríguez aseguran que enfrentan problemas de abastecimiento desde el 4 de octubre.",
    "dias": null,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/8588856cfd03.jpg"
   },
   {
    "fuente": "medio",
@@ -2580,7 +2624,8 @@
    "lugar": "Belisario Domínguez, Guadalajara",
    "cita": "Las afectaciones se reportan en colonias como Belisario Domínguez, San Andrés, Dionisio Rodríguez, Villa Fontana y Las Terrazas, donde algunas familias llevan varios días sin agua potable.",
    "dias": null,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/8588856cfd03.jpg"
   },
   {
    "fuente": "medio",
@@ -2600,7 +2645,8 @@
     "reacciones": 8,
     "comentarios": 0,
     "compartidos": 4
-   }
+   },
+   "vista": null
   },
   {
    "fuente": "medio",
@@ -2619,7 +2665,8 @@
     "al": "2026-10-21",
     "reacciones": 5,
     "comentarios": 0
-   }
+   },
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -2656,7 +2703,8 @@
     "al": "2026-10-21",
     "reacciones": 266,
     "comentarios": 51
-   }
+   },
+   "vista": null
   },
   {
    "fuente": "medio",
@@ -2675,7 +2723,8 @@
     "al": "2026-10-21",
     "reacciones": 310,
     "comentarios": 20
-   }
+   },
+   "vista": "fuentes/b8cc1dcf0838.jpg"
   },
   {
    "fuente": "medio",
@@ -2712,7 +2761,8 @@
     "al": "2026-10-21",
     "reacciones": 279,
     "comentarios": 13
-   }
+   },
+   "vista": "fuentes/0f2fe029c2ab.jpg"
   },
   {
    "fuente": "medio",
@@ -2731,7 +2781,8 @@
     "al": "2026-10-21",
     "reacciones": 156,
     "comentarios": 8
-   }
+   },
+   "vista": "fuentes/05b948c6b8d1.jpg"
   },
   {
    "fuente": "medio",
@@ -2750,7 +2801,8 @@
     "al": "2026-10-21",
     "reacciones": 657,
     "comentarios": 22
-   }
+   },
+   "vista": "fuentes/c25c5eea042d.jpg"
   },
   {
    "fuente": "medio",
@@ -2768,7 +2820,8 @@
     "al": "2026-10-21",
     "reacciones": 76,
     "comentarios": 20
-   }
+   },
+   "vista": "fuentes/171767392ee9.jpg"
   },
   {
    "fuente": "medio",
@@ -2787,7 +2840,8 @@
     "al": "2026-10-21",
     "reacciones": 2,
     "comentarios": 0
-   }
+   },
+   "vista": "fuentes/888544fff843.jpg"
   },
   {
    "fuente": "vecinos",
@@ -2874,7 +2928,8 @@
    "lugar": "La Normal, Guadalajara",
    "cita": "Vecinos de la colonia La Normal, en Guadalajara, reportaron baja presión, mal olor y agua de color café desde días antes del inicio oficial de los tandeos",
    "dias": null,
-   "eco": null
+   "eco": null,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -2892,7 +2947,8 @@
     "al": "2026-10-21",
     "reacciones": 9,
     "comentarios": 22
-   }
+   },
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -3007,7 +3063,8 @@
    "lugar": "Las Terrazas, Tlaquepaque",
    "cita": "En San Pedro Tlaquepaque, habitantes de Las Terrazas afirman que llevan alrededor de diez días sin agua.",
    "dias": 10,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/8588856cfd03.jpg"
   },
   {
    "fuente": "medio",
@@ -3021,7 +3078,8 @@
    "lugar": "Villa Fontana",
    "cita": "En Villa Fontana, los cortes ya suman cinco días, según los vecinos.",
    "dias": 5,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/8588856cfd03.jpg"
   },
   {
    "fuente": "medio",
@@ -3035,7 +3093,8 @@
    "lugar": "Miramar, Zapopan",
    "cita": "En Miramar, Zapopan, las interrupciones comenzaron desde el fin de semana",
    "dias": null,
-   "eco": null
+   "eco": null,
+   "vista": "fuentes/8588856cfd03.jpg"
   },
   {
    "fuente": "medio",
@@ -3174,6 +3233,55 @@
    "lugar": "Santa Cecilia, Guadalajara",
    "cita": "Sta cecilia un mes sin agua",
    "dias": 30,
+   "eco": {
+    "reacciones": 0,
+    "comentarios": 0,
+    "al": "2026-10-21"
+   }
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "Las Noticias en GDL",
+   "url": "https://www.facebook.com/reel/2900700006950200/",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "PRADOS VALLARTA|Zapopan|45020"
+   ],
+   "lugar": "Prados Vallarta, Zapopan",
+   "cita": "¡En Prados Vallarta sale el agua más negra y apestosa que antes!",
+   "dias": null,
+   "eco": {
+    "reacciones": 370,
+    "comentarios": 55,
+    "compartidos": 75,
+    "al": "2026-10-21"
+   },
+   "vista": "fuentes/f7becfd8956e.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "Las Noticias en GDL",
+    "url": "https://www.facebook.com/reel/2900700006950200/",
+    "eco": {
+     "reacciones": 370,
+     "comentarios": 55,
+     "compartidos": 75,
+     "al": "2026-10-21"
+    }
+   },
+   "url": "https://www.facebook.com/reel/2900700006950200/?comment_id=1114405144297861",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "GUADALUPE JARDIN|Zapopan|45030"
+   ],
+   "lugar": "Guadalupe Jardín, Zapopan",
+   "cita": "Guadalupe Jardin , zapopan, no tiene agua desde hace 10 dias , zona 6",
+   "dias": 10,
    "eco": {
     "reacciones": 0,
     "comentarios": 0,
