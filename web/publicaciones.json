@@ -7677,6 +7677,58 @@
     "comentarios": 0,
     "al": "2026-10-21"
    }
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "N+",
+   "url": "https://www.facebook.com/nmasguadalajara/posts/pfbid02oj2o23HFuLWeRAiLPh4QAbxQHTn6uLGpMga39uGncZ2RHixe5p5P6WhBS618nFURl",
+   "fecha": "2026-10-19",
+   "colonias": [
+    "DR VALENTIN GOMEZ FARIAS|Guadalajara|44940",
+    "FRANCISCO VILLA|Guadalajara|44970",
+    "BALCONES DEL CUATRO|Guadalajara|44984"
+   ],
+   "lugar": "Valentín Gómez Farías, Francisco Villa y Balcones del 4, Guadalajara",
+   "cita": "Vecinos de las colonias Valentín Gómez Farías, Francisco Villa, Balcones del 4 y sus alrededores bloquearon la avenida 8 de Julio y la calle Reyes Heroles para exigir el restablecimiento del suministro de agua, del que aseguran carecer desde hace más de 10 días.",
+   "dias": 10,
+   "bloqueo": true,
+   "eco": {
+    "reacciones": 1600,
+    "comentarios": 85,
+    "compartidos": 87,
+    "al": "2026-10-21"
+   },
+   "vista": "fuentes/e219eef56feb.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "N+",
+    "url": "https://www.facebook.com/nmasguadalajara/posts/pfbid02oj2o23HFuLWeRAiLPh4QAbxQHTn6uLGpMga39uGncZ2RHixe5p5P6WhBS618nFURl",
+    "eco": {
+     "reacciones": 1600,
+     "comentarios": 85,
+     "compartidos": 87,
+     "al": "2026-10-21"
+    }
+   },
+   "url": "https://www.facebook.com/nmasguadalajara/posts/pfbid02oj2o23HFuLWeRAiLPh4QAbxQHTn6uLGpMga39uGncZ2RHixe5p5P6WhBS618nFURl?comment_id=1656067699380887",
+   "fecha": "2026-10-19",
+   "colonias": [
+    "FRANCISCO VILLA|Guadalajara|44970"
+   ],
+   "lugar": "Francisco Villa, Guadalajara",
+   "cita": "10 días sin agua desde 10 de octubre Francisco villa",
+   "dias": 10,
+   "eco": {
+    "reacciones": 3,
+    "comentarios": 0,
+    "al": "2026-10-21"
+   }
   }
  ]
 }

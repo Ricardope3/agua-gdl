@@ -227,8 +227,8 @@ header.top { margin-bottom: 0; position: static }
 .iconbtn { width: 50px; height: 50px; padding: 0; justify-content: center; box-shadow: 0 4px 16px rgb(3 14 22 / .18) }
 .iconbtn .i { width: 1.3em; height: 1.3em }
 .stage .card { top: 74px; width: min(420px, calc(100% - 24px)); max-height: calc(100% - 86px) }
-.overview { position: absolute; z-index: 1100; left: 12px; bottom: 28px; width: min(340px, calc(100% - 24px)); background: color-mix(in srgb, var(--surface) 94%, transparent); backdrop-filter: blur(6px); border: 1px solid var(--line); border-left: 4px solid var(--s3); border-radius: 6px 12px 12px 6px; padding: 10px 14px 12px; box-shadow: 0 6px 18px rgb(3 14 22 / .2) }
-.stage.has-card .overview { display: none }
+.overview { position: absolute; z-index: 1100; right: 12px; top: 12px; max-height: calc(100% - 24px); overflow: auto; width: min(340px, calc(100% - 24px)); background: color-mix(in srgb, var(--surface) 94%, transparent); backdrop-filter: blur(6px); border: 1px solid var(--line); border-left: 4px solid var(--s3); border-radius: 6px 12px 12px 6px; padding: 10px 14px 12px; box-shadow: 0 6px 18px rgb(3 14 22 / .2) }
+@media (max-width: 1099px) { .stage.has-card .overview { display: none } }
 .ov-top { display: flex; align-items: center; justify-content: space-between; gap: 8px }
 .overview h1 { font-size: .78rem; margin: 0; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 700 }
 .ov-toggle { display: grid; place-items: center; width: 26px; height: 26px; padding: 0; border: 0; border-radius: 6px; background: none; color: var(--muted); cursor: pointer }
@@ -254,8 +254,7 @@ header.top { margin-bottom: 0; position: static }
   .stage { height: calc(100dvh - var(--hh, 110px)); min-height: 460px }
   .float-search { top: 8px; left: 8px; width: calc(100% - 16px) }
   .stage .card { top: auto; bottom: 8px; left: 8px; width: calc(100% - 16px); max-height: 66% }
-  .overview { left: 8px; bottom: 22px; width: calc(100% - 16px) }
-  .stage .leaflet-top.leaflet-right { top: 62px }
+  .overview { top: auto; right: auto; left: 8px; bottom: 22px; width: calc(100% - 16px) }
 }
 /* The sources' own preview images, saved on aguagdl.com (pipelines/publicaciones.py --imagenes). */
 .mosaic { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; margin: 10px 0 0; border-radius: 10px; overflow: hidden }
@@ -487,9 +486,9 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     return res.json();
   }
 
-  // The zoom buttons go top right: the colonia card opens top left.
+  // The zoom buttons go bottom right: the summary sits top right and the colonia card top left.
   const map = L.map("mapa", { preferCanvas: true, zoomSnap: 0.25, zoomControl: false });
-  L.control.zoom({ position: "topright" }).addTo(map);
+  L.control.zoom({ position: "bottomright" }).addTo(map);
   M.tiles(L, map);
   map.setView([20.66, -103.37], 11);
 
@@ -776,7 +775,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       card.replaceChildren(...kids);
       card.hidden = false;
       stage.classList.add("has-card");
-      setOverview(false);
+      if (!matchMedia("(min-width: 1100px)").matches) setOverview(false);
     }
 
     // The colonia's publications: the most days they give, how many sources say so, and each post
