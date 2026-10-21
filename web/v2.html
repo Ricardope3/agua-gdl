@@ -274,10 +274,19 @@ main .lede { color: var(--fg) }
 .posts { display: block }
 .posts li { margin: 0 0 12px; background: none; border: 0; border-left: 2px solid var(--alarm); border-radius: 0; padding: 2px 0 2px 14px }
 .posts q { font-family: var(--serif); font-size: 1.08rem }
+.maphero { margin: 4px 0 30px }
+.mapframe-box { position: relative; height: min(78vh, 780px); min-height: 460px; border: 1px solid var(--fg); border-radius: 4px; overflow: hidden; background: var(--subtle) }
+.mapframe-box::before { content: "Cargando el mapa…"; position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: .9rem }
+.mapframe { position: relative; display: block; width: 100%; height: 100%; border: 0; opacity: 0; transition: opacity .3s }
+.mapframe.ready { opacity: 1 }
+.mapnote { margin: 8px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.45 }
+.mapnote a { white-space: nowrap; font-weight: 600 }
+@media (max-width: 760px) { .mapframe-box { height: 72vh; min-height: 430px; margin: 0 -16px; border-radius: 0; border-inline: 0 } }
 
-.v2-hero { padding: 16px 0 6px; max-width: 780px }
-.v2-hero h1 { font-size: clamp(2.2rem, 6.6vw, 4rem) }
-.v2-hero .pulse { margin-top: 12px }
+.v2-hero { padding: 10px 0 16px }
+.v2-hero h1 { font-size: clamp(2rem, 5.4vw, 3.3rem); margin: 0 }
+.v2-intro { max-width: 780px }
+.v2-intro .pulse { margin-top: 12px }
 .v2-actions { display: grid; gap: 12px; margin: 22px 0 22px }
 @media (min-width: 900px) { .v2-actions { grid-template-columns: 1.35fr 1fr 1fr; align-items: stretch } }
 .v2-report { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid #e11d48; border-radius: 12px; box-shadow: var(--shadow); padding: 14px 16px }
@@ -319,8 +328,12 @@ main .lede { color: var(--fg) }
   </header>
 
   <main>
-    <div class="v2 v2-hero">
-      <h1>El agua es un derecho. Exígelo.</h1>
+    <div class="v2-hero"><h1>El agua es un derecho. Exígelo.</h1></div>
+    <div class="maphero">
+      <div class="mapframe-box"><iframe class="mapframe" src="/reportes" title="Mapa de lo que publican medios y vecinos, colonia por colonia"></iframe></div>
+      <p class="mapnote"><span>Cada colonia toma el color de los días sin agua que dicen sus publicaciones. Toca la tuya para ver qué se ha publicado y reportarla.</span> <a href="/reportes">Abrir el mapa completo</a></p>
+    </div>
+    <div class="v2-intro">
       <p class="lede">El <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">SIAPA</a> dijo «por máximo un día»; hay vecinos con <a href="https://www.nmas.com.mx/jalisco/sociedad/colonias-limitrofes-entre-tlaquepaque-y-guadalajara-carecen-de-agua/" rel="noopener">semanas sin agua</a>. Reporta tu colonia: <mark>cada reporte es una prueba</mark> de dónde falla el gobierno, y con ella puedes exigirle que lo arregle. Sin cuenta y anónimo.</p>
       <p class="pulse" id="pulse" aria-live="polite" hidden></p>
     </div>
@@ -502,6 +515,40 @@ main .lede { color: var(--fg) }
     if (dry >= 20) kids.push(` En la última semana, ${pct(w.sin_agua.fuera_de_corte, dry)} % de los reportes «sin agua» del mapa llegaron en días sin corte en su zona.`);
     pulse.replaceChildren(...kids);
     pulse.hidden = false;
+  }).catch(() => {});
+})();
+</script>
+<script>
+(() => {
+  const f = document.querySelector(".mapframe");
+  if (!f) return;
+  const api = new URLSearchParams(location.search).get("api");
+  if (api) { const u = new URL(f.src); u.searchParams.set("api", api); f.src = u; }
+  f.addEventListener("load", () => {
+    const d = f.contentDocument;
+    if (!d || !d.head) return;
+    const s = d.createElement("style");
+    s.textContent = "header.top, footer, main > :not(.stage) { display: none !important } :root { --hh: 0px !important } .stage { height: 100dvh !important; min-height: 0 !important }";
+    d.head.append(s);
+    d.addEventListener("click", (e) => {
+      const a = e.target.closest("a[href]");
+      if (a && !a.target && !a.getAttribute("href").startsWith("#")) a.target = "_top";
+    }, true);
+    f.contentWindow.dispatchEvent(new Event("resize"));
+    f.classList.add("ready");
+  });
+  document.addEventListener("tema", () => {
+    const w = f.contentWindow, b = f.contentDocument && f.contentDocument.querySelector(".theme-btn");
+    if (w && w.aguaDark && b && w.aguaDark() !== aguaDark()) b.click();
+  });
+  const note = document.querySelector(".mapnote[data-colonia]");
+  if (note) fetch("/publicaciones.json").then((r) => (r.ok ? r.json() : null)).then((doc) => {
+    if (!doc) return;
+    const count = new Map();
+    for (const p of doc.publicaciones) for (const k of p.colonias) count.set(k, (count.get(k) || 0) + 1);
+    const n = count.get(note.dataset.colonia) || 0, most = Math.max(...count.values());
+    const alone = [...count.values()].filter((v) => v === most).length === 1;
+    if (n) note.firstChild.textContent = `${n} ${n === 1 ? "publicación" : "publicaciones"} de medios y vecinos sobre la falta de agua en Ciudad Granja, Zapopan${n === most && alone ? ": más que en ninguna otra colonia" : ""}.`;
   }).catch(() => {});
 })();
 </script>

@@ -8,8 +8,10 @@ has stops it.
 
 Usage, from the repo root: python3 -I experiments/landing/variantes.py
 """
+import html
 import re
 from pathlib import Path
+from urllib.parse import urlencode
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 WEB = ROOT / "web"
@@ -78,6 +80,62 @@ def vs(facts=True):
             f'<div class="vs-grid">\n{PROMESA}\n{realidad(facts)}\n</div>\n{VS_BUTTONS}\n    </section>\n')
 
 
+# The colonia with the most publications on /reportes (24 on 21 Oct 2026): some variants open on it.
+GRANJA = {"q": "CIUDAD GRANJA", "m": "Zapopan", "cp": "45010"}
+
+
+def map_hero(colonia=None):
+    """/reportes' own map, front and center, on a colonia or on the whole city."""
+    src = html.escape("/reportes" + ("?" + urlencode(colonia) if colonia else ""))
+    if colonia:
+        note = (f'<p class="mapnote" data-colonia="{html.escape("|".join(colonia.values()))}"><span>Ciudad Granja, en Zapopan, '
+                f'en el mapa de lo que publican medios y vecinos.</span> <a href="{src}">Abrir el mapa completo</a></p>')
+    else:
+        note = ('<p class="mapnote"><span>Cada colonia toma el color de los días sin agua que dicen sus publicaciones. '
+                f'Toca la tuya para ver qué se ha publicado y reportarla.</span> <a href="{src}">Abrir el mapa completo</a></p>')
+    return (f'    <div class="maphero">\n      <div class="mapframe-box"><iframe class="mapframe" src="{src}" '
+            f'title="Mapa de lo que publican medios y vecinos, colonia por colonia"></iframe></div>\n      {note}\n    </div>\n')
+
+
+# /reportes is a whole page: in the frame only its map shows, its links leave the frame, it follows
+# this page's theme, and the note under it says how many publications the colonia has.
+EMBED = r"""<script>
+(() => {
+  const f = document.querySelector(".mapframe");
+  if (!f) return;
+  const api = new URLSearchParams(location.search).get("api");
+  if (api) { const u = new URL(f.src); u.searchParams.set("api", api); f.src = u; }
+  f.addEventListener("load", () => {
+    const d = f.contentDocument;
+    if (!d || !d.head) return;
+    const s = d.createElement("style");
+    s.textContent = "header.top, footer, main > :not(.stage) { display: none !important } :root { --hh: 0px !important } .stage { height: 100dvh !important; min-height: 0 !important }";
+    d.head.append(s);
+    d.addEventListener("click", (e) => {
+      const a = e.target.closest("a[href]");
+      if (a && !a.target && !a.getAttribute("href").startsWith("#")) a.target = "_top";
+    }, true);
+    f.contentWindow.dispatchEvent(new Event("resize"));
+    f.classList.add("ready");
+  });
+  document.addEventListener("tema", () => {
+    const w = f.contentWindow, b = f.contentDocument && f.contentDocument.querySelector(".theme-btn");
+    if (w && w.aguaDark && b && w.aguaDark() !== aguaDark()) b.click();
+  });
+  const note = document.querySelector(".mapnote[data-colonia]");
+  if (note) fetch("/publicaciones.json").then((r) => (r.ok ? r.json() : null)).then((doc) => {
+    if (!doc) return;
+    const count = new Map();
+    for (const p of doc.publicaciones) for (const k of p.colonias) count.set(k, (count.get(k) || 0) + 1);
+    const n = count.get(note.dataset.colonia) || 0, most = Math.max(...count.values());
+    const alone = [...count.values()].filter((v) => v === most).length === 1;
+    if (n) note.firstChild.textContent = `${n} ${n === 1 ? "publicación" : "publicaciones"} de medios y vecinos sobre la falta de agua en Ciudad Granja, Zapopan${n === most && alone ? ": más que en ninguna otra colonia" : ""}.`;
+  }).catch(() => {});
+})();
+</script>
+"""
+
+
 NAMES = {1: "Promesa contra realidad", 2: "Acciones primero", 3: "Alerta y cifras", 4: "Datos en vivo", 5: "Lo esencial"}
 
 BAR_CSS = """
@@ -111,6 +169,14 @@ main .lede { color: var(--fg) }
 .posts { display: block }
 .posts li { margin: 0 0 12px; background: none; border: 0; border-left: 2px solid var(--alarm); border-radius: 0; padding: 2px 0 2px 14px }
 .posts q { font-family: var(--serif); font-size: 1.08rem }
+.maphero { margin: 4px 0 30px }
+.mapframe-box { position: relative; height: min(78vh, 780px); min-height: 460px; border: 1px solid var(--fg); border-radius: 4px; overflow: hidden; background: var(--subtle) }
+.mapframe-box::before { content: "Cargando el mapa…"; position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: .9rem }
+.mapframe { position: relative; display: block; width: 100%; height: 100%; border: 0; opacity: 0; transition: opacity .3s }
+.mapframe.ready { opacity: 1 }
+.mapnote { margin: 8px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.45 }
+.mapnote a { white-space: nowrap; font-weight: 600 }
+@media (max-width: 760px) { .mapframe-box { height: 72vh; min-height: 430px; margin: 0 -16px; border-radius: 0; border-inline: 0 } }
 """
 
 
@@ -124,14 +190,15 @@ def bar(n):
 def page(n, css, main, script=SCRIPT, after=""):
     head = re.sub(r"<title>.*?</title>", f'<title>Agua GDL · Variante {n}: {NAMES[n]}</title>\n<meta name="robots" content="noindex">', HEAD, count=1, flags=re.S)
     html = (head + BAR_CSS + STYLE + css + "</style>" + HEAD_END + "</head>\n<body>\n<div class=\"wrap\">\n" + bar(n) + HEADER
-            + "\n  <main>\n" + main + "  </main>\n\n" + FOOTER + "</div>\n" + after + script + "</body>\n</html>\n")
+            + "\n  <main>\n" + main + "  </main>\n\n" + FOOTER + "</div>\n" + after + script + EMBED + "</body>\n</html>\n")
     (WEB / f"v{n}.html").write_text(html, encoding="utf-8")
 
 
 # v1: what SIAPA promised against what is happening is the hero, set like a newspaper page.
 page(1, """
-.v1-hero { padding: 14px 0 34px }
-.v1-hero h1 { font-size: clamp(2.2rem, 6.6vw, 4rem); max-width: 21ch; margin: 0 0 26px }
+.v1-hero { padding: 10px 0 16px }
+.v1-hero h1 { font-size: clamp(1.9rem, 4.4vw, 2.9rem); max-width: 34ch; margin: 0 }
+.v1-cols { margin: 0 0 8px }
 .v1-cols .promesa { position: static }
 @media (min-width: 760px) { .v1-cols { grid-template-columns: 1fr 1fr } }
 .v1-act { margin: 0 0 8px; padding: 26px 0; border-top: 0 }
@@ -148,10 +215,10 @@ page(1, """
 """, f"""    <div class="v1-hero">
       <p class="kicker">{text(H1)}</p>
       <h1>{VS_TITLE}</h1>
-      <div class="vs-grid v1-cols">
+    </div>
+{map_hero(GRANJA)}    <div class="vs-grid v1-cols">
 {PROMESA}
 <div class="vs-col realidad">{REALIDAD_H3}{FACTS}</div>
-      </div>
     </div>
     <section class="v1-act" aria-labelledby="tuya">
       <h2 id="tuya">¿Y en tu colonia?</h2>
@@ -170,9 +237,10 @@ page(1, """
 
 # v2: the three things to do up top; on phones they stay in a bar at the bottom.
 page(2, """
-.v2-hero { padding: 16px 0 6px; max-width: 780px }
-.v2-hero h1 { font-size: clamp(2.2rem, 6.6vw, 4rem) }
-.v2-hero .pulse { margin-top: 12px }
+.v2-hero { padding: 10px 0 16px }
+.v2-hero h1 { font-size: clamp(2rem, 5.4vw, 3.3rem); margin: 0 }
+.v2-intro { max-width: 780px }
+.v2-intro .pulse { margin-top: 12px }
 .v2-actions { display: grid; gap: 12px; margin: 22px 0 22px }
 @media (min-width: 900px) { .v2-actions { grid-template-columns: 1.35fr 1fr 1fr; align-items: stretch } }
 .v2-report { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid #e11d48; border-radius: 12px; box-shadow: var(--shadow); padding: 14px 16px }
@@ -193,8 +261,8 @@ page(2, """
 .v2-dock a:not(:first-child) .i { color: var(--ic) }
 @media (min-width: 900px) { .v2-dock { display: none } }
 @media (max-width: 899px) { body { padding-bottom: 72px } }
-""", f"""    <div class="v2 v2-hero">
-      {H1}
+""", f"""    <div class="v2-hero">{H1}</div>
+{map_hero()}    <div class="v2-intro">
       {LEDE}
       {PULSE}
     </div>
@@ -220,10 +288,11 @@ page(3, """
 .v3-alarm { padding: 16px 0 0 }
 .v3-alarm .alerta { font-size: .95rem }
 .v3-alarm .alerta .alerta-head { font-size: 1.05rem }
-.v3-hero { padding: 26px 0 30px }
-.v3-hero h1 { font-size: clamp(2.6rem, 9.5vw, 5rem); max-width: 14ch; margin: 0 0 20px }
+.v3-hero { padding: 18px 0 16px }
+.v3-hero h1 { font-size: clamp(2.2rem, 6vw, 3.6rem); margin: 0 }
 .v3-hero h1 .red { color: var(--alarm) }
-.v3-hero .quick { max-width: 640px }
+.v3-intro { padding: 0 0 30px }
+.v3-intro .quick { max-width: 640px }
 .v3-ticker { overflow: hidden; border-top: 3px solid var(--fg); border-bottom: 1px solid var(--fg) }
 .v3-ticker ul { display: flex; gap: 40px; width: max-content; margin: 0; padding: 12px 0; list-style: none; animation: v3-roll 120s linear infinite }
 .v3-ticker li { white-space: nowrap; color: var(--muted); font-size: .88rem }
@@ -241,8 +310,8 @@ page(3, """
 .v3-calls { display: grid; gap: 12px; margin: 0 0 40px }
 @media (min-width: 760px) { .v3-calls { grid-template-columns: 1fr 1fr } }
 """, f"""    <div class="v3-alarm">{ALERTA}</div>
-    <div class="v3-hero">
-      {H1.replace("Exígelo.", '<span class="red">Exígelo.</span>')}
+    <div class="v3-hero">{H1.replace("Exígelo.", '<span class="red">Exígelo.</span>')}</div>
+{map_hero(GRANJA)}    <div class="v3-intro">
       {LEDE}
       {FORM}
       {PULSE}
@@ -304,9 +373,10 @@ V4_SCRIPT = SCRIPT.split("  // What neighbours reported", 1)[0] + r"""  const fm
 </script>
 """
 page(4, """
-.v4-hero { display: grid; gap: 22px; padding: 16px 0 30px }
+.v4-title { padding: 10px 0 16px }
+.v4-title h1 { font-size: clamp(2rem, 5.4vw, 3.3rem); margin: 0 }
+.v4-hero { display: grid; gap: 22px; padding: 0 0 30px }
 @media (min-width: 860px) { .v4-hero { grid-template-columns: 1fr 1.05fr; align-items: center; gap: 36px } }
-.v4-hero h1 { font-size: clamp(2.2rem, 6.6vw, 3.8rem) }
 .v4-board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; border-top: 3px solid var(--fg); border-bottom: 1px solid var(--fg) }
 .v4-tile { margin: 0; padding: 14px 10px 14px 0 }
 .v4-tile b { display: block; font-family: var(--serif); font-size: clamp(1.7rem, 5.6vw, 2.4rem); font-weight: 700; letter-spacing: -.02em; line-height: 1.05; font-variant-numeric: tabular-nums }
@@ -330,9 +400,9 @@ page(4, """
 .v4-report .quick { margin-top: 14px }
 .v4-row { display: grid; gap: 12px; margin: 0 0 40px }
 @media (min-width: 860px) { .v4-row { grid-template-columns: repeat(3, 1fr) } }
-""", f"""    <div class="v4-hero">
+""", f"""    <div class="v4-title">{H1}</div>
+{map_hero()}    <div class="v4-hero">
       <div>
-        {H1}
         {LEDE}
       </div>
       <div class="v4-board" aria-live="polite">
@@ -359,8 +429,9 @@ folded = "".join(f'    <details class="v5-more"><summary>{title}</summary><div>{
                  for title, body in [(VS_TITLE, f'<div class="vs-grid">{PROMESA}{realidad()}</div>{VS_BUTTONS}'), split(CONGRESO), split(MAS), split(WHY)])
 page(5, """
 .v5 { max-width: 680px; margin: 0 auto }
-.v5-hero { padding: 30px 0 18px }
-.v5-hero h1 { font-size: clamp(2.4rem, 8.5vw, 3.8rem); margin: 0 0 14px }
+.v5-hero { padding: 10px 0 16px }
+.v5-hero h1 { font-size: clamp(2rem, 5.4vw, 3.3rem); margin: 0 }
+.v5-intro { padding: 0 0 4px }
 .v5 .quick input { font-size: 1.05rem; padding: 12px 14px }
 .v5 .pulse { font-weight: 500 }
 .v5-boxes { display: grid; gap: 10px; margin: 8px 0 14px }
@@ -378,9 +449,9 @@ page(5, """
 .v5-more .vs-grid > :first-child { padding-right: 0 }
 .v5-more .promesa { position: static }
 .v5 .contact { border-top: 0 }
-""", f"""    <div class="v5">
-    <div class="v5-hero">
-      {H1}
+""", f"""    <div class="v5 v5-hero">{H1}</div>
+{map_hero(GRANJA)}    <div class="v5">
+    <div class="v5-intro">
       {LEDE}
       {FORM}
       {PULSE}
