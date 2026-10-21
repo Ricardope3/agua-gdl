@@ -371,7 +371,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
           <p class="note" id="estado" aria-live="polite">Cargando el mapa de colonias…</p>
           <div class="ov-actions">
             <button class="button" type="button" id="reportar"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Reportar mi colonia</button>
-            <a href="#lista">Ver la lista ↓</a>
+            <a href="#lista" id="ver-lista">Ver la lista ↓</a>
           </div>
         </div>
       </section>
@@ -547,6 +547,9 @@ footer p { margin: 0 0 8px; max-width: 70ch }
   L.control.zoom({ position: "bottomright" }).addTo(map);
   M.tiles(L, map);
   map.setView([20.66, -103.37], 11);
+
+  // Inside the landing's frame the list is cut off below the map, so the link opens /reportes at the list.
+  if (window.top !== window.self) { const v = $("ver-lista"); v.href = "/reportes#lista"; v.target = "_top"; }
 
   // The map takes the screen below the header, whose height changes as the menu wraps.
   const stage = $("escenario"), top = document.querySelector("header.top");
