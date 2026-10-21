@@ -481,9 +481,9 @@
         },
         {"texto": "Bajan las quejas por la calidad del agua.", "estado": "pendiente"}
       ],
-      "veredicto": "incumplida",
-      "veredicto_fecha": "2026-10-16",
-      "nota": "Pasó el plazo y el propio gobierno reconoció después que el agua seguía llegando con olor y color.",
+      "veredicto": "en_riesgo",
+      "veredicto_fecha": "2026-10-20",
+      "nota": "Pasó el plazo y el propio gobierno reconoció después que el agua seguía llegando con olor y color. Antes de calificarla «Incumplida» esperamos su versión: puede responder hasta el 26 de octubre.",
       "respuesta": null,
       "historial": []
     },
@@ -614,5 +614,7 @@
     {"a": "Secretaría de Gestión Integral del Agua, por la Coordinación General Estratégica de Gestión del Territorio", "folio": "142042126005499", "fecha": "2026-10-18", "tema": "la presa Las Pintas (la orden de dejar de usarla, los caudales que llegaban a la planta de Miravalle, el programa de limpieza, el plan de remediación y los análisis del agua)", "estado": "en proceso; el plazo para responder vence el 29 de octubre"},
     {"a": "Secretaría de Gestión Integral del Agua, por la Coordinación General Estratégica de Gestión del Territorio", "folio": "142042126005500", "fecha": "2026-10-18", "tema": "la APP del acueducto (la opinión de la CONAGUA, las propuestas de empresas, los estudios de factibilidad y capacidad de pago, y si el contrato se registrará como obligación)", "estado": "en proceso; el plazo para responder vence el 29 de octubre"}
   ],
-  "correcciones": []
+  "correcciones": [
+    {"fecha": "2026-10-20", "codigo": "B6", "texto": "Pasa de «Incumplida» a «En riesgo». La calificamos el 16 de octubre, un día antes de pedirle su versión al gobierno, y nuestras reglas piden pedírsela antes de calificar «Incumplida». Puede responder hasta el 26 de octubre."}
+  ]
 }
