@@ -119,11 +119,16 @@ def page(n, css, main, script=""):
     (WEB / f"v{n}.html").write_text(out, encoding="utf-8")
 
 
-# v6: the map edge to edge and taller; the rest as on the landing.
+# v6: the map edge to edge and taller, and v7's menu on one row across wide screens; the rest
+# keeps the landing's column.
 page(6, """
 html, body { overflow-x: clip }
 .maphero .mapframe-box { width: 100vw; margin-left: calc(50% - 50vw); margin-right: 0; height: min(88vh, 920px); border-inline: 0; border-radius: 0 }
 @media (max-width: 760px) { .maphero .mapframe-box { height: 80vh } }
+@media (min-width: 1100px) {
+  .wrap { max-width: 1320px }
+  main > :not(.maphero), .maphero .mapnote, .wrap > footer { max-width: 928px; margin-left: auto; margin-right: auto }
+}
 """, HEADLINE + MAP + CONTRAST + YOURS + WALL + BOXES + CONGRESO + MAS + WHY + CONTACT)
 
 # v7: a front page on wide screens: the headline and the promise against the figures on the left,
