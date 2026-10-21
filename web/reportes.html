@@ -299,6 +299,18 @@ path.vivo-onda { animation: onda 1.6s ease-out infinite }
 .ftile.news small { font: 700 10px/1.2 var(--font); letter-spacing: .06em; text-transform: uppercase; color: #9b1c0c }
 .ftile.news b { font: 700 15px/1.18 Georgia, "Times New Roman", serif; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden }
 @media (max-width: 760px) { .ftile.news b { font-size: 11px; -webkit-line-clamp: 4 } .ftile.news small { font-size: 8px } }
+.ftile.cmt { display: flex; flex-direction: column; gap: 6px; padding: 8px 9px; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: #fff; color: #050505 }
+.ftile.cmt .c-head { display: flex; align-items: center; gap: 7px; min-width: 0 }
+.ftile.cmt .c-av { flex: none; width: 26px; height: 26px; border-radius: 50%; background: radial-gradient(circle at 50% 36%, #fff 0 20%, transparent 21%), radial-gradient(ellipse 34% 26% at 50% 92%, #fff 0 98%, transparent 100%), #bcc0c4 }
+.ftile.cmt .c-head b { display: block; font-size: 12px; line-height: 1.15 }
+.ftile.cmt .c-head small { display: block; font-size: 10px; color: #65676b; line-height: 1.2 }
+.ftile.cmt .c-body { font-size: 12.5px; line-height: 1.3; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical }
+.ftile.cmt.fb .c-body { background: #f0f2f5; border-radius: 12px; padding: 6px 9px }
+.ftile.cmt .c-en { margin-top: auto; font-size: 10px; color: #65676b; padding-right: 54px }
+.ftile.cmt.xp { border-left: 0 }
+.ftile.cmt.xp .c-head small::before { content: "𝕏 "; color: #050505; font-weight: 700 }
+@media (prefers-color-scheme: dark) { .ftile.cmt { background: #242526; color: #e4e6eb } .ftile.cmt.fb .c-body { background: #3a3b3c } .ftile.cmt .c-head small, .ftile.cmt .c-en { color: #b0b3b8 } .ftile.cmt.xp { background: #000 } .ftile.cmt.xp .c-head small::before { color: #e7e9ea } }
+@media (max-width: 760px) { .ftile.cmt .c-body { font-size: 10px; -webkit-line-clamp: 3 } .ftile.cmt .c-av { width: 18px; height: 18px } .ftile.cmt .c-en { display: none } }
 .fdias { position: absolute; right: 5px; bottom: 5px; padding: 1px 7px; border-radius: 6px; background: var(--s3); color: var(--s3-ink); font: 700 13px/1.5 var(--font) }
 @media (max-width: 760px) { .ftile.txt q, .ftile.over q { font-size: 11px } .fdias { font-size: 11px } }
 footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .85rem }
@@ -772,6 +784,16 @@ footer p { margin: 0 0 8px; max-width: 70ch }
           p.captura ? el("img", { src: `/${p.captura}`, alt: "", decoding: "async" }) : null,
           el("span", { class: "nw" }, el("small", {}, `${p.quien} · ${dateES(p.fecha)}`), el("b", {}, p.titular)));
         const who = p.tipo === "comentario" ? "Vecino en Facebook" : p.fuente === "medio" || p.quien ? p.quien : "Vecino";
+        // Words without a picture look like what they are, a comment or a post, with the neighbour unnamed.
+        if (!p.vista && (p.tipo === "comentario" || p.fuente === "vecinos")) {
+          const fb = p.red === "facebook";
+          return el("a", { class: `ftile cmt ${fb ? "fb" : "xp"}`, href: p.url, target: "_blank", rel: "noopener nofollow", tabindex: "-1", title: `${who} · ${dateES(p.fecha)}: «${p.cita}»` },
+            el("span", { class: "c-head" }, el("span", { class: "c-av", "aria-hidden": "true" }),
+              el("span", {}, el("b", {}, p.quien && !p.tipo ? p.quien : "Vecina o vecino"), el("small", {}, `${fb ? (p.tipo === "comentario" ? "Comentario en Facebook" : "Facebook") : "Publicación en X"} · ${dateES(p.fecha)}`))),
+            el("span", { class: "c-body" }, p.cita.length > 150 ? `${p.cita.slice(0, 148)}…` : p.cita),
+            p.tipo === "comentario" ? el("span", { class: "c-en" }, `En la publicación de ${p.en.quien}`) : null,
+            p.dias ? el("span", { class: "fdias" }, daysWord(p.dias)) : null);
+        }
         return el("a", { class: !p.vista ? "ftile txt" : p.tipo === "comentario" ? "ftile over" : "ftile", href: p.url, target: "_blank", rel: "noopener nofollow", tabindex: "-1", title: `${who} · ${dateES(p.fecha)}: «${p.cita}»` },
           p.vista ? el("img", { src: `/${p.vista}`, alt: "", decoding: "async" }) : null,
           p.vista && p.tipo !== "comentario" ? null : el("q", {}, p.cita.length > 120 ? `${p.cita.slice(0, 118)}…` : p.cita),
