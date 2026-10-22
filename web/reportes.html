@@ -230,6 +230,17 @@ header.top { margin-bottom: 0; position: static }
 .stage .card { top: 74px; width: min(420px, calc(100% - 24px)); max-height: calc(100% - 86px) }
 .overview { position: absolute; z-index: 1100; right: 12px; top: 12px; max-height: calc(100% - 24px); overflow: auto; width: min(340px, calc(100% - 24px)); background: color-mix(in srgb, var(--surface) 94%, transparent); backdrop-filter: blur(6px); border: 1px solid var(--line); border-left: 4px solid var(--s3); border-radius: 6px 12px 12px 6px; padding: 10px 14px 12px; box-shadow: 0 6px 18px rgb(3 14 22 / .2) }
 .stage.has-card .overview { display: none }
+.munis { position: absolute; z-index: 1100; right: 56px; bottom: 24px; width: 270px; max-height: calc(100% - 48px); overflow: auto; background: color-mix(in srgb, var(--surface) 94%, transparent); backdrop-filter: blur(6px); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; box-shadow: 0 6px 18px rgb(3 14 22 / .2); font-size: .8rem }
+.munis summary { cursor: pointer; font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 700 }
+.munis ol { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 6px }
+.munis li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1px 8px; align-items: baseline }
+.munis li b { font-size: 1rem; font-weight: 800; color: var(--s3); font-variant-numeric: tabular-nums }
+.munis li small { grid-column: 1 / -1; color: var(--muted); font-variant-numeric: tabular-nums }
+.munis .bar { grid-column: 1 / -1; height: 4px; border-radius: 2px; background: var(--subtle); overflow: hidden }
+.munis .bar span { display: block; height: 100%; background: var(--s3) }
+.munis p { margin: 8px 0 0; color: var(--muted); font-size: .72rem; line-height: 1.35 }
+.stage.has-card .munis { display: none }
+@media (max-width: 760px) { .munis { display: none } }
 .ov-top { display: flex; align-items: center; justify-content: space-between; gap: 8px }
 .overview h1 { font-size: .78rem; margin: 0; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 700 }
 .ov-toggle { display: grid; place-items: center; width: 26px; height: 26px; padding: 0; border: 0; border-radius: 6px; background: none; color: var(--muted); cursor: pointer }
@@ -395,6 +406,11 @@ if (window.top !== window.self) {
           </div>
         </div>
       </section>
+      <details class="munis" id="municipios" open hidden>
+        <summary>Colonias sin agua por municipio</summary>
+        <ol id="munis-lista"></ol>
+        <p>De las colonias del mapa del SIAPA, las que tienen publicaciones de medios o vecinos que dicen que no hay agua.</p>
+      </details>
     </div>
 
     <div class="wrap">
@@ -899,7 +915,7 @@ if (window.top !== window.self) {
           p.vista && p.tipo !== "comentario" ? null : el("q", {}, p.cita.length > 120 ? `${p.cita.slice(0, 118)}…` : p.cita),
           p.dias ? el("span", { class: "fdias" }, daysWord(p.dias)) : null);
       });
-      const blocked = () => [card, $("reporta"), document.querySelector(".float-search"), document.querySelector(".leaflet-control-zoom")]
+      const blocked = () => [card, $("reporta"), document.querySelector(".float-search"), document.querySelector(".leaflet-control-zoom"), $("municipios")]
         .filter((n) => n && n.offsetParent).map((n) => n.getBoundingClientRect());
       function draw() {
         frame.replaceChildren();
@@ -1272,6 +1288,7 @@ if (window.top !== window.self) {
       if (!framed) toList.addEventListener("click", () => { weekOnly = everything = true; renderRanking(); });
       $("pruebas").replaceChildren(toList, ", según medios y vecinos");
       $("solo-semana").textContent = `Solo una semana o más (${fmt(week)})`;
+      renderMunicipios();
       const n = pubs.publicaciones.length, medios = pubs.publicaciones.filter((x) => x.fuente === "medio").length;
       $("pruebas-nota").textContent = `El SIAPA prometió racionamientos «por máximo un día». Son ${plural(n, "publicación", "publicaciones")} del ${dateES(pubs.desde, true)} al ${dateES(pubs.actualizado, true)}: ${fmt(medios)} de medios, en sus notas, Facebook y X, y ${fmt(n - medios)} de vecinos con eco en redes. Toca una colonia para ver sus publicaciones.`;
       // The bar splits the colonias by the most days their posts give, and doubles as the map's key.
@@ -1293,6 +1310,25 @@ if (window.top !== window.self) {
         $("p-max").parentElement.title = M.joinES(names);
       }
       renderRanking();
+    }
+    // Each municipio's share of the map's colonias that publications say have no water. A colonia
+    // on a border ("Zapopan y Guadalajara") counts in both.
+    function renderMunicipios() {
+      const munis = (k) => k.split("|")[1].split(" y ").filter(Boolean);
+      const per = new Map();
+      for (const k of features.keys()) for (const m of munis(k)) {
+        if (!per.has(m)) per.set(m, { m, total: 0, sin: 0 });
+        per.get(m).total++;
+      }
+      for (const k of ev.keys()) if (features.has(k)) for (const m of munis(k)) per.get(m).sin++;
+      const rows = [...per.values()].filter((r) => r.sin).sort((a, b) => b.sin / b.total - a.sin / a.total);
+      $("munis-lista").replaceChildren(...rows.map((r) => {
+        const pct = 100 * r.sin / r.total;
+        return el("li", {}, el("span", {}, r.m), el("b", {}, `${pct < 1 ? "<1" : Math.round(pct)} %`),
+          el("span", { class: "bar" }, el("span", { style: `width:${pct}%` })),
+          el("small", {}, `${fmt(r.sin)} de ${plural(r.total, "colonia", "colonias")}`));
+      }));
+      $("municipios").hidden = !rows.length;
     }
     let order = "dias", everything = location.hash === "#lista-semana", weekOnly = everything;
     const ROWS = 12;
