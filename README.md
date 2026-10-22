@@ -102,7 +102,7 @@ Todo lo que está en `web/` es público: las notas, los datos que no se usan y l
 - `escribe.html`, `contamina.html` y `antisionismo.html`: cada afirmación enlaza su fuente.
 - `privacidad.html` y `terminos.html`: el aviso de privacidad y los términos de uso. La app de Meta enlaza a ellos, así que no cambies sus URL.
 - `theme.js` (en el `<head>` de cada página) pone el botón de tema claro u oscuro; el claro es el predeterminado. También cambia el color de la barra del navegador, así que cada página lleva un solo `<meta name="theme-color" content="#ffffff">`, sin `media`. Al cambiar de tema lanza el evento `tema` en `document`, con el que los mapas se vuelven a pintar.
-- `404.html`: la página de las direcciones que no existen.
+- `404.html`: la página para las direcciones que no existen. Por ahora Cloudflare responde a esas direcciones con un 404 vacío; la muestra solo cuando el proyecto se configura para servir `404.html`.
 
 El conteo semanal (`informes.html`, que escribe `api/cmd/informe`) y `resultados.html` (con `GET /v1/results`) se quitaron hasta que haya suficientes reportes; están en el historial de git.
 
