@@ -410,6 +410,10 @@ if (window.top !== window.self) {
         <button type="button" class="chip" data-orden="fuentes" aria-pressed="false">Más fuentes</button>
         <button type="button" class="chip" data-orden="eco" aria-pressed="false">Más eco en redes</button>
       </div>
+      <div class="sorter" style="align-items:center">
+        <button type="button" class="chip" id="solo-semana" aria-pressed="false">Solo una semana o más</button>
+        <button type="button" class="linkbtn" id="descargar" style="margin:0">Descargar la lista (CSV)</button>
+      </div>
       <p class="note" id="eco-nota" style="margin:-4px 0 12px" hidden>El eco (reacciones, comentarios y veces compartida) mide cuánta gente vio y reaccionó, no si es cierto: para eso cuentan las fuentes distintas y los medios.</p>
       <ol class="rank" id="ranking"></ol>
       <button type="button" class="linkbtn" id="ver-todas" hidden></button>
@@ -1263,7 +1267,11 @@ if (window.top !== window.self) {
       }
       const all = [...ev.values()];
       const week = all.filter((e) => e.dias >= 7).length;
-      $("pruebas").replaceChildren(el("b", {}, fmt(week)), ` ${week === 1 ? "colonia lleva" : "colonias llevan"} una semana o más sin agua, según medios y vecinos`);
+      // The count opens the list of those colonias, in the whole window when inside the landing's frame.
+      const toList = el("a", framed ? { href: "/reportes#lista-semana", target: "_top" } : { href: "#lista" }, el("b", {}, fmt(week)), ` ${week === 1 ? "colonia lleva" : "colonias llevan"} una semana o más sin agua`);
+      if (!framed) toList.addEventListener("click", () => { weekOnly = everything = true; renderRanking(); });
+      $("pruebas").replaceChildren(toList, ", según medios y vecinos");
+      $("solo-semana").textContent = `Solo una semana o más (${fmt(week)})`;
       const n = pubs.publicaciones.length, medios = pubs.publicaciones.filter((x) => x.fuente === "medio").length;
       $("pruebas-nota").textContent = `El SIAPA prometió racionamientos «por máximo un día». Son ${plural(n, "publicación", "publicaciones")} del ${dateES(pubs.desde, true)} al ${dateES(pubs.actualizado, true)}: ${fmt(medios)} de medios, en sus notas, Facebook y X, y ${fmt(n - medios)} de vecinos con eco en redes. Toca una colonia para ver sus publicaciones.`;
       // The bar splits the colonias by the most days their posts give, and doubles as the map's key.
@@ -1286,7 +1294,7 @@ if (window.top !== window.self) {
       }
       renderRanking();
     }
-    let order = "dias", everything = false;
+    let order = "dias", everything = location.hash === "#lista-semana", weekOnly = everything;
     const ROWS = 12;
     const daysOr0 = (e) => e.dias || 0;
     const ORDERS = {
@@ -1295,13 +1303,30 @@ if (window.top !== window.self) {
       fuentes: (a, b) => b.e.fuentes - a.e.fuentes || b.e.medios - a.e.medios || daysOr0(b.e) - daysOr0(a.e),
       eco: (a, b) => b.e.eco - a.e.eco || daysOr0(b.e) - daysOr0(a.e),
     };
+    const listRows = () => [...ev].filter(([k, e]) => features.has(k) && (!weekOnly || e.dias >= 7)).map(([k, e]) => ({ e, f: features.get(k)[0] })).sort(ORDERS[order]);
     function renderRanking() {
-      const rows = [...ev].filter(([k]) => features.has(k)).map(([k, e]) => ({ e, f: features.get(k)[0] })).sort(ORDERS[order]);
+      const rows = listRows();
       $("ranking").replaceChildren(...rows.slice(0, everything ? rows.length : ROWS).map(rankRow));
       const more = $("ver-todas");
       more.hidden = everything || rows.length <= ROWS;
       more.textContent = `Ver las ${rows.length} colonias`;
       $("eco-nota").hidden = order !== "eco";
+      $("solo-semana").setAttribute("aria-pressed", String(weekOnly));
+    }
+    // The list as a spreadsheet: every colonia shown (all of them, not only the first rows), with its municipio.
+    function download() {
+      const cell = (v) => /[",;\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v;
+      const head = ["Colonia", "Municipio", "Código postal", "Días sin agua (lo más largo que se publicó)", "Fuentes distintas", "Medios", "Última publicación", "Enlace"];
+      const rows = listRows().map(({ e, f }) => {
+        const p = f.properties;
+        return [nice(p.n), p.m, p.cp, e.dias ?? "", e.fuentes, e.medios, e.ultima, `https://aguagdl.com/reportes?${new URLSearchParams({ q: p.n, m: p.m, cp: p.cp })}`];
+      });
+      const csv = "﻿" + [head, ...rows].map((r) => r.map((v) => cell(String(v))).join(",")).join("\r\n");
+      const a = el("a", { href: URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" })), download: weekOnly ? "colonias-una-semana-o-mas-sin-agua.csv" : "colonias-sin-agua.csv" });
+      document.body.append(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
     }
     function rankRow({ e, f }) {
       const p = f.properties, s = sevOf(e.dias);
@@ -1321,7 +1346,10 @@ if (window.top !== window.self) {
       });
     }
     $("ver-todas").addEventListener("click", () => { everything = true; renderRanking(); });
+    $("solo-semana").addEventListener("click", () => { weekOnly = !weekOnly; everything ||= weekOnly; renderRanking(); });
+    $("descargar").addEventListener("click", download);
     renderEvidence();
+    if (location.hash === "#lista-semana") $("lista").scrollIntoView();
 
     say("");
     summaryLoad.then((s) => {
