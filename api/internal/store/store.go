@@ -47,17 +47,6 @@ type Subscriber struct {
 	CreatedAt time.Time // set by Subscriber only
 }
 
-type Result struct {
-	Zone      int    `json:"zone"`
-	Date      string `json:"date"`
-	Total     int    `json:"total"`
-	Normal    int    `json:"normal"`
-	Baja      int    `json:"baja"`
-	NoRegreso int    `json:"no_regreso"`
-	Turbia    int    `json:"turbia"`
-	LastAt    string `json:"last_report_at"`
-}
-
 type querier interface {
 	Exec(context.Context, string, ...any) (pgconn.CommandTag, error)
 	Query(context.Context, string, ...any) (pgx.Rows, error)
@@ -350,24 +339,4 @@ func (db *DB) SentSince(ctx context.Context, since time.Time) (int, error) {
 	err := db.q.QueryRow(ctx, `select (select count(*) from reminder where channel = 'wa' and sent_at >= $1 and status <> 'rejected')
 		+ (select count(*) from notice where channel = 'wa' and sent_at >= $1 and status <> 'rejected')`, since).Scan(&n)
 	return n, err
-}
-
-// Results counts reports per zone and cut day, hiding any day with fewer than minReports.
-// The last report time is truncated to the hour so it can't single out a reporter.
-func (db *DB) Results(ctx context.Context, since time.Time, minReports int) ([]Result, error) {
-	rows, err := db.q.Query(ctx, `select zone, cut_date::text, count(*),
-			count(*) filter (where answer = 'normal'), count(*) filter (where answer = 'baja'),
-			count(*) filter (where answer = 'no_regreso'), count(*) filter (where answer = 'turbia'),
-			to_char(date_trunc('hour', max(created_at) at time zone 'America/Mexico_City'), 'YYYY-MM-DD"T"HH24:MI')
-		from cut_report where cut_date >= $1::date
-		group by zone, cut_date having count(*) >= $2
-		order by cut_date desc, zone`, since.Format(dateLayout), minReports)
-	if err != nil {
-		return nil, err
-	}
-	return pgx.CollectRows(rows, func(r pgx.CollectableRow) (Result, error) {
-		var x Result
-		err := r.Scan(&x.Zone, &x.Date, &x.Total, &x.Normal, &x.Baja, &x.NoRegreso, &x.Turbia, &x.LastAt)
-		return x, err
-	})
 }

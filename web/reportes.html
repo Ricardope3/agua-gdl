@@ -320,7 +320,26 @@ path.vivo-onda { animation: onda 1.6s ease-out infinite }
 @media (max-width: 760px) { .ftile.txt q, .ftile.over q { font-size: 11px } .fdias { font-size: 11px } }
 footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .85rem }
 footer p { margin: 0 0 8px; max-width: 70ch }
+/* Inside the landing's frame only the map shows, filling the frame: the class is set before the body is parsed. */
+html.en-portada { overflow: hidden }
+.en-portada header.top, .en-portada footer, .en-portada main > :not(.stage) { display: none !important }
+.en-portada .stage { height: 100dvh; min-height: 0 }
+/* There the landing scrolls past the map: a gesture that scrolls it says how to move the map, where the finger or pointer is. */
+.gesto { position: absolute; inset: 0; z-index: 1400; background: rgb(6 20 29 / .55); pointer-events: none; opacity: 0; transition: opacity .2s }
+.gesto span { position: absolute; left: 24px; right: 24px; top: var(--y, 50%); transform: translateY(-50%); color: #fff; font-size: 1.1rem; font-weight: 700; line-height: 1.3; text-align: center; text-shadow: 0 1px 3px rgb(0 0 0 / .5) }
+.gesto.on { opacity: 1 }
+@media (prefers-reduced-motion: reduce) { .gesto { transition: none } }
 </style>
+<script>
+// Inside the landing's frame: the framed layout from the first paint, and links open in the whole window.
+if (window.top !== window.self) {
+  document.documentElement.classList.add("en-portada");
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest("a[href]");
+    if (a && !a.target && !a.getAttribute("href").startsWith("#")) a.target = "_top";
+  }, true);
+}
+</script>
 <script src="/theme.js"></script>
 </head>
 <body>
@@ -543,19 +562,77 @@ footer p { margin: 0 0 8px; max-width: 70ch }
 
   // The zoom buttons go bottom right: the summary sits top right and the colonia card top left.
   // Trackpad pinches send small wheel steps: fewer pixels per level make each pinch zoom further.
-  const map = L.map("mapa", { preferCanvas: true, zoomSnap: 0.25, zoomControl: false, wheelPxPerZoomLevel: 22, wheelDebounceTime: 20 });
+  // Inside the landing's frame the landing scrolls past the map: on a touch screen one finger scrolls it
+  // and two move the map; with a mouse the wheel scrolls it and Ctrl (⌘ on a Mac) + wheel, or a trackpad
+  // pinch, zooms the map.
+  const framed = window.top !== window.self;
+  const twoFingers = framed && matchMedia("(pointer: coarse)").matches;
+  const map = L.map("mapa", { preferCanvas: true, zoomSnap: 0.25, zoomControl: false, wheelPxPerZoomLevel: 22, wheelDebounceTime: 20, dragging: !twoFingers });
   L.control.zoom({ position: "bottomright" }).addTo(map);
-  M.tiles(L, map);
   map.setView([20.66, -103.37], 11);
+  // With a colonia in the link, the streets load once, at its view, instead of first for the whole city.
+  let streets = false;
+  const addStreets = () => { if (!streets) { streets = true; M.tiles(L, map); } };
+  if (!(new URLSearchParams(location.search).get("q") || "").trim()) addStreets();
+  // The landing shows its frame once the map is drawn, without waiting for every picture and street.
+  const ready = () => { if (framed) parent.postMessage("mapa-listo", location.origin); };
 
   // Inside the landing's frame the list is cut off below the map, so the link opens /reportes at the list.
-  if (window.top !== window.self) { const v = $("ver-lista"); v.href = "/reportes#lista"; v.target = "_top"; }
+  if (framed) { const v = $("ver-lista"); v.href = "/reportes#lista"; v.target = "_top"; }
 
   // The map takes the screen below the header, whose height changes as the menu wraps.
   const stage = $("escenario"), top = document.querySelector("header.top");
   const fitStage = () => { document.documentElement.style.setProperty("--hh", `${top.offsetHeight}px`); map.invalidateSize(); };
   if (window.ResizeObserver) new ResizeObserver(fitStage).observe(top);
   fitStage();
+  if (framed) {
+    const mac = /Mac|iPhone|iPad/.test(navigator.platform);
+    const text = twoFingers ? "Usa dos dedos para mover el mapa" : `Usa ${mac ? "⌘" : "Ctrl"} + rueda para acercar el mapa`;
+    const hint = el("div", { class: "gesto", "aria-hidden": "true" }, el("span", {}, text));
+    stage.append(hint);
+    const box = map.getContainer();
+    let off = 0, at = 0;
+    // The hint stays at the gesture's height on the landing's screen while the landing scrolls under
+    // it, inside the part of the frame that is on screen.
+    const frameTop = () => window.frameElement ? window.frameElement.getBoundingClientRect().top : 0;
+    const place = () => {
+      const top = frameTop() + stage.getBoundingClientRect().top, h = stage.offsetHeight;
+      const screen = window.frameElement ? parent.innerHeight : innerHeight;
+      const y = Math.min(Math.max(at, top + 40, 40), top + h - 40, screen - 40);
+      hint.style.setProperty("--y", `${y - top}px`);
+    };
+    const quiet = () => { clearTimeout(off); hint.classList.remove("on"); if (window.frameElement) parent.removeEventListener("scroll", place); };
+    const flash = (y) => {
+      at = y + frameTop();
+      place();
+      if (window.frameElement && !hint.classList.contains("on")) parent.addEventListener("scroll", place, { passive: true });
+      hint.classList.add("on");
+      clearTimeout(off);
+      off = setTimeout(quiet, 1600);
+    };
+    if (twoFingers) {
+      const fingers = new Map(); // touch → where it went down
+      box.addEventListener("pointerdown", (e) => {
+        if (e.pointerType === "touch") fingers.set(e.pointerId, e.clientY);
+        if (fingers.size > 1) quiet();
+      });
+      box.addEventListener("pointerup", (e) => fingers.delete(e.pointerId));
+      // The browser cancels a one-finger touch when it takes it to scroll the landing.
+      box.addEventListener("pointercancel", (e) => {
+        if (e.pointerType === "touch" && fingers.size === 1) flash(fingers.get(e.pointerId) ?? e.clientY);
+        fingers.delete(e.pointerId);
+      });
+      box.addEventListener("touchend", (e) => { if (!e.touches.length) fingers.clear(); }, { passive: true });
+    } else {
+      // A plain wheel over the map stops before the map's own handler, so the browser scrolls the landing.
+      stage.addEventListener("wheel", (e) => {
+        if (!box.contains(e.target)) return;
+        if (e.ctrlKey || e.metaKey) { quiet(); return; }
+        e.stopPropagation();
+        flash(e.clientY);
+      }, { capture: true, passive: true });
+    }
+  }
   const ov = $("resumen-mapa"), hide = $("ocultar");
   const setOverview = (open) => {
     ov.classList.toggle("closed", !open);
@@ -586,11 +663,15 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     for (const k of old) localStorage.removeItem(k);
   } catch {}
 
-  // What news outlets and neighbours published (web/publicaciones.json, checked by pipelines/publicaciones.py).
-  const pubsLoad = fetch("/publicaciones.json").then((r) => r.ok ? r.json() : null).catch(() => null);
-  Promise.all([M.load(), call("/v1/reportes").catch(() => null), pubsLoad])
-    .then(([data, s, pubs]) => build(data, s, pubs))
-    .catch(() => say("No pudimos cargar el mapa. Intenta de nuevo en unos minutos."));
+  // What news outlets and neighbours published (web/publicaciones.json, checked by pipelines/publicaciones.py),
+  // or null when it doesn't load or isn't the list it should be.
+  const pubsLoad = fetch("/publicaciones.json").then((r) => r.ok ? r.json() : null)
+    .then((doc) => doc && Array.isArray(doc.publicaciones) ? doc : null).catch(() => null);
+  // The map and the publications don't wait for the API: its reports go on the map when they arrive.
+  const summaryLoad = call("/v1/reportes").catch(() => null);
+  Promise.all([M.load(), pubsLoad])
+    .then(([data, pubs]) => build(data, pubs))
+    .catch(() => { say("No pudimos cargar el mapa. Intenta de nuevo en unos minutos."); addStreets(); ready(); });
 
   // Each account, page, group or comment is one source: several posts from one of them count once,
   // and a news story that retells a post ("de") counts as that post.
@@ -626,8 +707,9 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     return out;
   }
 
-  function build({ colonias, zonas }, first, pubs) {
-    const ev = evidence(pubs);
+  function build({ colonias, zonas }, pubs) {
+    let ev;
+    try { ev = evidence(pubs); } catch { pubs = null; ev = new Map(); } // a malformed entry counts as not loaded
     const features = new Map();   // key → the colonia's outlines (a few colonias have several)
     for (const f of colonias) {
       const k = keyOf(f.properties);
@@ -637,7 +719,6 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     const zoneStyle = (f) => ({ color: M.COLORS[aguaDark() ? "dark" : "light"][f.properties.z], weight: 1.5, dashArray: "5 4", fill: false, opacity: 0.7 });
     const zoneLayer = L.geoJSON({ type: "FeatureCollection", features: zonas }, { interactive: false, style: zoneStyle }).addTo(map);
     const home = zoneLayer.getBounds().pad(0.04);
-    map.fitBounds(home);
     // A colonia with publications takes the colour of the most days they give (dashed when none gives
     // days); otherwise the majority of this map's last 24 hours, or nothing.
     const styleOf = (f) => {
@@ -723,13 +804,14 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       layer.setStyle(styleOf);
       drawMarkers();
       renderSummary(s);
-      if (selected && !card.querySelector("form.report")) renderCard(selected);
+      refreshCounts();
       if (status.textContent === LOAD_FAILED) say("");
     }
 
     // The colonia card: its reports in the last 24 h and the form to add one.
     const card = $("ficha");
     let selected = null;
+    let apiFailed = false;
     let marks = [];
     function clearSelection() {
       selected = null;
@@ -743,7 +825,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       card.replaceChildren();
       history.replaceState(null, "", location.pathname + (location.search.includes("api=") ? `?api=${encodeURIComponent(API)}` : ""));
     }
-    function select(f, { fit = true, form = false } = {}) {
+    function select(f, { fit = true, form = false, animate = true } = {}) {
       selected = f;
       selZoom = fit ? null : map.getZoom();
       for (const g of marks) g.remove();
@@ -765,9 +847,9 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       if (fit) {
         // Room around the outline for the publications that surround it.
         const pad = phone() ? { paddingTopLeft: [130, 170], paddingBottomRight: [130, Math.round(map.getSize().y * 0.66) + 100] } : wall ? { paddingTopLeft: [map.getSize().x - 24 - Math.round(Math.min(top ? 230 : 320, map.getSize().x * (top ? 0.15 : 0.22))), 290], paddingBottomRight: [24, 40] } : { paddingTopLeft: [450 + 225, 175], paddingBottomRight: [225, 175] };
-        const opts = { ...pad, maxZoom: top ? 13.5 : wall ? 14 : 15, animate: !reduced, duration: 0.7 };
+        const opts = { ...pad, maxZoom: top ? 13.5 : wall ? 14 : 15, animate: animate && !reduced, duration: 0.7 };
         const b = marks[1].getBounds();
-        if (reduced) map.fitBounds(b, opts); else map.flyToBounds(b, opts);
+        if (opts.animate) map.flyToBounds(b, opts); else map.fitBounds(b, opts);
       }
       renderCard(f, form);
       const p = f.properties;
@@ -790,7 +872,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       const outline = L.geoJSON({ type: "FeatureCollection", features: feats.map((x) => ({ type: "Feature", geometry: x.geometry, properties: {} })) });
       const tiles = items.map((p) => {
         if (p.headline) return el("a", { class: "ftile news", href: p.url, target: "_blank", rel: "noopener nofollow", tabindex: "-1", title: `${p.quien} · ${dateES(p.fecha)}: ${p.titular}` },
-          p.captura ? el("img", { src: `/${p.captura}`, alt: "", decoding: "async" }) : null,
+          p.captura ? el("img", { loading: "lazy", src: `/${p.captura}`, alt: "", decoding: "async" }) : null,
           el("span", { class: "nw" }, el("small", {}, `${p.quien} · ${dateES(p.fecha)}`), el("b", {}, p.titular)));
         const who = p.tipo === "comentario" ? "Vecino en Facebook" : p.fuente === "medio" || p.quien ? p.quien : "Vecino";
         // Words without a picture look like what they are, a comment or a post, with the neighbour unnamed.
@@ -798,7 +880,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         if (p.tipo === "comentario" || (!p.vista && p.fuente === "vecinos")) {
           const fb = p.red === "facebook";
           return el("a", { class: `ftile cmt ${fb ? "fb" : "xp"}${p.vista ? " ctx" : ""}`, href: p.url, target: "_blank", rel: "noopener nofollow", tabindex: "-1", title: `${who} · ${dateES(p.fecha)}: «${p.cita}»` },
-            p.vista ? el("span", { class: "c-post" }, el("img", { src: `/${p.vista}`, alt: "", decoding: "async" }), el("small", {}, p.en ? p.en.quien : "")) : null,
+            p.vista ? el("span", { class: "c-post" }, el("img", { loading: "lazy", src: `/${p.vista}`, alt: "", decoding: "async" }), el("small", {}, p.en ? p.en.quien : "")) : null,
             el("span", { class: "c-head" }, el("span", { class: "c-av", "aria-hidden": "true" }),
               el("span", {}, el("b", {}, p.quien && !p.tipo ? p.quien : "Vecina o vecino"), el("small", {}, `${fb ? (p.tipo === "comentario" ? "Comentario en Facebook" : "Facebook") : "Publicación en X"} · ${dateES(p.fecha)}`))),
             el("span", { class: "c-body" }, p.cita.length > 150 ? `${p.cita.slice(0, 148)}…` : p.cita),
@@ -806,7 +888,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
             p.dias ? el("span", { class: "fdias" }, daysWord(p.dias)) : null);
         }
         return el("a", { class: !p.vista ? "ftile txt" : p.tipo === "comentario" ? "ftile over" : "ftile", href: p.url, target: "_blank", rel: "noopener nofollow", tabindex: "-1", title: `${who} · ${dateES(p.fecha)}: «${p.cita}»` },
-          p.vista ? el("img", { src: `/${p.vista}`, alt: "", decoding: "async" }) : null,
+          p.vista ? el("img", { loading: "lazy", src: `/${p.vista}`, alt: "", decoding: "async" }) : null,
           p.vista && p.tipo !== "comentario" ? null : el("q", {}, p.cita.length > 120 ? `${p.cita.slice(0, 118)}…` : p.cita),
           p.dias ? el("span", { class: "fdias" }, daysWord(p.dias)) : null);
       });
@@ -925,7 +1007,6 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     function renderCard(f, openForm) {
       const p = f.properties;
       const k = keyOf(p);
-      const c = byKey.get(k);
       const close = el("button", { type: "button", class: "close", "aria-label": "Cerrar" }, M.cross());
       close.addEventListener("click", clearSelection);
       // SIAPA's list sometimes gives other zones than its map, as /mapa says.
@@ -934,9 +1015,10 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       const kids = [close, el("h2", {}, p.n), el("p", { class: "where" }, `${p.m}${p.cp ? ` · C.P. ${p.cp}` : ""} · ${where}`)];
       if (ls.length && ls.join() !== [...zs].sort().join()) kids.push(el("p", { class: "where" }, `La lista de colonias del SIAPA la pone en ${M.theZones(ls)}.`));
       const e = ev.get(k);
+      if (!pubs) kids.push(el("p", { class: "none" }, "No pudimos cargar lo que publican medios y vecinos. Intenta de nuevo en unos minutos."));
       if (e) kids.push(evidenceBlock(e), el("p", { class: "sub-head" }, "Reportes en este mapa"));
-      if (c) kids.push(...countsBlock(c));
-      else kids.push(el("p", { class: "none" }, summary ? `Nadie ha reportado esta colonia${e ? " aquí" : ""} en las últimas 24 horas.` : "No pudimos cargar los reportes de esta colonia."));
+      // The refresh every two minutes replaces only these counts, so a list of posts the visitor opened stays open.
+      kids.push(el("div", { class: "conteo" }, ...countsOf(k, e)));
       const when = reportedAt(k);
       if (Date.now() - when < 2 * 60 * 1000) {
         kids.push(el("p", { class: "thanks" }, "¡Gracias! Tu reporte ya está en el mapa."), share(p), exige(p));
@@ -962,6 +1044,18 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         const fm = card.querySelector("form.report");
         if (fm) { fm.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "nearest" }); const first = fm.querySelector('input[name="estado"]'); if (first) first.focus({ preventScroll: true }); }
       };
+    }
+
+    // A colonia's reports in the last 24 hours: their counts, none, or why they aren't there.
+    function countsOf(k, e) {
+      const c = byKey.get(k);
+      if (c) return countsBlock(c);
+      return [el("p", { class: "none" }, summary ? `Nadie ha reportado esta colonia${e ? " aquí" : ""} en las últimas 24 horas.`
+        : apiFailed ? "No pudimos cargar los reportes de esta colonia." : "Cargando los reportes de esta colonia…")];
+    }
+    function refreshCounts() {
+      const box = selected && card.querySelector(".conteo");
+      if (box) box.replaceChildren(...countsOf(keyOf(selected.properties), ev.get(keyOf(selected.properties))));
     }
 
     // The colonia's publications: the most days they give, how many sources say so, and each post
@@ -992,7 +1086,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       shown.forEach((p, i) => {
         const who = p.fuente === "medio" || p.quien ? p.quien : "Vecinos";
         const a = el("a", { href: p.url, target: "_blank", rel: "noopener nofollow", role: "listitem", title: `${who} · ${dateES(p.fecha)}: «${p.cita}»` },
-          el("img", { src: `/${p.vista}`, alt: `Imagen de la publicación de ${who} del ${dateES(p.fecha, true)}`, loading: "lazy", decoding: "async" }),
+          el("img", { loading: "lazy", src: `/${p.vista}`, alt: `Imagen de la publicación de ${who} del ${dateES(p.fecha, true)}`, decoding: "async" }),
           el("span", { class: "lbl" }, `${who} · ${dateES(p.fecha)}`));
         if (i === MAX - 1 && pics.length > MAX) a.append(el("span", { class: "more" }, `+${pics.length - MAX + 1}`));
         grid.append(a);
@@ -1226,11 +1320,16 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     $("ver-todas").addEventListener("click", () => { everything = true; renderRanking(); });
     renderEvidence();
 
-    if (first) { apply(first); say(""); }
-    else {
-      say(LOAD_FAILED);
+    say("");
+    summaryLoad.then((s) => {
+      if (!s) throw new Error("no summary");
+      apply(s);
+    }).catch(() => {
+      apiFailed = true;
+      if (!status.textContent) say(LOAD_FAILED);
       $("bot-filas").replaceChildren(el("tr", {}, el("td", { colspan: "6", class: "few" }, "No pudimos cargar las respuestas. Intenta de nuevo en unos minutos.")));
-    }
+      refreshCounts();
+    });
     setInterval(() => { if (!document.hidden) call("/v1/reportes").then(apply).catch(() => {}); }, 120000);
 
     // Search over name, municipio and postal code, in the browser.
@@ -1365,7 +1464,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       if (best) {
         input.value = best.properties.n;
         clear.hidden = false;
-        select(best, { form: wantsForm });
+        select(best, { form: wantsForm, animate: false });
         wantsForm = false;
       } else if (hits.length) {
         input.value = preset;
@@ -1378,6 +1477,9 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         say(`No encontramos «${preset}» en el mapa del SIAPA. Revisa cómo se escribe, prueba con tu código postal o toca tu colonia en el mapa.`);
       }
     }
+    if (!selected) map.fitBounds(home, { animate: false });
+    addStreets();
+    ready();
   }
 })();
 </script>

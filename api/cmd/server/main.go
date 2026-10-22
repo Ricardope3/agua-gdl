@@ -212,9 +212,9 @@ func run(log *slog.Logger) error {
 		log.Warn("reminders disabled; set REMINDERS_ENABLED=true (WhatsApp) or TG_REMINDERS_ENABLED=true (Telegram) to send them")
 	}
 
-	a := &api{bot: b, db: db, sched: sched, zones: zones, cols: cols,
+	a := &api{bot: b, sched: sched, zones: zones, cols: cols,
 		appSecret: []byte(cfg.WAAppSecret), verifyToken: cfg.WAVerifyToken, tgSecret: cfg.TGWebhookSecret,
-		minShown: cfg.MinShown, reports: reports, log: log}
+		reports: reports, log: log}
 	srv := &http.Server{Addr: ":" + cfg.Port, Handler: a.routes(),
 		ReadHeaderTimeout: 10 * time.Second, ReadTimeout: 15 * time.Second,
 		WriteTimeout: 30 * time.Second, IdleTimeout: 60 * time.Second}
@@ -295,5 +295,9 @@ func heartbeat(ping string, log *slog.Logger) func(context.Context, bool, string
 			return
 		}
 		resp.Body.Close()
+		// A refused ping, e.g. a deleted check's 404, means nothing would ever alert.
+		if resp.StatusCode < 200 || resp.StatusCode > 299 {
+			logErr(fmt.Errorf("status %d", resp.StatusCode))
+		}
 	}
 }

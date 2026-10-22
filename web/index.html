@@ -321,7 +321,7 @@ html, body { overflow-x: clip }
       <h1>El SIAPA prometió un día. Hay vecinos con semanas sin agua.</h1>
     </div>
     <div class="maphero">
-      <div class="mapframe-box"><iframe class="mapframe" src="/reportes?q=CIUDAD+GRANJA&amp;m=Zapopan&amp;cp=45010" title="Mapa de lo que publican medios y vecinos, colonia por colonia"></iframe></div>
+      <div class="mapframe-box"><iframe class="mapframe" src="/reportes-portada?q=CIUDAD+GRANJA&amp;m=Zapopan&amp;cp=45010" title="Mapa de lo que publican medios y vecinos, colonia por colonia"></iframe></div>
       <p class="mapnote" data-colonia="CIUDAD GRANJA|Zapopan|45010" data-nombre="Ciudad Granja, Zapopan"><span>Ciudad Granja, en Zapopan, en el mapa de lo que publican medios y vecinos.</span> <a href="/reportes?q=CIUDAD+GRANJA&amp;m=Zapopan&amp;cp=45010">Abrir el mapa completo</a></p>
     </div>
     <div class="vs-grid contrast">
@@ -510,32 +510,24 @@ html, body { overflow-x: clip }
   if (!f) return;
   const api = new URLSearchParams(location.search).get("api");
   if (api) { const u = new URL(f.src); u.searchParams.set("api", api); f.src = u; }
-  f.addEventListener("load", () => {
-    const d = f.contentDocument;
-    if (!d || !d.head) return;
-    const s = d.createElement("style");
-    s.textContent = "header.top, footer, main > :not(.stage) { display: none !important } :root { --hh: 0px !important } .stage { height: 100dvh !important; min-height: 0 !important }";
-    d.head.append(s);
-    d.addEventListener("click", (e) => {
-      const a = e.target.closest("a[href]");
-      if (a && !a.target && !a.getAttribute("href").startsWith("#")) a.target = "_top";
-    }, true);
-    f.contentWindow.dispatchEvent(new Event("resize"));
-    f.classList.add("ready");
-  });
+  // The frame lays itself out (only the map) and says when its map is drawn; its load event, which
+  // waits for every picture and street, is the fallback.
+  const show = () => f.classList.add("ready");
+  addEventListener("message", (e) => { if (e.source === f.contentWindow && e.origin === location.origin && e.data === "mapa-listo") show(); });
+  f.addEventListener("load", show);
   document.addEventListener("tema", () => {
     const w = f.contentWindow, b = f.contentDocument && f.contentDocument.querySelector(".theme-btn");
     if (w && w.aguaDark && b && w.aguaDark() !== aguaDark()) b.click();
   });
   const note = document.querySelector(".mapnote[data-colonia]");
   if (note) fetch("/publicaciones.json").then((r) => (r.ok ? r.json() : null)).then((doc) => {
-    if (!doc) return;
+    if (!doc || !Array.isArray(doc.publicaciones)) throw new Error("publicaciones");
     const count = new Map();
     for (const p of doc.publicaciones) for (const k of p.colonias) count.set(k, (count.get(k) || 0) + 1);
     const n = count.get(note.dataset.colonia) || 0, most = Math.max(...count.values());
     const alone = [...count.values()].filter((v) => v === most).length === 1;
     if (n) note.firstChild.textContent = `${n} ${n === 1 ? "publicación" : "publicaciones"} de medios y vecinos sobre la falta de agua en ${note.dataset.nombre}${n === most && alone ? ": más que en ninguna otra colonia" : ""}.`;
-  }).catch(() => {});
+  }).catch(() => { note.firstChild.textContent = `No pudimos cargar lo que publican medios y vecinos sobre ${note.dataset.nombre}. Intenta de nuevo en unos minutos.`; });
 })();
 </script>
 </body>

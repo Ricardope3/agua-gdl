@@ -21,8 +21,9 @@ and regla.comentarios comments; news outlets count without. A neighbour's commen
 counts by the post it is in ("en"), whose reactions and comments must meet the rule. A news story that
 retells a post names it in "de", so the page counts both as one source. A private person is
 never named: "quien" is the outlet, the public group («Grupo «…»») or a colonia's own account («Cuenta de
-vecinos …»), or empty. Facebook's numbers can't be refreshed without a login; they keep the date they
-were read ("al").
+vecinos …»), or empty, and the post a comment is in ("en.quien") is an outlet some "medio" entry names,
+such a group or account, or one of the public pages in PAGINAS. Facebook's numbers can't be refreshed
+without a login; they keep the date they were read ("al").
 """
 import argparse
 import hashlib
@@ -35,6 +36,7 @@ import json
 import math
 import pathlib
 import re
+import string
 import sys
 import time
 import urllib.error
@@ -54,6 +56,8 @@ FUENTES = {"medio", "vecinos"}
 REDES = {"facebook", "x", "web"}
 X_URL = re.compile(r"^https://x\.com/(\w{1,15})/status/(\d{8,20})$")
 VECINOS_QUIEN = ("Grupo «", "Cuenta de vecinos ")
+# Public pages, not outlets with a "medio" entry, whose posts neighbours comment on (en.quien).
+PAGINAS = {"Jalisco ZMG", "SIAPA Guadalajara"}
 
 errors = []
 
@@ -85,6 +89,7 @@ def validate(doc):
     if not (count(rule.get("reacciones")) and count(rule.get("comentarios"))):
         fail("regla: needs reacciones and comentarios")
     seen = set()
+    pages = PAGINAS | {p["quien"] for p in doc.get("publicaciones") or [] if p.get("fuente") == "medio" and isinstance(p.get("quien"), str)}
     for i, p in enumerate(doc.get("publicaciones") or []):
         where = f"publicaciones[{i}] {p.get('url', '')}"
         if p.get("fuente") not in FUENTES:
@@ -155,6 +160,8 @@ def validate(doc):
                 fail(f"{where}: a comment names the post it is in (en.quien, en.url)")
             elif not url.startswith(en["url"] + "?comment_id="):
                 fail(f"{where}: a comment links its post with ?comment_id=")
+            if en.get("quien") and not (str(en["quien"]) in pages or str(en["quien"]).startswith(VECINOS_QUIEN)):
+                fail(f"{where}: en.quien is never a person: an outlet with a medio entry, «Grupo «…»», «Cuenta de vecinos …» or one of PAGINAS")
             check_eco(en.get("eco"), where + " en")
             eco = en.get("eco")
         if p.get("fuente") == "vecinos":
@@ -242,7 +249,8 @@ def refresh_x(doc):
 
 
 def get(url, ua="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130 Safari/537.36"):
-    req = urllib.request.Request(url, headers={"User-Agent": ua, "Accept-Language": "es-MX,es;q=0.9"})
+    # An og:image can carry raw accents, which urllib can't send: percent-encode them, as browsers do.
+    req = urllib.request.Request(urllib.parse.quote(url, safe=string.punctuation), headers={"User-Agent": ua, "Accept-Language": "es-MX,es;q=0.9"})
     with urllib.request.urlopen(req, timeout=25) as r:
         return r.read(8_000_000)
 

@@ -76,7 +76,7 @@ def main(out):
     listed = {(c["name"], c["municipio"]): c for c in json.loads((root / "api/data/colonias.json").read_text())}
     styles = '<Style id="col"><LineStyle><color>ff2c1e0c</color><width>1.5</width></LineStyle><PolyStyle><color>00ffffff</color></PolyStyle></Style>'
     marks = []
-    for f in json.loads((root / "web/colonias.geojson").read_text())["features"]:
+    for f in json.loads((root / "pipelines/colonias.geojson").read_text())["features"]:
         p = f["properties"]
         c = listed[(p["name"], p["municipio"])]
         mun = MUNICIPIOS.get(p["municipio"], p["municipio"].title())

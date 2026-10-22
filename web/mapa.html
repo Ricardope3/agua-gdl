@@ -255,19 +255,21 @@ footer p { margin: 0 0 8px; max-width: 70ch }
   M.tiles(L, map);
   map.setView([20.66, -103.37], 11);
 
-  // zoneInfo: zone → { days, next } from the API, the same calendar the reminders use.
+  // zoneInfo: zone → { days, next } from the API, the same calendar the reminders use. The map
+  // doesn't wait for it: the days fill in when they arrive.
   let zoneInfo = new Map();
+  let zonesDone = false, zonesFailed = false;
   const daysText = (z) => zoneInfo.has(z) ? cap(joinES(zoneInfo.get(z).days)) : null;
   const nextCut = (z) => zoneInfo.has(z) ? zoneInfo.get(z).next.find((d) => d >= isoToday(0)) : null;
 
-  Promise.all([M.load(), get("/v1/zones").catch(() => null)])
-    .then(([data, zones]) => build(data, zones))
+  const zonesLoad = get("/v1/zones").catch(() => null);
+  M.load()
+    .then((data) => build(data))
     .catch(() => say("No pudimos cargar el mapa de colonias. Intenta de nuevo en unos minutos o consulta el ", SIAPALink(), "."));
 
-  function build({ colonias, zonas, meta }, zones) {
-    if (zones) zoneInfo = new Map(zones.map((z) => [z.zone, z]));
+  function build({ colonias, zonas, meta }) {
     // idle is the status with nothing else to say: empty, or that the days didn't load.
-    const idle = () => zones ? say("") : say("No pudimos cargar los días de cada zona. El mapa funciona, pero revisa los días en el ", SIAPALink(), ".");
+    const idle = () => zonesFailed ? say("No pudimos cargar los días de cada zona. El mapa funciona, pero revisa los días en el ", SIAPALink(), ".") : say("");
     if (meta && meta.fetched) {
       const [y, m, d] = meta.fetched.split("-").map(Number);
       $("consultado").textContent = `, consultados el ${d} de ${MONTHS[m - 1]} de ${y}`;
@@ -282,7 +284,8 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       onClick: (f) => { if (Date.now() - closedAt > 500) select(f, { fit: false }); },
     });
     const { color, home } = drawn;
-    map.fitBounds(home);
+    // Without animation: one still running would swallow the jump to a colonia from the link.
+    map.fitBounds(home, { animate: false });
 
     const Reset = L.Control.extend({
       onAdd() {
@@ -299,7 +302,15 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     });
     new Reset({ position: "topright" }).addTo(map);
 
-    // Selection: a halo and a dark outline over the colonia, and the card.
+    // Selection: a halo and a dark outline over the colonia, and the card. A few colonias are drawn
+    // as several outlines with one name, municipio and postal code: picking one outlines them all.
+    const keyOf = (p) => `${p.n}|${p.m}|${p.cp}`;
+    const parts = new Map();
+    for (const f of colonias) {
+      const k = keyOf(f.properties);
+      if (!parts.has(k)) parts.set(k, []);
+      parts.get(k).push(f);
+    }
     function clearSelection() {
       selected = null;
       closedAt = Date.now();
@@ -308,14 +319,14 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       card.replaceChildren();
       history.replaceState(null, "", location.pathname);
     }
-    function select(f, { fit = true } = {}) {
+    function select(f, { fit = true, animate = true } = {}) {
       selected = f;
       drawn.clearHighlights();
-      const group = drawn.highlight(f);
+      const bounds = (parts.get(keyOf(f.properties)) || [f]).map((x) => drawn.highlight(x).getBounds()).reduce((b, x) => b.extend(x));
       if (fit) {
         const pad = phone() ? { paddingTopLeft: [24, 24], paddingBottomRight: [24, Math.round(map.getSize().y * 0.55)] } : { paddingTopLeft: [400, 24], paddingBottomRight: [24, 24] };
-        const opts = { ...pad, maxZoom: 15, animate: !reduced, duration: 0.7 };
-        if (reduced) map.fitBounds(group.getBounds(), opts); else map.flyToBounds(group.getBounds(), opts);
+        const opts = { ...pad, maxZoom: 15, animate: animate && !reduced, duration: 0.7 };
+        if (opts.animate) map.flyToBounds(bounds, opts); else map.fitBounds(bounds, opts);
       }
       renderCard(f);
       const q = new URLSearchParams({ q: f.properties.n, m: f.properties.m, cp: f.properties.cp });
@@ -340,7 +351,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         side: z.border,
         extra: differs ? ls.filter((zone) => !z.all.includes(zone)) : [],
         extraNote: differs ? `La lista de colonias del SIAPA la pone en ${M.theZones(ls)}. El mapa y la lista no siempre coinciden: ${z.all.length ? `prepárate para los días de ${new Set([...z.all, ...ls]).size > 2 ? "todas" : "las dos"}` : "prepárate para esos días"}.` : null,
-        days: daysText,
+        days: (zone) => daysText(zone) || (zonesDone ? null : "Cargando los días…"),
         next: nextCut,
         dateES,
         color,
@@ -356,17 +367,17 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     const legend = $("leyenda");
     const chips = new Map();
     let focus = null;
+    const chipTitle = (z) => daysText(z) ? `Zona ${z}: ${daysText(z)}` : `Zona ${z}`;
     for (const f of zonas) {
       const z = f.properties.z;
-      const days = daysText(z);
-      const b = el("button", { type: "button", "aria-pressed": "false", style: `--zc:${color(z)}`, title: days ? `Zona ${z}: ${days}` : `Zona ${z}` }, el("span", { class: "dot", "aria-hidden": "true" }), `Zona ${z}`);
+      const b = el("button", { type: "button", "aria-pressed": "false", style: `--zc:${color(z)}`, title: chipTitle(z) }, el("span", { class: "dot", "aria-hidden": "true" }), `Zona ${z}`);
       b.addEventListener("click", () => {
         focus = focus === z ? null : z;
         for (const [n, chip] of chips) chip.setAttribute("aria-pressed", String(focus === n));
         drawn.setFocus(focus);
         if (focus) {
           map.fitBounds(drawn.zoneLayer.getLayers().filter((l) => l.feature.properties.z === z).reduce((b, l) => b.extend(l.getBounds()), L.latLngBounds([])), { padding: [24, 24] });
-          const next = nextCut(z);
+          const days = daysText(z), next = nextCut(z);
           say(el("strong", {}, `Zona ${z}`), days ? `: ${days}.` : ".", next ? ` Próximo racionamiento: ${dateES(next)}.` : "");
         } else {
           map.fitBounds(home);
@@ -377,6 +388,20 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       legend.append(el("li", {}, b));
     }
     idle();
+    zonesLoad.then((zones) => {
+      zonesDone = true;
+      if (Array.isArray(zones)) zoneInfo = new Map(zones.map((z) => [z.zone, z]));
+      else zonesFailed = true;
+      for (const [z, chip] of chips) chip.title = chipTitle(z);
+      if (selected) renderCard(selected);
+      if (!status.textContent) idle();
+    });
+    // The visitor switched the theme: the map, the outline and the zone colours follow.
+    document.addEventListener("tema", () => {
+      drawn.setDark(aguaDark());
+      for (const [z, chip] of chips) chip.style.setProperty("--zc", color(z));
+      if (selected) renderCard(selected);
+    });
 
     // Search over name, municipio and postal code, in the browser.
     const input = $("q");
@@ -392,7 +417,9 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       const hits = index.filter((it) => tokens.every((t) => it.key.includes(t)));
       const rank = (it) => (it.name === nq ? 0 : it.cp === nq ? 1 : it.name.startsWith(nq) ? 2 : it.key.startsWith(nq) ? 3 : 4);
       hits.sort((a, b) => rank(a) - rank(b) || a.name.localeCompare(b.name) || a.f.properties.m.localeCompare(b.f.properties.m));
-      return hits.map((it) => it.f);
+      // A colonia drawn as several outlines is one option.
+      const seen = new Set();
+      return hits.map((it) => it.f).filter((f) => { const k = keyOf(f.properties); if (seen.has(k)) return false; seen.add(k); return true; });
     }
     let options = [];
     let active = -1;
@@ -524,7 +551,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       if (best) {
         input.value = best.properties.n;
         clear.hidden = false;
-        select(best);
+        select(best, { animate: false });
       } else {
         input.value = preset;
         clear.hidden = false;

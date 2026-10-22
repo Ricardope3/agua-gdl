@@ -21,7 +21,6 @@ import (
 	"aguagdl/api/internal/colonias"
 	"aguagdl/api/internal/geo"
 	"aguagdl/api/internal/rotation"
-	"aguagdl/api/internal/store"
 	"aguagdl/api/internal/tg"
 	"aguagdl/api/internal/wa"
 	"aguagdl/api/internal/webreports"
@@ -29,29 +28,15 @@ import (
 
 type api struct {
 	bot         *bot.Bot
-	db          resultsStore
 	sched       *rotation.Schedule
 	zones       *geo.Zones
 	cols        *colonias.Index
 	appSecret   []byte
 	verifyToken string
-	tgSecret    string // empty = Telegram off
-	minShown    int
+	tgSecret    string            // empty = Telegram off
 	reports     *webreports.Board // the map on /reportes; nil = off
 	log         *slog.Logger
-
-	resultsMu   sync.Mutex
-	resultsAt   time.Time
-	resultsRows []store.Result
 }
-
-type resultsStore interface {
-	Results(ctx context.Context, since time.Time, minReports int) ([]store.Result, error)
-}
-
-// resultsTTL is how long /v1/results reuses one query, so traffic can't keep Neon
-// awake and use up its compute hours.
-const resultsTTL = 5 * time.Minute
 
 type zoneInfo struct {
 	Zone int      `json:"zone"`
@@ -65,7 +50,6 @@ func (a *api) routes() http.Handler {
 	mux.HandleFunc("GET /v1/zones", a.zonesList)
 	mux.HandleFunc("GET /v1/zone", a.zoneAt)
 	mux.HandleFunc("GET /v1/colonias", a.coloniaSearch)
-	mux.HandleFunc("GET /v1/results", a.results)
 	if a.reports != nil {
 		mux.HandleFunc("GET /v1/reportes", a.reportesGet)
 		mux.HandleFunc("POST /v1/reportes", a.reportesPost)
@@ -208,35 +192,6 @@ func (a *api) coloniaSearch(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	writeJSON(w, res, publicFiveMinutes)
-}
-
-func (a *api) results(w http.ResponseWriter, r *http.Request) {
-	rows, err := a.cachedResults(r.Context())
-	if err != nil {
-		a.log.Error("results", "err", err)
-		http.Error(w, "error", http.StatusInternalServerError)
-		return
-	}
-	writeJSON(w, rows, publicFiveMinutes)
-}
-
-// cachedResults queries Postgres at most once per resultsTTL; concurrent requests
-// wait for that one query.
-func (a *api) cachedResults(ctx context.Context) ([]store.Result, error) {
-	a.resultsMu.Lock()
-	defer a.resultsMu.Unlock()
-	if a.resultsRows != nil && time.Since(a.resultsAt) < resultsTTL {
-		return a.resultsRows, nil
-	}
-	rows, err := a.db.Results(ctx, a.sched.Day(time.Now()).AddDate(0, 0, -60), a.minShown)
-	if err != nil {
-		return nil, err
-	}
-	if rows == nil {
-		rows = []store.Result{}
-	}
-	a.resultsRows, a.resultsAt = rows, time.Now()
-	return rows, nil
 }
 
 // reportesGet serves the map's numbers: the day's reports by colonia, the totals, the bot's

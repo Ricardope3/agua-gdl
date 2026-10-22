@@ -708,9 +708,16 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         hot = { key, overlay };
       };
       map.on("mouseout", unhover);
+      let pin = null;
+      // The visitor switched the theme: this map, its outlines and the tapped spot follow, while it's on the page.
+      const recolor = () => {
+        if (!box.isConnected) { document.removeEventListener("tema", recolor); return; }
+        drawn.setDark(aguaDark());
+        if (pin) pin.setStyle({ color: drawn.halo, fillColor: drawn.ink });
+      };
+      document.addEventListener("tema", recolor);
       if (tapPick) return;
       // A tap on a spot with no colonia drawn asks the API which zone polygon it is in.
-      let pin = null;
       let taps = 0;
       map.on("click", async (e) => {
         if (Date.now() - lastTap < 300) return;

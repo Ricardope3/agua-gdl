@@ -173,20 +173,91 @@ func TestIPv6NetworksShareTheirLimits(t *testing.T) {
 func TestColoniaCapForEveryone(t *testing.T) {
 	clock := start(t)
 	b := board(t, &fakeStore{}, clock)
+	add := func(addr, name, mun, cp string) error {
+		_, err := b.Add(addr, name, mun, cp, "con_agua", false, false, false)
+		return err
+	}
+	// Half the networks are IPv4 addresses, half IPv6 /48s.
 	for i := range perColoniaAllPerHour {
-		if _, err := b.Add(fmt.Sprint("10.1.0.", i), "1 DE MAYO", "Guadalajara", "44940", "con_agua", false, false, false); err != nil {
-			t.Fatalf("report %d: %v", i+1, err)
+		addr := fmt.Sprint("10.1.0.", i)
+		if i%2 == 1 {
+			addr = fmt.Sprintf("2001:db8:%x:1::/64", i)
+		}
+		if err := add(addr, "1 DE MAYO", "Guadalajara", "44940"); err != nil {
+			t.Fatalf("network %d: %v", i+1, err)
 		}
 	}
-	if _, err := b.Add("10.1.1.1", "1 DE MAYO", "Guadalajara", "44940", "sin_agua", false, false, false); !errors.Is(err, ErrColoniaFull) {
-		t.Fatalf("one report too many for the colonia from anyone: %v", err)
+	if err := add("10.1.1.1", "1 DE MAYO", "Guadalajara", "44940"); !errors.Is(err, ErrColoniaFull) {
+		t.Fatalf("one network too many for the colonia: %v", err)
 	}
-	if _, err := b.Add("10.1.1.1", "12 DE DICIEMBRE", "Zapopan", "45068", "sin_agua", false, false, false); err != nil {
+	if err := add("2001:db8:1:2::/64", "1 DE MAYO", "Guadalajara", "44940"); err != nil {
+		t.Fatalf("a network already counted, here from another /64 of its /48, can still report it: %v", err)
+	}
+	if err := add("10.1.1.1", "12 DE DICIEMBRE", "Zapopan", "45068"); err != nil {
 		t.Fatalf("other colonias still take reports: %v", err)
 	}
 	*clock = clock.Add(time.Hour)
-	if _, err := b.Add("10.1.1.1", "1 DE MAYO", "Guadalajara", "44940", "sin_agua", false, false, false); err != nil {
+	if err := add("10.1.1.1", "1 DE MAYO", "Guadalajara", "44940"); err != nil {
 		t.Fatalf("an hour later: %v", err)
+	}
+}
+
+func TestOneNetworkCantFillAColonia(t *testing.T) {
+	clock := start(t)
+	b := board(t, &fakeStore{}, clock)
+	accepted := map[string]int{}
+	report := func(who, addr string) {
+		t.Helper()
+		if _, err := b.Add(addr, "1 DE MAYO", "Guadalajara", "44940", "con_agua", false, false, false); err == nil {
+			accepted[who]++
+		} else if !errors.Is(err, ErrTooMany) {
+			t.Fatalf("%s: %v", addr, err)
+		}
+	}
+	// A home's /56 from every one of its /64s, and three IPv4 addresses, send all they can.
+	for sub := range 256 {
+		for range perColoniaPerHour {
+			report("/56", fmt.Sprintf("2001:db8:7:%02x::/64", sub))
+		}
+	}
+	ips := []string{"198.51.100.1", "198.51.100.2", "198.51.100.3"}
+	for _, ip := range ips {
+		for range perIPv4ColoniaPerHour + 1 {
+			report(ip, ip)
+		}
+	}
+	if accepted["/56"] != perNet48ColoniaPerHour {
+		t.Fatalf("a /56 put %d reports into one colonia", accepted["/56"])
+	}
+	for _, ip := range ips {
+		if accepted[ip] != perIPv4ColoniaPerHour {
+			t.Fatalf("%s put %d reports into one colonia", ip, accepted[ip])
+		}
+	}
+	if _, err := b.Add("203.0.113.9", "1 DE MAYO", "Guadalajara", "44940", "sin_agua", false, false, false); err != nil {
+		t.Fatalf("after %v, a neighbour on another network can still report the colonia: %v", accepted, err)
+	}
+}
+
+func TestSlash48PutsNoMoreIntoAColoniaThanAnIPv4Address(t *testing.T) {
+	clock := start(t)
+	b := board(t, &fakeStore{}, clock)
+	// Each report comes from a /64 in another /56 of the same /48, so only the /48's limits apply.
+	n := 0
+	for sub := range 256 {
+		if _, err := b.Add(fmt.Sprintf("2001:db8:9:%02x00::/64", sub), "1 DE MAYO", "Guadalajara", "44940", "baja", false, false, false); err != nil {
+			if !errors.Is(err, ErrTooMany) {
+				t.Fatalf("after %d reports: %v", n, err)
+			}
+			break
+		}
+		n++
+	}
+	if n != perNet48ColoniaPerHour || perNet48ColoniaPerHour != perIPv4ColoniaPerHour {
+		t.Fatalf("a /48 put %d reports into one colonia, an IPv4 address can put %d", n, perIPv4ColoniaPerHour)
+	}
+	if _, err := b.Add("2001:db8:9:ff01::/64", "12 DE DICIEMBRE", "Zapopan", "45068", "baja", false, false, false); err != nil {
+		t.Fatalf("the /48 can still report another colonia: %v", err)
 	}
 }
 
@@ -428,23 +499,26 @@ func TestAddressesAreForgottenAfterAnHour(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	held := func() (keys, times int) {
+	held := func() (keys, times, nets int) {
 		b.mu.Lock()
 		defer b.mu.Unlock()
 		for _, ts := range b.hits {
 			keys, times = keys+1, times+len(ts)
 		}
-		return keys, times
+		for _, ns := range b.nets {
+			nets += max(len(ns), 1) // an emptied colonia must go too
+		}
+		return keys, times, nets
 	}
-	wait := func(keys, times int, why string) {
+	wait := func(keys, times, nets int, why string) {
 		t.Helper()
 		for deadline := time.Now().Add(5 * time.Second); ; time.Sleep(time.Millisecond) {
-			k, n := held()
-			if k == keys && n == times {
+			k, n, c := held()
+			if k == keys && n == times && c == nets {
 				return
 			}
 			if time.Now().After(deadline) {
-				t.Fatalf("%s: the limits hold %d times under %d keys, want %d under %d", why, n, k, times, keys)
+				t.Fatalf("%s: the limits hold %d times under %d keys and %d networks by colonia, want %d under %d and %d", why, n, k, c, times, keys, nets)
 			}
 		}
 	}
@@ -462,13 +536,13 @@ func TestAddressesAreForgottenAfterAnHour(t *testing.T) {
 		<-done
 	}()
 	time.Sleep(20 * time.Millisecond)
-	if k, n := held(); k != 4 || n != 8 {
-		t.Fatalf("within the hour the /64, its colonia, its /56 and its /48 hold both reports: %d times under %d keys", n, k)
+	if k, n, c := held(); k != 5 || n != 10 || c != 1 {
+		t.Fatalf("within the hour the /64, its /56 and its /48, and the /64 and the /48 for the colonia, hold both reports, and the colonia its /48: %d times under %d keys, %d networks", n, k, c)
 	}
 	advance(30 * time.Minute)
-	wait(4, 4, "the first report is an hour old")
+	wait(5, 5, 1, "the first report is an hour old")
 	advance(30 * time.Minute)
-	wait(0, 0, "both reports are an hour old, and nobody sent another")
+	wait(0, 0, 0, "both reports are an hour old, and nobody sent another")
 }
 
 func TestColoniaListMatchesTheMap(t *testing.T) {

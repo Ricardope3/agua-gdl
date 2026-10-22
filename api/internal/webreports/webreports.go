@@ -44,15 +44,17 @@ const (
 	perIPv4PerHour        = 100
 	perIPv4ColoniaPerHour = 10
 	// The IPv6 networks a home or a provider gets (a /56, a /48) share these, so holding many
-	// /64s doesn't multiply the limits.
-	perNet56PerHour = 40
-	perNet48PerHour = 100
-	// perColoniaAllPerHour bounds one colonia's reports from everyone in an hour: plenty to
-	// show how it is. Once it's full the colonia takes none, from anyone, until the oldest of
-	// them are an hour old.
+	// /64s doesn't multiply the limits, and a /48 puts no more into one colonia than an IPv4 address.
+	perNet56PerHour        = 40
+	perNet48PerHour        = 100
+	perNet48ColoniaPerHour = perIPv4ColoniaPerHour
+	// perColoniaAllPerHour is how many networks (an IPv4 address or an IPv6 /48) may report one
+	// colonia in an hour: plenty to show how it is. Then a new one can't until one of them goes an
+	// hour without reporting it, so no single network can fill a colonia and lock its neighbours out.
 	perColoniaAllPerHour = 30
-	// maxPerHour caps everyone's reports together. Each report adds at most four keys to the
-	// limits, which Run forgets after the hour, so it also bounds the memory they use.
+	// maxPerHour caps everyone's reports together. Each report adds at most five keys to the
+	// limits and one network to its colonia, which Run forgets after the hour, so it also bounds
+	// the memory they use.
 	maxPerHour = 5_000
 	// maxPending bounds the reports held while the database is unreachable.
 	maxPending = 20_000
@@ -213,6 +215,7 @@ type Board struct {
 	pending   []store.WebReport // not yet in Postgres
 	allTime   int
 	hits      map[string][]time.Time
+	nets      map[string]map[string]time.Time // by colonia: the networks that reported it, and when they last did
 	cached    *Summary
 	cachedAt  time.Time
 	raw, gz   []byte // cached encoded, plain and gzipped
@@ -232,7 +235,7 @@ func New(st Store, coloniasJSON []byte, minShown int, loc *time.Location, now fu
 		return nil, fmt.Errorf("colonias_mapa.json: %w", err)
 	}
 	b := &Board{store: st, minShown: minShown, loc: loc, now: now, log: log, colonias: map[string]colonia{},
-		forgetEvery: forgetEvery, hits: map[string][]time.Time{}}
+		forgetEvery: forgetEvery, hits: map[string][]time.Time{}, nets: map[string]map[string]time.Time{}}
 	for _, r := range rows {
 		zone, _ := strconv.Atoi(strings.Split(r[3], ",")[0])
 		b.colonias[Key(r[0], r[1], r[2])] = colonia{r[0], r[1], r[2], zone}
@@ -278,18 +281,22 @@ func (b *Board) Add(addr, name, municipio, cp, status string, turbia, olor, sedi
 	if status == "sin_agua" {
 		turbia, olor, sedimento = false, false, false
 	}
-	now := b.now()
+	now, net := b.now(), netOf(addr)
 	b.mu.Lock()
 	defer b.mu.Unlock()
 	if b.lastHour(now) >= maxPerHour {
 		return Colonia{}, ErrBusy
 	}
-	if b.coloniaLastHour(key, now) >= perColoniaAllPerHour {
+	if b.coloniaFull(key, net, now) {
 		return Colonia{}, ErrColoniaFull
 	}
 	if !b.allow(addr, key, now) {
 		return Colonia{}, ErrTooMany
 	}
+	if b.nets[key] == nil {
+		b.nets[key] = map[string]time.Time{}
+	}
+	b.nets[key][net] = now
 	r := store.WebReport{Colonia: key, Status: status, Turbia: turbia, Olor: olor, Sedimento: sedimento, At: now}
 	b.recent = append(b.recent, r)
 	if len(b.pending) >= maxPending {
@@ -323,6 +330,9 @@ func (b *Board) allow(addr, key string, now time.Time) bool {
 			limits = append(limits, limit{"n:" + wide, n.max})
 		}
 	}
+	if wide, ok := network(addr, 48); ok {
+		limits = append(limits, limit{"c:" + wide + "|" + key, perNet48ColoniaPerHour})
+	}
 	kept := make([][]time.Time, len(limits))
 	for i, l := range limits {
 		if kept[i] = inLastHour(b.hits[l.key], now); len(kept[i]) >= l.max {
@@ -353,17 +363,39 @@ func (b *Board) forget() {
 			b.hits[k] = ts
 		}
 	}
+	for key, nets := range b.nets {
+		for net, last := range nets {
+			if now.Sub(last) >= time.Hour {
+				delete(nets, net)
+			}
+		}
+		if len(nets) == 0 {
+			delete(b.nets, key)
+		}
+	}
 }
 
-// coloniaLastHour counts everyone's reports for one colonia in the last hour. Called with mu held.
-func (b *Board) coloniaLastHour(key string, now time.Time) int {
+// coloniaFull reports whether perColoniaAllPerHour other networks reported the colonia in the
+// last hour, so net, which didn't, can't. Called with mu held.
+func (b *Board) coloniaFull(key, net string, now time.Time) bool {
 	n := 0
-	for i := len(b.recent) - 1; i >= 0 && now.Sub(b.recent[i].At) < time.Hour; i-- {
-		if b.recent[i].Colonia == key {
+	for other, last := range b.nets[key] {
+		if now.Sub(last) < time.Hour {
+			if other == net {
+				return false
+			}
 			n++
 		}
 	}
-	return n
+	return n >= perColoniaAllPerHour
+}
+
+// netOf is the network a colonia's cap counts once: an IPv4 address, or an IPv6 /64's /48.
+func netOf(addr string) string {
+	if wide, ok := network(addr, 48); ok {
+		return wide
+	}
+	return addr
 }
 
 // network returns the IPv6 network of the given size that a client's /64 belongs to.

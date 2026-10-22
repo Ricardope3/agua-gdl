@@ -125,6 +125,11 @@ func (s *Schedule) Expired(t time.Time) bool {
 	return !s.end.IsZero() && !s.Day(t).Before(s.end.AddDate(0, 0, RetentionDays))
 }
 
+// Over reports whether t is after the rotation's last day, so no reminder is left to send.
+func (s *Schedule) Over(t time.Time) bool {
+	return !s.end.IsZero() && s.Day(t).After(s.end)
+}
+
 func (s *Schedule) IsCut(zone int, t time.Time) bool {
 	d := s.Day(t)
 	k := key(d.Format(DateLayout), zone)

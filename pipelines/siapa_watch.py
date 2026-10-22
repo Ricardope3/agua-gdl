@@ -7,7 +7,8 @@ Prints a Markdown report. SIAPA's map (rotacion-siapa.topo.json, which its page 
 with web/colonias_siapa.topo.json, and the cut days in ajustes.php (what SIAPA edits from its
 admin panel; its page shows them) with api/data/rotation.json: a difference in either counts
 as a change until the repo matches. Writes changed=true|false and a
-fingerprint of the live hashes to $GITHUB_OUTPUT when it's set. Exits 1 only
+fingerprint of the live hashes and of any such difference to $GITHUB_OUTPUT
+when it's set, so a new difference gets its own comment. Exits 1 only
 when a source can't be fetched. --update rewrites the baseline with what's
 live now and drops the comment of every source that changed.
 
@@ -149,7 +150,7 @@ def main(args):
     with open(path, encoding="utf-8") as f:
         sources = json.load(f)
 
-    rows, changed, errors, live, mapa, days = [], [], [], {}, None, None
+    rows, changed, errors, live, mapa, days, mismatch = [], [], [], {}, None, None, {}
     for name, s in sources.items():
         link = f"[{name}]({s['url']})"
         try:
@@ -165,6 +166,8 @@ def main(args):
             mapa, differs = map_report(body)
         if name == AJUSTES:
             days, differs = days_report(body)
+        if differs:
+            mismatch[name] = mapa if name == TOPO else days
         old_lm = s.get("last_modified")
         lm = (code(modified) if modified else "—") if modified == old_lm else f"{code(old_lm) if old_lm else '—'} → {code(modified) if modified else '—'}"
         if sha == s.get("sha256") and not differs:
@@ -199,7 +202,9 @@ def main(args):
             "- Cuando termines, actualiza la línea base y haz commit:",
             "  `python3 pipelines/siapa_watch.py --update && git commit -m 'Update the SIAPA baseline' pipelines/siapa_sources.json`",
         ]
-    fingerprint = hashlib.sha256(json.dumps({n: v["sha256"] for n, v in live.items()}).encode()).hexdigest()[:16]
+    # A state with no difference with the repo hashes the live hashes alone.
+    state = {n: v["sha256"] for n, v in live.items()} | {f"{n} vs repo": text for n, text in mismatch.items()}
+    fingerprint = hashlib.sha256(json.dumps(state).encode()).hexdigest()[:16]
     out += ["", f"<!-- siapa-watch {fingerprint} -->"]
     print("\n".join(out))
 

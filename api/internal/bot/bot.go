@@ -278,7 +278,7 @@ func (b *Bot) onUserChanged(ctx context.Context, r User, sys *wa.System) error {
 }
 
 func (b *Bot) onLocation(ctx context.Context, r User, lat, lon float64) error {
-	zones := b.Zones.Lookup(lat, lon)
+	zones := b.scheduled(b.Zones.Lookup(lat, lon))
 	switch len(zones) {
 	case 0:
 		return b.text(ctx, r, msgOutside)
@@ -339,10 +339,23 @@ func (b *Bot) onPayload(ctx context.Context, r User, p string) error {
 }
 
 func (b *Bot) onColonia(ctx context.Context, r User, c colonias.Colonia) error {
-	if c.Multi || len(c.Zones) > 1 {
-		return b.pickZone(ctx, r, msgPickZone(c.Name, c.Zones), c.Zones)
+	zones := b.scheduled(c.Zones)
+	// Multi is the * on SIAPA's list: the colonia is split among zones even when the list
+	// names one. Once a zone without days is dropped, only the zones left decide.
+	split := len(zones) > 1 || (c.Multi && len(zones) == len(c.Zones))
+	switch {
+	case len(zones) == 0:
+		return b.text(ctx, r, msgColoniaOutside(c.Name))
+	case split:
+		return b.pickZone(ctx, r, msgPickZone(c.Name, zones), zones)
 	}
-	return b.subscribe(ctx, r, c.Zones[0])
+	return b.subscribe(ctx, r, zones[0])
+}
+
+// scheduled keeps the zones the rotation has days for: the map's and the list's data
+// could name another one, and its subscribers would never get a reminder.
+func (b *Bot) scheduled(zones []int) []int {
+	return slices.DeleteFunc(slices.Clone(zones), func(z int) bool { return !b.Schedule.HasZone(z) })
 }
 
 func (b *Bot) pickZone(ctx context.Context, r User, body string, zones []int) error {
@@ -375,9 +388,12 @@ func (b *Bot) subscribe(ctx context.Context, r User, zone int) error {
 		b.Log.Warn("message without business-scoped user ID")
 		return b.text(ctx, r, msgNoUserID)
 	}
-	if b.Schedule.Expired(b.Now()) {
-		// The purge has deleted every subscriber; storing a new one would break that promise.
+	if b.Schedule.Over(b.Now()) {
+		// No reminder is left to send, so there's nothing to keep a chat ID or a number for.
 		return b.text(ctx, r, msgRotationOver(b.BaseURL))
+	}
+	if !b.Schedule.HasZone(zone) {
+		return b.text(ctx, r, msgHelp(b.BaseURL, r.Channel))
 	}
 	full, err := b.nightFull(ctx, r, zone)
 	if err != nil {
@@ -435,7 +451,7 @@ func (b *Bot) nightFull(ctx context.Context, r User, zone int) (bool, error) {
 }
 
 func (b *Bot) welcome(ctx context.Context, r User) error {
-	if b.Schedule.Expired(b.Now()) {
+	if b.Schedule.Over(b.Now()) {
 		return b.text(ctx, r, msgRotationOver(b.BaseURL)) // nothing left to subscribe to
 	}
 	return b.reply(ctx, r, Reply{Text: msgWelcome(b.BaseURL, r.Channel), AskLocation: true})
@@ -461,7 +477,7 @@ func (b *Bot) subscribedText(ctx context.Context, s store.Subscriber, fresh bool
 	today := b.Schedule.Day(now)
 	tomorrow := today.AddDate(0, 0, 1)
 	info := subscribedInfo{
-		zone: zone, fresh: fresh, base: b.BaseURL, off: !b.remindersOn(channel), channel: channel,
+		zone: zone, fresh: fresh, base: b.BaseURL, off: !b.remindersOn(channel), over: b.Schedule.Over(now), channel: channel,
 		days: rotation.DaysES(b.Schedule.Weekdays(zone)),
 		hour: rotation.HourES(b.ReminderHour),
 	}

@@ -465,21 +465,6 @@ func TestDeleteSubscribers(t *testing.T) {
 	}
 }
 
-func TestResultsHideSmallDaysAndTruncateLastReport(t *testing.T) {
-	db := testDB(t)
-	ctx := context.Background()
-	if _, err := db.pool.Exec(ctx, `insert into cut_report (zone, cut_date, answer, created_at) values
-		(6, '2026-10-16', 'normal', '2026-10-17 09:47:12-06'), (6, '2026-10-16', 'baja', '2026-10-17 08:05:00-06'),
-		(4, '2026-10-19', 'turbia', '2026-10-20 10:00:00-06')`); err != nil {
-		t.Fatal(err)
-	}
-	got, err := db.Results(ctx, time.Date(2026, 10, 1, 0, 0, 0, 0, time.UTC), 2)
-	want := Result{Zone: 6, Date: "2026-10-16", Total: 2, Normal: 1, Baja: 1, LastAt: "2026-10-17T09:00"}
-	if err != nil || len(got) != 1 || got[0] != want {
-		t.Errorf("Results = %+v %v, want [%+v]", got, err, want)
-	}
-}
-
 func phoneHolders(t *testing.T, db *DB, phone string) []Subscriber {
 	t.Helper()
 	rows, err := db.pool.Query(context.Background(), `select id, user_id, coalesce(phone, ''), zone from subscriber where phone = $1`, phone)

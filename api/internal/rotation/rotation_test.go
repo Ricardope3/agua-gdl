@@ -98,6 +98,18 @@ func TestExpired(t *testing.T) {
 	}
 }
 
+func TestOver(t *testing.T) {
+	s := load(t, data.Rotation)
+	_, end := s.Span()
+	if s.Over(end.AddDate(0, 0, 1).Add(-time.Second)) || !s.Over(end.AddDate(0, 0, 1)) {
+		t.Errorf("the rotation is over from the day after its end (%s)", end.Format(DateLayout))
+	}
+	open := load(t, []byte(`{"start": "2026-10-15", "zones": {"1": ["fri"]}}`))
+	if open.Over(day(open, "2030-01-01")) {
+		t.Error("without an end date the rotation is never over")
+	}
+}
+
 func TestBlocks(t *testing.T) {
 	s := load(t, data.Rotation)
 	cases := []struct {

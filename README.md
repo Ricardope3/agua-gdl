@@ -14,7 +14,7 @@ cp .env.example .env   # llena los valores
 cd api && go test ./... && set -a && . ../.env && go run ./cmd/server
 ```
 
-Endpoints: `GET /healthz`, `GET /v1/zones`, `GET /v1/zone?lat=&lon=`, `GET /v1/colonias?q=`, `GET /v1/results`, `GET|POST /v1/reportes`, `POST /tg/webhook` (con `TG_TOKEN` y `TG_WEBHOOK_SECRET`) y `GET|POST /wa/webhook` (solo con `WA_TOKEN`).
+Endpoints: `GET /healthz`, `GET /v1/zones`, `GET /v1/zone?lat=&lon=`, `GET /v1/colonias?q=`, `GET|POST /v1/reportes`, `POST /tg/webhook` (con `TG_TOKEN` y `TG_WEBHOOK_SECRET`) y `GET|POST /wa/webhook` (solo con `WA_TOKEN`).
 
 Las pruebas de integración crean y borran esquemas aislados en una base de pruebas:
 `cd api && TEST_DATABASE_URL=postgres://postgres:dev@localhost:55432/aguagdl?sslmode=disable go test -race ./...`.
@@ -81,6 +81,31 @@ mensaje que WhatsApp ya aceptó. Confirma el resultado en WhatsApp Manager; marc
 como `sent` los aceptados, o `failed` los rechazados. Si no puedes
 confirmarlo, conserva `uncertain`.
 
+## Sitio (`web/`)
+
+Sitio estático de aguagdl.com, sin framework. Cloudflare Pages lo publica en cada push a `main` (carpeta de salida `web`). Su comando de build corre las revisiones de CI, para que un archivo de datos roto detenga la publicación en vez de llegar al sitio:
+
+```sh
+python3 pipelines/publicaciones.py --check && python3 pipelines/promesas.py --check && python3 pipelines/mapa_colonias.py --check
+```
+
+Todo lo que está en `web/` es público: las notas, los datos que no se usan y los borradores van fuera. Las visitas se cuentan con Cloudflare Web Analytics (sin cookies; se activa en la pestaña Metrics del proyecto de Pages, Cloudflare inserta el script y el aviso de privacidad lo describe en el punto 7). La portada carga el mapa de /reportes como `/reportes-portada`, así que en las estadísticas esas cargas no cuentan como visitas a /reportes. `www.aguagdl.com` redirige a `aguagdl.com` con una regla de Cloudflare. Las páginas que llaman a la API usan `https://api.aguagdl.com`; para probarlas con la API local, agrega `?api=http://localhost:8080` (solo acepta localhost o 127.0.0.1).
+
+- `index.html`, la portada: bajo «El agua es un derecho. Exígelo.», el titular «El SIAPA prometió un día. Hay vecinos con semanas sin agua.»; el mapa de /reportes en un marco de orilla a orilla, abierto en Ciudad Granja; lo que prometió el SIAPA frente a las cifras de la CEA; el reporte de tu colonia; las noticias y publicaciones de vecinos, cada una con su enlace (de las personas, solo la colonia y la fecha), y pedirle al Congreso que vote no al acueducto privado. Nada de la rotación: eso está en /mizona, /mapa y /avisos.
+- `reportes.html` (/reportes): el mapa de lo que publican medios y vecinos (`publicaciones.json`, que valida `pipelines/publicaciones.py`; las de medios van primero y las de vecinos solo con al menos 5 reacciones y 1 comentario) y de los reportes de los vecinos. Cada colonia se colorea por los días sin agua que dicen las publicaciones o, donde no hay, por lo que reportaron en las últimas 24 horas. Tiene la lista de las colonias con más días, una ficha por colonia con el formulario para reportar (sin cuenta y anónimo) y botones para compartirla, la semana por zona junto al calendario del SIAPA y las respuestas del bot por zona.
+- `exige.html` (/exige) arma un mensaje con tu colonia, tu municipio y lo que pasa, y lo mandas tú desde tu correo, X o Facebook al gobernador, a la CEA, a tu presidencia municipal y, en Guadalajara, Zapopan, Tlaquepaque y Tonalá, al SIAPA. Cada contacto lleva su fuente oficial y la fecha en que se revisó. Agua GDL no ve ni guarda nada.
+- `pipas.html` (/pipas) da el SIAPATEL y la línea de cada municipio con su fuente, y el artículo 90, fracción VI, de la Ley del Agua. Publica un número solo si una fuente lo da, y actualiza la fecha de revisión cuando los revises.
+- `mizona.html` busca la zona por ubicación o colonia, y `mapa.html` muestra todas las colonias coloreadas por zona (datos de `colonias_siapa.topo.json`, de `pipelines/siapa_mapa.py`; las dos y /reportes comparten `mapa.js`). Cuando una colonia apenas toca el límite de otra zona, dicen «al límite con la zona N».
+- `avisos.html`: suscribirse por Telegram o con el calendario de la zona.
+- `noticias.html`: la crisis al día, curada a mano. Cada nota enlaza a su fuente; actualiza «Última actualización» al editarla. Los videos se cargan de YouTube, TikTok o X solo al tocarlos.
+- `promesas.html` (/promesas): sus tarjetas y su gráfica se generan desde `promesas.json` con `python3 pipelines/promesas.py`; no las edites a mano.
+- `escribe.html`, `contamina.html` y `antisionismo.html`: cada afirmación enlaza su fuente.
+- `privacidad.html` y `terminos.html`: el aviso de privacidad y los términos de uso. La app de Meta enlaza a ellos, así que no cambies sus URL.
+- `theme.js` (en el `<head>` de cada página) pone el botón de tema claro u oscuro; el claro es el predeterminado. También cambia el color de la barra del navegador, así que cada página lleva un solo `<meta name="theme-color" content="#ffffff">`, sin `media`. Al cambiar de tema lanza el evento `tema` en `document`, con el que los mapas se vuelven a pintar.
+- `404.html`: la página de las direcciones que no existen.
+
+El conteo semanal (`informes.html`, que escribe `api/cmd/informe`) y `resultados.html` (con `GET /v1/results`) se quitaron hasta que haya suficientes reportes; están en el historial de git.
+
 ## Datos
 
 Si el SIAPA cambia los días, edita `api/data/rotation.json` (`skip`/`extra` para fechas sueltas; actualiza `checked` y `checked_by`), regenera los calendarios con `cd api && go run ./cmd/calendars` (la prueba de `internal/calendar` falla si no) y despliega. Luego avisa a los suscriptores de cada zona que cambió (los días salen de `rotation.json`; sin `-channel tg`, `notify` usa WhatsApp):
@@ -116,7 +141,7 @@ Para regenerar el mapa del SIAPA y lo que sale de él (solo biblioteca estándar
 python3 pipelines/siapa_mapa.py && python3 pipelines/mapa_colonias.py
 ```
 
-Cada 6 horas, `.github/workflows/siapa-watch.yml` corre `pipelines/siapa_watch.py`: descarga la página, el PDF, el mapa (TopoJSON) y `ajustes.php` del SIAPA, compara su SHA-256 con `pipelines/siapa_sources.json`, el mapa con `web/colonias_siapa.topo.json` y los días de `ajustes.php` con `rotation.json`. Si algo cambió, abre el issue «SIAPA cambió sus fuentes» (o comenta en el que siga abierto) con el reporte. Revisa el cambio, actualiza `api/data` si hace falta y luego la línea base:
+Cada hora (GitHub suele arrancarlo horas tarde), `.github/workflows/siapa-watch.yml` corre `pipelines/siapa_watch.py`: descarga la página, el PDF, el mapa (TopoJSON) y `ajustes.php` del SIAPA, compara su SHA-256 con `pipelines/siapa_sources.json`, el mapa con `web/colonias_siapa.topo.json` y los días de `ajustes.php` con `rotation.json`. Si algo cambió, abre el issue «SIAPA cambió sus fuentes» (o comenta en el que siga abierto) con el reporte, una vez por cada estado nuevo de las fuentes o de su diferencia con el repo. Revisa el cambio, actualiza `api/data` si hace falta y luego la línea base:
 
 ```sh
 python3 pipelines/siapa_watch.py --update && git commit -m 'Update the SIAPA baseline' pipelines/siapa_sources.json

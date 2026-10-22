@@ -53,6 +53,9 @@ import (
 	"aguagdl/api/internal/wa"
 )
 
+// now is the clock for tomorrow's date and the caps; tests set it.
+var now = time.Now
+
 func main() {
 	zone := flag.Int("zone", 0, "zone (1-7)")
 	from := flag.String("from", "", "cambio_rotacion: first day of the new schedule, YYYY-MM-DD")
@@ -145,8 +148,8 @@ func run(channel string, zone int, from string, send bool) error {
 	client := &wa.Client{BaseURL: "https://graph.facebook.com/" + env("WA_GRAPH_VERSION", "v24.0"),
 		PhoneNumberID: phoneID, Token: token, HTTP: &http.Client{Timeout: 15 * time.Second}}
 	log := slog.New(slog.NewTextHandler(os.Stderr, nil))
-	now := func() time.Time { return time.Now().In(loc) }
-	sent, err := notices.Send(ctx, db, client, n, caps["DAILY_CAP"], caps["MONTHLY_CAP"], 100*time.Millisecond, now, log)
+	local := func() time.Time { return now().In(loc) }
+	sent, err := notices.Send(ctx, db, client, n, caps["DAILY_CAP"], caps["MONTHLY_CAP"], 100*time.Millisecond, local, log)
 	fmt.Printf("sent %d\n", sent)
 	if errors.Is(err, notices.ErrCapped) {
 		fmt.Println("A send cap stopped the run; run the same command again later for the rest.")
@@ -180,11 +183,11 @@ func runTomorrow(zone int, send bool) error {
 		return err
 	}
 	defer db.Close()
-	now := time.Now()
+	at := now()
 	r := &reminders.Runner{Store: db, Schedule: sched, DailyCap: caps["DAILY_CAP"], MonthlyCap: caps["MONTHLY_CAP"],
-		Interval: 100 * time.Millisecond, Now: time.Now, Log: slog.New(slog.NewTextHandler(os.Stderr, nil))}
-	m := reminders.Manual{Zone: zone, ActiveSince: now.Add(-23 * time.Hour),
-		Text: bot.ManualReminder(rotation.DateES(sched.Day(now).AddDate(0, 0, 1)), zone)}
+		Interval: 100 * time.Millisecond, Now: now, Log: slog.New(slog.NewTextHandler(os.Stderr, nil))}
+	m := reminders.Manual{Zone: zone, ActiveSince: at.Add(-23 * time.Hour),
+		Text: bot.ManualReminder(rotation.DateES(sched.Day(at).AddDate(0, 0, 1)), zone)}
 	in, due, err := r.ManualRecipients(ctx, m)
 	if err != nil {
 		return err
@@ -228,7 +231,7 @@ func runAvisos(send bool) error {
 	}
 	defer db.Close()
 	// Each zone's message lists its cuts from tomorrow through the next week.
-	tomorrow := sched.Day(time.Now()).AddDate(0, 0, 1)
+	tomorrow := sched.Day(now()).AddDate(0, 0, 1)
 	texts := map[int]string{}
 	due := 0
 	for _, zone := range sched.Zones() {

@@ -72,15 +72,22 @@ func msgHelp(base, channel string) string {
 🔒 Aviso de privacidad: ` + base + `/privacidad`
 }
 
-// msgUseButtons answers a typed «sí», «ya no» or «poca»: the reminders' buttons carry the answer.
+// msgUseButtons answers a typed «sí», «ya no» or «poca»: the buttons carry the answer, and the
+// bot can't tell whether it answers a reminder or «¿Es la tuya?» about a colonia.
 const msgUseButtons = `Para contestar, toca uno de los botones del mensaje 👆
 
+Si es sobre tu colonia, mándame tu 📍 *ubicación* o escribe su nombre de otra forma.
+
 Si lo que quieres es dejar de recibir avisos, escribe *BAJA*. Para ver todo lo que puedo hacer, escribe *AYUDA*.`
+
+// echoed drops the * and _ from what someone typed before it's shown back, so it can't turn
+// into bold or italics (on Telegram, tags that don't nest and a refused message).
+var echoed = strings.NewReplacer("*", "", "_", "")
 
 func msgNotFound(q string) string {
 	return fmt.Sprintf(`No encontré «%s» en la lista de colonias del SIAPA 😕
 
-Puede que tu colonia no esté en la rotación. Para revisarlo, mándame tu 📍 *ubicación* o consulta el mapa oficial: %s`, q, MapURL)
+Puede que tu colonia no esté en la rotación. Para revisarlo, mándame tu 📍 *ubicación* o consulta el mapa oficial: %s`, strings.TrimSpace(echoed.Replace(q)), MapURL)
 }
 
 const msgOutside = `Tu ubicación no cae en ninguna zona del mapa del SIAPA.
@@ -88,6 +95,13 @@ const msgOutside = `Tu ubicación no cae en ninguna zona del mapa del SIAPA.
 Puede que no te toque la rotación, pero el mapa y la lista de colonias del SIAPA no siempre coinciden. Para revisarlo, mándame el *nombre de tu colonia* o, si ya sabes tu zona, escribe por ejemplo *ZONA 4*.
 
 🗺️ Mapa oficial: ` + MapURL
+
+// msgColoniaOutside is msgOutside for a colonia on SIAPA's list without a zone the rotation has days for.
+func msgColoniaOutside(name string) string {
+	return fmt.Sprintf(`No tengo días de corte para *%s* en el calendario del SIAPA 😕
+
+Puede que no le toque la rotación, pero el mapa y la lista de colonias del SIAPA no siempre coinciden. Para revisarlo, mándame tu 📍 *ubicación* o consulta el mapa oficial: %s`, name, MapURL)
+}
 
 func msgMunicipio(name string) string {
 	return fmt.Sprintf(`*%s* tiene colonias en varias zonas de la rotación 🤔
@@ -203,6 +217,7 @@ type subscribedInfo struct {
 	cutTomorrow  []time.Time // set when no reminder comes for tomorrow's cut: tonight's run has passed or it continues a block
 	cutsLeft     []time.Time // the rest of the block under way, from today: no reminder comes for them
 	off          bool        // reminders are switched off on the server
+	over         bool        // the rotation has ended: zone changes are refused, BAJA still works
 	nextReminder string
 	nextCut      []time.Time // the block the next message is about
 	hour         string
@@ -224,14 +239,18 @@ func msgSubscribed(i subscribedInfo) string {
 		fmt.Fprintf(&b, "⚠️ ¡Ojo! Hoy hay corte en tu zona, y también el *%s*. De esos días no te llegará aviso: si todavía tienes agua, llena tu tinaco.\n", rotation.DatesES(i.cutsLeft))
 	}
 	switch {
-	case i.off:
+	case i.off && !i.over:
 		b.WriteString("🔔 Los avisos automáticos empiezan en unos días.\n")
 	case i.nextReminder != "":
 		fmt.Fprintf(&b, "🔔 Próximo aviso: *%s, %s* (%s)\n", i.nextReminder, i.hour, cutsES(i.nextCut))
 	default:
 		b.WriteString("🔔 Por ahora no hay más cortes programados en tu zona.\n")
 	}
-	fmt.Fprintf(&b, "\n🗺️ ¿Cómo está el agua en tu colonia? Repórtalo y mira la de tus vecinos: %s/reportes\n📢 Exígele a quien le toca que lo arregle: %[1]s/exige\nEscribe *ZONA 1* a *ZONA 7* para cambiar de zona o *BAJA* para dejar de recibir avisos.\n🔒 Guardamos %s, tu zona y tus reportes. Todo lo que guardamos: %s/privacidad", i.base, storedID(i.channel), i.base)
+	commands := "Escribe *ZONA 1* a *ZONA 7* para cambiar de zona o *BAJA* para dejar de recibir avisos."
+	if i.over {
+		commands = "Escribe *BAJA* para borrar tu suscripción."
+	}
+	fmt.Fprintf(&b, "\n🗺️ ¿Cómo está el agua en tu colonia? Repórtalo y mira la de tus vecinos: %s/reportes\n📢 Exígele a quien le toca que lo arregle: %[1]s/exige\n%s\n🔒 Guardamos %s, tu zona y tus reportes. Todo lo que guardamos: %s/privacidad", i.base, commands, storedID(i.channel), i.base)
 	return b.String()
 }
 

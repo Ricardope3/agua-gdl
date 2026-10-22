@@ -133,14 +133,15 @@ window.aguaMapa = (() => {
   };
 
   // draw puts the zones and every colonia on map. opts: dark, days(zone) → text or null,
-  // onClick(feature, event). Returns the layers, the home bounds and highlight helpers.
+  // onClick(feature, event). Returns the layers, the home bounds, highlight helpers and
+  // setDark(dark), which recolours all of it when the visitor switches the theme.
   function draw(L, map, { colonias, zonas }, opts = {}) {
-    const colors = COLORS[opts.dark ? "dark" : "light"];
-    const color = (z) => colors[z] || "#888888";
-    const edge = opts.dark ? "#0b1a24" : "#1f2d3a";
-    const faint = opts.dark ? "#9bb8ca" : "#6b7f8c";
-    const ink = opts.dark ? "#f0f9ff" : "#0c1e2c";
-    const halo = opts.dark ? "#06141d" : "#ffffff";
+    let dark = !!opts.dark;
+    const color = (z) => COLORS[dark ? "dark" : "light"][z] || "#888888";
+    const edge = () => dark ? "#0b1a24" : "#1f2d3a";
+    const faint = () => dark ? "#9bb8ca" : "#6b7f8c";
+    const ink = () => dark ? "#f0f9ff" : "#0c1e2c";
+    const halo = () => dark ? "#06141d" : "#ffffff";
     let focus = null;
     const zoneStyle = (f) => {
       const z = f.properties.z;
@@ -151,9 +152,9 @@ window.aguaMapa = (() => {
     const home = zoneLayer.getBounds().pad(0.04);
     const coloniaStyle = (f) => {
       const z = zones(f.properties);
-      if (!z.all.length) return { color: faint, weight: 0.8, fillColor: "#000000", fillOpacity: focus ? 0 : 0.02, dashArray: null };
+      if (!z.all.length) return { color: faint(), weight: 0.8, fillColor: "#000000", fillOpacity: focus ? 0 : 0.02, dashArray: null };
       const dim = focus && !z.all.includes(focus);
-      return { color: dim ? faint : edge, weight: dim ? 0.6 : 1, fillColor: color(z.main[0]), fillOpacity: dim ? 0.04 : 0.3, dashArray: z.split ? "4 3" : null };
+      return { color: dim ? faint() : edge(), weight: dim ? 0.6 : 1, fillColor: color(z.main[0]), fillOpacity: dim ? 0.04 : 0.3, dashArray: z.split ? "4 3" : null };
     };
     const tip = (f) => {
       const p = f.properties;
@@ -188,20 +189,19 @@ window.aguaMapa = (() => {
     // highlight outlines f over everything; label (text) floats above it.
     function highlight(f, label) {
       const gj = { type: "Feature", geometry: f.geometry, properties: {} };
-      const group = L.featureGroup([
-        L.geoJSON(gj, { interactive: false, style: { color: halo, weight: 9, fill: false } }),
-        L.geoJSON(gj, { interactive: false, style: { color: ink, weight: 4, fill: false } }),
-      ]).addTo(map);
+      const under = L.geoJSON(gj, { interactive: false, style: { color: halo(), weight: 9, fill: false } });
+      const over = L.geoJSON(gj, { interactive: false, style: { color: ink(), weight: 4, fill: false } });
+      const group = L.featureGroup([under, over]).addTo(map);
       if (label) {
         const b = group.getBounds();
         const t = L.tooltip({ permanent: true, direction: "top", className: "map-label" }).setLatLng([b.getNorth(), b.getCenter().lng]).setContent(node("span", "", label)).addTo(map);
         group.on("remove", () => t.remove());
       }
-      marks.push(group);
+      marks.push({ group, under, over });
       return group;
     }
     function clearHighlights() {
-      for (const g of marks) g.remove();
+      for (const m of marks) m.group.remove();
       marks = [];
     }
     function setFocus(z) {
@@ -209,7 +209,16 @@ window.aguaMapa = (() => {
       zoneLayer.setStyle(zoneStyle);
       coloniaLayer.setStyle(coloniaStyle);
     }
-    return { zoneLayer, coloniaLayer, home, color, ink, halo, highlight, clearHighlights, setFocus };
+    function setDark(d) {
+      dark = d;
+      zoneLayer.setStyle(zoneStyle);
+      coloniaLayer.setStyle(coloniaStyle);
+      for (const m of marks) {
+        m.under.setStyle({ color: halo() });
+        m.over.setStyle({ color: ink() });
+      }
+    }
+    return { zoneLayer, coloniaLayer, home, color, get ink() { return ink(); }, get halo() { return halo(); }, highlight, clearHighlights, setFocus, setDark };
   }
 
   const icon = (name) => {

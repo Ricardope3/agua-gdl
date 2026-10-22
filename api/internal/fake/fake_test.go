@@ -3,6 +3,7 @@ package fake
 import (
 	"context"
 	"errors"
+	"strings"
 	"testing"
 	"time"
 
@@ -116,5 +117,35 @@ func TestBlockedAfterARefusalNeedsNoReview(t *testing.T) {
 		if reminders != 0 || notices != 0 {
 			t.Errorf("%s: a blocked bot is an opt-out, not an attempt to review: %d reminders, %d notices", channel, reminders, notices)
 		}
+	}
+}
+
+func TestASecondReportOfACutReplacesTheFirst(t *testing.T) {
+	ctx := context.Background()
+	s := NewStore()
+	sub := subscribe(t, s, store.Telegram, "777", 4)
+	for _, r := range []Report{{sub.ID, 4, "", "normal"}, {sub.ID, 6, "", "turbia"}} {
+		if err := s.SaveReport(ctx, r.SubscriberID, r.Zone, s.Now(), r.Answer); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if len(s.Reports) != 1 || s.Reports[0].Answer != "turbia" || s.Reports[0].Zone != 6 {
+		t.Fatalf("one report per subscription and cut, the latest: %+v", s.Reports)
+	}
+}
+
+func TestTelegramRefusesWhatTheBotAPIRefuses(t *testing.T) {
+	ctx := context.Background()
+	tel := &Telegram{}
+	long := tg.InlineKeyboard{InlineKeyboard: [][]tg.InlineButton{{{Text: "x", CallbackData: strings.Repeat("x", 65)}}}}
+	for _, m := range []tg.Message{tg.NewHTML(1, "<b>a <i>b</b> c</i>"), tg.NewHTML(1, "<b>a"), {ChatID: 1, Text: "x", ReplyMarkup: long}} {
+		_, err := tel.Send(ctx, m)
+		var refused *tg.APIError
+		if !errors.As(err, &refused) || !refused.Permanent() {
+			t.Errorf("%q: want a permanent 400, got %v", m.Text, err)
+		}
+	}
+	if _, err := tel.Send(ctx, tg.NewHTML(1, "<b>a <i>b</i></b> &lt;i&gt;")); err != nil || len(tel.Sent) != 1 {
+		t.Fatalf("tags that nest are sent: %v", err)
 	}
 }

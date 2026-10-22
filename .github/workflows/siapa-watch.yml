@@ -1,17 +1,21 @@
 name: siapa-watch
 on:
   schedule:
-    - cron: "17 */6 * * *"
+    - cron: "17 * * * *"  # Hourly: GitHub starts scheduled runs hours late, so more runs catch a change sooner
   workflow_dispatch:
 permissions:
   contents: read
   issues: write
+  actions: write  # Only for the last step, which enables the schedules again
 concurrency: siapa-watch
 jobs:
   watch:
     runs-on: ubuntu-latest
+    timeout-minutes: 15  # Four fetches that each time out twice take about 9.5 minutes
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
       - id: watch
         shell: bash
         run: python3 pipelines/siapa_watch.py | tee "$RUNNER_TEMP/report.md" "$GITHUB_STEP_SUMMARY"
@@ -30,3 +34,13 @@ jobs:
           else
             gh issue comment "$n" --body-file "$RUNNER_TEMP/report.md"
           fi
+      # GitHub disables a public repo's schedules after 60 days without activity; enabling them again
+      # keeps this watcher and CI's weekly check running until the rotation ends on 31 Mar 2027.
+      - if: ${{ !cancelled() }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          for workflow in siapa-watch.yml ci.yml; do
+            gh api --method PUT "repos/$GH_REPO/actions/workflows/$workflow/enable"
+          done

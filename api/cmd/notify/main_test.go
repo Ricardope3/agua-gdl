@@ -70,13 +70,15 @@ func TestDryRunsDontMigrate(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	tomorrow := sched.Day(time.Now()).AddDate(0, 0, 1)
-	for _, zone := range sched.Zones() {
-		if sched.IsCut(zone, tomorrow) {
-			dry["tomorrow"] = func() error { return runTomorrow(zone, false) }
-			break
-		}
+	// A Sunday inside the rotation, so -tomorrow always has a zone cut on Monday to try.
+	at := time.Date(2026, 10, 18, 12, 0, 0, 0, loc)
+	now = func() time.Time { return at }
+	t.Cleanup(func() { now = time.Now })
+	zones := sched.ZonesOn(at.AddDate(0, 0, 1))
+	if len(zones) == 0 {
+		t.Fatalf("no zone is cut on %s", at.AddDate(0, 0, 1).Format(rotation.DateLayout))
 	}
+	dry["tomorrow"] = func() error { return runTomorrow(zones[0], false) }
 	for name, f := range dry {
 		if err := f(); err != nil {
 			t.Errorf("%s: %v", name, err)

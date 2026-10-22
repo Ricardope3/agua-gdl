@@ -56,9 +56,10 @@ func TestHeartbeatCapsTheBody(t *testing.T) {
 		body, _ = io.ReadAll(r.Body)
 	}))
 	defer srv.Close()
-	heartbeat(srv.URL+"/ping", slog.New(slog.NewTextHandler(io.Discard, nil)))(context.Background(), false, strings.Repeat("é", 5000))
-	if path != "/ping/fail" || len([]rune(string(body))) != 1000 {
-		t.Fatalf("path %q, %d characters", path, len([]rune(string(body))))
+	var logs bytes.Buffer
+	heartbeat(srv.URL+"/ping", slog.New(slog.NewTextHandler(&logs, nil)))(context.Background(), false, strings.Repeat("é", 5000))
+	if path != "/ping/fail" || len([]rune(string(body))) != 1000 || logs.Len() != 0 {
+		t.Fatalf("path %q, %d characters, logs %q", path, len([]rune(string(body))), logs.String())
 	}
 }
 
@@ -67,6 +68,16 @@ func TestHeartbeatErrorsDontLogTheURL(t *testing.T) {
 	heartbeat("http://127.0.0.1:1/secret-check-id", slog.New(slog.NewTextHandler(&logs, nil)))(context.Background(), true, "ok")
 	if !strings.Contains(logs.String(), "heartbeat") || strings.Contains(logs.String(), "secret-check-id") {
 		t.Fatalf("the ping URL must stay out of the logs: %s", logs.String())
+	}
+}
+
+func TestHeartbeatRefusedPingIsAnError(t *testing.T) {
+	srv := httptest.NewServer(http.NotFoundHandler()) // a deleted check
+	defer srv.Close()
+	var logs bytes.Buffer
+	heartbeat(srv.URL+"/secret-check-id", slog.New(slog.NewTextHandler(&logs, nil)))(context.Background(), true, "ok")
+	if !strings.Contains(logs.String(), "level=ERROR") || !strings.Contains(logs.String(), "status 404") || strings.Contains(logs.String(), "secret-check-id") {
+		t.Fatalf("a refused ping must be logged by its status alone: %s", logs.String())
 	}
 }
 
@@ -108,37 +119,6 @@ func TestZoneLookupNeedsRealCoordinates(t *testing.T) {
 		if rec.Code != http.StatusBadRequest {
 			t.Errorf("%s: status %d, body %s", q, rec.Code, rec.Body.String())
 		}
-	}
-}
-
-type countingResults struct{ calls int }
-
-func (c *countingResults) Results(context.Context, time.Time, int) ([]store.Result, error) {
-	c.calls++
-	return []store.Result{{Zone: 4, Date: "2026-10-19", Total: 12}}, nil
-}
-
-func TestResultsQueryTheDatabaseOncePerFiveMinutes(t *testing.T) {
-	db := &countingResults{}
-	a := &api{db: db, sched: testSchedule(t), minShown: 10, log: slog.New(slog.NewTextHandler(io.Discard, nil))}
-	h := a.routes()
-	get := func() {
-		rec := httptest.NewRecorder()
-		h.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/v1/results", nil))
-		if rec.Code != http.StatusOK || !strings.Contains(rec.Body.String(), `"total":12`) {
-			t.Fatalf("status %d, body %s", rec.Code, rec.Body.String())
-		}
-	}
-	for range 3 {
-		get()
-	}
-	if db.calls != 1 {
-		t.Fatalf("3 visits made %d queries, want 1", db.calls)
-	}
-	a.resultsAt = a.resultsAt.Add(-resultsTTL)
-	get()
-	if db.calls != 2 {
-		t.Fatalf("after 5 minutes the next visit must query again: %d queries", db.calls)
 	}
 }
 
@@ -215,8 +195,10 @@ func TestLimiterCountsIPv6PerSlash64(t *testing.T) {
 }
 
 func TestTelegramWebhookChecksTheSecret(t *testing.T) {
-	st, tel := fake.NewStore(), &fake.Telegram{}
-	b := &bot.Bot{Store: st, Telegram: tel, Schedule: testSchedule(t), Now: time.Now, Log: slog.New(slog.NewTextHandler(io.Discard, nil))}
+	st, tel, sched := fake.NewStore(), &fake.Telegram{}, testSchedule(t)
+	// Inside the rotation: once it's over, the bot takes no subscriptions.
+	now := func() time.Time { return time.Date(2026, 10, 20, 10, 0, 0, 0, sched.Location()) }
+	b := &bot.Bot{Store: st, Telegram: tel, Schedule: sched, Now: now, Log: slog.New(slog.NewTextHandler(io.Discard, nil))}
 	update := `{"update_id":1,"message":{"message_id":1,"chat":{"id":777,"type":"private"},"text":"zona 4"}}`
 	post := func(h http.Handler, secret string) int {
 		req := httptest.NewRequest(http.MethodPost, "/tg/webhook", strings.NewReader(update))

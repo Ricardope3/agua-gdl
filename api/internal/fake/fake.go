@@ -6,6 +6,8 @@ import (
 	"errors"
 	"fmt"
 	"maps"
+	"net/http"
+	"regexp"
 	"slices"
 	"strings"
 	"time"
@@ -180,8 +182,16 @@ func (s *Store) Unsubscribe(_ context.Context, channel, userID, phone string) (b
 	return removed, nil
 }
 
+// SaveReport keeps one report per subscription and cut, the latest, like store.DB.SaveReport.
 func (s *Store) SaveReport(_ context.Context, id int64, zone int, d time.Time, answer string) error {
-	s.Reports = append(s.Reports, Report{id, zone, d.Format("2006-01-02"), answer})
+	r := Report{id, zone, d.Format("2006-01-02"), answer}
+	for i, old := range s.Reports {
+		if old.SubscriberID == id && old.Date == r.Date {
+			s.Reports[i] = r
+			return nil
+		}
+	}
+	s.Reports = append(s.Reports, r)
 	return nil
 }
 
@@ -425,12 +435,48 @@ type Telegram struct {
 	Err      error // returned by every Send
 }
 
+// Send refuses what Telegram refuses with a 400: HTML whose tags don't nest, and callback
+// data over 64 bytes.
 func (t *Telegram) Send(_ context.Context, m tg.Message) (int64, error) {
 	if t.Err != nil {
 		return 0, t.Err
 	}
+	if why := refusal(m); why != "" {
+		return 0, &tg.APIError{Status: http.StatusBadRequest, Description: "Bad Request: " + why}
+	}
 	t.Sent = append(t.Sent, m)
 	return int64(len(t.Sent)), nil
+}
+
+var htmlTag = regexp.MustCompile(`<(/?)([a-z-]+)[^>]*>`)
+
+func refusal(m tg.Message) string {
+	if m.ParseMode == "HTML" {
+		var open []string
+		for _, tag := range htmlTag.FindAllStringSubmatch(m.Text, -1) {
+			switch {
+			case tag[1] == "":
+				open = append(open, tag[2])
+			case len(open) == 0 || open[len(open)-1] != tag[2]:
+				return "can't parse entities: unmatched end tag </" + tag[2] + ">"
+			default:
+				open = open[:len(open)-1]
+			}
+		}
+		if len(open) > 0 {
+			return "can't parse entities: can't find end tag corresponding to start tag <" + open[len(open)-1] + ">"
+		}
+	}
+	if kb, ok := m.ReplyMarkup.(tg.InlineKeyboard); ok {
+		for _, row := range kb.InlineKeyboard {
+			for _, b := range row {
+				if len(b.CallbackData) > 64 {
+					return "BUTTON_DATA_INVALID"
+				}
+			}
+		}
+	}
+	return ""
 }
 
 func (t *Telegram) AnswerCallback(_ context.Context, id string) error {

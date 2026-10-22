@@ -2,6 +2,7 @@ package bot
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"io"
 	"log/slog"
@@ -425,6 +426,90 @@ func TestColoniaOffTheList(t *testing.T) {
 	}
 	if len(h.store.Subs) != 0 {
 		t.Error("must not subscribe")
+	}
+}
+
+func TestNeverSubscribesToAZoneWithoutDays(t *testing.T) {
+	h := newHarness(t, "2026-10-14 10:00")
+	loc, _ := time.LoadLocation("America/Mexico_City")
+	sched, err := rotation.Load([]byte(`{"start": "2026-10-15", "end": "2027-03-31", "zones": {"3": ["wed", "sat"], "4": ["mon", "thu"]}}`), loc)
+	if err != nil {
+		t.Fatal(err)
+	}
+	cols, err := colonias.Load([]byte(`[{"name": "PRUEBA SIN ZONA", "municipio": "GUADALAJARA", "zones": [], "multi": false},
+		{"name": "PRUEBA SEIS", "municipio": "GUADALAJARA", "zones": [6], "multi": false},
+		{"name": "PRUEBA TRES", "municipio": "GUADALAJARA", "zones": [3, 4, 6], "multi": true},
+		{"name": "PRUEBA ASTERISCO", "municipio": "GUADALAJARA", "zones": [4], "multi": true},
+		{"name": "PRUEBA PARTIDA", "municipio": "GUADALAJARA", "zones": [4, 6], "multi": true}]`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	h.bot.Schedule, h.bot.Colonias = sched, cols
+	for _, name := range []string{"prueba sin zona", "prueba seis"} {
+		if got := h.send(t, text(name)); !strings.HasPrefix(got, "No tengo días de corte para *PRUEBA") {
+			t.Errorf("%s: a colonia without a zone that has days is outside the rotation, got:\n%s", name, got)
+		}
+	}
+	// Two zones with days are left to pick from; SIAPA's * on a colonia it lists in one zone,
+	// all with days, still asks, as before.
+	for name, want := range map[string]string{"prueba tres": "Z:3 Z:4", "prueba asterisco": "Z:4"} {
+		h.send(t, text(name))
+		var ids []string
+		if m := h.sender.Sent[len(h.sender.Sent)-1]; m.Interactive != nil {
+			for _, row := range m.Interactive.Action.Sections[0].Rows {
+				ids = append(ids, row.ID)
+			}
+		}
+		if got := strings.Join(ids, " "); got != want {
+			t.Errorf("%s: choices %q, want %q", name, got, want)
+		}
+	}
+	// Catedral is in zone 6, which this rotation doesn't have.
+	if got := h.send(t, wa.Inbound{Type: "location", Location: &wa.Location{Latitude: 20.6767, Longitude: -103.3475}}); got != msgOutside {
+		t.Errorf("unexpected:\n%s", got)
+	}
+	if got := h.send(t, text("zona 6")); got != msgHelp(h.bot.BaseURL, store.WhatsApp) {
+		t.Errorf("unexpected:\n%s", got)
+	}
+	if len(h.store.Subs) != 0 {
+		t.Fatalf("subscribed to a zone without days: %+v", h.store.Subs)
+	}
+	// With one zone with days left, there's nothing to pick.
+	h.send(t, text("prueba partida"))
+	if s, ok := h.store.Subs["MX.42"]; !ok || s.Zone != 4 {
+		t.Errorf("a split colonia with one zone with days subscribes to it: %+v", h.store.Subs)
+	}
+	h.send(t, wa.Inbound{Type: "location", Location: &wa.Location{Latitude: 20.6597, Longitude: -103.3496}})
+	if s, ok := h.store.Subs["MX.42"]; !ok || s.Zone != 3 {
+		t.Errorf("a location in zone 3 still subscribes: %+v", h.store.Subs)
+	}
+}
+
+func TestColoniaButtonsFitTelegram(t *testing.T) {
+	var list []struct{ Name string }
+	if err := json.Unmarshal(data.Colonias, &list); err != nil {
+		t.Fatal(err)
+	}
+	cols, err := colonias.Load(data.Colonias)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Only SIAPA's list becomes buttons; the other colonias are answered in text.
+	ids := map[string]bool{}
+	for _, c := range list {
+		matches, exact := cols.Search(c.Name, 0)
+		if !exact {
+			t.Fatalf("%s doesn't find itself", c.Name)
+		}
+		for _, choice := range coloniaChoices(matches) {
+			if n := len(choice.ID); n > 64 {
+				t.Errorf("%q is %d bytes; Telegram's callback data takes 64", choice.ID, n)
+			}
+			ids[choice.ID] = true
+		}
+	}
+	if len(ids) != len(list) {
+		t.Errorf("checked %d buttons for %d colonias", len(ids), len(list))
 	}
 }
 

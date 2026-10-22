@@ -1,8 +1,8 @@
-"""Write web/colonias.geojson, the outline of each SIAPA colonia with the zones of
-api/data/zonas.geojson it overlaps (SIAPA's list can name others; no page loads it since
-/mizona draws SIAPA's own map), and api/data/otras_colonias.json, the colonias INE knows
-that aren't on SIAPA's rotation list, with the zones they overlap (none = not affected by
-the rotation). pipelines/mapa_colonias.py then gives those the zones SIAPA's map draws.
+"""Write pipelines/colonias.geojson, the outline of each SIAPA colonia with the zones of
+api/data/zonas.geojson it overlaps (SIAPA's list can name others; only mymaps_kml.py reads
+it, since /mizona draws SIAPA's own map), and api/data/otras_colonias.json, the colonias INE
+knows that aren't on SIAPA's rotation list, with the zones they overlap (none = not affected
+by the rotation). pipelines/mapa_colonias.py then gives those the zones SIAPA's map draws.
 
 Source: INE's Base Geográfica Digital for Jalisco (cut of 15 Dec 2025), layer COLONIA,
 from cartografia.ine.mx (BGD_15_diciembre_2025, "14 JALISCO.7z", shapefile without
@@ -28,7 +28,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 COLONIAS = ROOT / "api" / "data" / "colonias.json"
-OUT = ROOT / "web" / "colonias.geojson"
+OUT = ROOT / "pipelines" / "colonias.geojson"
 OTHERS = ROOT / "api" / "data" / "otras_colonias.json"
 ZONAS = ROOT / "api" / "data" / "zonas.geojson"
 

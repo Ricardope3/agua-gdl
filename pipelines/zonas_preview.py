@@ -1,4 +1,5 @@
-"""Draw web/zonas.svg, the static zone map on the landing page, from api/data/zonas.geojson, with the
+"""Draw experiments/landing/zonas.svg, the static zone map the landing showed from 15 to 20 Oct 2026
+(some of the earlier landings kept there load it as /zonas.svg), from api/data/zonas.geojson, with the
 municipio borders from pipelines/municipios_amg.geojson (INE BGD Jalisco, Dec 2025, layer MUNICIPIO,
 simplified to 50 m: ogr2ogr -f GeoJSON -t_srs EPSG:4326 -where "MUNICIPIO IN (41,120,99,102)"
 -simplify 50 -select nombre -lco COORDINATE_PRECISION=5 municipios_amg.geojson MUNICIPIO.shp)."""
@@ -114,5 +115,5 @@ text{{fill:#f0f9ff;stroke:#06141d}}
 {"".join(labels)}
 </svg>
 """
-(root / "web/zonas.svg").write_text(svg)
-print(f"web/zonas.svg {WIDTH}x{height}, {len(svg) // 1024} KB")
+(root / "experiments/landing/zonas.svg").write_text(svg)
+print(f"experiments/landing/zonas.svg {WIDTH}x{height}, {len(svg) // 1024} KB")

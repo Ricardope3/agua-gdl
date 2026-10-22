@@ -93,7 +93,8 @@ func TestTypedAnswersPointToTheButtons(t *testing.T) {
 		if s, ok := h.sub(t); !ok || s.Zone != 5 {
 			t.Fatalf("%q changed the subscription: %+v %v", text, s, ok)
 		}
-		if !strings.Contains(m.Text, "toca uno de los botones") || !strings.Contains(m.Text, "<b>BAJA</b>") {
+		// The bot can't tell a «no» to a reminder from a «no» to «¿Es la tuya?» about a colonia.
+		if !strings.Contains(m.Text, "toca uno de los botones") || !strings.Contains(m.Text, "<b>BAJA</b>") || !strings.Contains(m.Text, "Si es sobre tu colonia") {
 			t.Errorf("%q: %s", text, m.Text)
 		}
 	}
@@ -240,28 +241,35 @@ func TestRejoiningCantReportTheSameCutAgain(t *testing.T) {
 	}
 }
 
-func TestNoSubscriptionsAfterTheRetentionDeadline(t *testing.T) {
-	h := newTGHarness(t, "2027-04-29 23:59")
-	h.say(t, "zona 4")
-	loc, _ := time.LoadLocation("America/Mexico_City")
-	h.bot.Now = func() time.Time { return time.Date(2027, 4, 30, 0, 0, 0, 0, loc) }
+func TestNoSubscriptionsOnceTheRotationIsOver(t *testing.T) {
+	h := newTGHarness(t, "2026-10-14 10:00")
+	_, end := h.bot.Schedule.Span()
+	h.bot.Now = func() time.Time { return end.Add(24*time.Hour - time.Minute) }
+	m := h.say(t, "zona 4")
+	if s, ok := h.sub(t); !ok || s.Zone != 4 || !strings.Contains(m.Text, "<b>ZONA 1</b> a <b>ZONA 7</b> para cambiar de zona") {
+		t.Fatalf("the rotation's last day still takes subscriptions and zone changes: %+v %v\n%s", s, ok, m.Text)
+	}
+	h.bot.Now = func() time.Time { return end.AddDate(0, 0, 1) }
 	if m := h.say(t, "zona 6"); !strings.Contains(m.Text, "ya terminó") {
-		t.Fatalf("30 days after the end, no zone changes: %s", m.Text)
+		t.Fatalf("from the day after the end, no zone changes: %s", m.Text)
 	}
 	if s, _ := h.sub(t); s.Zone != 4 {
 		t.Fatalf("zone %d, want 4", s.Zone)
+	}
+	if m := h.say(t, "hola"); !strings.Contains(m.Text, "Escribe <b>BAJA</b> para borrar tu suscripción.") || strings.Contains(m.Text, "ZONA 1") {
+		t.Fatalf("once the rotation is over, the greeting offers BAJA, not zone changes: %s", m.Text)
 	}
 	h.say(t, "/baja")
 	if _, ok := h.sub(t); ok {
 		t.Fatal("BAJA still works")
 	}
 	if m := h.say(t, "zona 4"); !strings.Contains(m.Text, "ya terminó") {
-		t.Fatalf("no new subscriptions after the purge: %s", m.Text)
+		t.Fatalf("no new subscriptions once the rotation is over: %s", m.Text)
 	}
 	if _, ok := h.sub(t); ok {
-		t.Fatal("subscribed after the retention deadline")
+		t.Fatal("subscribed after the rotation's end")
 	}
-	m := h.say(t, "/start")
+	m = h.say(t, "/start")
 	if _, asks := m.ReplyMarkup.(tg.ReplyKeyboard); asks || !strings.Contains(m.Text, "ya terminó") {
 		t.Fatalf("/start says the rotation is over instead of asking for a location: %+v", m)
 	}
@@ -322,6 +330,66 @@ func TestTelegramHTML(t *testing.T) {
 	want := "&lt;script&gt; &amp; <b>Zona 4</b>: <i>Las Juntas</i> en https://aguagdl.com/privacidad"
 	if got != want {
 		t.Errorf("got  %s\nwant %s", got, want)
+	}
+}
+
+func TestTypedMarkupIsShownBackPlain(t *testing.T) {
+	h := newTGHarness(t, "2026-10-14 10:00")
+	// As bold and italics, these would close out of order and Telegram would refuse the reply.
+	if m := h.say(t, "*a _b* c_"); !strings.HasPrefix(m.Text, "No encontré «a b c»") {
+		t.Fatalf("got %q", m.Text)
+	}
+}
+
+func TestEveryMessageIsHTMLTelegramTakes(t *testing.T) {
+	SignButtons("test")
+	loc, _ := time.LoadLocation("America/Mexico_City")
+	one := []time.Time{time.Date(2026, 10, 24, 0, 0, 0, 0, loc)}
+	block := []time.Time{time.Date(2026, 10, 21, 0, 0, 0, 0, loc), time.Date(2026, 10, 23, 0, 0, 0, 0, loc), time.Date(2026, 10, 25, 0, 0, 0, 0, loc)}
+	const base = "https://aguagdl.test"
+	texts := []string{
+		msgWelcome(base, store.Telegram), msgWelcome(base, store.WhatsApp), msgHelp(base, store.Telegram), msgHelp(base, store.WhatsApp),
+		msgUseButtons, msgNotFound("*a _b* c_"), msgOutside, msgColoniaOutside("AMERICANA"), msgMunicipio("Tonalá"),
+		msgPickColonia, msgPickOneColonia, msgOtherColonia("EL MIRADOR", "Tonalá", nil), msgOtherColonia("EL MIRADOR", "Tonalá", []int{5, 6}),
+		msgOrOneOfThese, msgOrThisOne, msgPickZone("AMERICANA", []int{6}), msgPickZone("AMERICANA", []int{5, 6}), msgPickZoneAtPoint,
+		msgPipa(base), msgWrite(base), msgFull(base), msgUnsubscribed, msgNotSubscribed, msgNoUserID, msgUnsupported,
+		msgNoReportYet, msgReportClosed, msgReportBeforeJoin, msgRotationOver(base), msgAskReport("jueves 15 de octubre"), msgThanks,
+		msgAskPlace, ScheduleChange(4, "lunes y jueves", "lunes 2 de noviembre"), ManualReminder("lunes 19 de octubre", 4),
+		reminderBody("lunes 19 de octubre", 4), msgNotice(one, 3), msgNotice(block, 1), msgFollowUp(block, 1), msgReportMap(base),
+		AvisosChange(base, 1, block), AvisosChange(base, 1, nil), msgTelegramReminder(one, 3), msgTelegramReminder(block, 1),
+	}
+	for _, a := range waterAnswers {
+		texts = append(texts, a.thanks)
+	}
+	info := subscribedInfo{zone: 1, days: "miércoles, viernes y domingo", hour: "8 p. m.", base: base, channel: store.Telegram}
+	fresh, under, off, over := info, info, info, info
+	fresh.fresh, fresh.cutTomorrow, fresh.nextReminder, fresh.nextCut = true, block, "hoy", one
+	under.cutsLeft, under.nextReminder, under.nextCut = block[1:], "lunes 26 de octubre", block
+	off.off, off.channel = true, store.WhatsApp
+	over.over, over.off = true, true
+	for _, i := range []subscribedInfo{info, fresh, under, off, over} {
+		texts = append(texts, msgSubscribed(i))
+	}
+	var msgs []tg.Message
+	for _, text := range texts {
+		m, err := TelegramMessage("777", Reply{Text: text})
+		if err != nil {
+			t.Fatal(err)
+		}
+		msgs = append(msgs, m)
+	}
+	for _, build := range []func(string, int, []time.Time) (tg.Message, error){TelegramReminder, TelegramNotice, TelegramFollowUp} {
+		m, err := build("777", 7, block)
+		if err != nil {
+			t.Fatal(err)
+		}
+		msgs = append(msgs, m)
+	}
+	tel := &fake.Telegram{}
+	for _, m := range msgs {
+		if _, err := tel.Send(context.Background(), m); err != nil {
+			t.Errorf("%v:\n%s", err, m.Text)
+		}
 	}
 }
 
