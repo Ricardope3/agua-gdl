@@ -87,6 +87,7 @@ Agua GDL sends free Telegram reminders before each block of cuts of SIAPA's wate
 - `privacidad.html` and `terminos.html` are the privacy notice and terms of use; Meta's app settings link to them, so keep their URLs.
 - Removed until there are enough reports, in git history: `resultados.html` (with `GET /v1/results`, `store.Results` and its menu and footer links) and `informes.html` (see `cmd/informe`).
 - `experiments/landing/` (not deployed) keeps earlier landings and variants. `variantes.py` writes variants into `web/` from the blocks of `index.html`'s `<main>`, found by their class, so keep those classes; as it stands it rewrites the dropped fourth round (/v11…/v15), so change it before running it.
+- Variants of /reportes (since 22 Oct 2026, noindex, each a standalone copy of `reportes.html` with a bar to switch between them and /reportes): `web/r1.html` «La crisis día por día» (a timeline with play and a scrubber chart; `?dia=` opens a date), `r2.html` «Una de cada tres» (one square per SIAPA colonia, by municipio), `r3.html` «Prometieron un día» (each colonia a dot at its days against SIAPA's one-day promise), `r4.html` «Tu colonia primero» (search first, then an answer card to share) and `r5.html` «Sin marcadores» (only the fill by days, the key as a filter, a sidebar). They don't follow later changes to `reportes.html`; once one is chosen, fold it in and 301 /r1…/r5 to /reportes.
 
 ### Brand assets (repo root)
 
