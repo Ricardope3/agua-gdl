@@ -189,6 +189,7 @@ table.week td.cut { box-shadow: inset 0 0 0 2.5px var(--fg) }
 .sev { background: none; border: 0 }
 .sev span { display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%; background: var(--c); color: var(--k); font: 700 12px/1 var(--font); font-variant-numeric: tabular-nums; box-shadow: 0 0 0 2px var(--surface), 0 1px 3px rgb(3 14 22 / .45) }
 .sev.far span { font-size: 10.5px; box-shadow: 0 0 0 1.5px var(--surface), 0 1px 2px rgb(3 14 22 / .45) }
+.sev.nodays span { background: color-mix(in srgb, var(--s0) 20%, var(--surface)); border: 1.5px dashed var(--s0); color: var(--fg) }
 .sevb { display: inline-grid; place-items: center; min-width: 2.6em; padding: 3px 7px; border-radius: 999px; background: var(--c); color: var(--k); font-weight: 700; font-size: .85rem; line-height: 1.2; white-space: nowrap; font-variant-numeric: tabular-nums }
 .sevb.nodays { background: color-mix(in srgb, var(--c) 18%, var(--surface)); color: var(--fg); border: 1.5px dashed var(--c); font-weight: 600 }
 .ev { margin: 4px 0 0 }
@@ -460,7 +461,7 @@ if (window.top !== window.self) {
     <section aria-labelledby="como">
       <h2 class="sec" id="como">Cómo funciona</h2>
       <ul class="plain">
-        <li><strong>Las publicaciones.</strong> Buscamos en las notas de los medios, en Facebook, incluidos los grupos públicos de colonias, y en X lo que se publica desde el 12 de octubre sobre colonias sin agua. De los medios va todo lo que nombra una colonia, y va primero en cada ficha. De los vecinos, solo publicaciones con al menos 5 reacciones y 1 comentario, o comentarios en publicaciones así. Citamos sus palabras con la fecha y el enlace, y cada colonia toma el número de días más alto que dicen.</li>
+        <li><strong>Las publicaciones.</strong> Buscamos en las notas de los medios, en Facebook, incluidos los grupos públicos de colonias, y en X lo que se publica desde el 12 de octubre sobre colonias sin agua. De los medios va todo lo que nombra una colonia, y va primero en cada ficha. De los vecinos, solo publicaciones con al menos 5 reacciones y 1 comentario, o comentarios en publicaciones así. Citamos sus palabras con la fecha y el enlace. Cada colonia toma el color del número de días más alto que dicen, y el número sobre ella cuenta todos sus reportes: las publicaciones más los reportes de este mapa en las últimas 24 horas.</li>
         <li><strong>Las imágenes</strong> son la vista previa que cada nota o publicación comparte (su foto o el cuadro de su video). Guardamos una copia pequeña en aguagdl.com, así tu navegador no se conecta a Facebook, a X ni a los medios para verlas; tocarlas abre la publicación. Las notas y publicaciones de solo texto no tienen imagen.</li>
         <li><strong>Contamos fuentes, no «me gusta».</strong> Mucho eco no prueba que algo sea cierto: en Twitter, las noticias falsas tenían 70 % más probabilidad de ser retuiteadas que las verdaderas (<a href="https://doi.org/10.1126/science.aap9559" rel="noopener">Vosoughi, Roy y Aral, 2018</a>). Por eso el color sale de los días que dicen las publicaciones, y la confianza, de cuántas fuentes distintas lo dicen y de si lo reporta un medio; varias publicaciones de la misma cuenta, página o grupo cuentan como una sola fuente. El eco (reacciones, comentarios y veces compartida) se muestra aparte.</li>
         <li><strong>No publicamos nombres de personas.</strong> De los vecinos mostramos la colonia, la fecha y el enlace a lo que publicaron; de los medios y los grupos públicos, su nombre. Si una publicación es tuya y quieres que la quitemos, escríbenos a <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>.</li>
@@ -768,16 +769,18 @@ if (window.top !== window.self) {
     }
     function drawMarkers() {
       markers.clearLayers();
-      // Publications: a badge with the most days given, or a small dot when none gives days. They
-      // shrink when the whole city is in view, where neighbouring colonias' badges overlap.
+      // Publications: a badge with every report of the colonia, its publications plus this map's last
+      // 24 hours, coloured by the most days given (dashed when none gives days). They shrink when the
+      // whole city is in view, where neighbouring colonias' badges overlap.
       const far = map.getZoom() < 12;
       for (const [k, e] of ev) {
         const fs = features.get(k);
         if (!fs) continue;
-        const s = sevOf(e.dias), size = s ? (far ? 21 : 26) : (far ? 11 : 14);
+        const c = byKey.get(k), total = e.posts.length + (c ? totalOf(c) : 0), n = total > 99 ? "99+" : String(total);
+        const s = sevOf(e.dias), size = (far ? 21 : 26) + (n.length > 2 ? 4 : 0);
         const m = L.marker(L.geoJSON(fs[0]).getBounds().getCenter(), {
-          icon: L.divIcon({ className: far ? "sev far" : "sev", html: `<span style="${sevVars(s)}">${s ? e.dias : ""}</span>`, iconSize: [size, size] }),
-          keyboard: false, zIndexOffset: 1000 + (e.dias || 0), title: `${fs[0].properties.n}: ${evLine(e)}`,
+          icon: L.divIcon({ className: `sev${far ? " far" : ""}${s ? "" : " nodays"}`, html: `<span style="${sevVars(s)}">${n}</span>`, iconSize: [size, size] }),
+          keyboard: false, zIndexOffset: 1000 + total, title: `${fs[0].properties.n}: ${plural(total, "reporte", "reportes")} · ${evLine(e)}`,
         });
         m.on("click", () => select(fs[0]));
         markers.addLayer(m);
