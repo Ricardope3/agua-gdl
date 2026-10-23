@@ -3,3 +3,4 @@ pipelines/.venv/
 *.pdf
 .DS_Store
 *.kml
+/aguagdl_nowhite.png
