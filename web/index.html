@@ -321,8 +321,8 @@ html, body { overflow-x: clip }
       <h1>El SIAPA prometió un día. Hay vecinos con semanas sin agua.</h1>
     </div>
     <div class="maphero">
-      <div class="mapframe-box"><iframe class="mapframe" src="/reportes-portada?q=CIUDAD+GRANJA&amp;m=Zapopan&amp;cp=45010" title="Mapa de lo que publican medios y vecinos, colonia por colonia"></iframe></div>
-      <p class="mapnote" data-colonia="CIUDAD GRANJA|Zapopan|45010" data-nombre="Ciudad Granja, Zapopan"><span>Ciudad Granja, en Zapopan, en el mapa de lo que publican medios y vecinos.</span> <a href="/reportes?q=CIUDAD+GRANJA&amp;m=Zapopan&amp;cp=45010">Abrir el mapa completo</a></p>
+      <div class="mapframe-box"><iframe class="mapframe" src="/reportes-portada" title="Mapa de lo que publican medios y vecinos, colonia por colonia"></iframe></div>
+      <p class="mapnote"><span>Toca una colonia o búscala para ver lo que publican medios y vecinos, y reporta la tuya.</span> <a href="/reportes">Abrir el mapa completo</a></p>
     </div>
     <div class="vs-grid contrast">
       <div class="vs-col promesa">
@@ -519,15 +519,16 @@ html, body { overflow-x: clip }
     const w = f.contentWindow, b = f.contentDocument && f.contentDocument.querySelector(".theme-btn");
     if (w && w.aguaDark && b && w.aguaDark() !== aguaDark()) b.click();
   });
-  const note = document.querySelector(".mapnote[data-colonia]");
-  if (note) fetch("/publicaciones.json").then((r) => (r.ok ? r.json() : null)).then((doc) => {
-    if (!doc || !Array.isArray(doc.publicaciones)) throw new Error("publicaciones");
-    const count = new Map();
-    for (const p of doc.publicaciones) for (const k of p.colonias) count.set(k, (count.get(k) || 0) + 1);
-    const n = count.get(note.dataset.colonia) || 0, most = Math.max(...count.values());
-    const alone = [...count.values()].filter((v) => v === most).length === 1;
-    if (n) note.firstChild.textContent = `${n} ${n === 1 ? "publicación" : "publicaciones"} de medios y vecinos sobre la falta de agua en ${note.dataset.nombre}${n === most && alone ? ": más que en ninguna otra colonia" : ""}.`;
-  }).catch(() => { note.firstChild.textContent = `No pudimos cargar lo que publican medios y vecinos sobre ${note.dataset.nombre}. Intenta de nuevo en unos minutos.`; });
+  const box = f.parentElement;
+  // Three seconds after landing, the page scrolls down to the map, unless the visitor has already
+  // scrolled or touched something, or asked for less motion.
+  let touched = false;
+  for (const ev of ["wheel", "touchstart", "keydown", "pointerdown"]) addEventListener(ev, () => { touched = true; }, { passive: true, once: true });
+  setTimeout(() => {
+    if (touched || scrollY > 40 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const head = document.querySelector("header.top");
+    scrollTo({ top: box.getBoundingClientRect().top + scrollY - (head ? head.offsetHeight : 0), behavior: "smooth" });
+  }, 3000);
 })();
 </script>
 </body>
