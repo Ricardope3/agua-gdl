@@ -1471,14 +1471,14 @@ if (window.top !== window.self) {
     // neighbours say it, how long half of them have gone without water, and the SIAPA zone they're in
     // (a colonia's main zone, the one with most of its area).
     const mainZone = (k) => M.zones(features.get(k)[0].properties).all[0];
-    // r1: below the municipios, the three colonias with the most reports up to the timeline's day
+    // r1: below the municipios, the four colonias with the most reports up to the timeline's day
     // (publications, plus this map's 24 hours on the latest day), as their badges count them.
     function renderSlices() {
       $("ov-dia").hidden = true;
       const rows = onMap(evNow).map((k) => {
         const e = evNow.get(k), c = atEnd() ? byKey.get(k) : null;
         return { k, e, f: features.get(k)[0], total: e.posts.length + (c ? totalOf(c) : 0) };
-      }).sort((a, b) => b.total - a.total || daysOr0(b.e) - daysOr0(a.e) || b.e.fuentes - a.e.fuentes).slice(0, 3);
+      }).sort((a, b) => b.total - a.total || daysOr0(b.e) - daysOr0(a.e) || b.e.fuentes - a.e.fuentes).slice(0, 4);
       $("top-h").textContent = `${rows.length > 1 ? "Las que tienen más reportes" : "La colonia con reportes"}${atEnd() ? "" : `, al ${dateES(DAYS[at], true)}`}`;
       $("top-reportes").replaceChildren(...rows.map(({ e, f, total }) => {
         const s = sevOf(e.dias);
