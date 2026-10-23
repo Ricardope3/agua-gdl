@@ -22401,6 +22401,26 @@
     "al": "2026-10-23"
    },
    "vista": "fuentes/f3c34d16217d.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "Historias de la Noche GDL",
+   "url": "https://www.facebook.com/HISTORIASDELANOCHEGDL/posts/pfbid0PV4cZpeB2FjDL8hgK1rHsPu3cD5MN1jJ8nNeSXKWUXxyVpAoiVoMUModfoinxZkQl",
+   "fecha": "2026-10-22",
+   "colonias": [
+    "POLANQUITO PONIENTE|Guadalajara|44969",
+    "FRANCISCO VILLA|Guadalajara|44970"
+   ],
+   "lugar": "8 de Julio y Reyes Heroles, Guadalajara",
+   "cita": "Cuatro días consecutivos de manifestaciones en avenida 8 de Julio y Reyes Heroles al sur de Guadalajara, los vecinos de las colonias aledañas tienen 20 días sin agua en sus hogares",
+   "dias": 20,
+   "eco": {
+    "reacciones": 2400,
+    "comentarios": 235,
+    "compartidos": 140,
+    "al": "2026-10-23"
+   }
   }
  ]
 }
