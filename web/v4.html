@@ -301,15 +301,16 @@ html, body { overflow-x: clip }
 .cartel .ilus { width: min(60vw, 240px); height: auto; justify-self: center }
 @media (min-width: 760px) { .cartel { grid-template-columns: 1fr auto } .cartel .ilus { width: 240px } }
 </style>
-<style>/* variante v4: Menta */
-:root { --bg:#f1faf7; --surface:#ffffff; --subtle:#d5f3ea; --fg:#0f2a24; --muted:#4f6e66; --line:#cdeae1;
- --brand:#0f9d7a; --brand-deep:#0b7a5f; --link:#0b7a5f; --primary:#0f9d7a; --on-primary:#fff; --ring:#0f9d7a55; --alarm:#e5484d;
- --font: ui-rounded, "SF Pro Rounded", "Nunito", system-ui, sans-serif; --serif: ui-rounded, "SF Pro Rounded", system-ui, sans-serif;
- --shadow: 0 10px 30px -12px rgb(15 90 70 / .25) }
-@media (prefers-color-scheme: dark) { :root { --bg:#081915; --surface:#0e231e; --subtle:#123a30; --fg:#e6fbf4; --muted:#93bfb2; --line:#1b3c33; --brand:#2fd3a7; --brand-deep:#1fb08a; --link:#6ee7c5; --primary:#1fb08a; --alarm:#ff6b70 } }
-.card, .congreso, .signup, .finder, .summary, .facts li, .values li, .promesa, .posts li, .vs-facts > * { border-radius: 18px !important; border: 1px solid var(--line) !important; box-shadow: var(--shadow) !important }
-main h1, main h2 { font-weight: 800 }
-.button { border-radius: 14px }
+<style>/* variante v4: Suizo */
+:root { --bg:#f4f2ee; --surface:#ffffff; --subtle:#e3e9f5; --fg:#0a0a0a; --muted:#4a4a4a; --line:#0a0a0a;
+ --brand:#0038a8; --brand-deep:#002a80; --link:#0038a8; --primary:#ff5a1f; --on-primary:#fff; --ring:#0038a866; --alarm:#ff5a1f; --mark:#ff5a1f; --mark-fg:#fff;
+ --font: "Helvetica Neue", Helvetica, Arial, sans-serif; --serif: "Helvetica Neue", Helvetica, Arial, sans-serif; --shadow:none }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a0a0a; --surface:#141414; --subtle:#0f1d3a; --fg:#f4f2ee; --muted:#b0b0b0; --line:#f4f2ee; --brand:#5b8cff; --brand-deep:#3d6fe8; --link:#8fb0ff; --primary:#ff6a33; --alarm:#ff6a33 } }
+main h1 { font-weight: 800; letter-spacing: -.05em; line-height: .92 }
+main h2 { font-weight: 700; letter-spacing: -.035em }
+.card, .congreso, .signup, .finder, .summary, .facts li, .values li, .promesa, .posts li, .vs-facts > * { border-radius: 0 !important; box-shadow: none !important; border: 0 !important; background: var(--subtle) !important }
+section { border-top: 1px solid var(--line) }
+.button { border-radius: 0; font-weight: 700 }
 
 .vbar { position: fixed; left: 8px; bottom: 8px; z-index: 50; background: var(--fg); color: var(--bg); font: 12px/1.4 system-ui, sans-serif; padding: 6px 10px; border-radius: 6px; max-width: calc(100% - 16px) }
 .vbar a { color: inherit; opacity: .7 } .vbar a[aria-current] { opacity: 1; font-weight: 700 }
@@ -551,6 +552,6 @@ main h1, main h2 { font-weight: 800 }
   }, 3000);
 })();
 </script>
-<nav class="vbar"><a href="/">actual</a> · <a href="/v1">v1 Periódico</a> · <a href="/v2">v2 Tierra</a> · <a href="/v3">v3 Brutal</a> · <a href="/v4" aria-current=page>v4 Menta</a> · <a href="/v5">v5 Protesta</a></nav>
+<nav class="vbar"><a href="/">actual</a> · <a href="/v1">v1 Periódico</a> · <a href="/v2">v2 Archivo</a> · <a href="/v3">v3 Cristal</a> · <a href="/v4" aria-current=page>v4 Suizo</a> · <a href="/v5">v5 Pizarra</a></nav>
 </body>
 </html>

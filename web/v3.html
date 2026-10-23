@@ -301,16 +301,18 @@ html, body { overflow-x: clip }
 .cartel .ilus { width: min(60vw, 240px); height: auto; justify-self: center }
 @media (min-width: 760px) { .cartel { grid-template-columns: 1fr auto } .cartel .ilus { width: 240px } }
 </style>
-<style>/* variante v3: Brutal */
-:root { --bg:#ffffff; --surface:#ffffff; --subtle:#fff36b; --fg:#000; --muted:#222; --line:#000;
- --brand:#0047ff; --brand-deep:#0033bb; --link:#0033bb; --primary:#000; --on-primary:#fff36b; --ring:#0047ff88; --alarm:#ff2a00;
- --font: ui-monospace, "SF Mono", Menlo, Consolas, monospace; --serif: "Helvetica Neue", Helvetica, Arial, sans-serif; --shadow: 4px 4px 0 #000 }
-@media (prefers-color-scheme: dark) { :root { --bg:#000; --surface:#0d0d0d; --subtle:#3a3500; --fg:#fff; --muted:#ddd; --line:#fff; --brand:#5c8cff; --link:#8fb0ff; --primary:#fff36b; --on-primary:#000; --shadow: 4px 4px 0 #fff36b } }
-.card, .congreso, .signup, .finder, .summary, .facts li, .values li, .promesa, .posts li, .vs-facts > * { border-radius: 0 !important; border: 2px solid var(--line) !important; box-shadow: var(--shadow) !important }
-main h1, main h2 { font-weight: 900; letter-spacing: -.04em; text-transform: uppercase }
-.button { border-radius: 0; border: 2px solid var(--line); box-shadow: var(--shadow) }
-.button:hover { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--line) }
-section { border-top: 2px solid var(--line) }
+<style>/* variante v3: Cristal */
+:root { --bg:#dcecfb; --surface:rgb(255 255 255 / .55); --subtle:rgb(255 255 255 / .6); --fg:#0b2440; --muted:#3f5b78; --line:rgb(255 255 255 / .8);
+ --brand:#2563eb; --brand-deep:#1d4ed8; --link:#1d4ed8; --primary:#2563eb; --on-primary:#fff; --ring:#2563eb55; --alarm:#e11d48;
+ --font: "SF Pro Display", -apple-system, "Segoe UI", system-ui, sans-serif; --serif: "SF Pro Display", -apple-system, system-ui, sans-serif;
+ --shadow: 0 8px 32px rgb(30 64 175 / .15) }
+@media (prefers-color-scheme: dark) { :root { --bg:#050d1f; --surface:rgb(255 255 255 / .06); --subtle:rgb(255 255 255 / .08); --fg:#e8f0ff; --muted:#9db0d0; --line:rgb(255 255 255 / .14); --brand:#60a5fa; --brand-deep:#3b82f6; --link:#93c5fd; --primary:#3b82f6; --alarm:#fb7185 } }
+body { background: radial-gradient(1200px 700px at 10% 0%, #a5d8ff 0, transparent 60%), radial-gradient(900px 600px at 100% 30%, #c4b5fd 0, transparent 55%), var(--bg); background-attachment: fixed }
+@media (prefers-color-scheme: dark) { body { background: radial-gradient(1200px 700px at 10% 0%, #0b3a6e 0, transparent 60%), radial-gradient(900px 600px at 100% 30%, #3b1d6e 0, transparent 55%), var(--bg); background-attachment: fixed } }
+.card, .congreso, .signup, .finder, .summary, .facts li, .values li, .promesa, .posts li, .vs-facts > * { border-radius: 20px !important; border: 1px solid var(--line) !important; box-shadow: var(--shadow) !important; backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4) }
+main h1, main h2 { font-weight: 700; letter-spacing: -.03em }
+section { border-top: 0 }
+.button { border-radius: 12px }
 
 .vbar { position: fixed; left: 8px; bottom: 8px; z-index: 50; background: var(--fg); color: var(--bg); font: 12px/1.4 system-ui, sans-serif; padding: 6px 10px; border-radius: 6px; max-width: calc(100% - 16px) }
 .vbar a { color: inherit; opacity: .7 } .vbar a[aria-current] { opacity: 1; font-weight: 700 }
@@ -552,6 +554,6 @@ section { border-top: 2px solid var(--line) }
   }, 3000);
 })();
 </script>
-<nav class="vbar"><a href="/">actual</a> · <a href="/v1">v1 Periódico</a> · <a href="/v2">v2 Tierra</a> · <a href="/v3" aria-current=page>v3 Brutal</a> · <a href="/v4">v4 Menta</a> · <a href="/v5">v5 Protesta</a></nav>
+<nav class="vbar"><a href="/">actual</a> · <a href="/v1">v1 Periódico</a> · <a href="/v2">v2 Archivo</a> · <a href="/v3" aria-current=page>v3 Cristal</a> · <a href="/v4">v4 Suizo</a> · <a href="/v5">v5 Pizarra</a></nav>
 </body>
 </html>

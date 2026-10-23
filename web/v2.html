@@ -301,15 +301,15 @@ html, body { overflow-x: clip }
 .cartel .ilus { width: min(60vw, 240px); height: auto; justify-self: center }
 @media (min-width: 760px) { .cartel { grid-template-columns: 1fr auto } .cartel .ilus { width: 240px } }
 </style>
-<style>/* variante v2: Tierra */
-:root { --bg:#faf4ec; --surface:#fffaf3; --subtle:#f3e2cf; --fg:#2e1f14; --muted:#7a6250; --line:#ead6c0;
- --brand:#c2552d; --brand-deep:#9c3f1f; --link:#9c3f1f; --primary:#c2552d; --on-primary:#fff; --ring:#c2552d55; --alarm:#c2552d;
- --font: "Avenir Next", Avenir, "Segoe UI", system-ui, sans-serif; --serif: Optima, Candara, "Avenir Next", sans-serif;
- --shadow: 0 6px 20px rgb(120 60 20 / .10) }
-@media (prefers-color-scheme: dark) { :root { --bg:#1c140e; --surface:#261b13; --subtle:#3a281b; --fg:#f7eadc; --muted:#c4a98f; --line:#3e2c1f; --brand:#e8794f; --brand-deep:#c95f37; --link:#f2a07f; --primary:#e8794f; --alarm:#f08b62 } }
-.card, .congreso, .signup, .finder, .summary, .facts li, .values li, .promesa, .posts li, .vs-facts > * { border-radius: 22px !important; border: 0 !important }
-.button { border-radius: 999px; padding: 11px 22px }
-section { border-top: 0 }
+<style>/* variante v2: Archivo */
+:root { --bg:#efe6d2; --surface:#f7f0df; --subtle:#e4d6b8; --fg:#2b2418; --muted:#5e5340; --line:#a8977a;
+ --brand:#a3201a; --brand-deep:#7e1712; --link:#7e1712; --primary:#2b2418; --on-primary:#f7f0df; --ring:#a3201a55; --alarm:#a3201a; --mark:#e8c766;
+ --font: "American Typewriter", "Courier Prime", "Courier New", monospace; --serif: "American Typewriter", "Courier New", monospace; --shadow: none }
+@media (prefers-color-scheme: dark) { :root { --bg:#1b1812; --surface:#24201a; --subtle:#332c20; --fg:#ece2cc; --muted:#b5a687; --line:#5a4e3a; --brand:#e0574d; --brand-deep:#c2443b; --link:#f08a80; --primary:#ece2cc; --on-primary:#1b1812; --alarm:#f0786e } }
+.card, .congreso, .signup, .finder, .summary, .facts li, .values li, .promesa, .posts li, .vs-facts > * { border-radius: 2px !important; box-shadow: none !important; border: 1.5px dashed var(--line) !important }
+section { border-top: 1.5px dashed var(--line) }
+main h1 { color: var(--brand) }
+.button { border-radius: 2px; border: 2px solid currentColor; text-transform: uppercase; letter-spacing: .1em; font-size: .8rem }
 
 .vbar { position: fixed; left: 8px; bottom: 8px; z-index: 50; background: var(--fg); color: var(--bg); font: 12px/1.4 system-ui, sans-serif; padding: 6px 10px; border-radius: 6px; max-width: calc(100% - 16px) }
 .vbar a { color: inherit; opacity: .7 } .vbar a[aria-current] { opacity: 1; font-weight: 700 }
@@ -551,6 +551,6 @@ section { border-top: 0 }
   }, 3000);
 })();
 </script>
-<nav class="vbar"><a href="/">actual</a> · <a href="/v1">v1 Periódico</a> · <a href="/v2" aria-current=page>v2 Tierra</a> · <a href="/v3">v3 Brutal</a> · <a href="/v4">v4 Menta</a> · <a href="/v5">v5 Protesta</a></nav>
+<nav class="vbar"><a href="/">actual</a> · <a href="/v1">v1 Periódico</a> · <a href="/v2" aria-current=page>v2 Archivo</a> · <a href="/v3">v3 Cristal</a> · <a href="/v4">v4 Suizo</a> · <a href="/v5">v5 Pizarra</a></nav>
 </body>
 </html>
