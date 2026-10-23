@@ -919,12 +919,13 @@ if (window.top !== window.self) {
         const fs = features.get(k);
         if (!fs) continue;
         const c = atEnd() ? byKey.get(k) : null, total = e.posts.length + (c ? totalOf(c) : 0), n = total > 99 ? "99+" : String(total);
-        const s = sevOf(e.dias), size = Math.round(Math.min(far ? 56 : 76, (far ? 19 : 24) + (far ? 3.2 : 4.4) * Math.sqrt(total - 1)) + (n.length > 2 ? 4 : 0));
+        // Logarithmic, so it levels off: 1 report is a small dot, 10 about twice as wide, 44 a bit more.
+        const s = sevOf(e.dias), size = Math.round((far ? 13 : 16) + (far ? 4.6 : 6.2) * Math.log(total) + (n.length > 2 ? 4 : 0));
         counts.set(k, total);
         const was = shown.get(k), pop = reduced ? "" : was != null ? (total > was ? " pop" : "") : shown.size ? " nace" : "";
         if (!centers.has(k)) centers.set(k, L.geoJSON(fs[0]).getBounds().getCenter());
         const m = L.marker(centers.get(k), {
-          icon: L.divIcon({ className: `sev${far ? " far" : ""}${s ? "" : " nodays"}${pop}`, html: `<span style="${sevVars(s)};font-size:${Math.max(far ? 10.5 : 12, Math.round(size * 0.4))}px">${n}</span>`, iconSize: [size, size] }),
+          icon: L.divIcon({ className: `sev${far ? " far" : ""}${s ? "" : " nodays"}${pop}`, html: `<span style="${sevVars(s)};font-size:${Math.max(far ? 9 : 10, Math.round(size * 0.42))}px">${n}</span>`, iconSize: [size, size] }),
           keyboard: false, zIndexOffset: 2000 - Math.min(total, 999), title: `${fs[0].properties.n}: ${plural(total, "reporte", "reportes")} · ${evLine(e)}`,
         });
         m.on("click", () => select(fs[0]));
