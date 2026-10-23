@@ -87,7 +87,7 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 .linklike { font: inherit; color: var(--link); background: none; border: 0; padding: 0; text-decoration: underline; text-underline-offset: 3px; cursor: pointer }
 
 /* The map fills the screen under the header, like a map app; «Ten en cuenta» follows below it. */
-.stage { position: relative; height: calc(100dvh - var(--hh, 64px) - 28px); min-height: 520px }
+.stage { position: relative; height: calc(100dvh - var(--hh, 60px) - 28px); min-height: 520px }
 .bigmap { position: absolute; inset: 0; background: var(--subtle); border-bottom: 1px solid var(--line) }
 .bigmap:focus-visible { outline: 3px solid var(--brand); outline-offset: -3px }
 @media (prefers-color-scheme: dark) { .bigmap .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) } .bigmap.leaflet-container { background: #0c1e2c } }
@@ -547,7 +547,10 @@ footer p { margin: 0 0 8px; max-width: 70ch }
   const stage = $("escenario"), finder = $("buscador"), strip = $("zonas"), modo = $("modo"), header = document.querySelector("header.top");
   const map = L.map("mapa", { preferCanvas: true, zoomSnap: 0.25, zoomControl: false, wheelPxPerZoomLevel: 40, wheelDebounceTime: 20 });
   L.control.zoom({ position: "topright" }).addTo(map);
-  map.setView([20.66, -103.37], 11);
+  // The opening view, chosen by hand on 22 Oct 2026: from the edge of La Primavera to Tonalá. The map starts
+  // on it, so it doesn't jump (and reload its streets) once the colonias arrive.
+  const HOME = L.latLngBounds([20.73112, -103.57774], [20.55529, -103.21068]).pad(-0.01);
+  map.fitBounds(HOME, { animate: false });
   // With a colonia in the link, the streets load once, at its view, instead of first for the whole city.
   let streets = false;
   const addStreets = () => { if (!streets) { streets = true; M.tiles(L, map); } };
@@ -793,7 +796,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     zoneHalo = L.geoJSON({ type: "FeatureCollection", features: zonas }, { interactive: false, renderer: zoneRenderer, style: zoneHaloStyle }).addTo(map);
     zoneLayer = L.geoJSON({ type: "FeatureCollection", features: zonas }, { interactive: false, renderer: zoneRenderer, style: zoneStyle }).addTo(map);
     zoneLayer.restyle = () => { zoneLayer.setStyle(zoneStyle); zoneHalo.setStyle(zoneHaloStyle); };
-    home = zoneLayer.getBounds().pad(-0.16);
+    home = HOME;
 
     // Coloured by zone, each colonia takes its main zone's colour (dashed when split between zones).
     // Coloured by days, as on /reportes: the most days its publications give, else this site's last 24 hours.
@@ -1059,7 +1062,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
   }
   function fitHome(animate) {
     if (!home) return;
-    const opts = { ...pads(), animate: animate && !reduced(), duration: 0.6 };
+    const opts = { animate: animate && !reduced(), duration: 0.6 };
     if (opts.animate) map.flyToBounds(home, opts); else map.fitBounds(home, opts);
   }
   const zoneBounds = (zs) => zoneLayer.getLayers().filter((l) => zs.includes(l.feature.properties.z)).reduce((b, l) => (b ? b.extend(l.getBounds()) : L.latLngBounds(l.getBounds().getSouthWest(), l.getBounds().getNorthEast())), null);
