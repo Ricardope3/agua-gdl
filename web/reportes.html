@@ -1374,10 +1374,10 @@ if (window.top !== window.self) {
       b.addEventListener("click", () => { stage.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }); select(f); });
       return el("li", {}, b);
     }
-    for (const b of document.querySelectorAll(".sorter .chip")) {
+    for (const b of document.querySelectorAll(".sorter .chip[data-orden]")) {
       b.addEventListener("click", () => {
         order = b.dataset.orden;
-        for (const x of document.querySelectorAll(".sorter .chip")) x.setAttribute("aria-pressed", String(x === b));
+        for (const x of document.querySelectorAll(".sorter .chip[data-orden]")) x.setAttribute("aria-pressed", String(x === b));
         renderRanking();
       });
     }
