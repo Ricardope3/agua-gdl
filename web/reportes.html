@@ -308,6 +308,7 @@ path.vivo-onda { animation: onda 1.6s ease-out infinite }
 .ftile.news { background: #fbfaf7; color: #111 }
 .ftile.news img { object-position: top; opacity: .35 }
 .ftile.news .nw { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; gap: 4px; padding: 8px 10px; background: linear-gradient(rgb(251 250 247 / .1), rgb(251 250 247 / .92) 45%) }
+.ftile.news.noimg .nw { justify-content: center; background: none; padding: 12px 14px }
 .ftile.news small { font: 700 10px/1.2 var(--font); letter-spacing: .06em; text-transform: uppercase; color: #9b1c0c }
 .ftile.news b { font: 700 15px/1.18 Georgia, "Times New Roman", serif; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden }
 @media (max-width: 760px) { .ftile.news b { font-size: 11px; -webkit-line-clamp: 4 } .ftile.news small { font-size: 8px } }
@@ -869,7 +870,7 @@ if (window.top !== window.self) {
       if (e) marks.push(surround(all, e.posts, wall));
       if (fit) {
         // Room around the outline for the publications that surround it.
-        const pad = phone() ? { paddingTopLeft: [130, 170], paddingBottomRight: [130, Math.round(map.getSize().y * 0.66) + 100] } : wall ? { paddingTopLeft: [map.getSize().x - 24 - Math.round(Math.min(top ? 230 : 320, map.getSize().x * (top ? 0.15 : 0.22))), 290], paddingBottomRight: [24, 40] } : { paddingTopLeft: [450 + 225, 175], paddingBottomRight: [225, 175] };
+        const pad = phone() ? { paddingTopLeft: [130, 170], paddingBottomRight: [130, Math.round(map.getSize().y * 0.66) + 100] } : wall ? { paddingTopLeft: [map.getSize().x - 16 - Math.round(Math.min(top ? 180 : 240, map.getSize().x * (top ? 0.12 : 0.17))), 290], paddingBottomRight: [16, 40] } : { paddingTopLeft: [450 + 225, 175], paddingBottomRight: [225, 175] };
         const opts = { ...pad, maxZoom: top ? 13.5 : wall ? 14 : 15, animate: animate && !reduced, duration: 0.7 };
         const b = marks[1].getBounds();
         if (opts.animate) map.flyToBounds(b, opts); else map.fitBounds(b, opts);
@@ -894,7 +895,7 @@ if (window.top !== window.self) {
       const items = [...news, ...posts.filter((p) => p.vista), ...posts.filter((p) => !p.vista)].slice(0, 60);
       const outline = L.geoJSON({ type: "FeatureCollection", features: feats.map((x) => ({ type: "Feature", geometry: x.geometry, properties: {} })) });
       const tiles = items.map((p) => {
-        if (p.headline) return el("a", { class: "ftile news", href: p.url, target: "_blank", rel: "noopener nofollow", tabindex: "-1", title: `${p.quien} · ${dateES(p.fecha)}: ${p.titular}` },
+        if (p.headline) return el("a", { class: p.captura ? "ftile news" : "ftile news noimg", href: p.url, target: "_blank", rel: "noopener nofollow", tabindex: "-1", title: `${p.quien} · ${dateES(p.fecha)}: ${p.titular}` },
           p.captura ? el("img", { loading: "lazy", src: `/${p.captura}`, alt: "", decoding: "async" }) : null,
           el("span", { class: "nw" }, el("small", {}, `${p.quien} · ${dateES(p.fecha)}`), el("b", {}, p.titular)));
         const who = p.tipo === "comentario" ? "Vecino en Facebook" : p.fuente === "medio" || p.quien ? p.quien : "Vecino";
@@ -966,13 +967,19 @@ if (window.top !== window.self) {
           }
         }
       }
+      // Placed once this task ends, once the card and the report box are on screen (select() shows them
+      // after this), and again whenever either changes size, so no tile ends up underneath them.
+      let queued = 0;
+      const later = () => { clearTimeout(queued); queued = setTimeout(draw, 0); };
       const hide = () => frame.classList.add("moving");
-      const show = () => { frame.classList.remove("moving"); draw(); };
+      const show = () => { frame.classList.remove("moving"); later(); };
       map.on("movestart zoomstart", hide);
       map.on("moveend zoomend", show);
       window.addEventListener("resize", show);
-      draw();
-      return { remove() { map.off("movestart zoomstart", hide); map.off("moveend zoomend", show); window.removeEventListener("resize", show); frame.replaceChildren(); } };
+      const watch = window.ResizeObserver ? new ResizeObserver(later) : null;
+      if (watch) { watch.observe(card); watch.observe($("reporta")); }
+      later();
+      return { remove() { clearTimeout(queued); watch?.disconnect(); map.off("movestart zoomstart", hide); map.off("moveend zoomend", show); window.removeEventListener("resize", show); frame.replaceChildren(); } };
     }
 
     const liveRenderer = L.svg({ padding: 0.5 });
