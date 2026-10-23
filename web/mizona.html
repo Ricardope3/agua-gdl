@@ -223,7 +223,9 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 .zt-next b { color: var(--fg) }
 .zt-sub { color: var(--muted); font-size: .7rem }
 .hoy { display: inline-block; padding: 0 5px; border-radius: 4px; background: var(--fg); color: var(--surface); font-size: .64rem; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; vertical-align: 1px; white-space: nowrap }
-.ztile .hoy { position: absolute; top: -10px; right: 8px; box-shadow: 0 0 0 2px var(--surface) }
+.ztile .hoy { position: absolute; top: -10px; right: 8px; box-shadow: 0 0 0 2px var(--surface); animation: latido 1.4s ease-in-out infinite }
+@keyframes latido { 50% { transform: scale(1.08); box-shadow: 0 0 0 2px var(--surface), 0 0 0 7px color-mix(in srgb, var(--zc) 45%, transparent) } }
+@media (prefers-reduced-motion: reduce) { .ztile .hoy { animation: none } }
 .zlabel { background: none; border: 0 }
 .zlabel span { display: inline-block; transform: translate(-50%, -50%); padding: 2px 9px; border-radius: 999px; background: var(--zc); color: #fff; font: 800 12.5px/1.4 var(--font); white-space: nowrap; box-shadow: 0 0 0 2px var(--surface), 0 2px 6px rgb(3 14 22 / .35); cursor: pointer }
 .pin { background: var(--fg); border: 3px solid var(--surface); border-radius: 50%; box-shadow: 0 1px 4px rgb(3 14 22 / .5) }
@@ -314,7 +316,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       <p class="status" id="estado" aria-live="polite">Cargando el mapa de colonias…</p>
       <noscript><p class="status">Esta página necesita JavaScript. Consulta tu zona en el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa oficial del SIAPA</a>.</p></noscript>
     </div>
-    <div class="modo" id="modo" role="group" aria-label="Colorear el mapa por"><span>Colorear por:</span><button type="button" data-modo="zona" aria-pressed="true">Zona del SIAPA</button><button type="button" data-modo="dias" aria-pressed="false">Días sin agua</button>
+    <div class="modo" id="modo" role="group" aria-label="Colorear el mapa por"><span>Colorear por:</span><button type="button" data-modo="dias" aria-pressed="true">Días sin agua</button><button type="button" data-modo="zona" aria-pressed="false">Zona del SIAPA</button>
       <ul class="dkey" id="clave-dias" aria-label="Colores del mapa: días sin agua según medios y vecinos" hidden>
         <li><span class="sw" style="--c:var(--s1)"></span>1–2 días</li>
         <li><span class="sw" style="--c:var(--s2)"></span>3–6</li>
@@ -740,7 +742,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
   palette();
   const zoneColor = (z) => z ? M.COLORS[aguaDark() ? "dark" : "light"][z] || COLORS.muted : COLORS.muted;
   const edge = () => aguaDark() ? "#0b1a24" : "#1f2d3a";
-  let mode = params.get("color") === "dias" ? "dias" : "zona";
+  let mode = params.get("color") === "zona" ? "zona" : "dias";
   let focus = null;        // a Set of zones the map singles out, or null
   let locked = null;       // the zone whose tile is pressed
   let sheet = null;        // the open card: { node, render, marks, kind, bounds }
@@ -788,7 +790,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     zoneHalo = L.geoJSON({ type: "FeatureCollection", features: zonas }, { interactive: false, renderer: zoneRenderer, style: zoneHaloStyle }).addTo(map);
     zoneLayer = L.geoJSON({ type: "FeatureCollection", features: zonas }, { interactive: false, renderer: zoneRenderer, style: zoneStyle }).addTo(map);
     zoneLayer.restyle = () => { zoneLayer.setStyle(zoneStyle); zoneHalo.setStyle(zoneHaloStyle); };
-    home = zoneLayer.getBounds().pad(0.02);
+    home = zoneLayer.getBounds().pad(-0.16);
 
     // Coloured by zone, each colonia takes its main zone's colour (dashed when split between zones).
     // Coloured by days, as on /reportes: the most days its publications give, else this site's last 24 hours.
@@ -964,6 +966,8 @@ footer p { margin: 0 0 8px; max-width: 70ch }
       el("span", { class: "zt-sub" }, `${fmt(c.main)} colonias en el mapa`),
       cut ? el("span", { class: "hoy" }, "Hoy hay corte") : null);
     b.addEventListener("click", () => (locked === z ? closeSheet() : lockZone(z)));
+    b.addEventListener("mouseenter", () => { if (!sheet) setFocus([z]); });
+    b.addEventListener("mouseleave", () => { if (!sheet) setFocus(null); });
     return b;
   }
   function renderStrip() {
