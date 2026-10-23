@@ -298,8 +298,8 @@ html, body { overflow-x: clip }
 .boxes { display: grid; gap: 12px; margin: 0 0 40px }
 @media (min-width: 860px) { .boxes { grid-template-columns: repeat(3, 1fr) } }
 .cartel { display: grid; gap: 8px 32px; align-items: center; padding: 8px 0 20px }
-.cartel .ilus { width: min(70vw, 300px); height: auto; justify-self: center }
-@media (min-width: 760px) { .cartel { grid-template-columns: 1fr auto } .cartel .ilus { width: 300px } }
+.cartel .ilus { width: min(60vw, 240px); height: auto; justify-self: center }
+@media (min-width: 760px) { .cartel { grid-template-columns: 1fr auto } .cartel .ilus { width: 240px } }
 .vbar { position: fixed; left: 50%; bottom: max(10px, env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 2000; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; max-width: calc(100vw - 24px); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 5px; box-shadow: 0 6px 20px rgba(0,0,0,.18); font-size: .8rem }
 .vbar a { padding: 4px 8px; border-radius: 6px; color: var(--fg); text-decoration: none }
 .vbar a[aria-current] { background: var(--fg); color: var(--bg) }
@@ -535,7 +535,7 @@ html, body { overflow-x: clip }
   let touched = false;
   for (const ev of ["wheel", "touchstart", "keydown", "pointerdown"]) addEventListener(ev, () => { touched = true; }, { passive: true, once: true });
   setTimeout(() => {
-    if (true || touched || scrollY > 40 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (touched || scrollY > 40 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const head = document.querySelector("header.top");
     scrollTo({ top: box.getBoundingClientRect().top + scrollY - (head ? head.offsetHeight : 0), behavior: "smooth" });
   }, 3000);
