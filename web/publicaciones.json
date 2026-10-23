@@ -22442,6 +22442,95 @@
     "al": "2026-10-23"
    },
    "vista": "fuentes/03c2737f338f.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "Historias de la Noche GDL",
+   "url": "https://www.facebook.com/HISTORIASDELANOCHEGDL/posts/pfbid03AaPHbf59U69F77vwnyNEwg3bbuHBYNx5QrG97mMmHUkzgenzrcZB4bGCWrzFSsol",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Ciudad Granja, Zapopan",
+   "cita": "Se registra un bloqueo total a la circulación en Avenida Vallarta, a la altura de la colonia Ciudad Granja. Vecinos de la zona han cerrado por completo los carriles en ambos sentidos como protesta ante el desabasto de agua.",
+   "dias": null,
+   "bloqueo": true,
+   "eco": {
+    "reacciones": 1400,
+    "comentarios": 202,
+    "compartidos": 72,
+    "al": "2026-10-23"
+   }
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "Noticias Echeverría",
+   "url": "https://www.facebook.com/noticiasecheverriacalle22/posts/pfbid038GkaWnhY2Kto9fkZCFSBs9AD976Exmvub9GNQAspFwWR1UYDVRJPLpuPyxKAtfiSl",
+   "fecha": "2026-10-19",
+   "colonias": [
+    "FRANCISCO VILLA|Guadalajara|44970"
+   ],
+   "lugar": "Francisco Villa, Guadalajara",
+   "cita": "Al momento cierre a la circulación en ambos sentidos de la avenida 8 de Julio al cruce con la avenida Reyes Heroles, esto por una manifestación ya que en varias colonias no cuentan con el vital líquido, entre ellas la colonia Francisco Villa ya que desde el pasado 10 de octubre no tienen agua",
+   "dias": null,
+   "desde": "2026-10-10",
+   "bloqueo": true,
+   "eco": {
+    "reacciones": 437,
+    "comentarios": 30,
+    "compartidos": 32,
+    "al": "2026-10-23"
+   },
+   "vista": "fuentes/f8e3538bdb0e.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "Noticias Echeverría",
+   "url": "https://www.facebook.com/noticiasecheverriacalle22/posts/pfbid02ywpokbG8mjHvsNfHGa2GpVM4YdYWPKxNrvPycARKShyrWconm2FCCEaVRQwDQXvWl",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "DR VALENTIN GOMEZ FARIAS|Guadalajara|44940",
+    "POLANQUITO PONIENTE|Guadalajara|44969",
+    "LA MEZQUITERA|San Pedro Tlaquepaque|45983"
+   ],
+   "lugar": "Sur de Guadalajara",
+   "cita": "Por segundo día consecutivo manifestantes cierran la vialidad de la avenida 8 de Julio al cruce con Reyes Heroles en ambos sentidos, esto debido a la falta de agua potable en las colonias del sur de Guadalajara, entre ellas la Francisco Villa, Gómez Farías, Polanquito y Mezquitera, refieren que desde el 10 de Octubre no cuentan con el vital líquido",
+   "dias": null,
+   "desde": "2026-10-10",
+   "bloqueo": true,
+   "eco": {
+    "reacciones": 192,
+    "comentarios": 16,
+    "compartidos": 6,
+    "al": "2026-10-23"
+   },
+   "vista": "fuentes/9fb5c67c3356.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "AMG Noticias",
+   "url": "https://www.facebook.com/permalink.php?story_fbid=pfbid032rfTZv5i2jMRQLDppRwB3NMkgjz3ePCk8SzoBa89cA6Zt3PRvebNfpVXDPoCgw2Bl&id=100076384564458",
+   "fecha": "2026-10-14",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700",
+    "SAN ISIDRO|Guadalajara|44740",
+    "TALPITA|Guadalajara|44710",
+    "BLANCO Y CUELLAR|Guadalajara|44710",
+    "MEDRANO|Guadalajara|44410"
+   ],
+   "lugar": "Zona oriente, Guadalajara",
+   "cita": "Vecinos de colonias como Oblatos, San Isidro, Talpita, Blanco y Cuéllar, y Medrano señalan que la falta de agua está complicando sus actividades cotidianas",
+   "dias": null,
+   "eco": {
+    "reacciones": 272,
+    "comentarios": 301,
+    "compartidos": 97,
+    "al": "2026-10-23"
+   }
   }
  ]
 }
