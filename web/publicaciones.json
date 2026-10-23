@@ -22421,6 +22421,27 @@
     "compartidos": 140,
     "al": "2026-10-23"
    }
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "Cuenta de vecinos Mi 5 de mayo y alrededores TV",
+   "url": "https://www.facebook.com/noti5demayo/posts/pfbid0JDbsRj1SXzjB4nSWztaSFtz87ZL2Ly23tB9FVSN64Ww5udcHrQHkbVP9DeNztAKKl",
+   "fecha": "2026-10-22",
+   "colonias": [
+    "POLANQUITO PONIENTE|Guadalajara|44969",
+    "FRANCISCO VILLA|Guadalajara|44970"
+   ],
+   "lugar": "8 de Julio y Reyes Heroles, Guadalajara",
+   "cita": "De nuevo vecinos salen a manifestarse en los cruces de 8 de julio y reyes heroles después de casi 20 días sin agua.",
+   "dias": null,
+   "eco": {
+    "reacciones": 206,
+    "comentarios": 19,
+    "compartidos": 14,
+    "al": "2026-10-23"
+   },
+   "vista": "fuentes/03c2737f338f.jpg"
   }
  ]
 }
