@@ -426,6 +426,9 @@ path.nueva { animation: nueva 1.4s ease-out both; pointer-events: none }
   .overview { bottom: calc(var(--tlh, 150px) + 16px) }
   .stage .leaflet-bottom { bottom: var(--tlh, 150px) }
 }
+/* The top menu as on the landing: its frame is 960 px wide, and 1320 px from 1100 px, so it sits on one row. */
+.wrap:has(> header.top) { max-width: 960px }
+@media (min-width: 1100px) { .wrap:has(> header.top) { max-width: 1320px } }
 </style>
 <script>
 // Inside the landing's frame: the framed layout from the first paint, and links open in the whole window.

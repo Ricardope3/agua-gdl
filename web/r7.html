@@ -379,6 +379,9 @@ html.en-portada { overflow: hidden }
 .gesto span { position: absolute; left: 24px; right: 24px; top: var(--y, 50%); transform: translateY(-50%); color: #fff; font-size: 1.1rem; font-weight: 700; line-height: 1.3; text-align: center; text-shadow: 0 1px 3px rgb(0 0 0 / .5) }
 .gesto.on { opacity: 1 }
 @media (prefers-reduced-motion: reduce) { .gesto { transition: none } }
+/* The top menu as on the landing: its frame is 960 px wide, and 1320 px from 1100 px, so it sits on one row. */
+.wrap:has(> header.top) { max-width: 960px }
+@media (min-width: 1100px) { .wrap:has(> header.top) { max-width: 1320px } }
 </style>
 <script>
 // Inside the landing's frame: the framed layout from the first paint, and links open in the whole window.

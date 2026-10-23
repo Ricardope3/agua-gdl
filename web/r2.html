@@ -419,6 +419,9 @@ html.en-portada { overflow: hidden }
   .modo { top: 64px; left: 8px; font-size: .74rem; padding-left: 10px }
   .stage .card { max-height: 66% }
 }
+/* The top menu as on the landing: its frame is 960 px wide, and 1320 px from 1100 px, so it sits on one row. */
+.wrap:has(> header.top) { max-width: 960px }
+@media (min-width: 1100px) { .wrap:has(> header.top) { max-width: 1320px } }
 </style>
 <script>
 // Inside the landing's frame: the framed layout from the first paint, and links open in the whole window.

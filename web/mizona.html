@@ -274,6 +274,9 @@ ul.plain li { margin: 0 0 8px; max-width: 72ch }
 .callout li { margin: 0 0 6px }
 footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .85rem }
 footer p { margin: 0 0 8px; max-width: 70ch }
+/* The top menu as on the landing: its frame is 960 px wide, and 1320 px from 1100 px, so it sits on one row. */
+.wrap:has(> header.top) { max-width: 960px }
+@media (min-width: 1100px) { .wrap:has(> header.top) { max-width: 1320px } }
 </style>
 <script src="/theme.js"></script>
 </head>

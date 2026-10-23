@@ -109,6 +109,10 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .links a { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); box-shadow: var(--shadow); color: var(--fg); font-weight: 600; text-decoration: none }
 .links a:hover { border-color: var(--brand) }
 .links .i { color: var(--ic) }
+/* The top menu as on the landing: its frame is 960 px wide, and 1320 px from 1100 px, so it sits on one row. */
+.wrap:has(> header.top) { max-width: 960px }
+@media (min-width: 1100px) { .wrap:has(> header.top) { max-width: 1320px } }
+.wrap:has(> header.top) > :not(header.top) { max-width: 928px; margin-left: auto; margin-right: auto }
 </style>
 <script src="/theme.js"></script>
 </head>
