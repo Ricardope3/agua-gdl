@@ -18,6 +18,7 @@
 <link rel="icon" href="/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
 <style>
 :root {
   --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
@@ -26,53 +27,237 @@
   --shadow: 0 1px 2px rgb(3 105 161 / .08);
   --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --warn: #8a5a00; --warn-bg: #fff3d6;
+  --dry: #d1352c; --low: #d79a00; --ok: #2b9150; --none: #c9d8e2;
+  /* Days without water, one red ramp light→dark (1–2, 3–6, 7–13, 14+), and the ink each step takes. */
+  --s1: #f59d8b; --s2: #ea6d56; --s3: #cc361e; --s4: #90200e; --s0: #ea6d56;
+  --s1-ink: #0c1e2c; --s2-ink: #0c1e2c; --s3-ink: #ffffff; --s4-ink: #ffffff;
 }
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #06141d; --surface: #0a1c28; --subtle: #0c3149; --fg: #f0f9ff; --muted: #9bb8ca; --line: #18384d;
     --link: #7dd3fc; --primary: #0ea5e9; --on-primary: #ffffff; --ring: #38bdf866; --brand: #0ea5e9; --brand-deep: #0284c7;
     --warn: #ffd27a; --warn-bg: #3a2c10;
+    --dry: #f06a61; --low: #f2b84b; --ok: #5cc98a; --none: #2a4558;
+    --s1: #993b2b; --s2: #cb4832; --s3: #ea6d56; --s4: #fca391; --s0: #cb4832;
+    --s1-ink: #ffffff; --s2-ink: #ffffff; --s3-ink: #06141d; --s4-ink: #06141d;
     color-scheme: dark;
   }
 }
 * { box-sizing: border-box }
 html { -webkit-text-size-adjust: 100% }
-body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 var(--font) }
-a { color: var(--link) }
-a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; border-radius: 4px }
-.wrap { max-width: 960px; margin: 0 auto; padding: 0 20px }
-header.top { padding: 20px 0 }
-.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; font-weight: 800; font-size: 1.25rem; letter-spacing: -.01em }
-.brand img { width: 30px; height: auto }
-h1 { font-size: clamp(2rem, 6vw, 3rem); line-height: 1.08; letter-spacing: -.02em; margin: 20px 0 16px; text-wrap: balance }
-.lede { font-size: 1.15rem; color: var(--muted); margin: 0 0 28px; max-width: 60ch }
-.finder { background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--brand); border-radius: 10px; padding: 16px 20px }
-.locate { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px }
-.locate .note { flex: 1 1 260px; margin: 0 }
-.button { display: inline-block; background: var(--brand-deep); color: var(--on-brand); font: inherit; font-weight: 700; font-size: 1.1rem; text-decoration: none; padding: 12px 20px; border: 0; border-radius: 8px; cursor: pointer }
-.button:hover { background: var(--brand) }
+[hidden] { display: none !important }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased }
+a { color: var(--link); text-underline-offset: 3px }
+a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); border-radius: 6px }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 16px }
+header.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px; background: var(--bg); border-bottom: 1px solid var(--line); margin: 0 -16px; padding: 12px 16px }
+.brand { display: inline-flex; align-items: center; gap: 8px; color: var(--fg); text-decoration: none; font-weight: 600; font-size: 1rem; letter-spacing: -.01em }
+.brand img { width: 20px; height: auto }
+.site-nav { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; margin: 0 -6px }
+.site-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 8px; color: var(--muted); font-size: .9rem; font-weight: 500; text-decoration: none; white-space: nowrap }
+.site-nav a:hover { color: var(--fg); background: var(--subtle) }
+.site-nav a[aria-current="page"] { color: var(--link); background: var(--subtle) }
+@media (max-width: 980px) { .site-nav .i { display: none } }
+@media (max-width: 760px) { .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center } .site-nav a { flex: 1 1 22%; justify-content: center } }
+@media (max-width: 560px) { header.top { padding: 8px 16px } .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center; gap: 2px } .site-nav a { flex: 1 1 22%; justify-content: center; padding: 4px; font-size: .82rem; line-height: 1.35 } .site-nav .i { display: none } }
+.i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
+.i { --ic: var(--brand) }
+.i:has(use[href$="#bell"]), .i:has(use[href$="#megaphone"]) { --ic: #d97706 }
+.i:has(use[href$="#map-pin"]) { --ic: #e11d48 }
+.i:has(use[href$="#landmark"]) { --ic: #7c3aed }
+.i:has(use[href$="#heart"]) { --ic: #dc2626 }
+.i:has(use[href$="#check"]) { --ic: #16a34a }
+.i:has(use[href$="#calendar"]) { --ic: #4f46e5 }
+.i:has(use[href$="#send"]) { --ic: #229ed9 }
+@media (prefers-color-scheme: dark) { .i:has(use[href$="#bell"]), .i:has(use[href$="#megaphone"]) { --ic: #fbbf24 } .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#landmark"]) { --ic: #a78bfa } .i:has(use[href$="#heart"]) { --ic: #f87171 } .i:has(use[href$="#check"]) { --ic: #4ade80 } .i:has(use[href$="#calendar"]) { --ic: #818cf8 } .i:has(use[href$="#send"]) { --ic: #2aabee } }
+.site-nav .i, li > .i, p > .i, summary > .i, h2 > .i, h3 > .i { color: var(--ic) }
+.site-nav a[aria-current="page"] .i { color: inherit }
+.button { display: inline-flex; align-items: center; gap: 6px; background: var(--primary); color: var(--on-primary); font: inherit; font-weight: 500; font-size: .95rem; text-decoration: none; padding: 10px 16px; border: 1px solid transparent; border-radius: 8px; box-shadow: var(--shadow); cursor: pointer; transition: background .15s }
+.button:hover { background: var(--brand-deep) }
 .button:disabled { opacity: .6; cursor: progress }
-.note { margin: 10px 0 0; font-size: .95rem; color: var(--muted) }
-.or { display: flex; align-items: center; gap: 12px; margin: 12px 0; color: var(--muted); font-size: .95rem }
-.or::before, .or::after { content: ""; flex: 1; border-top: 1px solid var(--line) }
-label { display: block; font-weight: 700; margin: 0 0 6px }
-.search { display: flex; flex-wrap: wrap; gap: 10px }
-.search input { flex: 1 1 200px; min-width: 0; font: inherit; color: var(--fg); background: var(--surface); border: 2px solid var(--muted); border-radius: 8px; padding: 10px 12px }
-.search .field { position: relative; flex: 1 1 200px; min-width: 0 }
-.search .field input { width: 100% }
-.suggest { position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 1100; margin: 0; padding: 4px; list-style: none; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 24px rgb(3 14 22 / .18); max-height: 320px; overflow: auto }
-.suggest[hidden] { display: none }
+.button .i { color: inherit }
+.button.alt { background: color-mix(in srgb, var(--brand) 12%, var(--surface)); color: var(--link); border: 1.5px solid var(--brand) }
+.button.alt:hover { background: color-mix(in srgb, var(--brand) 22%, var(--surface)) }
+.button.glow { border: 2px solid transparent; background: linear-gradient(color-mix(in srgb, var(--brand) 14%, var(--surface)), color-mix(in srgb, var(--brand) 14%, var(--surface))) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100%; animation: glow 3s linear infinite; box-shadow: 0 0 8px rgb(139 92 246 / .3), 0 0 16px 2px rgb(14 165 233 / .22) }
+.button.glow:hover { background: linear-gradient(color-mix(in srgb, var(--brand) 26%, var(--surface)), color-mix(in srgb, var(--brand) 26%, var(--surface))) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100% }
+@keyframes glow { from { background-position: 0 0, 0% 0 } to { background-position: 0 0, 150% 0 } }
+@media (prefers-reduced-motion: reduce) { .button.glow { animation: none } }
+.note { margin: 10px 0 0; font-size: .92rem; color: var(--muted); max-width: 80ch }
+.linklike { font: inherit; color: var(--link); background: none; border: 0; padding: 0; text-decoration: underline; text-underline-offset: 3px; cursor: pointer }
+
+/* The map fills the screen under the header, like a map app; «Ten en cuenta» follows below it. */
+.stage { position: relative; height: calc(100dvh - var(--hh, 64px) - 28px); min-height: 520px }
+.bigmap { position: absolute; inset: 0; background: var(--subtle); border-bottom: 1px solid var(--line) }
+.bigmap:focus-visible { outline: 3px solid var(--brand); outline-offset: -3px }
+@media (prefers-color-scheme: dark) { .bigmap .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) } .bigmap.leaflet-container { background: #0c1e2c } }
+.bigmap .leaflet-interactive:focus { outline: none }
+.map-label { background: var(--surface); color: var(--fg); border: 1px solid var(--line); font: 600 13px/1.3 var(--font); box-shadow: var(--shadow); padding: 6px 8px }
+.map-label::before { display: none }
+.map-label .sub { display: block; font-weight: 500; color: var(--muted) }
+.map-label .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--zc, var(--muted)); margin-right: 5px }
+
+/* The finder: big search on top of the map. */
+.finder { position: absolute; z-index: 1300; top: 12px; left: 12px; width: min(440px, calc(100% - 24px)); background: color-mix(in srgb, var(--surface) 96%, transparent); backdrop-filter: blur(6px); border: 1px solid var(--line); border-top: 4px solid var(--brand); border-radius: 14px; padding: 12px 14px 12px; box-shadow: 0 8px 24px rgb(3 14 22 / .2) }
+.finder h1 { margin: 0 0 8px; font-size: 1.35rem; line-height: 1.15; letter-spacing: -.02em; font-weight: 700 }
+.search { display: flex; gap: 8px }
+.field { position: relative; flex: 1; min-width: 0 }
+.field > .i { position: absolute; left: 13px; top: 15px; color: var(--muted); pointer-events: none }
+.field input { width: 100%; font: inherit; font-size: 1.08rem; color: var(--fg); background: var(--surface); border: 2px solid var(--brand); border-radius: 10px; padding: 11px 38px 11px 40px; box-shadow: var(--shadow) }
+.field input::placeholder { color: var(--muted) }
+.field input::-webkit-search-cancel-button { display: none }
+.field .clear { position: absolute; right: 5px; top: 7px; width: 36px; height: 36px; display: grid; place-items: center; font: inherit; color: var(--muted); background: none; border: 0; border-radius: 8px; cursor: pointer }
+.field .clear:hover { color: var(--fg); background: var(--subtle) }
+.search .go { font-weight: 600; font-size: 1.02rem; padding: 0 16px }
+.suggest { position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 1500; margin: 0; padding: 4px; list-style: none; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 24px rgb(3 14 22 / .22); max-height: min(360px, 50vh); overflow: auto }
 .suggest li { padding: 8px 10px; border-radius: 8px; cursor: pointer; line-height: 1.35; font-size: .95rem }
 .suggest li[aria-selected="true"], .suggest li:hover { background: var(--subtle) }
-.suggest .sub { display: block; color: var(--muted); font-size: .85rem }
-#resultado { margin-top: 24px; scroll-margin-top: 16px }
-#resultado:empty { display: none }
-#resultado > p { margin: 0 0 14px; max-width: 65ch }
-.msg { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--brand); border-radius: 10px; padding: 16px 18px; font-size: 1.02rem }
-.result { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; padding: 20px; box-shadow: var(--shadow) }
-.result h3 { margin: 0 0 10px; font-size: 1.2rem; line-height: 1.3 }
-.result p { margin: 0 0 16px; color: var(--muted) }
-.result .subscribe { display: flex; flex-wrap: wrap; gap: 10px }
+.suggest .sub { display: block; color: var(--muted); font-size: .84rem }
+.suggest .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--zc, var(--muted)); margin-right: 5px; vertical-align: 0 }
+.locrow { display: flex; align-items: center; gap: 10px; margin-top: 10px }
+.locrow .button { flex: none; font-weight: 600 }
+.locrow p { margin: 0; font-size: .8rem; line-height: 1.35; color: var(--muted) }
+.status { margin: 8px 0 0; font-size: .88rem; line-height: 1.4 }
+.status:empty { display: none }
+
+/* The colour switch, top right, with the zoom buttons under it. */
+.modo { position: absolute; z-index: 1250; top: 12px; right: 12px; max-width: 390px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 5px 5px 5px 12px; border: 1px solid var(--line); border-radius: 16px; background: color-mix(in srgb, var(--surface) 95%, transparent); backdrop-filter: blur(6px); box-shadow: 0 4px 16px rgb(3 14 22 / .18); font-size: .8rem }
+.modo > span { color: var(--muted); font-weight: 600; margin-right: 2px }
+.modo button { white-space: nowrap; padding: 3px 10px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--fg); font: inherit; font-weight: 600; cursor: pointer }
+.modo button[aria-pressed="true"] { border-color: var(--fg); background: var(--fg); color: var(--surface) }
+.dkey { flex-basis: 100%; margin: 4px 0 2px; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 2px 10px; color: var(--muted); font-size: .74rem }
+.dkey li { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap }
+.dkey .sw { width: 10px; height: 10px; border-radius: 3px; background: var(--c) }
+.dkey .sw.nodays { background: color-mix(in srgb, var(--s0) 20%, transparent); border: 1.5px dashed var(--s0) }
+.dkey .full { flex-basis: 100%; white-space: normal; line-height: 1.3 }
+.stage .leaflet-top.leaflet-right { top: var(--mh, 52px) }
+
+/* The sheet: a colonia's card or a zone's, under the finder on wide screens and from the bottom on phones. */
+.stage .card { position: absolute; z-index: 1200; top: calc(var(--fh, 150px) + 22px); left: 12px; width: min(440px, calc(100% - 24px)); max-height: calc(100% - var(--fh, 150px) - var(--sh, 120px) - 56px); overflow: auto; overscroll-behavior: contain; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; box-shadow: 0 10px 30px rgb(3 14 22 / .24) }
+.stage .card.zcard { border-top: 6px solid var(--zc) }
+.card h2 { margin: 0 34px 2px 0; font-size: 1.3rem; line-height: 1.2; letter-spacing: -.02em; color: var(--link); text-transform: uppercase }
+.card.zcard h2 { text-transform: none; color: var(--fg) }
+.card h2 small { display: block; font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 700 }
+.card .where { margin: 0 0 10px; color: var(--muted) }
+.card .close { position: absolute; top: 10px; right: 10px; width: 34px; height: 34px; display: grid; place-items: center; font: inherit; color: var(--muted); background: none; border: 0; border-radius: 8px; cursor: pointer }
+.card .close:hover { color: var(--fg); background: var(--subtle) }
+.card .close .i { color: inherit }
+.card .grab { display: none }
+.zbox { border-left: 6px solid var(--zc, var(--muted)); background: var(--subtle); border-radius: 10px; padding: 10px 12px; margin: 0 0 10px }
+.zbox.side { background: transparent; border: 1px dashed var(--line); border-left: 6px solid var(--zc, var(--muted)) }
+.zbox p { margin: 0 }
+.zbox .zn { font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted) }
+.zbox .zd { font-weight: 700; font-size: 1.1rem; line-height: 1.3 }
+.zbox.side .zd { font-weight: 600; font-size: 1rem }
+.zbox .next { margin-top: 4px; font-size: .95rem }
+.zbox ul { margin: 4px 0 0; padding-left: 1.2em; font-size: .95rem }
+.card .warn { background: var(--warn-bg); border-left: 5px solid var(--warn); border-radius: 8px; padding: 10px 12px; margin: 0 0 10px; font-size: .95rem }
+.card .subscribe { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0 }
+.card .subscribe .button { font-size: .9rem; padding: 8px 12px }
+.card .note { margin-top: 10px; font-size: .85rem }
+.card .lead { margin: 6px 0 10px; font-size: .95rem }
+.card .mini { margin: 6px 0 0; font-size: .85rem; color: var(--muted) }
+.card .sub-head { margin: 16px 0 6px; padding-top: 12px; border-top: 1px solid var(--line); font-size: .95rem; font-weight: 700 }
+.cal { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 10px }
+.cal summary { cursor: pointer; font-weight: 600; color: var(--link); font-size: .92rem }
+.cal .subscribe .button { font-size: .85rem; padding: 7px 10px }
+.choices { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px }
+.choice { width: 100%; text-align: left; font: inherit; font-size: .95rem; line-height: 1.35; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; cursor: pointer; box-shadow: var(--shadow) }
+.choice:hover, .choice:focus-visible { border-color: var(--brand) }
+.choice span { display: block; color: var(--muted); font-size: .84rem }
+.ztop { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px }
+.ztop button { display: grid; grid-template-columns: 4.6em minmax(0, 1fr); align-items: center; gap: 8px; width: 100%; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--fg); font: inherit; font-size: .85rem; text-align: left; cursor: pointer }
+.ztop button:hover { border-color: var(--zc, var(--brand)) }
+.ztop .sevb { font-size: .74rem; padding: 2px 6px; min-width: 0 }
+.ztop strong { display: block; line-height: 1.2 }
+.ztop small { display: block; color: var(--muted); font-size: .76rem; line-height: 1.25 }
+.card .actions { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin: 10px 0 0; font-size: .9rem }
+.card .actions .button { font-size: .88rem; padding: 7px 12px }
+
+/* Publications and reports, as /reportes shows them. */
+.sevb { display: inline-grid; place-items: center; min-width: 2.6em; padding: 3px 7px; border-radius: 999px; background: var(--c); color: var(--k); font-weight: 700; font-size: .85rem; line-height: 1.2; white-space: nowrap; font-variant-numeric: tabular-nums }
+.sevb.nodays { background: color-mix(in srgb, var(--c) 18%, var(--surface)); color: var(--fg); border: 1.5px dashed var(--c); font-weight: 600 }
+.sev { background: none; border: 0 }
+.sev span { display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%; background: var(--c); color: var(--k); font: 700 12px/1 var(--font); font-variant-numeric: tabular-nums; box-shadow: 0 0 0 2px var(--surface), 0 1px 3px rgb(3 14 22 / .45) }
+.sev.far span { font-size: 10.5px; box-shadow: 0 0 0 1.5px var(--surface), 0 1px 2px rgb(3 14 22 / .45) }
+.sev.nodays span { background: color-mix(in srgb, var(--s0) 20%, var(--surface)); border: 1.5px dashed var(--s0); color: var(--fg) }
+.ev-head { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 1rem; line-height: 1.3 }
+.ev-src { margin: 6px 0 0; font-size: .88rem; color: var(--muted) }
+.posts { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 8px }
+.post { padding: 8px 10px; border-radius: 10px; background: var(--bg); border-left: 4px solid var(--line) }
+.post.medio { border-left-color: var(--brand) }
+.post q { display: block; font-size: .92rem; line-height: 1.45; quotes: "«" "»" }
+.post .who { margin: 6px 0 0; font-size: .8rem; line-height: 1.4; color: var(--muted) }
+.post .who a { font-weight: 600 }
+.tag { display: inline-block; margin-right: 6px; padding: 0 6px; border-radius: 5px; background: var(--brand); color: var(--on-brand); font-size: .72rem; font-weight: 700; letter-spacing: .02em; text-transform: uppercase; vertical-align: 1px }
+.tag.alt { background: var(--fg); color: var(--surface) }
+.linkbtn { margin: 8px 0 0; padding: 0; border: 0; background: none; color: var(--link); font: inherit; font-size: .9rem; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; cursor: pointer }
+.mosaic { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; margin: 10px 0 0; border-radius: 10px; overflow: hidden }
+.mosaic.n1 { grid-template-columns: 1fr }
+.mosaic.n2 { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+.mosaic a { position: relative; display: block; aspect-ratio: 4 / 3; background: var(--subtle); overflow: hidden }
+.mosaic.n1 a { aspect-ratio: 16 / 9 }
+.mosaic img { width: 100%; height: 100%; object-fit: cover; display: block }
+.mosaic .lbl { position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 6px 4px; background: linear-gradient(transparent, rgb(0 0 0 / .75)); color: #fff; font-size: .7rem; font-weight: 600; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
+.mosaic .more { position: absolute; inset: 0; display: grid; place-items: center; background: rgb(0 0 0 / .55); color: #fff; font-weight: 700; font-size: 1.1rem }
+.rbar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; background: var(--none); margin: 6px 0 6px }
+.rbar span { display: block; height: 100% }
+.rbar .s { background: var(--dry) } .rbar .b { background: var(--low) } .rbar .c { background: var(--ok) }
+.split { display: flex; flex-wrap: wrap; gap: 2px 14px; margin: 0; padding: 0; list-style: none; font-size: .88rem }
+.split li { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap }
+.split .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--dc) }
+.split .dry { --dc: var(--dry) } .split .low { --dc: var(--low) } .split .ok { --dc: var(--ok) }
+
+/* The zone strip, docked along the map's bottom edge; it scrolls sideways on phones. */
+.zstrip { position: absolute; z-index: 1150; left: 12px; right: 12px; bottom: 22px; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: thin; padding: 12px 2px 4px; pointer-events: none }
+.ztile { position: relative; pointer-events: auto; flex: 1 0 140px; max-width: 220px; display: flex; flex-direction: column; gap: 1px; text-align: left; padding: 7px 10px 8px; border: 1px solid var(--line); border-top: 5px solid var(--zc); border-radius: 10px; background: color-mix(in srgb, var(--surface) 95%, transparent); backdrop-filter: blur(6px); color: var(--fg); font: inherit; font-size: .78rem; line-height: 1.3; cursor: pointer; box-shadow: 0 4px 14px rgb(3 14 22 / .2); transition: transform .12s, box-shadow .12s, opacity .12s }
+.ztile:hover { transform: translateY(-2px) }
+.ztile[aria-pressed="true"] { box-shadow: 0 0 0 2.5px var(--zc), 0 8px 20px rgb(3 14 22 / .3); transform: translateY(-4px) }
+.zstrip.focusing .ztile:not(.on) { color: var(--muted); filter: grayscale(.85); opacity: .8 }
+.zt-head { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; font-weight: 800; font-size: .95rem; line-height: 1.2; white-space: nowrap }
+.zt-head > span { flex: none }
+.zt-head small { min-width: 0; font-weight: 600; color: var(--muted); font-size: .64rem; text-transform: uppercase; letter-spacing: .04em; overflow: hidden; text-overflow: ellipsis }
+.zt-cut b, .zt-next b { font-weight: 700 }
+.zt-cut, .zt-next { white-space: nowrap }
+.zt-next { color: var(--muted) }
+.zt-next b { color: var(--fg) }
+.zt-sub { color: var(--muted); font-size: .7rem }
+.hoy { display: inline-block; padding: 0 5px; border-radius: 4px; background: var(--fg); color: var(--surface); font-size: .64rem; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; vertical-align: 1px; white-space: nowrap }
+.ztile .hoy { position: absolute; top: -10px; right: 8px; box-shadow: 0 0 0 2px var(--surface) }
+.zlabel { background: none; border: 0 }
+.zlabel span { display: inline-block; transform: translate(-50%, -50%); padding: 2px 9px; border-radius: 999px; background: var(--zc); color: #fff; font: 800 12.5px/1.4 var(--font); white-space: nowrap; box-shadow: 0 0 0 2px var(--surface), 0 2px 6px rgb(3 14 22 / .35); cursor: pointer }
+.pin { background: var(--fg); border: 3px solid var(--surface); border-radius: 50%; box-shadow: 0 1px 4px rgb(3 14 22 / .5) }
+
+@media (max-width: 760px) {
+  .stage { height: calc(100dvh - var(--hh, 110px)); min-height: 480px }
+  .finder { top: 8px; left: 8px; width: calc(100% - 16px); padding: 8px 10px 10px; border-radius: 12px }
+  .finder h1 { font-size: 1.05rem; margin: 0 0 6px }
+  .field input { font-size: 1rem; padding: 10px 36px 10px 38px }
+  .field > .i { top: 14px; left: 12px }
+  .search .go { padding: 0 12px }
+  .locrow { margin-top: 8px; gap: 8px }
+  .locrow .button { padding: 7px 12px; font-size: .9rem }
+  .locrow p { font-size: .74rem }
+  .modo { top: calc(var(--fh, 140px) + 14px); right: auto; left: 8px; max-width: calc(100% - 64px); font-size: .74rem; padding-left: 10px }
+  .stage .leaflet-top.leaflet-right { top: calc(var(--fh, 140px) + 4px) }
+  .zstrip { left: 8px; right: 8px; bottom: 8px; scroll-snap-type: x proximity }
+  .ztile { flex: 0 0 136px; scroll-snap-align: start }
+  .stage .card { top: auto; bottom: 8px; left: 8px; width: calc(100% - 16px); max-height: min(58%, calc(100% - var(--fh, 140px) - 40px)); padding: 12px 14px 14px; border-radius: 16px }
+  .stage .card.zcard { bottom: calc(var(--sh, 110px) + 14px); max-height: min(46%, calc(100% - var(--fh, 140px) - var(--sh, 110px) - 40px)) }
+  .stage .card .grab { display: block; width: 40px; height: 4px; border-radius: 2px; background: var(--line); margin: -4px auto 8px }
+  .stage.sheet-colonia .zstrip, .stage.has-sheet .modo { display: none }
+  .stage.has-sheet .finder h1, .stage.has-sheet .locrow { display: none }
+}
+
+/* Below the map. */
+section { padding: 30px 0 8px }
+h2.sec { font-size: 1.4rem; line-height: 1.2; margin: 0 0 12px; letter-spacing: -.02em; font-weight: 600; text-wrap: balance }
+h2.ih { display: flex; align-items: center; gap: 10px }
+.ih .i-badge { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--brand); color: var(--on-primary); flex-shrink: 0 }
+.ih .i-badge .i { color: inherit }
+section p { margin: 0 0 14px; max-width: 70ch }
+ul.plain { padding-left: 1.3em; margin: 0 0 14px }
+ul.plain li { margin: 0 0 8px; max-width: 72ch }
 .warn { background: var(--warn-bg); border-left: 5px solid var(--warn); border-radius: 8px; padding: 12px 14px }
 .callout { position: relative; margin: 0 0 18px; padding: 16px 18px; max-width: 72ch; scroll-margin-top: 24px }
 .callout .trace { position: absolute; inset: -4px; width: calc(100% + 8px); height: calc(100% + 8px); overflow: visible; pointer-events: none }
@@ -81,132 +266,12 @@ label { display: block; font-weight: 700; margin: 0 0 6px }
 @keyframes trace { 0% { stroke-dashoffset: 1; opacity: 1 } 40% { stroke-dashoffset: 0; opacity: 1 } 80% { stroke-dashoffset: 0; opacity: 1 } 100% { stroke-dashoffset: 0; opacity: 0 } }
 @media (prefers-reduced-motion: reduce) { .callout.draw .trace rect { animation: trace-still 2.5s forwards } }
 @keyframes trace-still { 0%, 80% { stroke-dashoffset: 0; opacity: 1 } 100% { stroke-dashoffset: 0; opacity: 0 } }
-.map-missing { position: absolute; z-index: 1000; top: 10px; left: 10px; right: 60px; max-width: 46ch; margin: 0 auto; background: var(--warn-bg); color: var(--fg); border-left: 4px solid var(--warn); border-radius: 8px; padding: 8px 12px; font: 600 14px/1.35 var(--font); box-shadow: var(--shadow); pointer-events: none }
-.map-missing[hidden] { display: none }
 .callout h3 { margin: 0 0 8px; font-size: 1.15rem; line-height: 1.3 }
 .callout p { margin: 0 0 10px }
 .callout ul { margin: 0; padding-left: 1.2em }
 .callout li { margin: 0 0 6px }
-.linklike { font: inherit; color: var(--link); background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer }
-.zones { display: grid; gap: 12px; margin: 0 0 14px }
-.zone { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px }
-.zone h3 { margin: 0 0 4px; font-size: 1.5rem; line-height: 1.2 }
-.zone p { margin: 0 0 6px }
-.zone ul { margin: 0; padding-left: 1.2em }
-.zone li { margin: 0 0 2px }
-.cal { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 10px }
-.cal summary { cursor: pointer; font-weight: 600; color: var(--link) }
-.button.alt { background: color-mix(in srgb, var(--brand) 12%, var(--surface)); color: var(--link); border: 1.5px solid var(--brand) }
-.button.alt:hover { background: color-mix(in srgb, var(--brand) 22%, var(--surface)) }
-.button.glow { border: 2px solid transparent; background: linear-gradient(color-mix(in srgb, var(--brand) 14%, var(--surface)), color-mix(in srgb, var(--brand) 14%, var(--surface))) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100%; animation: glow 3s linear infinite; box-shadow: 0 0 8px rgb(139 92 246 / .3), 0 0 16px 2px rgb(14 165 233 / .22) }
-.button.glow:hover { background: linear-gradient(color-mix(in srgb, var(--brand) 26%, var(--surface)), color-mix(in srgb, var(--brand) 26%, var(--surface))) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100% }
-.button.glow.solid { color: var(--on-primary); background: linear-gradient(var(--primary), var(--primary)) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100% }
-.button.glow.solid:hover { background: linear-gradient(var(--brand-deep), var(--brand-deep)) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100% }
-@keyframes glow { from { background-position: 0 0, 0% 0 } to { background-position: 0 0, 150% 0 } }
-@media (prefers-reduced-motion: reduce) { .button.glow { animation: none } }
-.zone .subscribe { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px }
-.choices { list-style: none; margin: 0 0 14px; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr)); gap: 8px }
-.choices li { display: flex }
-.choice { width: 100%; text-align: left; font: inherit; font-size: .95rem; line-height: 1.35; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; cursor: pointer }
-.choice:hover { border-color: var(--brand) }
-.choice span { display: block; color: var(--muted); font-size: .85rem }
-.mapbox { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin: 0 0 14px; box-shadow: var(--shadow) }
-.mapbox > p { margin: 0 0 10px }
-.spotlight { position: fixed; inset: 0; z-index: 2000; pointer-events: none; animation: spot 1.8s ease-in-out forwards }
-@keyframes spot { 0% { opacity: 0 } 15% { opacity: 1 } 75% { opacity: 1 } 100% { opacity: 0 } }
-@media (prefers-reduced-motion: reduce) { .spotlight { animation-duration: 1.4s } }
-.mapbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: 0 0 10px }
-.mapbar p { margin: 0 }
-.mapbox .map { height: 380px; border-radius: 8px; margin: 0 0 10px; background: var(--subtle) }
-.mapbox .map.tall { height: clamp(420px, 72vh, 640px) }
-.mapbox .mapwrap { position: relative }
-.mapbox .card { position: absolute; z-index: 1200; top: 12px; left: 12px; width: min(360px, calc(100% - 24px)); max-height: calc(100% - 34px); overflow: auto; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; box-shadow: 0 10px 30px rgb(3 14 22 / .22) }
-@media (max-width: 760px) { .mapbox .card { top: auto; bottom: 20px; left: 10px; width: calc(100% - 20px); max-height: 58% } }
-.mapbox .card h2 { margin: 0 32px 2px 0; font-size: 1.3rem; line-height: 1.2; letter-spacing: -.02em; color: var(--link); text-transform: uppercase }
-.mapbox .card .where { margin: 0 0 10px; color: var(--muted); max-width: none }
-.mapbox .card .close { position: absolute; top: 10px; right: 10px; width: 34px; height: 34px; display: grid; place-items: center; font: inherit; color: var(--muted); background: none; border: 0; border-radius: 8px; cursor: pointer }
-.mapbox .card .close:hover { color: var(--fg); background: var(--subtle) }
-.mapbox .card .close .i { color: inherit }
-.zbox { border-left: 6px solid var(--zc, var(--muted)); background: var(--subtle); border-radius: 10px; padding: 10px 12px; margin: 0 0 10px }
-.zbox.side { background: transparent; border: 1px dashed var(--line); border-left: 6px solid var(--zc, var(--muted)) }
-.zbox p { margin: 0; max-width: none }
-.zbox .zn { font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted) }
-.zbox .zd { font-weight: 700; font-size: 1.1rem; line-height: 1.3 }
-.zbox.side .zd { font-weight: 600; font-size: 1rem }
-.zbox .next { margin-top: 4px; font-size: .95rem }
-.mapbox .card .warn { background: var(--warn-bg); border-left: 5px solid var(--warn); border-radius: 8px; padding: 10px 12px; margin: 0 0 10px; font-size: .95rem; max-width: none }
-.mapbox .card .subscribe { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0 }
-.mapbox .card .subscribe .button { font-size: .9rem; padding: 8px 12px }
-.mapbox .card .note { margin-top: 10px; font-size: .85rem }
-.mapbox .note { margin: 0 }
-.map-label { background: var(--surface); color: var(--fg); border: 1px solid var(--line); font: 600 13px/1.3 var(--font); box-shadow: var(--shadow) }
-.map-label::before { display: none }
-.map-label .sub { display: block; font-weight: 500; color: var(--muted) }
-.map-label .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--zc, var(--muted)); margin-right: 5px }
-.mapbox .leaflet-interactive:focus { outline: none }
-@media (prefers-color-scheme: dark) { .mapbox .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) } .mapbox .leaflet-container { background: #0c1e2c } }
-section { padding: 36px 0 8px }
-h2 { font-size: 1.5rem; line-height: 1.2; margin: 0 0 14px; letter-spacing: -.01em }
-section p { margin: 0 0 14px; max-width: 65ch }
-ul.plain { padding-left: 1.3em; margin: 0 0 14px }
-ul.plain li { margin: 0 0 8px }
-footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .9rem }
+footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .85rem }
 footer p { margin: 0 0 8px; max-width: 70ch }
-body { font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased }
-a { text-underline-offset: 3px }
-a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); border-radius: 6px }
-.wrap { padding: 0 16px }
-header.top { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); margin: 0 -16px 20px; padding: 12px 16px }
-.brand { gap: 8px; font-weight: 600; font-size: 1rem }
-.brand img { width: 20px }
-h1 { letter-spacing: -.03em; font-weight: 700 }
-h2 { font-weight: 600; letter-spacing: -.02em }
-.lede { font-size: 1.05rem }
-.button { display: inline-flex; align-items: center; gap: 6px; background: var(--primary); color: var(--on-primary); font-weight: 500; font-size: .95rem; padding: 10px 18px; border: 1px solid transparent; border-radius: 8px; box-shadow: var(--shadow); transition: background .15s }
-.button:hover { background: var(--brand-deep) }
-.signup, .finder, .notice, .summary { border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; box-shadow: var(--shadow) }
-.card, .zone, .msg, .empty, .choice, .values li { box-shadow: var(--shadow) }
-.search input, .filter select { border: 1px solid var(--line); box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s }
-.search input:focus-visible, .filter select:focus-visible { border-color: var(--brand) }
-footer { font-size: .85rem }
-.i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
-h2.ih, h3.ih { display: flex; align-items: center; gap: 10px }
-.ih .i-badge { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--subtle); color: var(--brand); flex-shrink: 0 }
-h3.ih .i-badge { width: 28px; height: 28px }
-header.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px }
-.site-nav { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; margin: 0 -6px }
-.site-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 8px; color: var(--muted); font-size: .9rem; font-weight: 500; text-decoration: none; white-space: nowrap }
-.site-nav a:hover { color: var(--fg); background: var(--subtle) }
-.site-nav a[aria-current="page"] { color: var(--link); background: var(--subtle) }
-@media (max-width: 980px) { .site-nav .i { display: none } }
-@media (max-width: 760px) { .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center } .site-nav a { flex: 1 1 22%; justify-content: center } }
-@media (max-width: 560px) { header.top { position: static; padding: 8px 16px } .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center; gap: 2px } .site-nav a { flex: 1 1 22%; justify-content: center; padding: 4px; font-size: .82rem; line-height: 1.35 } .site-nav .i { display: none } }
-.ih .i-badge { background: var(--brand); color: var(--on-primary) }
-.site-nav .i { color: var(--brand) }
-.site-nav a[aria-current="page"] .i { color: inherit }
-li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
-.i { --ic: var(--brand) }
-.i:has(use[href$="#bell"]), .i:has(use[href$="#megaphone"]) { --ic: #d97706 }
-.i:has(use[href$="#map-pin"]) { --ic: #e11d48 }
-.i:has(use[href$="#landmark"]) { --ic: #7c3aed }
-.i:has(use[href$="#heart"]) { --ic: #dc2626 }
-.i:has(use[href$="#check"]) { --ic: #16a34a }
-.i:has(use[href$="#shield-check"]) { --ic: #16a34a }
-.i:has(use[href$="#mail"]) { --ic: #0d9488 }
-.i:has(use[href$="#pen-line"]) { --ic: #ea580c }
-.i:has(use[href$="#calendar"]) { --ic: #4f46e5 }
-.i:has(use[href$="#send"]) { --ic: #229ed9 }
-@media (prefers-color-scheme: dark) { .i:has(use[href$="#bell"]), .i:has(use[href$="#megaphone"]) { --ic: #fbbf24 } .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#landmark"]) { --ic: #a78bfa } .i:has(use[href$="#heart"]) { --ic: #f87171 } .i:has(use[href$="#check"]) { --ic: #4ade80 } .i:has(use[href$="#shield-check"]) { --ic: #4ade80 } .i:has(use[href$="#mail"]) { --ic: #2dd4bf } .i:has(use[href$="#pen-line"]) { --ic: #fb923c } .i:has(use[href$="#calendar"]) { --ic: #818cf8 } .i:has(use[href$="#send"]) { --ic: #2aabee } }
-.site-nav .i, li > .i, p > .i, summary > .i, h3 > .i { color: var(--ic) }
-.ih .i-badge:has(use[href$="#bell"]), .ih .i-badge:has(use[href$="#megaphone"]) { background: #d97706 }
-.ih .i-badge:has(use[href$="#map-pin"]) { background: #e11d48 }
-.ih .i-badge:has(use[href$="#landmark"]) { background: #7c3aed }
-.ih .i-badge:has(use[href$="#heart"]) { background: #dc2626 }
-.ih .i-badge:has(use[href$="#check"]) { background: #16a34a }
-.ih .i-badge:has(use[href$="#shield-check"]) { background: #16a34a }
-.ih .i-badge:has(use[href$="#mail"]) { background: #0d9488 }
-.ih .i-badge:has(use[href$="#pen-line"]) { background: #ea580c }
-.ih .i-badge:has(use[href$="#calendar"]) { background: #4f46e5 }
 </style>
 <script src="/theme.js"></script>
 </head>
@@ -225,42 +290,52 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#heart"/></svg>Antisionismo</a>
     </nav>
   </header>
+</div>
 
-  <main>
-    <h1>¿Qué zona me toca?</h1>
-    <p class="lede">Encuentra tu zona de la rotación de agua del SIAPA y tus próximos días de racionamiento.</p>
-
-    <div class="finder">
-      <div class="locate">
-        <button class="button glow solid" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Usar mi ubicación</button>
-        <p class="note"><strong>Recomendado:</strong> usa el mapa de zonas del SIAPA, no los nombres de colonias. Solo la usamos para encontrar tu zona; no la guardamos.</p>
-      </div>
-      <p class="or">o</p>
-      <form id="buscar" role="search">
-        <label for="colonia">Escribe el nombre de tu colonia</label>
-        <div class="search">
-          <div class="field">
-            <input id="colonia" name="q" type="search" maxlength="80" autocomplete="off" spellcheck="false" placeholder="Por ejemplo: Las Juntas" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugerencias">
-            <ul class="suggest" id="sugerencias" role="listbox" aria-label="Colonias encontradas" hidden></ul>
-          </div>
-          <button class="button" type="submit"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#search"/></svg>Buscar</button>
+<main>
+  <div class="stage" id="escenario">
+    <div id="mapa" class="bigmap" role="region" aria-label="Mapa de las colonias y las zonas de la rotación del SIAPA" tabindex="0"></div>
+    <div class="finder" id="buscador">
+      <h1>¿Qué zona me toca?</h1>
+      <form class="search" id="buscar" role="search">
+        <div class="field">
+          <label for="colonia" class="sr">Busca tu colonia, municipio o código postal</label>
+          <svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#search"/></svg>
+          <input id="colonia" name="q" type="search" maxlength="80" autocomplete="off" spellcheck="false" placeholder="Busca tu colonia o C.P." role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugerencias">
+          <button class="clear" type="button" id="limpiar" aria-label="Borrar la búsqueda" hidden><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+          <ul class="suggest" id="sugerencias" role="listbox" aria-label="Colonias encontradas" hidden></ul>
         </div>
+        <button class="button go" type="submit">Buscar</button>
       </form>
-      <p class="note">Los nombres vienen de la lista del SIAPA y muchas veces no coinciden con Google Maps. <a href="#lista">Por qué</a>.</p>
-      <p class="note">¿Prefieres ver todo el mapa? En el <a href="/mapa">mapa de colonias y zonas</a> tocas tu colonia y te dice su zona y sus días.</p>
-      <noscript><p class="note">Esta página necesita JavaScript. Consulta tu zona en el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa oficial del SIAPA</a>.</p></noscript>
+      <div class="locrow">
+        <button class="button alt glow" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Usar mi ubicación</button>
+        <p><strong>Recomendado:</strong> usa el mapa de zonas del SIAPA, no los nombres. No guardamos tu ubicación. <a href="#lista">Por qué</a></p>
+      </div>
+      <p class="status" id="estado" aria-live="polite">Cargando el mapa de colonias…</p>
+      <noscript><p class="status">Esta página necesita JavaScript. Consulta tu zona en el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa oficial del SIAPA</a>.</p></noscript>
     </div>
+    <div class="modo" id="modo" role="group" aria-label="Colorear el mapa por"><span>Colorear por:</span><button type="button" data-modo="zona" aria-pressed="true">Zona del SIAPA</button><button type="button" data-modo="dias" aria-pressed="false">Días sin agua</button>
+      <ul class="dkey" id="clave-dias" aria-label="Colores del mapa: días sin agua según medios y vecinos" hidden>
+        <li><span class="sw" style="--c:var(--s1)"></span>1–2 días</li>
+        <li><span class="sw" style="--c:var(--s2)"></span>3–6</li>
+        <li><span class="sw" style="--c:var(--s3)"></span>7–13</li>
+        <li><span class="sw" style="--c:var(--s4)"></span>14 o más</li>
+        <li><span class="sw nodays"></span>sin días contados</li>
+        <li class="full">Según lo que publican medios y vecinos. El número: sus publicaciones más los reportes de las últimas 24 horas en <a href="/reportes">¿Hay agua?</a></li>
+      </ul>
+    </div>
+    <div class="zstrip" id="zonas" role="group" aria-label="Las zonas de la rotación del SIAPA"></div>
+  </div>
 
-    <div id="resultado" aria-live="polite" tabindex="-1"></div>
-
+  <div class="wrap">
     <section aria-labelledby="ojo">
-      <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#info"/></svg></span>Ten en cuenta</h2>
+      <h2 id="ojo" class="sec ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#info"/></svg></span>Ten en cuenta</h2>
       <div class="warn callout" id="lista">
         <svg class="trace" aria-hidden="true"><rect width="100%" height="100%" rx="10" pathLength="1"/></svg>
         <h3>La lista de colonias del SIAPA y su mapa no siempre coinciden</h3>
         <p>Comparamos la <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/pdf/colonias_siapa.pdf" rel="noopener">lista de colonias</a> que el SIAPA publicó el 12 de octubre (621; la CEA dice que la rotación abarca 627) con el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa</a> que publica desde el 16 de octubre, el mismo que ves aquí:</p>
         <ul>
-          <li><strong>271 colonias de la lista</strong> no aparecen con ese nombre en el mapa: son secciones, nombres antiguos o con otra ortografía, como JARDÍN DE LOS ESCRITORES o NUEVO FRACCIONAMIENTO. Para ellas te damos los días de la lista.</li>
+          <li><strong>271 colonias de la lista</strong> no aparecen con ese nombre en el mapa: son secciones, nombres antiguos o con otra ortografía, como JARDÍN DE LOS ESCRITORES o NUEVO FRACCIONAMIENTO. Si buscas una, te damos los días de la lista.</li>
           <li><strong>Hay colonias repetidas con zonas distintas:</strong> SAN FELIPE 2 SECCIÓN está en la zona 2 y SAN FELIPE SEGUNDA SECCIÓN en la zona 3.</li>
           <li><strong>Colonias partidas entre municipios:</strong> la lista pone CHAPALITA en la zona 5 en Guadalajara y en la 6 en Zapopan, y CIUDAD DEL SOL en la 5 en Tlaquepaque y en la 6 en Zapopan. En el mapa quedan en las dos zonas, así que aquí les mostramos las dos.</li>
           <li><strong>En 43 colonias</strong> el mapa da otras zonas o más zonas que la lista, como ANALCO (zona 2 en la lista; 1 y 2 en el mapa), y <strong>en 11</strong> la lista da más zonas que el mapa, como LAS CONCHAS (2 y 6 en la lista; solo la 2 en el mapa).</li>
@@ -269,21 +344,30 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         <p>Si buscas por ubicación y por nombre y te dan zonas distintas, prepárate para los días de las dos.</p>
       </div>
       <ul class="plain">
-        <li>Según el SIAPA, cada zona tiene de 2 a 3 racionamientos por semana «por máximo un día» y «no serán cortes totales». <a href="https://lasillarota.com/estados/2026/10/14/como-funcionara-la-rotacion-de-agua-en-guadalajara-aqui-las-claves-533014.html" rel="noopener">La Silla Rota publicó</a> que cada racionamiento empieza a las cero horas del día programado. Vecinos nos cuentan que en sus colonias el agua se va desde antes y tarda más en volver.</li>
+        <li>Según el SIAPA, cada zona tiene de 2 a 3 racionamientos por semana «por máximo un día» y «no serán cortes totales». <a href="https://lasillarota.com/estados/2026/10/14/como-funcionara-la-rotacion-de-agua-en-guadalajara-aqui-las-claves-533014.html" rel="noopener">La Silla Rota publicó</a> que cada racionamiento empieza a las cero horas del día programado. Vecinos nos cuentan que en sus colonias el agua se va desde antes y tarda más en volver: míralo en <a href="/reportes">¿Hay agua en tu colonia?</a></li>
+        <li>Algunas colonias reciben agua de varios acueductos, y el límite entre zonas pasa por dentro de otras: ahí una parte de la colonia puede tener otro calendario. Si tu colonia sale en dos zonas, usa tu ubicación o mira en el mapa de qué lado queda tu casa.</li>
+        <li>Las colonias, sus contornos y las zonas son los del <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa de la rotación del SIAPA</a>; los contornos son aproximados. Los días de cada zona salen de su calendario. También puedes ver <a href="/mapa">todo el mapa de colonias y zonas</a>.</li>
+        <li><strong>Tu privacidad.</strong> Si usas tu ubicación o tocas un punto del mapa fuera de las colonias, ese punto se manda a nuestro servidor solo para encontrar su zona, y no lo guardamos. Lo que escribes en el buscador se manda para buscar tu colonia en la lista del SIAPA, y tampoco lo guardamos. Las calles del mapa vienen de OpenStreetMap, que recibe tu dirección IP y ve qué parte del mapa se carga (si usas tu ubicación, la de tu alrededor). <a href="/privacidad">Aviso de privacidad</a>.</li>
+        <li id="descuento"><strong>Revisa tu recibo:</strong> hasta el 15 de diciembre, las casas y pequeños comercios de las colonias con problemas de calidad del agua tienen 80% de descuento si su consumo promedio es de hasta 25 m³ al mes (<a href="https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25482/1785200563-2026-07-27-.pdf" rel="noopener" target="_blank">decreto 30216/LXIV/26</a>). La lista vigente de colonias se publicó el 8 de octubre en el <a href="https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25862/1791483823-2026-10-08-IV.pdf" rel="noopener" target="_blank">Periódico Oficial</a>. Si tu colonia no está y tu agua llega turbia o con olor, puedes pedir el descuento al SIAPA, que hace una revisión técnica.</li>
         <li>Agua GDL es una iniciativa ciudadana: no es del SIAPA ni del gobierno y no tiene partido.</li>
       </ul>
     </section>
-  </main>
+  </div>
+</main>
 
+<div class="wrap">
   <footer>
     <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con el Gobierno de Jalisco.</p>
-    <p><a href="/">Inicio</a> · <a href="/escribe">Escribe al Congreso</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
+    <p><a href="/">Inicio</a> · <a href="/mapa">Mapa de la rotación</a> · <a href="/avisos">Recibir avisos</a> · <a href="/escribe">Escribe al Congreso</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
   </footer>
 </div>
+<script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script src="/mapa.js"></script>
 <script>
 (() => {
   "use strict";
-  const MAP = "https://rotaciondeserviciosiapa.jalisco.gob.mx/";
+  const M = window.aguaMapa;
+  const SIAPA = "https://rotaciondeserviciosiapa.jalisco.gob.mx/";
   const API = (() => {
     const o = new URLSearchParams(location.search).get("api");
     try {
@@ -292,574 +376,243 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     } catch {}
     return "https://api.aguagdl.com";
   })();
+  const params = new URLSearchParams(location.search);
   const DAYS = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
   const MONTHS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
   const MUNICIPIOS = { GUADALAJARA: "Guadalajara", ZAPOPAN: "Zapopan", TLAQUEPAQUE: "Tlaquepaque", "SAN PEDRO TLAQUEPAQUE": "San Pedro Tlaquepaque", TONALA: "Tonalá" };
-
-  const out = document.getElementById("resultado");
-  const locBtn = document.getElementById("ubicacion");
-  const form = document.getElementById("buscar");
-  const input = document.getElementById("colonia");
-  let zonesReq = null;
-  let lastChoices = null;
-
-  const icon = (name) => {
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.setAttribute("class", "i");
-    svg.setAttribute("aria-hidden", "true");
-    const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-    use.setAttribute("href", `/icons.svg?v=5#${name}`);
-    svg.append(use);
-    return svg;
-  };
-  const badge = (name) => el("span", { class: "i-badge" }, icon(name));
+  const { norm, joinES } = M;
+  const $ = (id) => document.getElementById(id);
+  const icon = M.icon;
   function el(tag, attrs, ...kids) {
     const n = document.createElement(tag);
     for (const [k, v] of Object.entries(attrs || {})) n.setAttribute(k, v);
-    n.append(...kids.filter((k) => k != null));
+    n.append(...kids.filter((k) => k != null && k !== false));
     return n;
   }
-  const mapLink = (text) => el("a", { href: MAP, rel: "noopener" }, text || "mapa oficial del SIAPA");
-  const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase().replace(/\s+/g, " ").trim();
-  const municipio = (m) => MUNICIPIOS[norm(m)] || m;
   const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+  // SIAPA writes names in capitals: «PONIENTE II» reads «Poniente II».
+  const SMALL = new Set(["de", "del", "la", "las", "los", "el", "y", "e"]);
+  const nice = (name) => name.toLowerCase().split(" ").map((w, i) =>
+    /^(i{1,3}|iv|vi{0,3}|ix|x)$/.test(w) ? w.toUpperCase() : i && SMALL.has(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+  const municipio = (m) => MUNICIPIOS[norm(m)] || (m === m.toUpperCase() ? nice(m) : m);
+  const fmt = (n) => n.toLocaleString("es-MX");
+  const plural = (n, one, many) => `${fmt(n)} ${n === 1 ? one : many}`;
+  const daysWord = (d) => `${d} ${d === 1 ? "día" : "días"}`;
+  const phone = () => matchMedia("(max-width: 760px)").matches;
+  const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const keyOf = (p) => `${p.n}|${p.m}|${p.cp}`;
 
-  function joinES(items) {
-    return items.length < 2 ? items.join("") : items.slice(0, -1).join(", ") + " y " + items[items.length - 1];
-  }
+  // Days are days in Guadalajara: "2026-10-22".
   function isoToday(offset) {
     const t = new Date(Intl.DateTimeFormat("en-CA", { timeZone: "America/Mexico_City" }).format(new Date()) + "T00:00:00Z");
     t.setUTCDate(t.getUTCDate() + (offset || 0));
     return t.toISOString().slice(0, 10);
   }
+  const today = isoToday(0);
+  const dayOf = (iso) => new Date(iso + "T00:00:00Z");
   function dateES(iso) {
-    const t = new Date(iso + "T00:00:00Z");
+    const t = dayOf(iso);
     const s = `${DAYS[t.getUTCDay()]} ${t.getUTCDate()} de ${MONTHS[t.getUTCMonth()]}`;
-    if (iso === isoToday(0)) return "Hoy, " + s;
+    if (iso === today) return "Hoy, " + s;
     if (iso === isoToday(1)) return "Mañana, " + s;
     return cap(s);
   }
+  const lowerDate = (iso) => dateES(iso).replace(/^./, (ch) => ch.toLowerCase());
+  // shortES: "hoy", "mañana", "vie 23".
+  const shortES = (iso) => iso === today ? "hoy" : iso === isoToday(1) ? "mañana" : `${DAYS[dayOf(iso).getUTCDay()].slice(0, 3)} ${dayOf(iso).getUTCDate()}`;
+  const pubDate = (iso, long) => { const [, m, d] = iso.split("-").map(Number); return long ? `${d} de ${MONTHS[m - 1]}` : `${d} ${MONTHS[m - 1].slice(0, 3)}`; };
+  // SIAPA's weekdays in the plural: "los miércoles, viernes y domingos".
+  const weekdaysES = (days) => `los ${joinES(days.map((d) => /o$/.test(d) ? `${d}s` : d))}`;
 
-  async function get(path) {
-    const opts = typeof AbortSignal.timeout === "function" ? { signal: AbortSignal.timeout(15000) } : {};
-    const res = await fetch(API + path, opts);
+  async function get(path, opts) {
+    const timeout = typeof AbortSignal.timeout === "function" ? { signal: AbortSignal.timeout(15000) } : {};
+    const res = await fetch(API + path, { ...timeout, ...opts });
     if (!res.ok) throw new Error("HTTP " + res.status);
     return res.json();
   }
-  function zoneTable() {
-    if (!zonesReq) {
-      zonesReq = get("/v1/zones").then((list) => new Map(list.map((z) => [z.zone, z])));
-      zonesReq.catch(() => { zonesReq = null; });
-    }
-    return zonesReq;
-  }
 
-  // Each render bumps shown, so a lookup still loading can tell it was overtaken: a slow
-  // earlier search must not replace a newer one.
-  let shown = 0;
-  function show(...nodes) {
-    shown++;
-    choiceHover = null;
-    out.replaceChildren(...nodes.filter((n) => n != null));
-  }
-  const msg = (...kids) => el("p", { class: "msg" }, ...kids);
-  const warn = (...kids) => el("p", { class: "warn" }, ...kids);
-  const result = (iconName, title, ...kids) => el("div", { class: "result" },
-    el("h3", { class: "ih" }, badge(iconName), title), ...kids);
-  const locateLink = (text) => {
+  const status = $("estado");
+  const say = (...kids) => status.replaceChildren(...kids);
+  const locBtn = $("ubicacion");
+  const linkTo = (text, fn) => {
     const b = el("button", { type: "button", class: "linklike" }, text);
-    b.addEventListener("click", locate);
+    b.addEventListener("click", fn);
     return b;
   };
-  const searchLink = (text) => {
-    const b = el("button", { type: "button", class: "linklike" }, text);
-    b.addEventListener("click", () => { input.focus(); input.scrollIntoView({ block: "center" }); });
-    return b;
-  };
-  function unreachable() {
-    show(msg("No pudimos conectar con Agua GDL. Intenta de nuevo en unos minutos o consulta tu zona en el ", mapLink(), "."));
-  }
+  const mapLink = (text) => el("a", { href: SIAPA, rel: "noopener" }, text || "mapa oficial del SIAPA");
 
+  // ——— SIAPA's calendar: each zone's cut days, from the API. ———
+  let zinfo = new Map(), zonesState = "loading";
+  const zonesLoad = get("/v1/zones")
+    .then((list) => { for (const z of list) zinfo.set(z.zone, z); zonesState = "ok"; })
+    .catch(() => { zonesState = zinfo.size ? "ok" : "failed"; });
+  const daysText = (z) => zinfo.has(z) ? cap(joinES(zinfo.get(z).days)) : zonesState === "loading" ? "Cargando los días…" : null;
+  const nextCut = (z, after) => { const i = zinfo.get(z); return i ? (i.next || []).find((d) => after ? d > after : d >= today) || null : null; };
+
+  // ——— Telegram and the calendars, as before. ———
   const TELEGRAM = "https://t.me/AvisoAguaGDLbot";
   const calendarURL = (zone) => `aguagdl.com/calendario/zona-${zone}.ics`;
   const googleCalendar = (zone) => `https://calendar.google.com/calendar/render?cid=${encodeURIComponent(`webcal://${calendarURL(zone)}`)}`;
   const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const telegramLink = (z) => el("a", { class: "button", href: `${TELEGRAM}?start=z${z}`, rel: "noopener" }, icon("send"), `Aviso por Telegram · zona ${z}`);
   // iPhones import the file with its alert kept; everyone else gets Google Calendar, the default on Android.
-  const calendarButton = (zone) => isIOS
-    ? el("a", { class: "button", href: `https://${calendarURL(zone)}` }, icon("calendar"), "Agregar a mi calendario")
-    : el("a", { class: "button", href: googleCalendar(zone), rel: "noopener", target: "_blank" }, icon("calendar"), "Agregar a Google Calendar");
-  function calendarLinks(zone) {
+  const calendarLink = (z) => isIOS
+    ? el("a", { class: "button alt", href: `https://${calendarURL(z)}` }, icon("calendar"), `Calendario · zona ${z}`)
+    : el("a", { class: "button alt", href: googleCalendar(z), rel: "noopener", target: "_blank" }, icon("calendar"), `Calendario · zona ${z}`);
+  function calendarLinks(zone, several) {
     const copy = el("button", { type: "button", class: "button alt" }, icon("copy"), "Copiar enlace");
     copy.addEventListener("click", async () => {
       try { await navigator.clipboard.writeText(`https://${calendarURL(zone)}`); copy.replaceChildren(icon("check"), "Copiado"); }
       catch { copy.replaceChildren(`https://${calendarURL(zone)}`); }
     });
     return el("details", { class: "cal" },
-      el("summary", {}, "Otras formas de agregarlo y cómo activar la alerta"),
+      el("summary", {}, several ? `Zona ${zone}: otras formas de agregar el calendario y cómo activar la alerta` : "Otras formas de agregar el calendario y cómo activar la alerta"),
       el("div", { class: "subscribe" },
         el("a", { class: "button alt", href: `https://${calendarURL(zone)}` }, icon("bell"), "iPhone: agregar con alerta"),
         el("a", { class: "button alt", href: `webcal://${calendarURL(zone)}` }, "iPhone o Mac: suscribirme"),
         el("a", { class: "button alt", href: googleCalendar(zone), rel: "noopener", target: "_blank" }, "Android o Google Calendar"),
         copy),
-      el("p", { class: "note" }, "Cada día de racionamiento de la zona, con alertas a las 8 p. m. dos días antes y la noche antes de cada tanda de cortes. No guardamos ningún dato tuyo."),
+      el("p", { class: "note" }, `Cada día de racionamiento de la zona ${zone}, con alertas a las 8 p. m. dos días antes y la noche antes de cada tanda de cortes. No guardamos ningún dato tuyo.`),
       el("p", { class: "note" }, el("strong", {}, "En iPhone, «agregar con alerta» "), "copia los días a tu calendario con la alerta incluida (ábrelo en Safari y toca «Agregar todo»). No se actualiza: si el SIAPA cambia el calendario lo avisaremos aquí y en el bot, y tendrás que borrarlos y agregarlos otra vez."),
       el("p", { class: "note" }, el("strong", {}, "«Suscribirme» "), "se actualiza solo, pero al suscribirte desactiva «Eliminar alertas» o no te llegará el aviso. Si ya te suscribiste: Ajustes › Apps › Calendario › Cuentas › Calendarios suscritos › Agua GDL › desactiva «Eliminar alertas»."),
       el("p", { class: "note" }, el("strong", {}, "En Android: "), "Google Calendar no usa las alertas de los calendarios suscritos. En la app, abre Configuración › Agua GDL › Notificaciones de eventos de todo el día y agrega una el día anterior a las 8 p. m. (y otra dos días antes, si la quieres). Google Calendar las usa en cada día de corte, no solo en el primero de cada tanda."));
   }
+  const subscribeNote = () => el("p", { class: "note" }, "Gratis: un mensaje a las 8 p. m. dos días antes de los cortes de tu zona y la noche antes (una vez por tanda cuando los cortes van seguidos), o alertas en tu calendario. En Telegram, al tocar «Iniciar» aceptas los avisos; ", el("a", { href: "/privacidad" }, "aviso de privacidad"), ".");
 
-  function zoneCard(z) {
-    const today = isoToday(0);
-    const next = z.next.filter((d) => d >= today).slice(0, 2);
-    return el("article", { class: "zone" },
-      el("h3", { class: "ih" }, badge("map-pin"), `Zona ${z.zone}`),
-      el("p", {}, "Días de racionamiento: ", el("strong", {}, joinES(z.days))),
-      next.length
-        ? el("div", {}, el("p", {}, icon("calendar"), " Próximos:"), el("ul", {}, ...next.map((d) => el("li", {}, dateES(d)))))
-        : el("p", {}, "No hay más días en el calendario que publicó el SIAPA."),
-      el("div", { class: "subscribe" },
-        calendarButton(z.zone),
-        el("a", { class: "button alt", href: `${TELEGRAM}?start=z${z.zone}`, rel: "noopener" }, icon("send"), "Recibir el aviso por Telegram")),
-      el("p", { class: "note" }, `Gratis. El calendario trae cada corte de la zona ${z.zone}, con alertas a las 8 p. m. dos días antes y la noche antes de cada tanda de cortes (abajo te decimos cómo asegurarte de que suenen), y no guarda ningún dato tuyo. En Telegram, al tocar «Iniciar» aceptas los avisos; `, el("a", { href: "/privacidad" }, "aviso de privacidad"), "."),
-      calendarLinks(z.zone));
+  // ——— What media and neighbours publish (web/publicaciones.json) and this site's reports, loaded when needed. ———
+  let ev = new Map(), pubsState = null, summary = null, summaryState = null;
+  const sevOf = (d) => d == null ? 0 : d <= 2 ? 1 : d <= 6 ? 2 : d <= 13 ? 3 : 4;
+  const sevVars = (s) => `--c:var(--s${s});--k:var(${s ? `--s${s}-ink` : "--fg"})`;
+  function sourceOf(p) {
+    if (p.de) return sourceOf({ red: /^https:\/\/x\.com\//.test(p.de) ? "x" : "facebook", url: p.de });
+    if (p.tipo === "comentario") return `c:${p.url}`;
+    if (p.fuente === "medio") return `m:${p.quien}`;
+    const seg = new URL(p.url).pathname.split("/").filter(Boolean);
+    if (p.red === "x") return `x:${seg[0].toLowerCase()}`;
+    if (p.red === "facebook") return seg[0] === "groups" ? `g:${seg[1]}` : `f:${seg[0]}`;
+    return `w:${new URL(p.url).hostname}`;
   }
-  const cards = (zones) => el("div", { class: "zones" }, ...zones.map(zoneCard));
-
-  function locate() {
-    if (!("geolocation" in navigator)) {
-      show(msg("Tu navegador no permite compartir tu ubicación. ", searchLink("Busca tu colonia"), " en su lugar."));
-      return;
-    }
-    locBtn.disabled = true;
-    show(msg("Buscando tu ubicación… Si tu navegador te pide permiso, toca «Permitir»."));
-    const mine = shown;
-    // Browsers can stay silent while the permission prompt is ignored or the system blocks location, so give up on our own.
-    let settled = false;
-    const giveUp = setTimeout(() => {
-      if (settled) return;
-      settled = true;
-      locBtn.disabled = false;
-      if (shown !== mine) return;
-      show(msg("No pudimos obtener tu ubicación. Revisa que tu navegador y tu celular o computadora tengan la ubicación activada, o ", searchLink("busca tu colonia"), "."));
-    }, 25000);
-    navigator.geolocation.getCurrentPosition(async (pos) => {
-      if (settled) return;
-      settled = true;
-      clearTimeout(giveUp);
-      try {
-        const { latitude: lat, longitude: lon } = pos.coords;
-        const r = await get(`/v1/zone?lat=${lat.toFixed(4)}&lon=${lon.toFixed(4)}`);
-        if (shown !== mine) return;
-        if (r.zones.length === 0) {
-          show(result("map-pin", "Tu ubicación no está en ninguna zona del mapa del SIAPA",
-            el("p", {}, "Puede que no te toque la rotación. Pero el mapa y la lista de colonias del SIAPA no siempre coinciden, así que busca también tu colonia por su nombre aquí arriba."),
-            el("div", { class: "subscribe" }, el("a", { class: "button alt", href: MAP, rel: "noopener", target: "_blank" }, icon("map-pin"), "Ver el mapa del SIAPA", icon("external-link")))));
-        } else if (r.zones.length === 1) {
-          show(el("p", {}, "Tu ubicación está en la ", el("strong", {}, `zona ${r.zones[0].zone}`), "."), cards(r.zones));
-        } else {
-          show(warn(`Tu ubicación queda en el límite entre las zonas ${joinES(r.zones.map((z) => z.zone))}. Revisa el `, mapLink(), " para saber cuál te toca."), cards(r.zones));
-        }
-      } catch {
-        if (shown === mine) unreachable();
-      } finally {
-        locBtn.disabled = false;
-      }
-    }, (err) => {
-      if (settled) return;
-      settled = true;
-      clearTimeout(giveUp);
-      locBtn.disabled = false;
-      if (shown !== mine) return;
-      const why = err.code === 1 ? "No diste permiso para usar tu ubicación. " : "No pudimos obtener tu ubicación. ";
-      show(msg(why, searchLink("Busca tu colonia"), " o revisa los permisos de ubicación de tu navegador."));
-    }, { enableHighAccuracy: false, timeout: 20000, maximumAge: 60000 });
-  }
-
-  // The map (Leaflet + OpenStreetMap tiles) loads with the first result, so nobody's IP
-  // reaches OSM before searching. It is SIAPA's own map data, drawn by /mapa.js.
-  const HIGHLIGHT = "#facc15";
-  let mapDeps = null;
-  let choiceHover = null; // set by the map, so hovering an option highlights its outline
-  function loadMap() {
-    if (!mapDeps) {
-      document.head.append(el("link", { rel: "stylesheet", href: "/vendor/leaflet-1.9.4/leaflet.css" }));
-      const script = (src) => new Promise((resolve, reject) => {
-        const t = el("script", { src });
-        t.onload = resolve;
-        t.onerror = reject;
-        document.head.append(t);
+  const ecoOf = (p) => p.eco ? p.eco.reacciones + p.eco.comentarios + (p.eco.compartidos || 0) : 0;
+  function evidence(doc) {
+    const out = new Map();
+    const byCol = new Map();
+    for (const p of doc.publicaciones) for (const k of p.colonias) { if (!byCol.has(k)) byCol.set(k, []); byCol.get(k).push(p); }
+    for (const [k, posts] of byCol) {
+      posts.sort((a, b) => (b.fuente === "medio") - (a.fuente === "medio") || b.fecha.localeCompare(a.fecha) || ecoOf(b) - ecoOf(a));
+      const days = posts.map((p) => p.dias).filter((d) => d != null);
+      out.set(k, {
+        posts,
+        dias: days.length ? Math.max(...days) : null,
+        fuentes: new Set(posts.map(sourceOf)).size,
+        medios: new Set(posts.filter((p) => p.fuente === "medio").map(sourceOf)).size,
+        ultima: posts.reduce((m, p) => p.fecha > m ? p.fecha : m, ""),
       });
-      mapDeps = Promise.all([script("/vendor/leaflet-1.9.4/leaflet.js"), script("/mapa.js")]).then(() => window.aguaMapa.load());
-      mapDeps.catch(() => { mapDeps = null; });
     }
-    return mapDeps;
+    return out;
   }
-  const coloniaKey = (name, mun) => norm(name) + "|" + norm(municipio(mun));
-  const phone = () => matchMedia("(max-width: 760px)").matches;
-  const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  // scrollToTop brings el to the top of the screen, just under the sticky menu.
-  function scrollToTop(el) {
-    const header = document.querySelector("header.top");
-    scrollTo({ top: el.getBoundingClientRect().top + scrollY - (header && getComputedStyle(header).position === "sticky" ? header.offsetHeight : 0) - 12, behavior: reduced() ? "auto" : "smooth" });
-  }
-  const telegramLink = (z) => el("a", { class: "button", href: `${TELEGRAM}?start=z${z}`, rel: "noopener" }, icon("send"), `Aviso por Telegram · zona ${z}`);
-  const calendarLink = (z) => isIOS
-    ? el("a", { class: "button alt", href: `https://${calendarURL(z)}` }, icon("calendar"), `Calendario · zona ${z}`)
-    : el("a", { class: "button alt", href: googleCalendar(z), rel: "noopener", target: "_blank" }, icon("calendar"), `Calendario · zona ${z}`);
-  const nextCut = (zones, z) => (zones.get(z) ? zones.get(z).next.find((d) => d >= isoToday(0)) : null) || null;
-  const lowerDate = (iso) => dateES(iso).replace(/^./, (ch) => ch.toLowerCase());
-
-  // mapBlock shows SIAPA's map with the listed colonias outlined, opening at once. With
-  // card (a list colonia), its card floats over the map, the list's zones first and the
-  // map's view as a note. In a choice list (pick), tapping an outlined colonia picks it;
-  // tapping any other colonia shows its own card. A tap on a spot with no colonia asks the
-  // API which zone it is in and shows that zone's days under the map.
-  function mapBlock(list, zones, pick = list.length > 1, card = null) {
-    const box = el("div", { class: "mapbox" },
-      el("p", { class: "note" }, "Cargando el mapa…"),
-      el("p", { class: "note" }, "El mapa se carga desde OpenStreetMap. Las colonias y las zonas son las del mapa del SIAPA; los contornos son aproximados."));
-    (async () => {
-      let data;
-      try {
-        data = await loadMap();
-      } catch {
-        box.replaceChildren(el("p", { class: "note" }, "No pudimos cargar el mapa. Revisa tu zona en el ", mapLink(), "."), ...(card ? [cards(card.zones.map((z) => zones.get(z)).filter(Boolean))] : []));
-        return;
-      }
-      if (!box.isConnected) return;
-      const M = window.aguaMapa;
-      const L = window.L;
-      const found = list.map((c) => [c, M.find(data.colonias, c.name, c.municipio)]).filter(([, fs]) => fs.length);
-      const absent = list.filter((c) => !M.find(data.colonias, c.name, c.municipio).length);
-      const div = el("div", { class: card ? "map tall" : "map", role: "region", "aria-label": "Mapa de las colonias y las zonas" });
-      const wrap = el("div", { class: "mapwrap" }, div);
-      const tapPick = pick && found.length > 0;
-      const answer = el("p", { "aria-live": "polite" }, tapPick ? "Toca tu colonia en el mapa." : "Toca cualquier colonia del mapa para ver su zona.",
-        absent.length && !card ? ` El mapa del SIAPA no dibuja ${joinES(absent.map((c) => `${c.name} (${municipio(c.municipio)})`))} con ese nombre: ` : null,
-        absent.length && !card ? el("a", { href: "#lista" }, "por qué") : null, absent.length && !card ? "." : null);
-      const tapped = el("div");
-      box.replaceChildren(wrap, answer, tapped, box.lastChild);
-      // The zoom buttons go top right: the colonia card opens top left.
-      const map = L.map(div, { preferCanvas: true, scrollWheelZoom: false, zoomSnap: 0.25, zoomControl: false });
-      L.control.zoom({ position: "topright" }).addTo(map);
-      // The wheel scrolls the page, but a trackpad pinch (ctrl+wheel; gesture events in Safari) zooms the map.
-      let pinch = 0;
-      div.addEventListener("wheel", (e) => {
-        if (!e.ctrlKey) return;
-        e.preventDefault();
-        pinch -= e.deltaY / 100;
-        if (Math.abs(pinch) < 0.25) return;
-        map.setZoomAround(map.mouseEventToContainerPoint(e), map.getZoom() + pinch, { animate: false });
-        pinch = 0;
-      }, { passive: false });
-      let gestureStart = 0;
-      div.addEventListener("gesturestart", (e) => { e.preventDefault(); gestureStart = map.getZoom(); });
-      div.addEventListener("gesturechange", (e) => {
-        e.preventDefault();
-        map.setZoomAround(map.mouseEventToContainerPoint(e), gestureStart + Math.log2(e.scale), { animate: false });
-      });
-      const missing = el("div", { class: "map-missing", role: "status" });
-      missing.hidden = true;
-      div.append(missing);
-      M.tiles(L, map);
-      // Any tap on the map brings it to the top of the screen, so the card and the results are in view.
-      map.on("click", () => scrollToTop(box));
-      const days = (z) => zones.get(z) ? cap(joinES(zones.get(z).days)) : null;
-      const picks = new Map();
-      for (const [c, fs] of found) for (const f of fs) picks.set(f, c);
-      let shownCard = null;
-      // A tapped colonia's outline goes with its card; the searched colonias keep theirs.
-      let tappedMark = null;
-      const unmark = () => {
-        if (tappedMark) tappedMark.remove();
-        tappedMark = null;
-      };
-      const closeCard = () => {
-        if (shownCard) shownCard.remove();
-        shownCard = null;
-        unmark();
-      };
-      // Only a searched colonia's map has the calendar details below it.
-      const cardOpts = { days, next: (z) => nextCut(zones, z), dateES: lowerDate, links: (z) => [telegramLink(z), calendarLink(z)],
-        note: "Gratis: un mensaje a las 8 p. m. dos días antes de los cortes de tu zona y la noche antes (una vez por tanda cuando los cortes van seguidos), o alertas en tu calendario." + (card ? " Abajo, otras formas de agregar el calendario y cómo activar la alerta." : ""), onClose: closeCard };
-      const place = (node) => {
-        if (shownCard) shownCard.remove();
-        shownCard = node;
-        wrap.append(node);
-      };
-      // fitTo leaves room for the card: on the left on wide screens, at the bottom on phones.
-      let lastFit = null;
-      M.recenter(L, map, () => { if (lastFit) fitTo(lastFit, true); }, "topright");
-      const fitTo = (bounds, animate) => {
-        lastFit = bounds;
-        const pad = shownCard
-          ? (phone() ? { paddingTopLeft: [24, 24], paddingBottomRight: [24, Math.round(map.getSize().y * 0.55)] } : { paddingTopLeft: [400, 24], paddingBottomRight: [24, 24] })
-          : { padding: [24, 24] };
-        const opts = { ...pad, maxZoom: 15, animate: animate && !reduced(), duration: 0.7 };
-        if (opts.animate) map.flyToBounds(bounds, opts); else map.fitBounds(bounds, opts);
-      };
-      // mapCard shows a tapped colonia the way /mapa does: the map's zones first, the list's as a note.
-      const mapCard = (f) => {
-        const p = f.properties;
-        const z = M.zones(p);
-        const ls = M.zonesOf(p.l || "");
-        const differs = ls.length && ls.join() !== [...z.all].sort().join();
-        place(M.card({ ...cardOpts, title: p.n, subtitle: municipio(p.m) + (p.cp ? ` · C.P. ${p.cp}` : ""), sentence: M.describe(p), main: z.main, side: z.border,
-          extra: differs ? ls.filter((zone) => !z.all.includes(zone)) : [],
-          extraNote: differs ? `La lista de colonias del SIAPA la pone en ${M.theZones(ls)}. El mapa y la lista no siempre coinciden: ${z.all.length ? `prepárate para los días de ${new Set([...z.all, ...ls]).size > 2 ? "todas" : "las dos"}` : "prepárate para esos días"}.` : null,
-          color: drawn.color }));
-        unmark();
-        tappedMark = drawn.highlight(f);
-        fitTo(tappedMark.getBounds(), true);
-      };
-      const drawn = M.draw(L, map, data, {
-        dark: aguaDark(),
-        days,
-        onClick: (f) => {
-          lastTap = Date.now();
-          const c = picks.get(f);
-          if (pick && c) {
-            showColonia(c, zones);
-            return;
-          }
-          mapCard(f);
-          const z = M.zones(f.properties);
-          const where = `${f.properties.n} (${municipio(f.properties.m)})`;
-          answer.replaceChildren(z.all.length
-            ? el("span", {}, where, " está en ", el("strong", {}, M.theZones(z.main)), z.border.length ? `, ${M.borderWord(z.border)}` : "", ".")
-            : `${where} queda fuera de las zonas del mapa del SIAPA: ahí no toca racionamiento.`);
-          tapped.replaceChildren();
-        },
-      });
-      let lastTap = 0;
-      // The listed colonias get an outline and a label; the municipio only when two share a name.
-      const sameName = (c) => list.some((o) => norm(o.name) === norm(c.name) && norm(o.municipio) !== norm(c.municipio));
-      const drawnBy = new Map();
-      let all = null;
-      for (const [c, fs] of found) {
-        const label = sameName(c) ? `${c.name} · ${municipio(c.municipio)}` : c.name;
-        let bounds = null;
-        for (const f of fs) {
-          const g = drawn.highlight(f, label);
-          bounds = bounds ? bounds.extend(g.getBounds()) : L.latLngBounds(g.getBounds());
-        }
-        all = all ? all.extend(bounds) : L.latLngBounds(bounds);
-        drawnBy.set(coloniaKey(c.name, c.municipio), fs);
-      }
-      if (card) {
-        // The searched colonia's card: the list's zones first; the map's view when it differs.
-        // A name can have several outlines (OBRERA in Guadalajara: C.P. 44150 in zone 5, 44400
-        // in zone 2): the ones in the list's zones stand for it, and only when none is does the
-        // card warn.
-        const fs = M.find(data.colonias, card.name, card.municipio);
-        const same = (zs) => [...zs].sort().join() === [...card.zones].sort().join();
-        const match = fs.filter((f) => same(M.zones(f.properties).all));
-        const cps = [...new Set((match.length ? match : fs).map((f) => f.properties.cp).filter(Boolean))].sort();
-        let sentence = null, side = [], extra = [], extraNote = null;
-        if (card.zones.length > 1) sentence = `La lista del SIAPA pone esta colonia en las ${M.zoneWord(card.zones)}: recibe agua de varios acueductos. Mira en el mapa de qué lado queda tu casa, o usa tu ubicación.`;
-        else if (card.multi) sentence = "El SIAPA marca esta colonia como abastecida por varios acueductos, así que una parte podría tener otro calendario. Para confirmarlo, usa tu ubicación.";
-        const views = fs.map((f) => M.zones(f.properties));
-        const main = [...new Set(views.flatMap((z) => z.main))];
-        const border = [...new Set(views.flatMap((z) => z.border))].filter((z) => !main.includes(z));
-        if (!fs.length) {
-          extraNote = `El mapa del SIAPA no dibuja una colonia llamada ${card.name} en ${municipio(card.municipio)}; estos son los días de su lista.`;
-        } else if (match.length) {
-          const mz = M.zones(match[0].properties);
-          if (mz.border.length && !sentence) {
-            sentence = M.describe(match[0].properties);
-            side = mz.border;
-          }
-        } else if (!main.length) {
-          extraNote = fs.length > 1 ? "En el mapa del SIAPA los contornos con este nombre quedan fuera de todas las zonas; la lista pone la colonia aquí."
-            : "En el mapa del SIAPA el contorno de esta colonia queda fuera de todas las zonas; la lista la pone aquí.";
-        } else {
-          extra = main.filter((z) => !card.zones.includes(z));
-          side = border.filter((z) => !card.zones.includes(z));
-          const shown = new Set([...card.zones, ...extra, ...side]).size;
-          extraNote = `En el mapa del SIAPA ${fs.length > 1 ? "las colonias con este nombre quedan" : "queda"} en ${M.theZones(main)}${border.length ? `, ${M.borderWord(border)}` : ""}. El mapa y la lista no siempre coinciden`
-            + (extra.length || side.length ? `: prepárate para los días de ${shown > 2 ? "todas" : "las dos"}.` : ".");
-        }
-        place(M.card({ ...cardOpts, title: card.name, subtitle: municipio(card.municipio) + (cps.length ? ` · C.P. ${joinES(cps)}` : ""), sentence, main: card.zones, side, extra, extraNote, color: drawn.color }));
-      }
-      const listed = [...new Set(list.flatMap((c) => c.zones))];
-      const zoneBounds = drawn.zoneLayer.getLayers().filter((l) => listed.includes(l.feature.properties.z)).reduce((b, l) => (b ? b.extend(l.getBounds()) : L.latLngBounds(l.getBounds())), null);
-      fitTo(all || zoneBounds || drawn.home, false);
-      // Hovering an option in the choice list lights its outline in yellow.
-      let hot = null;
-      const unhover = () => {
-        if (!hot) return;
-        hot.overlay.remove();
-        hot = null;
-      };
-      choiceHover = (c, on) => {
-        const key = coloniaKey(c.name, c.municipio);
-        const fs = drawnBy.get(key);
-        if (!fs) {
-          missing.hidden = !on;
-          if (on) missing.textContent = `${c.name}: el mapa del SIAPA no dibuja una colonia con ese nombre en ${municipio(c.municipio)}, así que no podemos marcarla. Mira «Ten en cuenta», abajo.`;
-          return;
-        }
-        missing.hidden = true;
-        if (!on && hot?.key !== key) return;
-        unhover();
-        if (!on) return;
-        const overlay = L.featureGroup(fs.flatMap((f) => {
-          const gj = { type: "Feature", geometry: f.geometry, properties: {} };
-          return [L.geoJSON(gj, { interactive: false, style: { color: "#0c1e2c", weight: 11, fill: false } }),
-            L.geoJSON(gj, { interactive: false, style: { color: HIGHLIGHT, weight: 6, fill: false } })];
-        })).addTo(map);
-        hot = { key, overlay };
-      };
-      map.on("mouseout", unhover);
-      let pin = null;
-      // The visitor switched the theme: this map, its outlines and the tapped spot follow, while it's on the page.
-      const recolor = () => {
-        if (!box.isConnected) { document.removeEventListener("tema", recolor); return; }
-        drawn.setDark(aguaDark());
-        if (pin) pin.setStyle({ color: drawn.halo, fillColor: drawn.ink });
-      };
-      document.addEventListener("tema", recolor);
-      if (tapPick) return;
-      // A tap on a spot with no colonia drawn asks the API which zone polygon it is in.
-      let taps = 0;
-      map.on("click", async (e) => {
-        if (Date.now() - lastTap < 300) return;
-        const { lat, lng } = e.latlng;
-        if (pin) pin.setLatLng(e.latlng); else pin = L.circleMarker(e.latlng, { radius: 8, color: drawn.halo, weight: 3, fillColor: drawn.ink, fillOpacity: 1 }).addTo(map);
-        answer.replaceChildren("Buscando la zona de ese punto…");
-        const mine = ++taps;
-        try {
-          const r = await get(`/v1/zone?lat=${lat.toFixed(5)}&lon=${lng.toFixed(5)}`);
-          if (mine !== taps) return;
-          const nums = r.zones.map((z) => z.zone);
-          answer.replaceChildren(nums.length === 0
-            ? "Ese punto no está en ninguna zona del mapa del SIAPA."
-            : nums.length === 1
-              ? el("span", {}, "Ese punto está en la ", el("strong", {}, `zona ${nums[0]}`), ". Abajo están sus días.")
-              : `Ese punto queda en el límite entre las zonas ${joinES(nums)}. Abajo están sus días.`);
-          tapped.replaceChildren(...(nums.length ? [cards(r.zones)] : []));
-        } catch {
-          if (mine === taps) answer.replaceChildren("No pudimos consultar la zona de ese punto. Intenta de nuevo.");
-        }
-      });
-    })();
-    return box;
-  }
-
-  // showColonia: the map with the colonia outlined and its card floating over it, then the
-  // calendar details for its zones.
-  function showColonia(c, zones) {
-    // The list that led here: typing in the box replaces lastChoices with its suggestions.
-    const choices = lastChoices;
-    const back = choices && choices.length > 1 ? el("p", {}, el("button", { type: "button", class: "linklike" }, "← Ver las otras colonias")) : null;
-    if (back) back.firstChild.addEventListener("click", () => showChoices(choices, zones));
-    const details = c.zones.map((z) => el("div", { class: "zone" }, el("h3", { class: "ih" }, badge("calendar"), `Calendario de la zona ${z}`), calendarLinks(z)));
-    show(mapBlock([c], zones, false, c), ...details, discountNote(), back);
-  }
-
-  const discountNote = () => isoToday(0) > "2026-12-15" ? null : el("p", { class: "note" },
-    el("strong", {}, "Revisa tu recibo: "),
-    "hasta el 15 de diciembre, las casas y pequeños comercios de las colonias con problemas de calidad del agua tienen 80% de descuento si su consumo promedio es de hasta 25 m³ al mes (",
-    el("a", { href: "https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25482/1785200563-2026-07-27-.pdf", rel: "noopener", target: "_blank" }, "decreto 30216/LXIV/26"),
-    "). La lista vigente de colonias se publicó el 8 de octubre en el ",
-    el("a", { href: "https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25862/1791483823-2026-10-08-IV.pdf", rel: "noopener", target: "_blank" }, "Periódico Oficial"),
-    ". Si tu colonia no está y tu agua llega turbia o con olor, puedes pedir el descuento al SIAPA, que hace una revisión técnica.");
-
-  function choiceList(list, zones) {
-    return el("ul", { class: "choices" }, ...list.map((c) => {
-      const b = el("button", { type: "button", class: "choice" }, el("strong", {}, c.name),
-        el("span", {}, `${municipio(c.municipio)} · ${c.zones.length > 1 ? "Zonas" : "Zona"} ${joinES(c.zones)}`));
-      b.addEventListener("click", () => showColonia(c, zones));
-      for (const [type, on] of [["mouseenter", true], ["focus", true], ["mouseleave", false], ["blur", false]]) {
-        b.addEventListener(type, () => choiceHover && choiceHover(c, on));
-      }
-      return el("li", {}, b);
-    }));
-  }
-
-  function showChoices(list, zones) {
-    show(el("p", {}, "Encontramos varias colonias parecidas. ¿Cuál es la tuya?"), mapBlock(list, zones, true), choiceList(list, zones));
-  }
-
-  // others are colonias that exist but aren't on SIAPA's rotation list; similar names
-  // that are on it are still offered below.
-  function showOthers(others, similar, zones) {
-    const nodes = others.map((o) => o.zones.length === 0
-      ? result("droplet", `${o.name} (${municipio(o.municipio)}): colonia no afectada`,
-        el("p", {}, "No está en la lista de colonias de la rotación del SIAPA y queda fuera de las zonas de su mapa, así que no le toca racionamiento."))
-      : result("info", `${o.name} (${municipio(o.municipio)}) no está en la lista del SIAPA`,
-        el("p", {}, `Pero queda dentro del mapa de ${o.zones.length > 1 ? "las zonas" : "la zona"} ${joinES(o.zones)}. El mapa y la lista no siempre coinciden: `, locateLink("usa tu ubicación"), " para confirmarlo.")));
-    if (similar.length) nodes.push(el("p", {}, "¿O es alguna de estas?"), mapBlock(similar, zones, true), choiceList(similar, zones));
-    show(...nodes);
-  }
-
-  async function search(q) {
-    if (MUNICIPIOS[norm(q)]) {
-      show(msg(`${MUNICIPIOS[norm(q)]} tiene colonias en varias zonas de la rotación. Escribe el nombre de tu colonia o `, locateLink("usa tu ubicación"), "."));
-      return;
+  let pubsReq = null;
+  function needPubs() {
+    if (!pubsReq) {
+      pubsState = "loading";
+      pubsReq = fetch("/publicaciones.json").then((r) => r.ok ? r.json() : null)
+        .then((doc) => { ev = evidence(doc); pubsState = "ok"; })
+        .catch(() => { ev = new Map(); pubsState = "failed"; })
+        .then(() => changed());
     }
-    show(msg("Buscando…"));
-    const mine = shown;
-    try {
-      const [r, zones] = await Promise.all([get("/v1/colonias?q=" + encodeURIComponent(q)), zoneTable()]);
-      if (shown !== mine) return;
-      lastChoices = r.colonias;
-      if (r.others && r.others.length) {
-        showOthers(r.others, r.colonias, zones);
-      } else if (r.colonias.length === 0) {
-        show(msg(`No encontramos «${q}» en la lista de colonias del SIAPA. Revisa cómo se escribe, prueba con solo una parte del nombre o `, locateLink("usa tu ubicación"), ". También puedes buscarla en el ", mapLink(), "."));
-      } else if (r.exact && r.colonias.length === 1) {
-        showColonia(r.colonias[0], zones);
-      } else {
-        showChoices(r.colonias, zones);
-      }
-    } catch {
-      if (shown === mine) unreachable();
-    }
+    return pubsReq;
   }
-
-  locBtn.addEventListener("click", locate);
-  // Links to the list's errors scroll there and draw an outline around them.
-  document.addEventListener("click", (e) => {
-    if (!e.target.closest('a[href="#lista"]')) return;
-    e.preventDefault();
-    const box = document.getElementById("lista");
-    box.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
-    box.classList.remove("draw");
-    void box.offsetWidth;
-    box.classList.add("draw");
-  });
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (active >= 0 && options[active]) {
-      pick(options[active]);
-      return;
+  let byKey = new Map(), summaryReq = null;
+  function needSummary() {
+    if (!summaryReq) {
+      summaryState = "loading";
+      summaryReq = get("/v1/reportes")
+        .then((s) => { summary = s; byKey = new Map(s.colonias.map((c) => [`${c.n}|${c.m}|${c.cp}`, c])); summaryState = "ok"; })
+        .catch(() => { summaryState = "failed"; })
+        .then(() => changed());
     }
-    cancelSuggestions();
-    const q = input.value.trim().slice(0, 80);
-    if (!q) {
-      show(msg("Escribe el nombre de tu colonia."));
-      return;
-    }
-    // Once someone searches by name, the location button stops calling for attention.
-    locBtn.classList.remove("glow", "solid");
-    scrollToTop(form.closest(".finder"));
-    search(q);
-  });
+    return summaryReq;
+  }
+  const totalOf = (c) => c.sin_agua + c.baja + c.con_agua;
+  const statusOf = (c) => !c ? null : 2 * c.sin_agua > totalOf(c) ? "dry" : 2 * c.con_agua > totalOf(c) ? "ok" : "low";
+  // changed: publications or reports arrived; the map, the strip and the open card follow.
+  let onChanged = () => {};
+  const changed = () => onChanged();
 
-  // Suggestions while typing: the API's matches for the text so far, picked with the mouse
-  // or the arrow keys; a pick runs the same flow as a search that found that colonia.
-  const list = document.getElementById("sugerencias");
-  let options = [];
-  let active = -1;
-  let typing = 0;
-  let pending = null;
-  // cancelSuggestions closes the list and forgets the keystrokes' pending request.
-  function cancelSuggestions() {
-    clearTimeout(typing);
-    if (pending) pending.abort();
-    pending = null;
-    closeList();
+  // ——— The map, on screen from the first paint. ———
+  const stage = $("escenario"), finder = $("buscador"), strip = $("zonas"), modo = $("modo"), header = document.querySelector("header.top");
+  const map = L.map("mapa", { preferCanvas: true, zoomSnap: 0.25, zoomControl: false, wheelPxPerZoomLevel: 40, wheelDebounceTime: 20 });
+  L.control.zoom({ position: "topright" }).addTo(map);
+  map.setView([20.66, -103.37], 11);
+  // With a colonia in the link, the streets load once, at its view, instead of first for the whole city.
+  let streets = false;
+  const addStreets = () => { if (!streets) { streets = true; M.tiles(L, map); } };
+  if (!(params.get("q") || "").trim()) addStreets();
+  // The stage takes the screen below the header; the finder, the switch and the strip leave room for each other.
+  const measure = () => {
+    document.documentElement.style.setProperty("--hh", `${header.offsetHeight}px`);
+    stage.style.setProperty("--fh", `${finder.offsetHeight}px`);
+    stage.style.setProperty("--sh", `${strip.offsetHeight}px`);
+    stage.style.setProperty("--mh", `${modo.offsetTop + modo.offsetHeight + 8}px`);
+    map.invalidateSize();
+  };
+  if (window.ResizeObserver) { const ro = new ResizeObserver(measure); for (const n of [header, finder, strip, modo]) ro.observe(n); }
+  measure();
+
+  // ——— Search: the map's own colonias (instant, by name, municipio or postal code) and SIAPA's list through the API. ———
+  const input = $("colonia"), list = $("sugerencias"), clear = $("limpiar"), form = $("buscar");
+  let data = null, ready = null;
+  let options = [], active = -1, typing = 0, pending = null;
+  const apiCache = new Map();
+  function apiSearch(q, signal) {
+    const k = q.toLowerCase();
+    if (apiCache.has(k)) return Promise.resolve(apiCache.get(k));
+    return get("/v1/colonias?q=" + encodeURIComponent(q.slice(0, 80)), signal ? { signal } : undefined).then((r) => {
+      apiCache.set(k, r);
+      if (apiCache.size > 60) apiCache.delete(apiCache.keys().next().value);
+      return r;
+    });
+  }
+  let index = [];
+  // Like the API's search: "Col."/"Fracc." dropped, and "GDL" for Guadalajara.
+  function matches(q) {
+    const nq = M.fold(q).split(" ").map((t) => (t === "GDL" ? "GUADALAJARA" : t)).join(" ");
+    if (!nq) return [];
+    const tokens = nq.split(" ");
+    const hits = index.filter((it) => tokens.every((t) => it.key.includes(t)));
+    const rank = (it) => (it.name === nq ? 0 : it.cp === nq ? 1 : it.name.startsWith(nq) ? 2 : it.key.startsWith(nq) ? 3 : 4);
+    hits.sort((a, b) => rank(a) - rank(b) || a.name.localeCompare(b.name) || a.f.properties.m.localeCompare(b.f.properties.m));
+    const seen = new Set();
+    return hits.map((it) => it.f).filter((f) => { const k = keyOf(f.properties); if (seen.has(k)) return false; seen.add(k); return true; });
+  }
+  // combine: the map's colonias first, then the API's matches the map draws under that name, then the
+  // list's colonias the map doesn't draw, and colonias that aren't on the list.
+  function combine(q, r, cap = 10) {
+    const out = [], seen = new Set();
+    const addMap = (f) => { const k = keyOf(f.properties); if (seen.has(k)) return; seen.add(k); out.push({ kind: "map", f }); };
+    if (data) matches(q).slice(0, 8).forEach(addMap);
+    if (r) {
+      const listed = [];
+      for (const c of r.colonias || []) {
+        const fs = data ? M.find(data.colonias, c.name, c.municipio) : [];
+        if (fs.length) fs.forEach(addMap); else listed.push({ kind: "list", c });
+      }
+      out.push(...listed.slice(0, 4));
+      if (!r.exact) for (const o of (r.others || []).slice(0, 3)) {
+        const fs = data ? M.find(data.colonias, o.name, o.municipio) : [];
+        if (fs.length) fs.forEach(addMap); else out.push({ kind: "other", o });
+      }
+    }
+    return out.slice(0, cap);
+  }
+  const optName = (o) => o.kind === "map" ? o.f.properties.n : o.kind === "list" ? o.c.name : o.o.name;
+  function optLine(o) {
+    if (o.kind === "map") {
+      const p = o.f.properties, z = M.zones(p);
+      return [z.all.length ? el("span", { class: "dot", style: `--zc:${zoneColor(z.main[0])}` }) : null, `${M.label(p)} · ${municipio(p.m)}${p.cp ? ` · C.P. ${p.cp}` : ""}`];
+    }
+    if (o.kind === "list") return [`${o.c.zones.length > 1 ? "Zonas" : "Zona"} ${joinES(o.c.zones)} según la lista del SIAPA · ${municipio(o.c.municipio)}`];
+    const x = o.o;
+    return [`${municipio(x.municipio)} · no está en la lista del SIAPA${x.zones.length ? ` · en el mapa, ${x.zones.length > 1 ? "zonas" : "zona"} ${joinES(x.zones)}` : " · colonia no afectada"}`];
   }
   function closeList() {
     list.hidden = true;
@@ -869,45 +622,23 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
     options = [];
     active = -1;
   }
+  function cancelSuggestions() {
+    clearTimeout(typing);
+    if (pending) pending.abort();
+    pending = null;
+    closeList();
+  }
   function setActive(i) {
     active = i;
     [...list.children].forEach((li, k) => li.setAttribute("aria-selected", String(k === i)));
-    if (i >= 0) {
-      input.setAttribute("aria-activedescendant", list.children[i].id);
-      list.children[i].scrollIntoView({ block: "nearest" });
-    } else {
-      input.removeAttribute("aria-activedescendant");
-    }
+    if (i >= 0) { input.setAttribute("aria-activedescendant", list.children[i].id); list.children[i].scrollIntoView({ block: "nearest" }); }
+    else input.removeAttribute("aria-activedescendant");
   }
-  async function pick(o) {
-    input.value = o.name;
-    cancelSuggestions();
-    locBtn.classList.remove("glow", "solid");
-    scrollToTop(form.closest(".finder"));
-    show(msg("Buscando…"));
-    const mine = shown;
-    try {
-      const zones = await zoneTable();
-      if (shown !== mine) return;
-      if (o.other) showOthers([o], o.similar, zones);
-      else showColonia(o, zones);
-    } catch {
-      if (shown === mine) unreachable();
-    }
-  }
-  function suggest(r) {
-    lastChoices = r.colonias;
-    const others = r.exact ? [] : (r.others || []).slice(0, 3).map((o) => ({ ...o, other: true, similar: r.colonias }));
-    options = [...others, ...r.colonias.slice(0, 8)];
-    if (!options.length) {
-      closeList();
-      return;
-    }
-    list.replaceChildren(...options.map((o, i) => {
-      const where = o.other
-        ? `${municipio(o.municipio)} · no está en la lista del SIAPA${o.zones.length ? ` · en el mapa, ${o.zones.length > 1 ? "zonas" : "zona"} ${joinES(o.zones)}` : " · colonia no afectada"}`
-        : `${municipio(o.municipio)} · ${o.zones.length > 1 ? "Zonas" : "Zona"} ${joinES(o.zones)}`;
-      const li = el("li", { role: "option", id: `op-${i}`, "aria-selected": "false" }, el("strong", {}, o.name), el("span", { class: "sub" }, where));
+  function showOptions(opts) {
+    options = opts;
+    if (!opts.length || document.activeElement !== input) { closeList(); options = opts; return; }
+    list.replaceChildren(...opts.map((o, i) => {
+      const li = el("li", { role: "option", id: `op-${i}`, "aria-selected": "false" }, el("strong", {}, optName(o)), el("span", { class: "sub" }, ...optLine(o)));
       li.addEventListener("mousedown", (e) => e.preventDefault());
       li.addEventListener("click", () => pick(o));
       return li;
@@ -919,51 +650,764 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   input.addEventListener("input", () => {
     clearTimeout(typing);
     const q = input.value.trim();
-    if (norm(q).length < 2 || MUNICIPIOS[norm(q)]) {
-      closeList();
-      return;
-    }
+    clear.hidden = !q;
+    if (norm(q).length < 2 || MUNICIPIOS[norm(q)]) { closeList(); return; }
+    // The map's colonias at once; the list's when the API answers.
+    showOptions(combine(q, apiCache.get(q.toLowerCase()) || null));
     typing = setTimeout(async () => {
       if (pending) pending.abort();
       const ctl = new AbortController();
       pending = ctl;
       try {
-        const res = await fetch(API + "/v1/colonias?q=" + encodeURIComponent(q.slice(0, 80)), { signal: ctl.signal });
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        const r = await res.json();
-        // Not once the box has lost focus: the list would open over the results.
-        if (pending === ctl && input.value.trim() === q && document.activeElement === input) suggest(r);
+        const r = await apiSearch(q, ctl.signal);
+        if (pending === ctl && input.value.trim() === q) showOptions(combine(q, r));
       } catch {
-        // A failed or superseded request leaves the list as it was: the search button still works.
+        // A failed or superseded request leaves the map's suggestions: the search button still works.
       }
     }, 250);
   });
-  input.addEventListener("focus", () => {
-    if (options.length && input.value.trim()) {
-      list.hidden = false;
-      input.setAttribute("aria-expanded", "true");
-    }
-  });
+  input.addEventListener("focus", () => { const q = input.value.trim(); if (norm(q).length >= 2 && !MUNICIPIOS[norm(q)]) showOptions(combine(q, apiCache.get(q.toLowerCase()) || null)); });
   input.addEventListener("blur", () => setTimeout(closeList, 150));
   input.addEventListener("keydown", (e) => {
     if (e.key === "ArrowDown" && options.length) {
       e.preventDefault();
-      list.hidden = false;
-      input.setAttribute("aria-expanded", "true");
+      if (list.hidden) showOptions(options);
       setActive((active + 1) % options.length);
     } else if (e.key === "ArrowUp" && options.length) {
       e.preventDefault();
       setActive((active - 1 + options.length) % options.length);
     } else if (e.key === "Escape") {
-      closeList();
+      if (list.hidden && sheet) closeSheet(); else closeList();
     }
   });
-  // Other pages (a landing variant) can link here with ?q=colonia to search right away.
-  const preset = new URLSearchParams(location.search).get("q");
-  if (preset && preset.trim()) {
-    input.value = preset.trim().slice(0, 80);
-    form.requestSubmit();
+  clear.addEventListener("click", () => { input.value = ""; clear.hidden = true; cancelSuggestions(); closeSheet(); input.focus(); });
+  const quietLocate = () => locBtn.classList.remove("glow");
+  let searchSeq = 0;
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (active >= 0 && options[active] && !list.hidden) { pick(options[active]); return; }
+    const q = input.value.trim().slice(0, 80);
+    cancelSuggestions();
+    if (!q) { input.focus(); say("Escribe el nombre de tu colonia o su código postal."); return; }
+    // Once someone searches by name, the location button stops calling for attention.
+    quietLocate();
+    if (MUNICIPIOS[norm(q)]) { say(`${MUNICIPIOS[norm(q)]} tiene colonias en varias zonas de la rotación. Escribe el nombre de tu colonia o `, linkTo("usa tu ubicación", locate), "."); return; }
+    runSearch(q);
+  });
+  // runSearch: one colonia with that exact name opens; several, or none exact, give a list to pick from.
+  // SIAPA's list is asked too, since it has colonias the map draws under another name or not at all.
+  async function runSearch(q, m) {
+    const mine = ++searchSeq;
+    say("Buscando…");
+    try { await ready; } catch {}
+    let r = null;
+    try { r = await apiSearch(q); } catch {}
+    if (mine !== searchSeq) return;
+    const same = (o) => {
+      const mun = o.kind === "map" ? o.f.properties.m : o.kind === "list" ? o.c.municipio : o.o.municipio;
+      return M.fold(optName(o)) === M.fold(q) && (!m || norm(municipio(mun)) === norm(municipio(m)));
+    };
+    const opts = combine(q, r, 14);
+    const exact = opts.filter(same);
+    if (!opts.length) {
+      say(r ? `No encontramos «${q}» en la lista ni en el mapa del SIAPA. Revisa cómo se escribe, prueba con solo una parte del nombre o con tu código postal, o ` : `No encontramos «${q}» en el mapa del SIAPA y no pudimos conectar con la lista. Prueba con tu código postal o `, linkTo("usa tu ubicación", locate), ".");
+      return;
+    }
+    say(r ? "" : "No pudimos conectar con la lista de colonias del SIAPA: estas son solo las del mapa.");
+    if (phone()) input.blur();
+    if (exact.length === 1) pick(exact[0], true);
+    else if (opts.length === 1) pick(opts[0], true);
+    else showChoices([...exact, ...opts.filter((o) => !exact.includes(o))], q);
   }
+  function pick(o, keepStatus) {
+    input.value = optName(o);
+    clear.hidden = false;
+    cancelSuggestions();
+    quietLocate();
+    if (!keepStatus) say("");
+    if (phone()) input.blur();
+    if (o.kind === "map") select(o.f);
+    else if (o.kind === "list") showListed(o.c);
+    else showOther(o.o);
+  }
+
+  // ——— Drawing: built once SIAPA's map has loaded. ———
+  let COLORS = {};
+  const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const palette = () => {
+    COLORS = { dry: css("--dry"), low: css("--low"), ok: css("--ok"), none: css("--none"), ink: css("--fg"), surface: css("--surface"), muted: css("--muted"), sev: [0, 1, 2, 3, 4].map((i) => css(`--s${i}`)) };
+  };
+  palette();
+  const zoneColor = (z) => z ? M.COLORS[aguaDark() ? "dark" : "light"][z] || COLORS.muted : COLORS.muted;
+  const edge = () => aguaDark() ? "#0b1a24" : "#1f2d3a";
+  let mode = params.get("color") === "dias" ? "dias" : "zona";
+  let focus = null;        // a Set of zones the map singles out, or null
+  let locked = null;       // the zone whose tile is pressed
+  let sheet = null;        // the open card: { node, render, marks, kind, bounds }
+  let lastTap = 0;
+  let features = new Map(), zonesByKey = new Map(), ZONES = [], zoneName = new Map(), counts = new Map();
+  let layer = null, zoneLayer = null, zoneHalo = null, home = null, labels = null, labelAt = new Map(), markers = null, centers = new Map();
+
+  ready = M.load().then(build);
+  ready.catch(() => { say("No pudimos cargar el mapa de colonias. Intenta de nuevo en unos minutos o consulta tu zona en el ", mapLink(), "."); addStreets(); });
+
+  function build(d) {
+    data = d;
+    const { colonias, zonas } = d;
+    index = colonias.map((f) => ({ f, key: norm(`${f.properties.n} ${f.properties.m} ${f.properties.cp}`), name: M.fold(f.properties.n), cp: f.properties.cp }));
+    for (const f of colonias) {
+      const k = keyOf(f.properties);
+      if (!features.has(k)) features.set(k, []);
+      features.get(k).push(f);
+    }
+    for (const [k, fs] of features) {
+      const zs = new Set(fs.flatMap((f) => M.zones(f.properties).main));
+      zonesByKey.set(k, [...zs].sort((a, b) => a - b));
+    }
+    ZONES = [...new Set(zonas.map((f) => f.properties.z))].sort((a, b) => a - b);
+    zoneName = new Map(zonas.map((f) => [f.properties.z, f.properties.nombre]));
+    for (const z of ZONES) counts.set(z, { main: 0, border: 0 });
+    for (const [, fs] of features) {
+      const main = new Set(), border = new Set();
+      for (const f of fs) { const z = M.zones(f.properties); z.main.forEach((x) => main.add(x)); z.border.forEach((x) => border.add(x)); }
+      for (const z of main) if (counts.has(z)) counts.get(z).main++;
+      for (const z of border) if (counts.has(z) && !main.has(z)) counts.get(z).border++;
+    }
+
+    // The zones' outlines go over the colonias, in a pane of their own, with a light halo under each line.
+    map.createPane("zonas").style.zIndex = 450;
+    map.getPane("zonas").style.pointerEvents = "none";
+    map.createPane("marcas").style.zIndex = 460;
+    map.getPane("marcas").style.pointerEvents = "none";
+    const zoneRenderer = L.canvas({ pane: "zonas", padding: 0.5 });
+    const zoneHaloStyle = (f) => ({ color: COLORS.surface, weight: focus && focus.has(f.properties.z) ? 9 : 5.5, opacity: focus && !focus.has(f.properties.z) ? 0.25 : 0.8, fill: false });
+    const zoneStyle = (f) => {
+      const z = f.properties.z, on = focus && focus.has(z), dim = focus && !on;
+      return { color: zoneColor(z), weight: on ? 4.5 : 2.6, opacity: dim ? 0.35 : 1, fill: false };
+    };
+    zoneHalo = L.geoJSON({ type: "FeatureCollection", features: zonas }, { interactive: false, renderer: zoneRenderer, style: zoneHaloStyle }).addTo(map);
+    zoneLayer = L.geoJSON({ type: "FeatureCollection", features: zonas }, { interactive: false, renderer: zoneRenderer, style: zoneStyle }).addTo(map);
+    zoneLayer.restyle = () => { zoneLayer.setStyle(zoneStyle); zoneHalo.setStyle(zoneHaloStyle); };
+    home = zoneLayer.getBounds().pad(0.02);
+
+    // Coloured by zone, each colonia takes its main zone's colour (dashed when split between zones).
+    // Coloured by days, as on /reportes: the most days its publications give, else this site's last 24 hours.
+    const styleOf = (f) => {
+      const p = f.properties, z = M.zones(p), k = keyOf(p);
+      const d = !focus ? 1 : z.main.some((x) => focus.has(x)) ? 1 : z.border.some((x) => focus.has(x)) ? 0.5 : 0.12;
+      if (mode === "zona") {
+        if (!z.all.length) return { color: COLORS.muted, weight: 0.4, opacity: 0.35 * d, dashArray: null, fillColor: COLORS.none, fillOpacity: 0.05 * d };
+        return { color: edge(), weight: z.split ? 1 : 0.5, opacity: (z.split ? 0.8 : 0.45) * d, dashArray: z.split ? "4 3" : null, fillColor: zoneColor(z.main[0]), fillOpacity: 0.42 * d };
+      }
+      const e = ev.get(k);
+      if (e) {
+        const s = sevOf(e.dias);
+        return s ? { color: COLORS.sev[s], weight: 1.2, opacity: 0.95 * d, dashArray: null, fillColor: COLORS.sev[s], fillOpacity: 0.62 * d }
+          : { color: COLORS.sev[0], weight: 1.8, opacity: 0.95 * d, dashArray: "4 3", fillColor: COLORS.sev[0], fillOpacity: 0.2 * d };
+      }
+      const s = statusOf(byKey.get(k));
+      if (!s) return { color: COLORS.muted, weight: 0.4, opacity: 0.5 * d, dashArray: null, fillColor: COLORS.none, fillOpacity: 0.06 * d };
+      return { color: COLORS[s], weight: 1, opacity: 0.9 * d, dashArray: null, fillColor: COLORS[s], fillOpacity: Math.min(0.65, 0.3 + 0.07 * totalOf(byKey.get(k))) * d };
+    };
+    const tip = (f) => {
+      const p = f.properties, z = M.zones(p), k = keyOf(p);
+      const box = el("span", {}, `${p.n} · ${municipio(p.m)}`);
+      if (!z.all.length) box.append(el("span", { class: "sub" }, M.zonesOf(p.l || "").length ? `Sin zona en el mapa; la lista la pone en ${M.theZones(M.zonesOf(p.l))}` : "Fuera de la rotación"));
+      for (const zone of z.main) {
+        const i = zinfo.get(zone);
+        box.append(el("span", { class: "sub" }, el("span", { class: "dot", style: `--zc:${zoneColor(zone)}` }), `Zona ${zone}${i ? ` · corte ${weekdaysES(i.days)}` : ""}`));
+      }
+      if (z.border.length) box.append(el("span", { class: "sub" }, cap(M.borderWord(z.border))));
+      const e = mode === "dias" && ev.get(k);
+      if (e) box.append(el("span", { class: "sub" }, e.dias != null ? `Hasta ${daysWord(e.dias)} sin agua, según ${plural(e.fuentes, "fuente", "fuentes")}` : `Sin agua, sin días contados · ${plural(e.fuentes, "fuente", "fuentes")}`));
+      return box;
+    };
+    layer = L.geoJSON({ type: "FeatureCollection", features: colonias }, {
+      renderer: L.canvas({ padding: 0.5 }),
+      style: styleOf,
+      onEachFeature: (f, l) => {
+        l.bindTooltip(() => tip(f), { sticky: true, className: "map-label" });
+        l.on("click", () => { lastTap = Date.now(); select(f); });
+        l.on("mouseover", () => l.setStyle({ weight: 2, fillOpacity: Math.min(0.75, (l.options.fillOpacity || 0) + 0.2) }));
+        l.on("mouseout", () => layer.resetStyle(l));
+      },
+    }).addTo(map);
+    layer.restyle = () => layer.setStyle(styleOf);
+    for (const [k, fs] of features) centers.set(k, L.geoJSON(fs[0]).getBounds().getCenter());
+
+    // Coloured by days: a badge per colonia with publications, with every report it has (its publications plus
+    // the last 24 hours on /reportes), like /reportes. They shrink when the whole city is in view.
+    markers = L.layerGroup().addTo(map);
+    labels = L.layerGroup().addTo(map);
+    computeLabels(zonas);
+    map.on("zoomend", () => { drawMarkers(); drawLabels(); });
+    onChanged = () => { if (mode === "dias") { layer.restyle(); drawMarkers(); } if (sheet && sheet.live) rerender(); };
+
+    // A tap on a spot with no colonia drawn asks the API which zone polygon it is in.
+    map.on("click", (e) => {
+      if (Date.now() - lastTap < 400) return;
+      showPoint(e.latlng, false);
+    });
+    M.recenter(L, map, () => { if (sheet && sheet.bounds) fitTo(sheet.bounds, true); else fitHome(true); }, "topright");
+    setMode(mode);
+    renderStrip();
+    drawLabels();
+    say("");
+    zonesLoad.then(() => {
+      renderStrip();
+      if (zonesState === "failed") say("No pudimos cargar los días de cada zona. El mapa funciona; intenta de nuevo en unos minutos.");
+      if (sheet) rerender();
+    });
+    startFromLink();
+    if (!sheet) fitHome(false);
+    addStreets();
+  }
+
+  function drawMarkers() {
+    markers.clearLayers();
+    if (mode !== "dias") return;
+    const far = map.getZoom() < 12;
+    for (const [k, e] of ev) {
+      const fs = features.get(k);
+      if (!fs) continue;
+      const c = byKey.get(k), total = e.posts.length + (c ? totalOf(c) : 0), n = total > 99 ? "99+" : String(total);
+      const s = sevOf(e.dias), size = (far ? 21 : 26) + (n.length > 2 ? 4 : 0);
+      const zs = zonesByKey.get(k) || [];
+      const m = L.marker(centers.get(k), {
+        icon: L.divIcon({ className: `sev${far ? " far" : ""}${s ? "" : " nodays"}`, html: `<span style="${sevVars(s)}">${n}</span>`, iconSize: [size, size] }),
+        keyboard: false, zIndexOffset: 1000 + total, opacity: !focus || zs.some((z) => focus.has(z)) ? 1 : 0.15,
+        title: `${fs[0].properties.n}: ${plural(total, "reporte", "reportes")}${e.dias != null ? `, hasta ${daysWord(e.dias)} sin agua` : ""}`,
+      });
+      m.on("click", () => select(fs[0]));
+      markers.addLayer(m);
+    }
+  }
+
+  // Every zone's label, at the middle of its largest piece, while the whole city or most of it is in view.
+  function computeLabels(zonas) {
+    for (const f of zonas) {
+      const polys = f.geometry.type === "Polygon" ? [f.geometry.coordinates] : f.geometry.coordinates;
+      for (const poly of polys) {
+        const r = poly[0];
+        let a = 0, cx = 0, cy = 0;
+        for (let i = 0, j = r.length - 1; i < r.length; j = i++) {
+          const c = r[j][0] * r[i][1] - r[i][0] * r[j][1];
+          a += c; cx += (r[j][0] + r[i][0]) * c; cy += (r[j][1] + r[i][1]) * c;
+        }
+        const z = f.properties.z, prev = labelAt.get(z);
+        if (a && (!prev || Math.abs(a) > prev.a)) labelAt.set(z, { a: Math.abs(a), at: [cy / (3 * a), cx / (3 * a)], f: { type: "Feature", geometry: { type: "Polygon", coordinates: poly } } });
+      }
+    }
+    // A concave zone's middle can fall outside it: then the label goes to the zone's colonia nearest to it.
+    for (const [z, x] of labelAt) {
+      if (M.contains(x.f, [x.at[1], x.at[0]])) continue;
+      let best = null, bd = Infinity;
+      for (const [k, zs] of zonesByKey) {
+        if (!zs.includes(z)) continue;
+        const c = centers.get(k), d = (c.lat - x.at[0]) ** 2 + (c.lng - x.at[1]) ** 2;
+        if (d < bd && M.contains(x.f, [c.lng, c.lat])) { bd = d; best = [c.lat, c.lng]; }
+      }
+      if (best) x.at = best;
+    }
+  }
+  function drawLabels() {
+    labels.clearLayers();
+    if (map.getZoom() >= 13) return;
+    // Small zones' labels can land on each other (1 and 2 at the centre): the larger zones keep their spot.
+    const placed = [];
+    for (const [z, x] of [...labelAt].sort((a, b) => b[1].a - a[1].a)) {
+      const p0 = map.latLngToLayerPoint(x.at);
+      let pt = p0;
+      for (const dy of [24, -24, 48, -48]) {
+        if (!placed.some((q) => Math.abs(q.x - pt.x) < 72 && Math.abs(q.y - pt.y) < 24)) break;
+        pt = p0.add([0, dy]);
+      }
+      placed.push(pt);
+      const at = map.layerPointToLatLng(pt);
+      const m = L.marker(at, { icon: L.divIcon({ className: "zlabel", html: `<span style="--zc:${zoneColor(z)}">Zona ${z}</span>`, iconSize: [0, 0] }), keyboard: false, zIndexOffset: 4000, opacity: focus && !focus.has(z) ? 0.3 : 1, title: `Zona ${z}: toca para ver sus días` });
+      m.on("click", () => (locked === z ? closeSheet() : lockZone(z)));
+      labels.addLayer(m);
+    }
+  }
+
+  function setFocus(zs) {
+    focus = zs && zs.length ? new Set(zs) : null;
+    if (!layer) return;
+    zoneLayer.restyle();
+    layer.restyle();
+    drawMarkers();
+    drawLabels();
+    strip.classList.toggle("focusing", !!focus);
+    for (const t of strip.children) t.classList.toggle("on", !!focus && focus.has(Number(t.dataset.z)));
+  }
+
+  function setMode(m) {
+    mode = m;
+    for (const b of modo.querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset.modo === m));
+    $("clave-dias").hidden = m !== "dias";
+    if (m === "dias") { needPubs(); needSummary(); }
+    if (layer) { layer.restyle(); drawMarkers(); }
+    measure();
+  }
+  for (const b of modo.querySelectorAll("button")) b.addEventListener("click", () => setMode(b.dataset.modo));
+
+  // ——— The zone strip: one tile per zone with its cut days and its next cut, per SIAPA's calendar. ———
+  function tile(z) {
+    const i = zinfo.get(z), nx = nextCut(z), cut = nx === today;
+    const after = cut ? nextCut(z, today) : nx;
+    const c = counts.get(z) || { main: 0 };
+    const b = el("button", { type: "button", class: `ztile${focus && focus.has(z) ? " on" : ""}`, "data-z": String(z), style: `--zc:${zoneColor(z)}`, "aria-pressed": String(locked === z),
+      "aria-label": `Zona ${z}${i ? `: corte ${weekdaysES(i.days)}` : ""}${cut ? ". Hoy hay corte" : ""}${after ? `. ${cut ? "Siguiente" : "Próximo"}: ${lowerDate(after)}` : ""}` },
+      el("span", { class: "zt-head" }, el("span", {}, `Zona ${z}`), el("small", {}, nice(zoneName.get(z) || ""))),
+      el("span", { class: "zt-cut" }, ...(i ? ["Corte: ", el("b", {}, i.days.map((d) => d.slice(0, 3)).join(" · "))] : [zonesState === "loading" ? "Cargando días…" : "Días: no cargaron"])),
+      after ? el("span", { class: "zt-next" }, cut ? "Siguiente: " : "Próximo: ", el("b", {}, shortES(after))) : null,
+      el("span", { class: "zt-sub" }, `${fmt(c.main)} colonias en el mapa`),
+      cut ? el("span", { class: "hoy" }, "Hoy hay corte") : null);
+    b.addEventListener("click", () => (locked === z ? closeSheet() : lockZone(z)));
+    return b;
+  }
+  function renderStrip() {
+    const x = strip.scrollLeft;
+    strip.replaceChildren(...ZONES.map(tile));
+    strip.classList.toggle("focusing", !!focus);
+    strip.scrollLeft = x;
+  }
+
+  // ——— The sheet: one card at a time over the map. ———
+  function cardShell(kids, cls) {
+    const c = el("aside", { class: `card${cls ? ` ${cls}` : ""}`, "aria-live": "polite" });
+    c.append(el("span", { class: "grab", "aria-hidden": "true" }));
+    const close = el("button", { type: "button", class: "close", "aria-label": "Cerrar" }, M.cross());
+    close.addEventListener("click", closeSheet);
+    c.append(close, ...kids.filter(Boolean));
+    return c;
+  }
+  // openSheet shows render()'s card; marks are map layers that go with it; focus, the zones it singles out.
+  function openSheet(kind, render, { marks = [], focusZones = null, bounds = null, live = false, zone = null } = {}) {
+    dropSheet();
+    const node = render();
+    sheet = { kind, render, marks, bounds, live, node, zone };
+    stage.append(node);
+    stage.classList.add("has-sheet", `sheet-${kind === "zona" ? "zona" : "colonia"}`);
+    locked = zone;
+    setFocus(focusZones);
+    renderStrip();
+    measure();
+    return sheet;
+  }
+  function rerender() {
+    if (!sheet) return;
+    const top = sheet.node.scrollTop;
+    const open = [...sheet.node.querySelectorAll("details")].map((d) => d.open);
+    const node = sheet.render();
+    sheet.node.replaceWith(node);
+    sheet.node = node;
+    node.querySelectorAll("details").forEach((d, i) => { if (open[i]) d.open = true; });
+    node.scrollTop = top;
+  }
+  function dropSheet() {
+    if (!sheet) return;
+    for (const m of sheet.marks) m.remove();
+    sheet.node.remove();
+    sheet = null;
+    stage.classList.remove("has-sheet", "sheet-colonia", "sheet-zona");
+  }
+  function closeSheet() {
+    const had = !!sheet;
+    dropSheet();
+    locked = null;
+    setFocus(null);
+    renderStrip();
+    setURL(null);
+    measure();
+    if (had) map.getContainer().focus({ preventScroll: true });
+  }
+  function setURL(q) {
+    const p = new URLSearchParams(q || {});
+    if (location.search.includes("api=")) p.set("api", API);
+    const s = p.toString();
+    history.replaceState(null, "", location.pathname + (s ? `?${s}` : ""));
+  }
+
+  // fitTo leaves room for the finder, the card and the strip.
+  function pads() {
+    const W = stage.clientWidth, H = stage.clientHeight;
+    const shown = (n) => n && n.isConnected && n.offsetParent !== null;
+    const sh = shown(strip) ? strip.offsetHeight + 24 : 16;
+    const node = sheet && sheet.node;
+    if (phone()) {
+      const top = finder.offsetTop + finder.offsetHeight + 12;
+      const bottom = shown(node) ? H - node.offsetTop + 12 : sh;
+      return { paddingTopLeft: [24, Math.min(top, H * 0.5)], paddingBottomRight: [24, Math.min(bottom, H * 0.6)] };
+    }
+    let left = finder.offsetLeft + finder.offsetWidth + 24;
+    if (shown(node)) left = Math.max(left, node.offsetLeft + node.offsetWidth + 24);
+    if (W - left < 260) left = 24;
+    return { paddingTopLeft: [left, 24], paddingBottomRight: [64, sh] };
+  }
+  function fitTo(bounds, animate, maxZoom = 15) {
+    if (sheet) sheet.bounds = bounds;
+    const opts = { ...pads(), maxZoom, animate: animate && !reduced(), duration: 0.7 };
+    if (opts.animate) map.flyToBounds(bounds, opts); else map.fitBounds(bounds, opts);
+  }
+  function fitHome(animate) {
+    if (!home) return;
+    const opts = { ...pads(), animate: animate && !reduced(), duration: 0.6 };
+    if (opts.animate) map.flyToBounds(home, opts); else map.fitBounds(home, opts);
+  }
+  const zoneBounds = (zs) => zoneLayer.getLayers().filter((l) => zs.includes(l.feature.properties.z)).reduce((b, l) => (b ? b.extend(l.getBounds()) : L.latLngBounds(l.getBounds().getSouthWest(), l.getBounds().getNorthEast())), null);
+
+  // outline draws fs over everything, with a halo, and an optional label above.
+  function outline(fs, label, hot) {
+    const gj = { type: "FeatureCollection", features: fs.map((x) => ({ type: "Feature", geometry: x.geometry, properties: {} })) };
+    const under = L.geoJSON(gj, { interactive: false, pane: "marcas", style: { color: hot ? "#0c1e2c" : COLORS.surface, weight: hot ? 11 : 9, fill: false } });
+    const over = L.geoJSON(gj, { interactive: false, pane: "marcas", style: { color: hot ? "#facc15" : COLORS.ink, weight: hot ? 6 : 4, fill: false } });
+    const g = L.featureGroup([under, over]).addTo(map);
+    g.restyle = () => { if (!hot) { under.setStyle({ color: COLORS.surface }); over.setStyle({ color: COLORS.ink }); } };
+    if (label) {
+      const b = g.getBounds();
+      const t = L.tooltip({ permanent: true, direction: "top", className: "map-label" }).setLatLng([b.getNorth(), b.getCenter().lng]).setContent(el("span", {}, label)).addTo(map);
+      g.on("remove", () => t.remove());
+    }
+    return g;
+  }
+  const pinAt = (latlng) => L.marker(latlng, { icon: L.divIcon({ className: "pin", iconSize: [18, 18] }), keyboard: false, interactive: false, pane: "marcas" }).addTo(map);
+
+  // The common card options: SIAPA's days and next cut per zone, and the buttons to get the notices.
+  const cardOpts = () => ({ days: daysText, next: (z) => nextCut(z), dateES: lowerDate, color: zoneColor, links: (z) => [telegramLink(z), calendarLink(z)], onClose: closeSheet });
+  // finish adds to M.card's card the grab handle, the calendar details per zone, and extra nodes.
+  function finish(c, zones, extra = []) {
+    c.setAttribute("aria-live", "polite");
+    c.prepend(el("span", { class: "grab", "aria-hidden": "true" }));
+    const note = c.querySelector(".subscribe");
+    if (note) note.after(subscribeNote(), ...zones.map((z) => calendarLinks(z, zones.length > 1)));
+    c.append(...extra.filter(Boolean));
+    return c;
+  }
+
+  // ——— A colonia on SIAPA's map: the map's zones first, the list's when they differ (as on /mapa). ———
+  function select(f, { animate = true } = {}) {
+    const p = f.properties, k = keyOf(p);
+    const fs = features.get(k) || [f];
+    const z = M.zones(p);
+    let multi = null; // from SIAPA's list, when the API answers
+    const render = () => {
+      const ls = M.zonesOf(p.l || "");
+      const differs = ls.length && ls.join() !== [...z.all].sort().join();
+      const extra = differs ? ls.filter((zone) => !z.all.includes(zone)) : [];
+      const c = M.card({
+        ...cardOpts(),
+        title: p.n,
+        subtitle: municipio(p.m) + (p.cp ? ` · C.P. ${p.cp}` : ""),
+        sentence: M.describe(p) || (multi && z.all.length === 1 && !extra.length ? "El SIAPA marca esta colonia como abastecida por varios acueductos, así que una parte podría tener otro calendario. Para confirmarlo, usa tu ubicación." : null),
+        main: z.main, side: z.border, extra,
+        extraNote: differs ? `La lista de colonias del SIAPA la pone en ${M.theZones(ls)}. El mapa y la lista no siempre coinciden: ${z.all.length ? `prepárate para los días de ${new Set([...z.all, ...ls]).size > 2 ? "todas" : "las dos"}` : "prepárate para esos días"}.` : null,
+      });
+      return finish(c, [...z.main, ...z.border, ...extra], [reportsBlock(p)]);
+    };
+    const marks = [outline(fs)];
+    openSheet("colonia", render, { marks, focusZones: null, live: true });
+    fitTo(marks[0].getBounds(), animate);
+    setURL({ q: p.n, m: p.m, cp: p.cp });
+    addStreets();
+    needPubs();
+    needSummary();
+    // SIAPA's list marks some colonias as fed by several aqueducts: the card says so when the map shows one zone.
+    if (z.all.length === 1) {
+      const mine = sheet;
+      apiSearch(p.n).then((r) => {
+        const c = (r.colonias || []).find((x) => M.fold(x.name) === M.fold(p.n) && M.find([f], x.name, x.municipio).length);
+        if (c && c.multi && sheet === mine) { multi = true; rerender(); }
+      }).catch(() => {});
+    }
+  }
+
+  // reportsBlock: what media and neighbours publish about the colonia and this site's reports, as /reportes shows them.
+  function reportsBlock(p) {
+    const k = keyOf(p), e = ev.get(k), c = byKey.get(k);
+    const q = { q: p.n, m: p.m, cp: p.cp };
+    const kids = [el("p", { class: "sub-head" }, "¿Hay agua en esta colonia?")];
+    if (e) kids.push(evidenceBlock(e));
+    else if (pubsState === "ok") kids.push(el("p", { class: "mini", style: "margin-top:0" }, "No tenemos publicaciones de medios o vecinos que digan que aquí falta el agua. Eso no quiere decir que haya."));
+    else if (pubsState === "failed") kids.push(el("p", { class: "mini", style: "margin-top:0" }, "No pudimos cargar lo que publican medios y vecinos."));
+    if (c) {
+      const t = totalOf(c);
+      const bar = el("div", { class: "rbar", "aria-hidden": "true" });
+      for (const [key, cls] of [["sin_agua", "s"], ["baja", "b"], ["con_agua", "c"]]) { const s = el("span", { class: cls }); s.style.width = `${100 * c[key] / t}%`; bar.append(s); }
+      kids.push(el("p", { class: "mini" }, el("strong", {}, plural(t, "reporte", "reportes")), " en las últimas 24 horas en ¿Hay agua?"), bar,
+        el("ul", { class: "split" }, el("li", { class: "dry" }, el("span", { class: "dot" }), `Sin agua ${fmt(c.sin_agua)}`), el("li", { class: "low" }, el("span", { class: "dot" }), `Baja presión ${fmt(c.baja)}`), el("li", { class: "ok" }, el("span", { class: "dot" }), `Con agua ${fmt(c.con_agua)}`)));
+    } else if (summaryState === "ok") kids.push(el("p", { class: "mini" }, "Nadie la ha reportado en ¿Hay agua? en las últimas 24 horas."));
+    kids.push(el("p", { class: "actions" },
+      el("a", { class: "button", href: `/reportes?${new URLSearchParams({ ...q, reportar: "1" })}` }, "Reportar cómo está el agua"),
+      el("a", { href: `/reportes?${new URLSearchParams(q)}` }, "Verla en el mapa de reportes"),
+      el("a", { href: "/pipas" }, "¿Sin agua? Pide una pipa")));
+    return el("div", {}, ...kids);
+  }
+  function evidenceBlock(e) {
+    const s = sevOf(e.dias);
+    const badge = el("span", { class: s ? "sevb" : "sevb nodays", style: sevVars(s) }, s ? daysWord(e.dias) : "sin días");
+    const head = el("p", { class: "ev-head" }, badge, el("strong", {}, s ? `Hasta ${daysWord(e.dias)} sin agua` : "Sin agua, sin días contados"));
+    const src = [`según ${plural(e.fuentes, "fuente", "fuentes distintas")}`, e.medios ? (e.medios === 1 ? "lo reporta un medio" : `lo reportan ${e.medios} medios`) : null, `la más reciente del ${pubDate(e.ultima, true)}`].filter(Boolean).join(" · ");
+    const shown = e.posts.slice(0, 2);
+    const box = el("div", {}, head, el("p", { class: "ev-src" }, cap(src)), mosaic(e.posts), el("ol", { class: "posts" }, ...shown.map(post)));
+    if (e.posts.length > shown.length) {
+      const more = el("button", { type: "button", class: "linkbtn" }, `Ver ${plural(e.posts.length - shown.length, "publicación más", "publicaciones más")}`);
+      more.addEventListener("click", () => { box.querySelector(".posts").append(...e.posts.slice(shown.length).map(post)); more.remove(); });
+      box.append(more);
+    }
+    return box;
+  }
+  function mosaic(posts) {
+    const seen = new Set(), pics = posts.filter((p) => p.vista && !seen.has(p.vista) && seen.add(p.vista));
+    if (!pics.length) return null;
+    const MAX = 3, shown = pics.slice(0, MAX);
+    const grid = el("div", { class: `mosaic n${shown.length}`, role: "list", "aria-label": "Imágenes de las publicaciones" });
+    shown.forEach((p, i) => {
+      const who = p.fuente === "medio" || p.quien ? p.quien : "Vecinos";
+      const a = el("a", { href: p.url, target: "_blank", rel: "noopener nofollow", role: "listitem", title: `${who} · ${pubDate(p.fecha)}: «${p.cita}»` },
+        el("img", { loading: "lazy", src: `/${p.vista}`, alt: `Imagen de la publicación de ${who} del ${pubDate(p.fecha, true)}`, decoding: "async" }),
+        el("span", { class: "lbl" }, `${who} · ${pubDate(p.fecha)}`));
+      if (i === MAX - 1 && pics.length > MAX) a.append(el("span", { class: "more" }, `+${pics.length - MAX + 1}`));
+      grid.append(a);
+    });
+    return grid;
+  }
+  function post(p) {
+    const net = p.red === "x" ? "X" : p.red === "facebook" ? "Facebook" : "Nota";
+    const who = p.tipo === "comentario" ? `Comentario de una vecina o vecino en una publicación de ${p.en.quien}` : p.fuente === "medio" || p.quien ? p.quien : "Vecina o vecino";
+    return el("li", { class: `post ${p.fuente}` },
+      el("q", {}, p.cita),
+      el("p", { class: "who" },
+        p.fuente === "medio" ? el("span", { class: "tag" }, "Medio") : null,
+        p.bloqueo ? el("span", { class: "tag alt" }, "Bloqueo") : null,
+        `${who} · ${net} · ${pubDate(p.fecha)} · `,
+        el("a", { href: p.url, rel: "noopener nofollow", target: "_blank" }, p.tipo === "comentario" ? "Ver el comentario" : p.red === "web" ? "Leer la nota" : "Ver la publicación")));
+  }
+
+  // ——— A colonia from SIAPA's list that its map doesn't draw under that name: the list's days. ———
+  function showListed(c) {
+    const render = () => {
+      const sentence = c.zones.length > 1
+        ? `La lista del SIAPA pone esta colonia en las ${M.zoneWord(c.zones)}: recibe agua de varios acueductos. Usa tu ubicación para saber cuál te toca.`
+        : c.multi ? "El SIAPA marca esta colonia como abastecida por varios acueductos, así que una parte podría tener otro calendario. Para confirmarlo, usa tu ubicación." : null;
+      const card = M.card({ ...cardOpts(), title: c.name, subtitle: municipio(c.municipio), sentence, main: c.zones,
+        extraNote: `El mapa del SIAPA no dibuja una colonia llamada ${c.name} en ${municipio(c.municipio)}; estos son los días de su lista. En el mapa resaltamos ${c.zones.length > 1 ? "esas zonas" : "esa zona"}.` });
+      return finish(card, c.zones, [el("p", { class: "note" }, el("a", { href: "#lista" }, "Por qué la lista y el mapa no coinciden"), ". Para confirmar tu zona, ", linkTo("usa tu ubicación", locate), " o toca tu calle en el mapa.")]);
+    };
+    openSheet("colonia", render, { focusZones: c.zones });
+    const b = zoneBounds(c.zones);
+    if (b) fitTo(b, true, 13);
+    setURL({ q: c.name, m: c.municipio });
+    addStreets();
+  }
+  // ——— A colonia that isn't on SIAPA's list at all. ———
+  function showOther(o) {
+    const render = () => {
+      const card = M.card({ ...cardOpts(), title: o.name, subtitle: `${municipio(o.municipio)} · no está en la lista del SIAPA`, main: o.zones,
+        sentence: o.zones.length ? `No está en la lista de colonias de la rotación del SIAPA, pero queda dentro del mapa de ${o.zones.length > 1 ? "las zonas" : "la zona"} ${joinES(o.zones)}. El mapa y la lista no siempre coinciden: usa tu ubicación para confirmarlo.` : null });
+      if (!o.zones.length) card.querySelector(".zbox .zd").textContent = "No está en la lista de colonias de la rotación del SIAPA y queda fuera de las zonas de su mapa, así que no le toca racionamiento.";
+      return finish(card, o.zones, [el("p", { class: "note" }, "¿No es tu colonia? ", linkTo("Usa tu ubicación", locate), " o toca tu calle en el mapa.")]);
+    };
+    openSheet("colonia", render, { focusZones: o.zones });
+    const b = o.zones.length ? zoneBounds(o.zones) : null;
+    if (b) fitTo(b, true, 13);
+    addStreets();
+  }
+
+  // ——— Several matches: pick yours; hovering one lights its outline. ———
+  function showChoices(opts, q) {
+    const drawn = opts.filter((o) => o.kind === "map");
+    const sameName = (f) => drawn.some((o) => o.f !== f && M.fold(o.f.properties.n) === M.fold(f.properties.n));
+    const marks = [];
+    let bounds = null;
+    for (const o of drawn) {
+      const p = o.f.properties;
+      // Labels only while they fit; with many, hovering an option lights its outline instead.
+      const g = outline(features.get(keyOf(p)) || [o.f], drawn.length > 6 ? null : sameName(o.f) ? `${p.n} · ${municipio(p.m)}` : p.n);
+      marks.push(g);
+      bounds = bounds ? bounds.extend(g.getBounds()) : L.latLngBounds(g.getBounds().getSouthWest(), g.getBounds().getNorthEast());
+    }
+    let hot = null;
+    const unhover = () => { if (hot) { hot.remove(); hot = null; } };
+    const render = () => {
+      const items = opts.map((o) => {
+        const b = el("button", { type: "button", class: "choice" }, el("strong", {}, optName(o)), el("span", {}, ...optLine(o)));
+        b.addEventListener("click", () => { unhover(); pick(o); });
+        if (o.kind === "map") {
+          const on = () => { unhover(); hot = outline(features.get(keyOf(o.f.properties)) || [o.f], null, true); };
+          b.addEventListener("mouseenter", on);
+          b.addEventListener("focus", on);
+          b.addEventListener("mouseleave", unhover);
+          b.addEventListener("blur", unhover);
+        }
+        return el("li", {}, b);
+      });
+      return cardShell([el("h2", {}, "¿Cuál es la tuya?"), el("p", { class: "where" }, `Encontramos ${opts.length} colonias parecidas a «${q}».${drawn.length ? " Las del mapa del SIAPA están marcadas." : ""}`), el("ul", { class: "choices" }, ...items)]);
+    };
+    const s = openSheet("colonia", render, { marks });
+    s.marks.push({ remove: unhover });
+    if (bounds) fitTo(bounds, true, 14);
+  }
+
+  // ——— A point: your location, or a tap where the map draws no colonia. The API says which zone it is in. ———
+  let pointSeq = 0;
+  async function showPoint(latlng, mine) {
+    const seq = ++pointSeq;
+    const inside = data ? data.colonias.filter((f) => M.contains(f, [latlng.lng, latlng.lat])) : [];
+    const f = inside.find((c) => M.zones(c.properties).all.length) || inside[0] || null;
+    if (!mine && f) { select(f); return; }
+    const who = mine ? "Tu ubicación" : "Ese punto";
+    const pin = pinAt(latlng);
+    let r = null, failed = false;
+    const render = () => {
+      if (!r && !failed) return cardShell([el("h2", {}, who), el("p", { class: "where" }, "Buscando su zona en el mapa del SIAPA…")]);
+      if (failed) return cardShell([el("h2", {}, who), el("p", { class: "where" }, "No pudimos consultar la zona de ese punto. Intenta de nuevo en unos minutos o consulta el ", mapLink(), ".")]);
+      const zs = r.zones.map((z) => z.zone);
+      const c = M.card({ ...cardOpts(), title: who,
+        subtitle: f ? `Dentro de ${f.properties.n}, ${municipio(f.properties.m)}` : "Fuera de las colonias que dibuja el mapa del SIAPA",
+        sentence: zs.length > 1 ? `${who} queda en el límite entre las zonas ${joinES(zs)}. Revisa el mapa oficial del SIAPA para saber cuál te toca, y prepárate para los días de las dos.` : null,
+        main: zs });
+      const extra = [];
+      if (!zs.length) extra.push(el("p", { class: "note" }, "Puede que no te toque la rotación. Pero el mapa y la lista de colonias del SIAPA no siempre coinciden, así que busca también tu colonia por su nombre aquí arriba. ", el("a", { href: SIAPA, rel: "noopener", target: "_blank" }, "Ver el mapa del SIAPA"), "."));
+      if (f) {
+        const b = linkTo(`Ver la ficha de ${f.properties.n}`, () => select(f));
+        extra.push(el("p", { class: "note" }, b, mine ? " (con lo que publican medios y vecinos)." : "."));
+      }
+      if (mine) extra.push(el("p", { class: "note" }, "Usamos tu ubicación solo para encontrar tu zona; no la guardamos."));
+      return finish(c, zs, extra);
+    };
+    const marks = [pin];
+    if (f) marks.push(outline(features.get(keyOf(f.properties)) || [f]));
+    openSheet("colonia", render, { marks });
+    if (mine) {
+      if (f) fitTo(marks[1].getBounds(), true);
+      else { sheet.bounds = L.latLngBounds([latlng, latlng]).pad(0.01); fitTo(sheet.bounds, true, 15); }
+    }
+    addStreets();
+    try {
+      r = await get(`/v1/zone?lat=${latlng.lat.toFixed(mine ? 4 : 5)}&lon=${latlng.lng.toFixed(mine ? 4 : 5)}`);
+      for (const z of r.zones) if (!zinfo.has(z.zone)) zinfo.set(z.zone, z);
+    } catch {
+      failed = true;
+    }
+    if (seq !== pointSeq || !sheet || !sheet.marks.includes(pin)) return;
+    rerender();
+    if (r && r.zones.length && !f) setFocus(r.zones.map((z) => z.zone));
+    // The card grew with the answer: fit again so the spot stays clear of it.
+    if (mine && sheet.bounds) fitTo(sheet.bounds, true, 15);
+  }
+
+  function locate() {
+    if (!("geolocation" in navigator)) { say("Tu navegador no permite compartir tu ubicación. Busca tu colonia por su nombre."); input.focus(); return; }
+    locBtn.disabled = true;
+    say("Buscando tu ubicación… Si tu navegador te pide permiso, toca «Permitir».");
+    // Browsers can stay silent while the permission prompt is ignored or the system blocks location, so give up on our own.
+    let settled = false;
+    const giveUp = setTimeout(() => {
+      if (settled) return;
+      settled = true;
+      locBtn.disabled = false;
+      say("No pudimos obtener tu ubicación. Revisa que tu navegador y tu celular o computadora tengan la ubicación activada, o busca tu colonia.");
+    }, 25000);
+    navigator.geolocation.getCurrentPosition(async (pos) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(giveUp);
+      locBtn.disabled = false;
+      say("");
+      try { await ready; } catch {}
+      showPoint(L.latLng(pos.coords.latitude, pos.coords.longitude), true);
+    }, (err) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(giveUp);
+      locBtn.disabled = false;
+      say(err.code === 1 ? "No diste permiso para usar tu ubicación. Busca tu colonia o revisa los permisos de ubicación de tu navegador." : "No pudimos obtener tu ubicación. Busca tu colonia por su nombre.");
+    }, { enableHighAccuracy: false, timeout: 20000, maximumAge: 60000 });
+  }
+  locBtn.addEventListener("click", locate);
+
+  // ——— A zone: its days, its next cuts, how many colonias, the notices; the map singles it out. ———
+  function lockZone(z) {
+    const render = () => {
+      const i = zinfo.get(z), c = counts.get(z) || { main: 0, border: 0 };
+      const next = i ? (i.next || []).filter((d) => d >= today).slice(0, 3) : [];
+      const box = el("div", { class: "zbox", style: `--zc:${zoneColor(z)}` },
+        el("p", { class: "zn" }, "Días de racionamiento"),
+        el("p", { class: "zd" }, daysText(z) || "No pudimos cargar los días"),
+        next.length ? el("p", { class: "next" }, icon("calendar"), " Próximos:") : null,
+        next.length ? el("ul", {}, ...next.map((d) => el("li", {}, dateES(d)))) : i ? el("p", { class: "next" }, "No hay más días en el calendario que publicó el SIAPA.") : null);
+      const kids = [el("h2", {}, el("small", {}, nice(zoneName.get(z) || "")), `Zona ${z}`), box,
+        el("p", { class: "lead" }, `El mapa del SIAPA pone ${plural(c.main, "colonia", "colonias")} en esta zona${c.border ? `, y otras ${fmt(c.border)} tocan su límite` : ""}. Busca la tuya para confirmar: el límite entre zonas pasa por dentro de algunas colonias.`)];
+      const cols = [...ev].filter(([k]) => (zonesByKey.get(k) || []).includes(z)).sort((a, b) => (b[1].dias ?? 0) - (a[1].dias ?? 0) || b[1].fuentes - a[1].fuentes);
+      if (cols.length) {
+        const max = cols.find(([, e]) => e.dias != null);
+        kids.push(el("p", { class: "mini" }, `Según el SIAPA, cada corte dura «por máximo un día». Medios y vecinos publicaron que no hay agua en ${plural(cols.length, "colonia", "colonias")} de esta zona${max ? `, hasta ${daysWord(max[1].dias)}` : ""}:`),
+          el("ol", { class: "ztop", style: `--zc:${zoneColor(z)};margin-top:6px` }, ...cols.slice(0, 3).map(([k, e]) => {
+            const f = features.get(k)[0], p = f.properties, s = sevOf(e.dias);
+            const b = el("button", { type: "button" }, el("span", { class: s ? "sevb" : "sevb nodays", style: sevVars(s) }, s ? daysWord(e.dias) : "sin días"),
+              el("span", {}, el("strong", {}, nice(p.n)), el("small", {}, `${municipio(p.m)} · ${plural(e.fuentes, "fuente", "fuentes")}`)));
+            b.addEventListener("click", () => select(f));
+            return el("li", {}, b);
+          })),
+          el("p", { class: "mini" }, el("a", { href: `/reportes?zona=${z}` }, "Ver todas en ¿Hay agua?")));
+      }
+      kids.push(el("div", { class: "subscribe" }, telegramLink(z), calendarLink(z)), subscribeNote(), calendarLinks(z, false));
+      const card = cardShell(kids, "zcard");
+      card.style.setProperty("--zc", zoneColor(z));
+      return card;
+    };
+    openSheet("zona", render, { focusZones: [z], zone: z, live: true });
+    needPubs();
+    setURL({ zona: String(z) });
+    const b = zoneBounds([z]);
+    if (b) fitTo(b, true, 14);
+  }
+
+  // ——— Links: ?q=colonia&m=municipio&cp=código postal opens that colonia; ?zona=3 opens a zone. ———
+  function startFromLink() {
+    const preset = (params.get("q") || "").trim().slice(0, 80);
+    if (preset) {
+      input.value = preset;
+      clear.hidden = false;
+      quietLocate();
+      const m = params.get("m"), cp = params.get("cp");
+      // With the municipio or postal code (links from /reportes and /mapa), the map's colonia opens at once.
+      if (m || cp) {
+        const exact = matches(preset).filter((f) => M.fold(f.properties.n) === M.fold(preset) && (!m || norm(municipio(f.properties.m)) === norm(municipio(m))));
+        const best = (cp && exact.find((f) => f.properties.cp === cp)) || exact[0];
+        if (best) { input.value = best.properties.n; select(best, { animate: false }); return; }
+      }
+      runSearch(preset, m);
+      return;
+    }
+    const zq = Number(params.get("zona"));
+    if (zq && ZONES.includes(zq)) lockZone(zq);
+  }
+
+  // The visitor switched the theme: the map's canvas, its outlines, the strip and the card follow.
+  document.addEventListener("tema", () => {
+    palette();
+    if (!layer) return;
+    zoneLayer.restyle();
+    layer.restyle();
+    drawMarkers();
+    drawLabels();
+    renderStrip();
+    if (sheet) { for (const m of sheet.marks) if (m.restyle) m.restyle(); rerender(); }
+  });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && e.target !== input && sheet) closeSheet(); });
+  // Links to the list's errors scroll there and draw an outline around them.
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest('a[href="#lista"]')) return;
+    e.preventDefault();
+    const box = $("lista");
+    box.scrollIntoView({ behavior: reduced() ? "auto" : "smooth", block: "center" });
+    box.classList.remove("draw");
+    void box.offsetWidth;
+    box.classList.add("draw");
+  });
+  if (today > "2026-12-15") $("descuento").remove();
 })();
 </script>
 </body>
