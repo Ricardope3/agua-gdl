@@ -555,6 +555,20 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   }, 3000);
 })();
 </script>
+<script>
+(() => {
+  const f = document.querySelector(".mapframe"), css = ":root { --bg:#fbfaf6; --surface:#ffffff; --subtle:#e4eaf8; --fg:#14213d; --muted:#4f5b7a; --line:#c4cfe9;\n --brand:#1d3f9e; --brand-deep:#142d75; --link:#1d3f9e; --primary:#1d3f9e; --on-primary:#fff; --ring:#1d3f9e55; --alarm:#1d3f9e; --mark:#f2c84b; --mark-fg:#14213d;\n --font: \"Iowan Old Style\", \"Palatino Linotype\", Palatino, Georgia, serif; --serif: Baskerville, \"Baskerville Old Face\", \"Libre Baskerville\", Georgia, serif; --shadow:none;\n --tile: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M12 2l4 10-4 10-4-10z M2 12l10-4 10 4-10 4z' fill='%231d3f9e'/%3E%3C/svg%3E\") }\n@media (prefers-color-scheme: dark) { :root { --bg:#0c1328; --surface:#121b36; --subtle:#1a2850; --fg:#eef1fb; --muted:#a6b1d6; --line:#2a3a6e; --brand:#7f9cf5; --brand-deep:#5b7be8; --link:#a9bdfa; --primary:#5b7be8; --alarm:#9fb4ff; --mark:#c9a12f; --tile: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M12 2l4 10-4 10-4-10z M2 12l10-4 10 4-10 4z' fill='%237f9cf5'/%3E%3C/svg%3E\") } }\n.button { border-radius: 4px }\nbody, button, input, select { font-family: var(--font) }";
+  const dress = () => {
+    const d = f.contentDocument;
+    if (!d || !d.head || d.getElementById("variante") || d.location.href === "about:blank") return;
+    const s = d.createElement("style"); s.id = "variante"; s.textContent = css; d.head.append(s);
+    const dark = f.contentWindow.aguaDark && f.contentWindow.aguaDark();
+    for (const r of s.sheet.cssRules) if (r instanceof f.contentWindow.CSSMediaRule) r.media.mediaText = dark ? "all" : "not all";
+  };
+  const t = setInterval(() => { try { dress(); if (f.contentDocument.getElementById("variante")) clearInterval(t); } catch {} }, 50);
+  f.addEventListener("load", dress);
+})();
+</script>
 <nav class="vbar"><a href="/">actual</a> · <a href="/v1">v1 Periódico</a> · <a href="/v2">v2 Glaciar</a> · <a href="/v3">v3 Marino</a> · <a href="/v4" aria-current=page>v4 Talavera</a> · <a href="/v5">v5 Hielo</a></nav>
 </body>
 </html>

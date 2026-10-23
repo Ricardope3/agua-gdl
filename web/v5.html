@@ -557,6 +557,20 @@ strong, b { font-weight: 600 }
   }, 3000);
 })();
 </script>
+<script>
+(() => {
+  const f = document.querySelector(".mapframe"), css = ":root { --bg:#f7fbfe; --surface:#ffffff; --subtle:#eaf4fc; --fg:#1b3a52; --muted:#6c8aa1; --line:#dbe9f4;\n --brand:#4a9fd8; --brand-deep:#2f80bd; --link:#2f80bd; --primary:#2f80bd; --on-primary:#fff; --ring:#4a9fd855; --alarm:#2f80bd; --mark:#d6ecfb; --mark-fg:#1b3a52;\n --font: \"Helvetica Neue\", Helvetica, Arial, sans-serif; --serif: \"Helvetica Neue\", Helvetica, Arial, sans-serif; --shadow:none }\n@media (prefers-color-scheme: dark) { :root { --bg:#0a1620; --surface:#0f1f2c; --subtle:#14293a; --fg:#e3f1fb; --muted:#8eabc2; --line:#1b3346; --brand:#7cc4f4; --brand-deep:#4a9fd8; --link:#a6d8fa; --primary:#4a9fd8; --alarm:#7cc4f4; --mark:#1d4766; --mark-fg:#e3f1fb } }\n.button { border-radius: 2px; font-weight: 400; letter-spacing: .05em }\nbody, button, input, select { font-family: var(--font) }";
+  const dress = () => {
+    const d = f.contentDocument;
+    if (!d || !d.head || d.getElementById("variante") || d.location.href === "about:blank") return;
+    const s = d.createElement("style"); s.id = "variante"; s.textContent = css; d.head.append(s);
+    const dark = f.contentWindow.aguaDark && f.contentWindow.aguaDark();
+    for (const r of s.sheet.cssRules) if (r instanceof f.contentWindow.CSSMediaRule) r.media.mediaText = dark ? "all" : "not all";
+  };
+  const t = setInterval(() => { try { dress(); if (f.contentDocument.getElementById("variante")) clearInterval(t); } catch {} }, 50);
+  f.addEventListener("load", dress);
+})();
+</script>
 <nav class="vbar"><a href="/">actual</a> · <a href="/v1">v1 Periódico</a> · <a href="/v2">v2 Glaciar</a> · <a href="/v3">v3 Marino</a> · <a href="/v4">v4 Talavera</a> · <a href="/v5" aria-current=page>v5 Hielo</a></nav>
 </body>
 </html>

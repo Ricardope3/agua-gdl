@@ -570,6 +570,20 @@ main h1, main h2 { font-weight: 400; letter-spacing: -.03em }
   }, 3000);
 })();
 </script>
+<script>
+(() => {
+  const f = document.querySelector(".mapframe"), css = ":root { --bg:#f3f7fa; --surface:#ffffff; --subtle:#d6e9f6; --fg:#153a5c; --muted:#5a7690; --line:#cfe0ec;\n --brand:#3a7fb8; --brand-deep:#1f5c91; --link:#1f5c91; --primary:#1f5c91; --on-primary:#fff; --ring:#3a7fb855; --alarm:#e2574c; --mark:#cfe5f6; --mark-fg:#153a5c;\n --font: \"Helvetica Neue\", Helvetica, Arial, sans-serif; --serif: Didot, \"Bodoni 72\", \"Bodoni MT\", \"Playfair Display\", Georgia, serif; --shadow:none; --deep:#1f5f99 }\n@media (prefers-color-scheme: dark) { :root { --bg:#0b1c2c; --surface:#102538; --subtle:#163552; --fg:#e4f0fa; --muted:#93b2cc; --line:#1e3d58; --brand:#6fb1e6; --brand-deep:#3a7fb8; --link:#9fcdf1; --primary:#3a7fb8; --mark:#1f4e79; --mark-fg:#e4f0fa; --deep:#071320 } }\n.button { border-radius: 999px; font-weight: 500 }\nbody, button, input, select { font-family: var(--font) }";
+  const dress = () => {
+    const d = f.contentDocument;
+    if (!d || !d.head || d.getElementById("variante") || d.location.href === "about:blank") return;
+    const s = d.createElement("style"); s.id = "variante"; s.textContent = css; d.head.append(s);
+    const dark = f.contentWindow.aguaDark && f.contentWindow.aguaDark();
+    for (const r of s.sheet.cssRules) if (r instanceof f.contentWindow.CSSMediaRule) r.media.mediaText = dark ? "all" : "not all";
+  };
+  const t = setInterval(() => { try { dress(); if (f.contentDocument.getElementById("variante")) clearInterval(t); } catch {} }, 50);
+  f.addEventListener("load", dress);
+})();
+</script>
 <nav class="vbar"><a href="/">actual</a> · <a href="/v1">v1 Periódico</a> · <a href="/v2" aria-current=page>v2 Glaciar</a> · <a href="/v3">v3 Marino</a> · <a href="/v4">v4 Talavera</a> · <a href="/v5">v5 Hielo</a></nav>
 </body>
 </html>

@@ -551,6 +551,20 @@ header.top { border-bottom: 3px double var(--fg) }
   }, 3000);
 })();
 </script>
+<script>
+(() => {
+  const f = document.querySelector(".mapframe"), css = ":root { --bg:#f5f0e6; --surface:#fbf8f1; --subtle:#ebe3d3; --fg:#1a1712; --muted:#5b5348; --line:#cfc4b0;\n --brand:#b3261e; --brand-deep:#8c1d17; --link:#8c1d17; --primary:#1a1712; --on-primary:#fbf8f1; --ring:#b3261e55; --alarm:#b3261e;\n --font: Charter, \"Bitstream Charter\", \"Sitka Text\", Cambria, Georgia, serif; --serif: \"Didot\", \"Bodoni 72\", \"Playfair Display\", Georgia, serif; --shadow: none }\n@media (prefers-color-scheme: dark) { :root { --bg:#16140f; --surface:#1e1b15; --subtle:#2a261e; --fg:#f0e9da; --muted:#b3a993; --line:#3d372b; --brand:#e0574d; --brand-deep:#c2443b; --link:#f08a80; --primary:#f0e9da; --on-primary:#16140f; --alarm:#f0786e } }\n.button { border-radius: 0; text-transform: uppercase; letter-spacing: .08em; font-size: .8rem; font-weight: 700 }\nbody, button, input, select { font-family: var(--font) }";
+  const dress = () => {
+    const d = f.contentDocument;
+    if (!d || !d.head || d.getElementById("variante") || d.location.href === "about:blank") return;
+    const s = d.createElement("style"); s.id = "variante"; s.textContent = css; d.head.append(s);
+    const dark = f.contentWindow.aguaDark && f.contentWindow.aguaDark();
+    for (const r of s.sheet.cssRules) if (r instanceof f.contentWindow.CSSMediaRule) r.media.mediaText = dark ? "all" : "not all";
+  };
+  const t = setInterval(() => { try { dress(); if (f.contentDocument.getElementById("variante")) clearInterval(t); } catch {} }, 50);
+  f.addEventListener("load", dress);
+})();
+</script>
 <nav class="vbar"><a href="/">actual</a> · <a href="/v1" aria-current=page>v1 Periódico</a> · <a href="/v2">v2 Glaciar</a> · <a href="/v3">v3 Marino</a> · <a href="/v4">v4 Talavera</a> · <a href="/v5">v5 Hielo</a></nav>
 </body>
 </html>
