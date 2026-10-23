@@ -375,6 +375,39 @@ html.en-portada { overflow: hidden }
 @media (prefers-reduced-motion: reduce) { .tl-chart .slide { transition: none } }
 .tl-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 12px; margin: 6px 0 0; font-size: .74rem; color: var(--muted); line-height: 1.35 }
 .tl-foot .sevkey { font-size: .72rem }
+/* r1: the overview's slices of the timeline's day: what's new, who says it, how long, which SIAPA zones. */
+.ov-dia { margin: 10px 0 0; padding: 8px 0 0; border-top: 1px solid var(--line); display: grid; gap: 7px; font-size: .8rem; line-height: 1.32 }
+.ov-dia h2 { margin: 0; font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 700 }
+.ov-dia p { margin: 0 }
+.ov-dia .k { display: block; font-size: .68rem; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); font-weight: 700 }
+.ov-dia b { font-variant-numeric: tabular-nums }
+.ov-dia .new b { color: var(--s3) }
+.ov-split { display: flex; height: 6px; border-radius: 3px; overflow: hidden; margin: 4px 0 2px; background: var(--subtle) }
+.ov-split span { display: block; height: 100% } .ov-split .med { background: var(--fg) } .ov-split .vec { background: color-mix(in srgb, var(--fg) 35%, var(--surface)) }
+.ov-zonas { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3px; align-items: end; height: 46px; margin-top: 3px }
+.ov-zonas span { position: relative; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; font-size: .66rem; text-align: center; color: var(--muted); font-variant-numeric: tabular-nums }
+.ov-zonas i { display: block; min-height: 2px; border-radius: 2px 2px 0 0; background: var(--z); transition: height .35s ease }
+.ov-zonas b { color: var(--fg); font-size: .7rem }
+@media (prefers-reduced-motion: reduce) { .ov-zonas i { transition: none } }
+@media (max-width: 760px) { .ov-dia { display: none } }
+/* r1: the municipios' panel sits inside the overview, as one more slice of the timeline's day. */
+.overview .munis { position: static; width: auto; max-height: none; overflow: visible; margin: 7px 0 0; padding: 0; border: 0; border-radius: 0; background: none; backdrop-filter: none; box-shadow: none; font-size: .78rem }
+.overview .munis summary { font-size: .68rem; letter-spacing: .05em }
+.overview .munis ol { gap: 4px; margin-top: 4px }
+.overview .munis li { grid-template-columns: minmax(0, 1fr) auto auto; gap: 0 8px }
+.overview .munis li small { grid-column: auto; order: 2 }
+.overview .munis li b { order: 3; font-size: .82rem }
+.overview .munis .bar { order: 4; height: 3px }
+.overview .munis p { display: none }
+.overview:has(#ov-dia:not([hidden])) { max-height: calc(100% - 110px) }
+@media (max-width: 1100px) { .overview .munis { display: block } .overview .munis[hidden] { display: none } }
+@media (max-width: 760px) { .overview .munis { display: none } }
+/* r1: a badge whose count rose pops; one that appears grows in. Leaflet moves the marker itself, so the span animates. */
+.sev.pop span { animation: sube .55s cubic-bezier(.3, 1.6, .5, 1) }
+.sev.nace span { animation: nace .5s cubic-bezier(.3, 1.4, .5, 1) both }
+@keyframes sube { 35% { transform: scale(1.38); box-shadow: 0 0 0 3px var(--surface), 0 0 0 7px color-mix(in srgb, var(--c) 45%, transparent) } }
+@keyframes nace { from { transform: scale(0); opacity: 0 } }
+@media (prefers-reduced-motion: reduce) { .sev.pop span, .sev.nace span { animation: none } }
 path.nueva { animation: nueva 1.4s ease-out both; pointer-events: none }
 @keyframes nueva { 0% { stroke-width: 3px; stroke-opacity: 1; fill-opacity: .55 } 100% { stroke-width: 26px; stroke-opacity: 0; fill-opacity: 0 } }
 .munis { bottom: 24px }
@@ -403,7 +436,7 @@ if (window.top !== window.self) {
 <script src="/theme.js"></script>
 </head>
 <body>
-<div class="variant-bar"><strong>Prueba · r1: La crisis día por día</strong><a href="/reportes">Actual</a><a href="/r1" aria-current="page">r1 Día por día</a><a href="/r2">r2 Una de cada tres</a><a href="/r3">r3 Prometieron un día</a><a href="/r4">r4 Tu colonia</a><a href="/r5">r5 Sin marcadores</a></div>
+<div class="variant-bar"><strong>Prueba · r1: La crisis día por día</strong><a href="/reportes">Actual</a><a href="/r1" aria-current="page">r1 Día por día</a><a href="/r2">r2 Zonas</a><a href="/r3">r3 Quién lo dice</a><a href="/r4">r4 Lo nuevo</a><a href="/r5">r5 Lo que ves</a><a href="/r6">r6 Burbujas</a><a href="/r7">r7 Calor</a><a href="/r8">r8 Hexágonos</a><a href="/r9">r9 Agujas</a></div>
 <div class="wrap">
   <header class="top">
     <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
@@ -446,6 +479,12 @@ if (window.top !== window.self) {
         <p class="ov-head" id="pruebas">Cargando lo que publican medios y vecinos…</p>
         <div id="ov-cuerpo">
           <p class="ov-stats"><span><b id="p-colonias">—</b> <span id="p-colonias-txt">colonias en el mapa</span></span><span><b id="p-medios">—</b> <span id="p-medios-txt">notas de medios</span></span><span><b id="p-max">—</b> <span id="p-max-txt">lo más largo según un medio</span></span></p>
+          <div class="ov-dia" id="ov-dia" hidden></div>
+          <details class="munis" id="municipios" open hidden>
+            <summary>Por municipio · % de colonias</summary>
+            <ol id="munis-lista"></ol>
+            <p>De las colonias del mapa del SIAPA, las que tienen publicaciones de medios o vecinos que dicen que no hay agua, <span id="munis-al">hasta hoy</span>.</p>
+          </details>
           <p class="note" id="estado" aria-live="polite">Cargando el mapa de colonias…</p>
           <div class="ov-actions">
             <button class="button" type="button" id="reportar"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Reportar mi colonia</button>
@@ -453,11 +492,6 @@ if (window.top !== window.self) {
           </div>
         </div>
       </section>
-      <details class="munis" id="municipios" open hidden>
-        <summary>Colonias sin agua por municipio</summary>
-        <ol id="munis-lista"></ol>
-        <p>De las colonias del mapa del SIAPA, las que tienen publicaciones de medios o vecinos que dicen que no hay agua, <span id="munis-al">hasta hoy</span>.</p>
-      </details>
       <section class="tl" id="linea" aria-labelledby="tl-fecha" hidden>
         <div class="tl-top">
           <button class="button tl-play" type="button" id="tl-play" aria-label="Reproducir día por día" title="Reproducir día por día"></button>
@@ -853,6 +887,7 @@ if (window.top !== window.self) {
     // Rings with the count, like a donut chart of the answers, over the colonias with reports.
     const markers = L.layerGroup().addTo(map);
     const centers = new Map();
+    let shown = new Map(); // each badge's number as last drawn, so a rise can pop
     function donut(counts) {
       const c = { sin_agua: Number(counts.sin_agua) || 0, baja: Number(counts.baja) || 0, con_agua: Number(counts.con_agua) || 0 };
       const t = totalOf(c), R = 15, C = 2 * Math.PI * R;
@@ -871,30 +906,25 @@ if (window.top !== window.self) {
       // Publications: a badge with every report of the colonia, its publications plus this map's last
       // 24 hours, coloured by the most days given (dashed when none gives days). They shrink when the
       // whole city is in view, where neighbouring colonias' badges overlap.
-      // r1: with the whole city in view a dot in the colonia's colour stands in for the badge, so the
-      // colours of the timeline show; the numbers come back from zoom 13.
-      const far = map.getZoom() < 13;
-      // The darkest go last, on top.
-      for (const [k, e] of [...evNow].sort((a, b) => sevOf(a[1].dias) - sevOf(b[1].dias))) {
+      // r1: the count and the colour as they stood on the timeline's day (this map's 24 hours only on
+      // the latest); a badge whose number went up since the last day shown pops.
+      const far = map.getZoom() < 12, counts = new Map();
+      for (const [k, e] of evNow) {
         const fs = features.get(k);
         if (!fs) continue;
         const c = atEnd() ? byKey.get(k) : null, total = e.posts.length + (c ? totalOf(c) : 0), n = total > 99 ? "99+" : String(total);
-        const s = sevOf(e.dias), size = 26 + (n.length > 2 ? 4 : 0);
+        const s = sevOf(e.dias), size = (far ? 21 : 26) + (n.length > 2 ? 4 : 0);
+        counts.set(k, total);
+        const was = shown.get(k), pop = reduced ? "" : was != null ? (total > was ? " pop" : "") : shown.size ? " nace" : "";
         if (!centers.has(k)) centers.set(k, L.geoJSON(fs[0]).getBounds().getCenter());
-        if (far) {
-          const d = L.circleMarker(centers.get(k), { renderer: colRenderer, radius: s ? 3 + s : 4, color: COLORS.surface, weight: 1.5, opacity: 0.95, fillColor: SEV[s], fillOpacity: s ? 1 : 0.45 });
-          d.bindTooltip(`${fs[0].properties.n} · ${evLine(e)}`, { className: "map-label" });
-          d.on("click", () => select(fs[0]));
-          markers.addLayer(d);
-          continue;
-        }
         const m = L.marker(centers.get(k), {
-          icon: L.divIcon({ className: `sev${s ? "" : " nodays"}`, html: `<span style="${sevVars(s)}">${n}</span>`, iconSize: [size, size] }),
+          icon: L.divIcon({ className: `sev${far ? " far" : ""}${s ? "" : " nodays"}${pop}`, html: `<span style="${sevVars(s)}">${n}</span>`, iconSize: [size, size] }),
           keyboard: false, zIndexOffset: 1000 + total, title: `${fs[0].properties.n}: ${plural(total, "reporte", "reportes")} · ${evLine(e)}`,
         });
         m.on("click", () => select(fs[0]));
         markers.addLayer(m);
       }
+      shown = counts;
       // This map's own reports: rings with the count, where there are no publications.
       const show = atEnd() && (map.getZoom() >= 13 || byKey.size <= 60);
       if (!show) return;
@@ -1084,6 +1114,7 @@ if (window.top !== window.self) {
       zoneLayer.setStyle(zoneStyle);
       layer.setStyle(styleOf);
       drawMarkers();
+      renderSlices();
       if (marks.length) {
         marks[0].setStyle({ color: COLORS.surface });
 
@@ -1380,6 +1411,7 @@ if (window.top !== window.self) {
       $("pruebas").replaceChildren(toList, ", según medios y vecinos");
       $("solo-semana").textContent = `Solo una semana o más (${fmt(week)})`;
       renderMunicipios();
+      renderSlices();
       const n = pubs.publicaciones.length, medios = pubs.publicaciones.filter((x) => x.fuente === "medio").length;
       $("pruebas-nota").textContent = `El SIAPA prometió racionamientos «por máximo un día». Son ${plural(n, "publicación", "publicaciones")} del ${dateES(pubs.desde, true)} al ${dateES(pubs.actualizado, true)}: ${fmt(medios)} de medios, en sus notas, Facebook y X, y ${fmt(n - medios)} de vecinos con eco en redes. Toca una colonia para ver sus publicaciones.`;
       // The bar splits the colonias by the most days their posts give, and doubles as the map's key.
@@ -1418,6 +1450,41 @@ if (window.top !== window.self) {
           el("small", {}, `${fmt(r.sin)} de ${plural(r.total, "colonia", "colonias")}`));
       }));
       $("municipios").hidden = !rows.length;
+    }
+    // r1: the timeline's day in four slices: the colonias new that day, whether an outlet or only
+    // neighbours say it, how long half of them have gone without water, and the SIAPA zone they're in
+    // (a colonia's main zone, the one with most of its area).
+    const mainZone = (k) => M.zones(features.get(k)[0].properties).all[0];
+    function renderSlices() {
+      const box = $("ov-dia");
+      if (!DAYS.length) { box.hidden = true; return; }
+      const iso = DAYS[at], ks = onMap(evNow);
+      const fresh = at ? ks.filter((k) => !evByDay[at - 1].has(k)) : ks;
+      const top = [...fresh].sort((a, b) => daysOr0(evNow.get(b)) - daysOr0(evNow.get(a)) || evNow.get(b).fuentes - evNow.get(a).fuentes);
+      const names = top.slice(0, 3).map((k) => nice(k.split("|")[0]));
+      const others = fresh.length - names.length;
+      const neu = fresh.length
+        ? [el("b", {}, `+${fmt(fresh.length)}`), ` ${fresh.length === 1 ? "colonia" : "colonias"}: ${others ? `${names.join(", ")} y ${plural(others, "más", "más")}` : M.joinES(names)}`]
+        : ["Ninguna colonia nueva ese día."];
+      const med = ks.filter((k) => evNow.get(k).medios).length, vec = ks.length - med;
+      const counted = ks.map((k) => evNow.get(k).dias).filter((d) => d != null).sort((a, b) => a - b);
+      const half = counted.length ? counted[Math.floor((counted.length - 1) / 2)] : 0;
+      const zs = new Map();
+      for (const k of ks) { const z = mainZone(k); if (z) zs.set(z, (zs.get(z) || 0) + 1); }
+      const zmax = Math.max(1, ...zs.values()), zc = M.COLORS[aguaDark() ? "dark" : "light"];
+      const most = [...zs].sort((a, b) => b[1] - a[1])[0];
+      box.replaceChildren(
+        el("h2", {}, `${atEnd() ? "Hasta el" : "Al"} ${dateES(iso, true)}`),
+        el("p", { class: "new" }, el("span", { class: "k" }, at ? "Nuevas ese día" : "El primer día"), ...neu),
+        ks.length ? el("p", {}, el("span", { class: "k" }, "Quién lo dice"),
+          el("span", { class: "ov-split", "aria-hidden": "true" }, el("span", { class: "med", style: `width:${100 * med / ks.length}%` }), el("span", { class: "vec", style: `width:${100 * vec / ks.length}%` })),
+          el("b", {}, fmt(med)), ` con al menos un medio · `, el("b", {}, fmt(vec)), ` solo con vecinos`) : null,
+        counted.length ? el("p", {}, el("span", { class: "k" }, "Cuánto tiempo"),
+          ...(counted.length === 1 ? ["Una colonia cuenta días: ", el("b", {}, daysWord(half))] : ["La mitad de las ", el("b", {}, fmt(counted.length)), " que cuentan días lleva ", el("b", {}, `${daysWord(half)} o más`), " sin agua; el SIAPA prometió uno como máximo."])) : null,
+        most ? el("div", {}, el("span", { class: "k" }, `Por zona del SIAPA · más en la ${most[0]} (${fmt(most[1])})`),
+          el("div", { class: "ov-zonas", role: "img", "aria-label": [1, 2, 3, 4, 5, 6, 7].map((z) => `zona ${z}: ${zs.get(z) || 0}`).join(", ") },
+            ...[1, 2, 3, 4, 5, 6, 7].map((z) => el("span", {}, el("b", {}, fmt(zs.get(z) || 0)), el("i", { style: `--z:${zc[z]};height:${(zs.get(z) || 0) / zmax * 26}px` }), `Z${z}`)))) : null);
+      box.hidden = false;
     }
     let order = "dias", everything = location.hash === "#lista-semana", weekOnly = everything;
     const ROWS = 12;
@@ -1533,6 +1600,7 @@ if (window.top !== window.self) {
       if (ring) pulse(i);
       renderTimeline();
       renderMunicipios();
+      renderSlices();
       setPlay();
     }
 

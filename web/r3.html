@@ -3,10 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Agua GDL · Prueba r3: Prometieron un día</title>
+<title>Agua GDL · Prueba r3: Quién lo dice</title>
 <meta name="robots" content="noindex">
 <meta name="facebook-domain-verification" content="li0vsm7edv0afccxodm5t0jvyiw0za">
-<meta name="description" content="Cuántos días llevan sin agua las colonias de Guadalajara, según medios y vecinos en Facebook y X, cada publicación con su enlace. Reporta la tuya en cuatro toques, sin cuenta y de forma anónima.">
+<meta name="description" content="Qué tan documentada está cada colonia sin agua en Guadalajara: las que reporta un medio, las que dicen varias fuentes de vecinos y las de una o dos voces, cada publicación con su enlace.">
+<link rel="canonical" href="https://aguagdl.com/reportes">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aguagdl.com/reportes">
 <meta property="og:title" content="¿Hay agua en tu colonia? Reportes de vecinos en Guadalajara">
@@ -243,7 +244,7 @@ header.top { margin-bottom: 0; position: static }
 .stage.has-card .munis { display: none }
 @media (max-width: 760px) { .munis { display: none } }
 .ov-top { display: flex; align-items: center; justify-content: space-between; gap: 8px }
-.overview .ov-title { font-size: .78rem; margin: 0; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 700 }
+.overview h1 { font-size: .78rem; margin: 0; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 700 }
 .ov-toggle { display: grid; place-items: center; width: 26px; height: 26px; padding: 0; border: 0; border-radius: 6px; background: none; color: var(--muted); cursor: pointer }
 .ov-toggle:hover { background: var(--subtle); color: var(--fg) }
 .overview.closed .ov-toggle svg { transform: rotate(180deg) }
@@ -343,50 +344,72 @@ html.en-portada { overflow: hidden }
 .gesto.on { opacity: 1 }
 @media (prefers-reduced-motion: reduce) { .gesto { transition: none } }
 .variant-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; padding: 6px 16px; background: #1c1400; color: #fde68a; font-size: .78rem } .variant-bar strong { margin-right: 4px } .variant-bar a { color: #fde68a; text-decoration: none; padding: 2px 8px; border-radius: 999px; border: 1px solid #fde68a55 } .variant-bar a[aria-current="page"] { background: #fde68a; color: #1c1400; font-weight: 700 }
-/* r3: the promise against the days. A dot per colonia at the most days its publications give, beside SIAPA's «máximo un día». */
-:root { --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif; --alarm: #dc2626 }
-@media (prefers-color-scheme: dark) { :root { --alarm: #f87171 } }
-.promesa { padding: 26px 0 28px }
-.kicker { margin: 0 0 12px; color: var(--alarm); font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase }
-.promesa h1 { font-family: var(--serif); font-size: clamp(1.9rem, 4.6vw, 3.1rem); line-height: 1.05; letter-spacing: -.015em; max-width: 30ch; margin: 0 0 14px }
-.promesa h1 .num { color: var(--alarm) }
-.dek { margin: 0 0 22px; max-width: 66ch; font-size: 1.05rem; line-height: 1.5 }
-.dek q { font-family: var(--serif); font-style: italic; quotes: "«" "»" }
-.chart { margin: 0; border-top: 3px solid var(--fg); border-bottom: 1px solid var(--fg); padding: 14px 0 10px }
-.chart-box { position: relative; outline: none; touch-action: manipulation }
-.chart-box:focus-visible { box-shadow: 0 0 0 3px var(--ring); border-radius: 6px }
-.chart svg { display: block; width: 100%; overflow: visible; font-family: var(--font) }
-.chart .ax { stroke: var(--fg); stroke-width: 1.5 }
-.chart .grid { stroke: var(--line); stroke-width: 1 }
-.chart .tick { fill: var(--fg); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums }
-.chart .tick2 { fill: var(--muted); font-size: 11.5px }
-.chart .axt { fill: var(--muted); font-size: 12px }
-.chart .promise { stroke: var(--fg); stroke-width: 3.5 }
-.chart .promise-zone { fill: color-mix(in srgb, var(--ok) 14%, transparent) }
-.chart .pl1 { fill: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase }
-.chart .pl2 { fill: var(--fg); font-family: var(--serif); font-size: 19px; font-weight: 700 }
-.chart .ann { fill: var(--fg); font-family: var(--serif); font-size: 15px; font-weight: 700 }
-.chart .ann2 { fill: var(--muted); font-size: 12px }
-.chart .dt { stroke: var(--surface); stroke-width: 1 }
-.chart .dt.on { stroke: var(--fg); stroke-width: 2.5 }
-.chart .ring { fill: none; stroke: #e4572e; stroke-width: 3 }
-.chart figcaption { margin: 8px 0 0; color: var(--muted); font-size: .85rem; line-height: 1.45; max-width: 80ch }
-.chart .key { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 0 0 4px; padding: 0; list-style: none; font-size: .82rem; color: var(--muted) }
-.chart .key li { display: inline-flex; align-items: center; gap: 5px }
-.chart .key .sw { width: 11px; height: 11px; border-radius: 50%; background: var(--c); display: inline-block }
-.tip { position: absolute; z-index: 5; pointer-events: none; width: max-content; max-width: 260px; padding: 8px 11px; border-radius: 8px; background: var(--fg); color: var(--bg); font-size: .85rem; line-height: 1.35; box-shadow: 0 6px 18px rgb(3 14 22 / .3) }
-.tip strong { display: block; font-size: .95rem }
-.tip span { display: block; opacity: .8 }
-.tip em { display: block; margin-top: 4px; font-style: normal; font-weight: 600; opacity: .95 }
-.sindias { margin: 18px 0 0 }
-.sindias h2 { font-family: var(--serif); font-size: 1.2rem; margin: 0 0 4px }
-.sindias p { margin: 0 0 10px; color: var(--muted); font-size: .9rem; max-width: 70ch }
-.sindias ul { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none }
-.sindias li button { padding: 4px 10px; border: 1.5px dashed var(--s0); border-radius: 999px; background: color-mix(in srgb, var(--s0) 10%, var(--surface)); color: var(--fg); font: inherit; font-size: .85rem; cursor: pointer }
-.sindias li button:hover { background: color-mix(in srgb, var(--s0) 22%, var(--surface)) }
-.sindias li button small { color: var(--muted) }
-.tomap { display: inline-block; margin: 20px 0 0; font-weight: 600 }
-@media (max-width: 560px) { .promesa { padding-top: 18px } .chart .pl2 { font-size: 15px } .chart .pl1 { font-size: 10.5px } }
+.en-portada .variant-bar { display: none }
+/* r3: who says it. Each colonia's evidence in three tiers, drawn on the map beside the days colour and
+   broken down in the panel: the ladder of tiers, municipios, outlets, neighbours and leads. */
+.overview { width: min(384px, calc(100% - 24px)); max-height: calc(100% - 110px); border-left-color: var(--fg); padding: 10px 14px 14px }
+.ov-h { margin: 14px 0 6px; padding-top: 10px; border-top: 1px solid var(--line); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 700; display: flex; justify-content: space-between; gap: 8px; align-items: baseline }
+.ov-h small { text-transform: none; letter-spacing: 0; font-weight: 500; font-size: .74rem }
+.tsw { display: inline-block; width: 18px; height: 14px; border-radius: 3px; flex: none; vertical-align: -2px }
+.tsw.t1 { background: var(--s3); box-shadow: inset 0 0 0 2.5px var(--fg) }
+.tsw.t2 { background: color-mix(in srgb, var(--s3) 62%, var(--surface)); box-shadow: inset 0 0 0 1px var(--s3) }
+.tsw.t3 { background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--s3) 70%, transparent) 0 2px, transparent 2px 5px); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--s3) 60%, transparent) }
+.ladder { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px }
+.rung { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; gap: 2px 8px; align-items: center; width: 100%; padding: 6px 8px; border: 1.5px solid transparent; border-radius: 10px; background: none; color: var(--fg); font: inherit; text-align: left; cursor: pointer }
+.rung:hover { background: var(--subtle) }
+.rung[aria-pressed="true"] { border-color: var(--fg); background: var(--subtle) }
+.rung strong { font-size: .9rem; line-height: 1.25 }
+.rung .cnt { font-size: 1.25rem; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1 }
+.rung .why { grid-column: 2 / -1; font-size: .74rem; color: var(--muted); line-height: 1.3 }
+.dbar { grid-column: 2 / -1; display: flex; height: 9px; border-radius: 2px; overflow: hidden }
+.dbar span { display: block; height: 100% }
+.dbar .nodays { background: repeating-linear-gradient(135deg, var(--s0) 0 3px, color-mix(in srgb, var(--s0) 25%, var(--surface)) 3px 6px) }
+.sevkey.mini { margin: 4px 0 0 }
+.sevkey .sw { display: inline-block; border-radius: 3px; background: var(--c) }
+.sevkey .sw.nodays { background: color-mix(in srgb, var(--s0) 20%, transparent); border: 1.5px dashed var(--s0) }
+.dv { list-style: none; margin: 0; padding: 0; display: grid; gap: 3px; font-size: .78rem }
+.dv-head, .dv li button { display: grid; grid-template-columns: 7.2em minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 0 }
+.dv-head { font-size: .7rem; color: var(--muted); margin: 0 0 2px }
+.dv-head span:nth-child(2) { text-align: right; padding-right: 6px } .dv-head span:nth-child(3) { padding-left: 6px }
+.dv li button { width: 100%; padding: 2px 0; border: 0; border-radius: 6px; background: none; color: var(--fg); font: inherit; text-align: left; cursor: pointer }
+.dv li button:hover { background: var(--subtle) }
+.dv li button[aria-pressed="true"] { background: var(--subtle); box-shadow: inset 0 0 0 1.5px var(--fg) }
+.dv .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-left: 4px; line-height: 1.2 }
+.dv .nm small { display: block; color: var(--muted); font-size: .68rem }
+.dv .l, .dv .r { display: flex; align-items: center; gap: 4px; height: 16px; font-variant-numeric: tabular-nums; font-weight: 700; font-size: .74rem }
+.dv .l { justify-content: flex-end; border-right: 1.5px solid var(--fg); padding-right: 0 }
+.dv .l i, .dv .r i { display: block; height: 12px; flex: none }
+.dv .l i { background: var(--s3); box-shadow: inset 0 0 0 1.5px var(--fg); border-radius: 2px 0 0 2px }
+.dv .r i.t2 { background: color-mix(in srgb, var(--s3) 62%, var(--surface)) }
+.dv .r i.t3 { background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--s3) 70%, transparent) 0 2px, transparent 2px 5px); border-radius: 0 2px 2px 0 }
+.dv .r { gap: 0 } .dv .r b { margin-left: 4px }
+.outlets { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px }
+.outlets button { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1px 8px; width: 100%; padding: 4px 6px; border: 0; border-radius: 6px; background: none; color: var(--fg); font: inherit; font-size: .82rem; text-align: left; cursor: pointer; line-height: 1.25 }
+.outlets button:hover { background: var(--subtle) }
+.outlets button[aria-pressed="true"] { background: var(--subtle); box-shadow: inset 0 0 0 1.5px var(--fg) }
+.outlets b { font-variant-numeric: tabular-nums }
+.outlets .ob { grid-column: 1 / -1; height: 5px; border-radius: 2px; background: var(--subtle); overflow: hidden }
+.outlets .ob span { display: block; height: 100%; background: var(--fg) }
+.outlets small { color: var(--muted); font-weight: 400 }
+.vec { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin: 0 }
+.vec div { background: var(--subtle); border-radius: 8px; padding: 6px 8px; font-size: .72rem; line-height: 1.25; color: var(--muted) }
+.vec b { display: block; color: var(--fg); font-size: 1.05rem; font-variant-numeric: tabular-nums }
+.ov-small { margin: 6px 0 0; font-size: .74rem; line-height: 1.4; color: var(--muted) }
+.leads { list-style: none; margin: 0; padding: 0; display: grid; gap: 3px }
+.leads button { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px; align-items: center; width: 100%; padding: 4px 6px; border: 0; border-radius: 6px; background: none; color: var(--fg); font: inherit; font-size: .82rem; text-align: left; cursor: pointer; line-height: 1.25 }
+.leads button:hover { background: var(--subtle) }
+.leads .sevb { font-size: .72rem; min-width: 2.4em; padding: 2px 6px }
+.leads small { color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums }
+.filtro { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 8px 0 0; padding: 6px 6px 6px 10px; border-radius: 8px; background: var(--fg); color: var(--surface); font-size: .82rem; line-height: 1.3 }
+.filtro button { flex: none; padding: 3px 8px; border: 1px solid color-mix(in srgb, var(--surface) 50%, transparent); border-radius: 6px; background: none; color: inherit; font: inherit; font-size: .78rem; font-weight: 600; cursor: pointer }
+.ov-more { margin: 4px 0 0; padding: 0 6px; border: 0; background: none; color: var(--link); font: inherit; font-size: .8rem; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; cursor: pointer }
+.sev.t1 span { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--fg), 0 2px 5px rgb(3 14 22 / .5) }
+.sev.far.t1 span { box-shadow: 0 0 0 1.5px var(--surface), 0 0 0 3px var(--fg), 0 1px 3px rgb(3 14 22 / .45) }
+.sev.t3 span { background: color-mix(in srgb, var(--c) 40%, var(--surface)); color: var(--fg); box-shadow: 0 0 0 1.5px var(--c), 0 1px 2px rgb(3 14 22 / .3) }
+.sev.t3.nodays span { border: 0; box-shadow: 0 0 0 1.5px var(--s0), 0 1px 2px rgb(3 14 22 / .3) }
+.tierb { display: inline-flex; align-items: center; gap: 6px; margin: 8px 0 0; padding: 3px 9px 3px 6px; border-radius: 999px; background: var(--subtle); font-size: .82rem; font-weight: 600; line-height: 1.3 }
+.rank .tierline { display: flex; align-items: center; gap: 5px; margin-top: 2px; color: var(--muted); font-size: .8rem }
+@media (max-width: 760px) { .overview { max-height: 62%; width: calc(100% - 66px) } }
 </style>
 <script>
 // Inside the landing's frame: the framed layout from the first paint, and links open in the whole window.
@@ -401,7 +424,7 @@ if (window.top !== window.self) {
 <script src="/theme.js"></script>
 </head>
 <body>
-<div class="variant-bar"><strong>Prueba · r3: Prometieron un día</strong><a href="/reportes">Actual</a><a href="/r1">r1 Día por día</a><a href="/r2">r2 Una de cada tres</a><a href="/r3" aria-current="page">r3 Prometieron un día</a><a href="/r4">r4 Tu colonia</a><a href="/r5">r5 Sin marcadores</a></div>
+<div class="variant-bar"><strong>Prueba · r3: Quién lo dice</strong><a href="/reportes">Actual</a><a href="/r1">r1 Día por día</a><a href="/r2">r2 Zonas</a><a href="/r3" aria-current="page">r3 Quién lo dice</a><a href="/r4">r4 Lo nuevo</a><a href="/r5">r5 Lo que ves</a><a href="/r6">r6 Burbujas</a><a href="/r7">r7 Calor</a><a href="/r8">r8 Hexágonos</a><a href="/r9">r9 Agujas</a></div>
 <div class="wrap">
   <header class="top">
     <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
@@ -419,25 +442,6 @@ if (window.top !== window.self) {
 
   </div>
   <main>
-    <div class="wrap">
-    <section class="promesa" aria-labelledby="promesa-titulo">
-      <p class="kicker">Prometieron un día</p>
-      <h1 id="promesa-titulo">Cargando lo que publican medios y vecinos…</h1>
-      <p class="dek" id="promesa-dek">El SIAPA prometió que cada racionamiento duraría <q>por máximo un día</q> (<a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">su página de la rotación</a>). Cada punto es una colonia de su mapa, puesta en lo más largo que dicen las publicaciones de medios y vecinos sobre ella. No son datos oficiales.</p>
-      <figure class="chart" id="grafica">
-        <ul class="key" id="grafica-clave" aria-hidden="true"></ul>
-        <div class="chart-box" id="grafica-caja" tabindex="0" role="group" aria-roledescription="gráfica" aria-label="Colonias por días sin agua según medios y vecinos. Usa las flechas para recorrerlas y Enter para verla en el mapa."></div>
-        <figcaption id="grafica-pie">Cargando…</figcaption>
-      </figure>
-      <div class="sindias" id="sin-dias" hidden>
-        <h2 id="sin-dias-titulo"></h2>
-        <p>Sus publicaciones dicen que no hay agua, pero no cuántos días. Toca una para verla en el mapa.</p>
-        <ul id="sin-dias-lista"></ul>
-        <button type="button" class="linkbtn" id="sin-dias-mas" hidden></button>
-      </div>
-      <a class="tomap" href="#escenario">Míralas en el mapa, con lo que publicaron ↓</a>
-    </section>
-    </div>
     <div class="stage" id="escenario">
       <div id="mapa" class="bigmap" role="region" aria-label="Mapa de reportes de agua por colonia" tabindex="0"></div>
       <div class="float-search">
@@ -457,14 +461,26 @@ if (window.top !== window.self) {
       </div>
       <section class="overview" id="resumen-mapa" aria-labelledby="titulo">
         <div class="ov-top">
-          <h2 class="ov-title" id="titulo">¿Hay agua en tu colonia?</h2>
+          <h1 id="titulo">¿Quién lo dice?</h1>
           <button type="button" class="ov-toggle" id="ocultar" aria-expanded="true" aria-controls="ov-cuerpo" aria-label="Ocultar el resumen" title="Ocultar el resumen"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
         </div>
         <p class="ov-head" id="pruebas">Cargando lo que publican medios y vecinos…</p>
+        <div class="filtro" id="filtro" hidden><span id="filtro-txt"></span><button type="button" id="filtro-quitar">Ver todas</button></div>
         <div id="ov-cuerpo">
-          <div class="sevbar" id="sevbar" aria-hidden="true"></div>
-          <ul class="sevkey" id="sevkey" aria-label="Colores del mapa: días sin agua según medios y vecinos"></ul>
-          <p class="ov-stats"><span><b id="p-colonias">—</b> <span id="p-colonias-txt">colonias en el mapa</span></span><span><b id="p-medios">—</b> <span id="p-medios-txt">notas de medios</span></span><span><b id="p-max">—</b> <span id="p-max-txt">lo más largo según un medio</span></span></p>
+          <p class="ov-h" style="border-top:0;padding-top:0;margin-top:10px"><span>Qué tan documentada está</span><small>toca para filtrar</small></p>
+          <ol class="ladder" id="escalera" aria-label="Colonias por nivel de evidencia"></ol>
+          <ul class="sevkey mini" id="sevkey" aria-label="Colores: días sin agua según medios y vecinos"></ul>
+          <p class="ov-h"><span>Por municipio</span><small>colonias del mapa del SIAPA</small></p>
+          <p class="dv-head" aria-hidden="true"><span></span><span>Con nota de medio</span><span>Solo vecinos</span></p>
+          <ol class="dv" id="munis-lista"></ol>
+          <p class="ov-h"><span>Los medios que más colonias cubren</span><small id="medios-n"></small></p>
+          <ol class="outlets" id="medios"></ol>
+          <button type="button" class="ov-more" id="medios-mas" hidden></button>
+          <p class="ov-h"><span>Lo que dicen los vecinos</span></p>
+          <div class="vec" id="vecinos"></div>
+          <p class="ov-small">El eco (reacciones, comentarios y veces compartida) mide cuánta gente vio y reaccionó, no si es cierto: en Twitter, las noticias falsas se compartían más que las verdaderas (<a href="https://doi.org/10.1126/science.aap9559" rel="noopener">Vosoughi, Roy y Aral, 2018</a>). Por eso los niveles cuentan fuentes distintas y medios, no «me gusta».</p>
+          <p class="ov-h"><span>Pistas: sin nota de medio</span><small>por fuentes</small></p>
+          <ol class="leads" id="pistas"></ol>
           <p class="note" id="estado" aria-live="polite">Cargando el mapa de colonias…</p>
           <div class="ov-actions">
             <button class="button" type="button" id="reportar"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Reportar mi colonia</button>
@@ -472,11 +488,6 @@ if (window.top !== window.self) {
           </div>
         </div>
       </section>
-      <details class="munis" id="municipios" open hidden>
-        <summary>Colonias sin agua por municipio</summary>
-        <ol id="munis-lista"></ol>
-        <p>De las colonias del mapa del SIAPA, las que tienen publicaciones de medios o vecinos que dicen que no hay agua.</p>
-      </details>
     </div>
 
     <div class="wrap">
@@ -486,11 +497,13 @@ if (window.top !== window.self) {
     <section aria-labelledby="lista">
       <h2 class="sec" id="lista">Las colonias con más días sin agua</h2>
       <p class="note" style="margin-top:0" id="lista-nota">Según las publicaciones de medios y vecinos. Toca una para verla en el mapa con lo que publicaron.</p>
+      <p class="note" id="lista-filtro" style="margin:0 0 12px;font-weight:600;color:var(--fg)" hidden></p>
       <div class="sorter" role="group" aria-label="Ordenar la lista">
         <button type="button" class="chip" data-orden="dias" aria-pressed="true">Más días</button>
         <button type="button" class="chip" data-orden="fecha" aria-pressed="false">Más recientes</button>
         <button type="button" class="chip" data-orden="fuentes" aria-pressed="false">Más fuentes</button>
         <button type="button" class="chip" data-orden="eco" aria-pressed="false">Más eco en redes</button>
+        <button type="button" class="chip" data-orden="nivel" aria-pressed="false">Mejor documentadas</button>
       </div>
       <div class="sorter" style="align-items:center">
         <button type="button" class="chip" id="solo-semana" aria-pressed="false">Solo una semana o más</button>
@@ -549,6 +562,7 @@ if (window.top !== window.self) {
       <ul class="plain">
         <li><strong>Las publicaciones.</strong> Buscamos en las notas de los medios, en Facebook, incluidos los grupos públicos de colonias, y en X lo que se publica desde el 12 de octubre sobre colonias sin agua. De los medios va todo lo que nombra una colonia, y va primero en cada ficha. De los vecinos, solo publicaciones con al menos 5 reacciones y 1 comentario, o comentarios en publicaciones así. Citamos sus palabras con la fecha y el enlace. Cada colonia toma el color del número de días más alto que dicen, y el número sobre ella cuenta todos sus reportes: las publicaciones más los reportes de este mapa en las últimas 24 horas.</li>
         <li><strong>Las imágenes</strong> son la vista previa que cada nota o publicación comparte (su foto o el cuadro de su video). Guardamos una copia pequeña en aguagdl.com, así tu navegador no se conecta a Facebook, a X ni a los medios para verlas; tocarlas abre la publicación. Las notas y publicaciones de solo texto no tienen imagen.</li>
+        <li><strong>Quién lo dice.</strong> Cada colonia tiene uno de tres niveles, según sus publicaciones: «Lo reporta un medio» si al menos una nota o publicación es de un medio; «Varias fuentes de vecinos» si no hay medio pero lo dicen 3 o más cuentas, páginas, grupos o comentarios distintos; y «Una o dos voces» en los demás casos. El nivel dice qué tan documentado está, no qué tan grave es: para eso es el color de los días. Una colonia con una o dos voces puede estar igual o peor; falta que alguien más lo confirme.</li>
         <li><strong>Contamos fuentes, no «me gusta».</strong> Mucho eco no prueba que algo sea cierto: en Twitter, las noticias falsas tenían 70 % más probabilidad de ser retuiteadas que las verdaderas (<a href="https://doi.org/10.1126/science.aap9559" rel="noopener">Vosoughi, Roy y Aral, 2018</a>). Por eso el color sale de los días que dicen las publicaciones, y la confianza, de cuántas fuentes distintas lo dicen y de si lo reporta un medio; varias publicaciones de la misma cuenta, página o grupo cuentan como una sola fuente. El eco (reacciones, comentarios y veces compartida) se muestra aparte.</li>
         <li><strong>No publicamos nombres de personas.</strong> De los vecinos mostramos la colonia, la fecha y el enlace a lo que publicaron; de los medios y los grupos públicos, su nombre. Si una publicación es tuya y quieres que la quitemos, escríbenos a <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>.</li>
         <li><strong>Faltan colonias.</strong> Publica más quien tiene internet y usa redes: en México usa internet el 88.9 % de las personas en zonas urbanas y el 75.2 % en zonas rurales (<a href="https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/endutih/ENDUTIH_25.pdf" rel="noopener">INEGI, ENDUTIH 2025</a>), y los anuncios de X llegan al 12.4 % de la población, contra 70.7 % de los de Facebook (<a href="https://datareportal.com/reports/digital-2026-mexico" rel="noopener">DataReportal, 2026</a>). Que una colonia no aparezca no quiere decir que tenga agua.</li>
@@ -607,11 +621,25 @@ if (window.top !== window.self) {
   }
   const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
   // The map's canvas needs the colours themselves, read again when the visitor switches the theme.
-  let COLORS, SEV;
+  let COLORS, SEV, HATCH;
+  // A colonia only one or two neighbours speak for is drawn hatched in its days colour: canvas
+  // takes a pattern as its fill.
+  const hatch = (color) => {
+    const c = document.createElement("canvas");
+    c.width = c.height = 7;
+    const x = c.getContext("2d");
+    x.strokeStyle = color;
+    x.lineWidth = 2;
+    x.beginPath();
+    for (const o of [-7, 0, 7]) { x.moveTo(o, 7); x.lineTo(o + 7, 0); }
+    x.stroke();
+    return x.createPattern(c, "repeat");
+  };
   const palette = () => {
     COLORS = { dry: css("--dry"), low: css("--low"), ok: css("--ok"), none: css("--none"), ink: css("--fg"), surface: css("--surface"), muted: css("--muted") };
     // Days without water: 0 is "no days given", then 1–2, 3–6, 7–13 and 14 or more.
     SEV = [0, 1, 2, 3, 4].map((i) => css(`--s${i}`));
+    HATCH = SEV.map(hatch);
   };
   palette();
   // Badges take the variables, each level with its ink, so they follow the theme by themselves.
@@ -668,9 +696,9 @@ if (window.top !== window.self) {
   if (framed) { const v = $("ver-lista"); v.href = "/reportes#lista"; v.target = "_top"; }
 
   // The map takes the screen below the header, whose height changes as the menu wraps.
-  const stage = $("escenario"), top = document.querySelector("header.top");
-  const fitStage = () => { document.documentElement.style.setProperty("--hh", `${top.offsetHeight}px`); map.invalidateSize(); };
-  if (window.ResizeObserver) new ResizeObserver(fitStage).observe(top);
+  const stage = $("escenario"), top = document.querySelector("header.top"), vbar = document.querySelector(".variant-bar");
+  const fitStage = () => { document.documentElement.style.setProperty("--hh", `${top.offsetHeight + (vbar && vbar.offsetParent ? vbar.offsetHeight : 0)}px`); map.invalidateSize(); };
+  if (window.ResizeObserver) { const ro = new ResizeObserver(fitStage); ro.observe(top); if (vbar) ro.observe(vbar); }
   fitStage();
   if (framed) {
     const mac = /Mac|iPhone|iPad/.test(navigator.platform);
@@ -789,10 +817,21 @@ if (window.top !== window.self) {
         medios: new Set(posts.filter((p) => p.fuente === "medio").map(sourceOf)).size,
         ultima: posts.reduce((m, p) => p.fecha > m ? p.fecha : m, ""),
         eco: posts.reduce((t, p) => t + ecoOf(p), 0),
+        outlets: [...new Set(posts.filter((p) => p.fuente === "medio").map((p) => p.quien))],
+        vecinos: posts.some((p) => p.fuente === "vecinos"),
       });
     }
+    // How solid each colonia's evidence is: 1 an outlet reports it, 2 three or more distinct sources
+    // of neighbours, 3 one or two.
+    for (const e of out.values()) e.tier = e.outlets.length ? 1 : e.fuentes >= 3 ? 2 : 3;
     return out;
   }
+  const TIERS = [null,
+    { name: "Lo reporta un medio", short: "Medio", why: "Al menos una nota o publicación de un medio" },
+    { name: "Varias fuentes de vecinos", short: "Varias fuentes", why: "Sin medio, pero 3 o más cuentas, páginas, grupos o comentarios distintos" },
+    { name: "Una o dos voces", short: "Una o dos voces", why: "Una o dos fuentes de vecinos, sin medio" }];
+  const tierSw = (t) => el("span", { class: `tsw t${t}`, "aria-hidden": "true" });
+  const munisOf = (k) => k.split("|")[1].split(" y ").filter(Boolean);
 
   function build({ colonias, zonas }, pubs) {
     let ev;
@@ -806,22 +845,37 @@ if (window.top !== window.self) {
     const zoneStyle = (f) => ({ color: M.COLORS[aguaDark() ? "dark" : "light"][f.properties.z], weight: 1.5, dashArray: "5 4", fill: false, opacity: 0.7 });
     const zoneLayer = L.geoJSON({ type: "FeatureCollection", features: zonas }, { interactive: false, style: zoneStyle }).addTo(map);
     const home = zoneLayer.getBounds().pad(0.04);
+    // The filter: one tier, one outlet and one municipio at most, combined.
+    const F = { tier: 0, outlet: null, muni: null };
+    const filtering = () => !!(F.tier || F.outlet || F.muni);
+    const passes = (k) => {
+      if (!filtering()) return true;
+      const e = ev.get(k);
+      return !!e && (!F.tier || e.tier === F.tier) && (!F.outlet || e.outlets.includes(F.outlet)) && (!F.muni || munisOf(k).includes(F.muni));
+    };
+    const bounds = new Map();
+    const boundsOf = (k) => { if (!bounds.has(k)) bounds.set(k, L.geoJSON(features.get(k)[0]).getBounds()); return bounds.get(k); };
     // A colonia with publications takes the colour of the most days they give (dashed when none gives
     // days); otherwise the majority of this map's last 24 hours, or nothing.
+    // The tier draws on top of the days colour: an outlet's colonias solid with a thick ink outline,
+    // several neighbours' in the plain fill, one or two voices' hatched. Filtered out: barely there.
+    const FAINT = () => ({ color: COLORS.muted, weight: 0.4, opacity: 0.35, dashArray: null, fillColor: COLORS.none, fillOpacity: 0.05 });
     const styleOf = (f) => {
       const k = keyOf(f.properties);
       const e = ev.get(k);
+      if (filtering() && !passes(k)) return FAINT();
       if (e) {
-        const s = sevOf(e.dias);
-        return s ? { color: SEV[s], weight: 1.2, opacity: 0.95, dashArray: null, fillColor: SEV[s], fillOpacity: 0.62 }
-          : { color: SEV[0], weight: 1.8, opacity: 0.95, dashArray: "4 3", fillColor: SEV[0], fillOpacity: 0.2 };
+        const s = sevOf(e.dias), dash = s ? null : "4 3";
+        if (e.tier === 1) return { color: COLORS.ink, weight: 2.6, opacity: 0.95, dashArray: s ? null : "6 3", fillColor: SEV[s], fillOpacity: s ? 0.8 : 0.35 };
+        if (e.tier === 2) return { color: SEV[s], weight: 1.2, opacity: 0.95, dashArray: dash, fillColor: SEV[s], fillOpacity: s ? 0.5 : 0.2 };
+        return { color: SEV[s], weight: 1, opacity: 0.85, dashArray: dash, fillColor: HATCH[s], fillOpacity: 1 };
       }
       const c = byKey.get(k);
       const s = statusOf(c);
       if (!s) return { color: COLORS.muted, weight: 0.4, opacity: 0.5, dashArray: null, fillColor: COLORS.none, fillOpacity: 0.06 };
       return { color: COLORS[s], weight: 1, opacity: 0.9, dashArray: null, fillColor: COLORS[s], fillOpacity: Math.min(0.65, 0.3 + 0.07 * totalOf(c)) };
     };
-    const evLine = (e) => e.dias != null ? `Hasta ${daysWord(e.dias)} sin agua · ${plural(e.fuentes, "fuente", "fuentes")}` : `Sin agua, sin días contados · ${plural(e.fuentes, "fuente", "fuentes")}`;
+    const evLine = (e) => `${e.dias != null ? `Hasta ${daysWord(e.dias)} sin agua` : "Sin agua, sin días contados"} · ${plural(e.fuentes, "fuente", "fuentes")} · ${e.tier === 1 ? `lo reporta ${M.joinES(e.outlets)}` : TIERS[e.tier].name.toLowerCase()}`;
     let closedAt = 0;
     const layer = L.geoJSON({ type: "FeatureCollection", features: colonias }, {
       renderer: L.canvas({ padding: 0.5 }),
@@ -861,18 +915,19 @@ if (window.top !== window.self) {
       const far = map.getZoom() < 12;
       for (const [k, e] of ev) {
         const fs = features.get(k);
-        if (!fs) continue;
+        if (!fs || !passes(k)) continue;
         const c = byKey.get(k), total = e.posts.length + (c ? totalOf(c) : 0), n = total > 99 ? "99+" : String(total);
-        const s = sevOf(e.dias), size = (far ? 21 : 26) + (n.length > 2 ? 4 : 0);
-        const m = L.marker(L.geoJSON(fs[0]).getBounds().getCenter(), {
-          icon: L.divIcon({ className: `sev${far ? " far" : ""}${s ? "" : " nodays"}`, html: `<span style="${sevVars(s)}">${n}</span>`, iconSize: [size, size] }),
-          keyboard: false, zIndexOffset: 1000 + total, title: `${fs[0].properties.n}: ${plural(total, "reporte", "reportes")} · ${evLine(e)}`,
+        // An outlet's colonias get a ringed badge on top; one or two voices', a smaller, lighter one.
+        const s = sevOf(e.dias), size = (far ? 21 : 26) + (n.length > 2 ? 4 : 0) - (e.tier === 3 ? 3 : 0);
+        const m = L.marker(boundsOf(k).getCenter(), {
+          icon: L.divIcon({ className: `sev t${e.tier}${far ? " far" : ""}${s ? "" : " nodays"}`, html: `<span style="${sevVars(s)}">${n}</span>`, iconSize: [size, size] }),
+          keyboard: false, zIndexOffset: (4 - e.tier) * 1000 + total, title: `${fs[0].properties.n}: ${plural(total, "reporte", "reportes")} · ${evLine(e)}`,
         });
         m.on("click", () => select(fs[0]));
         markers.addLayer(m);
       }
       // This map's own reports: rings with the count, where there are no publications.
-      const show = map.getZoom() >= 13 || byKey.size <= 60;
+      const show = (map.getZoom() >= 13 || byKey.size <= 60) && !filtering();
       if (!show) return;
       for (const [k, c] of byKey) {
         const fs = features.get(k);
@@ -912,7 +967,6 @@ if (window.top !== window.self) {
       $("reporta").hidden = true;
       setOverview(wantOpen);
       card.replaceChildren();
-      markDot(null);
       history.replaceState(null, "", location.pathname + (location.search.includes("api=") ? `?api=${encodeURIComponent(API)}` : ""));
     }
     function select(f, { fit = true, form = false, animate = true } = {}) {
@@ -942,7 +996,6 @@ if (window.top !== window.self) {
         if (opts.animate) map.flyToBounds(b, opts); else map.fitBounds(b, opts);
       }
       renderCard(f, form);
-      markDot(keyOf(f.properties));
       const p = f.properties;
       const q = new URLSearchParams({ q: p.n, m: p.m, cp: p.cp });
       if (location.search.includes("api=")) q.set("api", API);
@@ -983,7 +1036,7 @@ if (window.top !== window.self) {
           p.vista && p.tipo !== "comentario" ? null : el("q", {}, p.cita.length > 120 ? `${p.cita.slice(0, 118)}…` : p.cita),
           p.dias ? el("span", { class: "fdias" }, daysWord(p.dias)) : null);
       });
-      const blocked = () => [card, $("reporta"), document.querySelector(".float-search"), document.querySelector(".leaflet-control-zoom"), $("municipios")]
+      const blocked = () => [card, $("reporta"), document.querySelector(".float-search"), document.querySelector(".leaflet-control-zoom")]
         .filter((n) => n && n.offsetParent).map((n) => n.getBoundingClientRect());
       function draw() {
         frame.replaceChildren();
@@ -1157,7 +1210,10 @@ if (window.top !== window.self) {
       const head = el("p", { class: "ev-head" }, badge, el("strong", {}, s ? `Hasta ${daysWord(e.dias)} sin agua` : "Sin agua, sin días contados"));
       const src = [plural(e.fuentes, "fuente", "fuentes distintas"), e.medios ? (e.medios === 1 ? "lo reporta un medio" : `lo reportan ${e.medios} medios`) : null, `la más reciente del ${dateES(e.ultima, true)}`].filter(Boolean).join(" · ");
       const list = el("ol", { class: "posts" }, ...e.posts.map(post));
-      const box = el("div", { class: "ev" }, head, el("p", { class: "ev-src" }, src), mosaic(e.posts), list);
+      const voices = e.fuentes === 1 ? "Una sola fuente" : "Dos fuentes";
+      const tier = el("p", { class: "tierb" }, tierSw(e.tier), e.tier === 1 ? `Lo reporta ${M.joinES(e.outlets)}`
+        : e.tier === 2 ? `${plural(e.fuentes, "fuente", "fuentes")} de vecinos, sin nota de medio todavía` : `${voices} de vecinos, sin nota de medio todavía`);
+      const box = el("div", { class: "ev" }, head, tier, el("p", { class: "ev-src" }, src), mosaic(e.posts), list);
       const SHOWN = 3;
       if (e.posts.length > SHOWN) {
         [...list.children].slice(SHOWN).forEach((li) => { li.hidden = true; });
@@ -1343,255 +1399,154 @@ if (window.top !== window.self) {
     }
 
     // The publications' summary and the list of colonias: static, so they show even without the API.
+    const onMap = () => [...ev].filter(([k]) => features.has(k));
+    const steps = [[1, "1 o 2 días"], [2, "3 a 6 días"], [3, "1 a 2 semanas"], [4, "2 semanas o más"], [0, "sin días contados"]];
+    // A bar of colonias split by the most days their posts give.
+    const daysBar = (es, width) => {
+      const bar = el("span", { class: "dbar", "aria-hidden": "true", style: `width:${width}%` });
+      for (const [s] of steps) {
+        const n = es.filter((e) => sevOf(e.dias) === s).length;
+        if (n) bar.append(el("span", { class: s ? "" : "nodays", style: `flex:${n};${s ? `background:var(--s${s})` : ""}`, title: `${n} con ${steps.find((x) => x[0] === s)[1]}` }));
+      }
+      return bar;
+    };
     function renderEvidence() {
       if (!pubs) {
         $("pruebas").textContent = "No pudimos cargar lo que publican medios y vecinos. Intenta de nuevo en unos minutos.";
         $("lista").closest("section").hidden = true;
         return;
       }
-      const all = [...ev.values()];
+      const all = onMap().map(([, e]) => e);
+      const byTier = [1, 2, 3].map((t) => all.filter((e) => e.tier === t));
+      $("pruebas").replaceChildren(el("b", {}, fmt(all.length)), ` ${all.length === 1 ? "colonia tiene" : "colonias tienen"} publicaciones de que no hay agua. A `,
+        el("b", {}, fmt(byTier[0].length)), ` ${byTier[0].length === 1 ? "la reporta" : "las reporta"} al menos un medio.`);
       const week = all.filter((e) => e.dias >= 7).length;
-      // The count opens the list of those colonias, in the whole window when inside the landing's frame.
-      const toList = el("a", framed ? { href: "/reportes#lista-semana", target: "_top" } : { href: "#lista" }, el("b", {}, fmt(week)), ` ${week === 1 ? "colonia lleva" : "colonias llevan"} una semana o más sin agua`);
-      if (!framed) toList.addEventListener("click", () => { weekOnly = everything = true; renderRanking(); });
-      $("pruebas").replaceChildren(toList, ", según medios y vecinos");
       $("solo-semana").textContent = `Solo una semana o más (${fmt(week)})`;
+
+      // The ladder: each tier, how many colonias and their days, on one scale so the sizes compare.
+      const most = Math.max(1, ...byTier.map((x) => x.length));
+      $("escalera").replaceChildren(...[1, 2, 3].map((t) => {
+        const es = byTier[t - 1], wk = es.filter((e) => e.dias >= 7).length;
+        const extra = t === 1 ? `${fmt(es.filter((e) => e.vecinos).length)} también con vecinos` : t === 2 ? "3 o más fuentes distintas" : "1 o 2 fuentes";
+        const b = el("button", { type: "button", class: "rung", "data-tier": String(t), "aria-pressed": "false", title: TIERS[t].why },
+          tierSw(t), el("strong", {}, TIERS[t].name), el("span", { class: "cnt" }, fmt(es.length)),
+          daysBar(es, 100 * es.length / most),
+          el("span", { class: "why" }, `${extra} · ${fmt(wk)} con una semana o más`));
+        b.addEventListener("click", () => setFilter({ tier: F.tier === t ? 0 : t }));
+        return el("li", {}, b);
+      }));
+      $("sevkey").replaceChildren(...steps.map(([s, w]) => el("li", {}, el("span", { class: s ? "sw" : "sw nodays", style: `--c:var(--s${s})` }), w)));
+
       renderMunicipios();
+      renderOutlets();
+
+      // The neighbours: their posts and comments, how many distinct sources and their eco.
+      const vec = pubs.publicaciones.filter((x) => x.fuente === "vecinos");
+      const cm = vec.filter((x) => x.tipo === "comentario").length;
+      const tile = (n, one, many) => el("div", {}, el("b", {}, fmt(n)), n === 1 ? one : many);
+      $("vecinos").replaceChildren(
+        tile(vec.length - cm, "publicación", "publicaciones"),
+        tile(cm, "comentario", "comentarios"),
+        tile(all.filter((e) => e.tier > 1).length, "colonia solo con vecinos", "colonias solo con vecinos"),
+        tile(vec.reduce((t, x) => t + ecoOf(x), 0), "de eco", "de eco"));
+      $("vecinos").style.gridTemplateColumns = "repeat(4, minmax(0, 1fr))";
+
+      // Leads for a reporter: colonias no outlet has covered yet, the most distinct sources first.
+      const leads = onMap().filter(([, e]) => e.tier > 1)
+        .sort(([, a], [, b]) => b.fuentes - a.fuentes || daysOr0(b) - daysOr0(a) || b.ultima.localeCompare(a.ultima)).slice(0, 5);
+      $("pistas").replaceChildren(...leads.map(([k, e]) => {
+        const f = features.get(k)[0], s = sevOf(e.dias);
+        const b = el("button", { type: "button" },
+          el("span", { class: s ? "sevb" : "sevb nodays", style: sevVars(s) }, s ? daysWord(e.dias) : "sin días"),
+          el("span", {}, el("strong", {}, nice(f.properties.n)), ` · ${f.properties.m}`),
+          el("small", {}, `${plural(e.fuentes, "fuente", "fuentes")} · ${dateES(e.ultima)}`));
+        b.addEventListener("click", () => select(f));
+        return el("li", {}, b);
+      }));
+
       const n = pubs.publicaciones.length, medios = pubs.publicaciones.filter((x) => x.fuente === "medio").length;
-      $("pruebas-nota").textContent = `El SIAPA prometió racionamientos «por máximo un día». Son ${plural(n, "publicación", "publicaciones")} del ${dateES(pubs.desde, true)} al ${dateES(pubs.actualizado, true)}: ${fmt(medios)} de medios, en sus notas, Facebook y X, y ${fmt(n - medios)} de vecinos con eco en redes. Toca una colonia para ver sus publicaciones.`;
-      // The bar splits the colonias by the most days their posts give, and doubles as the map's key.
-      const steps = [[1, "1 o 2 días"], [2, "3 a 6 días"], [3, "1 a 2 semanas"], [4, "2 semanas o más"], [0, "sin días contados"]];
-      const per = steps.map(([s]) => all.filter((e) => sevOf(e.dias) === s).length);
-      $("sevbar").replaceChildren(...steps.map(([s], i) => per[i] ? el("span", { class: s ? "" : "nodays", style: `width:${100 * per[i] / all.length}%;background:${s ? `var(--s${s})` : ""}` }) : null).filter(Boolean));
-      $("sevkey").replaceChildren(...steps.map(([s, w], i) => el("li", {}, el("span", { class: s ? "sw" : "sw nodays", style: `--c:var(--s${s})` }), w, " ", el("b", {}, fmt(per[i])))));
-      $("p-colonias").textContent = fmt(ev.size);
-      $("p-colonias-txt").textContent = ev.size === 1 ? "colonia en el mapa" : "colonias en el mapa";
-      $("p-medios").textContent = fmt(medios);
-      $("p-medios-txt").textContent = medios === 1 ? "nota de medios" : "notas de medios";
-      // The longest a news outlet reports: outlets weigh more than a single neighbour's post.
-      const byNews = pubs.publicaciones.filter((x) => x.fuente === "medio" && x.dias);
-      const max = Math.max(0, ...byNews.map((x) => x.dias));
-      if (max) {
-        const names = [...new Set(byNews.filter((x) => x.dias === max).flatMap((x) => x.colonias.map((k) => nice(k.split("|")[0]))))];
-        $("p-max").textContent = daysWord(max);
-        $("p-max-txt").textContent = "lo más largo según un medio";
-        $("p-max").parentElement.title = M.joinES(names);
-      }
+      $("pruebas-nota").textContent = `El SIAPA prometió racionamientos «por máximo un día». Son ${plural(n, "publicación", "publicaciones")} del ${dateES(pubs.desde, true)} al ${dateES(pubs.actualizado, true)}: ${fmt(medios)} de medios, en sus notas, Facebook y X, y ${fmt(n - medios)} de vecinos con eco en redes. En el mapa, el color dice los días y el trazo dice quién lo dice: contorno grueso si lo reporta un medio, relleno normal si son varias fuentes de vecinos, rayado si son una o dos. Toca una colonia para ver sus publicaciones.`;
       renderRanking();
     }
-
-    // The promise against the days: every colonia with publications that give days, a dot at the most
-    // days any of them gives, stacked by day so none overlap, beside SIAPA's «por máximo un día».
-    let markDot = () => {};
-    function renderPromise() {
-      const sec = document.querySelector(".promesa");
-      if (!pubs) { $("promesa-titulo").textContent = "No pudimos cargar lo que publican medios y vecinos."; $("grafica").hidden = true; return; }
-      const rows = [...ev].filter(([k]) => features.has(k)).map(([k, e]) => ({ k, e, f: features.get(k)[0] }));
-      const dated = rows.filter((r) => r.e.dias != null);
-      const undated = rows.filter((r) => r.e.dias == null);
-      const over = dated.filter((r) => r.e.dias > 1).length;
-      const max = Math.max(0, ...dated.map((r) => r.e.dias));
-      const longest = dated.filter((r) => r.e.dias === max);
-      const h1 = $("promesa-titulo");
-      if (!dated.length) h1.textContent = "Las publicaciones de medios y vecinos todavía no dicen cuántos días llevan sin agua";
-      else {
-        const lead = longest.length === 1 ? `la que más, ${nice(longest[0].f.properties.n)}, ${daysWord(max)}` : `las que más, ${daysWord(max)}`;
-        h1.replaceChildren(el("span", { class: "num" }, fmt(over)), ` ${over === 1 ? "colonia lleva" : "colonias llevan"} más de un día sin agua, según medios y vecinos; ${lead}`);
-      }
-
-      // The key: the map's red ramp, with how many colonias each step has.
-      const steps = [[1, "1 o 2 días"], [2, "3 a 6"], [3, "7 a 13"], [4, "14 o más"]];
-      $("grafica-clave").replaceChildren(...steps.map(([s, w]) => el("li", {}, el("span", { class: "sw", style: `--c:var(--s${s})` }), w, " ", el("b", {}, fmt(dated.filter((r) => sevOf(r.e.dias) === s).length)))));
-      const within = dated.length - over;
-      $("grafica-pie").textContent = `Cada punto es una de las ${plural(dated.length, "colonia", "colonias")} del mapa del SIAPA cuyas publicaciones dicen cuántos días llevan sin agua, en lo más largo que dice alguna; ${within ? `${plural(within, "está", "están")} en un día o menos y` : "ninguna está en un día o menos;"} ${plural(over, "pasa", "pasan")} de lo prometido. Publicaciones del ${dateES(pubs.desde, true)} al ${dateES(pubs.actualizado, true)}. Pasa el cursor o toca un punto para ver la colonia; tócalo para abrirla en el mapa. Que una colonia no aparezca no quiere decir que tenga agua.`;
-
-      // Colonias whose posts give no days, apart.
-      const sd = $("sin-dias");
-      if (undated.length) {
-        sd.hidden = false;
-        $("sin-dias-titulo").textContent = `Sin días contados: ${plural(undated.length, "colonia más", "colonias más")}`;
-        undated.sort((a, b) => b.e.fuentes - a.e.fuentes || b.e.ultima.localeCompare(a.e.ultima));
-        const SHOW = 18;
-        const chip = (r) => {
-          const b = el("button", { type: "button", title: `${r.f.properties.n}, ${r.f.properties.m}: ${plural(r.e.fuentes, "fuente", "fuentes")}` }, nice(r.f.properties.n), " ", el("small", {}, r.f.properties.m));
-          b.addEventListener("click", () => open(r));
-          return el("li", {}, b);
-        };
-        const list = $("sin-dias-lista"), more = $("sin-dias-mas");
-        list.replaceChildren(...undated.slice(0, SHOW).map(chip));
-        more.hidden = undated.length <= SHOW;
-        more.textContent = `Ver las ${fmt(undated.length)}`;
-        more.onclick = () => { list.replaceChildren(...undated.map(chip)); more.hidden = true; };
-      }
-      if (!dated.length) { $("grafica").hidden = true; return; }
-
-      const box = $("grafica-caja");
-      const tip = el("div", { class: "tip", role: "status", hidden: "" });
-      const NS = "http://www.w3.org/2000/svg";
-      const svgEl = (tag, attrs) => { const n = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v); return n; };
-      const byDay = new Map();
-      for (const r of dated) { const d = Math.round(r.e.dias); if (!byDay.has(d)) byDay.set(d, []); byDay.get(d).push(r); }
-      // Best-sourced at the bottom of each stack: news outlets, then distinct sources, then newest.
-      for (const list of byDay.values()) list.sort((a, b) => b.e.medios - a.e.medios || b.e.fuentes - a.e.fuentes || b.e.ultima.localeCompare(a.e.ultima));
-      const tall = Math.max(...[...byDay.values()].map((l) => l.length));
-      let dots = [], active = -1, marked = null, touched = false;
-
-      function draw() {
-        const W = Math.max(280, box.clientWidth);
-        const narrow = W < 600;
-        const L0 = 6, R0 = narrow ? 10 : 18, T0 = narrow ? 62 : 70, B0 = narrow ? 44 : 52;
-        const span = max + 1; // columns for 0 … max days
-        const colW = (W - L0 - R0) / span;
-        const x = (d) => L0 + (d + 0.5) * colW;
-        // The largest dot whose stacks fit the height, a few per row in each day's column.
-        const maxH = narrow ? 300 : 250;
-        let d = 14, step, k, rowsN;
-        for (; d >= 5; d--) {
-          step = d + (d >= 9 ? 3 : 2);
-          k = Math.max(1, Math.floor((colW - 1) / step));
-          rowsN = Math.ceil(tall / k);
-          if (rowsN * step <= maxH) break;
-        }
-        const base = T0 + rowsN * step + 6;
-        const H = base + B0;
-        const svg = svgEl("svg", { viewBox: `0 0 ${W} ${H}`, height: H, "aria-hidden": "true" });
-        // The promise: a day or less, shaded, and its line.
-        const px = x(1);
-        svg.append(svgEl("rect", { class: "promise-zone", x: L0, y: T0 - 8, width: px - L0, height: base - T0 + 8 }));
-        // Week lines.
-        for (let w = 7; w <= max; w += 7) svg.append(svgEl("line", { class: "grid", x1: x(w), x2: x(w), y1: T0 - 8, y2: base }));
-        svg.append(svgEl("line", { class: "ax", x1: L0, x2: W - R0, y1: base, y2: base }));
-        // Ticks: a day, then each week, and the longest.
-        const ticks = [[1, "1", "día"]];
-        const weekWord = ["", "una semana", "dos semanas", "tres semanas", "cuatro semanas", "cinco semanas", "seis semanas"];
-        for (let w = 7; w <= max; w += 7) ticks.push([w, String(w), narrow ? "" : weekWord[w / 7] || ""]);
-        if (max > 1 && !ticks.some(([t]) => Math.abs(t - max) * colW < (narrow ? 22 : 30))) ticks.push([max, String(max), ""]);
-        for (const [t, a, b] of ticks) {
-          svg.append(svgEl("line", { class: "ax", x1: x(t), x2: x(t), y1: base, y2: base + 5 }));
-          const lab = svgEl("text", { class: "tick", x: x(t), y: base + 19, "text-anchor": "middle" }); lab.textContent = a; svg.append(lab);
-          if (b) { const l2 = svgEl("text", { class: "tick2", x: x(t), y: base + 33, "text-anchor": "middle" }); l2.textContent = b; svg.append(l2); }
-        }
-        const axt = svgEl("text", { class: "axt", x: W - R0, y: base + (narrow ? 36 : 48), "text-anchor": "end" });
-        axt.textContent = "días sin agua: lo más largo que dice una publicación →";
-        svg.append(axt);
-        svg.append(svgEl("line", { class: "promise", x1: px, x2: px, y1: 6, y2: base }));
-        const p1 = svgEl("text", { class: "pl1", x: px + 8, y: 18 }); p1.textContent = "Lo que prometió el SIAPA:"; svg.append(p1);
-        const p2 = svgEl("text", { class: "pl2", x: px + 8, y: narrow ? 38 : 42 }); p2.textContent = "máximo un día"; svg.append(p2);
-        // The longest, named above its stack when there's room beside the promise's label.
-        const topY = (n) => base - Math.ceil(n / k) * step;
-        if (max >= 8 && !narrow) {
-          const n = byDay.get(max).length;
-          // Above every stack under the label, which runs about 110 px left of the column's edge.
-          const ax = x(max), ay = Math.min(...[...byDay].filter(([day]) => x(day) >= ax - 110).map(([, l]) => topY(l.length))) - 8;
-          const a1 = svgEl("text", { class: "ann", x: ax + colW / 2, y: Math.max(ay - 16, 34), "text-anchor": "end" });
-          a1.textContent = `${daysWord(max)}`;
-          const a2 = svgEl("text", { class: "ann2", x: ax + colW / 2, y: Math.max(ay, 50), "text-anchor": "end" });
-          a2.textContent = n === 1 ? nice(longest[0].f.properties.n) : `${fmt(n)} colonias`;
-          svg.append(a1, a2);
-        }
-        dots = [];
-        const g = svgEl("g", {});
-        for (const [day, list] of [...byDay].sort((a, b) => a[0] - b[0])) {
-          list.forEach((r, i) => {
-            const row = Math.floor(i / k), inRow = Math.min(k, list.length - row * k), c = i % k;
-            const cx = x(day) + (c - (inRow - 1) / 2) * step, cy = base - step / 2 - row * step;
-            const s = sevOf(r.e.dias);
-            const circle = svgEl("circle", { class: "dt", cx, cy, r: d / 2, style: `fill:var(--s${s})` });
-            g.append(circle);
-            dots.push({ r, cx, cy, circle });
-          });
-        }
-        svg.append(g);
-        const ring = svgEl("circle", { class: "ring", r: d / 2 + 4, visibility: "hidden" });
-        svg.append(ring);
-        box.replaceChildren(svg, tip);
-        dots.radius = Math.max(14, d);
-        dots.ring = ring;
-        dots.sort((a, b) => a.cx - b.cx || b.cy - a.cy);
-        if (active >= 0) show(active, false);
-        ring.setAttribute("visibility", "hidden");
-        if (marked) { const i = dots.findIndex((o) => o.r.k === marked); if (i >= 0) { ring.setAttribute("cx", dots[i].cx); ring.setAttribute("cy", dots[i].cy); ring.setAttribute("visibility", "visible"); } }
-      }
-      function show(i, hint) {
-        if (active >= 0 && dots[active]) dots[active].circle.classList.remove("on");
-        active = i;
-        if (i < 0) { tip.hidden = true; return; }
-        const o = dots[i], p = o.r.f.properties, e = o.r.e;
-        o.circle.classList.add("on");
-        o.circle.parentNode.append(o.circle);
-        tip.replaceChildren(el("strong", {}, nice(p.n)), el("span", {}, p.m),
-          el("span", {}, `Hasta ${daysWord(e.dias)} sin agua · ${plural(e.fuentes, "fuente", "fuentes")}${e.medios ? ` · ${plural(e.medios, "medio", "medios")}` : ""}`),
-          el("em", {}, hint ? "Toca otra vez para verla en el mapa" : "Clic para verla en el mapa"));
-        tip.hidden = false;
-        const bw = box.clientWidth, tw = tip.offsetWidth, th = tip.offsetHeight;
-        const left = Math.min(Math.max(0, o.cx - tw / 2), bw - tw);
-        const top = o.cy - th - 14 < 0 ? o.cy + 16 : o.cy - th - 14;
-        tip.style.left = `${left}px`;
-        tip.style.top = `${top}px`;
-      }
-      const nearest = (ev) => {
-        const b = box.getBoundingClientRect(), mx = ev.clientX - b.left, my = ev.clientY - b.top;
-        let best = -1, bd = dots.radius * dots.radius;
-        dots.forEach((o, i) => { const dd = (o.cx - mx) ** 2 + (o.cy - my) ** 2; if (dd <= bd) { bd = dd; best = i; } });
-        return best;
-      };
-      function open({ f }) {
-        tip.hidden = true;
-        stage.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
-        select(f);
-      }
-      box.addEventListener("pointermove", (ev) => { if (ev.pointerType === "mouse") { const i = nearest(ev); box.style.cursor = i >= 0 ? "pointer" : ""; if (i !== active) show(i, false); } });
-      box.addEventListener("pointerleave", (ev) => { if (ev.pointerType === "mouse") show(-1); });
-      box.addEventListener("pointerdown", (ev) => { touched = ev.pointerType !== "mouse"; });
-      box.addEventListener("click", (ev) => {
-        const i = nearest(ev);
-        if (i < 0) { show(-1); return; }
-        // On a touch screen the first tap shows the colonia and a second one opens it.
-        if (touched && i !== active) { show(i, true); return; }
-        open(dots[i].r);
-      });
-      box.addEventListener("keydown", (ev) => {
-        if (!dots.length) return;
-        if (ev.key === "ArrowRight" || ev.key === "ArrowUp") { ev.preventDefault(); show(Math.min(dots.length - 1, active + 1), false); }
-        else if (ev.key === "ArrowLeft" || ev.key === "ArrowDown") { ev.preventDefault(); show(Math.max(0, active < 0 ? 0 : active - 1), false); }
-        else if (ev.key === "Home") { ev.preventDefault(); show(0, false); }
-        else if (ev.key === "End") { ev.preventDefault(); show(dots.length - 1, false); }
-        else if ((ev.key === "Enter" || ev.key === " ") && active >= 0) { ev.preventDefault(); open(dots[active].r); }
-        else if (ev.key === "Escape") show(-1);
-      });
-      box.addEventListener("blur", () => show(-1));
-      markDot = (k) => {
-        marked = k;
-        if (!dots.ring) return;
-        const o = k && dots.find((x) => x.r.k === k);
-        dots.ring.setAttribute("visibility", o ? "visible" : "hidden");
-        if (o) { dots.ring.setAttribute("cx", o.cx); dots.ring.setAttribute("cy", o.cy); }
-      };
-      let lastW = 0;
-      const redraw = () => { if (box.clientWidth !== lastW) { lastW = box.clientWidth; draw(); } };
-      if (window.ResizeObserver) new ResizeObserver(redraw).observe(box); else window.addEventListener("resize", redraw);
-      redraw();
-      if (selected) markDot(keyOf(selected.properties));
-    }
-    // Each municipio's share of the map's colonias that publications say have no water. A colonia
-    // on a border ("Zapopan y Guadalajara") counts in both.
+    // Per municipio, its colonias with an outlet's report (left) against those only neighbours speak
+    // for (right: several sources solid, one or two hatched). A colonia on a border counts in both.
     function renderMunicipios() {
-      const munis = (k) => k.split("|")[1].split(" y ").filter(Boolean);
       const per = new Map();
-      for (const k of features.keys()) for (const m of munis(k)) {
-        if (!per.has(m)) per.set(m, { m, total: 0, sin: 0 });
+      for (const k of features.keys()) for (const m of munisOf(k)) {
+        if (!per.has(m)) per.set(m, { m, total: 0, t: [0, 0, 0, 0] });
         per.get(m).total++;
       }
-      for (const k of ev.keys()) if (features.has(k)) for (const m of munis(k)) per.get(m).sin++;
-      const rows = [...per.values()].filter((r) => r.sin).sort((a, b) => b.sin / b.total - a.sin / a.total);
+      for (const [k, e] of onMap()) for (const m of munisOf(k)) per.get(m).t[e.tier]++;
+      const rows = [...per.values()].map((r) => ({ ...r, sin: r.t[1] + r.t[2] + r.t[3] })).filter((r) => r.sin).sort((a, b) => b.sin - a.sin || b.t[1] - a.t[1]);
+      const scale = Math.max(1, ...rows.map((r) => Math.max(r.t[1], r.t[2] + r.t[3])));
+      const w = (n) => `width:${(76 * n / scale).toFixed(1)}%`;
       $("munis-lista").replaceChildren(...rows.map((r) => {
-        const pct = 100 * r.sin / r.total;
-        return el("li", {}, el("span", {}, r.m), el("b", {}, `${pct < 1 ? "<1" : Math.round(pct)} %`),
-          el("span", { class: "bar" }, el("span", { style: `width:${pct}%` })),
-          el("small", {}, `${fmt(r.sin)} de ${plural(r.total, "colonia", "colonias")}`));
+        const b = el("button", { type: "button", "data-muni": r.m, "aria-pressed": "false",
+          title: `${r.m}: ${fmt(r.sin)} de ${plural(r.total, "colonia", "colonias")} del mapa del SIAPA con publicaciones; ${fmt(r.t[1])} con nota de medio, ${fmt(r.t[2])} con varias fuentes de vecinos y ${fmt(r.t[3])} con una o dos` },
+          el("span", { class: "nm" }, r.m, el("small", {}, `${fmt(r.sin)} de ${fmt(r.total)}`)),
+          el("span", { class: "l" }, r.t[1] ? el("b", {}, fmt(r.t[1])) : null, el("i", { style: w(r.t[1]) })),
+          el("span", { class: "r" }, el("i", { class: "t2", style: w(r.t[2]) }), el("i", { class: "t3", style: w(r.t[3]) }), r.t[2] + r.t[3] ? el("b", {}, fmt(r.t[2] + r.t[3])) : null));
+        b.addEventListener("click", () => setFilter({ muni: F.muni === r.m ? null : r.m }));
+        return el("li", {}, b);
       }));
-      $("municipios").hidden = !rows.length;
     }
+    // The outlets, by how many of the map's colonias they report (their names are public; neighbours'
+    // never show).
+    let allOutlets = false;
+    function renderOutlets() {
+      const per = new Map();
+      for (const [k, e] of onMap()) for (const o of e.outlets) {
+        if (!per.has(o)) per.set(o, { o, cols: 0, posts: 0 });
+        per.get(o).cols++;
+      }
+      for (const x of pubs.publicaciones) if (x.fuente === "medio" && per.has(x.quien)) per.get(x.quien).posts++;
+      const rows = [...per.values()].sort((a, b) => b.cols - a.cols || b.posts - a.posts || a.o.localeCompare(b.o));
+      const max = Math.max(1, ...rows.map((r) => r.cols));
+      const SHOWN = 6;
+      $("medios-n").textContent = plural(rows.length, "medio", "medios");
+      $("medios").replaceChildren(...rows.slice(0, allOutlets ? rows.length : SHOWN).map((r) => {
+        const b = el("button", { type: "button", "data-outlet": r.o, "aria-pressed": String(F.outlet === r.o) },
+          el("span", {}, r.o),
+          el("span", {}, el("b", {}, fmt(r.cols)), el("small", {}, ` ${r.cols === 1 ? "colonia" : "colonias"} · ${plural(r.posts, "publicación", "publicaciones")}`)),
+          el("span", { class: "ob", "aria-hidden": "true" }, el("span", { style: `width:${100 * r.cols / max}%` })));
+        b.addEventListener("click", () => setFilter({ outlet: F.outlet === r.o ? null : r.o }));
+        return el("li", {}, b);
+      }));
+      const more = $("medios-mas");
+      more.hidden = rows.length <= SHOWN;
+      more.textContent = allOutlets ? "Ver menos" : `Ver los ${rows.length} medios`;
+      more.onclick = () => { allOutlets = !allOutlets; renderOutlets(); };
+    }
+    // Applies a filter: the map dims the rest and frames what's left, the panel and the list follow.
+    function filterText() {
+      const parts = [];
+      if (F.tier) parts.push(F.tier === 1 ? "con nota de medio" : F.tier === 2 ? "con varias fuentes de vecinos" : "con una o dos voces");
+      if (F.outlet) parts.push(`que reporta ${F.outlet}`);
+      if (F.muni) parts.push(`en ${F.muni}`);
+      const n = onMap().filter(([k]) => passes(k)).length;
+      return `${plural(n, "colonia", "colonias")} ${parts.join(", ")}`;
+    }
+    function setFilter(patch) {
+      Object.assign(F, patch);
+      layer.setStyle(styleOf);
+      drawMarkers();
+      for (const b of document.querySelectorAll(".rung")) b.setAttribute("aria-pressed", String(Number(b.dataset.tier) === F.tier));
+      for (const b of document.querySelectorAll("#munis-lista button")) b.setAttribute("aria-pressed", String(b.dataset.muni === F.muni));
+      for (const b of document.querySelectorAll("#medios button")) b.setAttribute("aria-pressed", String(b.dataset.outlet === F.outlet));
+      const on = filtering(), txt = on ? filterText() : "";
+      $("filtro").hidden = !on;
+      $("filtro-txt").textContent = on ? `Solo ${txt}` : "";
+      $("lista-filtro").hidden = !on;
+      $("lista-filtro").textContent = on ? `Filtro del mapa: ${txt}.` : "";
+      renderRanking();
+      if (!on || selected) return;
+      const ks = onMap().filter(([k]) => passes(k)).map(([k]) => k);
+      if (!ks.length) return;
+      const b = ks.reduce((acc, k) => acc.extend(boundsOf(k)), L.latLngBounds(boundsOf(ks[0]).getSouthWest(), boundsOf(ks[0]).getNorthEast()));
+      const pad = phone() ? { paddingTopLeft: [20, 70], paddingBottomRight: [20, Math.round(map.getSize().y * 0.45)] } : { paddingTopLeft: [20, 70], paddingBottomRight: [Math.min(410, map.getSize().x / 2), 20] };
+      map.flyToBounds(b, { ...pad, maxZoom: 14, animate: !reduced, duration: 0.6 });
+    }
+    $("filtro-quitar").addEventListener("click", () => { setFilter({ tier: 0, outlet: null, muni: null }); map.flyToBounds(home, { animate: !reduced, duration: 0.6 }); });
     let order = "dias", everything = location.hash === "#lista-semana", weekOnly = everything;
     const ROWS = 12;
     const daysOr0 = (e) => e.dias || 0;
@@ -1600,8 +1555,9 @@ if (window.top !== window.self) {
       fecha: (a, b) => b.e.ultima.localeCompare(a.e.ultima) || daysOr0(b.e) - daysOr0(a.e),
       fuentes: (a, b) => b.e.fuentes - a.e.fuentes || b.e.medios - a.e.medios || daysOr0(b.e) - daysOr0(a.e),
       eco: (a, b) => b.e.eco - a.e.eco || daysOr0(b.e) - daysOr0(a.e),
+      nivel: (a, b) => a.e.tier - b.e.tier || b.e.medios - a.e.medios || b.e.fuentes - a.e.fuentes || daysOr0(b.e) - daysOr0(a.e),
     };
-    const listRows = () => [...ev].filter(([k, e]) => features.has(k) && (!weekOnly || e.dias >= 7)).map(([k, e]) => ({ e, f: features.get(k)[0] })).sort(ORDERS[order]);
+    const listRows = () => [...ev].filter(([k, e]) => features.has(k) && passes(k) && (!weekOnly || e.dias >= 7)).map(([k, e]) => ({ e, f: features.get(k)[0] })).sort(ORDERS[order]);
     function renderRanking() {
       const rows = listRows();
       $("ranking").replaceChildren(...rows.slice(0, everything ? rows.length : ROWS).map(rankRow));
@@ -1614,13 +1570,13 @@ if (window.top !== window.self) {
     // The list as a spreadsheet: every colonia shown (all of them, not only the first rows), with its municipio.
     function download() {
       const cell = (v) => /[",;\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v;
-      const head = ["Colonia", "Municipio", "Código postal", "Días sin agua (lo más largo que se publicó)", "Fuentes distintas", "Medios", "Última publicación", "Enlace"];
+      const head = ["Colonia", "Municipio", "Código postal", "Días sin agua (lo más largo que se publicó)", "Nivel de evidencia", "Fuentes distintas", "Medios", "Qué medios", "Última publicación", "Enlace"];
       const rows = listRows().map(({ e, f }) => {
         const p = f.properties;
-        return [nice(p.n), p.m, p.cp, e.dias ?? "", e.fuentes, e.medios, e.ultima, `https://aguagdl.com/reportes?${new URLSearchParams({ q: p.n, m: p.m, cp: p.cp })}`];
+        return [nice(p.n), p.m, p.cp, e.dias ?? "", TIERS[e.tier].name, e.fuentes, e.medios, e.outlets.join("; "), e.ultima, `https://aguagdl.com/reportes?${new URLSearchParams({ q: p.n, m: p.m, cp: p.cp })}`];
       });
       const csv = "﻿" + [head, ...rows].map((r) => r.map((v) => cell(String(v))).join(",")).join("\r\n");
-      const a = el("a", { href: URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" })), download: weekOnly ? "colonias-una-semana-o-mas-sin-agua.csv" : "colonias-sin-agua.csv" });
+      const a = el("a", { href: URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" })), download: filtering() ? "colonias-sin-agua-filtradas.csv" : weekOnly ? "colonias-una-semana-o-mas-sin-agua.csv" : "colonias-sin-agua.csv" });
       document.body.append(a);
       a.click();
       a.remove();
@@ -1630,16 +1586,17 @@ if (window.top !== window.self) {
       const p = f.properties, s = sevOf(e.dias);
       const b = el("button", { type: "button", class: "row" },
         el("span", { class: s ? "sevb" : "sevb nodays", style: sevVars(s) }, s ? daysWord(e.dias) : "sin días"),
-        el("span", { class: "what" }, el("strong", {}, nice(p.n)), el("small", {}, `${p.m} · ${M.label(p)}`)),
+        el("span", { class: "what" }, el("strong", {}, nice(p.n)), el("small", {}, `${p.m} · ${M.label(p)}`),
+          el("span", { class: "tierline" }, tierSw(e.tier), e.tier === 1 ? `Medio: ${M.joinES(e.outlets)}` : TIERS[e.tier].name)),
         el("span", { class: "meta" }, [plural(e.fuentes, "fuente", "fuentes"), e.medios ? plural(e.medios, "medio", "medios") : null].filter(Boolean).join(" · "),
           el("small", {}, `${dateES(e.ultima)}${e.eco ? ` · ${plural(e.eco, "interacción", "interacciones")}` : ""}`)));
       b.addEventListener("click", () => { stage.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }); select(f); });
       return el("li", {}, b);
     }
-    for (const b of document.querySelectorAll(".sorter .chip")) {
+    for (const b of document.querySelectorAll(".sorter .chip[data-orden]")) {
       b.addEventListener("click", () => {
         order = b.dataset.orden;
-        for (const x of document.querySelectorAll(".sorter .chip")) x.setAttribute("aria-pressed", String(x === b));
+        for (const x of document.querySelectorAll(".sorter .chip[data-orden]")) x.setAttribute("aria-pressed", String(x === b));
         renderRanking();
       });
     }
@@ -1647,7 +1604,6 @@ if (window.top !== window.self) {
     $("solo-semana").addEventListener("click", () => { weekOnly = !weekOnly; everything ||= weekOnly; renderRanking(); });
     $("descargar").addEventListener("click", download);
     renderEvidence();
-    renderPromise();
     if (location.hash === "#lista-semana") $("lista").scrollIntoView();
 
     say("");
@@ -1795,8 +1751,6 @@ if (window.top !== window.self) {
         input.value = best.properties.n;
         clear.hidden = false;
         select(best, { form: wantsForm, animate: false });
-        // A shared link is about that colonia: it opens at the map, the chart above it.
-        stage.scrollIntoView({ block: "start" });
         wantsForm = false;
       } else if (hits.length) {
         input.value = preset;
