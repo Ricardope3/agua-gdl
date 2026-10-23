@@ -288,5 +288,25 @@ window.aguaMapa = (() => {
     return c;
   }
 
-  return { DATA, BORDER, COLORS, norm, fold, joinES, zonesOf, zones, label, describe, borderWord, zoneWord, theZones, decode, contains, load, find, tiles, draw, card, icon, cross };
+  // recenter(L, map, go, position): a button beside the zoom buttons that brings the map back to
+  // where it started; go() does the moving, since each page starts somewhere else.
+  function recenter(L, map, go, position = "bottomright") {
+    const Ctl = L.Control.extend({
+      onAdd() {
+        const bar = L.DomUtil.create("div", "leaflet-bar leaflet-control-centrar");
+        const a = L.DomUtil.create("a", "", bar);
+        a.href = "#";
+        a.title = "Volver a centrar el mapa";
+        a.setAttribute("role", "button");
+        a.setAttribute("aria-label", a.title);
+        a.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="vertical-align:-4px" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>';
+        L.DomEvent.disableClickPropagation(bar);
+        L.DomEvent.on(a, "click", (e) => { L.DomEvent.preventDefault(e); go(); });
+        return bar;
+      },
+    });
+    return new Ctl({ position }).addTo(map);
+  }
+
+  return { DATA, BORDER, COLORS, recenter, norm, fold, joinES, zonesOf, zones, label, describe, borderWord, zoneWord, theZones, decode, contains, load, find, tiles, draw, card, icon, cross };
 })();

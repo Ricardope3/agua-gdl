@@ -785,6 +785,7 @@ if (window.top !== window.self) {
     const zoneStyle = (f) => ({ color: M.COLORS[aguaDark() ? "dark" : "light"][f.properties.z], weight: 1.5, dashArray: "5 4", fill: false, opacity: 0.7 });
     const zoneLayer = L.geoJSON({ type: "FeatureCollection", features: zonas }, { interactive: false, style: zoneStyle }).addTo(map);
     const home = zoneLayer.getBounds().pad(0.04);
+    M.recenter(L, map, () => map.flyToBounds(home, { duration: 0.6 }));
     // A colonia with publications takes the colour of the most days they give (dashed when none gives
     // days); otherwise the majority of this map's last 24 hours, or nothing.
     const styleOf = (f) => {
@@ -1152,12 +1153,15 @@ if (window.top !== window.self) {
       for (const g of marks) g.remove();
       const all = features.get(keyOf(f.properties)) || [f];
       const gj = { type: "FeatureCollection", features: all.map((x) => ({ type: "Feature", geometry: x.geometry, properties: {} })) };
+      // A colonia nobody has reported without water is outlined calmly in blue, not as a red alarm.
+      const k0 = keyOf(f.properties), c0 = byKey.get(k0);
+      const quiet = !ev.has(k0) && !(c0 && c0.sin_agua + c0.baja);
       marks = [
         // A wide halo and the report button's orange-red, so the colonia stands out among the coloured ones.
         L.geoJSON(gj, { interactive: false, style: { color: COLORS.surface, weight: 12, opacity: 0.95, fill: false } }).addTo(map),
         // Drawn as SVG so CSS can make it beat: a glowing fill and a ring that keeps spreading out, like a live signal.
-        L.geoJSON(gj, { interactive: false, renderer: liveRenderer, style: { color: "#e4572e", weight: 5, fill: true, fillColor: "#e4572e", fillOpacity: 0.2, className: "vivo" } }).addTo(map),
-        L.geoJSON(gj, { interactive: false, renderer: liveRenderer, style: { color: "#e4572e", weight: 4, fill: false, className: "vivo-onda" } }).addTo(map),
+        L.geoJSON(gj, { interactive: false, renderer: liveRenderer, style: quiet ? { color: css("--primary"), weight: 4, fill: true, fillColor: css("--primary"), fillOpacity: 0.1 } : { color: "#e4572e", weight: 5, fill: true, fillColor: "#e4572e", fillOpacity: 0.2, className: "vivo" } }).addTo(map),
+        L.geoJSON(gj, { interactive: false, renderer: liveRenderer, style: quiet ? { opacity: 0, fill: false } : { color: "#e4572e", weight: 4, fill: false, className: "vivo-onda" } }).addTo(map),
       ];
       const e = ev.get(keyOf(f.properties));
       // Many publications: the colonia moves to the right and they fill the map beside the card as a wall.
@@ -1213,7 +1217,7 @@ if (window.top !== window.self) {
           p.vista && p.tipo !== "comentario" ? null : el("q", {}, p.cita.length > 120 ? `${p.cita.slice(0, 118)}…` : p.cita),
           p.dias ? el("span", { class: "fdias" }, daysWord(p.dias)) : null);
       });
-      const blocked = () => [card, $("reporta"), document.querySelector(".float-search"), document.querySelector(".leaflet-control-zoom")]
+      const blocked = () => [card, $("reporta"), document.querySelector(".float-search"), document.querySelector(".leaflet-control-zoom"), document.querySelector(".leaflet-control-centrar")]
         .filter((n) => n && n.offsetParent).map((n) => n.getBoundingClientRect());
       function draw() {
         frame.replaceChildren();

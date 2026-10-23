@@ -94,7 +94,6 @@ h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.08; letter-spacing: -
 .map-label::before { display: none }
 .map-label .sub { display: block; font-weight: 500; color: var(--muted) }
 .map-label .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--zc, var(--muted)); margin-right: 5px }
-.leaflet-container a.reset { font-size: 18px; line-height: 30px }
 .card { position: absolute; z-index: 1200; top: 12px; left: 12px; width: min(360px, calc(100% - 24px)); max-height: calc(100% - 24px); overflow: auto; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; box-shadow: 0 10px 30px rgb(3 14 22 / .22) }
 @media (max-width: 760px) { .card { top: auto; bottom: 10px; left: 10px; width: calc(100% - 20px); max-height: 58% } }
 .card h2 { margin: 0 32px 2px 0; font-size: 1.3rem; line-height: 1.2; letter-spacing: -.02em; color: var(--link); text-transform: uppercase }
@@ -287,20 +286,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     // Without animation: one still running would swallow the jump to a colonia from the link.
     map.fitBounds(home, { animate: false });
 
-    const Reset = L.Control.extend({
-      onAdd() {
-        const bar = L.DomUtil.create("div", "leaflet-bar");
-        const a = L.DomUtil.create("a", "reset", bar);
-        a.href = "#";
-        a.textContent = "↺";
-        a.title = "Ver toda el área";
-        a.setAttribute("role", "button");
-        a.setAttribute("aria-label", a.title);
-        L.DomEvent.on(a, "click", (e) => { L.DomEvent.preventDefault(e); L.DomEvent.stopPropagation(e); map.fitBounds(home); });
-        return bar;
-      },
-    });
-    new Reset({ position: "topright" }).addTo(map);
+    M.recenter(L, map, () => map.flyToBounds(home, { duration: 0.6 }), "topright");
 
     // Selection: a halo and a dark outline over the colonia, and the card. A few colonias are drawn
     // as several outlines with one name, municipio and postal code: picking one outlines them all.

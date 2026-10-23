@@ -588,7 +588,10 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
         wrap.append(node);
       };
       // fitTo leaves room for the card: on the left on wide screens, at the bottom on phones.
+      let lastFit = null;
+      M.recenter(L, map, () => { if (lastFit) fitTo(lastFit, true); }, "topright");
       const fitTo = (bounds, animate) => {
+        lastFit = bounds;
         const pad = shownCard
           ? (phone() ? { paddingTopLeft: [24, 24], paddingBottomRight: [24, Math.round(map.getSize().y * 0.55)] } : { paddingTopLeft: [400, 24], paddingBottomRight: [24, 24] })
           : { padding: [24, 24] };
