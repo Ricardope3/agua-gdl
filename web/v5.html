@@ -569,6 +569,8 @@ strong, b { font-weight: 600 }
   };
   const t = setInterval(() => { try { dress(); if (f.contentDocument.getElementById("variante")) clearInterval(t); } catch {} }, 50);
   f.addEventListener("load", dress);
+  const top = () => document.documentElement.classList.toggle("abajo", scrollY > 8);
+  addEventListener("scroll", top, { passive: true }); top();
 })();
 </script>
 <nav class="vbar"><a href="/">actual</a> · <a href="/v1">v1 Periódico</a> · <a href="/v2">v2 Glaciar</a> · <a href="/v3">v3 Marino</a> · <a href="/v4">v4 Talavera</a> · <a href="/v5" aria-current=page>v5 Hielo</a></nav>
