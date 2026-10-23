@@ -291,9 +291,11 @@ header.top { margin-bottom: 0; position: static }
 @media (max-width: 760px) { .report-cta { top: 66px; left: 8px; right: 8px; width: auto; padding: 8px 10px; display: flex; align-items: center; gap: 10px } .report-cta p { margin: 0; font-size: .82rem } .report-cta .button { width: auto; flex-shrink: 0; font-size: .88rem; padding: 8px 10px } }
 path.vivo { animation: vivo 1.6s ease-in-out infinite }
 path.vivo-onda { animation: onda 1.6s ease-out infinite }
+path.invita { animation: invita .9s ease-in-out 3 }
+@keyframes invita { 50% { stroke-width: 12px; fill-opacity: .45 } }
 @keyframes vivo { 50% { fill-opacity: .42; stroke-width: 7px } }
 @keyframes onda { 0% { stroke-width: 4px; stroke-opacity: .9 } 100% { stroke-width: 34px; stroke-opacity: 0 } }
-@media (prefers-reduced-motion: reduce) { path.vivo, path.vivo-onda { animation: none } path.vivo-onda { stroke-opacity: 0 } }
+@media (prefers-reduced-motion: reduce) { path.vivo, path.vivo-onda, path.invita { animation: none } path.vivo-onda { stroke-opacity: 0 } }
 .marco { position: absolute; inset: 0; z-index: 1000; pointer-events: none; transition: opacity .15s }
 .marco.moving { opacity: 0 }
 .ftile { position: absolute; display: block; overflow: hidden; pointer-events: auto; border-radius: 10px; border: 3px solid var(--surface); background: var(--surface); box-shadow: 0 3px 10px rgb(3 14 22 / .4); text-decoration: none; color: var(--fg); transition: transform .15s; animation: fin .3s both }
@@ -1573,10 +1575,23 @@ if (window.top !== window.self) {
       setPlay();
       timer = setTimeout(tick, STEP_MS * 0.7);
     }
+    let onPlayed = null;   // what to do once the timeline has played to the end, once
     function tick() {
       if (!playing) return;
       showDay(at + 1, { pulse: true });
-      if (atEnd()) { playing = false; setPlay(); } else timer = setTimeout(tick, STEP_MS);
+      if (!atEnd()) { timer = setTimeout(tick, STEP_MS); return; }
+      playing = false;
+      setPlay();
+      if (onPlayed) { const then = onPlayed; onPlayed = null; setTimeout(then, 700); }
+    }
+    // ?muestra=NAME|Municipio|CP (the landing's frame): after the timeline plays, that colonia's outline
+    // pulses three times and it opens, to show that a colonia can be tapped for its close-up.
+    function showcase(key) {
+      const fs = features.get(key);
+      if (!fs || selected || playing || !atEnd()) return;
+      const gj = { type: "FeatureCollection", features: fs.map((x) => ({ type: "Feature", geometry: x.geometry, properties: {} })) };
+      const hint = L.geoJSON(gj, { interactive: false, renderer: liveRenderer, style: { color: "#e4572e", weight: 4, fill: true, fillColor: "#e4572e", fillOpacity: 0.12, className: "invita" } }).addTo(map);
+      setTimeout(() => { hint.remove(); if (!selected && !playing && atEnd()) select(fs[0]); }, reduced ? 0 : 2800);
     }
     playBtn.addEventListener("click", () => (playing ? stop() : play()));
 
@@ -1862,6 +1877,8 @@ if (window.top !== window.self) {
     else if (framed && window.IntersectionObserver) {
       // In the landing's frame it waits on the first day until most of the map is on screen.
       showDay(0);
+      const muestra = params.get("muestra");
+      if (muestra && features.has(muestra)) onPlayed = () => showcase(muestra);
       new IntersectionObserver((entries, io) => {
         if (!entries.some((e) => e.isIntersecting)) return;
         io.disconnect();
