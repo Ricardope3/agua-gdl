@@ -297,8 +297,9 @@ html, body { overflow-x: clip }
 .wall .note { color: var(--muted); font-size: .82rem; margin: 6px 0 0 }
 .boxes { display: grid; gap: 12px; margin: 0 0 40px }
 @media (min-width: 860px) { .boxes { grid-template-columns: repeat(3, 1fr) } }
-.sello { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center }
-.sello .ilus { width: clamp(84px, 18vw, 150px); height: auto; transform: rotate(6deg); filter: drop-shadow(0 4px 8px rgba(0,0,0,.25)) }
+.cartel { display: grid; gap: 8px 32px; align-items: center; padding: 8px 0 20px }
+.cartel .ilus { width: min(70vw, 300px); height: auto; justify-self: center }
+@media (min-width: 760px) { .cartel { grid-template-columns: 1fr auto } .cartel .ilus { width: 300px } }
 .vbar { position: fixed; left: 50%; bottom: max(10px, env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 2000; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; max-width: calc(100vw - 24px); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 5px; box-shadow: 0 6px 20px rgba(0,0,0,.18); font-size: .8rem }
 .vbar a { padding: 4px 8px; border-radius: 6px; color: var(--fg); text-decoration: none }
 .vbar a[aria-current] { background: var(--fg); color: var(--bg) }
@@ -322,7 +323,7 @@ html, body { overflow-x: clip }
   </header>
 
   <main>
-    <div class="headline sello">
+    <div class="headline cartel">
       <div>
         <p class="kicker">El agua es un derecho. Exígelo.</p>
         <h1>El SIAPA prometió un día. Hay vecinos con semanas sin agua.</h1>
@@ -540,6 +541,6 @@ html, body { overflow-x: clip }
   }, 3000);
 })();
 </script>
-<nav class="vbar" aria-label="Versiones"><a href="/v1">v1 Cartel</a> <a href="/v2">v2 Banda negra</a> <a href="/v3">v3 Promesa y realidad</a> <a href="/v4" aria-current="page">v4 Sello</a> <a href="/">Portada actual</a></nav>
+<nav class="vbar" aria-label="Versiones"><a href="/i1" aria-current="page">i1 Cartel</a> <a href="/i2">i2 Banda negra</a> <a href="/i3">i3 Promesa y realidad</a> <a href="/i4">i4 Sello</a> <a href="/">Portada actual</a></nav>
 </body>
 </html>
