@@ -290,6 +290,9 @@ body.has-actbar { padding-bottom: 76px }
 .wrap:has(> header.top) { max-width: 960px }
 @media (min-width: 1100px) { .wrap:has(> header.top) { max-width: 1320px } }
 .wrap:has(> header.top) > :not(header.top) { max-width: 928px; margin-left: auto; margin-right: auto }
+.ilus-lado { display: block; width: 150px; height: auto; margin: 0 auto 12px }
+@media (min-width: 900px) { .ilus-lado { float: right; width: 230px; margin: 0 0 16px 32px } }
+.hero .stats { clear: both }
 </style>
 <script src="/theme.js"></script>
 </head>
@@ -311,6 +314,7 @@ body.has-actbar { padding-bottom: 76px }
 
   <section class="hero" aria-labelledby="titulo">
     <span class="eyebrow"><span class="pulse" aria-hidden="true"></span><span id="dia">Crisis del agua en Guadalajara</span></span>
+    <img class="ilus-lado" src="/img/ilustracion.png" alt="Caricatura de Pablo Lemus con la mano en una llave de la que cae una gota, sobre la Catedral de Guadalajara y una multitud que protesta" width="517" height="640">
     <h1 id="titulo">La crisis del agua, al día</h1>
     <p class="lede">Cortes de agua en 627 colonias. Una marcha por agua limpia dispersada con gas lacrimógeno y agua a presión, periodistas heridos, detenidos que <a href="#testimonios">denuncian tortura</a> y seis manifestantes vinculados a proceso. Y un acueducto de 11,922 millones de pesos, que se pagaría a una empresa privada durante 20 o 25 años, esperando votos en el Congreso que <a href="#sin-votos">por ahora no tiene</a>. Todo, con sus fuentes.</p>
     <div class="latest-wrap" id="latest-wrap" hidden><span class="latest-h">Lo último</span><ul class="latest" id="latest"></ul></div>

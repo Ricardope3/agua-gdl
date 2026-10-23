@@ -138,6 +138,8 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .wrap:has(> header.top) { max-width: 960px }
 @media (min-width: 1100px) { .wrap:has(> header.top) { max-width: 1320px } }
 .wrap:has(> header.top) > :not(header.top) { max-width: 928px; margin-left: auto; margin-right: auto }
+.ilus-lado { display: block; width: 150px; height: auto; margin: 0 auto 12px }
+@media (min-width: 900px) { .ilus-lado { float: right; width: 230px; margin: 0 0 16px 32px } }
 </style>
 <script src="/theme.js"></script>
 </head>
@@ -158,9 +160,11 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
   </header>
 
   <main>
+    <img class="ilus-lado" src="/img/ilustracion.png" alt="Caricatura de Pablo Lemus con la mano en una llave de la que cae una gota, sobre la Catedral de Guadalajara y una multitud que protesta" width="517" height="640">
     <h1>¿Quién contamina el agua?</h1>
     <p class="lede">El agua de Guadalajara viene sobre todo del Lago de Chapala y de la parte alta del Río Santiago, y desde diciembre de 2025 la que entraba por el canal de Las Pintas llegó tan sucia que el SIAPA cerró ese sistema y empezó la rotación. Río abajo, en El Salto, Juanacatlán y Poncitlán, el Santiago es uno de los ríos más contaminados de México: los registros oficiales nombran a 39 empresas y puntos de descarga, y los estudios encuentran metales en la sangre y daño en el ADN de quienes viven ahí. Exigimos que se detengan y sancionen las descargas y que el dinero público vaya primero a sanear el agua, no a pagar 20 o 25 años un acueducto privado. Todo, con sus fuentes.</p>
     <div class="buttons lede-actions"><a class="button" href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#mail"/></svg>Escribir al Congreso</a></div>
+    <div style="clear: both"></div>
 
     <section aria-labelledby="empresas">
       <h2 id="empresas" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg></span>Las empresas en los registros oficiales</h2>
