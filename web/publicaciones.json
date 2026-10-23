@@ -22229,6 +22229,413 @@
    "vista": "fuentes/4e28b7419cdb.jpg",
    "captura": "fuentes/4e28b7419cdb-t.jpg",
    "titular": "Piden pipas a diario ante escasez de agua"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2113357727103623528",
+    "eco": {
+     "reacciones": 9,
+     "comentarios": 29,
+     "al": "2026-10-23"
+    }
+   },
+   "url": "https://x.com/otaneRanreS/status/2113650657387589883",
+   "fecha": "2026-10-23",
+   "colonias": [
+    "DEL FRESNO|Guadalajara|44900"
+   ],
+   "lugar": "Del Fresno, Guadalajara",
+   "cita": "Ya es el 4to día sin agua en la colonia del fresno",
+   "dias": 4,
+   "eco": {
+    "reacciones": 0,
+    "comentarios": 0,
+    "al": "2026-10-23"
+   },
+   "vista": "fuentes/8bcd3bd758c3.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2113269051757600959",
+    "eco": {
+     "reacciones": 22,
+     "comentarios": 98,
+     "al": "2026-10-23"
+    }
+   },
+   "url": "https://x.com/Minirex666/status/2113368858463506857",
+   "fecha": "2026-10-22",
+   "colonias": [
+    "MAGAÑA|Guadalajara|44800"
+   ],
+   "lugar": "Magaña, Guadalajara",
+   "cita": "La colonia Magaña no aparece en las listas y no tenemos servicio de agua desde hace 15 días",
+   "dias": 15,
+   "eco": {
+    "reacciones": 1,
+    "comentarios": 0,
+    "al": "2026-10-23"
+   },
+   "vista": "fuentes/07e2c41c0efa.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2113269051757600959",
+    "eco": {
+     "reacciones": 22,
+     "comentarios": 98,
+     "al": "2026-10-23"
+    }
+   },
+   "url": "https://x.com/claus2503/status/2113302836859871420",
+   "fecha": "2026-10-22",
+   "colonias": [
+    "PRADOS TEPEYAC|Zapopan|45050"
+   ],
+   "lugar": "Prados Tepeyac, Zapopan",
+   "cita": "Zona 6 Col. Prados Tepeyac tenemos 5 dias sin agua y mañana vuelven con el corte",
+   "dias": 5,
+   "eco": {
+    "reacciones": 1,
+    "comentarios": 0,
+    "al": "2026-10-23"
+   },
+   "vista": "fuentes/07e2c41c0efa.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2112911061393228260",
+    "eco": {
+     "reacciones": 25,
+     "comentarios": 112,
+     "al": "2026-10-23"
+    }
+   },
+   "url": "https://x.com/Alexand95626152/status/2113137084835750175",
+   "fecha": "2026-10-21",
+   "colonias": [
+    "ECHEVERRIA|Guadalajara|44970"
+   ],
+   "lugar": "Echeverría, Guadalajara",
+   "cita": "cuando nos va a llegar el agua a la colonia Echeverría ? Llevamos 13 días sin agua",
+   "dias": 13,
+   "eco": {
+    "reacciones": 1,
+    "comentarios": 0,
+    "al": "2026-10-23"
+   },
+   "vista": "fuentes/f1a6517cf995.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2112974661290213476",
+    "eco": {
+     "reacciones": 12,
+     "comentarios": 37,
+     "al": "2026-10-23"
+    }
+   },
+   "url": "https://x.com/fernandamven/status/2113107390946033984",
+   "fecha": "2026-10-21",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "Oblatos, Guadalajara",
+   "cita": "Col oblatos lleva más de 21 días sin agua",
+   "dias": 21,
+   "eco": {
+    "reacciones": 0,
+    "comentarios": 0,
+    "al": "2026-10-23"
+   },
+   "vista": "fuentes/cf08b8c6dc7b.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2112911061393228260",
+    "eco": {
+     "reacciones": 25,
+     "comentarios": 112,
+     "al": "2026-10-23"
+    }
+   },
+   "url": "https://x.com/ChuyCar/status/2113095978526052691",
+   "fecha": "2026-10-21",
+   "colonias": [
+    "SAN MARCOS|Guadalajara|44330"
+   ],
+   "lugar": "San Marcos, Guadalajara",
+   "cita": "En colonia San Marcos no tenemos agua desde hace 15 días !",
+   "dias": 15,
+   "eco": {
+    "reacciones": 0,
+    "comentarios": 0,
+    "al": "2026-10-23"
+   },
+   "vista": "fuentes/f1a6517cf995.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2113034476565541273",
+    "eco": {
+     "reacciones": 6,
+     "comentarios": 13,
+     "al": "2026-10-23"
+    }
+   },
+   "url": "https://x.com/ArturoTeandon/status/2113060257299935480",
+   "fecha": "2026-10-21",
+   "colonias": [
+    "CHAPALITA INN|Zapopan|45037"
+   ],
+   "lugar": "Chapalita Inn, Zapopan",
+   "cita": "En la colonia Exitmex (Chapalita Inn), no tenemos agua desde el lunes de la semana pasada.",
+   "dias": null,
+   "eco": {
+    "reacciones": 2,
+    "comentarios": 0,
+    "al": "2026-10-23"
+   },
+   "vista": "fuentes/65feae03379e.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2112545191710065048",
+    "eco": {
+     "reacciones": 30,
+     "comentarios": 162,
+     "al": "2026-10-23"
+    }
+   },
+   "url": "https://x.com/bastardovsatan/status/2113027775187628123",
+   "fecha": "2026-10-21",
+   "colonias": [
+    "COLINAS DE LA PRIMAVERA|Zapopan|45066"
+   ],
+   "lugar": "Colinas de la Primavera, Zapopan",
+   "cita": "En colonia colinas de la primavera en zona 6 les valió y desde ayer no hay suministro.",
+   "dias": null,
+   "eco": {
+    "reacciones": 0,
+    "comentarios": 0,
+    "al": "2026-10-23"
+   },
+   "vista": "fuentes/6f5f83f360ad.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2112911061393228260",
+    "eco": {
+     "reacciones": 25,
+     "comentarios": 112,
+     "al": "2026-10-23"
+    }
+   },
+   "url": "https://x.com/martinezcruzr/status/2113026362051346535",
+   "fecha": "2026-10-21",
+   "colonias": [
+    "CIRCUNVALACION BELISARIO|Guadalajara|44330"
+   ],
+   "lugar": "Circunvalación Belisario, Guadalajara",
+   "cita": "Tenemos 12 dias sin agua en la calle puerto san telmo, colonia circunvalación belisario",
+   "dias": 12,
+   "eco": {
+    "reacciones": 1,
+    "comentarios": 0,
+    "al": "2026-10-23"
+   },
+   "vista": "fuentes/f1a6517cf995.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2111822694086066677",
+    "eco": {
+     "reacciones": 37,
+     "comentarios": 165,
+     "al": "2026-10-23"
+    }
+   },
+   "url": "https://x.com/MarthaEstherOc1/status/2112940391276388771",
+   "fecha": "2026-10-21",
+   "colonias": [
+    "LADRON DE GUEVARA|Guadalajara|44600"
+   ],
+   "lugar": "Ladrón de Guevara, Guadalajara",
+   "cita": "Soy de La colonia Ladrón de Guevara zona 6\nTenemos hoy 3 días sin una gota de agua",
+   "dias": 3,
+   "eco": {
+    "reacciones": 0,
+    "comentarios": 0,
+    "al": "2026-10-23"
+   },
+   "vista": "fuentes/26bd1f2b34e1.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2112911061393228260",
+    "eco": {
+     "reacciones": 25,
+     "comentarios": 112,
+     "al": "2026-10-23"
+    }
+   },
+   "url": "https://x.com/torre74879/status/2112928874111619171",
+   "fecha": "2026-10-21",
+   "colonias": [
+    "JARDINES DE SAN JOSE|Guadalajara|44950"
+   ],
+   "lugar": "Jardines de San José, Guadalajara",
+   "cita": "Desde el sábado no hay agua en mi colonia Jardines de San José zona 5",
+   "dias": null,
+   "eco": {
+    "reacciones": 3,
+    "comentarios": 0,
+    "al": "2026-10-23"
+   },
+   "vista": "fuentes/f1a6517cf995.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2113269051757600959",
+    "eco": {
+     "reacciones": 22,
+     "comentarios": 98,
+     "al": "2026-10-23"
+    }
+   },
+   "url": "https://x.com/adyhgo/status/2113502960068001913",
+   "fecha": "2026-10-22",
+   "colonias": [
+    "SAN VICENTE|Guadalajara|44330"
+   ],
+   "lugar": "San Vicente, Guadalajara",
+   "cita": "Col. San Vicente de Guadalajara, sin agua desde el 6 de octubre",
+   "dias": null,
+   "eco": {
+    "reacciones": 0,
+    "comentarios": 0,
+    "al": "2026-10-23"
+   },
+   "desde": "2026-10-06",
+   "vista": "fuentes/07e2c41c0efa.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2111854005609742770",
+    "eco": {
+     "reacciones": 15,
+     "comentarios": 101,
+     "al": "2026-10-23"
+    }
+   },
+   "url": "https://x.com/aguirrevanessa/status/2112738910207975855",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "ARCOS DE GUADALUPE|Zapopan|45030"
+   ],
+   "lugar": "Arcos de Guadalupe, Zapopan",
+   "cita": "En la zona 6 de Zapopan colonia Arcos de Guadalupe 1 semana sin agua!!! Cuál Rotación !!! No existe",
+   "dias": null,
+   "eco": {
+    "reacciones": 0,
+    "comentarios": 0,
+    "al": "2026-10-23"
+   },
+   "vista": "fuentes/27623ed10435.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2112640390398439531",
+    "eco": {
+     "reacciones": 7,
+     "comentarios": 31,
+     "al": "2026-10-23"
+    }
+   },
+   "url": "https://x.com/Jorge_Barajas/status/2112651902752075820",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "JARDINES DE LA PATRIA|Zapopan|45120"
+   ],
+   "lugar": "Jardines de la Patria, Zapopan",
+   "cita": "Colonia Jardines de la Patria tienen 7 días seguidos sin agua. Dijeron que eran 2 días por semana.",
+   "dias": 7,
+   "eco": {
+    "reacciones": 6,
+    "comentarios": 0,
+    "al": "2026-10-23"
+   },
+   "vista": "fuentes/9a5ab6049804.jpg"
   }
  ]
 }

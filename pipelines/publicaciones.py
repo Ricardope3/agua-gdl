@@ -18,7 +18,7 @@
 Each entry quotes a news outlet ("medio") or neighbours ("vecinos") saying a colonia has no water, with
 its link, date and SIAPA colonias. Neighbours' posts count only with at least regla.reacciones reactions
 and regla.comentarios comments; news outlets count without. A neighbour's comment ("tipo": "comentario")
-counts by the post it is in ("en"), whose reactions and comments must meet the rule. A news story that
+counts by the post it is in ("en"; on X, the post a reply answers), whose reactions and comments must meet the rule. A news story that
 retells a post names it in "de", so the page counts both as one source. A private person is
 never named: "quien" is the outlet, the public group («Grupo «…»») or a colonia's own account («Cuenta de
 vecinos …»), or empty, and the post a comment is in ("en.quien") is an outlet some "medio" entry names,
@@ -156,7 +156,13 @@ def validate(doc):
             fail(f"{where}: tipo is absent or comentario")
         if tipo == "comentario":
             en = p.get("en") or {}
-            if not en.get("quien") or not str(en.get("url", "")).startswith("https://www.facebook.com/"):
+            # On X a comment is a reply: its own post, answering the one in en.
+            if red == "x":
+                if not en.get("quien") or not X_URL.match(str(en.get("url", ""))):
+                    fail(f"{where}: a reply names the post it answers (en.quien, en.url)")
+                elif not X_URL.match(url) or url == en["url"]:
+                    fail(f"{where}: a reply links its own post")
+            elif not en.get("quien") or not str(en.get("url", "")).startswith("https://www.facebook.com/"):
                 fail(f"{where}: a comment names the post it is in (en.quien, en.url)")
             elif not url.startswith(en["url"] + "?comment_id="):
                 fail(f"{where}: a comment links its post with ?comment_id=")
@@ -296,7 +302,7 @@ def fetch_images(doc, again=False):
             continue
         # A comment shows the picture of the post it was written under.
         url = p["en"]["url"] if p.get("tipo") == "comentario" else p["url"]
-        red = "facebook" if p.get("tipo") == "comentario" else p["red"]
+        red = "facebook" if p.get("tipo") == "comentario" and p["red"] != "x" else p["red"]
         name = f"fuentes/{hashlib.sha1(url.encode()).hexdigest()[:12]}.jpg"
         if (WEB / name).is_file():
             p["vista"] = name

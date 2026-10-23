@@ -1032,7 +1032,7 @@ if (window.top !== window.self) {
         if (p.headline) return el("a", { class: p.captura ? "ftile news" : "ftile news noimg", href: p.url, target: "_blank", rel: "noopener nofollow", tabindex: "-1", title: `${p.quien} · ${dateES(p.fecha)}: ${p.titular}` },
           p.captura ? el("img", { loading: "lazy", src: `/${p.captura}`, alt: "", decoding: "async" }) : null,
           el("span", { class: "nw" }, el("small", {}, `${p.quien} · ${dateES(p.fecha)}`), el("b", {}, p.titular)));
-        const who = p.tipo === "comentario" ? "Vecino en Facebook" : p.fuente === "medio" || p.quien ? p.quien : "Vecino";
+        const who = p.tipo === "comentario" ? (p.red === "x" ? "Vecino en X" : "Vecino en Facebook") : p.fuente === "medio" || p.quien ? p.quien : "Vecino";
         // Words without a picture look like what they are, a comment or a post, with the neighbour unnamed.
         // A comment always shows as the comment itself, under a strip of the post it answers.
         if (p.tipo === "comentario" || (!p.vista && p.fuente === "vecinos")) {
@@ -1040,7 +1040,7 @@ if (window.top !== window.self) {
           return el("a", { class: `ftile cmt ${fb ? "fb" : "xp"}${p.vista ? " ctx" : ""}`, href: p.url, target: "_blank", rel: "noopener nofollow", tabindex: "-1", title: `${who} · ${dateES(p.fecha)}: «${p.cita}»` },
             p.vista ? el("span", { class: "c-post" }, el("img", { loading: "lazy", src: `/${p.vista}`, alt: "", decoding: "async" }), el("small", {}, p.en ? p.en.quien : "")) : null,
             el("span", { class: "c-head" }, el("span", { class: "c-av", "aria-hidden": "true" }),
-              el("span", {}, el("b", {}, p.quien && !p.tipo ? p.quien : "Vecina o vecino"), el("small", {}, `${fb ? (p.tipo === "comentario" ? "Comentario en Facebook" : "Facebook") : "Publicación en X"} · ${dateES(p.fecha)}`))),
+              el("span", {}, el("b", {}, p.quien && !p.tipo ? p.quien : "Vecina o vecino"), el("small", {}, `${fb ? (p.tipo === "comentario" ? "Comentario en Facebook" : "Facebook") : p.tipo === "comentario" ? "Respuesta en X" : "Publicación en X"} · ${dateES(p.fecha)}`))),
             el("span", { class: "c-body" }, p.cita.length > 150 ? `${p.cita.slice(0, 148)}…` : p.cita),
             p.tipo === "comentario" && !p.vista ? el("span", { class: "c-en" }, `En la publicación de ${p.en.quien}`) : null,
             p.dias ? el("span", { class: "fdias" }, daysWord(p.dias)) : null);
@@ -1261,7 +1261,7 @@ if (window.top !== window.self) {
     function post(p) {
       const net = p.red === "x" ? "X" : p.red === "facebook" ? "Facebook" : "Nota";
       const eco = (x) => [plural(x.reacciones, "reacción", "reacciones"), plural(x.comentarios, "comentario", "comentarios"), x.compartidos ? `compartida ${plural(x.compartidos, "vez", "veces")}` : null].filter(Boolean).join(" · ");
-      const who = p.tipo === "comentario" ? `Comentario de una vecina o vecino en una publicación de ${p.en.quien}` : p.fuente === "medio" || p.quien ? p.quien : "Vecina o vecino";
+      const who = p.tipo === "comentario" ? `${p.red === "x" ? "Respuesta" : "Comentario"} de una vecina o vecino en una publicación de ${p.en.quien}` : p.fuente === "medio" || p.quien ? p.quien : "Vecina o vecino";
       const lines = [];
       if (p.tipo === "comentario") lines.push(`La publicación: ${eco(p.en.eco)}${p.eco && p.eco.reacciones ? `; el comentario: ${plural(p.eco.reacciones, "reacción", "reacciones")}` : ""}.`);
       else if (p.eco) lines.push(`${eco(p.eco)}, al ${dateES(p.eco.al)}.`);
@@ -1272,7 +1272,7 @@ if (window.top !== window.self) {
           p.fuente === "medio" ? el("span", { class: "tag" }, "Medio") : null,
           p.bloqueo ? el("span", { class: "tag alt" }, "Bloqueo") : null,
           `${who} · ${net} · ${dateES(p.fecha)} · `,
-          el("a", { href: p.url, rel: "noopener nofollow", target: "_blank" }, p.tipo === "comentario" ? "Ver el comentario" : p.red === "web" ? "Leer la nota" : "Ver la publicación")),
+          el("a", { href: p.url, rel: "noopener nofollow", target: "_blank" }, p.tipo === "comentario" ? (p.red === "x" ? "Ver la respuesta" : "Ver el comentario") : p.red === "web" ? "Leer la nota" : "Ver la publicación")),
         ...lines.map((t) => el("p", { class: "eco" }, t)));
     }
 
