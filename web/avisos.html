@@ -76,10 +76,6 @@ h2 { font-weight: 600; letter-spacing: -.02em }
 .lede { font-size: 1.05rem }
 .button { display: inline-flex; align-items: center; gap: 6px; background: var(--primary); color: var(--on-primary); font-weight: 500; font-size: .95rem; padding: 10px 18px; border: 1px solid transparent; border-radius: 8px; box-shadow: var(--shadow); transition: background .15s }
 .button:hover { background: var(--brand-deep) }
-.button.glow { border: 2px solid transparent; background: linear-gradient(var(--primary), var(--primary)) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100%; animation: glow 3s linear infinite; box-shadow: 0 0 8px rgb(139 92 246 / .3), 0 0 16px 2px rgb(14 165 233 / .22) }
-.button.glow:hover { background: linear-gradient(var(--brand-deep), var(--brand-deep)) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100% }
-@keyframes glow { from { background-position: 0 0, 0% 0 } to { background-position: 0 0, 150% 0 } }
-@media (prefers-reduced-motion: reduce) { .button.glow { animation: none } }
 .signup, .finder, .notice, .summary { border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; box-shadow: var(--shadow) }
 .card, .zone, .msg, .empty, .choice, .values li { box-shadow: var(--shadow) }
 .search input, .filter select { border: 1px solid var(--line); box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s }
@@ -129,6 +125,20 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 @media (min-width: 1100px) { .wrap:has(> header.top) { max-width: 1320px } }
 .wrap:has(> header.top) > :not(header.top) { max-width: 928px; margin-left: auto; margin-right: auto }
 </style>
+<style>/* Talavera */
+:root { --bg:#fbfaf6; --surface:#ffffff; --subtle:#e4eaf8; --fg:#14213d; --muted:#4f5b7a; --line:#c4cfe9;
+ --brand:#1d3f9e; --brand-deep:#142d75; --link:#1d3f9e; --primary:#1d3f9e; --on-primary:#fff; --ring:#1d3f9e55; --alarm:#1d3f9e; --mark:#f2c84b; --mark-fg:#14213d;
+ --font: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; --serif: Baskerville, "Baskerville Old Face", "Libre Baskerville", Georgia, serif; --shadow:none;
+ --tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M12 2l4 10-4 10-4-10z M2 12l10-4 10 4-10 4z' fill='%231d3f9e'/%3E%3C/svg%3E") }
+@media (prefers-color-scheme: dark) { :root { --bg:#0c1328; --surface:#121b36; --subtle:#1a2850; --fg:#eef1fb; --muted:#a6b1d6; --line:#2a3a6e; --brand:#7f9cf5; --brand-deep:#5b7be8; --link:#a9bdfa; --primary:#5b7be8; --alarm:#9fb4ff; --mark:#c9a12f; --tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M12 2l4 10-4 10-4-10z M2 12l10-4 10 4-10 4z' fill='%237f9cf5'/%3E%3C/svg%3E") } }
+header.top { position: relative; border-bottom: 0 } header.top::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 12px; background: var(--tile) center/12px 12px repeat-x; transition: opacity .2s }
+main h1, main h2 { font-weight: 400; font-style: italic }
+.vs-grid, .wall { border-top: 3px double var(--brand) }
+.card, .congreso, .signup, .finder, .summary, .boxes > * { border-radius: 4px !important; border: 3px double var(--brand) !important; box-shadow: none !important }
+.posts li { border-left: 3px double var(--brand) }
+.button { border-radius: 4px }
+footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-top: 34px }
+</style>
 <script src="/theme.js"></script>
 </head>
 <body>
@@ -155,7 +165,7 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
       <div class="signup">
         <h2 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#send"/></svg></span>Por Telegram</h2>
         <p>Un mensaje a las 8 p. m. dos días antes de los cortes de tu zona y otro la noche antes (una vez por tanda cuando los cortes van seguidos), con botones para decirnos si todavía tienes agua. Desde el chat también puedes cambiar de zona y contar cómo regresó el agua.</p>
-        <a class="button glow" href="https://t.me/AvisoAguaGDLbot?start=hola" rel="noopener"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#send"/></svg>Recibir avisos por Telegram</a>
+        <a class="button" href="https://t.me/AvisoAguaGDLbot?start=hola" rel="noopener"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#send"/></svg>Recibir avisos por Telegram</a>
         <p class="consent">Te suscribes cuando, en el chat, nos mandas tu ubicación, tu colonia o tu zona. Al hacerlo aceptas recibir de <strong>Agua GDL</strong> avisos dos días antes de los cortes de tu zona y la noche antes (una vez por tanda cuando los cortes van seguidos): de 2 a 4 por semana, y una pregunta más sobre si ya regresó el agua si nos dices que no tienes o que tienes poca. También te llegan las respuestas a lo que escribas. Para dejar de recibirlos, escribe <strong>BAJA</strong> cuando quieras. Guardamos tu identificador de usuario de Telegram, tu zona, cuándo te suscribiste, tus reportes y respuestas y el registro de los avisos enviados, nunca tu nombre ni tu teléfono; los detalles están en el <a href="/privacidad">aviso de privacidad</a>.</p>
         <p class="alt">¿No tienes Telegram? Es gratis: descárgalo en la tienda de apps de tu celular y vuelve a esta página. También puedes buscar <span class="number">@AvisoAguaGDLbot</span> en Telegram.</p>
       </div>

@@ -79,10 +79,6 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 .button .i { color: inherit }
 .button.alt { background: color-mix(in srgb, var(--brand) 12%, var(--surface)); color: var(--link); border: 1.5px solid var(--brand) }
 .button.alt:hover { background: color-mix(in srgb, var(--brand) 22%, var(--surface)) }
-.button.glow { border: 2px solid transparent; background: linear-gradient(color-mix(in srgb, var(--brand) 14%, var(--surface)), color-mix(in srgb, var(--brand) 14%, var(--surface))) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100%; animation: glow 3s linear infinite; box-shadow: 0 0 8px rgb(139 92 246 / .3), 0 0 16px 2px rgb(14 165 233 / .22) }
-.button.glow:hover { background: linear-gradient(color-mix(in srgb, var(--brand) 26%, var(--surface)), color-mix(in srgb, var(--brand) 26%, var(--surface))) padding-box, linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #10b981, #0ea5e9) border-box; background-size: 100% 100%, 300% 100% }
-@keyframes glow { from { background-position: 0 0, 0% 0 } to { background-position: 0 0, 150% 0 } }
-@media (prefers-reduced-motion: reduce) { .button.glow { animation: none } }
 .note { margin: 10px 0 0; font-size: .92rem; color: var(--muted); max-width: 80ch }
 .linklike { font: inherit; color: var(--link); background: none; border: 0; padding: 0; text-decoration: underline; text-underline-offset: 3px; cursor: pointer }
 
@@ -278,6 +274,20 @@ footer p { margin: 0 0 8px; max-width: 70ch }
 .wrap:has(> header.top) { max-width: 960px }
 @media (min-width: 1100px) { .wrap:has(> header.top) { max-width: 1320px } }
 </style>
+<style>/* Talavera */
+:root { --bg:#fbfaf6; --surface:#ffffff; --subtle:#e4eaf8; --fg:#14213d; --muted:#4f5b7a; --line:#c4cfe9;
+ --brand:#1d3f9e; --brand-deep:#142d75; --link:#1d3f9e; --primary:#1d3f9e; --on-primary:#fff; --ring:#1d3f9e55; --alarm:#1d3f9e; --mark:#f2c84b; --mark-fg:#14213d;
+ --font: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; --serif: Baskerville, "Baskerville Old Face", "Libre Baskerville", Georgia, serif; --shadow:none;
+ --tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M12 2l4 10-4 10-4-10z M2 12l10-4 10 4-10 4z' fill='%231d3f9e'/%3E%3C/svg%3E") }
+@media (prefers-color-scheme: dark) { :root { --bg:#0c1328; --surface:#121b36; --subtle:#1a2850; --fg:#eef1fb; --muted:#a6b1d6; --line:#2a3a6e; --brand:#7f9cf5; --brand-deep:#5b7be8; --link:#a9bdfa; --primary:#5b7be8; --alarm:#9fb4ff; --mark:#c9a12f; --tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M12 2l4 10-4 10-4-10z M2 12l10-4 10 4-10 4z' fill='%237f9cf5'/%3E%3C/svg%3E") } }
+header.top { position: relative; border-bottom: 0 } header.top::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 12px; background: var(--tile) center/12px 12px repeat-x; transition: opacity .2s }
+main h1, main h2 { font-weight: 400; font-style: italic }
+.vs-grid, .wall { border-top: 3px double var(--brand) }
+.card, .congreso, .signup, .finder, .summary, .boxes > * { border-radius: 4px !important; border: 3px double var(--brand) !important; box-shadow: none !important }
+.posts li { border-left: 3px double var(--brand) }
+.button { border-radius: 4px }
+footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-top: 34px }
+</style>
 <script src="/theme.js"></script>
 </head>
 <body>
@@ -313,7 +323,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
         <button class="button go" type="submit">Buscar</button>
       </form>
       <div class="locrow">
-        <button class="button alt glow" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Usar mi ubicación</button>
+        <button class="button alt" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Usar mi ubicación</button>
         <p><strong>Recomendado:</strong> usa el mapa de zonas del SIAPA, no los nombres. No guardamos tu ubicación. <a href="#lista">Por qué</a></p>
       </div>
       <p class="status" id="estado" aria-live="polite">Cargando el mapa de colonias…</p>
@@ -689,7 +699,6 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     }
   });
   clear.addEventListener("click", () => { input.value = ""; clear.hidden = true; cancelSuggestions(); closeSheet(); input.focus(); });
-  const quietLocate = () => locBtn.classList.remove("glow");
   let searchSeq = 0;
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -698,7 +707,6 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     cancelSuggestions();
     if (!q) { input.focus(); say("Escribe el nombre de tu colonia o su código postal."); return; }
     // Once someone searches by name, the location button stops calling for attention.
-    quietLocate();
     if (MUNICIPIOS[norm(q)]) { say(`${MUNICIPIOS[norm(q)]} tiene colonias en varias zonas de la rotación. Escribe el nombre de tu colonia o `, linkTo("usa tu ubicación", locate), "."); return; }
     runSearch(q);
   });
@@ -731,7 +739,6 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     input.value = optName(o);
     clear.hidden = false;
     cancelSuggestions();
-    quietLocate();
     if (!keepStatus) say("");
     if (phone()) input.blur();
     if (o.kind === "map") select(o.f);
@@ -1380,7 +1387,6 @@ footer p { margin: 0 0 8px; max-width: 70ch }
     if (preset) {
       input.value = preset;
       clear.hidden = false;
-      quietLocate();
       const m = params.get("m"), cp = params.get("cp");
       // With the municipio or postal code (links from /reportes and /mapa), the map's colonia opens at once.
       if (m || cp) {
