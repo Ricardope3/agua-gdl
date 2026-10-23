@@ -228,28 +228,6 @@
    "vista": "fuentes/008fb99889ac.jpg"
   },
   {
-   "fuente": "medio",
-   "red": "facebook",
-   "quien": "Las Noticias en GDL",
-   "url": "https://www.facebook.com/LasNoticiasGDL/posts/pfbid027wrkTF7PKrxqRNqArRgHZhpMovbkiTjZUs6mTjMEcMRpBNGHJ82frAQMveAzP1Jol",
-   "fecha": "2026-10-20",
-   "colonias": [
-    "CIUDAD GRANJA|Zapopan|45010",
-    "LOMAS DE POLANCO|Guadalajara|44960"
-   ],
-   "lugar": "Ciudad Granja (Zapopan) y Lomas de Polanco (Guadalajara)",
-   "cita": "Actualmente se reportan dos bloqueos importantes: uno en avenida Vallarta, a la altura de Ciudad Granja, en Zapopan, y otro en avenida 8 de Julio y Reyes Heroles, en la colonia Lomas de Polanco, entre Guadalajara y Tlaquepaque.",
-   "dias": null,
-   "bloqueo": true,
-   "eco": {
-    "reacciones": 205,
-    "comentarios": 8,
-    "compartidos": 14,
-    "al": "2026-10-20"
-   },
-   "vista": "fuentes/bd1b7265f9e2.jpg"
-  },
-  {
    "fuente": "vecinos",
    "red": "facebook",
    "quien": "Grupo «Colonia Circunvalación, Belisario, San Marcos y San Vicente»",
@@ -913,26 +891,6 @@
    "vista": "fuentes/3db829d13fff.jpg",
    "captura": "fuentes/3db829d13fff-t.jpg",
    "titular": "Reparte Manos Tapatías 600 mil litros de agua gratuita en Guadalajara"
-  },
-  {
-   "fuente": "medio",
-   "red": "x",
-   "quien": "Telediario Guadalajara",
-   "url": "https://x.com/TelediarioGDL/status/2112353564915798349",
-   "fecha": "2026-10-19",
-   "colonias": [
-    "POLANQUITO PONIENTE|Guadalajara|44969"
-   ],
-   "lugar": "Polanquito, Guadalajara",
-   "cita": "Se registra una manifestación para exigir el servicio de agua en la colonia Polanquito en Guadalajara; afirman que llevan 12 días sin el líquido.",
-   "dias": 12,
-   "bloqueo": true,
-   "eco": {
-    "reacciones": 9,
-    "comentarios": 0,
-    "al": "2026-10-22"
-   },
-   "vista": null
   },
   {
    "fuente": "medio",
@@ -3665,35 +3623,6 @@
      "al": "2026-10-21"
     }
    },
-   "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02rU3LwtY1mXV8C1Uvto9JVfRrEZ5yh2ggdu9BdDJecF9ikcKRKC1xWzGLWN7m8BREl?comment_id=4027705407535620",
-   "fecha": "2026-10-20",
-   "colonias": [
-    "JARDINES DE LA CRUZ|Guadalajara|44950"
-   ],
-   "lugar": "Jardines de la Cruz",
-   "cita": "Jardines de la cruz sin agua",
-   "dias": null,
-   "eco": {
-    "reacciones": 2,
-    "comentarios": 0,
-    "al": "2026-10-21"
-   }
-  },
-  {
-   "fuente": "vecinos",
-   "red": "facebook",
-   "tipo": "comentario",
-   "quien": "",
-   "en": {
-    "quien": "Jalisco ZMG",
-    "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02rU3LwtY1mXV8C1Uvto9JVfRrEZ5yh2ggdu9BdDJecF9ikcKRKC1xWzGLWN7m8BREl",
-    "eco": {
-     "reacciones": 194,
-     "comentarios": 326,
-     "compartidos": 5,
-     "al": "2026-10-21"
-    }
-   },
    "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02rU3LwtY1mXV8C1Uvto9JVfRrEZ5yh2ggdu9BdDJecF9ikcKRKC1xWzGLWN7m8BREl?comment_id=2171542360453103",
    "fecha": "2026-10-20",
    "colonias": [
@@ -4071,35 +4000,6 @@
      "al": "2026-10-21"
     }
    },
-   "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02rU3LwtY1mXV8C1Uvto9JVfRrEZ5yh2ggdu9BdDJecF9ikcKRKC1xWzGLWN7m8BREl?comment_id=1593581692572060",
-   "fecha": "2026-10-20",
-   "colonias": [
-    "CENTRO|San Pedro Tlaquepaque|45500"
-   ],
-   "lugar": "Tlaquepaque centro",
-   "cita": "Tlaquepaque centro sin agua",
-   "dias": null,
-   "eco": {
-    "reacciones": 1,
-    "comentarios": 0,
-    "al": "2026-10-21"
-   }
-  },
-  {
-   "fuente": "vecinos",
-   "red": "facebook",
-   "tipo": "comentario",
-   "quien": "",
-   "en": {
-    "quien": "Jalisco ZMG",
-    "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02rU3LwtY1mXV8C1Uvto9JVfRrEZ5yh2ggdu9BdDJecF9ikcKRKC1xWzGLWN7m8BREl",
-    "eco": {
-     "reacciones": 194,
-     "comentarios": 326,
-     "compartidos": 5,
-     "al": "2026-10-21"
-    }
-   },
    "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02rU3LwtY1mXV8C1Uvto9JVfRrEZ5yh2ggdu9BdDJecF9ikcKRKC1xWzGLWN7m8BREl?comment_id=2171857076831470",
    "fecha": "2026-10-21",
    "colonias": [
@@ -4397,35 +4297,6 @@
    ],
    "lugar": "El Campanario, Zapopan",
    "cita": "Aquí en Col. El Campanario en Zapopan no tenemos agua",
-   "dias": null,
-   "eco": {
-    "reacciones": 0,
-    "comentarios": 0,
-    "al": "2026-10-21"
-   }
-  },
-  {
-   "fuente": "vecinos",
-   "red": "facebook",
-   "tipo": "comentario",
-   "quien": "",
-   "en": {
-    "quien": "Jalisco ZMG",
-    "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02rU3LwtY1mXV8C1Uvto9JVfRrEZ5yh2ggdu9BdDJecF9ikcKRKC1xWzGLWN7m8BREl",
-    "eco": {
-     "reacciones": 194,
-     "comentarios": 326,
-     "compartidos": 5,
-     "al": "2026-10-21"
-    }
-   },
-   "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02rU3LwtY1mXV8C1Uvto9JVfRrEZ5yh2ggdu9BdDJecF9ikcKRKC1xWzGLWN7m8BREl?comment_id=1014692288329002",
-   "fecha": "2026-10-20",
-   "colonias": [
-    "GUADALUPE INN|Zapopan|45037"
-   ],
-   "lugar": "Guadalupe Inn",
-   "cita": "Guadalupe Inn sin agua",
    "dias": null,
    "eco": {
     "reacciones": 0,
@@ -10920,36 +10791,6 @@
      "al": "2026-10-21"
     }
    },
-   "url": "https://www.facebook.com/elinformador/posts/pfbid029YoC6Bfo3pdKqxVpAgqqajtaWLLxwKLvPSBcSyTp6mqTgsXw32ki8rQvkwYyQmPnl?comment_id=1585143559417666",
-   "fecha": "2026-10-16",
-   "colonias": [
-    "LOMAS DEL PARADERO|Guadalajara|44840"
-   ],
-   "lugar": "Lomas del Paradero, Guadalajara",
-   "cita": "Lomas del paradero NO HAY AGUA !!",
-   "dias": null,
-   "eco": {
-    "reacciones": 0,
-    "comentarios": 0,
-    "al": "2026-10-21"
-   },
-   "vista": "fuentes/494e342fac11.jpg"
-  },
-  {
-   "fuente": "vecinos",
-   "red": "facebook",
-   "tipo": "comentario",
-   "quien": "",
-   "en": {
-    "quien": "El Informador",
-    "url": "https://www.facebook.com/elinformador/posts/pfbid029YoC6Bfo3pdKqxVpAgqqajtaWLLxwKLvPSBcSyTp6mqTgsXw32ki8rQvkwYyQmPnl",
-    "eco": {
-     "reacciones": 280,
-     "comentarios": 1173,
-     "compartidos": 26,
-     "al": "2026-10-21"
-    }
-   },
    "url": "https://www.facebook.com/elinformador/posts/pfbid029YoC6Bfo3pdKqxVpAgqqajtaWLLxwKLvPSBcSyTp6mqTgsXw32ki8rQvkwYyQmPnl?comment_id=4092696810866516",
    "fecha": "2026-10-20",
    "colonias": [
@@ -17338,23 +17179,6 @@
   {
    "fuente": "medio",
    "red": "web",
-   "quien": "Telediario Guadalajara",
-   "url": "https://www.youtube.com/watch?v=bO72nVjihw8",
-   "fecha": "2026-10-20",
-   "colonias": [
-    "POLANQUITO PONIENTE|Guadalajara|44969"
-   ],
-   "lugar": "Av. 8 de Julio y Reyes Heroles, Guadalajara",
-   "cita": "Decenas de vecinos de la colonia Polanquito y alrededores bloquearon la noche de este lunes la avenida 8 de Julio, al cruce con Reyes Heroles, en Guadalajara para exigir el restablecimiento del suministro de agua potable. Los manifestantes denunciaron que llevan hasta 11 días sin servicio y que cuando llega a salir un poco de agua por las tuberías, presuntamente está contaminada.",
-   "dias": 11,
-   "bloqueo": true,
-   "eco": null,
-   "captura": null,
-   "titular": "Vecinos bloquearon la avenida 8 de Julio por falta de agua en Guadalajara"
-  },
-  {
-   "fuente": "medio",
-   "red": "web",
    "quien": "N+",
    "url": "https://www.nmas.com.mx/jalisco/sociedad/vecinos-denuncian-incumplimiento-de-tandeos-en-jalisco/",
    "fecha": "2026-10-21",
@@ -17536,26 +17360,6 @@
   {
    "fuente": "medio",
    "red": "web",
-   "quien": "Tráfico ZMG",
-   "url": "https://traficozmg.com/2026/10/por-segundo-dia-vecinos-se-manifiestan-por-falta-de-agua-en-la-zona-metropolitana-de-guadalajara/",
-   "fecha": "2026-10-20",
-   "colonias": [
-    "DR VALENTIN GOMEZ FARIAS|Guadalajara|44940",
-    "POLANCO|Guadalajara|44969",
-    "POLANQUITO PONIENTE|Guadalajara|44969",
-    "BALCONES DEL CUATRO|Guadalajara|44984"
-   ],
-   "lugar": "Av. 8 de Julio y Jesús Reyes Heroles, Guadalajara",
-   "cita": "En el cruce de avenida 8 de Julio y Jesús Reyes Heroles, habitantes de las colonias Dr. Valentín Gómez Farías, Polanco, Polanquito y Balcones del Cuatro se manifestaron para denunciar las dificultades que enfrentan ante la falta de agua en sus hogares.",
-   "dias": null,
-   "eco": null,
-   "vista": "fuentes/7b7ccf35daf6.jpg",
-   "captura": "fuentes/7b7ccf35daf6-t.jpg",
-   "titular": "Por segundo día, vecinos se manifiestan por falta de agua en la Zona Metropolitana de Guadalajara - Tráfico ZMG"
-  },
-  {
-   "fuente": "medio",
-   "red": "web",
    "quien": "El Heraldo de México",
    "url": "https://www.youtube.com/watch?v=6HkEmkigk1s",
    "fecha": "2026-10-21",
@@ -17568,24 +17372,6 @@
    "eco": null,
    "captura": null,
    "titular": "¡Gobierno federal rescata a Jalisco! Claudia Sheinbaum dará 13 mmdp para atender agua contaminada"
-  },
-  {
-   "fuente": "medio",
-   "red": "web",
-   "quien": "Tráfico ZMG",
-   "url": "https://traficozmg.com/2026/10/por-segundo-dia-vecinos-se-manifiestan-por-falta-de-agua-en-la-zona-metropolitana-de-guadalajara/",
-   "fecha": "2026-10-20",
-   "colonias": [
-    "CIUDAD GRANJA|Zapopan|45010"
-   ],
-   "lugar": "Av. Vallarta, glorieta Los Pirules, Zapopan",
-   "cita": "En otro punto de la ciudad, vecinos de la colonia Ciudad Granja volvieron a manifestarse sobre avenida Vallarta, a la altura de la glorieta de Los Pirules.",
-   "dias": null,
-   "bloqueo": true,
-   "eco": null,
-   "vista": "fuentes/7b7ccf35daf6.jpg",
-   "captura": "fuentes/7b7ccf35daf6-t.jpg",
-   "titular": "Por segundo día, vecinos se manifiestan por falta de agua en la Zona Metropolitana de Guadalajara - Tráfico ZMG"
   },
   {
    "fuente": "medio",
@@ -17817,47 +17603,6 @@
    "dias": 18,
    "eco": null,
    "vista": "fuentes/a28f4971a3d2.jpg"
-  },
-  {
-   "fuente": "medio",
-   "red": "facebook",
-   "quien": "Meganoticias",
-   "url": "https://www.facebook.com/MeganoticiasGdl/videos/941764162067352/",
-   "fecha": "2026-10-21",
-   "colonias": [
-    "CIUDAD GRANJA|Zapopan|45010"
-   ],
-   "lugar": "Ciudad Granja, Zapopan (a la altura de Ciudad Judicial)",
-   "cita": "Denuncian que tienen más de 12 días sin suministro, señalan que no se están respetando las fechas de los tandeos.",
-   "dias": 12,
-   "bloqueo": true,
-   "eco": {
-    "reacciones": 83,
-    "comentarios": 5,
-    "compartidos": 10,
-    "al": "2026-10-21"
-   },
-   "vista": "fuentes/d5a0de150df3.jpg"
-  },
-  {
-   "fuente": "medio",
-   "red": "facebook",
-   "quien": "Telediario Guadalajara",
-   "url": "https://www.facebook.com/reel/2150513105853524/",
-   "fecha": "2026-10-19",
-   "colonias": [
-    "POLANQUITO PONIENTE|Guadalajara|44969"
-   ],
-   "lugar": "Polanquito, Guadalajara",
-   "cita": "Continúa la protesta para exigir el suministro de agua en la colonia Polanquito en Guadalajara; señalan que desde hace 11 días no han recibido el líquido en sus casas.",
-   "dias": 11,
-   "eco": {
-    "reacciones": 340,
-    "comentarios": 35,
-    "compartidos": 40,
-    "al": "2026-10-21"
-   },
-   "vista": "fuentes/68e64a1ba9ff.jpg"
   },
   {
    "fuente": "vecinos",

@@ -39,6 +39,7 @@ import re
 import string
 import sys
 import time
+import unicodedata
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -89,6 +90,7 @@ def validate(doc):
     if not (count(rule.get("reacciones")) and count(rule.get("comentarios"))):
         fail("regla: needs reacciones and comentarios")
     seen = set()
+    said = set()
     pages = PAGINAS | {p["quien"] for p in doc.get("publicaciones") or [] if p.get("fuente") == "medio" and isinstance(p.get("quien"), str)}
     for i, p in enumerate(doc.get("publicaciones") or []):
         where = f"publicaciones[{i}] {p.get('url', '')}"
@@ -108,6 +110,13 @@ def validate(doc):
         if (url, p.get("cita")) in seen:
             fail(f"{where}: listed twice")
         seen.add((url, p.get("cita")))
+        # A neighbour who pastes the same words under several posts is one report.
+        if p.get("fuente") == "vecinos" and isinstance(p.get("cita"), str):
+            words = "".join(c for c in unicodedata.normalize("NFD", p["cita"].lower()) if c.isalnum())
+            for k in p.get("colonias") or []:
+                if (words, k) in said:
+                    fail(f"{where}: the same words for {k} are already in another entry")
+                said.add((words, k))
         if "de" in p and not (p.get("fuente") == "medio" and str(p["de"]).startswith("https://")):
             fail(f"{where}: de is the https post a news story retells")
         quien = p.get("quien")
