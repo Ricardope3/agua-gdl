@@ -22381,6 +22381,25 @@
     "al": "2026-10-23"
    },
    "vista": "fuentes/9a5ab6049804.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "Meganoticias",
+   "url": "https://www.facebook.com/reel/2331509790722883",
+   "fecha": "2026-10-22",
+   "colonias": [
+    "VILLA HERMOSA|Guadalajara|44970"
+   ],
+   "lugar": "Villa Hermosa, Guadalajara",
+   "cita": "Vecinos de la colonia Villa Hermosa en Guadalajara denuncian que no cuentan con agua desde hace 15 dias.",
+   "dias": 15,
+   "eco": {
+    "reacciones": 96,
+    "comentarios": 46,
+    "compartidos": 28,
+    "al": "2026-10-23"
+   }
   }
  ]
 }
