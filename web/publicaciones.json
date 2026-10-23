@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-10-22",
+ "actualizado": "2026-10-23",
  "desde": "2026-10-12",
  "regla": {
   "reacciones": 5,
@@ -22159,6 +22159,76 @@
     "al": "2026-10-22"
    },
    "vista": "fuentes/9462eb1065b3.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "UDG TV",
+   "url": "https://udgtv.com/noticias/preparan-mas-protestas-por-falta-de-agua-en-gdl-y-zapopan/335503",
+   "fecha": "2026-10-23",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700",
+    "SAN ANDRES|Guadalajara|44810",
+    "TALPITA|Guadalajara|44710"
+   ],
+   "lugar": "Oblatos, San Andrés y Talpita, Guadalajara",
+   "cita": "Para el sábado 24 de octubre, a las 12:00 horas, habitantes de colonias de Guadalajara convocaron a un cierre de la avenida Javier Mina para reclamar que llevan 15 días sin suministro de agua, según la información difundida en su cartel. La convocatoria invita a residentes de Oblatos, San Andrés, Talpita y colonias aledañas a sumarse a la manifestación",
+   "dias": 15,
+   "eco": null,
+   "vista": "fuentes/b18475e2e463.jpg",
+   "captura": "fuentes/b18475e2e463-t.jpg",
+   "titular": "Preparan más protestas por falta de agua en Guadalajara y Zapopan durante el fin de semana"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "N+",
+   "url": "https://www.nmas.com.mx/jalisco/sociedad/ojo-de-agua-ayuda-a-habitantes-de-guadalajara-a-sobrevivir-a-tandeos/",
+   "fecha": "2026-10-23",
+   "colonias": [
+    "LOS COLORINES|Guadalajara|44985"
+   ],
+   "lugar": "Los Colorines, Guadalajara",
+   "cita": "Ante los tandeos anticipados y la falta de suministro, vecinos de colonias como Los Colorines y Polanquito acuden a un nacimiento de agua sobre la avenida Reyes Heroles para llenar bidones",
+   "dias": null,
+   "eco": null,
+   "vista": "fuentes/f36807334dcd.jpg",
+   "captura": "fuentes/f36807334dcd-t.jpg",
+   "titular": "Ojo de Agua Ayuda a Habitantes de Guadalajara a Sobrevivir a Tandeos | N+"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Milenio",
+   "url": "https://www.milenio.com/comunidad/agua-guadalajara-vecinos-exigen-soluciones-bloquean-avenida",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "DR VALENTIN GOMEZ FARIAS|Guadalajara|44940"
+   ],
+   "lugar": "Gómez Farías, Guadalajara",
+   "cita": "Los vecinos reprochan que también hay problemas de abastecimiento en colonias como Gómez Farías, Francisco Villa y Polanco.",
+   "dias": null,
+   "eco": null,
+   "vista": "fuentes/6348af3a83df.jpg",
+   "captura": "fuentes/6348af3a83df-t.jpg",
+   "titular": "“No queremos pipas, queremos soluciones”; vecinos exigen agua"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Mural",
+   "url": "https://www.mural.com.mx/piden-pipas-a-diario-ante-escasez-de-agua/ar3300413",
+   "fecha": "2026-10-23",
+   "colonias": [
+    "JARDINES DE GUADALUPE|Zapopan|45030"
+   ],
+   "lugar": "Jardines de Guadalupe, Zapopan",
+   "cita": "Ni limpia, ni sin olor, ni con baja presión reciben agua en la Colonia Jardines de Guadalupe, en Zapopan, donde desde hace dos semanas se cortó el suministro por completo y hogares y negocios sobreviven con el servicio de pipas.",
+   "dias": 14,
+   "eco": null,
+   "vista": "fuentes/4e28b7419cdb.jpg",
+   "captura": "fuentes/4e28b7419cdb-t.jpg",
+   "titular": "Piden pipas a diario ante escasez de agua"
   }
  ]
 }
