@@ -301,14 +301,21 @@ html, body { overflow-x: clip }
 .cartel .ilus { width: min(60vw, 240px); height: auto; justify-self: center }
 @media (min-width: 760px) { .cartel { grid-template-columns: 1fr auto } .cartel .ilus { width: 240px } }
 </style>
-<style>/* variante v5: Pizarra */
-:root { --bg:#eef1f4; --surface:#ffffff; --subtle:#e2e7ed; --fg:#1d2733; --muted:#5d6b7a; --line:#c9d2dc;
- --brand:#0891b2; --brand-deep:#0e7490; --link:#0e7490; --primary:#1d2733; --on-primary:#fff; --ring:#0891b255; --alarm:#db2777; --mark:#a5f3fc; --mark-fg:#0b2730;
- --font: "Gill Sans", "Gill Sans MT", Futura, "Trebuchet MS", sans-serif; --serif: Futura, "Century Gothic", "Gill Sans", sans-serif; --shadow:none }
-@media (prefers-color-scheme: dark) { :root { --bg:#151b22; --surface:#1c242e; --subtle:#253040; --fg:#e7edf3; --muted:#9aa9b8; --line:#33404f; --brand:#22d3ee; --brand-deep:#06b6d4; --link:#67e8f9; --primary:#22d3ee; --on-primary:#0b1a20; --alarm:#f472b6; --mark:#155e75; --mark-fg:#ecfeff } }
-main h1, main h2 { font-weight: 500; letter-spacing: 0 }
-.card, .congreso, .signup, .finder, .summary, .facts li, .values li, .promesa, .posts li, .vs-facts > * { border-radius: 6px !important; box-shadow: none !important; border: 1px solid var(--line) !important; border-top: 4px solid var(--brand) !important }
-.button { border-radius: 4px; letter-spacing: .04em }
+<style>/* variante v5: Hielo */
+:root { --bg:#f7fbfe; --surface:#ffffff; --subtle:#eaf4fc; --fg:#1b3a52; --muted:#6c8aa1; --line:#dbe9f4;
+ --brand:#4a9fd8; --brand-deep:#2f80bd; --link:#2f80bd; --primary:#2f80bd; --on-primary:#fff; --ring:#4a9fd855; --alarm:#2f80bd; --mark:#d6ecfb; --mark-fg:#1b3a52;
+ --font: "Helvetica Neue", Helvetica, Arial, sans-serif; --serif: "Helvetica Neue", Helvetica, Arial, sans-serif; --shadow:none }
+@media (prefers-color-scheme: dark) { :root { --bg:#0a1620; --surface:#0f1f2c; --subtle:#14293a; --fg:#e3f1fb; --muted:#8eabc2; --line:#1b3346; --brand:#7cc4f4; --brand-deep:#4a9fd8; --link:#a6d8fa; --primary:#4a9fd8; --alarm:#7cc4f4; --mark:#1d4766; --mark-fg:#e3f1fb } }
+body { font-weight: 300 }
+main h1, main h2 { font-weight: 200; letter-spacing: -.03em }
+main h1 { font-size: clamp(2.2rem, 5vw, 3.6rem) }
+.vs-facts strong { font-weight: 200 }
+.vs-grid, .wall, section { border-top: 1px solid var(--line); border-bottom-color: var(--line) }
+.mapframe-box { border-block-color: var(--line) }
+.card, .congreso, .signup, .finder, .summary, .boxes > * { border-radius: 2px !important; border: 1px solid var(--line) !important; box-shadow: none !important }
+.posts li { border-left: 1px solid var(--brand) }
+.button { border-radius: 2px; font-weight: 400; letter-spacing: .05em }
+strong, b { font-weight: 600 }
 
 .vbar { position: fixed; left: 8px; bottom: 8px; z-index: 50; background: var(--fg); color: var(--bg); font: 12px/1.4 system-ui, sans-serif; padding: 6px 10px; border-radius: 6px; max-width: calc(100% - 16px) }
 .vbar a { color: inherit; opacity: .7 } .vbar a[aria-current] { opacity: 1; font-weight: 700 }
@@ -550,6 +557,6 @@ main h1, main h2 { font-weight: 500; letter-spacing: 0 }
   }, 3000);
 })();
 </script>
-<nav class="vbar"><a href="/">actual</a> · <a href="/v1">v1 Periódico</a> · <a href="/v2">v2 Archivo</a> · <a href="/v3">v3 Cristal</a> · <a href="/v4">v4 Suizo</a> · <a href="/v5" aria-current=page>v5 Pizarra</a></nav>
+<nav class="vbar"><a href="/">actual</a> · <a href="/v1">v1 Periódico</a> · <a href="/v2">v2 Glaciar</a> · <a href="/v3">v3 Marino</a> · <a href="/v4">v4 Talavera</a> · <a href="/v5" aria-current=page>v5 Hielo</a></nav>
 </body>
 </html>

@@ -301,15 +301,34 @@ html, body { overflow-x: clip }
 .cartel .ilus { width: min(60vw, 240px); height: auto; justify-self: center }
 @media (min-width: 760px) { .cartel { grid-template-columns: 1fr auto } .cartel .ilus { width: 240px } }
 </style>
-<style>/* variante v2: Archivo */
-:root { --bg:#efe6d2; --surface:#f7f0df; --subtle:#e4d6b8; --fg:#2b2418; --muted:#5e5340; --line:#a8977a;
- --brand:#a3201a; --brand-deep:#7e1712; --link:#7e1712; --primary:#2b2418; --on-primary:#f7f0df; --ring:#a3201a55; --alarm:#a3201a; --mark:#e8c766;
- --font: "American Typewriter", "Courier Prime", "Courier New", monospace; --serif: "American Typewriter", "Courier New", monospace; --shadow: none }
-@media (prefers-color-scheme: dark) { :root { --bg:#1b1812; --surface:#24201a; --subtle:#332c20; --fg:#ece2cc; --muted:#b5a687; --line:#5a4e3a; --brand:#e0574d; --brand-deep:#c2443b; --link:#f08a80; --primary:#ece2cc; --on-primary:#1b1812; --alarm:#f0786e } }
-.card, .congreso, .signup, .finder, .summary, .facts li, .values li, .promesa, .posts li, .vs-facts > * { border-radius: 2px !important; box-shadow: none !important; border: 1.5px dashed var(--line) !important }
-section { border-top: 1.5px dashed var(--line) }
-main h1 { color: var(--brand) }
-.button { border-radius: 2px; border: 2px solid currentColor; text-transform: uppercase; letter-spacing: .1em; font-size: .8rem }
+<style>/* variante v2: Glaciar */
+:root { --bg:#f3f7fa; --surface:#ffffff; --subtle:#d6e9f6; --fg:#153a5c; --muted:#5a7690; --line:#cfe0ec;
+ --brand:#3a7fb8; --brand-deep:#1f5c91; --link:#1f5c91; --primary:#1f5c91; --on-primary:#fff; --ring:#3a7fb855; --alarm:#e2574c; --mark:#cfe5f6; --mark-fg:#153a5c;
+ --font: "Helvetica Neue", Helvetica, Arial, sans-serif; --serif: Didot, "Bodoni 72", "Bodoni MT", "Playfair Display", Georgia, serif; --shadow:none; --deep:#1f5f99 }
+@media (prefers-color-scheme: dark) { :root { --bg:#0b1c2c; --surface:#102538; --subtle:#163552; --fg:#e4f0fa; --muted:#93b2cc; --line:#1e3d58; --brand:#6fb1e6; --brand-deep:#3a7fb8; --link:#9fcdf1; --primary:#3a7fb8; --mark:#1f4e79; --mark-fg:#e4f0fa; --deep:#071320 } }
+body { background: var(--deep) }
+.wrap { background: var(--bg); border-radius: 22px; margin-top: 16px; margin-bottom: 16px; max-width: calc(100% - 64px) }
+@media (max-width: 560px) { .wrap { max-width: calc(100% - 16px); margin-top: 8px } }
+@media (min-width: 1100px) { .wrap { max-width: 1320px } }
+header.top { background: var(--bg); border-bottom: 0; border-radius: 22px 22px 0 0 }
+main h1, main h2 { font-weight: 400; letter-spacing: -.03em }
+.cartel { background: var(--brand); color: #fff; border-radius: 14px; padding: 28px 28px }
+.cartel h1 { color: #fff; font-size: clamp(2.2rem, 5vw, 3.4rem) }
+.cartel .kicker { color: #cfe5f6 }
+.cartel .ilus { background: #fff; border-radius: 12px; padding: 10px }
+.mapframe-box { border: 0; border-radius: 14px; width: 100%; margin-left: 0 }
+.vs-grid { border: 0; gap: 12px }
+.vs-col { border-radius: 12px; padding: 24px !important; border: 0 !important }
+.vs-grid > :first-child { background: var(--subtle) }
+.vs-grid > :last-child { background: var(--surface); border: 1px solid var(--line) !important }
+.vs-col h3, .wall h4 { color: var(--brand) }
+.vs-facts strong { font-weight: 400; color: var(--brand-deep) }
+.kicker { color: var(--brand) }
+.wall, section { border-top: 0 }
+.posts li { border-left-color: var(--brand) }
+.card, .congreso, .signup, .finder, .summary, .boxes > * { border-radius: 12px !important; border: 0 !important; box-shadow: none !important; background: var(--subtle) }
+.congreso { background: var(--brand-deep) !important; color: #fff } .congreso p, .congreso h2 { color: #e4f0fa } .congreso .facts li { background: rgb(255 255 255 / .1) } .congreso .facts strong { color: #fff } .congreso .facts span { color: #cfe5f6 }
+.button { border-radius: 999px; font-weight: 500 }
 
 .vbar { position: fixed; left: 8px; bottom: 8px; z-index: 50; background: var(--fg); color: var(--bg); font: 12px/1.4 system-ui, sans-serif; padding: 6px 10px; border-radius: 6px; max-width: calc(100% - 16px) }
 .vbar a { color: inherit; opacity: .7 } .vbar a[aria-current] { opacity: 1; font-weight: 700 }
@@ -551,6 +570,6 @@ main h1 { color: var(--brand) }
   }, 3000);
 })();
 </script>
-<nav class="vbar"><a href="/">actual</a> · <a href="/v1">v1 Periódico</a> · <a href="/v2" aria-current=page>v2 Archivo</a> · <a href="/v3">v3 Cristal</a> · <a href="/v4">v4 Suizo</a> · <a href="/v5">v5 Pizarra</a></nav>
+<nav class="vbar"><a href="/">actual</a> · <a href="/v1">v1 Periódico</a> · <a href="/v2" aria-current=page>v2 Glaciar</a> · <a href="/v3">v3 Marino</a> · <a href="/v4">v4 Talavera</a> · <a href="/v5">v5 Hielo</a></nav>
 </body>
 </html>
