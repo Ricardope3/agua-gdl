@@ -91,7 +91,7 @@ Agua GDL sends free Telegram reminders before each block of cuts of SIAPA's wate
 
 ### Brand assets (repo root)
 
-The logo is a blue water drop (`#017CDC`, shadow `#015198`) with "GDL" in white. `aguagdl.svg` (6 KB vector, with its white background) is for anything drawn in a page; `web/logo.svg` is its transparent cut. The pages' header shows instead `web/logo.png` (142×176, about 34 KB), cropped and shrunk from the illustration `aguagdl_logo.png` (2480×3508, transparent) with `sips`. `aguagdl_favicon/` holds the favicon set and `site.webmanifest` (root paths); `web/` serves `favicon.ico` (16, 32, 48), `apple-touch-icon.png`, `android-chrome-*` and the manifest. Use `android-chrome-512x512.png` for the Telegram profile photo and social accounts. The 1254×1254 raster (`aguagdl.png`, about 1 MB) is in git history and `~/agua-gdl-notes/`; never serve a 1 MB raster on the web.
+The logo is a blue water drop (`#017CDC`, shadow `#015198`) with "GDL" in white. `aguagdl.svg` (6 KB vector, with its white background) is for anything drawn in a page; `web/logo.svg` is its transparent cut. `aguagdl_favicon/` holds the favicon set and `site.webmanifest` (root paths); `web/` serves `favicon.ico` (16, 32, 48), `apple-touch-icon.png`, `android-chrome-*` and the manifest. Use `android-chrome-512x512.png` for the Telegram profile photo and social accounts. The 1254×1254 raster (`aguagdl.png`, about 1 MB) is in git history and `~/agua-gdl-notes/`; never serve a 1 MB raster on the web.
 
 ## Commands
 
