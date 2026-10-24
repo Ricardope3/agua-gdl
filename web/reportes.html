@@ -469,6 +469,13 @@ path.nueva { animation: nueva 1.4s ease-out both; pointer-events: none }
   .stage .card .ev-src { font-size: .82rem }
   .stage .card .c-acc { margin-left: 16px; margin-right: 16px }
 }
+@media (max-width: 760px) {
+  .stage .card .posts li { padding: 0 0 10px; overflow: hidden }
+  .stage .card .posts li > :not(.c-img) { margin-left: 12px; margin-right: 12px }
+  .c-img { display: block; width: 100%; height: 96px; object-fit: cover; margin-bottom: 8px; background: var(--subtle) }
+  .stage .card .posts li.sin-img { padding-top: 10px }
+  .stage .card .posts q { -webkit-line-clamp: 2 }
+}
 </style>
 <style>/* Talavera */
 :root { --bg:#fbfaf6; --surface:#ffffff; --subtle:#e4eaf8; --fg:#14213d; --muted:#4f5b7a; --line:#c4cfe9;
@@ -528,6 +535,44 @@ if (window.top !== window.self) {
   window.__pad = (s) => ({ paddingTopLeft: [40, 90], paddingBottomRight: [40, Math.round(s.y * 0.6)] });
   // The carousel holds the posts, so the map shows no tiles of them around the colonia.
   window.__tile = [0, 0];
+
+  const slides = (card, e) => [...card.querySelectorAll(".posts li")].map((li, i) => [li, e.posts[i]]);
+  function dots(card, n, label) {
+    const list = card.querySelector(".posts");
+    if (!list || n < 2) return;
+    const row = document.createElement("div");
+    row.className = "c-dots";
+    const count = document.createElement("span");
+    const prev = document.createElement("button"), next = document.createElement("button");
+    prev.type = next.type = "button"; prev.textContent = "‹"; next.textContent = "›";
+    prev.setAttribute("aria-label", "Anterior"); next.setAttribute("aria-label", "Siguiente");
+    const step = () => list.children[0].getBoundingClientRect().width + 10;
+    prev.onclick = () => list.scrollBy({ left: -step(), behavior: "smooth" });
+    next.onclick = () => list.scrollBy({ left: step(), behavior: "smooth" });
+    const marks = label ? null : Array.from({ length: Math.min(n, 12) }, () => document.createElement("i"));
+    const at = () => {
+      const i = Math.min(n - 1, Math.round(list.scrollLeft / step()));
+      if (marks) marks.forEach((m, j) => m.classList.toggle("on", j === Math.min(i, marks.length - 1)));
+      else count.textContent = `${i + 1} de ${n}`;
+      prev.disabled = i === 0; next.disabled = i === n - 1;
+    };
+    list.addEventListener("scroll", at, { passive: true });
+    if (marks) row.append(prev, ...marks, next); else row.append(prev, count, next);
+    list.after(row);
+    at();
+  }
+
+  window.__ficha = (card, e) => {
+    acciones(card, e, false);
+    if (!e) return;
+    for (const [li, p] of slides(card, e)) {
+      const src = p.vista || p.captura || (p.en && p.en.vista);
+      if (!src) { li.classList.add("sin-img"); continue; }
+      const img = document.createElement("img");
+      img.className = "c-img"; img.src = `/${src}`; img.alt = ""; img.loading = "lazy"; img.decoding = "async";
+      li.prepend(img);
+    }
+  };
 </script>
 <div class="wrap">
   <header class="top">

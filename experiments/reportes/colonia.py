@@ -215,6 +215,9 @@ V = {
 NAMES = {k: v[0] for k, v in V.items()}
 
 
+DEFAULT = "c1"
+
+
 def sub(html, old, new):
     assert html.count(old) == 1, old
     return html.replace(old, new)
@@ -271,8 +274,8 @@ def main():
     for v in NAMES:
         (WEB / f"{v}.html").write_text(build(src, v))
         print(f"web/{v}.html")
-    # /reportes itself takes the carousel on phones.
-    (WEB / "reportes.html").write_text(build(src, None, bar=False))
+    # /reportes itself takes this variant's carousel on phones.
+    (WEB / "reportes.html").write_text(build(src, DEFAULT, bar=False))
     print("web/reportes.html")
 
 
