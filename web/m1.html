@@ -629,7 +629,7 @@ aguaM.datos.then((d) => {
   let touched = false;
   for (const ev of ["wheel", "touchstart", "keydown", "pointerdown"]) addEventListener(ev, () => { touched = true; }, { passive: true, once: true });
   setTimeout(() => {
-    if (touched || scrollY > 40 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (touched || scrollY > 40 || "quieto" in document.documentElement.dataset || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     // A variant can name what to scroll to instead (data-ancla); the header only covers it while it sticks.
     const to = [...document.querySelectorAll("[data-ancla]")].find((e) => e.offsetParent) || box;
     if (!to.offsetParent) return;

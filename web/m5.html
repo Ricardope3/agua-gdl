@@ -399,7 +399,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
       </div>
       <img class="ilus" src="/img/ilustracion.png" alt="Caricatura de Pablo Lemus con la mano en una llave de la que cae una gota, sobre la Catedral de Guadalajara y una multitud que protesta" width="517" height="640">
     </div>
-    <section class="m-only m5" aria-label="Las zonas del SIAPA en el mapa" data-ancla>
+    <section class="m-only m5" aria-label="Las zonas del SIAPA en el mapa">
   <div class="m5-track" id="m5-track"><article class="m5-card"><div class="m5-map"></div></article></div>
   <div class="m5-dots" id="m5-dots" aria-hidden="true"></div>
 </section>
@@ -614,6 +614,8 @@ const aguaM = (() => {
 })();
 aguaM.frame('@media (max-width: 760px) { #resumen-mapa, #linea { display: none !important } }');
 
+// m5 stays where the visitor lands: no scroll down to the map.
+document.documentElement.dataset.quieto = "";
 if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.datos]).then(([topo, d]) => {
   const g = aguaMapa.decode(topo), pubs = new Map(d.cols.map((c) => [c.k, c]));
   const SEV = (n) => n >= 14 ? 4 : n >= 7 ? 3 : n >= 3 ? 2 : 1;
@@ -714,7 +716,7 @@ track.addEventListener("scroll", mark, { passive: true }); mark();
   let touched = false;
   for (const ev of ["wheel", "touchstart", "keydown", "pointerdown"]) addEventListener(ev, () => { touched = true; }, { passive: true, once: true });
   setTimeout(() => {
-    if (touched || scrollY > 40 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (touched || scrollY > 40 || "quieto" in document.documentElement.dataset || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     // A variant can name what to scroll to instead (data-ancla); the header only covers it while it sticks.
     const to = [...document.querySelectorAll("[data-ancla]")].find((e) => e.offsetParent) || box;
     if (!to.offsetParent) return;
