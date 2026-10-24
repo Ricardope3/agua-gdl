@@ -441,8 +441,8 @@ path.nueva { animation: nueva 1.4s ease-out both; pointer-events: none }
   .tl-chart { height: 88px; margin-top: 6px }
   .tl-foot .sevkey, .tl-new { display: none }
   .stage .leaflet-bottom { bottom: var(--tlh, 150px) }
-  .stage.libre .overview, .stage.libre .tl { display: none }
-  .stage.libre .leaflet-bottom { bottom: 0 }
+  .stage.libre .overview, .stage.libre:not(.en-curso) .tl { display: none }
+  .stage.libre:not(.en-curso) .leaflet-bottom { bottom: 0 }
 }
 /* The top menu as on the landing: its frame is 960 px wide, and 1320 px from 1100 px, so it sits on one row. */
 .wrap:has(> header.top) { max-width: 960px }
@@ -741,7 +741,8 @@ if (window.top !== window.self) {
   const fitStage = () => { document.documentElement.style.setProperty("--hh", `${top.offsetHeight}px`); map.invalidateSize(); };
   if (window.ResizeObserver) new ResizeObserver(fitStage).observe(top);
   fitStage();
-  // On phones the summary and the timeline step aside once the visitor moves or zooms the map, and come back on a tap.
+  // On phones the summary steps aside once the visitor moves or zooms the map, and the timeline once it has
+  // stopped playing (the en-curso class); both come back on a tap.
   const aside = (on) => { if (phone()) stage.classList.toggle("libre", on); };
   map.on("dragstart", () => aside(true));
   $("mapa").addEventListener("touchmove", () => aside(true), { passive: true });
@@ -1606,6 +1607,7 @@ if (window.top !== window.self) {
       playBtn.innerHTML = playing ? PAUSE : atEnd() ? AGAIN : PLAY;
       playBtn.setAttribute("aria-label", label);
       playBtn.title = label;
+      stage.classList.toggle("en-curso", playing);
     }
     function stop() { if (!playing) return; playing = false; clearTimeout(timer); setPlay(); }
     const STEP_MS = 1000;
