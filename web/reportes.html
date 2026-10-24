@@ -2060,7 +2060,8 @@ if (window.top !== window.self) {
     if (zf) {
       const zl = L.geoJSON(zf, { interactive: false, style: { color: M.COLORS[aguaDark() ? "dark" : "light"][zona], weight: 4, opacity: 0.95, fill: true, fillOpacity: 0.08 } }).addTo(map);
       map.fitBounds(zl.getBounds(), phone() ? { paddingTopLeft: [10, 110], paddingBottomRight: [10, 150], animate: false } : { padding: [40, 40], animate: false });
-    } else if (!selected) map.fitBounds(home, { animate: false });
+    // In the landing's frame on wide screens the city sits a little right of centre, clear of the timeline.
+    } else if (!selected) map.fitBounds(home, framed && !phone() ? { paddingTopLeft: [160, 0], animate: false } : { animate: false });
     addStreets();
     ready();
     if (!framed) {
