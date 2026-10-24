@@ -66,7 +66,9 @@ BASE = ("""
 }""", r"""
   window.__antes = (map) => calla(map);
   window.__ficha = (card, e) => acciones(card, e, false);
-  window.__pad = (s) => ({ paddingTopLeft: [70, 90], paddingBottomRight: [70, Math.round(s.y * 0.6)] });
+  window.__pad = (s) => ({ paddingTopLeft: [40, 90], paddingBottomRight: [40, Math.round(s.y * 0.6)] });
+  // The carousel holds the posts, so the map shows no tiles of them around the colonia.
+  window.__tile = [0, 0];
 """)
 
 # Helpers the variants share: each slide with its post, and a dot per slide that follows the scroll.
