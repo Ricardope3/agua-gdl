@@ -239,7 +239,10 @@ if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.
     for (const poly of polys) for (const ring of poly) {
       dpath += ring.map((p, i) => { const [x, y] = px(p); x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); return (i ? "L" : "M") + x.toFixed(5) + " " + y.toFixed(5); }).join("") + "Z";
     }
-    return { f, d: dpath, box: [x0, y0, x1, y1] };
+    // The badge sits at the middle of the colonia's biggest ring.
+    const big = polys.map((poly) => poly[0]).sort((a, b) => b.length - a.length)[0].map(px);
+    const mid = [big.reduce((t, p) => t + p[0], 0) / big.length, big.reduce((t, p) => t + p[1], 0) / big.length];
+    return { f, d: dpath, box: [x0, y0, x1, y1], mid };
   };
   const cols = g.colonias.map(shape), zonas = g.zonas.map(shape);
   for (const c of cols) { const p = c.f.properties; c.pub = pubs.get(`${p.n}|${p.m}|${p.cp}`); }
@@ -254,12 +257,19 @@ if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.
   const map = (vb, zs) => `<svg class="m5-map" viewBox="${vb.join(" ")}" preserveAspectRatio="xMidYMid slice" aria-hidden="true">`
     + `<g stroke="var(--line)" stroke-width=".5">${cols.filter((c) => meets(c.box, vb)).map((c) => `<path d="${c.d}" fill="${fill(c)}"${c.pub ? "" : ' fill-opacity=".6"'}/>`).join("")}</g>`
     + zonas.filter((z) => zs.includes(z.f.properties.z)).map((z) => `<path d="${z.d}" fill="${zc(z.f.properties.z)}" fill-opacity=".08" stroke="${zc(z.f.properties.z)}" stroke-width="3"/>`).join("")
-    + `</svg>`;
-  const box = zonas.reduce((b, z) => [Math.min(b[0], z.box[0]), Math.min(b[1], z.box[1]), Math.max(b[2], z.box[2]), Math.max(b[3], z.box[3])], [Infinity, Infinity, -Infinity, -Infinity]);
+    + badges(vb) + `</svg>`;
+  // Each colonia with publications gets its count of reports, as on /reportes; the smaller ones on top.
+  const badges = (vb) => {
+    const u = vb[2] / 300;
+    return cols.filter((c) => c.pub && meets(c.box, vb)).sort((a, b) => b.pub.n - a.pub.n).map((c) => {
+      const r = u * (4.5 + 2 * Math.log2(c.pub.n)), [x, y] = c.mid;
+      return `<g><circle cx="${x}" cy="${y}" r="${r}" fill="var(--s${Math.max(1, SEV(c.pub.dias))})" stroke="var(--surface)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`
+        + `<text x="${x}" y="${y}" dy=".35em" text-anchor="middle" font-size="${r * 1.1}" font-weight="700" font-family="system-ui, sans-serif" fill="${SEV(c.pub.dias) >= 3 ? "#fff" : "#3b0d05"}">${c.pub.n}</text></g>`;
+    }).join("");
+  };
   const card = (href, label, tag, color, svg) => `<article class="m5-card"${color ? ` style="--zc:${color}"` : ""}><a href="${href}" aria-label="${label}">${svg}</a><span class="m5-tag">${tag}</span></article>`;
   const track = document.getElementById("m5-track"), dots = document.getElementById("m5-dots");
-  track.innerHTML = card("/mizona", "Las siete zonas del SIAPA en el mapa", "Las 7 zonas", "", map(fit(box), [1, 2, 3, 4, 5, 6, 7]))
-    + zonas.map((z) => { const n = z.f.properties.z; return card(`/mizona?zona=${n}`, `La zona ${n} en el mapa`, `Zona ${n}`, zc(n), map(fit(z.box), [n])); }).join("");
+  track.innerHTML = zonas.map((z) => { const n = z.f.properties.z; return card(`/mizona?zona=${n}`, `La zona ${n} en el mapa`, `Zona ${n}`, zc(n), map(fit(z.box), [n])); }).join("");
   dots.innerHTML = [...track.children].map(() => "<i></i>").join("");
   const mark = () => { const i = Math.round(track.scrollLeft / (track.children[1].offsetLeft - track.children[0].offsetLeft)); [...dots.children].forEach((x, j) => x.classList.toggle("on", i === j)); };
   track.addEventListener("scroll", mark, { passive: true }); mark();
