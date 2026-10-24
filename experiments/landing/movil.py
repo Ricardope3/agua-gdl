@@ -97,7 +97,7 @@ V["m1"] = dict(
   .m1-chips a b { font-weight: 700 } .m1-chips a small { color: var(--muted) }
   .m1-chips-h { margin: 0 0 4px }
 }""",
-    before_map="""<div class="m-only m1-cifra" aria-live="polite"><div class="m-num" id="m1-num">—</div><p>colonias llevan <strong>una semana o más sin agua</strong>, según medios y vecinos.</p><p class="s" id="m1-sub"></p></div>""",
+    before_map="""<div class="m-only m1-cifra" aria-live="polite" data-ancla><div class="m-num" id="m1-num">—</div><p>colonias llevan <strong>una semana o más sin agua</strong>, según medios y vecinos.</p><p class="s" id="m1-sub"></p></div>""",
     after_map="""<div class="m-only"><p class="m-k m1-chips-h">Las que más reportes tienen · toca una</p><div class="m1-chips" id="m1-chips"></div></div>""",
     frame_css=MAP_ONLY,
     map_only=True,
@@ -191,7 +191,7 @@ V["m4"] = dict(
   .mapframe-box { height: 70svh; min-height: 400px }
   .maphero .mapnote { font-size: .85rem }
 }""",
-    before_map="""<section class="m-only m4" aria-label="La crisis en seis tarjetas">
+    before_map="""<section class="m-only m4" aria-label="La crisis en seis tarjetas" data-ancla>
   <div class="m4-track" id="m4-track">
     <article class="m4-card"><p class="m-k">¿Hay agua en tu colonia?</p><div class="m-num" id="m4-num">—</div><p>colonias llevan <strong>una semana o más sin agua</strong>, según medios y vecinos.</p><p class="who">Desliza para ver más →</p></article>
     <article class="m4-card"><p class="m-k">Lo que prometió el SIAPA</p><div class="m4-vs"><div><div class="m-num">1</div>día «por máximo», dijo el SIAPA</div><div><div class="m-num" id="m4-max">—</div>días sin agua, lo más largo que publica un medio</div></div><p class="who">Fuente: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">página de la rotación del SIAPA</a></p></article>

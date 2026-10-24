@@ -615,8 +615,11 @@ aguaM.frame('@media (max-width: 760px) {\n  .overview { top: 64px; bottom: auto;
   for (const ev of ["wheel", "touchstart", "keydown", "pointerdown"]) addEventListener(ev, () => { touched = true; }, { passive: true, once: true });
   setTimeout(() => {
     if (touched || scrollY > 40 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const head = document.querySelector("header.top");
-    scrollTo({ top: box.getBoundingClientRect().top + scrollY - (head ? head.offsetHeight : 0), behavior: "smooth" });
+    // A variant can name what to scroll to instead (data-ancla); the header only covers it while it sticks.
+    const to = [...document.querySelectorAll("[data-ancla]")].find((e) => e.offsetParent) || box;
+    if (!to.offsetParent) return;
+    const head = document.querySelector("header.top"), sticks = head && /sticky|fixed/.test(getComputedStyle(head).position);
+    scrollTo({ top: to.getBoundingClientRect().top + scrollY - (sticks ? head.offsetHeight : 0), behavior: "smooth" });
   }, 3000);
 })();
 </script>

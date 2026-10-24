@@ -371,7 +371,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
       </div>
       <img class="ilus" src="/img/ilustracion.png" alt="Caricatura de Pablo Lemus con la mano en una llave de la que cae una gota, sobre la Catedral de Guadalajara y una multitud que protesta" width="517" height="640">
     </div>
-    <div class="m-only m1-cifra" aria-live="polite"><div class="m-num" id="m1-num">—</div><p>colonias llevan <strong>una semana o más sin agua</strong>, según medios y vecinos.</p><p class="s" id="m1-sub"></p></div>
+    <div class="m-only m1-cifra" aria-live="polite" data-ancla><div class="m-num" id="m1-num">—</div><p>colonias llevan <strong>una semana o más sin agua</strong>, según medios y vecinos.</p><p class="s" id="m1-sub"></p></div>
     <div class="maphero">
       <div class="mapframe-box"><iframe class="mapframe" src="/reportes-portada" title="Mapa de lo que publican medios y vecinos, colonia por colonia"></iframe></div>
       <p class="mapnote"><span>Toca una colonia o búscala para ver lo que publican medios y vecinos, y reporta la tuya.</span> <a href="/reportes">Abrir el mapa completo</a></p>
@@ -630,8 +630,11 @@ aguaM.datos.then((d) => {
   for (const ev of ["wheel", "touchstart", "keydown", "pointerdown"]) addEventListener(ev, () => { touched = true; }, { passive: true, once: true });
   setTimeout(() => {
     if (touched || scrollY > 40 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const head = document.querySelector("header.top");
-    scrollTo({ top: box.getBoundingClientRect().top + scrollY - (head ? head.offsetHeight : 0), behavior: "smooth" });
+    // A variant can name what to scroll to instead (data-ancla); the header only covers it while it sticks.
+    const to = [...document.querySelectorAll("[data-ancla]")].find((e) => e.offsetParent) || box;
+    if (!to.offsetParent) return;
+    const head = document.querySelector("header.top"), sticks = head && /sticky|fixed/.test(getComputedStyle(head).position);
+    scrollTo({ top: to.getBoundingClientRect().top + scrollY - (sticks ? head.offsetHeight : 0), behavior: "smooth" });
   }, 3000);
 })();
 </script>
