@@ -235,8 +235,8 @@ V["m5"] = dict(
 document.documentElement.dataset.quieto = "";
 if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.datos]).then(([topo, d]) => {
   const g = aguaMapa.decode(topo), pubs = new Map(d.cols.map((c) => [c.k, c]));
-  const SEV = (n) => n >= 14 ? 4 : n >= 7 ? 3 : n >= 3 ? 2 : 1;
-  const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  // Colour and size both follow the colonia's reports: the more, the bigger and the deeper red, in either theme.
+  const STEP = (n) => n >= 15 ? 4 : n >= 5 ? 3 : n >= 2 ? 2 : 1, RED = [, "#f59d8b", "#ea6d56", "#cc361e", "#90200e"];
   const zc = (z) => aguaMapa.COLORS[window.aguaDark && aguaDark() ? "dark" : "light"][z];
   // The badge sits at the middle of the colonia's biggest ring.
   const mid = (f) => {
@@ -253,14 +253,14 @@ if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.
     const zone = L.geoJSON(z, { interactive: false, style: { color: zc(n), weight: 3, fillColor: zc(n), fillOpacity: 0.06 } }).addTo(map);
     const cs = mine(n);
     L.geoJSON({ type: "FeatureCollection", features: cs.map((c) => c.f) }, { interactive: false, style: (f) => {
-      const c = css(`--s${SEV(pubs.get(`${f.properties.n}|${f.properties.m}|${f.properties.cp}`).dias)}`);
+      const c = RED[STEP(pubs.get(`${f.properties.n}|${f.properties.m}|${f.properties.cp}`).n)];
       return { color: c, weight: 1, fillColor: c, fillOpacity: 0.45 };
     } }).addTo(map);
     for (const c of cs) {
-      const s = SEV(c.pub.dias), px = Math.round(11 + 3.5 * Math.log2(c.pub.n));
+      const s = STEP(c.pub.n), px = Math.round(11 + 3.5 * Math.log2(c.pub.n));
       L.marker(mid(c.f), { interactive: false, keyboard: false, zIndexOffset: -c.pub.n, icon: L.divIcon({
         className: "", iconSize: [px, px],
-        html: `<span class="m5-b${(window.aguaDark && aguaDark() ? s >= 3 : s < 3) ? " l" : ""}" style="width:${px}px;height:${px}px;background:${css(`--s${s}`)}">${c.pub.n}</span>`,
+        html: `<span class="m5-b${s < 3 ? " l" : ""}" style="width:${px}px;height:${px}px;background:${RED[s]}">${c.pub.n}</span>`,
       }) }).addTo(map);
     }
     map.fitBounds(zone.getBounds(), { padding: [10, 10] });
