@@ -553,6 +553,9 @@ if (window.top !== window.self) {
     const ls = M.zonesOf(p.l || ""), zs = ls.length ? ls : M.zones(p).main;
     h.append(" ", Object.assign(document.createElement("small"), { textContent: `· ${p.m}` }));
     w.textContent = zs.length ? `${zs.length > 1 ? "Zonas" : "Zona"} ${M.joinES(zs.map(String))}` : "Sin zona en el mapa del SIAPA";
+    // With publications, the zone opens their line: «Zona 5 · 3 fuentes distintas · …».
+    const src = card.querySelector(".ev-src");
+    if (src) { src.prepend(`${w.textContent} · `); w.hidden = true; }
   }
   const calla = (map) => map.eachLayer((l) => l.closeTooltip && l.closeTooltip());
 
