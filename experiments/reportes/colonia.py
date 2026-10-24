@@ -146,12 +146,14 @@ def sub(html, old, new):
 CUR = ' aria-current="page"'
 
 
-def build(src, v):
+def build(src, v, bar=True):
     name = NAMES[v]
     css, js = V[v]
     links = '<a href="/reportes?q=AMERICANA&amp;m=Guadalajara&amp;cp=44100">Actual</a>' + "".join(
         f'<a href="/{k}"{CUR if k == v else ""}>{k} {n}</a>' for k, n in NAMES.items())
     h = src
+    if not bar:
+        return hooks(h.replace("</style>", BAR_CSS.split(".en-portada .variant-bar { display: none }")[1] + css + "\n</style>", 1), js)
     h = sub(h, "<title>¿Hay agua en tu colonia? · Agua GDL</title>",
             f'<title>Agua GDL · Prueba {v}: {name}</title>\n<meta name="robots" content="noindex">')
     h = h.replace("</style>", BAR_CSS + css + "\n</style>", 1)
@@ -164,8 +166,14 @@ def build(src, v):
             'const stage = $("escenario"), top = document.querySelector("header.top"), vbar = document.querySelector(".variant-bar");\n'
             '  const fitStage = () => { document.documentElement.style.setProperty("--hh", `${top.offsetHeight + (vbar && vbar.offsetParent ? vbar.offsetHeight : 0)}px`); map.invalidateSize(); };\n'
             '  if (window.ResizeObserver) { const ro = new ResizeObserver(fitStage); ro.observe(top); if (vbar) ro.observe(vbar); }')
+    return hooks(h, js, americana=True)
+
+
+def hooks(h, js, americana=False):
+    if not americana:
+        h = sub(h, "<body>\n<div class=\"wrap\">", f'<body>\n<script>{COMMON}{js}</script>\n<div class="wrap">')
     # Americana unless the link names a colonia.
-    h = sub(h, "const params = new URLSearchParams(location.search);",
+    if americana: h = sub(h, "const params = new URLSearchParams(location.search);",
             'if (!new URLSearchParams(location.search).get("q")) history.replaceState(null, "", `${location.pathname}?q=AMERICANA&m=Guadalajara&cp=44100${location.search.replace(/^\\?/, "&")}`);\n'
             "    const params = new URLSearchParams(location.search);")
     h = sub(h, '      stage.classList.remove("has-card");\n',
@@ -182,10 +190,13 @@ def build(src, v):
 
 
 def main():
-    src = (WEB / "reportes.html").read_text()
+    src = (Path(__file__).parent / "reportes-before-c3.html").read_text()
     for v in NAMES:
         (WEB / f"{v}.html").write_text(build(src, v))
         print(f"web/{v}.html")
+    # /reportes itself takes c3's layout on phones.
+    (WEB / "reportes.html").write_text(build(src, "c3", bar=False))
+    print("web/reportes.html")
 
 
 if __name__ == "__main__":
