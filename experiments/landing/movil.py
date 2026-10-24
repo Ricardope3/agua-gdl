@@ -202,18 +202,20 @@ track.addEventListener("scroll", mark, { passive: true }); mark();""",
 )
 
 V["m5"] = dict(
-    head='<script src="/mapa.js"></script>',
+    head='<link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">\n<script src="/vendor/leaflet-1.9.4/leaflet.js"></script>\n<script src="/mapa.js"></script>',
     css="""
 :root { --s1: #f59d8b; --s2: #ea6d56; --s3: #cc361e; --s4: #90200e }
-@media (prefers-color-scheme: dark) { :root { --s1: #993b2b; --s2: #cb4832; --s3: #ea6d56; --s4: #fca391 } }
+@media (prefers-color-scheme: dark) { :root { --s1: #993b2b; --s2: #cb4832; --s3: #ea6d56; --s4: #fca391 } .m5-map .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) } .m5-map.leaflet-container { background: #0c1e2c } }
 @media (max-width: 760px) {
   .m5 { margin: 0 -16px 14px }
   .m5-track { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 16px; scrollbar-width: none }
   .m5-card { position: relative; flex: 0 0 84%; scroll-snap-align: center; border: 3px double var(--zc, var(--brand)); border-radius: 6px; background: var(--subtle); overflow: hidden }
   .m5-card a { display: block }
-  .m5-map { display: block; width: 100%; aspect-ratio: 4 / 5 }
-  .m5-map path { vector-effect: non-scaling-stroke }
-  .m5-tag { position: absolute; left: 10px; top: 10px; font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: var(--zc, var(--fg)); color: #fff; padding: 3px 8px; border-radius: 4px; pointer-events: none }
+  .m5-map { display: block; width: 100%; aspect-ratio: 4 / 5; pointer-events: none; background: var(--subtle) }
+  .m5-map .leaflet-control-attribution { font-size: 9px }
+  .m5-b { display: grid; place-items: center; border-radius: 50%; border: 1.5px solid #fff; font: 700 11px/1 system-ui, sans-serif; color: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / .35) }
+  .m5-b.l { color: #3b0d05 }
+  .m5-tag { position: absolute; z-index: 1000; left: 10px; top: 10px; font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: var(--zc, var(--fg)); color: #fff; padding: 3px 8px; border-radius: 4px; pointer-events: none }
   .m5-dots, .m4-dots { display: flex; justify-content: center; gap: 6px; margin-top: 10px }
   .m5-dots i, .m4-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line) }
   .m5-dots i.on, .m4-dots i.on { background: var(--brand) }
@@ -229,50 +231,43 @@ V["m5"] = dict(
     js=r"""
 if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.datos]).then(([topo, d]) => {
   const g = aguaMapa.decode(topo), pubs = new Map(d.cols.map((c) => [c.k, c]));
-  const K = Math.cos(20.65 * Math.PI / 180), px = ([x, y]) => [x * K, -y];
-  const SEV = (n) => n >= 14 ? 4 : n >= 7 ? 3 : n >= 3 ? 2 : n >= 1 ? 1 : 0;
+  const SEV = (n) => n >= 14 ? 4 : n >= 7 ? 3 : n >= 3 ? 2 : 1;
+  const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
   const zc = (z) => aguaMapa.COLORS[window.aguaDark && aguaDark() ? "dark" : "light"][z];
-  // Each shape is projected once into a path; every card's map only changes its viewBox.
-  const shape = (f) => {
+  // The badge sits at the middle of the colonia's biggest ring.
+  const mid = (f) => {
     const polys = f.geometry.type === "Polygon" ? [f.geometry.coordinates] : f.geometry.coordinates;
-    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity, dpath = "";
-    for (const poly of polys) for (const ring of poly) {
-      dpath += ring.map((p, i) => { const [x, y] = px(p); x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); return (i ? "L" : "M") + x.toFixed(5) + " " + y.toFixed(5); }).join("") + "Z";
+    const r = polys.map((p) => p[0]).sort((a, b) => b.length - a.length)[0];
+    return [r.reduce((t, p) => t + p[1], 0) / r.length, r.reduce((t, p) => t + p[0], 0) / r.length];
+  };
+  const mine = (n) => g.colonias.filter((f) => aguaMapa.zones(f.properties).main.includes(n))
+    .map((f) => ({ f, pub: pubs.get(`${f.properties.n}|${f.properties.m}|${f.properties.cp}`) })).filter((c) => c.pub);
+  // Each card's map is a still picture: no dragging or zooming, so the cards swipe; a tap opens /mizona.
+  const draw = (el, z) => {
+    const n = z.properties.z, map = L.map(el, { zoomControl: false, dragging: false, touchZoom: false, scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false, keyboard: false, zoomSnap: 0.25 });
+    aguaMapa.tiles(L, map);
+    const zone = L.geoJSON(z, { interactive: false, style: { color: zc(n), weight: 3, fillColor: zc(n), fillOpacity: 0.06 } }).addTo(map);
+    const cs = mine(n);
+    L.geoJSON({ type: "FeatureCollection", features: cs.map((c) => c.f) }, { interactive: false, style: (f) => {
+      const c = css(`--s${SEV(pubs.get(`${f.properties.n}|${f.properties.m}|${f.properties.cp}`).dias)}`);
+      return { color: c, weight: 1, fillColor: c, fillOpacity: 0.45 };
+    } }).addTo(map);
+    for (const c of cs) {
+      const s = SEV(c.pub.dias), px = Math.round(14 + 5 * Math.log2(c.pub.n));
+      L.marker(mid(c.f), { interactive: false, keyboard: false, zIndexOffset: -c.pub.n, icon: L.divIcon({
+        className: "", iconSize: [px, px],
+        html: `<span class="m5-b${s < 3 ? " l" : ""}" style="width:${px}px;height:${px}px;background:${css(`--s${s}`)}">${c.pub.n}</span>`,
+      }) }).addTo(map);
     }
-    // The badge sits at the middle of the colonia's biggest ring.
-    const big = polys.map((poly) => poly[0]).sort((a, b) => b.length - a.length)[0].map(px);
-    const mid = [big.reduce((t, p) => t + p[0], 0) / big.length, big.reduce((t, p) => t + p[1], 0) / big.length];
-    return { f, d: dpath, box: [x0, y0, x1, y1], mid };
+    map.fitBounds(zone.getBounds(), { padding: [10, 10] });
   };
-  const cols = g.colonias.map(shape), zonas = g.zonas.map(shape);
-  for (const c of cols) { const p = c.f.properties; c.pub = pubs.get(`${p.n}|${p.m}|${p.cp}`); c.zs = aguaMapa.zones(p).main; }
-  const fit = (box) => {
-    let [x0, y0, x1, y1] = box, w = x1 - x0, h = y1 - y0;
-    x0 -= w * .04; x1 += w * .04; y0 -= h * .04; y1 += h * .04; w = x1 - x0; h = y1 - y0;
-    if (w / h > 4 / 5) { const nh = w * 5 / 4; y0 -= (nh - h) / 2; h = nh; } else { const nw = h * 4 / 5; x0 -= (nw - w) / 2; w = nw; }
-    return [x0, y0, w, h];
-  };
-  const meets = (b, [x, y, w, h]) => b[2] >= x && b[0] <= x + w && b[3] >= y && b[1] <= y + h;
-  // Only the zone's own colonias are coloured; the rest stay a faint backdrop.
-  const fill = (c, n) => !c.zs.includes(n) ? "none" : c.pub ? `var(--s${Math.max(1, SEV(c.pub.dias))})` : "var(--surface)";
-  const map = (vb, zs, n) => `<svg class="m5-map" viewBox="${vb.join(" ")}" preserveAspectRatio="xMidYMid slice" aria-hidden="true">`
-    + `<g stroke="var(--line)" stroke-width=".5">${cols.filter((c) => meets(c.box, vb)).map((c) => `<path d="${c.d}" fill="${fill(c, n)}"${c.pub ? "" : ' fill-opacity=".6"'}/>`).join("")}</g>`
-    + zonas.filter((z) => zs.includes(z.f.properties.z)).map((z) => `<path d="${z.d}" fill="${zc(z.f.properties.z)}" fill-opacity=".08" stroke="${zc(z.f.properties.z)}" stroke-width="3"/>`).join("")
-    + badges(vb, n) + `</svg>`;
-  // Each colonia with publications gets its count of reports, as on /reportes; the smaller ones on top.
-  const badges = (vb, n) => {
-    const u = vb[2] / 300;
-    return cols.filter((c) => c.pub && c.zs.includes(n) && meets(c.box, vb)).sort((a, b) => b.pub.n - a.pub.n).map((c) => {
-      const r = u * (4.5 + 2 * Math.log2(c.pub.n)), [x, y] = c.mid;
-      return `<g><circle cx="${x}" cy="${y}" r="${r}" fill="var(--s${Math.max(1, SEV(c.pub.dias))})" stroke="var(--surface)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`
-        + `<text x="${x}" y="${y}" dy=".35em" text-anchor="middle" font-size="${r * 1.1}" font-weight="700" font-family="system-ui, sans-serif" fill="${SEV(c.pub.dias) >= 3 ? "#fff" : "#3b0d05"}">${c.pub.n}</text></g>`;
-    }).join("");
-  };
-  const card = (href, label, tag, color, svg) => `<article class="m5-card"${color ? ` style="--zc:${color}"` : ""}><a href="${href}" aria-label="${label}">${svg}</a><span class="m5-tag">${tag}</span></article>`;
   const track = document.getElementById("m5-track"), dots = document.getElementById("m5-dots");
-  track.innerHTML = zonas.map((z) => { const n = z.f.properties.z; return card(`/mizona?zona=${n}`, `La zona ${n} en el mapa`, `Zona ${n}`, zc(n), map(fit(z.box), [n], n)); }).join("");
+  track.innerHTML = g.zonas.map((z) => { const n = z.properties.z; return `<article class="m5-card" style="--zc:${zc(n)}"><a href="/mizona?zona=${n}" aria-label="La zona ${n} en el mapa"><div class="m5-map" data-z="${n}"></div></a><span class="m5-tag">Zona ${n}</span></article>`; }).join("");
+  // A card's streets load only once it, or the card beside it, is in view.
+  const maps = [...track.querySelectorAll(".m5-map")], done = new Set();
+  const near = (i) => { for (const j of [i - 1, i, i + 1]) if (maps[j] && !done.has(j)) { done.add(j); draw(maps[j], g.zonas[j]); } };
   dots.innerHTML = [...track.children].map(() => "<i></i>").join("");
-  const mark = () => { const i = Math.round(track.scrollLeft / (track.children[1].offsetLeft - track.children[0].offsetLeft)); [...dots.children].forEach((x, j) => x.classList.toggle("on", i === j)); };
+  const mark = () => { const i = Math.round(track.scrollLeft / (track.children[1].offsetLeft - track.children[0].offsetLeft)); [...dots.children].forEach((x, j) => x.classList.toggle("on", i === j)); near(i); };
   track.addEventListener("scroll", mark, { passive: true }); mark();
 });
 """ + V["m4"]["js"],
