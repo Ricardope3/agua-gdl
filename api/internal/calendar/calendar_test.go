@@ -62,15 +62,15 @@ func TestAlarmsOnlyBeforeEachBlock(t *testing.T) {
 		e := ics[strings.Index(ics, "DTSTART;VALUE=DATE:"+date+"\r\n"):]
 		return strings.ReplaceAll(e[:strings.Index(e, "END:VEVENT")], "\r\n ", "")
 	}
-	zone1 := string(Zone(schedule(t), 1))
-	wednesday := event(zone1, "20261021")
-	for _, want := range []string{"TRIGGER:-P1DT4H", "TRIGGER:-PT4H", "zona 1: miércoles 21\\, viernes 23 y domingo 25 de octubre"} {
-		if !strings.Contains(wednesday, want) {
-			t.Errorf("zone 1's Wednesday starts the block; missing %q in:\n%s", want, wednesday)
+	zone2 := string(Zone(schedule(t), 2))
+	sunday := event(zone2, "20261018")
+	for _, want := range []string{"TRIGGER:-P1DT4H", "TRIGGER:-PT4H", "zona 2: domingo 18\\, martes 20 y jueves 22 de octubre"} {
+		if !strings.Contains(sunday, want) {
+			t.Errorf("zone 2's Sunday starts the block; missing %q in:\n%s", want, sunday)
 		}
 	}
-	for _, date := range []string{"20261023", "20261025"} {
-		if e := event(zone1, date); strings.Contains(e, "VALARM") {
+	for _, date := range []string{"20261020", "20261022"} {
+		if e := event(zone2, date); strings.Contains(e, "VALARM") {
 			t.Errorf("%s continues the block: an alarm would ring in the middle of it:\n%s", date, e)
 		}
 	}

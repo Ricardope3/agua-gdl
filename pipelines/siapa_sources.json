@@ -1,9 +1,9 @@
 {
  "index.html": {
   "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/index.html",
-  "sha256": "5589bd66ab387ffcd4eba36cd2d99c7a23800a581dfe392c1c74c3e053a4b4fe",
-  "bytes": 21569,
-  "last_modified": "Fri, 16 Oct 2026 17:12:34 GMT"
+  "sha256": "f6fc2c914a3b954e2c74d3539687aab60f7992f5d0918428935a86b333693fdd",
+  "bytes": 21614,
+  "last_modified": "Wed, 21 Oct 2026 15:29:24 GMT"
  },
  "colonias_siapa.pdf": {
   "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/pdf/colonias_siapa.pdf",
@@ -14,10 +14,9 @@
  },
  "ajustes.php": {
   "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/api/ajustes.php",
-  "sha256": "d5879d25b488a42070b781d74136722ccc21c850aa14e51a874730da93b2b747",
-  "bytes": 864,
-  "last_modified": null,
-  "comment": "The cut days per zone and hand-made colonia zone changes SIAPA edits from its /admin panel (last saved 16 Oct 2026); the page's calendar module (assets/calendario-*.js) fetches it with no-store, so index.html doesn't change when the days do. Its sha256 leaves out «actualizado»."
+  "sha256": "dbe7a21863cf9d1fa486a634280d203bf61f4f24c30c2f7ae6f538b333987c52",
+  "bytes": 1122,
+  "last_modified": null
  },
  "rotacion-siapa.topo.json": {
   "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/geo/rotacion-siapa.topo.json",

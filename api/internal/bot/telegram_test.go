@@ -414,8 +414,7 @@ func TestWriteToCongressIsTelegramOnly(t *testing.T) {
 
 func TestJoinInTheMiddleOfABlock(t *testing.T) {
 	for _, c := range []struct{ now, zone, later string }{
-		{"2026-10-21 10:00", "1", "viernes 23"}, // zone 1: Wednesday, Friday and Sunday are one block
-		{"2026-10-23 10:00", "1", "domingo 25"},
+		{"2026-10-23 10:00", "1", "domingo 25"}, // zone 1: Friday and Sunday are one block
 		{"2026-10-18 10:00", "2", "martes 20"}, // zone 2: Sunday, Tuesday and Thursday
 		{"2026-10-20 10:00", "2", "jueves 22"},
 	} {
@@ -432,24 +431,24 @@ func TestJoinInTheMiddleOfABlock(t *testing.T) {
 }
 
 func TestMadeUpButtonsCantAnswerForAnotherZone(t *testing.T) {
-	h := newTGHarness(t, "2026-10-20 21:00")
-	h.say(t, "/start z1")
+	h := newTGHarness(t, "2026-10-19 21:00")
+	h.say(t, "/start z2")
 	s, _ := h.sub(t)
-	h.store.Reminders[fmt.Sprintf("%d/2026-10-21", s.ID)] = true
-	for _, data := range []string{"A:3:2026-10-21:no", "A:3:2026-10-21:no:AAAAAAAA"} { // zone 3 is cut that Wednesday too
+	h.store.Reminders[fmt.Sprintf("%d/2026-10-20", s.ID)] = true
+	for _, data := range []string{"A:5:2026-10-20:no", "A:5:2026-10-20:no:AAAAAAAA"} { // zone 5 is cut that Tuesday too
 		if m := h.press(t, data); !strings.Contains(m.Text, "ya cerró") {
 			t.Errorf("%s: %s", data, m.Text)
 		}
 	}
 	if len(h.store.Water) != 0 {
-		t.Fatalf("a zone 1 subscriber answered for zone 3: %+v", h.store.Water)
+		t.Fatalf("a zone 2 subscriber answered for zone 5: %+v", h.store.Water)
 	}
-	m, err := TelegramReminder(s.UserID, 1, h.bot.Schedule.Block(1, h.bot.Schedule.Day(h.bot.Now()).AddDate(0, 0, 1)))
+	m, err := TelegramReminder(s.UserID, 2, h.bot.Schedule.Block(2, h.bot.Schedule.Day(h.bot.Now()).AddDate(0, 0, 1)))
 	if err != nil {
 		t.Fatal(err)
 	}
 	h.press(t, m.ReplyMarkup.(tg.InlineKeyboard).InlineKeyboard[0][2].CallbackData) // ❌ No, as the reminder sends it
-	if len(h.store.Water) != 1 || h.store.Water[0].Zone != 1 || h.store.Water[0].Answer != "no" {
+	if len(h.store.Water) != 1 || h.store.Water[0].Zone != 2 || h.store.Water[0].Answer != "no" {
 		t.Fatalf("the reminder's own button: %+v", h.store.Water)
 	}
 	h = newTGHarness(t, "2026-10-16 09:00")
