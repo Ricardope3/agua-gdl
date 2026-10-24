@@ -1911,7 +1911,8 @@ if (window.top !== window.self) {
       // In the landing's frame it waits on the first day until most of the map is on screen.
       showDay(0);
       const muestra = params.get("muestra");
-      if (muestra && features.has(muestra)) onPlayed = () => showcase(muestra);
+      // On a phone the opened card would cover the map, so the frame leaves the showcase out.
+      if (muestra && features.has(muestra) && !matchMedia("(max-width: 760px)").matches) onPlayed = () => showcase(muestra);
       new IntersectionObserver((entries, io) => {
         if (!entries.some((e) => e.isIntersecting)) return;
         io.disconnect();

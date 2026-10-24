@@ -616,8 +616,8 @@ const aguaM = (() => {
 })();
 { const f = document.querySelector(".mapframe"); if (!aguaM.phone) f.src = f.dataset.src; }
 
-// m5 stays where the visitor lands: no scroll down to the map.
-document.documentElement.dataset.quieto = "";
+// On a phone m5 stays where the visitor lands: no scroll down to the map.
+if (aguaM.phone) document.documentElement.dataset.quieto = "";
 if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.datos]).then(([topo, d]) => {
   const g = aguaMapa.decode(topo), pubs = new Map(d.cols.map((c) => [c.k, c]));
   // Colour and size both follow the colonia's reports: the more, the bigger and the deeper red, in either theme.

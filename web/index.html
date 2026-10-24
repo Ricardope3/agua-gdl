@@ -295,6 +295,65 @@ html, body { overflow-x: clip }
 .cartel { display: grid; gap: 8px 32px; align-items: center; padding: 8px 0 20px }
 .cartel .ilus { width: min(60vw, 240px); height: auto; justify-self: center }
 @media (min-width: 760px) { .cartel { grid-template-columns: 1fr auto } .cartel .ilus { width: 240px } }
+
+@media (max-width: 760px) {
+  .cartel { grid-template-columns: minmax(0, 1fr) 92px; gap: 4px 12px; padding: 4px 0 12px }
+  .cartel h1 { font-size: 1.55rem; margin: 0 }
+  .cartel .kicker { font-size: .72rem; margin-bottom: 4px }
+  .cartel .ilus { width: 92px; justify-self: end }
+}
+.m-only { display: none }
+@media (max-width: 760px) { .m-only { display: block } }
+.m-num { font: 800 3.4rem/1 var(--serif, Georgia, serif); color: var(--alarm); font-variant-numeric: tabular-nums }
+.m-k { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin: 0 0 6px }
+.m-rank { list-style: none; margin: 0; padding: 0 }
+.m-rank li { border-bottom: 1px solid var(--line) }
+.m-rank a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; padding: 10px 0; color: inherit; text-decoration: none }
+.m-rank b { font-weight: 600 } .m-rank small { color: var(--muted); grid-column: 1 }
+.m-rank .d { grid-row: 1 / 3; grid-column: 2; align-self: center; font-weight: 800; color: var(--alarm); font-variant-numeric: tabular-nums }
+.m-bar { height: 6px; border-radius: 3px; background: var(--subtle); overflow: hidden }
+.m-rank .m-bar { grid-column: 1 / -1 }
+.m-bar i { display: block; height: 100%; background: var(--alarm) }
+
+:root { --s1: #f59d8b; --s2: #ea6d56; --s3: #cc361e; --s4: #90200e }
+@media (prefers-color-scheme: dark) { :root { --s1: #993b2b; --s2: #cb4832; --s3: #ea6d56; --s4: #fca391 } .m5-map .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) } .m5-map.leaflet-container { background: #0c1e2c } }
+@media (max-width: 760px) {
+  .m5 { margin: 0 -16px 14px }
+  .m5-track { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 16px; scrollbar-width: none }
+  .m5-card { position: relative; flex: 0 0 84%; scroll-snap-align: center; border: 3px double var(--zc, var(--brand)); border-radius: 6px; background: var(--subtle); overflow: hidden }
+  .m5-card a { display: block }
+  .m5-map { display: block; width: 100%; aspect-ratio: 4 / 5; pointer-events: none; background: var(--subtle) }
+  .m5-map .leaflet-control-attribution { font-size: 9px }
+  .m5-b { display: grid; place-items: center; border-radius: 50%; border: 1px solid #fff; font: 700 9px/1 system-ui, sans-serif; color: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / .35) }
+  .m5-b.l { color: #3b0d05 }
+  .m5-tag { position: absolute; z-index: 1000; left: 10px; top: 10px; font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: var(--zc, var(--fg)); color: #fff; padding: 3px 8px; border-radius: 4px; pointer-events: none }
+  .m5-dots, .m4-dots { display: flex; justify-content: center; gap: 6px; margin-top: 10px }
+  .m5-dots i, .m4-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line) }
+  .m5-dots i.on, .m4-dots i.on { background: var(--brand) }
+}
+@media (max-width: 760px) { .maphero { display: none } }
+
+@media (max-width: 760px) {
+  .m4 { margin: 0 -16px 18px }
+  .m4-track { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 16px; scrollbar-width: none }
+  .m4-card { flex: 0 0 84%; scroll-snap-align: center; min-height: 260px; display: flex; flex-direction: column; border: 3px double var(--brand); border-radius: 6px; background: var(--surface); padding: 16px }
+  .m4-card h3 { font-size: 1.25rem; margin: 0 0 8px; font-style: italic; font-weight: 400 }
+  .m4-card p { margin: 6px 0 0 }
+  .m4-card q { display: block; font-size: 1.15rem; line-height: 1.4; font-style: italic }
+  .m4-card .who { margin-top: auto; color: var(--muted); font-size: .85rem }
+  .m4-card .button { margin-top: auto; justify-content: center }
+  .m4-card .m-rank a { padding: 7px 0 }
+  .m4-dots { display: flex; justify-content: center; gap: 6px; margin-top: 10px }
+  .m4-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line) }
+  .m4-dots i.on { background: var(--brand) }
+  .m4-vs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px }
+  .m4-vs > div { border-top: 3px solid var(--line); padding-top: 8px }
+  .m4-vs .m-k { min-height: 2.6em }
+  .m4-vs .m-num { font-size: 2.6rem }
+  .m4-vs > div:first-child .m-num { color: var(--brand) }
+  .mapframe-box { height: 70svh; min-height: 400px }
+  .maphero .mapnote { font-size: .85rem }
+}
 </style>
 <style>/* Talavera */
 :root { --bg:#fbfaf6; --surface:#ffffff; --subtle:#e4eaf8; --fg:#14213d; --muted:#4f5b7a; --line:#c4cfe9;
@@ -311,6 +370,9 @@ main h1, main h2 { font-weight: 400; font-style: italic }
 footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-top: 34px }
 </style>
 <script src="/theme.js"></script>
+<link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
+<script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script src="/mapa.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -336,8 +398,21 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
       </div>
       <img class="ilus" src="/img/ilustracion.png" alt="Caricatura de Pablo Lemus con la mano en una llave de la que cae una gota, sobre la Catedral de Guadalajara y una multitud que protesta" width="517" height="640">
     </div>
+    <section class="m-only m5" aria-label="Las zonas del SIAPA en el mapa">
+  <div class="m5-track" id="m5-track"><article class="m5-card"><div class="m5-map"></div></article></div>
+  <div class="m5-dots" id="m5-dots" aria-hidden="true"></div>
+</section>
+    <section class="m-only m4" aria-label="La crisis en cuatro tarjetas">
+  <div class="m4-track" id="m4-track">
+    <article class="m4-card"><p class="m-k">¿Hay agua en tu colonia?</p><div class="m-num" id="m4-num">—</div><p>colonias llevan <strong>una semana o más sin agua</strong>, según medios y vecinos.</p><p class="who">Desliza para ver más →</p></article>
+    <article class="m4-card"><div class="m4-vs"><div><p class="m-k">Lo que prometió el SIAPA</p><div class="m-num">1</div>día de corte «por máximo»</div><div><p class="m-k">La realidad</p><div class="m-num" id="m4-max">—</div>días sin agua, lo más largo que publica un medio</div></div><p class="who">Fuente: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">página de la rotación del SIAPA</a></p></article>
+    <article class="m4-card"><h3>Por municipio</h3><ol class="m-rank" id="m4-munis"></ol></article>
+    <article class="m4-card"><h3>¿Y en tu colonia?</h3><p>Cada reporte es una prueba de dónde falla el gobierno. Sin cuenta y anónimo.</p><a class="button" href="/reportes?reportar=1">Reportar mi colonia</a><p><a href="/exige">Exígele a quien le toca →</a></p></article>
+  </div>
+  <div class="m4-dots" id="m4-dots" aria-hidden="true"></div>
+</section>
     <div class="maphero">
-      <div class="mapframe-box"><iframe class="mapframe" src="/reportes-portada?muestra=CIUDAD+GRANJA%7CZapopan%7C45010" title="Mapa de lo que publican medios y vecinos, colonia por colonia"></iframe></div>
+      <div class="mapframe-box"><iframe class="mapframe" data-src="/reportes-portada?muestra=CIUDAD+GRANJA%7CZapopan%7C45010" title="Mapa de lo que publican medios y vecinos, colonia por colonia"></iframe></div>
       <p class="mapnote"><span>Toca una colonia o búscala para ver lo que publican medios y vecinos, y reporta la tuya.</span> <a href="/reportes">Abrir el mapa completo</a></p>
     </div>
     <div class="vs-grid contrast">
@@ -494,6 +569,104 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     <p><a href="/exige">Exígele a quien le toca</a> · <a href="/escribe">Escribe al Congreso</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a></p>
   </footer>
 </div>
+<script>
+
+const aguaM = (() => {
+  const SMALL = ["de", "del", "la", "las", "los", "el", "y"];
+  const name = (k) => k.split("|")[0].toLowerCase().replace(/(^|[\s(])([^\s(]+)/g, (m, p, w) => p + (SMALL.includes(w) && p ? w : w[0].toUpperCase() + w.slice(1)));
+  const link = (k) => { const [q, m, cp] = k.split("|"); return "/reportes?" + new URLSearchParams({ q, m, cp }); };
+  const fmt = (n) => n.toLocaleString("es-MX");
+  const datos = fetch("/publicaciones.json").then((r) => r.json()).then((d) => {
+    const m = new Map();
+    for (const e of d.publicaciones) for (const k of e.colonias) {
+      const r = m.get(k) || { k, dias: 0, n: 0, muni: k.split("|")[1] };
+      r.dias = Math.max(r.dias, e.dias || 0); r.n++; m.set(k, r);
+    }
+    const cols = [...m.values()], medios = d.publicaciones.filter((e) => e.fuente === "medio");
+    const munis = new Map();
+    for (const c of cols) if (!c.muni.includes(" y ")) munis.set(c.muni, (munis.get(c.muni) || 0) + 1);
+    return {
+      pubs: d.publicaciones, cols, semana: cols.filter((c) => c.dias >= 7).length, medios: medios.length,
+      max: Math.max(...medios.map((e) => e.dias || 0)),
+      top: [...cols].sort((a, b) => b.n - a.n || b.dias - a.dias),
+      peores: [...cols].sort((a, b) => b.dias - a.dias || b.n - a.n),
+      munis: [...munis].sort((a, b) => b[1] - a[1]),
+    };
+  });
+  // The frame is same-origin: a style element in it rearranges /reportes for this variant.
+  const frame = (css) => {
+    const f = document.querySelector(".mapframe");
+    if (!f) return;
+    const go = () => {
+      try {
+        const d = f.contentDocument;
+        if (!d || !d.head || d.location.href === "about:blank" || d.getElementById("movil")) return;
+        const s = d.createElement("style"); s.id = "movil"; s.textContent = css; d.head.append(s);
+      } catch {}
+    };
+    const t = setInterval(() => { go(); try { if (f.contentDocument.getElementById("movil")) clearInterval(t); } catch {} }, 50);
+    f.addEventListener("load", go);
+  };
+  const rank = (list, n, max) => list.slice(0, n).map((c) =>
+    `<li><a href="${link(c.k)}"><b>${name(c.k)}</b><span class="d">${c.dias ? c.dias + " días" : c.n + " rep."}</span><small>${c.muni} · ${c.n} ${c.n === 1 ? "publicación" : "publicaciones"}</small>${max ? `<span class="m-bar"><i style="width:${Math.max(4, 100 * c.dias / max)}%"></i></span>` : ""}</a></li>`).join("");
+  return { datos, frame, name, link, fmt, rank, phone: matchMedia("(max-width: 760px)").matches };
+})();
+{ const f = document.querySelector(".mapframe"); if (!aguaM.phone) f.src = f.dataset.src; }
+
+// On a phone m5 stays where the visitor lands: no scroll down to the map.
+if (aguaM.phone) document.documentElement.dataset.quieto = "";
+if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.datos]).then(([topo, d]) => {
+  const g = aguaMapa.decode(topo), pubs = new Map(d.cols.map((c) => [c.k, c]));
+  // Colour and size both follow the colonia's reports: the more, the bigger and the deeper red, in either theme.
+  const STEP = (n) => n >= 15 ? 4 : n >= 5 ? 3 : n >= 2 ? 2 : 1, RED = [, "#f59d8b", "#ea6d56", "#cc361e", "#90200e"];
+  const zc = (z) => aguaMapa.COLORS[window.aguaDark && aguaDark() ? "dark" : "light"][z];
+  // The badge sits at the middle of the colonia's biggest ring.
+  const mid = (f) => {
+    const polys = f.geometry.type === "Polygon" ? [f.geometry.coordinates] : f.geometry.coordinates;
+    const r = polys.map((p) => p[0]).sort((a, b) => b.length - a.length)[0];
+    return [r.reduce((t, p) => t + p[1], 0) / r.length, r.reduce((t, p) => t + p[0], 0) / r.length];
+  };
+  const mine = (n) => g.colonias.filter((f) => aguaMapa.zones(f.properties).main.includes(n))
+    .map((f) => ({ f, pub: pubs.get(`${f.properties.n}|${f.properties.m}|${f.properties.cp}`) })).filter((c) => c.pub);
+  // Each card's map is a still picture: no dragging or zooming, so the cards swipe; a tap opens /mizona.
+  const draw = (el, z) => {
+    const n = z.properties.z, map = L.map(el, { zoomControl: false, dragging: false, touchZoom: false, scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false, keyboard: false, zoomSnap: 0.25 });
+    aguaMapa.tiles(L, map);
+    const zone = L.geoJSON(z, { interactive: false, style: { color: zc(n), weight: 3, fillColor: zc(n), fillOpacity: 0.06 } }).addTo(map);
+    const cs = mine(n);
+    L.geoJSON({ type: "FeatureCollection", features: cs.map((c) => c.f) }, { interactive: false, style: (f) => {
+      const c = RED[STEP(pubs.get(`${f.properties.n}|${f.properties.m}|${f.properties.cp}`).n)];
+      return { color: c, weight: 1, fillColor: c, fillOpacity: 0.45 };
+    } }).addTo(map);
+    for (const c of cs) {
+      const s = STEP(c.pub.n), px = Math.round(11 + 3.5 * Math.log2(c.pub.n));
+      L.marker(mid(c.f), { interactive: false, keyboard: false, zIndexOffset: -c.pub.n, icon: L.divIcon({
+        className: "", iconSize: [px, px],
+        html: `<span class="m5-b${s < 3 ? " l" : ""}" style="width:${px}px;height:${px}px;background:${RED[s]}">${c.pub.n}</span>`,
+      }) }).addTo(map);
+    }
+    map.fitBounds(zone.getBounds(), { padding: [10, 10] });
+  };
+  const track = document.getElementById("m5-track"), dots = document.getElementById("m5-dots");
+  track.innerHTML = g.zonas.map((z) => { const n = z.properties.z; return `<article class="m5-card" style="--zc:${zc(n)}"><a href="/mizona?zona=${n}" aria-label="La zona ${n} en el mapa"><div class="m5-map" data-z="${n}"></div></a><span class="m5-tag">Zona ${n}</span></article>`; }).join("");
+  // A card's streets load only once it, or the card beside it, is in view.
+  const maps = [...track.querySelectorAll(".m5-map")], done = new Set();
+  const near = (i) => { for (const j of [i - 1, i, i + 1]) if (maps[j] && !done.has(j)) { done.add(j); draw(maps[j], g.zonas[j]); } };
+  dots.innerHTML = [...track.children].map(() => "<i></i>").join("");
+  const mark = () => { const i = Math.round(track.scrollLeft / (track.children[1].offsetLeft - track.children[0].offsetLeft)); [...dots.children].forEach((x, j) => x.classList.toggle("on", i === j)); near(i); };
+  track.addEventListener("scroll", mark, { passive: true }); mark();
+});
+
+aguaM.datos.then((d) => {
+  document.getElementById("m4-num").textContent = aguaM.fmt(d.semana);
+  document.getElementById("m4-max").textContent = d.max;
+  document.getElementById("m4-munis").innerHTML = d.munis.slice(0, 5).map(([m, n]) => `<li><a href="/reportes"><b>${m}</b><span class="d">${n}</span><small>colonias con publicaciones</small></a></li>`).join("");
+});
+const track = document.getElementById("m4-track"), dots = document.getElementById("m4-dots");
+dots.innerHTML = [...track.children].map(() => "<i></i>").join("");
+const mark = () => { const i = Math.round(track.scrollLeft / (track.children[1].offsetLeft - track.children[0].offsetLeft)); [...dots.children].forEach((d, j) => d.classList.toggle("on", i === j)); };
+track.addEventListener("scroll", mark, { passive: true }); mark();
+</script>
 <script>
 (() => {
   const API = (() => {

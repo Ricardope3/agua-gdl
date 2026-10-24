@@ -1,4 +1,5 @@
-"""Writes the phone variants of the landing, web/m1.html … web/m5.html, from web/index.html.
+"""Writes the phone variants of the landing, web/m1.html … web/m5.html, from the landing as it was before m5 became it
+(experiments/landing/index-before-m5.html); web/index.html is m5 without its noindex and variant bar.
 
 Each one changes only what shows at 760 px or less; on a wider screen it is the landing as is.
 Run from the repo root: python3 experiments/landing/movil.py
@@ -231,8 +232,8 @@ V["m5"] = dict(
     frame_css="",
     lazy_frame=True,
     js=r"""
-// m5 stays where the visitor lands: no scroll down to the map.
-document.documentElement.dataset.quieto = "";
+// On a phone m5 stays where the visitor lands: no scroll down to the map.
+if (aguaM.phone) document.documentElement.dataset.quieto = "";
 if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.datos]).then(([topo, d]) => {
   const g = aguaMapa.decode(topo), pubs = new Map(d.cols.map((c) => [c.k, c]));
   // Colour and size both follow the colonia's reports: the more, the bigger and the deeper red, in either theme.
@@ -310,7 +311,8 @@ def build(key, v, src):
 
 
 def main():
-    src = (WEB / "index.html").read_text()
+    # The landing became m5 on phones; the variants build from the landing as it was before.
+    src = (Path(__file__).parent / "index-before-m5.html").read_text()
     for key, v in V.items():
         (WEB / f"{key}.html").write_text(build(key, v, src))
         print("wrote", key)
