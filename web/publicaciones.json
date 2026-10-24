@@ -22530,7 +22530,27 @@
     "comentarios": 301,
     "compartidos": 97,
     "al": "2026-10-23"
-   }
+   },
+   "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/viogu/status/2113683288200015970",
+   "fecha": "2026-10-23",
+   "colonias": [
+    "INDEPENDENCIA|Guadalajara|44290"
+   ],
+   "lugar": "Independencia, Guadalajara",
+   "cita": "Viernes 23 de octubre, colonia Independencia de Guadalajara, Jalisco. Agua turbia, amarillenta, a 15 días del cierre del sistema antiguo. Hay gente que le sigue saliendo maloliente e incluso las turbia.",
+   "dias": null,
+   "eco": {
+    "reacciones": 101,
+    "comentarios": 5,
+    "al": "2026-10-24"
+   },
+   "vista": "fuentes/f194dc68ca54.jpg"
   }
  ]
 }
