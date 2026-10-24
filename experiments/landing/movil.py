@@ -274,6 +274,9 @@ if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.
   dots.innerHTML = [...track.children].map(() => "<i></i>").join("");
   const mark = () => { const i = Math.round(track.scrollLeft / (track.children[1].offsetLeft - track.children[0].offsetLeft)); [...dots.children].forEach((x, j) => x.classList.toggle("on", i === j)); near(i); };
   track.addEventListener("scroll", mark, { passive: true }); mark();
+  // The cards open on zone 3, the one with the most colonias a week or more without water.
+  const tres = track.querySelector('[data-z="3"]');
+  if (tres) { track.scrollLeft = tres.closest(".m5-card").offsetLeft - track.children[0].offsetLeft; mark(); }
 });
 """ + V["m4"]["js"],
 )
