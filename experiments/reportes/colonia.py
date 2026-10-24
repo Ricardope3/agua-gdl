@@ -82,7 +82,18 @@ BASE = ("""
   window.__pad = (s) => ({ paddingTopLeft: [40, 90], paddingBottomRight: [40, Math.round(s.y * 0.6)] });
   // Framed again once the card is drawn, in the map left above it: the card's height varies with
   // the colonia and with the browser's toolbars.
-  window.__refit = (map, b, card) => map.flyToBounds(b, { paddingTopLeft: [40, 80], paddingBottomRight: [40, card.offsetHeight + 16], maxZoom: 16, duration: 0.5, animate: !matchMedia("(prefers-reduced-motion: reduce)").matches });
+  // The zoom fits the colonia in that space, but never further out than 14: a small strip of map
+  // above a tall card would otherwise zoom out to the whole city.
+  window.__refit = (map, b, card) => {
+    const size = map.getSize(), top = 76, bottom = card.offsetHeight + 12;
+    // The free strip is at least 120 px tall, so a short screen doesn't zoom in without limit.
+    const room = Math.max(120, size.y - top - bottom);
+    const z = Math.min(16, Math.max(14, map.getBoundsZoom(b, false, L.point(60, size.y - room + 20))));
+    // The colonia's centre goes to the middle of the free strip, not of the whole map.
+    const free = Math.min(top + room / 2, size.y - bottom - 60);
+    const at = map.project(b.getCenter(), z).add([0, size.y / 2 - free]);
+    map.flyTo(map.unproject(at, z), z, { duration: 0.5, animate: !matchMedia("(prefers-reduced-motion: reduce)").matches });
+  };
   // The carousel holds the posts, so the map shows no tiles of them around the colonia.
   window.__tile = [0, 0];
 """)
