@@ -219,15 +219,16 @@ V["m5"] = dict(
   .m5-dots, .m4-dots { display: flex; justify-content: center; gap: 6px; margin-top: 10px }
   .m5-dots i, .m4-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line) }
   .m5-dots i.on, .m4-dots i.on { background: var(--brand) }
-}""" + V["m4"]["css"].replace("  .mapframe-box { height: 70svh; min-height: 400px }\n", "  .mapframe-box { height: 70svh; min-height: 400px }\n"),
+}  .maphero { display: none }
+""" + V["m4"]["css"].replace("  .mapframe-box { height: 70svh; min-height: 400px }\n", "  .mapframe-box { height: 70svh; min-height: 400px }\n"),
     before_map="""<section class="m-only m5" aria-label="Las zonas del SIAPA en el mapa">
   <div class="m5-track" id="m5-track"><article class="m5-card"><div class="m5-map"></div></article></div>
   <div class="m5-dots" id="m5-dots" aria-hidden="true"></div>
 </section>
     """ + V["m4"]["before_map"].replace(" data-ancla>", ">"),
     after_map="",
-    frame_css=MAP_ONLY,
-    map_only=True,
+    frame_css="",
+    lazy_frame=True,
     js=r"""
 // m5 stays where the visitor lands: no scroll down to the map.
 document.documentElement.dataset.quieto = "";
