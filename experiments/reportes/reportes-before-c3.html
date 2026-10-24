@@ -224,6 +224,12 @@ header.top { margin-bottom: 0; position: static }
 .stage .bigmap { height: 100%; border-radius: 0; border: 0; border-bottom: 1px solid var(--line) }
 .float-search { position: absolute; z-index: 1300; top: 12px; left: 12px; width: min(420px, calc(100% - 76px)); display: flex; gap: 8px }
 .float-search .search { flex: 1 }
+.stage .float-search { transition: width .5s ease }
+.stage .float-search.chica { width: 104px }
+.float-search.chica .search input { cursor: pointer; padding-right: 0; color: transparent }
+.float-search.chica .search input::placeholder { color: transparent }
+.float-search.chica .clear { display: none }
+@media (prefers-reduced-motion: reduce) { .stage .float-search { transition: none } }
 .float-search .search input { box-shadow: 0 4px 16px rgb(3 14 22 / .18) }
 .iconbtn { width: 50px; height: 50px; padding: 0; justify-content: center; box-shadow: 0 4px 16px rgb(3 14 22 / .18) }
 .iconbtn .i { width: 1.3em; height: 1.3em }
@@ -1917,6 +1923,17 @@ if (window.top !== window.self) {
     if (!selected) map.fitBounds(home, { animate: false });
     addStreets();
     ready();
+    if (!framed) {
+      // A second after landing the map takes the screen, unless the visitor has already scrolled or touched it.
+      let moved = false;
+      const mark = () => { moved = true; };
+      for (const t of ["wheel", "touchstart", "keydown", "mousedown"]) addEventListener(t, mark, { once: true, passive: true });
+      setTimeout(() => { if (!moved && scrollY < 5) stage.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }); }, 1000);
+      // Eight seconds in, the search shrinks to its icon so the map has the room; a tap opens it again.
+      const fs = document.querySelector(".float-search");
+      setTimeout(() => { if (document.activeElement !== input) fs.classList.add("chica"); }, 8000);
+      formSearch.addEventListener("click", () => { if (fs.classList.contains("chica")) { fs.classList.remove("chica"); input.focus(); } });
+    }
     // ?dia=2026-10-17 opens on that day; a colonia in the link (its card hides the timeline), or
     // reduced motion, shows today; otherwise the crisis plays once from the first publication.
     const dia = params.get("dia"), di = DAYS.indexOf(dia);

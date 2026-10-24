@@ -225,6 +225,12 @@ header.top { margin-bottom: 0; position: static }
 .stage .bigmap { height: 100%; border-radius: 0; border: 0; border-bottom: 1px solid var(--line) }
 .float-search { position: absolute; z-index: 1300; top: 12px; left: 12px; width: min(420px, calc(100% - 76px)); display: flex; gap: 8px }
 .float-search .search { flex: 1 }
+.stage .float-search { transition: width .5s ease }
+.stage .float-search.chica { width: 104px }
+.float-search.chica .search input { cursor: pointer; padding-right: 0; color: transparent }
+.float-search.chica .search input::placeholder { color: transparent }
+.float-search.chica .clear { display: none }
+@media (prefers-reduced-motion: reduce) { .stage .float-search { transition: none } }
 .float-search .search input { box-shadow: 0 4px 16px rgb(3 14 22 / .18) }
 .iconbtn { width: 50px; height: 50px; padding: 0; justify-content: center; box-shadow: 0 4px 16px rgb(3 14 22 / .18) }
 .iconbtn .i { width: 1.3em; height: 1.3em }
@@ -463,7 +469,12 @@ path.nueva { animation: nueva 1.4s ease-out both; pointer-events: none }
   .stage.has-card .leaflet-control-zoom, .stage.has-card .leaflet-control-centrar { display: none }
 }
 @media (max-width: 760px) {
-  .stage .card { bottom: 0; left: 0; width: 100%; max-height: 62%; border-radius: 18px 18px 0 0; padding: 14px 0 12px }
+  .stage .card { bottom: 0; left: 0; width: 100%; max-height: 74%; overflow: hidden; border-radius: 18px 18px 0 0; padding: 14px 0 12px }
+  .stage .card h2 { font-size: 1.2rem }
+  .stage .card h2 small { font: 400 1rem var(--font); color: var(--muted); text-transform: none; letter-spacing: 0 }
+  .stage .card .where { margin-bottom: 8px }
+  .stage .card .where ~ .where { display: none }
+  .stage .card .ev-src { margin-top: 3px }
   .stage .card > :not(.ev):not(.close), .stage .card .ev > :not(.posts) { margin-left: 16px; margin-right: 16px }
   .stage .card .mosaic, .stage .card .ev > .linkbtn, .stage .card .sub-head, .stage .card .conteo { display: none }
   .stage .card .posts { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 10px; padding: 0 16px 6px; scrollbar-width: none }
@@ -537,10 +548,18 @@ if (window.top !== window.self) {
     if (row.children.length && at) at.after(row);
     return row;
   }
+  // The card's head on one line: «NAME · Municipio», then only the zone SIAPA puts it in.
+  function compacta(card, p) {
+    const M = window.aguaMapa, h = card.querySelector("h2"), w = card.querySelector(".where");
+    if (!p || !h || !w || h.querySelector("small")) return;
+    const ls = M.zonesOf(p.l || ""), zs = ls.length ? ls : M.zones(p).main;
+    h.append(" ", Object.assign(document.createElement("small"), { textContent: `· ${p.m}` }));
+    w.textContent = zs.length ? `${zs.length > 1 ? "Zonas" : "Zona"} ${M.joinES(zs.map(String))}` : "Sin zona en el mapa del SIAPA";
+  }
   const calla = (map) => map.eachLayer((l) => l.closeTooltip && l.closeTooltip());
 
   window.__antes = (map) => calla(map);
-  window.__ficha = (card, e) => acciones(card, e, false);
+  window.__ficha = (card, e, form, p) => { compacta(card, p); acciones(card, e, false); };
   window.__pad = (s) => ({ paddingTopLeft: [40, 90], paddingBottomRight: [40, Math.round(s.y * 0.6)] });
   // The carousel holds the posts, so the map shows no tiles of them around the colonia.
   window.__tile = [0, 0];
@@ -571,7 +590,8 @@ if (window.top !== window.self) {
     at();
   }
 
-  window.__ficha = (card, e) => {
+  window.__ficha = (card, e, form, p) => {
+    compacta(card, p);
     acciones(card, e, false);
     if (!e) return;
     const list = card.querySelector(".posts"), name = card.querySelector("h2").textContent;
@@ -1352,7 +1372,7 @@ if (window.top !== window.self) {
       card.hidden = false;
       stage.classList.add("has-card");
       setOverview(false);
-      if (window.__ficha && phone()) window.__ficha(card, e, openForm);
+      if (window.__ficha && phone()) window.__ficha(card, e, openForm, f.properties);
       // The selected colonia's report button, top right where the summary was, while the form isn't open.
       const done = Date.now() - reportedAt(k) < SEEN;
       $("reporta").hidden = done || !!openForm;
@@ -2030,6 +2050,17 @@ if (window.top !== window.self) {
     if (!selected) map.fitBounds(home, { animate: false });
     addStreets();
     ready();
+    if (!framed) {
+      // A second after landing the map takes the screen, unless the visitor has already scrolled or touched it.
+      let moved = false;
+      const mark = () => { moved = true; };
+      for (const t of ["wheel", "touchstart", "keydown", "mousedown"]) addEventListener(t, mark, { once: true, passive: true });
+      setTimeout(() => { if (!moved && scrollY < 5) stage.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }); }, 1000);
+      // Eight seconds in, the search shrinks to its icon so the map has the room; a tap opens it again.
+      const fs = document.querySelector(".float-search");
+      setTimeout(() => { if (document.activeElement !== input) fs.classList.add("chica"); }, 8000);
+      formSearch.addEventListener("click", () => { if (fs.classList.contains("chica")) { fs.classList.remove("chica"); input.focus(); } });
+    }
     // ?dia=2026-10-17 opens on that day; a colonia in the link (its card hides the timeline), or
     // reduced motion, shows today; otherwise the crisis plays once from the first publication.
     const dia = params.get("dia"), di = DAYS.indexOf(dia);

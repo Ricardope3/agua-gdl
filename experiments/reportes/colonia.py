@@ -48,13 +48,26 @@ COMMON = r"""
     if (row.children.length && at) at.after(row);
     return row;
   }
+  // The card's head on one line: «NAME · Municipio», then only the zone SIAPA puts it in.
+  function compacta(card, p) {
+    const M = window.aguaMapa, h = card.querySelector("h2"), w = card.querySelector(".where");
+    if (!p || !h || !w || h.querySelector("small")) return;
+    const ls = M.zonesOf(p.l || ""), zs = ls.length ? ls : M.zones(p).main;
+    h.append(" ", Object.assign(document.createElement("small"), { textContent: `· ${p.m}` }));
+    w.textContent = zs.length ? `${zs.length > 1 ? "Zonas" : "Zona"} ${M.joinES(zs.map(String))}` : "Sin zona en el mapa del SIAPA";
+  }
   const calla = (map) => map.eachLayer((l) => l.closeTooltip && l.closeTooltip());
 """
 
 # /reportes' carousel on phones: a short card over the map whose posts slide sideways.
 BASE = ("""
 @media (max-width: 760px) {
-  .stage .card { bottom: 0; left: 0; width: 100%; max-height: 62%; border-radius: 18px 18px 0 0; padding: 14px 0 12px }
+  .stage .card { bottom: 0; left: 0; width: 100%; max-height: 74%; overflow: hidden; border-radius: 18px 18px 0 0; padding: 14px 0 12px }
+  .stage .card h2 { font-size: 1.2rem }
+  .stage .card h2 small { font: 400 1rem var(--font); color: var(--muted); text-transform: none; letter-spacing: 0 }
+  .stage .card .where { margin-bottom: 8px }
+  .stage .card .where ~ .where { display: none }
+  .stage .card .ev-src { margin-top: 3px }
   .stage .card > :not(.ev):not(.close), .stage .card .ev > :not(.posts) { margin-left: 16px; margin-right: 16px }
   .stage .card .mosaic, .stage .card .ev > .linkbtn, .stage .card .sub-head, .stage .card .conteo { display: none }
   .stage .card .posts { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 10px; padding: 0 16px 6px; scrollbar-width: none }
@@ -65,7 +78,7 @@ BASE = ("""
   .stage .card .c-acc { margin-left: 16px; margin-right: 16px }
 }""", r"""
   window.__antes = (map) => calla(map);
-  window.__ficha = (card, e) => acciones(card, e, false);
+  window.__ficha = (card, e, form, p) => { compacta(card, p); acciones(card, e, false); };
   window.__pad = (s) => ({ paddingTopLeft: [40, 90], paddingBottomRight: [40, Math.round(s.y * 0.6)] });
   // The carousel holds the posts, so the map shows no tiles of them around the colonia.
   window.__tile = [0, 0];
@@ -117,7 +130,8 @@ V = {
   .stage .card .posts li.sin-img { padding-top: 10px }
   .stage .card .posts q { -webkit-line-clamp: 2 }
 }""", r"""
-  window.__ficha = (card, e) => {
+  window.__ficha = (card, e, form, p) => {
+    compacta(card, p);
     acciones(card, e, false);
     if (!e) return;
     for (const [li, p] of slides(card, e)) {
@@ -136,7 +150,8 @@ V = {
   .stage .card .posts li.full q { -webkit-line-clamp: unset; display: block }
   .stage .card .posts li:not(.full) q::after { content: " Leer todo"; color: var(--link); font-weight: 600; font-size: .85rem }
 }""", r"""
-  window.__ficha = (card, e) => {
+  window.__ficha = (card, e, form, p) => {
+    compacta(card, p);
     acciones(card, e, false);
     if (!e) return;
     for (const [li] of slides(card, e)) li.querySelector("q").addEventListener("click", () => li.classList.toggle("full"));
@@ -156,7 +171,8 @@ V = {
   .stage .card .posts q { font-size: .88rem; -webkit-line-clamp: 2 }
   .stage .card .posts .who { font-size: .75rem }
 }""", r"""
-  window.__ficha = (card, e) => {
+  window.__ficha = (card, e, form, p) => {
+    compacta(card, p);
     const h = card.querySelector("h2"), b = card.querySelector(".ev-head .sevb");
     if (b) h.append(b.cloneNode(true));
     const row = acciones(card, e, false);
@@ -175,7 +191,8 @@ V = {
   .stage .card .posts li.medio { background: color-mix(in srgb, var(--brand) 10%, var(--bg)) }
   .stage .card .posts .who .tag { display: none }
 }""", r"""
-  window.__ficha = (card, e) => {
+  window.__ficha = (card, e, form, p) => {
+    compacta(card, p);
     acciones(card, e, false);
     if (!e) return;
     const all = slides(card, e), list = card.querySelector(".posts");
@@ -198,7 +215,8 @@ V = {
   .c-fin .button { justify-content: center; padding: 8px 10px; font-size: .9rem }
   .c-fin .rep { background: #e4572e; color: #fff }
 }""", r"""
-  window.__ficha = (card, e) => {
+  window.__ficha = (card, e, form, p) => {
+    compacta(card, p);
     acciones(card, e, false);
     if (!e) return;
     const list = card.querySelector(".posts"), name = card.querySelector("h2").textContent;
@@ -265,7 +283,7 @@ def hooks(h, js, americana=False):
             "const W = phone() ? (window.__tile || [120])[0] : 210, H = phone() ? (window.__tile || [0, 90])[1] : 158, G = 8;\n"
             "        if (!W) return;")
     h = sub(h, '      stage.classList.add("has-card");\n      setOverview(false);\n',
-            '      stage.classList.add("has-card");\n      setOverview(false);\n      if (window.__ficha && phone()) window.__ficha(card, e, openForm);\n')
+            '      stage.classList.add("has-card");\n      setOverview(false);\n      if (window.__ficha && phone()) window.__ficha(card, e, openForm, f.properties);\n')
     return h
 
 
