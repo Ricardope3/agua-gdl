@@ -1920,7 +1920,12 @@ if (window.top !== window.self) {
         say(`No encontramos «${preset}» en el mapa del SIAPA. Revisa cómo se escribe, prueba con tu código postal o toca tu colonia en el mapa.`);
       }
     }
-    if (!selected) map.fitBounds(home, { animate: false });
+    // ?zona=N (the landing's zone cards): that zone outlined and framed, a little closer than the city.
+    const zona = Number(params.get("zona")), zf = !selected && zonas.find((z) => z.properties.z === zona);
+    if (zf) {
+      const zl = L.geoJSON(zf, { interactive: false, style: { color: M.COLORS[aguaDark() ? "dark" : "light"][zona], weight: 4, opacity: 0.95, fill: true, fillOpacity: 0.08 } }).addTo(map);
+      map.fitBounds(zl.getBounds(), phone() ? { paddingTopLeft: [10, 110], paddingBottomRight: [10, 150], animate: false } : { padding: [40, 40], animate: false });
+    } else if (!selected) map.fitBounds(home, { animate: false });
     addStreets();
     ready();
     if (!framed) {
