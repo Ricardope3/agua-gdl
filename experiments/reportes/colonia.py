@@ -1,5 +1,5 @@
 """Writes web/c1.html … web/c5.html: /reportes with a colonia open (Americana unless the link names
-another), each laying out the colonia's view differently on phones. Wider screens see /reportes as is.
+another), each a take on the carousel /reportes shows a colonia in on phones. Wider screens see /reportes as is.
 Run from the repo root: python3 experiments/reportes/colonia.py
 """
 from pathlib import Path
@@ -7,7 +7,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 WEB = ROOT / "web"
 
-NAMES = {"c1": "Hoja", "c2": "Mitad y mitad", "c3": "Carrusel", "c4": "Ficha", "c5": "Muro"}
 
 BAR_CSS = """
 .variant-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; padding: 6px 16px; background: #1c1400; color: #fde68a; font-size: .78rem } .variant-bar strong { margin-right: 4px } .variant-bar a { color: #fde68a; text-decoration: none; padding: 2px 8px; border-radius: 999px; border: 1px solid #fde68a55 } .variant-bar a[aria-current="page"] { background: #fde68a; color: #1c1400; font-weight: 700 }
@@ -52,35 +51,8 @@ COMMON = r"""
   const calla = (map) => map.eachLayer((l) => l.closeTooltip && l.closeTooltip());
 """
 
-V = {
-    # A bottom sheet that peeks with the essentials and opens to the posts.
-    "c1": ("""
-@media (max-width: 760px) {
-  .stage .card { bottom: 0; left: 0; width: 100%; max-height: 220px; overflow: hidden; border-radius: 18px 18px 0 0; padding-top: 22px; transition: max-height .25s }
-  .stage .card::before { content: ""; position: absolute; top: 8px; left: 50%; width: 40px; height: 5px; margin-left: -20px; border-radius: 3px; background: var(--line) }
-  .stage .card.abierta { max-height: 86%; overflow: auto }
-  .stage .card:not(.abierta) .mosaic, .stage .card:not(.abierta) .posts, .stage .card:not(.abierta) .ev ~ *, .stage .card:not(.abierta) .ev > .linkbtn { display: none }
-  .stage .card .where { margin-bottom: 6px }
-}""", r"""
-  window.__antes = (map) => { calla(map); document.getElementById("ficha").classList.remove("abierta"); };
-  window.__ficha = (card, e, form) => { if (form) card.classList.add("abierta"); acciones(card, e, true); };
-  window.__pad = (s) => ({ paddingTopLeft: [70, 90], paddingBottomRight: [70, 240] });
-"""),
-    # The map on top, the card below it, each with its own half of the screen.
-    "c2": ("""
-@media (max-width: 760px) {
-  .stage.has-card .bigmap { height: 44% }
-  .stage .card { top: 44%; bottom: 0; left: 0; width: 100%; max-height: none; border-radius: 0; border-width: 2px 0 0; border-top-color: #e4572e; box-shadow: none }
-  .stage.has-card .float-search { display: none }
-}""", r"""
-  window.__antes = (map, stage) => { calla(map); stage.classList.add("has-card"); map.invalidateSize(); };
-  window.__cierra = (map) => map.invalidateSize();
-  window.__ficha = (card, e) => acciones(card, e, false);
-  window.__pad = (s) => ({ paddingTopLeft: [24, 24], paddingBottomRight: [24, 24] });
-  window.__tile = [92, 70];
-"""),
-    # A short card over the map whose posts slide sideways, one at a time.
-    "c3": ("""
+# /reportes' carousel on phones: a short card over the map whose posts slide sideways.
+BASE = ("""
 @media (max-width: 760px) {
   .stage .card { bottom: 0; left: 0; width: 100%; max-height: 62%; border-radius: 18px 18px 0 0; padding: 14px 0 12px }
   .stage .card > :not(.ev):not(.close), .stage .card .ev > :not(.posts) { margin-left: 16px; margin-right: 16px }
@@ -95,48 +67,150 @@ V = {
   window.__antes = (map) => calla(map);
   window.__ficha = (card, e) => acciones(card, e, false);
   window.__pad = (s) => ({ paddingTopLeft: [70, 90], paddingBottomRight: [70, Math.round(s.y * 0.6)] });
-"""),
-    # The colonia as a page: a strip of map, the days in large type, the report button always at hand.
-    "c4": ("""
+""")
+
+# Helpers the variants share: each slide with its post, and a dot per slide that follows the scroll.
+SLIDES = r"""
+  const slides = (card, e) => [...card.querySelectorAll(".posts li")].map((li, i) => [li, e.posts[i]]);
+  function dots(card, n, label) {
+    const list = card.querySelector(".posts");
+    if (!list || n < 2) return;
+    const row = document.createElement("div");
+    row.className = "c-dots";
+    const count = document.createElement("span");
+    const prev = document.createElement("button"), next = document.createElement("button");
+    prev.type = next.type = "button"; prev.textContent = "‹"; next.textContent = "›";
+    prev.setAttribute("aria-label", "Anterior"); next.setAttribute("aria-label", "Siguiente");
+    const step = () => list.children[0].getBoundingClientRect().width + 10;
+    prev.onclick = () => list.scrollBy({ left: -step(), behavior: "smooth" });
+    next.onclick = () => list.scrollBy({ left: step(), behavior: "smooth" });
+    const marks = label ? null : Array.from({ length: Math.min(n, 12) }, () => document.createElement("i"));
+    const at = () => {
+      const i = Math.min(n - 1, Math.round(list.scrollLeft / step()));
+      if (marks) marks.forEach((m, j) => m.classList.toggle("on", j === Math.min(i, marks.length - 1)));
+      else count.textContent = `${i + 1} de ${n}`;
+      prev.disabled = i === 0; next.disabled = i === n - 1;
+    };
+    list.addEventListener("scroll", at, { passive: true });
+    if (marks) row.append(prev, ...marks, next); else row.append(prev, count, next);
+    list.after(row);
+    at();
+  }
+"""
+
+DOTS_CSS = """
+  .c-dots { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 4px 16px 0; font-size: .85rem; color: var(--muted); font-variant-numeric: tabular-nums }
+  .c-dots button { width: 34px; height: 30px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--fg); font: 700 1.1rem/1 var(--font); cursor: pointer }
+  .c-dots button:disabled { opacity: .35 }
+  .c-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line); transition: width .2s }
+  .c-dots i.on { width: 18px; border-radius: 4px; background: #e4572e }"""
+
+V = {
+    # Each slide shows the post's own picture above its words.
+    "c1": ("Con imagen", """
 @media (max-width: 760px) {
-  .stage.has-card .bigmap { height: 30% }
-  .stage .card { top: calc(30% - 16px); bottom: 0; left: 0; width: 100%; max-height: none; border-radius: 18px 18px 0 0; padding-bottom: 0 }
-  .stage.has-card .float-search { display: none }
-  .stage .card .ev-head { flex-direction: column; align-items: flex-start; gap: 4px; font-size: 1.15rem }
-  .stage .card .ev-head .sevb { font: 800 2.6rem/1 var(--font); padding: 6px 14px; border-radius: 14px }
-  .stage .card .mosaic { margin-left: -18px; margin-right: -18px; border-radius: 0 }
-  .stage .card .c-acc { position: sticky; bottom: 0; z-index: 2; margin: 14px -18px 0; padding: 10px 18px calc(10px + env(safe-area-inset-bottom)); background: var(--surface); border-top: 1px solid var(--line) }
-  .stage .card > .button { display: none }
+  .stage .card .posts li { padding: 0 0 10px; overflow: hidden }
+  .stage .card .posts li > :not(.c-img) { margin-left: 12px; margin-right: 12px }
+  .c-img { display: block; width: 100%; height: 96px; object-fit: cover; margin-bottom: 8px; background: var(--subtle) }
+  .stage .card .posts li.sin-img { padding-top: 10px }
+  .stage .card .posts q { -webkit-line-clamp: 2 }
 }""", r"""
-  window.__antes = (map, stage) => { calla(map); stage.classList.add("has-card"); map.invalidateSize(); };
-  window.__cierra = (map) => map.invalidateSize();
-  window.__ficha = (card, e) => card.append(acciones(card, e, false));
-  window.__pad = (s) => ({ paddingTopLeft: [16, 16], paddingBottomRight: [16, 16] });
-  window.__tile = [0, 0];
-"""),
-    # The map and its wall of posts are the view; the card is a slim bar until asked.
-    "c5": ("""
-@media (max-width: 760px) {
-  .stage .card { bottom: 8px; max-height: 160px; overflow: hidden; padding: 12px 14px; border: 2px solid #e4572e }
-  .stage .card h2 { font-size: 1.1rem }
-  .stage .card .where { margin: 0; font-size: .85rem }
-  .stage .card:not(.abierta) > :not(h2):not(.where):not(.close):not(.c-acc) { display: none }
-  .stage .card:not(.abierta) .where ~ .where { display: none }
-  .stage .card .c-acc { margin-top: 8px }
-  .stage .card.abierta { max-height: 82%; overflow: auto }
-  .stage .float-search { opacity: .96 }
-}""", r"""
-  window.__antes = (map) => { calla(map); document.getElementById("ficha").classList.remove("abierta"); };
-  window.__ficha = (card, e, form) => {
-    if (form) card.classList.add("abierta");
-    const h = card.querySelector("h2");
-    if (e && !h.querySelector(".sevb")) { const b = card.querySelector(".ev-head .sevb"); if (b) h.append(" ", b.cloneNode(true)); }
-    card.querySelector(".where").after(acciones(card, e, true));
+  window.__ficha = (card, e) => {
+    acciones(card, e, false);
+    if (!e) return;
+    for (const [li, p] of slides(card, e)) {
+      const src = p.vista || p.captura || (p.en && p.en.vista);
+      if (!src) { li.classList.add("sin-img"); continue; }
+      const img = document.createElement("img");
+      img.className = "c-img"; img.src = `/${src}`; img.alt = ""; img.loading = "lazy"; img.decoding = "async";
+      li.prepend(img);
+    }
   };
-  window.__pad = (s) => ({ paddingTopLeft: [120, 130], paddingBottomRight: [120, 200] });
-  window.__tile = [140, 105];
+"""),
+    # Arrows and «2 de 5», and a tap on a quote reads it whole.
+    "c2": ("Contador", """
+@media (max-width: 760px) {""" + DOTS_CSS + """
+  .stage .card .posts q { cursor: pointer }
+  .stage .card .posts li.full q { -webkit-line-clamp: unset; display: block }
+  .stage .card .posts li:not(.full) q::after { content: " Leer todo"; color: var(--link); font-weight: 600; font-size: .85rem }
+}""", r"""
+  window.__ficha = (card, e) => {
+    acciones(card, e, false);
+    if (!e) return;
+    for (const [li] of slides(card, e)) li.querySelector("q").addEventListener("click", () => li.classList.toggle("full"));
+    dots(card, e.posts.length, true);
+  };
+"""),
+    # The least card that still says it: name and days on one line, narrower slides, more map.
+    "c3": ("Compacto", """
+@media (max-width: 760px) {
+  .stage .card { max-height: 46%; padding-top: 12px }
+  .stage .card h2 { font-size: 1.1rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap }
+  .stage .card .where { margin: 2px 0 0; font-size: .82rem }
+  .stage .card .where ~ .where, .stage .card .ev-head, .stage .card .ev-src { display: none }
+  .stage .card .c-acc { margin-top: 8px }
+  .stage .card .c-acc .button { padding: 8px 10px }
+  .stage .card .posts li, .stage .card .posts li[hidden] { flex-basis: 72%; padding: 8px 10px }
+  .stage .card .posts q { font-size: .88rem; -webkit-line-clamp: 2 }
+  .stage .card .posts .who { font-size: .75rem }
+}""", r"""
+  window.__ficha = (card, e) => {
+    const h = card.querySelector("h2"), b = card.querySelector(".ev-head .sevb");
+    if (b) h.append(b.cloneNode(true));
+    const row = acciones(card, e, false);
+    card.querySelector(".where").after(row);
+  };
+  window.__pad = (s) => ({ paddingTopLeft: [50, 90], paddingBottomRight: [50, Math.round(s.y * 0.46) + 20] });
+"""),
+    # Outlets first, each slide marked as a news outlet or a neighbour, with the days it gives.
+    "c4": ("Quién lo dice", """
+@media (max-width: 760px) {
+  .stage .card .posts li { position: relative; padding-top: 34px }
+  .c-who { position: absolute; top: 9px; left: 12px; right: 12px; display: flex; gap: 6px; align-items: center }
+  .c-who span { font-size: .68rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; background: var(--subtle); color: var(--muted) }
+  .c-who .m { background: var(--brand); color: #fff }
+  .c-who .d { margin-left: auto; background: #e4572e; color: #fff }
+  .stage .card .posts li.medio { background: color-mix(in srgb, var(--brand) 10%, var(--bg)) }
+  .stage .card .posts .who .tag { display: none }
+}""", r"""
+  window.__ficha = (card, e) => {
+    acciones(card, e, false);
+    if (!e) return;
+    const all = slides(card, e), list = card.querySelector(".posts");
+    all.sort(([, a], [, b]) => (b.fuente === "medio") - (a.fuente === "medio"));
+    for (const [li, p] of all) {
+      const w = document.createElement("span");
+      w.className = "c-who";
+      w.innerHTML = p.fuente === "medio" ? '<span class="m">Medio</span>' : `<span>${p.tipo === "comentario" ? "Comentario de vecino" : "Vecino"}</span>`;
+      if (p.dias) w.insertAdjacentHTML("beforeend", `<span class="d">${p.dias} ${p.dias === 1 ? "día" : "días"}</span>`);
+      li.prepend(w);
+      list.append(li);
+    }
+  };
+"""),
+    # Dots under the slides, and a last slide that asks the visitor to act: report, demand, share.
+    "c5": ("Remata con acción", """
+@media (max-width: 760px) {""" + DOTS_CSS + """
+  .stage .card .posts li.c-fin { display: flex; flex-direction: column; justify-content: center; gap: 8px; border: 2px dashed #e4572e; background: color-mix(in srgb, #e4572e 8%, var(--bg)) }
+  .c-fin p { margin: 0; font-weight: 700; line-height: 1.3 }
+  .c-fin .button { justify-content: center; padding: 8px 10px; font-size: .9rem }
+  .c-fin .rep { background: #e4572e; color: #fff }
+}""", r"""
+  window.__ficha = (card, e) => {
+    acciones(card, e, false);
+    if (!e) return;
+    const list = card.querySelector(".posts"), name = card.querySelector("h2").textContent;
+    const q = new URLSearchParams(location.search);
+    const fin = document.createElement("li");
+    fin.className = "post c-fin";
+    fin.innerHTML = `<p>¿Y en tu casa hay agua?</p><button type="button" class="button rep">Reportar esta colonia</button><a class="button alt" href="/exige?${new URLSearchParams({ q: q.get("q") || name, m: q.get("m") || "", cp: q.get("cp") || "" })}">Exígelo al gobierno</a>`;
+    fin.querySelector(".rep").onclick = () => document.getElementById("reporta-btn").click();
+    list.append(fin);
+    dots(card, e.posts.length + 1, false);
+  };
 """),
 }
+NAMES = {k: v[0] for k, v in V.items()}
 
 
 def sub(html, old, new):
@@ -148,8 +222,8 @@ CUR = ' aria-current="page"'
 
 
 def build(src, v, bar=True):
-    name = NAMES[v]
-    css, js = V[v]
+    name = NAMES.get(v)
+    css, js = (BASE[0] + V[v][1], BASE[1] + SLIDES + V[v][2]) if v in V else BASE
     links = '<a href="/reportes?q=AMERICANA&amp;m=Guadalajara&amp;cp=44100">Actual</a>' + "".join(
         f'<a href="/{k}"{CUR if k == v else ""}>{k} {n}</a>' for k, n in NAMES.items())
     h = src
@@ -195,8 +269,8 @@ def main():
     for v in NAMES:
         (WEB / f"{v}.html").write_text(build(src, v))
         print(f"web/{v}.html")
-    # /reportes itself takes c3's layout on phones.
-    (WEB / "reportes.html").write_text(build(src, "c3", bar=False))
+    # /reportes itself takes the carousel on phones.
+    (WEB / "reportes.html").write_text(build(src, None, bar=False))
     print("web/reportes.html")
 
 

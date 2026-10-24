@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Agua GDL · Prueba c4: Ficha</title>
+<title>Agua GDL · Prueba c4: Quién lo dice</title>
 <meta name="robots" content="noindex">
 <meta name="facebook-domain-verification" content="li0vsm7edv0afccxodm5t0jvyiw0za">
 <meta name="description" content="Cuántos días llevan sin agua las colonias de Guadalajara, según medios y vecinos en Facebook y X, cada publicación con su enlace. Reporta la tuya en cuatro toques, sin cuenta y de forma anónima.">
@@ -462,14 +462,24 @@ path.nueva { animation: nueva 1.4s ease-out both; pointer-events: none }
   .stage.has-card .leaflet-control-zoom, .stage.has-card .leaflet-control-centrar { display: none }
 }
 @media (max-width: 760px) {
-  .stage.has-card .bigmap { height: 30% }
-  .stage .card { top: calc(30% - 16px); bottom: 0; left: 0; width: 100%; max-height: none; border-radius: 18px 18px 0 0; padding-bottom: 0 }
-  .stage.has-card .float-search { display: none }
-  .stage .card .ev-head { flex-direction: column; align-items: flex-start; gap: 4px; font-size: 1.15rem }
-  .stage .card .ev-head .sevb { font: 800 2.6rem/1 var(--font); padding: 6px 14px; border-radius: 14px }
-  .stage .card .mosaic { margin-left: -18px; margin-right: -18px; border-radius: 0 }
-  .stage .card .c-acc { position: sticky; bottom: 0; z-index: 2; margin: 14px -18px 0; padding: 10px 18px calc(10px + env(safe-area-inset-bottom)); background: var(--surface); border-top: 1px solid var(--line) }
-  .stage .card > .button { display: none }
+  .stage .card { bottom: 0; left: 0; width: 100%; max-height: 62%; border-radius: 18px 18px 0 0; padding: 14px 0 12px }
+  .stage .card > :not(.ev):not(.close), .stage .card .ev > :not(.posts) { margin-left: 16px; margin-right: 16px }
+  .stage .card .mosaic, .stage .card .ev > .linkbtn, .stage .card .sub-head, .stage .card .conteo { display: none }
+  .stage .card .posts { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 10px; padding: 0 16px 6px; scrollbar-width: none }
+  .stage .card .posts li, .stage .card .posts li[hidden] { display: block; flex: 0 0 82%; scroll-snap-align: center }
+  .stage .card .posts .eco { display: none }
+  .stage .card .posts q { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden }
+  .stage .card .ev-src { font-size: .82rem }
+  .stage .card .c-acc { margin-left: 16px; margin-right: 16px }
+}
+@media (max-width: 760px) {
+  .stage .card .posts li { position: relative; padding-top: 34px }
+  .c-who { position: absolute; top: 9px; left: 12px; right: 12px; display: flex; gap: 6px; align-items: center }
+  .c-who span { font-size: .68rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; background: var(--subtle); color: var(--muted) }
+  .c-who .m { background: var(--brand); color: #fff }
+  .c-who .d { margin-left: auto; background: #e4572e; color: #fff }
+  .stage .card .posts li.medio { background: color-mix(in srgb, var(--brand) 10%, var(--bg)) }
+  .stage .card .posts .who .tag { display: none }
 }
 </style>
 <style>/* Talavera */
@@ -499,7 +509,7 @@ if (window.top !== window.self) {
 <script src="/theme.js"></script>
 </head>
 <body>
-<div class="variant-bar"><strong>Prueba · c4: Ficha</strong><a href="/reportes?q=AMERICANA&amp;m=Guadalajara&amp;cp=44100">Actual</a><a href="/c1">c1 Hoja</a><a href="/c2">c2 Mitad y mitad</a><a href="/c3">c3 Carrusel</a><a href="/c4" aria-current="page">c4 Ficha</a><a href="/c5">c5 Muro</a></div>
+<div class="variant-bar"><strong>Prueba · c4: Quién lo dice</strong><a href="/reportes?q=AMERICANA&amp;m=Guadalajara&amp;cp=44100">Actual</a><a href="/c1">c1 Con imagen</a><a href="/c2">c2 Contador</a><a href="/c3">c3 Compacto</a><a href="/c4" aria-current="page">c4 Quién lo dice</a><a href="/c5">c5 Remata con acción</a></div>
 <script>
   const isPhone = () => matchMedia("(max-width: 760px)").matches;
   // The report button and, when wanted, a toggle for the rest of the card, right under its title.
@@ -526,11 +536,50 @@ if (window.top !== window.self) {
   }
   const calla = (map) => map.eachLayer((l) => l.closeTooltip && l.closeTooltip());
 
-  window.__antes = (map, stage) => { calla(map); stage.classList.add("has-card"); map.invalidateSize(); };
-  window.__cierra = (map) => map.invalidateSize();
-  window.__ficha = (card, e) => card.append(acciones(card, e, false));
-  window.__pad = (s) => ({ paddingTopLeft: [16, 16], paddingBottomRight: [16, 16] });
-  window.__tile = [0, 0];
+  window.__antes = (map) => calla(map);
+  window.__ficha = (card, e) => acciones(card, e, false);
+  window.__pad = (s) => ({ paddingTopLeft: [70, 90], paddingBottomRight: [70, Math.round(s.y * 0.6)] });
+
+  const slides = (card, e) => [...card.querySelectorAll(".posts li")].map((li, i) => [li, e.posts[i]]);
+  function dots(card, n, label) {
+    const list = card.querySelector(".posts");
+    if (!list || n < 2) return;
+    const row = document.createElement("div");
+    row.className = "c-dots";
+    const count = document.createElement("span");
+    const prev = document.createElement("button"), next = document.createElement("button");
+    prev.type = next.type = "button"; prev.textContent = "‹"; next.textContent = "›";
+    prev.setAttribute("aria-label", "Anterior"); next.setAttribute("aria-label", "Siguiente");
+    const step = () => list.children[0].getBoundingClientRect().width + 10;
+    prev.onclick = () => list.scrollBy({ left: -step(), behavior: "smooth" });
+    next.onclick = () => list.scrollBy({ left: step(), behavior: "smooth" });
+    const marks = label ? null : Array.from({ length: Math.min(n, 12) }, () => document.createElement("i"));
+    const at = () => {
+      const i = Math.min(n - 1, Math.round(list.scrollLeft / step()));
+      if (marks) marks.forEach((m, j) => m.classList.toggle("on", j === Math.min(i, marks.length - 1)));
+      else count.textContent = `${i + 1} de ${n}`;
+      prev.disabled = i === 0; next.disabled = i === n - 1;
+    };
+    list.addEventListener("scroll", at, { passive: true });
+    if (marks) row.append(prev, ...marks, next); else row.append(prev, count, next);
+    list.after(row);
+    at();
+  }
+
+  window.__ficha = (card, e) => {
+    acciones(card, e, false);
+    if (!e) return;
+    const all = slides(card, e), list = card.querySelector(".posts");
+    all.sort(([, a], [, b]) => (b.fuente === "medio") - (a.fuente === "medio"));
+    for (const [li, p] of all) {
+      const w = document.createElement("span");
+      w.className = "c-who";
+      w.innerHTML = p.fuente === "medio" ? '<span class="m">Medio</span>' : `<span>${p.tipo === "comentario" ? "Comentario de vecino" : "Vecino"}</span>`;
+      if (p.dias) w.insertAdjacentHTML("beforeend", `<span class="d">${p.dias} ${p.dias === 1 ? "día" : "días"}</span>`);
+      li.prepend(w);
+      list.append(li);
+    }
+  };
 </script>
 <div class="wrap">
   <header class="top">
