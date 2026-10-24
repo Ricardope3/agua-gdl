@@ -13,6 +13,7 @@ NAMES = {"h1": "Próximo corte", "h2": "La cifra", "h3": "La más reportada", "h
 # Shared over every variant: the zone's days from the API, and a panel at the foot of each map card.
 CSS = """
 @media (max-width: 760px) {
+  .m5-map { aspect-ratio: 2 / 3 }
   .m5-over { position: absolute; z-index: 1000; left: 0; right: 0; bottom: 0; padding: 34px 12px 12px; pointer-events: none;
     background: linear-gradient(transparent, color-mix(in srgb, var(--surface) 92%, transparent) 38%); color: var(--fg); font-size: .9rem; line-height: 1.3 }
   .m5-over:empty { display: none }
@@ -73,7 +74,10 @@ def variant(key):
     f = "    map.fitBounds(zone.getBounds(), { padding: [10, 10] });"
     assert f in js
     js = js.replace(f, "    const foot = el.closest(\".m5-card\").querySelector(\".m5-over\");\n"
-                    "    map.fitBounds(zone.getBounds(), { paddingTopLeft: [10, 44], paddingBottomRight: [10, 10 + (foot ? foot.offsetHeight - 24 : 0)] });", 1)
+                    "    // Zoomed onto where the zone's reports are (the whole zone when it has none), a step closer than a plain fit.\n"
+                    "    const where = cs.length ? L.latLngBounds(cs.map((c) => mid(c.f))) : zone.getBounds();\n"
+                    "    map.fitBounds(where, { paddingTopLeft: [24, 56], paddingBottomRight: [24, 24 + (foot ? foot.offsetHeight - 24 : 0)], maxZoom: 15 });\n"
+                    "    map.setZoom(map.getZoom() + 0.25, { animate: false });", 1)
     v["js"] = js
     v["css"] = v["css"] + CSS
     return v
