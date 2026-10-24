@@ -581,7 +581,7 @@ aguaM.datos.then((d) => {
   document.getElementById("m1-chips").innerHTML = d.top.slice(0, 10).map((c) => `<a href="${aguaM.link(c.k)}"><b>${aguaM.name(c.k)}</b><small>${c.n} reportes${c.dias ? " · " + c.dias + " días" : ""}</small></a>`).join("");
 });
 </script>
-<nav class="vbar"><a href="/">actual</a> · <a href="/m1" aria-current=page>m1 Mapa limpio</a> · <a href="/m2">m2 Cifras primero</a> · <a href="/m3">m3 Pantalla completa</a> · <a href="/m4">m4 Historias</a></nav>
+<nav class="vbar"><a href="/">actual</a> · <a href="/m1" aria-current=page>m1 Mapa limpio</a> · <a href="/m2">m2 Cifras primero</a> · <a href="/m3">m3 Pantalla completa</a> · <a href="/m4">m4 Historias</a> · <a href="/m5">m5 Zonas</a></nav>
 <script>
 (() => {
   const API = (() => {

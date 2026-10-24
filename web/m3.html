@@ -563,10 +563,9 @@ const aguaM = (() => {
     `<li><a href="${link(c.k)}"><b>${name(c.k)}</b><span class="d">${c.dias ? c.dias + " días" : c.n + " rep."}</span><small>${c.muni} · ${c.n} ${c.n === 1 ? "publicación" : "publicaciones"}</small>${max ? `<span class="m-bar"><i style="width:${Math.max(4, 100 * c.dias / max)}%"></i></span>` : ""}</a></li>`).join("");
   return { datos, frame, name, link, fmt, rank, phone: matchMedia("(max-width: 760px)").matches };
 })();
-aguaM.frame('@media (max-width: 760px) {\n  .overview { top: 64px; bottom: auto; left: 8px; right: 8px; width: auto; padding: 6px 10px; border-left-width: 3px }\n  .overview .ov-top, .overview #ov-cuerpo { display: none }\n  .overview .ov-head { margin: 0; font-size: .92rem; line-height: 1.3 }\n  .overview .ov-head b, .overview .ov-head .n { font-size: 1.15rem }\n  .tl { left: 8px; right: 8px; bottom: 8px; width: auto; padding: 6px 10px; border-radius: 10px }\n  .tl-top { gap: 8px }\n  .tl-play { width: 34px; height: 34px }\n  .tl-play svg { width: 14px; height: 14px }\n  .tl-date b { font-size: .9rem }\n  .tl-count { font-size: .8rem }\n  .tl-count .n { font-size: 1.05rem }\n  .tl-new { display: none }\n  .tl-chart { height: 38px; margin-top: 4px }\n  .tl-foot { display: none }\n}');
 
 </script>
-<nav class="vbar"><a href="/">actual</a> · <a href="/m1">m1 Mapa limpio</a> · <a href="/m2">m2 Cifras primero</a> · <a href="/m3" aria-current=page>m3 Pantalla completa</a> · <a href="/m4">m4 Historias</a></nav>
+<nav class="vbar"><a href="/">actual</a> · <a href="/m1">m1 Mapa limpio</a> · <a href="/m2">m2 Cifras primero</a> · <a href="/m3" aria-current=page>m3 Pantalla completa</a> · <a href="/m4">m4 Historias</a> · <a href="/m5">m5 Zonas</a></nav>
 <script>
 (() => {
   const API = (() => {

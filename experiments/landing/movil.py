@@ -1,4 +1,4 @@
-"""Writes the phone variants of the landing, web/m1.html … web/m4.html, from web/index.html.
+"""Writes the phone variants of the landing, web/m1.html … web/m5.html, from web/index.html.
 
 Each one changes only what shows at 760 px or less; on a wider screen it is the landing as is.
 Run from the repo root: python3 experiments/landing/movil.py
@@ -9,7 +9,7 @@ from pathlib import Path
 WEB = Path(__file__).resolve().parents[2] / "web"
 MUESTRA = "?muestra=CIUDAD+GRANJA%7CZapopan%7C45010"
 
-NAMES = {"m1": "Mapa limpio", "m2": "Cifras primero", "m3": "Pantalla completa", "m4": "Historias"}
+NAMES = {"m1": "Mapa limpio", "m2": "Cifras primero", "m3": "Pantalla completa", "m4": "Historias", "m5": "Zonas"}
 
 # Shared by every variant: a smaller illustration beside the headline, the variant bar, the data.
 BASE_CSS = """
@@ -150,22 +150,7 @@ V["m3"] = dict(
 }""",
     before_map="",
     after_map="",
-    frame_css="""@media (max-width: 760px) {
-  .overview { top: 64px; bottom: auto; left: 8px; right: 8px; width: auto; padding: 6px 10px; border-left-width: 3px }
-  .overview .ov-top, .overview #ov-cuerpo { display: none }
-  .overview .ov-head { margin: 0; font-size: .92rem; line-height: 1.3 }
-  .overview .ov-head b, .overview .ov-head .n { font-size: 1.15rem }
-  .tl { left: 8px; right: 8px; bottom: 8px; width: auto; padding: 6px 10px; border-radius: 10px }
-  .tl-top { gap: 8px }
-  .tl-play { width: 34px; height: 34px }
-  .tl-play svg { width: 14px; height: 14px }
-  .tl-date b { font-size: .9rem }
-  .tl-count { font-size: .8rem }
-  .tl-count .n { font-size: 1.05rem }
-  .tl-new { display: none }
-  .tl-chart { height: 38px; margin-top: 4px }
-  .tl-foot { display: none }
-}""",
+    frame_css="",
     js="",
 )
 
@@ -227,11 +212,111 @@ const mark = () => { const i = Math.round(track.scrollLeft / (track.children[1].
 track.addEventListener("scroll", mark, { passive: true }); mark();""",
 )
 
+V["m5"] = dict(
+    head='<script src="/mapa.js"></script>',
+    css="""
+:root { --s1: #f59d8b; --s2: #ea6d56; --s3: #cc361e; --s4: #90200e }
+@media (prefers-color-scheme: dark) { :root { --s1: #993b2b; --s2: #cb4832; --s3: #ea6d56; --s4: #fca391 } }
+@media (max-width: 760px) {
+  .m5 { margin: 0 -16px 18px }
+  .m5-track { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 16px; scrollbar-width: none }
+  .m5-card { flex: 0 0 86%; scroll-snap-align: center; display: flex; flex-direction: column; border: 3px double var(--zc, var(--brand)); border-radius: 6px; background: var(--surface); overflow: hidden }
+  .m5-map { display: block; width: 100%; aspect-ratio: 4 / 3; background: var(--subtle); border-bottom: 1px solid var(--line) }
+  .m5-map path { vector-effect: non-scaling-stroke }
+  .m5-body { padding: 12px 14px 14px; display: flex; flex-direction: column; flex: 1 }
+  .m5-body h3 { font-size: 1.3rem; margin: 0; font-style: italic; font-weight: 400 }
+  .m5-body h3 small { font-style: normal; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-left: 6px }
+  .m5-body p { margin: 6px 0 0; font-size: .95rem }
+  .m5-hoy { display: inline-block; font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: var(--fg); color: var(--bg); padding: 2px 6px; border-radius: 4px; margin-left: 6px; vertical-align: 2px }
+  .m5-big { font: 800 2.2rem/1 var(--serif, Georgia, serif); color: var(--s3); font-variant-numeric: tabular-nums }
+  .m5-body .m-rank a { padding: 6px 0 }
+  .m5-body .more { margin-top: auto; padding-top: 10px; font-size: .9rem }
+  .m5-key { display: flex; gap: 10px; flex-wrap: wrap; font-size: .75rem; color: var(--muted); margin: 8px 0 0; padding: 0; list-style: none }
+  .m5-key i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; vertical-align: -1px }
+  .m5-dots { display: flex; justify-content: center; gap: 6px; margin-top: 10px }
+  .m5-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line) }
+  .m5-dots i.on { background: var(--brand) }
+  .mapframe-box { height: 70svh; min-height: 400px }
+  .maphero .mapnote { font-size: .85rem }
+}""",
+    before_map="""<section class="m-only m5" aria-label="La crisis zona por zona" data-ancla>
+  <div class="m5-track" id="m5-track"><article class="m5-card"><div class="m5-map"></div><div class="m5-body"><p>Cargando las zonas…</p></div></article></div>
+  <div class="m5-dots" id="m5-dots" aria-hidden="true"></div>
+</section>""",
+    after_map="",
+    frame_css=MAP_ONLY,
+    map_only=True,
+    js=r"""
+if (aguaM.phone) Promise.all([
+  fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.datos,
+  fetch("https://api.aguagdl.com/v1/zones").then((r) => r.json()).catch(() => []),
+]).then(([topo, d, api]) => {
+  const g = aguaMapa.decode(topo), pubs = new Map(d.cols.map((c) => [c.k, c]));
+  const K = Math.cos(20.65 * Math.PI / 180), px = ([x, y]) => [x * K, -y];
+  const SEV = (n) => n >= 14 ? 4 : n >= 7 ? 3 : n >= 3 ? 2 : n >= 1 ? 1 : 0;
+  const dark = () => window.aguaDark && aguaDark();
+  const zc = (z) => aguaMapa.COLORS[dark() ? "dark" : "light"][z];
+  // Each shape is projected once into a path; every card's map only changes its viewBox.
+  const shape = (f) => {
+    const polys = f.geometry.type === "Polygon" ? [f.geometry.coordinates] : f.geometry.coordinates;
+    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity, dpath = "";
+    for (const poly of polys) for (const ring of poly) {
+      dpath += ring.map((p, i) => { const [x, y] = px(p); x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); return (i ? "L" : "M") + x.toFixed(5) + " " + y.toFixed(5); }).join("") + "Z";
+    }
+    return { f, d: dpath, box: [x0, y0, x1, y1] };
+  };
+  const cols = g.colonias.map(shape), zonas = g.zonas.map(shape);
+  for (const c of cols) { const p = c.f.properties; c.pub = pubs.get(`${p.n}|${p.m}|${p.cp}`); c.zs = aguaMapa.zones(p).main; }
+  const fit = (box) => {
+    let [x0, y0, x1, y1] = box, w = x1 - x0, h = y1 - y0;
+    const pad = 0.08; x0 -= w * pad; x1 += w * pad; y0 -= h * pad; y1 += h * pad; w = x1 - x0; h = y1 - y0;
+    if (w / h > 4 / 3) { const nh = w * 3 / 4; y0 -= (nh - h) / 2; h = nh; } else { const nw = h * 4 / 3; x0 -= (nw - w) / 2; w = nw; }
+    return [x0, y0, w, h];
+  };
+  const meets = (b, [x, y, w, h]) => b[2] >= x && b[0] <= x + w && b[3] >= y && b[1] <= y + h;
+  const fill = (c) => c.pub ? (c.pub.dias ? `var(--s${SEV(c.pub.dias)})` : "var(--s1)") : "var(--surface)";
+  const map = (vb, zs, href, label) => {
+    const inView = cols.filter((c) => meets(c.box, vb));
+    return `<a href="${href}" aria-label="${label}"><svg class="m5-map" viewBox="${vb.join(" ")}" preserveAspectRatio="xMidYMid slice" role="img">`
+      + `<g stroke="var(--line)" stroke-width=".5">${inView.map((c) => `<path d="${c.d}" fill="${fill(c)}"${c.pub ? "" : ' fill-opacity=".6"'}/>`).join("")}</g>`
+      + zonas.filter((z) => zs.includes(z.f.properties.z)).map((z) => `<path d="${z.d}" fill="${zc(z.f.properties.z)}" fill-opacity=".08" stroke="${zc(z.f.properties.z)}" stroke-width="2.5"/>`).join("")
+      + `</svg></a>`;
+  };
+  const hoy = new Date().toLocaleDateString("en-CA", { timeZone: "America/Mexico_City" });
+  const days = new Map(api.map((z) => [z.zone, z]));
+  const all = [1, 2, 3, 4, 5, 6, 7];
+  const box = zonas.reduce((b, z) => [Math.min(b[0], z.box[0]), Math.min(b[1], z.box[1]), Math.max(b[2], z.box[2]), Math.max(b[3], z.box[3])], [Infinity, Infinity, -Infinity, -Infinity]);
+  const key = `<ul class="m5-key"><li><i style="background:var(--s1)"></i>1–2 días</li><li><i style="background:var(--s2)"></i>3–6</li><li><i style="background:var(--s3)"></i>7–13</li><li><i style="background:var(--s4)"></i>14 o más</li></ul>`;
+  const cards = [`<article class="m5-card">${map(fit(box), all, "/mizona", "Las siete zonas en el mapa")}<div class="m5-body"><p class="m-k">¿Hay agua en tu colonia?</p><div class="m5-big">${aguaM.fmt(d.semana)}</div><p>colonias llevan <strong>una semana o más sin agua</strong>, según medios y vecinos. El SIAPA prometió «por máximo un día».</p>${key}<p class="more">Desliza para ver cada zona →</p></div></article>`];
+  const zcards = zonas.map((z) => {
+    const n = z.f.properties.z, mine = cols.filter((c) => c.zs.includes(n)), withPub = mine.filter((c) => c.pub);
+    const week = withPub.filter((c) => c.pub.dias >= 7).length;
+    const top = withPub.map((c) => c.pub).sort((a, b) => b.dias - a.dias || b.n - a.n);
+    const info = days.get(n), cut = info && info.next[0] === hoy;
+    const html = `<article class="m5-card" style="--zc:${zc(n)}">${map(fit(z.box), [n], `/mizona?zona=${n}`, `La zona ${n} en el mapa`)}<div class="m5-body">`
+      + `<h3>Zona ${n}<small>${z.f.properties.nombre}</small>${cut ? '<span class="m5-hoy">Hoy hay corte</span>' : ""}</h3>`
+      + (info ? `<p>Cortes: ${aguaMapa.joinES(info.days)}</p>` : "")
+      + `<p><span class="m5-big">${week}</span> de sus ${mine.length} colonias llevan una semana o más sin agua · ${withPub.length} con publicaciones</p>`
+      + (top.length ? `<ol class="m-rank">${aguaM.rank(top, 3, 0)}</ol>` : "<p>Nadie ha publicado todavía que falte el agua aquí.</p>")
+      + `<a class="more" href="/mizona?zona=${n}">Ver la zona ${n} →</a></div></article>`;
+    return { week, html };
+  }).sort((a, b) => b.week - a.week).map((c) => c.html);
+  const end = `<article class="m5-card"><div class="m5-body"><h3>¿Y en tu colonia?</h3><p>Cada reporte es una prueba de dónde falla el gobierno. Sin cuenta y anónimo.</p><a class="button" href="/reportes?reportar=1" style="justify-content:center;margin-top:12px">Reportar mi colonia</a><p><a href="/exige">Exígele a quien le toca →</a></p><p><a href="/avisos">Recibe avisos de los cortes de tu zona →</a></p></div></article>`;
+  const track = document.getElementById("m5-track"), dots = document.getElementById("m5-dots");
+  track.innerHTML = [...cards, ...zcards, end].join("");
+  dots.innerHTML = [...track.children].map(() => "<i></i>").join("");
+  const mark = () => { const i = Math.round(track.scrollLeft / (track.children[1].offsetLeft - track.children[0].offsetLeft)); [...dots.children].forEach((x, j) => x.classList.toggle("on", i === j)); };
+  track.addEventListener("scroll", mark, { passive: true }); mark();
+});""",
+)
+
 
 def build(key, v, src):
     s = src
     s = s.replace("<title>", '<meta name="robots" content="noindex">\n<title>', 1)
     s = s.replace("</style>", BASE_CSS + v["css"] + "\n</style>", 1)
+    if v.get("head"):
+        s = s.replace('<script src="/theme.js"></script>', '<script src="/theme.js"></script>\n' + v["head"], 1)
     if v.get("map_only"):
         assert MUESTRA in s
         s = s.replace(MUESTRA, "", 1)

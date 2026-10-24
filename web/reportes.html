@@ -373,6 +373,23 @@ html.en-portada { overflow: hidden }
 @media (prefers-reduced-motion: reduce) { .tl-chart .slide { transition: none } }
 .tl-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 12px; margin: 6px 0 0; font-size: .74rem; color: var(--muted); line-height: 1.35 }
 .tl-foot .sevkey { font-size: .72rem }
+/* On phones the summary shrinks to its headline under the search and the timeline to a slim bar,
+   so the map keeps the screen; the chart keeps enough height for its bars. */
+@media (max-width: 760px) {
+  .overview { top: 64px; bottom: auto; left: 8px; right: 8px; width: auto; padding: 6px 10px; border-left-width: 3px }
+  .overview .ov-top, .overview #ov-cuerpo { display: none }
+  .overview .ov-head { margin: 0; font-size: .92rem; line-height: 1.3 }
+  .tl { left: 8px; right: 8px; bottom: 8px; width: auto; padding: 8px 10px 6px; border-radius: 10px }
+  .tl-top { gap: 10px }
+  .tl-play { width: 38px; height: 38px }
+  .tl-play svg { width: 16px; height: 16px }
+  .tl-date b { font-size: .95rem }
+  .tl-count { font-size: .85rem }
+  .tl-count .n { font-size: 1.15rem }
+  .tl-new { display: none }
+  .tl-chart { height: 88px; margin-top: 6px }
+  .tl-foot { display: none }
+}
 /* r1: the overview's slices of the timeline's day: what's new, who says it, how long, which SIAPA zones. */
 .ov-dia { margin: 10px 0 0; padding: 8px 0 0; border-top: 1px solid var(--line); display: grid; gap: 7px; font-size: .8rem; line-height: 1.32 }
 .ov-dia h2 { margin: 0; font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 700 }
@@ -421,9 +438,8 @@ path.nueva { animation: nueva 1.4s ease-out both; pointer-events: none }
   .stage.has-card .tl { display: none }
   .tl-play { width: 40px; height: 40px }
   .tl-count { font-size: .88rem } .tl-count .n { font-size: 1.25rem }
-  .tl-chart { height: 64px; margin-top: 6px }
+  .tl-chart { height: 88px; margin-top: 6px }
   .tl-foot .sevkey, .tl-new { display: none }
-  .overview { bottom: calc(var(--tlh, 150px) + 16px) }
   .stage .leaflet-bottom { bottom: var(--tlh, 150px) }
 }
 /* The top menu as on the landing: its frame is 960 px wide, and 1320 px from 1100 px, so it sits on one row. */
