@@ -666,7 +666,7 @@ if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.
     // Zoomed onto where the zone's reports are (the whole zone when it has none), a step closer than a plain fit.
     const where = cs.length ? L.latLngBounds(cs.map((c) => mid(c.f))) : zone.getBounds();
     map.fitBounds(where, { paddingTopLeft: [24, 56], paddingBottomRight: [24, 24 + (foot ? foot.offsetHeight - 24 : 0)], maxZoom: 15 });
-    map.setZoom(map.getZoom() + (n === 2 ? 0 : 0.25), { animate: false }); // zone 2's two pieces need the whole width
+    map.setZoom(map.getZoom() + (n === 2 ? 0 : n === 3 ? 0.5 : 0.25), { animate: false }); // zone 2's two pieces need the whole width
     if (n === 3) map.panBy([-30, 0], { animate: false }); // zone 3's reports sit left of its outline's middle
   };
 
