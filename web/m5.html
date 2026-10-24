@@ -327,7 +327,7 @@ html, body { overflow-x: clip }
   .m5-card a { display: block }
   .m5-map { display: block; width: 100%; aspect-ratio: 4 / 5; pointer-events: none; background: var(--subtle) }
   .m5-map .leaflet-control-attribution { font-size: 9px }
-  .m5-b { display: grid; place-items: center; border-radius: 50%; border: 1.5px solid #fff; font: 700 11px/1 system-ui, sans-serif; color: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / .35) }
+  .m5-b { display: grid; place-items: center; border-radius: 50%; border: 1px solid #fff; font: 700 9px/1 system-ui, sans-serif; color: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / .35) }
   .m5-b.l { color: #3b0d05 }
   .m5-tag { position: absolute; z-index: 1000; left: 10px; top: 10px; font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: var(--zc, var(--fg)); color: #fff; padding: 3px 8px; border-radius: 4px; pointer-events: none }
   .m5-dots, .m4-dots { display: flex; justify-content: center; gap: 6px; margin-top: 10px }
@@ -640,10 +640,10 @@ if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.
       return { color: c, weight: 1, fillColor: c, fillOpacity: 0.45 };
     } }).addTo(map);
     for (const c of cs) {
-      const s = SEV(c.pub.dias), px = Math.round(14 + 5 * Math.log2(c.pub.n));
+      const s = SEV(c.pub.dias), px = Math.round(11 + 3.5 * Math.log2(c.pub.n));
       L.marker(mid(c.f), { interactive: false, keyboard: false, zIndexOffset: -c.pub.n, icon: L.divIcon({
         className: "", iconSize: [px, px],
-        html: `<span class="m5-b${s < 3 ? " l" : ""}" style="width:${px}px;height:${px}px;background:${css(`--s${s}`)}">${c.pub.n}</span>`,
+        html: `<span class="m5-b${(window.aguaDark && aguaDark() ? s >= 3 : s < 3) ? " l" : ""}" style="width:${px}px;height:${px}px;background:${css(`--s${s}`)}">${c.pub.n}</span>`,
       }) }).addTo(map);
     }
     map.fitBounds(zone.getBounds(), { padding: [10, 10] });
