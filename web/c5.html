@@ -442,8 +442,9 @@ path.nueva { animation: nueva 1.4s ease-out both; pointer-events: none }
   .tl-chart { height: 88px; margin-top: 6px }
   .tl-foot .sevkey, .tl-new { display: none }
   .stage .leaflet-bottom { bottom: var(--tlh, 150px) }
-  .stage.libre .overview, .stage.libre:not(.en-curso) .tl { display: none }
-  .stage.libre:not(.en-curso) .leaflet-bottom { bottom: 0 }
+  .stage .overview, .stage .tl { transition: opacity .5s, visibility .5s }
+  .stage.libre .overview, .stage.libre.acabo .tl { opacity: 0; visibility: hidden; pointer-events: none }
+  .stage.libre.acabo .leaflet-bottom { bottom: 0 }
 }
 /* The top menu as on the landing: its frame is 960 px wide, and 1320 px from 1100 px, so it sits on one row. */
 .wrap:has(> header.top) { max-width: 960px }
@@ -850,7 +851,7 @@ if (window.top !== window.self) {
   if (window.ResizeObserver) { const ro = new ResizeObserver(fitStage); ro.observe(top); if (vbar) ro.observe(vbar); }
   fitStage();
   // On phones the summary steps aside once the visitor moves or zooms the map, and the timeline once it has
-  // stopped playing (the en-curso class); both come back on a tap.
+  // stopped playing two seconds ago (the acabo class); both fade out, and come back on a tap.
   const aside = (on) => { if (phone()) stage.classList.toggle("libre", on); };
   map.on("dragstart", () => aside(true));
   $("mapa").addEventListener("touchmove", () => aside(true), { passive: true });
@@ -1714,13 +1715,14 @@ if (window.top !== window.self) {
     const PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>';
     const PAUSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4.5v16H6zM13.5 4H18v16h-4.5z"/></svg>';
     const AGAIN = '<svg viewBox="0 0 24 24" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"><path d="M4 12a8 8 0 1 0 2.6-5.9"/><path d="M4 4v4.5h4.5"/></svg>';
-    let playing = false, timer = 0;
+    let playing = false, timer = 0, acaboT = 0, located = false;
     function setPlay() {
       const label = playing ? "Pausar" : atEnd() ? "Ver de nuevo desde el principio" : "Reproducir día por día";
       playBtn.innerHTML = playing ? PAUSE : atEnd() ? AGAIN : PLAY;
       playBtn.setAttribute("aria-label", label);
       playBtn.title = label;
-      stage.classList.toggle("en-curso", playing);
+      clearTimeout(acaboT);
+      if (playing) stage.classList.remove("acabo"); else acaboT = setTimeout(() => stage.classList.add("acabo"), 2000);
     }
     function stop() { if (!playing) return; playing = false; clearTimeout(timer); setPlay(); }
     const STEP_MS = 1000;
@@ -1739,6 +1741,8 @@ if (window.top !== window.self) {
       playing = false;
       setPlay();
       if (onPlayed) { const then = onPlayed; onPlayed = null; setTimeout(then, 700); }
+      // Once the crisis has played, the visitor's own colonia: their location, if they allow it.
+      else if (!framed && !selected && !located) { located = true; setTimeout(() => { if (!selected) locate(false); }, 2000); }
     }
     // ?muestra=NAME|Municipio|CP (the landing's frame): after the timeline plays, that colonia's outline
     // pulses three times and it opens, to show that a colonia can be tapped for its close-up.
