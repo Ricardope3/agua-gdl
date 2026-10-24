@@ -77,7 +77,7 @@ def variant(key):
                     "    // Zoomed onto where the zone's reports are (the whole zone when it has none), a step closer than a plain fit.\n"
                     "    const where = cs.length ? L.latLngBounds(cs.map((c) => mid(c.f))) : zone.getBounds();\n"
                     "    map.fitBounds(where, { paddingTopLeft: [24, 56], paddingBottomRight: [24, 24 + (foot ? foot.offsetHeight - 24 : 0)], maxZoom: 15 });\n"
-                    "    map.setZoom(map.getZoom() + 0.25, { animate: false });", 1)
+                    "    map.setZoom(map.getZoom() + (n === 2 ? 0 : 0.25), { animate: false }); // zone 2's two pieces need the whole width", 1)
     v["js"] = js
     v["css"] = v["css"] + CSS
     return v
