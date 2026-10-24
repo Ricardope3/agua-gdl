@@ -691,7 +691,7 @@ if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.
   const nm = (c) => aguaM.name(`${c.f.properties.n}|`);
   const over = (n) => { const i = info(n); return i.top ? `<div class="h-k">La más reportada</div><div class="h-name">${nm(i.top)}</div><div>${i.top.pub.n} reportes${i.top.pub.dias ? ` · hasta ${i.top.pub.dias} días sin agua` : ""}</div>` : '<div class="h-k">Nadie ha publicado aún que falte el agua aquí</div>'; };
   const track = document.getElementById("m5-track"), dots = document.getElementById("m5-dots");
-  track.innerHTML = g.zonas.map((z) => { const n = z.properties.z; return `<article class="m5-card" style="--zc:${zc(n)}"><a href="/mizona?zona=${n}" aria-label="La zona ${n} en el mapa"><div class="m5-map" data-z="${n}"></div></a><span class="m5-tag">Zona ${n}</span><div class="m5-over">${over(n)}</div></article>`; }).join("");
+  track.innerHTML = g.zonas.map((z) => { const n = z.properties.z; return `<article class="m5-card" style="--zc:${zc(n)}"><a href="/reportes" aria-label="La zona ${n} en el mapa de reportes"><div class="m5-map" data-z="${n}"></div></a><span class="m5-tag">Zona ${n}</span><div class="m5-over">${over(n)}</div></article>`; }).join("");
   // A card's streets load only once it, or the card beside it, is in view.
   const maps = [...track.querySelectorAll(".m5-map")], done = new Set();
   const near = (i) => { for (const j of [i - 1, i, i + 1]) if (maps[j] && !done.has(j)) { done.add(j); draw(maps[j], g.zonas[j]); } };
