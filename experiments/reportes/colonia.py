@@ -62,7 +62,7 @@ COMMON = r"""
 # /reportes' carousel on phones: a short card over the map whose posts slide sideways.
 BASE = ("""
 @media (max-width: 760px) {
-  .stage .card { bottom: 0; left: 0; width: 100%; max-height: 74%; overflow: hidden; border-radius: 18px 18px 0 0; padding: 14px 0 12px }
+  .stage .card { bottom: 0; left: 0; width: 100%; max-height: none; overflow: hidden; border-radius: 18px 18px 0 0; padding: 14px 0 12px }
   .stage .card h2 { font-size: 1.2rem }
   .stage .card h2 small { font: 400 1rem var(--font); color: var(--muted); text-transform: none; letter-spacing: 0 }
   .stage .card .where { margin-bottom: 8px }
@@ -80,6 +80,9 @@ BASE = ("""
   window.__antes = (map) => calla(map);
   window.__ficha = (card, e, form, p) => { compacta(card, p); acciones(card, e, false); };
   window.__pad = (s) => ({ paddingTopLeft: [40, 90], paddingBottomRight: [40, Math.round(s.y * 0.6)] });
+  // Framed again once the card is drawn, in the map left above it: the card's height varies with
+  // the colonia and with the browser's toolbars.
+  window.__refit = (map, b, card) => map.flyToBounds(b, { paddingTopLeft: [40, 80], paddingBottomRight: [40, card.offsetHeight + 16], maxZoom: 16, duration: 0.5, animate: !matchMedia("(prefers-reduced-motion: reduce)").matches });
   // The carousel holds the posts, so the map shows no tiles of them around the colonia.
   window.__tile = [0, 0];
 """)
@@ -278,6 +281,7 @@ def hooks(h, js, americana=False):
             '      stage.classList.remove("has-card");\n      if (window.__cierra) window.__cierra(map);\n')
     h = sub(h, "      if (fit) {\n        // Room around",
             "      if (window.__antes && phone()) window.__antes(map, stage);\n      if (fit) {\n        // Room around")
+    h = sub(h, "      renderCard(f, form);\n", "      renderCard(f, form);\n      if (fit && window.__refit && phone()) window.__refit(map, marks[1].getBounds(), card);\n")
     h = sub(h, "const pad = phone() ? {", "const pad = phone() && window.__pad ? window.__pad(map.getSize()) : phone() ? {")
     h = sub(h, "const W = phone() ? 120 : 210, H = phone() ? 90 : 158, G = 8;",
             "const W = phone() ? (window.__tile || [120])[0] : 210, H = phone() ? (window.__tile || [0, 90])[1] : 158, G = 8;\n"
