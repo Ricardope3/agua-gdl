@@ -463,6 +463,19 @@ path.nueva { animation: nueva 1.4s ease-out both; pointer-events: none }
   .c-acc .rep:hover { background: #c4421c }
   .c-acc .alt2 { flex: 0 0 auto; background: var(--subtle); color: var(--fg) }
   .stage .card > .button { display: none }
+  .ql { position: fixed; inset: 0; z-index: 5000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 16px; background: rgb(3 8 20 / 0); -webkit-backdrop-filter: blur(0); backdrop-filter: blur(0); transition: background .25s, backdrop-filter .25s, -webkit-backdrop-filter .25s }
+  .ql.on { background: rgb(3 8 20 / .45); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px) }
+  .ql-card { width: min(100%, 440px); max-height: 62vh; overflow: auto; border-radius: 16px; background: var(--surface); color: var(--fg); box-shadow: 0 18px 50px rgb(0 0 0 / .45); transition: transform .38s cubic-bezier(.2, 1.25, .4, 1), opacity .2s }
+  .ql-card img { display: block; width: 100%; max-height: 34vh; object-fit: cover; background: var(--subtle) }
+  .ql-body { padding: 14px 16px 16px }
+  .ql-tit { margin: 0 0 8px; font-weight: 700; font-size: 1.05rem; line-height: 1.3 }
+  .ql-body q { display: block; font-size: 1.05rem; line-height: 1.45; quotes: "«" "»" }
+  .ql-body .who, .ql-body .eco { margin: 8px 0 0; font-size: .85rem; color: var(--muted) }
+  .ql-menu { width: min(100%, 440px); display: flex; gap: 8px; opacity: 0; transform: translateY(-8px) scale(.96); transition: opacity .2s .1s, transform .3s .1s cubic-bezier(.2, 1.25, .4, 1) }
+  .ql.on .ql-menu { opacity: 1; transform: none }
+  .ql-menu .button { flex: 1; justify-content: center; padding: 11px 10px }
+  .ql-menu .ql-go { flex: 1.6; background: #e4572e; color: #fff; font-weight: 700; text-decoration: none }
+  @media (prefers-reduced-motion: reduce) { .ql, .ql-card, .ql-menu { transition: none } }
   .stage.has-card .leaflet-control-zoom, .stage.has-card .leaflet-control-centrar { display: none }
 }
 @media (max-width: 760px) {
@@ -520,6 +533,7 @@ if (window.top !== window.self) {
   const isPhone = () => matchMedia("(max-width: 760px)").matches;
   // The report button and, when wanted, a toggle for the rest of the card, right under its title.
   function acciones(card, e, more) {
+    quicklook(card, e);
     const row = document.createElement("div");
     row.className = "c-acc";
     if (!card.querySelector(".thanks") && !card.querySelector("form.report")) {
@@ -539,6 +553,77 @@ if (window.top !== window.self) {
     const at = card.querySelector(".ev-src") || [...card.querySelectorAll(".where")].pop();
     if (row.children.length && at) at.after(row);
     return row;
+  }
+  // A tap on a slide (not on its link) opens it in a quick look, as iOS previews a photo: the slide
+  // grows from where it is into a large card over a blurred map, with its actions underneath.
+  function quicklook(card, e) {
+    if (!e) return;
+    const items = [...card.querySelectorAll(".posts li")];
+    items.forEach((li, i) => {
+      const p = e.posts[i];
+      if (!p || li.dataset.ql) return;
+      li.dataset.ql = "1";
+      li.style.cursor = "pointer";
+      li.addEventListener("click", (ev) => { if (!ev.target.closest("a, button")) abre(li, p); });
+    });
+  }
+  const reduce = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function abre(li, p) {
+    const mk = (tag, cls, txt) => { const n = document.createElement(tag); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
+    const link = p.tipo === "comentario" ? (p.red === "x" ? "Ver la respuesta" : "Ver el comentario") : p.red === "web" ? "Leer la nota" : "Ver la publicación";
+    const img = p.captura || p.vista || (p.en && p.en.vista);
+    const back = mk("div", "ql");
+    const box = mk("div", "ql-card");
+    box.setAttribute("role", "dialog"); box.setAttribute("aria-modal", "true"); box.setAttribute("aria-label", "Vista previa de la publicación");
+    if (img) { const im = mk("img"); im.src = `/${img}`; im.alt = ""; box.append(im); }
+    const body = mk("div", "ql-body");
+    // The headline, unless the quote already is it.
+    if (p.titular && !p.cita.startsWith(p.titular.slice(0, 30))) body.append(mk("p", "ql-tit", p.titular));
+    const q = mk("q", null, p.cita);
+    body.append(q);
+    const who = li.querySelector(".who");
+    if (who) { const w = who.cloneNode(true); w.querySelectorAll("a").forEach((a) => a.remove()); w.lastChild && (w.lastChild.textContent = w.lastChild.textContent.replace(/ · $/, "")); body.append(w); }
+    li.querySelectorAll(".eco").forEach((x) => body.append(x.cloneNode(true)));
+    box.append(body);
+    const menu = mk("div", "ql-menu");
+    const go = mk("a", "button ql-go", link);
+    go.href = p.url; go.target = "_blank"; go.rel = "noopener nofollow";
+    const share = mk("button", "button alt", "Compartir");
+    share.type = "button";
+    share.onclick = () => {
+      if (navigator.share) navigator.share({ url: p.url, text: `«${p.cita}»` }).catch(() => {});
+      else navigator.clipboard?.writeText(p.url).then(() => { share.textContent = "Enlace copiado"; }).catch(() => {});
+    };
+    const shut = mk("button", "button alt", "Cerrar");
+    shut.type = "button";
+    menu.append(go, share, shut);
+    back.append(box, menu);
+    document.body.append(back);
+    // From the slide's own rectangle to the card's, with a spring; the menu follows a beat later.
+    const from = li.getBoundingClientRect(), to = box.getBoundingClientRect();
+    const anim = !reduce();
+    if (anim) {
+      box.style.transformOrigin = "0 0";
+      box.style.transform = `translate(${from.left - to.left}px, ${from.top - to.top}px) scale(${from.width / to.width}, ${from.height / to.height})`;
+    }
+    requestAnimationFrame(() => requestAnimationFrame(() => { back.classList.add("on"); box.style.transform = ""; }));
+    const prev = document.activeElement;
+    go.focus({ preventScroll: true });
+    function close() {
+      document.removeEventListener("keydown", key);
+      back.classList.remove("on");
+      if (anim) {
+        const now = li.getBoundingClientRect(), r = box.getBoundingClientRect();
+        box.style.transform = `translate(${now.left - r.left}px, ${now.top - r.top}px) scale(${now.width / r.width}, ${now.height / r.height})`;
+        box.style.opacity = "0";
+        setTimeout(() => back.remove(), 280);
+      } else back.remove();
+      prev?.focus?.({ preventScroll: true });
+    }
+    const key = (ev) => { if (ev.key === "Escape") close(); };
+    document.addEventListener("keydown", key);
+    shut.onclick = close;
+    back.addEventListener("click", (ev) => { if (ev.target === back) close(); });
   }
   // The card's head on one line: «NAME · Municipio», then only the zone SIAPA puts it in.
   function compacta(card, p) {
