@@ -176,11 +176,10 @@ V["m4"] = dict(
   .mapframe-box { height: 70svh; min-height: 400px }
   .maphero .mapnote { font-size: .85rem }
 }""",
-    before_map="""<section class="m-only m4" aria-label="La crisis en seis tarjetas" data-ancla>
+    before_map="""<section class="m-only m4" aria-label="La crisis en cinco tarjetas" data-ancla>
   <div class="m4-track" id="m4-track">
     <article class="m4-card"><p class="m-k">¿Hay agua en tu colonia?</p><div class="m-num" id="m4-num">—</div><p>colonias llevan <strong>una semana o más sin agua</strong>, según medios y vecinos.</p><p class="who">Desliza para ver más →</p></article>
     <article class="m4-card"><p class="m-k">Lo que prometió el SIAPA</p><div class="m4-vs"><div><div class="m-num">1</div>día «por máximo», dijo el SIAPA</div><div><div class="m-num" id="m4-max">—</div>días sin agua, lo más largo que publica un medio</div></div><p class="who">Fuente: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">página de la rotación del SIAPA</a></p></article>
-    <article class="m4-card"><h3>Las que llevan más días</h3><ol class="m-rank" id="m4-rank"></ol></article>
     <article class="m4-card" id="m4-voz"><p class="m-k">Lo que publican los vecinos</p></article>
     <article class="m4-card"><h3>Por municipio</h3><ol class="m-rank" id="m4-munis"></ol></article>
     <article class="m4-card"><h3>¿Y en tu colonia?</h3><p>Cada reporte es una prueba de dónde falla el gobierno. Sin cuenta y anónimo.</p><a class="button" href="/reportes?reportar=1">Reportar mi colonia</a><p><a href="/exige">Exígele a quien le toca →</a></p></article>
@@ -194,7 +193,6 @@ V["m4"] = dict(
 aguaM.datos.then((d) => {
   document.getElementById("m4-num").textContent = aguaM.fmt(d.semana);
   document.getElementById("m4-max").textContent = d.max;
-  document.getElementById("m4-rank").innerHTML = aguaM.rank(d.peores, 4, d.peores[0].dias);
   document.getElementById("m4-munis").innerHTML = d.munis.slice(0, 5).map(([m, n]) => `<li><a href="/reportes"><b>${m}</b><span class="d">${n}</span><small>colonias con publicaciones</small></a></li>`).join("");
   const v = d.pubs.filter((e) => e.fuente === "vecinos" && e.cita && e.cita.length < 180 && e.dias >= 7).sort((a, b) => b.fecha.localeCompare(a.fecha))[0];
   if (v) {
