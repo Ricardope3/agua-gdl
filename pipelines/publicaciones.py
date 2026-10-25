@@ -58,7 +58,7 @@ REDES = {"facebook", "x", "web"}
 X_URL = re.compile(r"^https://x\.com/(\w{1,15})/status/(\d{8,20})$")
 VECINOS_QUIEN = ("Grupo «", "Cuenta de vecinos ")
 # Public pages, not outlets with a "medio" entry, whose posts neighbours comment on (en.quien).
-PAGINAS = {"Gobierno de Jalisco", "Jalisco ZMG", "SIAPA Guadalajara"}
+PAGINAS = {"Gobierno de Guadalajara", "Gobierno de Jalisco", "Jalisco ZMG", "SIAPA Guadalajara"}
 
 errors = []
 

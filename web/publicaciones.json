@@ -24536,6 +24536,273 @@
     "al": "2026-10-24"
    },
    "vista": "fuentes/ccf170208ac1.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "UnoTV",
+   "url": "https://www.unotv.com/estados/jalisco/llevamos-15-dias-sin-una-gota-vecinos-bloquean-avenidas-de-guadalajara-por-falta-de-agua/",
+   "fecha": "2026-10-24",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "Oblatos, Guadalajara",
+   "cita": "Habitantes de Oblatos denuncian que llevan hasta 15 días sin suministro de agua y deben gastar en garrafones y pipas particulares para cubrir sus necesidades.",
+   "dias": 15,
+   "bloqueo": true,
+   "eco": null,
+   "titular": "“Llevamos 15 días sin una gota”: vecinos bloquean avenidas de Guadalajara por falta de agua",
+   "vista": "fuentes/48b377e439df.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "El Informador",
+   "url": "https://www.informador.mx/jalisco/siapa-guadalajara-reparte-mas-de-dos-millones-de-litros-de-agua-en-80-colonias-ante-tandeos-20261024-0085.html",
+   "fecha": "2026-10-24",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Ciudad Granja, Zapopan",
+   "cita": "El pasado miércoles 21 de octubre, vecinos de Ciudad Granja y zonas aledañas cerraron parcialmente los carriles centrales de Periférico, a la altura de Las Palmas, en Zapopan. Los manifestantes reportaron más de 15 días sin suministro y exigieron su restablecimiento.",
+   "dias": 15,
+   "bloqueo": true,
+   "eco": null,
+   "titular": "SIAPA: Guadalajara reparte más de dos millones de litros de agua en 80 colonias ante tandeos",
+   "vista": null
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "UDG TV",
+   "url": "https://udgtv.com/noticias/protestan-con-bloqueos-en-javier-mina-por-crisis-de-agua/335673",
+   "fecha": "2026-10-24",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "Oblatos y San Felipe, Guadalajara",
+   "cita": "Un grupo de vecinos de Oblatos y San Felipe bloquea la avenida Javier Mina por 15 días sin agua.",
+   "dias": 15,
+   "bloqueo": true,
+   "eco": null,
+   "titular": "Protestan con bloqueos en Javier Mina y la autopista a Zapotlanejo por crisis de agua del SIAPA",
+   "vista": "fuentes/6c863aaf7348.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Meganoticias",
+   "url": "https://www.meganoticias.mx/guadalajara/noticia/bloquean-javier-mina-al-cruce-con-celestino-negrete-por-falta-de-agua/782221",
+   "fecha": "2026-10-24",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700",
+    "EL RETIRO|Guadalajara|44280"
+   ],
+   "lugar": "Oblatos, San Felipe y El Retiro, Guadalajara",
+   "cita": "Vecinos de las colonias Oblatos, San Felipe, El Retiro y otras zonas de Guadalajara realizaron una manifestación la tarde de este sábado en el cruce de la avenida Javier Mina y la calle Pedro Celestino Negrete, frente a la estación Oblatos de la Línea 2 del Tren Ligero, para exigir el restablecimiento del suministro de agua potable, luego de permanecer entre 15 días y casi un mes sin servicio",
+   "dias": 15,
+   "bloqueo": true,
+   "eco": null,
+   "titular": "Bloquean Javier Mina al cruce con Celestino Negrete por falta de agua",
+   "vista": "fuentes/dff6c21b9a74.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Meganoticias",
+   "url": "https://www.meganoticias.mx/guadalajara/noticia/suman-meses-de-reclamos-por-problemas-con-el-agua-en-ciudad-granja/782127",
+   "fecha": "2026-10-23",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Ciudad Granja, Zapopan",
+   "cita": "Vecinos de la colonia Ciudad Granja, en Zapopan, han salido en repetidas ocasiones a las calles para exigir al SIAPA una solución a los constantes cortes en el suministro de agua potable y a los problemas de calidad.",
+   "dias": null,
+   "bloqueo": true,
+   "eco": null,
+   "titular": "Suman meses de reclamos por problemas con el agua en Ciudad Granja",
+   "vista": "fuentes/d86b0ae0ef3d.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Partidero",
+   "url": "https://partidero.com/siapa-reajustara-calendario-de-tandeos-tras-fallas-y-descontento-social-en-la-zmg/",
+   "fecha": "2026-10-23",
+   "colonias": [
+    "AMERICANA|Guadalajara|44100"
+   ],
+   "lugar": "Americana, Guadalajara",
+   "cita": "La medida responde al descontento generalizado de vecinos en colonias céntricas e históricas como la Americana, quienes denuncian que los cronogramas publicados por el organismo no coinciden con la realidad.",
+   "dias": null,
+   "eco": null,
+   "titular": "SIAPA reajustará calendario de tandeos tras fallas y descontento social en la ZMG",
+   "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2113993838582739118",
+    "eco": {
+     "reacciones": 23,
+     "comentarios": 110,
+     "al": "2026-10-24"
+    }
+   },
+   "url": "https://x.com/SaethCarolina/status/2114013148608954761",
+   "fecha": "2026-10-24",
+   "colonias": [
+    "SANTA CECILIA|Guadalajara|44700"
+   ],
+   "lugar": "Santa Cecilia, Guadalajara",
+   "cita": "¿Cuándo van a restablecer el servicio en la colonia Santa Cecilia? Llevamos 3 semanas sin agua.",
+   "dias": 21,
+   "eco": {
+    "reacciones": 0,
+    "comentarios": 0,
+    "al": "2026-10-24"
+   },
+   "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2113993838582739118",
+    "eco": {
+     "reacciones": 23,
+     "comentarios": 110,
+     "al": "2026-10-24"
+    }
+   },
+   "url": "https://x.com/genesis7285/status/2114074439738417345",
+   "fecha": "2026-10-24",
+   "colonias": [
+    "GUADALAJARA ORIENTE|Guadalajara|44700"
+   ],
+   "lugar": "Guadalajara Oriente, Guadalajara",
+   "cita": "tenemos semana y media sin agua la colonia Guadalajara oriente",
+   "dias": null,
+   "eco": {
+    "reacciones": 0,
+    "comentarios": 0,
+    "al": "2026-10-24"
+   },
+   "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/Ladydigdl/status/2114084671713575173",
+   "fecha": "2026-10-24",
+   "colonias": [
+    "HACIENDA DEL VALLE|Zapopan|45180"
+   ],
+   "lugar": "Hacienda del Valle, Zapopan",
+   "cita": "¿por qué no tenemos agua en Haciendas del Valle Zapopan? Sin Agua desde el jueves 22 de octubre",
+   "dias": null,
+   "desde": "2026-10-22",
+   "eco": {
+    "reacciones": 6,
+    "comentarios": 2,
+    "al": "2026-10-24"
+   }
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "Gobierno de Guadalajara",
+    "url": "https://x.com/GuadalajaraGob/status/2114056854041211163",
+    "eco": {
+     "reacciones": 6,
+     "comentarios": 14,
+     "al": "2026-10-24"
+    }
+   },
+   "url": "https://x.com/martinezcruzr/status/2114176559217008759",
+   "fecha": "2026-10-24",
+   "colonias": [
+    "CIRCUNVALACION BELISARIO|Guadalajara|44330"
+   ],
+   "lugar": "Circunvalación Belisario, Guadalajara",
+   "cita": "Tenemos 3 semanas sin agua en colonia circunvalación belisario",
+   "dias": 21,
+   "eco": {
+    "reacciones": 5,
+    "comentarios": 0,
+    "al": "2026-10-24"
+   },
+   "vista": null
+  },
+  {
+   "fuente": "medio",
+   "red": "x",
+   "quien": "Tráfico ZMG",
+   "url": "https://x.com/Trafico_ZMG/status/2114067979511926869",
+   "fecha": "2026-10-24",
+   "colonias": [
+    "VISTAS DEL PEDREGAL|Tonalá|45429"
+   ],
+   "lugar": "Vistas del Pedregal, Tonalá",
+   "cita": "Habitantes del fraccionamiento Vistas del Pedregal cerraron la autopista Zapotlanejo-Morelia, a la altura de El Vado, en Tonalá.",
+   "dias": null,
+   "bloqueo": true,
+   "eco": {
+    "reacciones": 70,
+    "comentarios": 4,
+    "al": "2026-10-24"
+   }
+  },
+  {
+   "fuente": "medio",
+   "red": "x",
+   "quien": "DK 1250 AM",
+   "url": "https://x.com/dk1250/status/2114074485145960846",
+   "fecha": "2026-10-24",
+   "colonias": [
+    "VISTAS DEL PEDREGAL|Tonalá|45429"
+   ],
+   "lugar": "Vistas del Pedregal, Tonalá",
+   "cita": "Habitantes del fraccionamiento Vistas del Pedregal bloquean la autopista Zapotlanejo-Morelia, a la altura de El Vado en Tonalá, en protesta por la falta y mala calidad del agua.",
+   "dias": null,
+   "bloqueo": true,
+   "eco": {
+    "reacciones": 19,
+    "comentarios": 0,
+    "al": "2026-10-24"
+   },
+   "vista": "fuentes/28d8f5f93db4.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "x",
+   "quien": "Tráfico ZMG",
+   "url": "https://x.com/Trafico_ZMG/status/2114190000854122556",
+   "fecha": "2026-10-24",
+   "colonias": [
+    "GUADALAJARA ORIENTE|Guadalajara|44700"
+   ],
+   "lugar": "Guadalajara Oriente, Guadalajara",
+   "cita": "durante la manifestación en el cruce de la avenida Juan Pablo II y la calle Himno, en Guadalajara Oriente, para denunciar la falta de agua potable.",
+   "dias": null,
+   "bloqueo": true,
+   "eco": {
+    "reacciones": 5,
+    "comentarios": 1,
+    "al": "2026-10-24"
+   },
+   "vista": "fuentes/7dea597ff7e0.jpg"
   }
  ]
 }
