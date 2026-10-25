@@ -80,7 +80,9 @@ type queued struct {
 var (
 	zoneRe    = regexp.MustCompile(`^(?:ZONA ?)?([1-7])$`)
 	badZoneRe = regexp.MustCompile(`^ZONA ?\d*$`)
-	stopWords = []string{"BAJA", "ALTO", "STOP", "CANCELAR", "DARME DE BAJA", "DEJAR DE RECIBIR AVISOS"}
+	stopWords = []string{"BAJA", "ALTO", "STOP", "DARME DE BAJA", "DEJAR DE RECIBIR AVISOS"}
+	// cancelWords back out of a list of colonias or zones; they don't unsubscribe.
+	cancelWords = []string{"CANCELAR", "CANCELA", "CANCEL"}
 	// answerWords are typed answers to the reminders' questions, whose buttons carry the
 	// answer: «Ya no» to «¿Ahorita tienes agua?» must not unsubscribe or search colonias.
 	answerWords = []string{"SI", "NO", "YA NO", "SI HAY", "NO HAY", "YA NO HAY", "NO HAY AGUA", "YA NO HAY AGUA", "SIN AGUA", "CON AGUA",
@@ -202,6 +204,8 @@ func (b *Bot) onText(ctx context.Context, r User, body string) error {
 		return b.text(ctx, r, msgHelp(b.BaseURL, r.Channel))
 	case slices.Contains(stopWords, n):
 		return b.unsubscribe(ctx, r)
+	case slices.Contains(cancelWords, n):
+		return b.text(ctx, r, msgCancelled)
 	case slices.Contains(answerWords, n):
 		return b.text(ctx, r, msgUseButtons)
 	case slices.Contains(reportWords, n):

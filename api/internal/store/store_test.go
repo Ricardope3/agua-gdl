@@ -165,6 +165,40 @@ func TestAcceptedReminderIsNotResentAfterRecordingFails(t *testing.T) {
 	}
 }
 
+func TestReservationIsReleasedWhenTheSendNeverStarts(t *testing.T) {
+	db := testDB(t)
+	s := testSubscriber(t, db)
+	ctx, date := context.Background(), time.Date(2026, 10, 19, 0, 0, 0, 0, time.UTC)
+	// Hold the subscriber row so the send's lock times out after the reservation
+	// commits (the reservation's foreign key check doesn't conflict with this lock).
+	blocker, err := db.pool.Begin(ctx)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer blocker.Rollback(ctx)
+	if _, err := blocker.Exec(ctx, `select 1 from subscriber where id = $1 for no key update`, s.ID); err != nil {
+		t.Fatal(err)
+	}
+	short, cancel := context.WithTimeout(ctx, 300*time.Millisecond)
+	defer cancel()
+	attempted, err := db.SendReminder(short, s, date, []int{4}, nil, func(Subscriber) (string, error) { t.Error("sent while locked"); return "", nil })
+	if attempted || err == nil {
+		t.Fatalf("expected a failure before the send: %v %v", attempted, err)
+	}
+	if err := blocker.Rollback(ctx); err != nil {
+		t.Fatal(err)
+	}
+	if due, err := db.DueSubscribers(ctx, WhatsApp, []int{4}, date); err != nil || len(due) != 1 {
+		t.Fatalf("the retry must find the subscriber: due=%v %v", due, err)
+	}
+	if attempted, err := db.SendReminder(ctx, s, date, []int{4}, nil, func(Subscriber) (string, error) { return "wamid.ok", nil }); !attempted || err != nil {
+		t.Fatalf("retry: %v %v", attempted, err)
+	}
+	if n, err := db.UnresolvedReminders(ctx, WhatsApp, date); err != nil || n != 0 {
+		t.Fatalf("unresolved=%d %v", n, err)
+	}
+}
+
 func TestQueuedReminderRechecksSubscriber(t *testing.T) {
 	for _, change := range []string{"unsubscribe", "zone"} {
 		t.Run(change, func(t *testing.T) {

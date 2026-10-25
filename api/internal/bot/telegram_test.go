@@ -98,6 +98,14 @@ func TestTypedAnswersPointToTheButtons(t *testing.T) {
 			t.Errorf("%q: %s", text, m.Text)
 		}
 	}
+	// «Cancelar» backs out of a list of colonias; it must not drop the subscription.
+	h.say(t, "americana")
+	if m := h.say(t, "Cancelar"); !strings.Contains(m.Text, "no cambié nada") || !strings.Contains(m.Text, "<b>BAJA</b>") {
+		t.Errorf("cancelar: %s", m.Text)
+	}
+	if s, ok := h.sub(t); !ok || s.Zone != 5 {
+		t.Fatalf("cancelar changed the subscription: %+v %v", s, ok)
+	}
 	h.say(t, "baja")
 	if _, ok := h.sub(t); ok {
 		t.Fatal("BAJA still unsubscribes")
@@ -349,7 +357,7 @@ func TestEveryMessageIsHTMLTelegramTakes(t *testing.T) {
 	const base = "https://aguagdl.test"
 	texts := []string{
 		msgWelcome(base, store.Telegram), msgWelcome(base, store.WhatsApp), msgHelp(base, store.Telegram), msgHelp(base, store.WhatsApp),
-		msgUseButtons, msgNotFound("*a _b* c_"), msgOutside, msgColoniaOutside("AMERICANA"), msgMunicipio("Tonalá"),
+		msgUseButtons, msgCancelled, msgNotFound("*a _b* c_"), msgOutside, msgColoniaOutside("AMERICANA"), msgMunicipio("Tonalá"),
 		msgPickColonia, msgPickOneColonia, msgOtherColonia("EL MIRADOR", "Tonalá", nil), msgOtherColonia("EL MIRADOR", "Tonalá", []int{5, 6}),
 		msgOrOneOfThese, msgOrThisOne, msgPickZone("AMERICANA", []int{6}), msgPickZone("AMERICANA", []int{5, 6}), msgPickZoneAtPoint,
 		msgPipa(base), msgWrite(base), msgFull(base), msgUnsubscribed, msgNotSubscribed, msgNoUserID, msgUnsupported,

@@ -123,6 +123,16 @@ func (db *DB) sendReserved(ctx context.Context, table string, id, subscriberID i
 		_, err = tx.Exec(ctx, `update `+table+` set wamid_hash = nullif($2, ''), status = $3, zone = $4 where id = $1`, id, hashID(wamid), status, current.Zone)
 		return err
 	})
+	if err != nil && !attempted {
+		// No request was made, so release the reservation for the run's retry, which
+		// skips any subscriber with an attempt still 'sending'. If the database is still
+		// unreachable, the attempt stays for review.
+		release, cancel := context.WithTimeout(context.WithoutCancel(ctx), 10*time.Second)
+		defer cancel()
+		if _, delErr := db.pool.Exec(release, `delete from `+table+` where id = $1 and status = 'sending'`, id); delErr != nil {
+			err = errors.Join(err, delErr)
+		}
+	}
 	return attempted, errors.Join(err, sendErr)
 }
 

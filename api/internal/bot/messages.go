@@ -80,6 +80,11 @@ Si es sobre tu colonia, mándame tu 📍 *ubicación* o escribe su nombre de otr
 
 Si lo que quieres es dejar de recibir avisos, escribe *BAJA*. Para ver todo lo que puedo hacer, escribe *AYUDA*.`
 
+// msgCancelled answers «cancelar», typed to back out of a list rather than to unsubscribe.
+const msgCancelled = `Listo, no cambié nada.
+
+Si lo que quieres es dejar de recibir avisos y borrar tus datos, escribe *BAJA*. Para ver todo lo que puedo hacer, escribe *AYUDA*.`
+
 // echoed drops the * and _ from what someone typed before it's shown back, so it can't turn
 // into bold or italics (on Telegram, tags that don't nest and a refused message).
 var echoed = strings.NewReplacer("*", "", "_", "")
