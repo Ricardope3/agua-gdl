@@ -24329,28 +24329,6 @@
    "vista": null
   },
   {
-   "fuente": "medio",
-   "red": "facebook",
-   "quien": "El Informador",
-   "url": "https://www.facebook.com/elinformador/posts/pfbid0tm4bHNYGzV7sxViioPviK7tohnng5eeRymgrFrBbDQN3nzQKeokSUm6mrGEmNEcil",
-   "fecha": "2026-10-24",
-   "colonias": [
-    "OBLATOS|Guadalajara|44700",
-    "SAN ANDRES|Guadalajara|44810",
-    "TALPITA|Guadalajara|44710"
-   ],
-   "lugar": "Oblatos, San Andrés, Talpita y San Felipe, Guadalajara",
-   "cita": "Vecinos de colonias como Oblatos, San Andrés, Talpita y San Felipe bloquearon la avenida Javier Mina, en Guadalajara, para exigir el restablecimiento del agua.",
-   "dias": null,
-   "bloqueo": true,
-   "eco": {
-    "reacciones": 747,
-    "comentarios": 93,
-    "al": "2026-10-24"
-   },
-   "vista": "fuentes/73ccfb61eaa8.jpg"
-  },
-  {
    "fuente": "vecinos",
    "red": "facebook",
    "tipo": "comentario",
@@ -24377,7 +24355,7 @@
     "comentarios": 0,
     "al": "2026-10-24"
    },
-   "vista": "fuentes/73ccfb61eaa8.jpg"
+   "vista": "fuentes/f137047d1c16.jpg"
   },
   {
    "fuente": "vecinos",
@@ -24406,7 +24384,7 @@
     "comentarios": 0,
     "al": "2026-10-24"
    },
-   "vista": "fuentes/73ccfb61eaa8.jpg"
+   "vista": "fuentes/f137047d1c16.jpg"
   },
   {
    "fuente": "vecinos",
