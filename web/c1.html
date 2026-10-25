@@ -190,6 +190,8 @@ table.week td.cut { box-shadow: inset 0 0 0 2.5px var(--fg) }
 .sev { background: none; border: 0 }
 .sev span { display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%; background: var(--c); color: var(--k); font: 700 12px/1 var(--font); font-variant-numeric: tabular-nums; white-space: nowrap; letter-spacing: -.03em; overflow: hidden; box-shadow: 0 0 0 2px var(--surface), 0 1px 3px rgb(3 14 22 / .45) }
 .sev.far span { font-size: 10.5px; box-shadow: 0 0 0 1.5px var(--surface), 0 1px 2px rgb(3 14 22 / .45) }
+.sev.reciente span { opacity: .75 }
+.sev.vieja span { background: var(--subtle); color: var(--muted); border: 0; opacity: .8 }
 .sev.nodays span { background: color-mix(in srgb, var(--s0) 20%, var(--surface)); border: 1.5px dashed var(--s0); color: var(--fg) }
 .sevb { display: inline-grid; place-items: center; min-width: 2.6em; padding: 3px 7px; border-radius: 999px; background: var(--c); color: var(--k); font-weight: 700; font-size: .85rem; line-height: 1.2; white-space: nowrap; font-variant-numeric: tabular-nums }
 .sevb.nodays { background: color-mix(in srgb, var(--c) 18%, var(--surface)); color: var(--fg); border: 1.5px dashed var(--c); font-weight: 600 }
@@ -1117,6 +1119,14 @@ if (window.top !== window.self) {
     let at = DAYS.length - 1;
     let evNow = DAYS.length ? evByDay[at] : ev;
     const atEnd = () => at >= DAYS.length - 1;
+    // Silence is the only sign the water came back: people post when it's missing, not when it returns.
+    // A colonia stays «activa» up to 3 days after its latest publication, «reciente» up to 7, and then
+    // has no new reports: greyed out, kept for the record. Days count to the timeline's day, or today.
+    const today = new Date().toLocaleDateString("en-CA", { timeZone: "America/Mexico_City" });
+    const refDay = () => atEnd() ? (today > (DAYS[at] || "") ? today : DAYS[at]) : DAYS[at];
+    const ageOf = (e) => Math.round((Date.parse(refDay()) - Date.parse(e.ultima)) / 864e5);
+    const ACTIVE = 3, RECENT = 7;
+    const stateOf = (e) => { const a = ageOf(e); return a <= ACTIVE ? "activa" : a <= RECENT ? "reciente" : "vieja"; };
     const zoneStyle = (f) => ({ color: M.COLORS[aguaDark() ? "dark" : "light"][f.properties.z], weight: 1.5, dashArray: "5 4", fill: false, opacity: 0.7 });
     const zoneLayer = L.geoJSON({ type: "FeatureCollection", features: zonas }, { interactive: false, style: zoneStyle }).addTo(map);
     const home = zoneLayer.getBounds().pad(0.04);
@@ -1127,7 +1137,10 @@ if (window.top !== window.self) {
       const k = keyOf(f.properties);
       const e = evNow.get(k);
       if (e) {
-        const s = sevOf(e.dias);
+        const s = sevOf(e.dias), st = stateOf(e);
+        if (st === "vieja") return { color: COLORS.muted, weight: 0.8, opacity: 0.6, dashArray: null, fillColor: COLORS.muted, fillOpacity: 0.14 };
+        if (st === "reciente") return s ? { color: SEV[s], weight: 1, opacity: 0.7, dashArray: null, fillColor: SEV[s], fillOpacity: 0.3 }
+          : { color: SEV[0], weight: 1.4, opacity: 0.7, dashArray: "4 3", fillColor: SEV[0], fillOpacity: 0.1 };
         return s ? { color: SEV[s], weight: 1.2, opacity: 0.95, dashArray: null, fillColor: SEV[s], fillOpacity: 0.62 }
           : { color: SEV[0], weight: 1.8, opacity: 0.95, dashArray: "4 3", fillColor: SEV[0], fillOpacity: 0.2 };
       }
@@ -1136,7 +1149,7 @@ if (window.top !== window.self) {
       if (!s) return { color: COLORS.muted, weight: 0.4, opacity: 0.5, dashArray: null, fillColor: COLORS.none, fillOpacity: 0.06 };
       return { color: COLORS[s], weight: 1, opacity: 0.9, dashArray: null, fillColor: COLORS[s], fillOpacity: Math.min(0.65, 0.3 + 0.07 * totalOf(c)) };
     };
-    const evLine = (e) => e.dias != null ? `Hasta ${daysWord(e.dias)} sin agua · ${plural(e.fuentes, "fuente", "fuentes")}` : `Sin agua, sin días contados · ${plural(e.fuentes, "fuente", "fuentes")}`;
+    const evLine = (e) => stateOf(e) === "vieja" ? `Sin reportes nuevos desde el ${dateES(e.ultima)} · ${plural(e.fuentes, "fuente", "fuentes")}` : e.dias != null ? `Hasta ${daysWord(e.dias)} sin agua · ${plural(e.fuentes, "fuente", "fuentes")}` : `Sin agua, sin días contados · ${plural(e.fuentes, "fuente", "fuentes")}`;
     let closedAt = 0;
     // One canvas for the colonias and the dots over them: a second canvas on top would take their clicks.
     const colRenderer = L.canvas({ padding: 0.5 });
@@ -1193,7 +1206,7 @@ if (window.top !== window.self) {
         const was = shown.get(k), pop = reduced ? "" : was != null ? (total > was ? " pop" : "") : shown.size ? " nace" : "";
         if (!centers.has(k)) centers.set(k, L.geoJSON(fs[0]).getBounds().getCenter());
         const m = L.marker(centers.get(k), {
-          icon: L.divIcon({ className: `sev${far ? " far" : ""}${s ? "" : " nodays"}${pop}`, html: `<span style="${sevVars(s)};font-size:${Math.max(far ? 9 : 10, Math.round(size * (n.length > 2 ? 0.3 : 0.42)))}px">${n}</span>`, iconSize: [size, size] }),
+          icon: L.divIcon({ className: `sev${far ? " far" : ""}${s ? "" : " nodays"} ${stateOf(e)}${pop}`, html: `<span style="${sevVars(s)};font-size:${Math.max(far ? 9 : 10, Math.round(size * (n.length > 2 ? 0.3 : 0.42)))}px">${n}</span>`, iconSize: [size, size] }),
           keyboard: false, zIndexOffset: 2000 - Math.min(total, 999), title: `${fs[0].properties.n}: ${plural(total, "reporte", "reportes")} · ${evLine(e)}`,
         });
         m.on("click", () => select(fs[0]));
@@ -1499,8 +1512,10 @@ if (window.top !== window.self) {
     function evidenceBlock(e) {
       const s = sevOf(e.dias);
       const badge = el("span", { class: s ? "sevb" : "sevb nodays", style: sevVars(s) }, s ? daysWord(e.dias) : "sin días");
-      const head = el("p", { class: "ev-head" }, badge, el("strong", {}, s ? `Hasta ${daysWord(e.dias)} sin agua` : "Sin agua, sin días contados"));
-      const src = [plural(e.fuentes, "fuente", "fuentes distintas"), e.medios ? (e.medios === 1 ? "lo reporta un medio" : `lo reportan ${e.medios} medios`) : null, `la más reciente del ${dateES(e.ultima, true)}`].filter(Boolean).join(" · ");
+      // Once a week has passed without new publications, the days are told in the past.
+      const old = stateOf(e) === "vieja";
+      const head = el("p", { class: "ev-head" }, badge, el("strong", {}, s ? `${old ? "Llegó a" : "Hasta"} ${daysWord(e.dias)} sin agua` : "Sin agua, sin días contados"));
+      const src = [plural(e.fuentes, "fuente", "fuentes distintas"), e.medios ? (e.medios === 1 ? "lo reporta un medio" : `lo reportan ${e.medios} medios`) : null, old ? `sin reportes nuevos desde el ${dateES(e.ultima, true)}` : `la más reciente del ${dateES(e.ultima, true)}`].filter(Boolean).join(" · ");
       const list = el("ol", { class: "posts" }, ...e.posts.map(post));
       const box = el("div", { class: "ev" }, head, el("p", { class: "ev-src" }, src), mosaic(e.posts), list);
       const SHOWN = 3;
@@ -1697,9 +1712,10 @@ if (window.top !== window.self) {
       const all = [...ev.values()];
       const week = all.filter((e) => e.dias >= 7).length;
       // The count opens the list of those colonias, in the whole window when inside the landing's frame.
-      const toList = el("a", framed ? { href: "/reportes#lista-semana", target: "_top" } : { href: "#lista" }, el("b", {}, fmt(week)), ` ${week === 1 ? "colonia lleva" : "colonias llevan"} una semana o más sin agua`);
+      const active = [...ev.values()].filter((e) => stateOf(e) === "activa").length;
+      const toList = el("a", framed ? { href: "/reportes#lista-semana", target: "_top" } : { href: "#lista" }, el("b", {}, fmt(week)), ` ${week === 1 ? "colonia llegó" : "colonias llegaron"} a una semana o más sin agua`);
       if (!framed) toList.addEventListener("click", () => { weekOnly = everything = true; renderRanking(); });
-      $("pruebas").replaceChildren(toList, ", según medios y vecinos");
+      $("pruebas").replaceChildren(toList, `, según medios y vecinos; ${fmt(active)} con quejas de los últimos ${ACTIVE} días`);
       $("solo-semana").textContent = `Solo una semana o más (${fmt(week)})`;
       renderMunicipios();
       renderSlices();
