@@ -496,6 +496,18 @@ U_CSS = """
   .u-tabs { display: flex; gap: 4px; margin: 12px 0 0; border-bottom: 1px solid var(--line) }
   .u-tabs button { flex: 1; padding: 8px 4px; border: 0; border-bottom: 3px solid transparent; background: none; color: var(--muted); font: 600 .9rem var(--font); cursor: pointer }
   .u-tabs button[aria-selected="true"] { color: var(--fg); border-color: #e4572e }
+  .u-panel { position: absolute; z-index: 1200; top: 74px; right: 12px; bottom: 12px; width: 400px; overflow: auto; padding: 14px 16px; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 10px 30px rgb(3 14 22 / .22) }
+  .u-panel .u-h { margin-top: 0 }
+  .u-sub { margin: 0 0 8px; font-size: .82rem; color: var(--muted) }
+  .u-feed { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px }
+  .u-feed li { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 10px; padding: 8px; border-radius: 10px; background: var(--bg); border-left: 4px solid #e4572e; cursor: pointer }
+  .u-feed li.medio { border-left-color: var(--brand) }
+  .u-feed li:not(:has(img)) { grid-template-columns: minmax(0, 1fr) }
+  .u-feed img { width: 96px; height: 72px; object-fit: cover; border-radius: 6px }
+  .u-feed small { display: block; font-size: .72rem; color: var(--muted) }
+  .u-feed span { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; font-size: .88rem; line-height: 1.35 }
+  .u-feed li:hover span { color: var(--link) }
+  .stage.has-card .leaflet-control-zoom, .stage.has-card .leaflet-control-centrar { display: none }
 }"""
 
 def u(name, js):
@@ -508,10 +520,31 @@ VD = {
     compacta(card, p);
     const [k, t] = ahora(e), now = mk("div", `u-now ${k}`); now.append(mk("b", null, "Ahora"), t);
     const cal = mk("div"); cortes(p, cal);
-    const kids = [now, mk("p", "u-h", "Cortes del SIAPA"), cal, mk("p", "u-h", "Qué puedes hacer"), pasos(p, e)];
-    if (e) kids.push(mk("p", "u-h", `Lo que se publica · ${e.posts.length}`), pruebas(e, 4));
-    card.querySelector(".where").after(...kids);
+    card.querySelector(".where").after(now, mk("p", "u-h", "Cortes del SIAPA"), cal, mk("p", "u-h", "Qué puedes hacer"), pasos(p, e));
+    // The news and posts in their own panel on the right, so the colonia sits between the two.
+    panel(e);
   };
+  function panel(e) {
+    document.querySelector(".u-panel")?.remove();
+    if (!e) return;
+    const box = mk("aside", "u-panel"), list = mk("ul", "u-feed");
+    box.setAttribute("aria-label", "Lo que se publica de esta colonia");
+    box.append(mk("p", "u-h", `Lo que se publica · ${e.posts.length}`), mk("p", "u-sub", `${e.fuentes} fuentes distintas · ${e.medios} ${e.medios === 1 ? "medio" : "medios"}. Toca una para verla.`));
+    const news = e.posts.filter((q) => q.fuente === "medio"), rest = e.posts.filter((q) => q.fuente !== "medio");
+    for (const q of [...news, ...rest].sort((a, b) => (b.fuente === "medio") - (a.fuente === "medio") || b.fecha.localeCompare(a.fecha))) {
+      const li = mk("li", q.fuente === "medio" ? "medio" : ""), src = q.captura || q.vista || (q.en && q.en.vista);
+      if (src) { const im = mk("img"); im.src = `/${src}`; im.alt = ""; im.loading = "lazy"; li.append(im); }
+      const tx = mk("div");
+      tx.append(mk("small", null, `${q.fuente === "medio" ? "Medio · " : ""}${quien(q)} · ${fecha(q.fecha)}`), mk("span", null, q.titular || q.cita));
+      li.append(tx);
+      li.onclick = () => abre(li, q);
+      list.append(li);
+    }
+    box.append(list);
+    document.getElementById("escenario").append(box);
+  }
+  window.__cierra = () => document.querySelector(".u-panel")?.remove();
+  window.__refitD = (map, b) => map.flyToBounds(b, { paddingTopLeft: [440 + 50, 80], paddingBottomRight: [410 + 50, 50], maxZoom: 16, duration: 0.6, animate: !reduce() });
 """),
     # Is it only my colonia? The colonias around it within 1.5 km and how they're doing.
     "d2": u("Alrededor", r"""
