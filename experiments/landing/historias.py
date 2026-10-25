@@ -52,7 +52,7 @@ COMMON = r"""
 
 OVER = {
     "h1": r"""(n) => { const i = info(n); return `<div class="h-k">Cortes: ${aguaMapa.joinES(i.days)}</div><div style="margin-top:4px">${cut(i)}</div>`; }""",
-    "h2": r"""(n) => { const i = info(n); return `<div class="h-row"><span class="h-big">${i.week}</span><span>de sus ${i.total} colonias llevan <b>una semana o más sin agua</b></span></div>`; }""",
+    "h2": r"""(n) => { const i = info(n); return `<div class="h-row"><span class="h-big">${i.week}</span><span>de sus ${i.total} colonias llegaron a <b>una semana o más sin agua</b></span></div>`; }""",
     "h3": r"""(n) => { const i = info(n); return i.top ? `<div class="h-k">La más reportada</div><div class="h-name">${nm(i.top)}</div><div>${i.top.pub.n} reportes${i.top.pub.dias ? ` · hasta ${i.top.pub.dias} días sin agua` : ""}</div>` : '<div class="h-k">Nadie ha publicado aún que falte el agua aquí</div>'; }""",
     "h4": r"""(n) => { const i = info(n); return `<div class="h-k">Su semana · ${aguaMapa.joinES(i.days)}</div>${week(i)}<div style="margin-top:6px">${cut(i)}</div>`; }""",
     "h5": r"""(n) => { const i = info(n); return `<div class="h-row"><span class="h-big" style="font-size:1.9rem">${i.week}</span><span>colonias con una semana o más sin agua</span></div>${week(i)}<div style="margin-top:6px;font-size:.85rem">${cut(i)}${i.top ? ` · más reportes: <b>${nm(i.top)}</b> (${i.top.pub.n})` : ""}</div>`; }""",

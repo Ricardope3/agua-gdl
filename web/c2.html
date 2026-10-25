@@ -747,7 +747,7 @@ if (window.top !== window.self) {
           <details class="munis" id="municipios" open hidden>
             <summary>Por municipio · % de colonias</summary>
             <ol id="munis-lista"></ol>
-            <p>De las colonias del mapa del SIAPA, las que tienen publicaciones de medios o vecinos que dicen que no hay agua, <span id="munis-al">hasta hoy</span>.</p>
+            <p>De las colonias del mapa del SIAPA, las que tienen publicaciones de medios o vecinos que dicen que no tenían agua, <span id="munis-al">hasta hoy</span>.</p>
           </details>
           <div id="top-box" hidden><p class="lv-h" id="top-h">Las que tienen más reportes</p><ol class="lv-top" id="top-reportes"></ol></div>
           <p class="note" id="estado" aria-live="polite">Cargando el mapa de colonias…</p>
@@ -775,7 +775,7 @@ if (window.top !== window.self) {
 
     <div class="wrap">
     <p class="note" id="pruebas-nota" style="margin-top:24px;font-size:1rem"></p>
-    <p class="lede" style="margin-top:12px">El SIAPA prometió que cada corte duraría «por máximo un día». El mapa muestra cuántos días llevan sin agua las colonias, según lo que publican los medios y los vecinos en Facebook y X, cada publicación con su enlace e imagen, y los reportes que se hacen aquí. Toca tu colonia para verlos y reportar la tuya: sin cuenta y anónimo. No son datos oficiales.</p>
+    <p class="lede" style="margin-top:12px">El SIAPA prometió que cada corte duraría «por máximo un día». El mapa muestra cuántos días llegaron a estar sin agua las colonias, según lo que publican los medios y los vecinos en Facebook y X, cada publicación con su enlace e imagen, y los reportes que se hacen aquí. Toca tu colonia para verlos y reportar la tuya: sin cuenta y anónimo. No son datos oficiales.</p>
     <p class="lede">La línea de tiempo bajo el mapa repite la crisis día por día: cada colonia se enciende el día en que se publica por primera vez que no tiene agua y se oscurece conforme las publicaciones cuentan más días. Una colonia sin publicaciones no es una colonia con agua: puede ser que nadie lo haya publicado.</p>
 
     <section aria-labelledby="lista">
@@ -1918,10 +1918,12 @@ if (window.top !== window.self) {
       $("tl-fecha").replaceChildren(el("b", {}, `${weekday(iso).replace(/^./, (c) => c.toUpperCase())} ${dateES(iso, true)}`),
         atEnd() ? "lo más reciente" : `día ${at + 1} de ${DAYS.length}`);
       const n = el("span", { class: "n" }, fmt(d.total));
-      const week = !d.week ? [] : d.total === 1 ? [", con una semana o más"] : d.week === 1 ? [", una de ellas con una semana o más"]
-        : [", ", el("span", { class: "w" }, fmt(d.week)), " de ellas con una semana o más"];
+      // Every colonia ever reported up to that day, those that reached a week, and those still complaining.
+      const week = !d.week ? [] : d.total === 1 ? [", llegó a una semana o más"] : d.week === 1 ? [", una llegó a una semana o más"]
+        : [", ", el("span", { class: "w" }, fmt(d.week)), " llegaron a una semana o más"];
+      const active = [...evNow.values()].filter((e) => stateOf(e) === "activa").length;
       $("tl-cuenta").replaceChildren(`Al ${dateES(iso, true)}: `, n,
-        ` ${d.total === 1 ? "colonia con publicaciones que dicen" : "colonias con publicaciones que dicen"} que no hay agua`, ...week, ". ",
+        ` ${d.total === 1 ? "colonia con publicaciones que dicen" : "colonias con publicaciones que dicen"} que no tenían agua`, ...week, `; ${fmt(active)} con quejas de los últimos ${ACTIVE} días. `,
         at && d.total > prev ? el("span", { class: "tl-new" }, `+${fmt(d.total - prev)} ese día`) : null);
       $("tl-clave").replaceChildren(...STEPS.map(([s, w], k) => el("li", {}, el("span", { class: s ? "sw" : "sw nodays", style: `--c:var(--s${s})` }), w, " ", el("b", {}, fmt(d.sev[k])))));
       chart.setAttribute("aria-valuemax", String(DAYS.length - 1));

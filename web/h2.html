@@ -689,7 +689,7 @@ if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.
   }).join("")}</div>`;
   const cut = (i) => i.hoy ? '<span class="h-hoy">Hoy hay corte</span>' : i.next ? `Próximo corte: <b>${dayName(i.next)}</b>` : "";
   const nm = (c) => aguaM.name(`${c.f.properties.n}|`);
-  const over = (n) => { const i = info(n); return `<div class="h-row"><span class="h-big">${i.week}</span><span>de sus ${i.total} colonias llevan <b>una semana o más sin agua</b></span></div>`; };
+  const over = (n) => { const i = info(n); return `<div class="h-row"><span class="h-big">${i.week}</span><span>de sus ${i.total} colonias llegaron a <b>una semana o más sin agua</b></span></div>`; };
   const track = document.getElementById("m5-track"), dots = document.getElementById("m5-dots");
   track.innerHTML = g.zonas.map((z) => { const n = z.properties.z; return `<article class="m5-card" style="--zc:${zc(n)}"><a href="/reportes?zona=${n}" aria-label="La zona ${n} en el mapa de reportes"><div class="m5-map" data-z="${n}"></div></a><span class="m5-tag">Zona ${n}</span><div class="m5-over">${over(n)}</div></article>`; }).join("");
   // A card's streets load only once it, or the card beside it, is in view.
