@@ -1949,11 +1949,11 @@ if (window.top !== window.self) {
     addStreets();
     ready();
     if (!framed) {
-      // A second after landing the map takes the screen, unless the visitor has already scrolled or touched it.
+      // On phones, a second after landing the map takes the screen, unless the visitor has already scrolled or touched it.
       let moved = false;
       const mark = () => { moved = true; };
       for (const t of ["wheel", "touchstart", "keydown", "mousedown"]) addEventListener(t, mark, { once: true, passive: true });
-      setTimeout(() => { if (!moved && scrollY < 5) stage.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }); }, 1000);
+      setTimeout(() => { if (!moved && scrollY < 5 && phone()) stage.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }); }, 1000);
       // Eight seconds in, the search shrinks to its icon so the map has the room; a tap opens it again.
       const fs = document.querySelector(".float-search");
       setTimeout(() => { if (document.activeElement !== input) fs.classList.add("chica"); }, 8000);
