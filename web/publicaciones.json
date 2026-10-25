@@ -24803,6 +24803,77 @@
     "al": "2026-10-24"
    },
    "vista": "fuentes/7dea597ff7e0.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "Las Noticias en GDL",
+   "url": "https://www.facebook.com/LasNoticiasGDL/posts/pfbid0KHxjsvExJyGU1KEUsdotfbzAmogMBKp8cFRqdTSwuyA2mDUM8ns131R1oMyKNoJ8l",
+   "fecha": "2026-10-24",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "Oblatos, Guadalajara",
+   "cita": "Habitantes de la colonia Oblatos realizan un bloqueo total en ambos sentidos de la avenida Juan Pablo II, en su cruce con Hacienda de los Laureles, para exigir que se restablezca el servicio de agua potable.",
+   "dias": null,
+   "bloqueo": true,
+   "eco": {
+    "reacciones": 917,
+    "comentarios": 52,
+    "al": "2026-10-24"
+   },
+   "vista": "fuentes/def45c610ade.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid02T9obfsFBjafACws4rPXhGoSGSXfymSBU5DFViCck2RvpGaJgMXsX3CpUWB1gr7cxl",
+    "eco": {
+     "reacciones": 232,
+     "comentarios": 392,
+     "al": "2026-10-24"
+    }
+   },
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid02T9obfsFBjafACws4rPXhGoSGSXfymSBU5DFViCck2RvpGaJgMXsX3CpUWB1gr7cxl?comment_id=1092795746800827",
+   "fecha": "2026-10-25",
+   "colonias": [
+    "TALPITA|Guadalajara|44710",
+    "BLANCO Y CUELLAR|Guadalajara|44710",
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "Talpita, Blanco y Cuéllar y Oblatos, Guadalajara",
+   "cita": "Zona 3 talpita, blanco y cuellar, oblatos 3 semanas sin ahua y contando",
+   "dias": 21,
+   "eco": {
+    "reacciones": 0,
+    "comentarios": 0,
+    "al": "2026-10-24"
+   },
+   "vista": null
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "Las Noticias en GDL",
+   "url": "https://www.facebook.com/reel/948714917961180/",
+   "fecha": "2026-10-24",
+   "colonias": [
+    "CIRCUNVALACION BELISARIO|Guadalajara|44330"
+   ],
+   "lugar": "Circunvalación Belisario, Guadalajara",
+   "cita": "Habitantes de la colonia Circunvalación Belisario se manifiestan y bloquean la circulación en avenida Belisario Domínguez, al cruce con Circunvalación, en el sentido de Guadalajara hacia Tlaquepaque, para exigir una solución ante la falta de agua.",
+   "dias": null,
+   "bloqueo": true,
+   "eco": {
+    "reacciones": 494,
+    "comentarios": 54,
+    "al": "2026-10-24"
+   },
+   "vista": "fuentes/fc603f73acca.jpg"
   }
  ]
 }
