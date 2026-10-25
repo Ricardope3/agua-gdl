@@ -56,7 +56,7 @@ func whenES(channel string) string {
 func msgHelp(base, channel string) string {
 	write := ""
 	if channel == store.Telegram {
-		write = "✉️ *ESCRIBIR*: pedirle al gobernador y al Congreso que arreglen el agua\n"
+		write = "✉️ *ESCRIBIR*: pedirles al gobernador y al Congreso agua limpia y ríos sanos\n"
 	}
 	return `Esto es lo que puedo hacer 💧
 
@@ -155,7 +155,7 @@ Agua GDL no es del SIAPA y no puede mandar pipas.`
 }
 
 func msgWrite(base string) string {
-	return `✉️ Pídeles al gobernador Pablo Lemus y a las 38 diputaciones del Congreso de Jalisco que saneen los ríos y arreglen la crisis del agua, por correo, X o Messenger desde tu propia cuenta:
+	return `✉️ Pídeles al gobernador Pablo Lemus y a las 38 diputaciones del Congreso de Jalisco que saneen los ríos y que el agua llegue limpia y suficiente, por correo, X o Messenger desde tu propia cuenta:
 
 ` + base + `/exige
 

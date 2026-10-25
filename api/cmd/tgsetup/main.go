@@ -42,7 +42,7 @@ var commands = []command{
 	{"zona", "Elegir o cambiar tu zona"},
 	{"reportar", "Contar cómo regresó el agua"},
 	{"pipa", "Cómo pedir una pipa al SIAPA"},
-	{"escribe", "Pedirle a Lemus y al Congreso que arreglen el agua"},
+	{"escribe", "Pedirles a Lemus y al Congreso agua limpia y ríos sanos"},
 	{"baja", "Dejar de recibir avisos y borrar tus datos"},
 	{"ayuda", "Ver lo que puedo hacer"},
 }
