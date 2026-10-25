@@ -19,21 +19,21 @@ BAR_CSS = """
   .c-acc .rep:hover { background: #c4421c }
   .c-acc .alt2 { flex: 0 0 auto; background: var(--subtle); color: var(--fg) }
   .stage .card > .button { display: none }
-  .ql { position: fixed; inset: 0; z-index: 5000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 16px; background: rgb(3 8 20 / 0); -webkit-backdrop-filter: blur(0); backdrop-filter: blur(0); transition: background .25s, backdrop-filter .25s, -webkit-backdrop-filter .25s }
-  .ql.on { background: rgb(3 8 20 / .45); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px) }
-  .ql-card { width: min(100%, 440px); max-height: 62vh; overflow: auto; border-radius: 16px; background: var(--surface); color: var(--fg); box-shadow: 0 18px 50px rgb(0 0 0 / .45); transition: transform .38s cubic-bezier(.2, 1.25, .4, 1), opacity .2s }
-  .ql-card img { display: block; width: 100%; max-height: 34vh; object-fit: cover; background: var(--subtle) }
-  .ql-body { padding: 14px 16px 16px }
-  .ql-tit { margin: 0 0 8px; font-weight: 700; font-size: 1.05rem; line-height: 1.3 }
-  .ql-body q { display: block; font-size: 1.05rem; line-height: 1.45; quotes: "«" "»" }
-  .ql-body .who, .ql-body .eco { margin: 8px 0 0; font-size: .85rem; color: var(--muted) }
-  .ql-menu { width: min(100%, 440px); display: flex; gap: 8px; opacity: 0; transform: translateY(-8px) scale(.96); transition: opacity .2s .1s, transform .3s .1s cubic-bezier(.2, 1.25, .4, 1) }
-  .ql.on .ql-menu { opacity: 1; transform: none }
-  .ql-menu .button { flex: 1; justify-content: center; padding: 11px 10px }
-  .ql-menu .ql-go { flex: 1.6; background: #e4572e; color: #fff; font-weight: 700; text-decoration: none }
-  @media (prefers-reduced-motion: reduce) { .ql, .ql-card, .ql-menu { transition: none } }
   .stage.has-card .leaflet-control-zoom, .stage.has-card .leaflet-control-centrar { display: none }
-}"""
+}
+.ql { position: fixed; inset: 0; z-index: 5000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 16px; background: rgb(3 8 20 / 0); -webkit-backdrop-filter: blur(0); backdrop-filter: blur(0); transition: background .25s, backdrop-filter .25s, -webkit-backdrop-filter .25s }
+.ql.on { background: rgb(3 8 20 / .45); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px) }
+.ql-card { width: min(100%, 440px); max-height: 62vh; overflow: auto; border-radius: 16px; background: var(--surface); color: var(--fg); box-shadow: 0 18px 50px rgb(0 0 0 / .45); transition: transform .38s cubic-bezier(.2, 1.25, .4, 1), opacity .2s }
+.ql-card img { display: block; width: 100%; max-height: 34vh; object-fit: cover; background: var(--subtle) }
+.ql-body { padding: 14px 16px 16px }
+.ql-tit { margin: 0 0 8px; font-weight: 700; font-size: 1.05rem; line-height: 1.3 }
+.ql-body q { display: block; font-size: 1.05rem; line-height: 1.45; quotes: "«" "»" }
+.ql-body .who, .ql-body .eco { margin: 8px 0 0; font-size: .85rem; color: var(--muted) }
+.ql-menu { width: min(100%, 440px); display: flex; gap: 8px; opacity: 0; transform: translateY(-8px) scale(.96); transition: opacity .2s .1s, transform .3s .1s cubic-bezier(.2, 1.25, .4, 1) }
+.ql.on .ql-menu { opacity: 1; transform: none }
+.ql-menu .button { flex: 1; justify-content: center; padding: 11px 10px }
+.ql-menu .ql-go { flex: 1.6; background: #e4572e; color: #fff; font-weight: 700; text-decoration: none }
+@media (prefers-reduced-motion: reduce) { .ql, .ql-card, .ql-menu { transition: none } }"""
 
 # Hooks the variants fill: __antes(map, stage) before the map frames the colonia, __ficha(card, e, form)
 # once its card is drawn, __cierra(map) when it closes, __pad(size) the phone's framing, __tile the tiles' size.
@@ -335,6 +335,122 @@ V = {
 NAMES = {k: v[0] for k, v in V.items()}
 
 
+# Desktop takes on an open colonia (/d1 … /d5). Phones get /reportes' carousel on these pages.
+DESK = r"""
+  const isDesk = () => !isPhone();
+  // Each post with its picture above its words (the slide's own, the article's, or the post it's under).
+  function imagenes(card, e) {
+    if (!e) return;
+    [...card.querySelectorAll(".posts li")].forEach((li, i) => {
+      const p = e.posts[i], src = p && (p.vista || p.captura || (p.en && p.en.vista));
+      if (!src || li.querySelector(".c-img")) return;
+      const img = document.createElement("img");
+      img.className = "c-img"; img.src = `/${src}`; img.alt = ""; img.loading = "lazy"; img.decoding = "async";
+      li.prepend(img);
+    });
+  }
+  // The colonia flown into the part of the map the card leaves free (left, right, above or below it).
+  window.__refitD = (map, b, card) => {
+    const s = map.getContainer().getBoundingClientRect(), r = card.getBoundingClientRect();
+    const room = { left: r.left - s.left, right: s.right - r.right, top: r.top - s.top, bottom: s.bottom - r.bottom };
+    const side = Object.keys(room).sort((a, c) => room[c] - room[a])[0], G = 50;
+    const pad = side === "left" ? { paddingTopLeft: [G, 90], paddingBottomRight: [s.width - room.left + G, G] }
+      : side === "right" ? { paddingTopLeft: [s.width - room.right + G, 90], paddingBottomRight: [G, G] }
+      : side === "top" ? { paddingTopLeft: [G, 90], paddingBottomRight: [G, s.height - room.top + G] }
+      : { paddingTopLeft: [G, s.height - room.bottom + G], paddingBottomRight: [G, G] };
+    map.flyToBounds(b, { ...pad, maxZoom: 16, duration: 0.6, animate: !reduce() });
+  };
+"""
+
+VD = {
+    # The card becomes a panel down the right side; posts listed with their pictures; no tiles on the map.
+    "d1": ("Panel lateral", """
+@media (min-width: 761px) {
+  .stage .card { top: 0; right: 0; left: auto; bottom: 0; width: min(460px, 38%); max-height: none; border-radius: 0; border-width: 0 0 0 1px; padding: 22px 24px; box-shadow: -10px 0 30px rgb(3 14 22 / .18) }
+  #reporta { display: none !important }
+  .stage .card .mosaic, .stage .card > .button { display: none }
+  .stage .card .posts li, .stage .card .posts li[hidden] { display: block; padding: 0 0 10px; overflow: hidden; cursor: pointer }
+  .stage .card .posts li > :not(.c-img) { margin-left: 12px; margin-right: 12px }
+  .stage .card .ev > .linkbtn { display: none }
+  .c-img { display: block; width: 100%; height: 150px; object-fit: cover; margin-bottom: 8px }
+  .stage .float-search { width: min(420px, calc(62% - 76px)) }
+}""", r"""
+  window.__tileD = [0, 0];
+  window.__fichaD = (card, e, form, p) => { compacta(card, p); acciones(card, e, false); imagenes(card, e); };
+"""),
+    # A strip across the bottom: the colonia on the left, its posts sliding sideways with their pictures.
+    "d2": ("Carrusel abajo", """
+@media (min-width: 761px) {
+  .stage .card { top: auto; left: 0; bottom: 0; width: 100%; max-height: none; overflow: hidden; border-radius: 18px 18px 0 0; padding: 18px 22px; display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: 0 24px; align-items: start }
+  .stage .card > .d-head { grid-column: 1 }
+  .stage .card > .posts { grid-column: 2; grid-row: 1; display: flex; gap: 12px; overflow-x: auto; margin: 0; padding: 0 0 6px; scroll-snap-type: x mandatory }
+  .stage .card > .posts li, .stage .card > .posts li[hidden] { display: block; flex: 0 0 280px; padding: 0 0 10px; overflow: hidden; scroll-snap-align: start; cursor: pointer }
+  .stage .card > .posts li > :not(.c-img) { margin-left: 12px; margin-right: 12px }
+  .stage .card > .posts q { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden }
+  .stage .card > .posts .eco { display: none }
+  .c-img { display: block; width: 100%; height: 130px; object-fit: cover; margin-bottom: 8px }
+  .stage .card .mosaic, .stage .card .ev > .linkbtn, .stage .card .sub-head, .stage .card .conteo, .stage .card .d-head > .button { display: none }
+  #reporta { display: none !important }
+}""", r"""
+  window.__tileD = [0, 0];
+  window.__fichaD = (card, e, form, p) => {
+    compacta(card, p); acciones(card, e, false); imagenes(card, e);
+    const list = card.querySelector(".posts"), close = card.querySelector(".close");
+    const head = document.createElement("div");
+    head.className = "d-head";
+    head.append(...[...card.childNodes].filter((n) => n !== close));
+    card.append(head);
+    if (list) card.append(list);
+  };
+"""),
+    # The posts take most of the screen as a wall of pictures and quotes; the map keeps a strip on the left.
+    "d3": ("Muro", """
+@media (min-width: 761px) {
+  .stage .card { top: 0; right: 0; left: auto; bottom: 0; width: 62%; max-height: none; border-radius: 0; border-width: 0 0 0 1px; padding: 22px 26px }
+  #reporta { display: none !important }
+  .stage .card .mosaic, .stage .card > .button, .stage .card .ev > .linkbtn { display: none }
+  .stage .card .posts { display: block; columns: 2 260px; column-gap: 12px }
+  .stage .card .posts li, .stage .card .posts li[hidden] { display: block; break-inside: avoid; margin: 0 0 12px; padding: 0 0 10px; overflow: hidden; cursor: pointer }
+  .stage .card .posts li > :not(.c-img) { margin-left: 12px; margin-right: 12px }
+  .c-img { display: block; width: 100%; height: auto; max-height: 220px; object-fit: cover; margin-bottom: 8px }
+  .stage .card h2 { font-size: 1.7rem }
+  .stage .float-search { width: min(360px, calc(38% - 76px)) }
+}""", r"""
+  window.__tileD = [0, 0];
+  window.__fichaD = (card, e, form, p) => { compacta(card, p); acciones(card, e, false); imagenes(card, e); };
+"""),
+    # A short card with the essentials; the evidence stays on the map as larger tiles around the colonia.
+    "d4": ("Ficha corta y muro en el mapa", """
+@media (min-width: 761px) {
+  .stage .card { width: 340px }
+  #reporta { display: none !important }
+  .stage .card .mosaic, .stage .card .posts, .stage .card .ev > .linkbtn, .stage .card > .button { display: none }
+}""", r"""
+  window.__tileD = [250, 188];
+  window.__padD = (s) => ({ paddingTopLeft: [340 + 300, 230], paddingBottomRight: [300, 230] });
+  window.__fichaD = (card, e, form, p) => { compacta(card, p); acciones(card, e, false); };
+"""),
+    # A magazine page over the dimmed map: the days as a headline, a large picture, the posts in two columns.
+    "d5": ("Revista", """
+@media (min-width: 761px) {
+  .stage .card { top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(940px, 90%); max-height: 88%; overflow: auto; border-radius: 18px; padding: 28px 34px; box-shadow: 0 0 0 100vmax rgb(3 8 20 / .5), 0 24px 60px rgb(0 0 0 / .4) }
+  #reporta { display: none !important }
+  .stage .card h2 { font-size: 2rem }
+  .stage .card .ev-head { font-size: 1.5rem }
+  .stage .card .ev-head .sevb { font-size: 1.3rem; padding: 6px 12px }
+  .stage .card .mosaic { max-height: 340px }
+  .stage .card .posts { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+  .stage .card .posts li, .stage .card .posts li[hidden] { display: block; cursor: pointer }
+  .stage .card .ev > .linkbtn, .stage .card > .button { display: none }
+  .stage .float-search { display: none }
+}""", r"""
+  window.__tileD = [0, 0];
+  window.__fichaD = (card, e, form, p) => { compacta(card, p); acciones(card, e, false); };
+  window.__refitD = (map, b) => map.flyToBounds(b, { padding: [60, 60], maxZoom: 16, duration: 0.6, animate: !reduce() });
+"""),
+}
+DNAMES = {k: v[0] for k, v in VD.items()}
+
 DEFAULT = "c1"
 
 
@@ -347,10 +463,16 @@ CUR = ' aria-current="page"'
 
 
 def build(src, v, bar=True):
-    name = NAMES.get(v)
-    css, js = (BASE[0] + V[v][1], BASE[1] + SLIDES + V[v][2]) if v in V else BASE
+    fam = DNAMES if v in VD else NAMES
+    name = fam.get(v)
+    if v in VD:
+        # The desktop takes ride on /reportes' own phone carousel.
+        dv = V[DEFAULT]
+        css, js = BASE[0] + dv[1] + VD[v][1], BASE[1] + SLIDES + dv[2] + DESK + VD[v][2]
+    else:
+        css, js = (BASE[0] + V[v][1], BASE[1] + SLIDES + V[v][2]) if v in V else BASE
     links = '<a href="/reportes?q=AMERICANA&amp;m=Guadalajara&amp;cp=44100">Actual</a>' + "".join(
-        f'<a href="/{k}"{CUR if k == v else ""}>{k} {n}</a>' for k, n in NAMES.items())
+        f'<a href="/{k}"{CUR if k == v else ""}>{k} {n}</a>' for k, n in fam.items())
     h = src
     if not bar:
         return hooks(h.replace("</style>", BAR_CSS.split(".en-portada .variant-bar { display: none }")[1] + css + "\n</style>", 1), js)
@@ -379,20 +501,22 @@ def hooks(h, js, americana=False):
     h = sub(h, '      stage.classList.remove("has-card");\n',
             '      stage.classList.remove("has-card");\n      if (window.__cierra) window.__cierra(map);\n')
     h = sub(h, "      if (fit) {\n        // Room around",
-            "      if (window.__antes && phone()) window.__antes(map, stage);\n      if (fit) {\n        // Room around")
-    h = sub(h, "      renderCard(f, form);\n", "      renderCard(f, form);\n      if (fit && window.__refit && phone()) window.__refit(map, marks[1].getBounds(), card);\n")
-    h = sub(h, "const pad = phone() ? {", "const pad = phone() && window.__pad ? window.__pad(map.getSize()) : phone() ? {")
+            "      if (window.__antes && phone()) window.__antes(map, stage);\n      if (!phone()) for (const g of document.querySelectorAll('.leaflet-tooltip')) g.remove();\n      if (fit) {\n        // Room around")
+    h = sub(h, "      renderCard(f, form);\n", "      renderCard(f, form);\n      if (fit && window.__refit && phone()) window.__refit(map, marks[1].getBounds(), card);\n"
+               "      else if (fit && window.__refitD && window.__fichaD && !phone()) window.__refitD(map, marks[1].getBounds(), card);\n")
+    h = sub(h, "const pad = phone() ? {", "const pad = phone() && window.__pad ? window.__pad(map.getSize()) : !phone() && window.__padD ? window.__padD(map.getSize()) : phone() ? {")
     h = sub(h, "const W = phone() ? 120 : 210, H = phone() ? 90 : 158, G = 8;",
-            "const W = phone() ? (window.__tile || [120])[0] : 210, H = phone() ? (window.__tile || [0, 90])[1] : 158, G = 8;\n"
+            "const W = phone() ? (window.__tile || [120])[0] : (window.__tileD || [210])[0], H = phone() ? (window.__tile || [0, 90])[1] : (window.__tileD || [0, 158])[1], G = 8;\n"
             "        if (!W) return;")
     h = sub(h, '      stage.classList.add("has-card");\n      setOverview(false);\n',
-            '      stage.classList.add("has-card");\n      setOverview(false);\n      if (window.__ficha && phone()) window.__ficha(card, e, openForm, f.properties);\n')
+            '      stage.classList.add("has-card");\n      setOverview(false);\n      if (window.__ficha && phone()) window.__ficha(card, e, openForm, f.properties);\n'
+            '      else if (window.__fichaD && !phone()) window.__fichaD(card, e, openForm, f.properties);\n')
     return h
 
 
 def main():
     src = (Path(__file__).parent / "reportes-before-c3.html").read_text()
-    for v in NAMES:
+    for v in [*NAMES, *DNAMES]:
         (WEB / f"{v}.html").write_text(build(src, v))
         print(f"web/{v}.html")
     # /reportes itself takes this variant's carousel on phones.

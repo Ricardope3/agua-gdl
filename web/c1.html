@@ -468,21 +468,21 @@ path.nueva { animation: nueva 1.4s ease-out both; pointer-events: none }
   .c-acc .rep:hover { background: #c4421c }
   .c-acc .alt2 { flex: 0 0 auto; background: var(--subtle); color: var(--fg) }
   .stage .card > .button { display: none }
-  .ql { position: fixed; inset: 0; z-index: 5000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 16px; background: rgb(3 8 20 / 0); -webkit-backdrop-filter: blur(0); backdrop-filter: blur(0); transition: background .25s, backdrop-filter .25s, -webkit-backdrop-filter .25s }
-  .ql.on { background: rgb(3 8 20 / .45); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px) }
-  .ql-card { width: min(100%, 440px); max-height: 62vh; overflow: auto; border-radius: 16px; background: var(--surface); color: var(--fg); box-shadow: 0 18px 50px rgb(0 0 0 / .45); transition: transform .38s cubic-bezier(.2, 1.25, .4, 1), opacity .2s }
-  .ql-card img { display: block; width: 100%; max-height: 34vh; object-fit: cover; background: var(--subtle) }
-  .ql-body { padding: 14px 16px 16px }
-  .ql-tit { margin: 0 0 8px; font-weight: 700; font-size: 1.05rem; line-height: 1.3 }
-  .ql-body q { display: block; font-size: 1.05rem; line-height: 1.45; quotes: "«" "»" }
-  .ql-body .who, .ql-body .eco { margin: 8px 0 0; font-size: .85rem; color: var(--muted) }
-  .ql-menu { width: min(100%, 440px); display: flex; gap: 8px; opacity: 0; transform: translateY(-8px) scale(.96); transition: opacity .2s .1s, transform .3s .1s cubic-bezier(.2, 1.25, .4, 1) }
-  .ql.on .ql-menu { opacity: 1; transform: none }
-  .ql-menu .button { flex: 1; justify-content: center; padding: 11px 10px }
-  .ql-menu .ql-go { flex: 1.6; background: #e4572e; color: #fff; font-weight: 700; text-decoration: none }
-  @media (prefers-reduced-motion: reduce) { .ql, .ql-card, .ql-menu { transition: none } }
   .stage.has-card .leaflet-control-zoom, .stage.has-card .leaflet-control-centrar { display: none }
 }
+.ql { position: fixed; inset: 0; z-index: 5000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 16px; background: rgb(3 8 20 / 0); -webkit-backdrop-filter: blur(0); backdrop-filter: blur(0); transition: background .25s, backdrop-filter .25s, -webkit-backdrop-filter .25s }
+.ql.on { background: rgb(3 8 20 / .45); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px) }
+.ql-card { width: min(100%, 440px); max-height: 62vh; overflow: auto; border-radius: 16px; background: var(--surface); color: var(--fg); box-shadow: 0 18px 50px rgb(0 0 0 / .45); transition: transform .38s cubic-bezier(.2, 1.25, .4, 1), opacity .2s }
+.ql-card img { display: block; width: 100%; max-height: 34vh; object-fit: cover; background: var(--subtle) }
+.ql-body { padding: 14px 16px 16px }
+.ql-tit { margin: 0 0 8px; font-weight: 700; font-size: 1.05rem; line-height: 1.3 }
+.ql-body q { display: block; font-size: 1.05rem; line-height: 1.45; quotes: "«" "»" }
+.ql-body .who, .ql-body .eco { margin: 8px 0 0; font-size: .85rem; color: var(--muted) }
+.ql-menu { width: min(100%, 440px); display: flex; gap: 8px; opacity: 0; transform: translateY(-8px) scale(.96); transition: opacity .2s .1s, transform .3s .1s cubic-bezier(.2, 1.25, .4, 1) }
+.ql.on .ql-menu { opacity: 1; transform: none }
+.ql-menu .button { flex: 1; justify-content: center; padding: 11px 10px }
+.ql-menu .ql-go { flex: 1.6; background: #e4572e; color: #fff; font-weight: 700; text-decoration: none }
+@media (prefers-reduced-motion: reduce) { .ql, .ql-card, .ql-menu { transition: none } }
 @media (max-width: 760px) {
   .stage .card { bottom: 0; left: 0; width: 100%; max-height: none; overflow: hidden; border-radius: 18px 18px 0 0; padding: 14px 0 12px }
   .stage .card h2 { font-size: 1.2rem }
@@ -1283,15 +1283,17 @@ if (window.top !== window.self) {
       const top = wall && e.posts.length >= TOP;
       if (e) marks.push(surround(all, e.posts, wall));
       if (window.__antes && phone()) window.__antes(map, stage);
+      if (!phone()) for (const g of document.querySelectorAll('.leaflet-tooltip')) g.remove();
       if (fit) {
         // Room around the outline for the publications that surround it.
-        const pad = phone() && window.__pad ? window.__pad(map.getSize()) : phone() ? { paddingTopLeft: [130, 170], paddingBottomRight: [130, Math.round(map.getSize().y * 0.66) + 100] } : wall ? { paddingTopLeft: [map.getSize().x - 16 - Math.round(Math.min(top ? 180 : 240, map.getSize().x * (top ? 0.12 : 0.17))), 290], paddingBottomRight: [16, 40] } : { paddingTopLeft: [450 + 225, 175], paddingBottomRight: [225, 175] };
+        const pad = phone() && window.__pad ? window.__pad(map.getSize()) : !phone() && window.__padD ? window.__padD(map.getSize()) : phone() ? { paddingTopLeft: [130, 170], paddingBottomRight: [130, Math.round(map.getSize().y * 0.66) + 100] } : wall ? { paddingTopLeft: [map.getSize().x - 16 - Math.round(Math.min(top ? 180 : 240, map.getSize().x * (top ? 0.12 : 0.17))), 290], paddingBottomRight: [16, 40] } : { paddingTopLeft: [450 + 225, 175], paddingBottomRight: [225, 175] };
         const opts = { ...pad, maxZoom: top ? 13.5 : wall ? 14 : 15, animate: animate && !reduced, duration: 0.7 };
         const b = marks[1].getBounds();
         if (opts.animate) map.flyToBounds(b, opts); else map.fitBounds(b, opts);
       }
       renderCard(f, form);
       if (fit && window.__refit && phone()) window.__refit(map, marks[1].getBounds(), card);
+      else if (fit && window.__refitD && window.__fichaD && !phone()) window.__refitD(map, marks[1].getBounds(), card);
       const p = f.properties;
       const q = new URLSearchParams({ q: p.n, m: p.m, cp: p.cp });
       if (location.search.includes("api=")) q.set("api", API);
@@ -1341,7 +1343,7 @@ if (window.top !== window.self) {
         // Once the visitor pans the colonia off screen, its publications leave with it.
         if (!map.getBounds().contains(b.getCenter())) return;
         const nw = map.latLngToContainerPoint(b.getNorthWest()), se = map.latLngToContainerPoint(b.getSouthEast());
-        const W = phone() ? (window.__tile || [120])[0] : 210, H = phone() ? (window.__tile || [0, 90])[1] : 158, G = 8;
+        const W = phone() ? (window.__tile || [120])[0] : (window.__tileD || [210])[0], H = phone() ? (window.__tile || [0, 90])[1] : (window.__tileD || [0, 158])[1], G = 8;
         if (!W) return;
         const hits = blocked().map((r) => ({ l: r.left - box.left - G, t: r.top - box.top - G, r: r.right - box.left + G, b: r.bottom - box.top + G }));
         // Every tile placed so far blocks its spot too, so rings and sides never overlap.
@@ -1486,6 +1488,7 @@ if (window.top !== window.self) {
       stage.classList.add("has-card");
       setOverview(false);
       if (window.__ficha && phone()) window.__ficha(card, e, openForm, f.properties);
+      else if (window.__fichaD && !phone()) window.__fichaD(card, e, openForm, f.properties);
       // The selected colonia's report button, top right where the summary was, while the form isn't open.
       const done = Date.now() - reportedAt(k) < SEEN;
       $("reporta").hidden = done || !!openForm;
