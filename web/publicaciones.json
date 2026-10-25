@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-10-24",
+ "actualizado": "2026-10-25",
  "desde": "2026-10-12",
  "regla": {
   "reacciones": 5,
@@ -23595,7 +23595,8 @@
     "reacciones": 0,
     "comentarios": 0,
     "al": "2026-10-24"
-   }
+   },
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -23624,7 +23625,8 @@
     "reacciones": 0,
     "comentarios": 0,
     "al": "2026-10-24"
-   }
+   },
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -23653,7 +23655,8 @@
     "reacciones": 0,
     "comentarios": 0,
     "al": "2026-10-24"
-   }
+   },
+   "vista": "fuentes/ccb841d93915.jpg"
   },
   {
    "fuente": "vecinos",
@@ -23683,7 +23686,8 @@
     "reacciones": 0,
     "comentarios": 0,
     "al": "2026-10-24"
-   }
+   },
+   "vista": "fuentes/ccb841d93915.jpg"
   },
   {
    "fuente": "vecinos",
@@ -23712,7 +23716,8 @@
     "reacciones": 0,
     "comentarios": 0,
     "al": "2026-10-24"
-   }
+   },
+   "vista": "fuentes/ccb841d93915.jpg"
   },
   {
    "fuente": "vecinos",
@@ -23741,7 +23746,8 @@
     "reacciones": 0,
     "comentarios": 0,
     "al": "2026-10-24"
-   }
+   },
+   "vista": "fuentes/ccb841d93915.jpg"
   },
   {
    "fuente": "vecinos",
@@ -23770,7 +23776,8 @@
     "reacciones": 0,
     "comentarios": 0,
     "al": "2026-10-24"
-   }
+   },
+   "vista": "fuentes/ccb841d93915.jpg"
   },
   {
    "fuente": "vecinos",
@@ -23799,7 +23806,8 @@
     "reacciones": 0,
     "comentarios": 0,
     "al": "2026-10-24"
-   }
+   },
+   "vista": "fuentes/ccb841d93915.jpg"
   },
   {
    "fuente": "vecinos",
@@ -23828,7 +23836,8 @@
     "reacciones": 0,
     "comentarios": 0,
     "al": "2026-10-24"
-   }
+   },
+   "vista": "fuentes/ccb841d93915.jpg"
   },
   {
    "fuente": "vecinos",
@@ -23857,7 +23866,8 @@
     "reacciones": 0,
     "comentarios": 0,
     "al": "2026-10-24"
-   }
+   },
+   "vista": "fuentes/ccb841d93915.jpg"
   },
   {
    "fuente": "vecinos",
@@ -23886,7 +23896,8 @@
     "reacciones": 0,
     "comentarios": 0,
     "al": "2026-10-24"
-   }
+   },
+   "vista": "fuentes/ccb841d93915.jpg"
   },
   {
    "fuente": "vecinos",
@@ -23915,7 +23926,8 @@
     "reacciones": 0,
     "comentarios": 0,
     "al": "2026-10-24"
-   }
+   },
+   "vista": "fuentes/ccb841d93915.jpg"
   },
   {
    "fuente": "vecinos",
@@ -23944,7 +23956,66 @@
     "reacciones": 0,
     "comentarios": 0,
     "al": "2026-10-24"
+   },
+   "vista": "fuentes/ccb841d93915.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "x",
+   "quien": "Telediario Guadalajara",
+   "url": "https://x.com/TelediarioGDL/status/2114148340640121209",
+   "fecha": "2026-10-24",
+   "colonias": [
+    "GUADALAJARA ORIENTE|Guadalajara|44700"
+   ],
+   "lugar": "Guadalajara Oriente, Guadalajara",
+   "cita": "Al grito de “¡Queremos agua!”, vecinos de la colonia Guadalajara Oriente bloquearon la Avenida Juan Pablo II, al cruce con Himno; aseguran que llevan un mes sin suministro de agua.",
+   "dias": 30,
+   "bloqueo": true,
+   "eco": {
+    "reacciones": 13,
+    "comentarios": 2,
+    "al": "2026-10-25"
+   },
+   "vista": "fuentes/437a40dca048.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "x",
+   "quien": "Mural",
+   "url": "https://x.com/muralcom/status/2114181400932835830",
+   "fecha": "2026-10-24",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700",
+    "SAN ANDRES|Guadalajara|44810",
+    "LA PENAL|Guadalajara|44730"
+   ],
+   "lugar": "Oblatos, San Andrés y La Penal, Guadalajara",
+   "cita": "Ahora fueron los habitantes de San Felipe, Oblatos, San Andrés y La Penal quienes se manifestaron por la falta de agua e incumplimiento de tandeos.",
+   "dias": null,
+   "eco": {
+    "reacciones": 14,
+    "comentarios": 2,
+    "al": "2026-10-25"
    }
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Partidero",
+   "url": "https://partidero.com/continua-la-exigencia-por-agua-limpia-en-guadalajara-vecinos-bloquean-javier-mina/",
+   "fecha": "2026-10-24",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700",
+    "SAN ANDRES|Guadalajara|44810",
+    "TALPITA|Guadalajara|44710"
+   ],
+   "lugar": "Oblatos, San Andrés y Talpita, Guadalajara",
+   "cita": "La movilización reunió a habitantes de zonas aledañas como Oblatos, San Andrés, Talpita y San Felipe.",
+   "dias": null,
+   "bloqueo": true,
+   "eco": null,
+   "titular": "Continúa la exigencia por agua limpia en Guadalajara; vecinos bloquean Javier Mina"
   }
  ]
 }
