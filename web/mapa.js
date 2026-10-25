@@ -230,7 +230,7 @@ window.aguaMapa = (() => {
     svg.append(use);
     return svg;
   };
-  // cross is a plain × for closing: the sprite's "x" is the X (Twitter) logo used on /escribe.
+  // cross is a plain × for closing: the sprite's "x" is the X (Twitter) logo used on /exige.
   const cross = () => {
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("class", "i");

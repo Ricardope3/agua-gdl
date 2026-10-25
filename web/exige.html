@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Exígele a quien le toca · Agua GDL</title>
-<meta name="description" content="El agua es un derecho. Mándale tu caso al gobernador, al SIAPA, a la CEA y a tu presidencia municipal desde tu correo, X o Facebook. Agua GDL no ve ni guarda nada.">
+<title>Exige agua limpia · Agua GDL</title>
+<meta name="description" content="Pídele al gobernador Pablo Lemus y a las 38 diputaciones de Jalisco que saneen los ríos y arreglen la crisis del agua, desde tu correo, X o Messenger. Agua GDL no ve ni guarda nada.">
 <link rel="canonical" href="https://aguagdl.com/exige">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aguagdl.com/exige">
 <meta property="og:title" content="El agua es un derecho. Exígelo.">
-<meta property="og:description" content="¿Sin agua, con poca presión o agua sucia? Mándale tu caso al gobernador, al SIAPA, a la CEA y a tu presidencia municipal desde tu cuenta, en unos minutos.">
+<meta property="og:description" content="Pídele a Lemus y al Congreso de Jalisco que saneen los ríos, que el agua llegue limpia y suficiente y que siga siendo pública, desde tu cuenta, en unos minutos.">
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary">
@@ -23,6 +23,7 @@
   --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
   --brand: #0284c7; --brand-deep: #0369a1; --link: #0369a1; --on-brand: #ffffff;
   --primary: #0284c7; --on-primary: #ffffff; --ring: #0284c766;
+  --warn: #dc2626;
   --shadow: 0 1px 2px rgb(3 105 161 / .08);
   --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
@@ -30,66 +31,131 @@
   :root {
     --bg: #06141d; --surface: #0a1c28; --subtle: #0c3149; --fg: #f0f9ff; --muted: #9bb8ca; --line: #18384d;
     --link: #7dd3fc; --primary: #0ea5e9; --on-primary: #ffffff; --ring: #38bdf866; --brand: #0ea5e9; --brand-deep: #0284c7;
+    --warn: #f87171;
     color-scheme: dark;
   }
 }
 * { box-sizing: border-box }
+[hidden] { display: none !important }
 html { -webkit-text-size-adjust: 100% }
-body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 var(--font) }
-a { color: var(--link) }
-a:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; border-radius: 4px }
-.wrap { max-width: 960px; margin: 0 auto; padding: 0 20px }
-header.top { padding: 20px 0 }
-.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; font-weight: 800; font-size: 1.25rem; letter-spacing: -.01em }
-.brand img { width: 30px; height: auto }
-h1 { font-size: clamp(2rem, 6vw, 3rem); line-height: 1.08; letter-spacing: -.02em; margin: 20px 0 16px; text-wrap: balance }
-.signup { background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--brand); border-radius: 10px; padding: 20px }
-.button { display: inline-block; background: var(--brand-deep); color: var(--on-brand); font-weight: 700; font-size: 1.1rem; text-decoration: none; padding: 13px 22px; border-radius: 8px }
-.button:hover { background: var(--brand) }
-.consent { margin: 16px 0 0; font-size: .95rem }
-.options { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; align-items: start }
-.signup h2 { font-size: 1.25rem; margin: 0 0 8px }
-.signup > p:not(.consent):not(.alt) { margin: 0 0 16px; color: var(--muted) }
-.buttons { display: flex; flex-wrap: wrap; gap: 10px }
-.number { font-weight: 700; color: var(--fg); white-space: nowrap }
-.tel { font-size: 1.35rem; font-weight: 700; letter-spacing: -.01em; white-space: nowrap; text-decoration: none }
-.tel:hover { text-decoration: underline }
-.via { font-size: .9rem; color: var(--muted); margin: 10px 0 0 }
-.signup p { margin: 0 0 8px }
-.alt { margin: 12px 0 0; font-size: .95rem; color: var(--muted) }
-.lede { font-size: 1.15rem; color: var(--muted); margin: 0 0 28px; max-width: 60ch }
-section { padding: 36px 0 8px }
-h2 { font-size: 1.5rem; line-height: 1.2; margin: 0 0 14px; letter-spacing: -.01em }
-ol, ul { padding-left: 1.3em; margin: 0 0 14px }
-li { margin: 0 0 8px }
-section p { margin: 0 0 14px; max-width: 65ch }
-dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0 }
-dt { font-weight: 800; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .95rem; padding-top: 2px }
-dd { margin: 0 }
-footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .9rem }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased }
+a { color: var(--link); text-underline-offset: 3px }
+a:focus-visible, button:focus-visible, textarea:focus-visible, input:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); border-color: var(--brand) }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 16px }
+header.top { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); margin: 0 -16px; padding: 12px 16px }
+.brand { display: inline-flex; align-items: center; gap: 8px; color: var(--fg); text-decoration: none; font-weight: 600; font-size: 1rem; letter-spacing: -.01em }
+.brand img { width: 20px; height: auto }
+h1 { font-size: clamp(1.9rem, 5.5vw, 2.6rem); line-height: 1.1; letter-spacing: -.03em; font-weight: 700; margin: 40px 0 12px; text-wrap: balance }
+.lede { font-size: 1.05rem; color: var(--muted); margin: 0 0 28px; max-width: 62ch }
+.box, section { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; padding: 24px; box-shadow: var(--shadow) }
+section { margin: 20px 0 0 }
+label { display: block; font-weight: 500; font-size: .875rem; margin: 0 0 6px }
+input, textarea { width: 100%; font: inherit; font-size: .95rem; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s }
+input::placeholder, textarea::placeholder { color: var(--muted) }
+textarea { min-height: 22em; resize: vertical; line-height: 1.6 }
+#texto { min-height: 8em; overflow: hidden }
+textarea.post { min-height: 7em }
+.search { display: flex; gap: 8px; max-width: 360px }
+.search input { flex: 1; min-width: 0 }
+#mi-dip { margin: 12px 0 0 }
+.firma { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 0 12px }
+@media (max-width: 560px) { .firma { grid-template-columns: 1fr } }
+.firma input { scroll-margin-top: 80px }
+.firma input.falta { border-color: var(--warn); box-shadow: 0 0 0 3px color-mix(in srgb, var(--warn) 25%, transparent) }
+.firma input:disabled { opacity: .5; cursor: not-allowed }
+.check { display: inline-flex; gap: 8px; align-items: center; font-weight: 400; font-size: .9rem; margin: 0; cursor: pointer }
+.check input { width: 16px; height: 16px; margin: 0; box-shadow: none; accent-color: var(--primary) }
+.firma-tu { margin-top: 16px }
+.caso { border: 0; padding: 0; margin: 0 0 14px; display: grid; gap: 8px; justify-items: start }
+.caso legend { font-weight: 500; font-size: .875rem; margin: 0 0 8px; padding: 0 }
+.caso input[type="number"] { width: 4.5em; height: auto; padding: 2px 8px }
+.rehacer { margin: 12px 0 0 }
+.number { font-weight: 600; color: var(--fg); white-space: nowrap }
+#seccion-estado.falta, #firma-estado.falta { color: var(--warn); font-weight: 500 }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 0 }
+.button { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; background: var(--primary); color: var(--on-primary); font: inherit; font-size: .9rem; font-weight: 500; line-height: 1.3; text-decoration: none; padding: 6px 16px; border: 1px solid transparent; border-radius: 8px; cursor: pointer; box-shadow: var(--shadow); transition: opacity .15s, background .15s }
+.button:hover { background: var(--brand-deep); opacity: 1 }
+.button.alt { background: color-mix(in srgb, var(--brand) 12%, var(--surface)); color: var(--link); border: 1.5px solid var(--brand) }
+.button.alt:hover { background: color-mix(in srgb, var(--brand) 22%, var(--surface)); opacity: 1 }
+.note { margin: 12px 0 0; font-size: .875rem; color: var(--muted) }
+#firma-estado:empty, #estado:empty { margin: 0 }
+.steps { list-style: none; margin: 0; padding: 0; counter-reset: paso }
+.steps > li { counter-increment: paso }
+.steps > li + li { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--line) }
+.paso { display: flex; align-items: center; gap: 10px; font-size: 1.05rem; margin: 0 0 4px }
+.paso::before { content: counter(paso); display: grid; place-items: center; width: 28px; height: 28px; flex-shrink: 0; border-radius: 50%; background: var(--brand); color: var(--on-primary); font-size: .875rem; letter-spacing: 0 }
+.hint { margin: 0 0 14px }
+.mail { border: 1px solid var(--line); border-radius: 10px; background: var(--bg) }
+.mail-row { display: flex; align-items: baseline; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--line); font-size: .95rem }
+.mail-row > :first-child { flex: 0 0 3.7em; margin: 0; color: var(--muted); font-size: .875rem; font-weight: 400 }
+.mail-row > :last-child { flex: 1; min-width: 0 }
+.mail-row b { font-weight: 600 }
+.mail-row small { display: block; color: var(--muted); font-size: .8rem; overflow-wrap: break-word }
+@media (max-width: 560px) { .mail-row, .mail-text { padding-left: 12px; padding-right: 12px } .mail-row > :first-child { flex-basis: 3.2em } }
+.mail-row input { padding: 6px 10px }
+.mail input, .mail textarea { background: var(--surface) }
+.mail-text { padding: 14px }
+.auto { margin: 0; color: var(--muted); font-size: .95rem }
+#saludo { margin: 0 0 10px }
+#firma-vista { margin: 10px 0 0 }
+#firma-vista span { display: block }
+#firma-vista .ph { font-style: italic; opacity: .75 }
+.via { border: 0; padding: 0; margin: 0 0 14px; display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; font-size: .9rem }
+.via legend { float: left; color: var(--muted) }
+.seg { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg) }
+.seg label { position: relative; margin: 0; padding: 5px 12px; border-radius: 7px; font-size: .875rem; font-weight: 500; color: var(--muted); cursor: pointer }
+.seg input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer }
+.seg label:has(:checked) { background: var(--primary); color: var(--on-primary) }
+.seg label:has(:focus-visible) { box-shadow: 0 0 0 3px var(--ring) }
+.button.big { min-height: 48px; padding: 10px 20px; font-size: 1rem; font-weight: 600 }
+@media (max-width: 560px) { .button.big { display: flex; width: 100%; justify-content: center } }
+#avance { display: flex; align-items: center; gap: 10px }
+#avance progress { flex: 0 1 220px; height: 6px; border: 0; border-radius: 3px; background: var(--subtle); appearance: none; overflow: hidden }
+#avance progress::-webkit-progress-bar { background: var(--subtle) }
+#avance progress::-webkit-progress-value { background: var(--primary) }
+#avance progress::-moz-progress-bar { background: var(--primary) }
+.otra { margin: 20px 0 0 }
+.otra summary { cursor: pointer; color: var(--link); font-size: .9rem; font-weight: 500 }
+.otra ol { margin: 10px 0 0; padding-left: 20px; font-size: .9rem; color: var(--muted) }
+.otra li + li { margin-top: 8px }
+.otra .button { margin-right: 4px }
+h2 { font-size: 1.2rem; line-height: 1.3; font-weight: 600; margin: 0 0 8px; letter-spacing: -.02em }
+section p { margin: 0 0 14px; max-width: 65ch; color: var(--muted); font-size: .95rem }
+section ul:not(.people) { margin: 0; padding-left: 20px; color: var(--muted); font-size: .95rem }
+.people { list-style: none; padding: 0; margin: 0; border: 1px solid var(--line); border-radius: 8px; overflow: hidden }
+.people li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 14px; font-size: .95rem; font-weight: 500 }
+.people li + li { border-top: 1px solid var(--line) }
+.people li:hover { background: var(--subtle) }
+.people small { display: block; color: var(--muted); font-weight: 400; font-size: .8rem; overflow-wrap: anywhere }
+.people li, .people span { min-width: 0 }
+.people .links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 12px; flex-shrink: 0; max-width: 55% }
+.people a { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; font-weight: 500; font-size: .875rem; text-decoration: none }
+@media (max-width: 640px) { .people li { flex-direction: column; align-items: stretch } .people .links { max-width: none; justify-content: flex-start } }
+.tabs-label { margin: 0 0 8px; font-weight: 600 }
+.tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0 0 20px }
+@media (max-width: 760px) { .tabs { grid-template-columns: repeat(2, 1fr) } }
+
+.tabs button { display: flex; align-items: center; gap: 10px; text-align: left; font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; cursor: pointer; box-shadow: var(--shadow); transition: border-color .15s, background .15s }
+.tabs button:hover { border-color: var(--brand) }
+.tab-icon { display: grid; place-items: center; width: 34px; height: 34px; flex-shrink: 0; border-radius: 50%; background: var(--brand); color: var(--on-primary) }
+.tab-text { display: grid; line-height: 1.25; min-width: 0 }
+.tab-text strong { font-size: .92rem; font-weight: 600 }
+.tab-text small { font-size: .78rem; color: var(--muted) }
+.tabs button[aria-selected="true"] { border: 2px solid var(--brand); padding: 9px 11px; background: color-mix(in srgb, var(--brand) 10%, var(--surface)) }
+.tabs button[aria-selected="true"] .tab-text strong { color: var(--link) }
+.panel > section { margin-top: 0 }
+.panel > section + section { margin-top: 20px }
+#p-porque ul { margin: 0 0 14px }
+#p-porque li { margin: 0 0 10px }
+.people a.who { white-space: normal; color: var(--fg); font-size: .95rem }
+.people a:hover { text-decoration: underline }
+.people .done { color: var(--muted); font-weight: 400 }
+footer { border-top: 1px solid var(--line); margin-top: 48px; padding: 24px 0 48px; color: var(--muted); font-size: .85rem }
 footer p { margin: 0 0 8px; max-width: 70ch }
-body { font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased }
-a { text-underline-offset: 3px }
-a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); border-radius: 6px }
-.wrap { padding: 0 16px }
-header.top { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); margin: 0 -16px 20px; padding: 12px 16px }
-.brand { gap: 8px; font-weight: 600; font-size: 1rem }
-.brand img { width: 20px }
-h1 { letter-spacing: -.03em; font-weight: 700 }
-h2 { font-weight: 600; letter-spacing: -.02em }
-.lede { font-size: 1.05rem }
-.button { display: inline-flex; align-items: center; gap: 6px; background: var(--primary); color: var(--on-primary); font-weight: 500; font-size: .95rem; padding: 10px 18px; border: 1px solid transparent; border-radius: 8px; box-shadow: var(--shadow); transition: background .15s }
-.button:hover { background: var(--brand-deep) }
-.signup, .finder, .notice, .summary { border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; box-shadow: var(--shadow) }
-.card, .zone, .msg, .empty, .choice, .values li { box-shadow: var(--shadow) }
-.search input, .filter select { border: 1px solid var(--line); box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s }
-.search input:focus-visible, .filter select:focus-visible { border-color: var(--brand) }
-footer { font-size: .85rem }
 .i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
 h2.ih, h3.ih { display: flex; align-items: center; gap: 10px }
 .ih .i-badge { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--subtle); color: var(--brand); flex-shrink: 0 }
 h3.ih .i-badge { width: 28px; height: 28px }
-.steps li .i { color: var(--ic); margin-right: 4px }
 header.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px }
 .site-nav { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; margin: 0 -6px }
 .site-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 8px; color: var(--muted); font-size: .9rem; font-weight: 500; text-decoration: none; white-space: nowrap }
@@ -124,25 +190,6 @@ li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .ih .i-badge:has(use[href$="#mail"]) { background: #0d9488 }
 .ih .i-badge:has(use[href$="#pen-line"]) { background: #ea580c }
 .ih .i-badge:has(use[href$="#calendar"]) { background: #4f46e5 }
-.fields { display: grid; gap: 0 14px }
-@media (min-width: 640px) { .fields { grid-template-columns: 1fr 1fr } }
-#caso label, .block { display: grid; gap: 6px; font-weight: 600; font-size: .95rem; margin: 0 0 14px }
-#caso input[type="text"], #caso select, .block input, .block textarea { font: inherit; font-weight: 400; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; box-shadow: var(--shadow); width: 100%; min-width: 0 }
-.block textarea { resize: vertical; line-height: 1.5 }
-fieldset { border: 0; margin: 0 0 14px; padding: 0; min-width: 0 }
-legend { font-weight: 600; font-size: .95rem; margin: 0 0 8px; padding: 0 }
-#caso label.opt { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-weight: 400; margin: 0 0 8px }
-label.opt input[type="number"] { font: inherit; width: 4.5em; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 4px 8px }
-.pick label { font-weight: 400; margin-right: 12px; white-space: nowrap }
-.estado { min-height: 1.4em; color: var(--muted); font-size: .9rem; margin: 8px 0 0 }
-.cargo h3 { margin: 0 0 2px; font-size: 1.05rem }
-.cargo .quien { margin: 0 0 12px; color: var(--muted) }
-.todos { margin-top: 16px }
-.tuit { white-space: pre-wrap; color: var(--muted); font-size: .92rem }
-button.button { font: inherit; font-weight: 500; font-size: .95rem; cursor: pointer }
-.button.alt { background: var(--surface); color: var(--link); border: 1px solid var(--line) }
-.button.alt:hover { background: var(--subtle) }
-.sinx { color: var(--muted); font-size: .9rem; margin: 0 }
 /* The top menu as on the landing: its frame is 960 px wide, and 1320 px from 1100 px, so it sits on one row. */
 .wrap:has(> header.top) { max-width: 960px }
 @media (min-width: 1100px) { .wrap:has(> header.top) { max-width: 1320px } }
@@ -173,7 +220,6 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
       <a href="/exige" aria-current="page"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exige</a>
       <a href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Mi zona</a>
       <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg>Noticias</a>
-      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#landmark"/></svg>Congreso</a>
       <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg>Cuentas</a>
       <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Contaminación</a>
       <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#heart"/></svg>Antisionismo</a>
@@ -181,105 +227,239 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   </header>
 
   <main>
-    <h1>Exígele a quien le toca</h1>
-    <p class="lede">El agua es un derecho: lo dice el <a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf" rel="noopener">artículo 4 de la Constitución</a>. Si en tu colonia no llega, llega sucia o sin presión, mándale tu caso al gobernador, a la CEA, a tu presidencia municipal y, en Guadalajara, Zapopan, Tlaquepaque y Tonalá, al SIAPA. Lo mandas tú, desde tu correo, X o Facebook; Agua GDL no ve ni guarda nada.</p>
+    <h1>Exige que arreglen el agua y saneen los ríos</h1>
+    <p class="lede">El agua es un derecho: lo dice el <a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf" rel="noopener">artículo 4 de la Constitución</a>. Pídele al gobernador Pablo Lemus y a las 38 diputaciones del Congreso de Jalisco que saneen los ríos, que el agua llegue limpia y suficiente, que rindan cuentas y que el agua siga siendo pública. Escríbeles por correo, X o Messenger desde tu propia cuenta, o llámales. Agua GDL no ve ni guarda nada.</p>
 
-    <form class="signup" id="caso" autocomplete="off">
-      <h2 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg></span>1. Tu caso</h2>
-      <div class="fields">
-        <label>Tu colonia<input id="colonia" type="text" maxlength="80" placeholder="Por ejemplo: Las Juntas"></label>
-        <label>Municipio<select id="municipio">
-          <option value="">Elige tu municipio</option>
-          <option>Guadalajara</option>
-          <option>Zapopan</option>
-          <option>San Pedro Tlaquepaque</option>
-          <option>Tonalá</option>
-          <option>Tlajomulco de Zúñiga</option>
-          <option>El Salto</option>
-          <option>Zapotlanejo</option>
-          <option>Ixtlahuacán de los Membrillos</option>
-          <option>Juanacatlán</option>
-        </select></label>
-      </div>
-      <fieldset>
-        <legend>¿Qué pasa?</legend>
-        <label class="opt"><input type="radio" name="pasa" value="sin" checked> No llega el agua desde hace <input id="dias" type="number" min="1" max="99" inputmode="numeric" placeholder="3" aria-label="Días sin agua"> días</label>
-        <label class="opt"><input type="radio" name="pasa" value="presion"> Llega con muy poca presión</label>
-        <label class="opt"><input type="radio" name="pasa" value="sucia"> Llega sucia o con mal olor</label>
-      </fieldset>
-      <label>Tu nombre, para firmar (si quieres)<input id="nombre" type="text" maxlength="80"></label>
-    </form>
+    <p class="tabs-label">Elige cómo participar:</p>
+    <nav class="tabs" role="tablist" aria-label="Formas de participar">
+      <button type="button" role="tab" id="t-correo" aria-controls="p-correo" data-tab="correo"><span class="tab-icon"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#mail"/></svg></span><span class="tab-text"><strong>Correo</strong><small>Al gobernador y a las 38</small></span></button>
+      <button type="button" role="tab" id="t-tu" aria-controls="p-tu" data-tab="tu"><span class="tab-icon"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#user"/></svg></span><span class="tab-text"><strong>Tu diputación</strong><small>Búscala con tu INE</small></span></button>
+      <button type="button" role="tab" id="t-redes" aria-controls="p-redes" data-tab="redes"><span class="tab-icon"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#message-circle"/></svg></span><span class="tab-text"><strong>X y Messenger</strong><small>Un post o un mensaje</small></span></button>
+      <button type="button" role="tab" id="t-lista" aria-controls="p-lista" data-tab="lista"><span class="tab-icon"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg></span><span class="tab-text"><strong>A quién</strong><small>Correo, redes y teléfono</small></span></button>
+      <button type="button" role="tab" id="t-porque" aria-controls="p-porque" data-tab="porque"><span class="tab-icon"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#info"/></svg></span><span class="tab-text"><strong>Por qué</strong><small>Ríos, agua limpia y cuentas</small></span></button>
+    </nav>
 
-    <section aria-labelledby="mensaje-h">
-      <h2 id="mensaje-h" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#pen-line"/></svg></span>2. Revisa el mensaje</h2>
-      <p>Lo armamos con tu caso y puedes cambiarlo. Cada correo empieza con el saludo a quien va dirigido.</p>
-      <label class="block">Asunto<input id="asunto" type="text" maxlength="120"></label>
-      <label class="block">Mensaje<textarea id="cuerpo" rows="15"></textarea></label>
-      <div class="buttons">
-        <button class="button alt" type="button" id="copiar"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#copy"/></svg>Copiar mensaje</button>
-        <button class="button alt" type="button" id="rehacer" hidden>Volver a armarlo con mi caso</button>
+    <div class="panel" role="tabpanel" id="p-correo" aria-labelledby="t-correo">
+    <div class="box">
+      <ol class="steps">
+        <li>
+          <h2 class="paso">Tu caso y tu firma</h2>
+          <p class="note hint">Con tu colonia y lo que pasa ahí, el correo pesa más. Tu nombre y tu colonia van al final de cada correo.</p>
+          <div class="firma">
+            <div>
+              <label for="nombre">Tu nombre</label>
+              <input id="nombre" autocomplete="name" placeholder="Escribe tu nombre">
+            </div>
+            <div>
+              <label for="colonia">Tu colonia y municipio</label>
+              <input id="colonia" placeholder="Ej. Analco, Guadalajara">
+            </div>
+          </div>
+          <fieldset class="caso">
+            <legend>¿Qué pasa en tu colonia?</legend>
+            <label class="check"><input type="radio" name="pasa" value="sin"> No llega el agua desde hace <input id="dias" type="number" min="1" max="99" inputmode="numeric" placeholder="3" aria-label="Días sin agua"> días</label>
+            <label class="check"><input type="radio" name="pasa" value="presion"> Llega con muy poca presión</label>
+            <label class="check"><input type="radio" name="pasa" value="sucia"> Llega sucia o con mal olor</label>
+            <label class="check"><input type="radio" name="pasa" value="" checked> Prefiero no contarlo</label>
+          </fieldset>
+          <label class="check"><input type="checkbox" id="anonimo"> Enviar sin firma</label>
+          <p class="note" id="firma-estado" aria-live="polite"></p>
+        </li>
+        <li>
+          <h2 class="paso">Revisa el correo</h2>
+          <p class="note hint">Ya está escrito con tu caso. Puedes cambiar el asunto y el texto: un correo con tus palabras pesa más.</p>
+          <div class="mail">
+            <div class="mail-row"><span>Para</span><span id="para"></span></div>
+            <div class="mail-row"><label for="asunto">Asunto</label><input id="asunto" value="Petición ciudadana: arreglen la crisis del agua y saneen los ríos"></div>
+            <div class="mail-text">
+              <p class="auto" id="saludo"></p>
+              <textarea id="texto" aria-label="Texto del correo"></textarea>
+              <p class="auto" id="firma-vista"></p>
+            </div>
+          </div>
+          <button class="button alt rehacer" type="button" id="rehacer" hidden>Volver a armarlo con mi caso</button>
+        </li>
+        <li>
+          <h2 class="paso">Envíalo a cada quien</h2>
+          <p class="note hint">Son 39 correos: uno para el gobernador y uno para cada diputación, con su nombre. Toca el botón, envía el correo que se abre y vuelve aquí para el siguiente.</p>
+          <fieldset class="via">
+            <legend>Abrir con</legend>
+            <span class="seg">
+              <label><input type="radio" name="via" value="gmail" checked>Gmail</label>
+              <label><input type="radio" name="via" value="app">Mi app de correo</label>
+            </span>
+          </fieldset>
+          <a class="button big" id="siguiente" href="#" rel="noopener" target="_blank"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#mail"/></svg>Abrir el correo 1 de 39</a>
+          <p class="note" id="avance" hidden><progress id="barra" max="39" value="0"></progress><span id="progreso"></span></p>
+          <details class="otra">
+            <summary>¿Prefieres mandar un solo correo a los 39?</summary>
+            <p class="note">Abre un correo nuevo y pega cada cosa en su lugar:</p>
+            <ol>
+              <li><button class="button alt" type="button" id="copiar-correos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#copy"/></svg>Copiar los 39 correos</button> y pégalos en «Para».</li>
+              <li><button class="button alt" type="button" id="copiar-asunto"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#copy"/></svg>Copiar el asunto</button> y pégalo en «Asunto».</li>
+              <li><button class="button alt" type="button" id="copiar-texto"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#copy"/></svg>Copiar el texto</button> y pégalo en el mensaje.</li>
+            </ol>
+            <p class="note" id="estado" aria-live="polite"></p>
+          </details>
+        </li>
+      </ol>
+    </div>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-tu" aria-labelledby="t-tu">
+    <section aria-labelledby="tu-dip">
+      <h2 id="tu-dip" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#user"/></svg></span>¿Quién te representa en el Congreso?</h2>
+      <p>Escribe el número de sección de tu credencial del INE (viene en el frente, junto a «SECCIÓN») y te decimos quién es la diputada o el diputado de tu distrito. La búsqueda se hace en tu teléfono o computadora: el número no se envía ni se guarda.</p>
+      <form class="search" id="buscar-seccion">
+        <input id="seccion" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="Ej. 3082" aria-label="Número de sección de tu INE">
+        <button class="button" type="submit"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#search"/></svg>Buscar</button>
+      </form>
+      <p class="note" id="seccion-estado" aria-live="polite"></p>
+      <div class="firma firma-tu">
+        <div>
+          <label for="nombre-tu">Tu nombre</label>
+          <input id="nombre-tu" autocomplete="name" placeholder="Escribe tu nombre">
+        </div>
+        <div>
+          <label for="colonia-tu">Tu colonia y municipio</label>
+          <input id="colonia-tu" placeholder="Ej. Analco, Guadalajara">
+        </div>
       </div>
-      <p class="estado" id="estado" aria-live="polite"></p>
+      <label class="check"><input type="checkbox" id="anonimo-tu"> Enviar sin firma</label>
+      <p class="note" style="margin:6px 0 0">Tu firma va al final del correo; es la misma de la pestaña Correo, donde también puedes contar qué pasa en tu colonia.</p>
+      <ul class="people" id="mi-dip" hidden></ul>
+      <p class="note">Además de la diputación de tu distrito, las 18 de representación proporcional representan a todo Jalisco.</p>
     </section>
+    </div>
 
-    <section aria-labelledby="manda-h">
-      <h2 id="manda-h" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#send"/></svg></span>3. Mándalo</h2>
-      <p class="pick">Abrir el correo con: <label><input type="radio" name="via" value="app" checked> mi app de correo</label> <label><input type="radio" name="via" value="gmail"> Gmail</label></p>
-      <div class="options" id="cargos"></div>
-      <div class="signup todos" id="todos" hidden>
-        <h3>A todos en X</h3>
-        <p class="tuit" id="tuit-texto"></p>
-        <a class="button" id="tuit" href="https://x.com" target="_blank" rel="noopener">Publicar en X</a>
+    <div class="panel" role="tabpanel" id="p-redes" aria-labelledby="t-redes">
+    <section aria-labelledby="x">
+      <h2 id="x" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#x"/></svg></span>Publícalo también en X</h2>
+      <p>Un post para el gobernador y uno para cada diputación que tiene cuenta en X. Cada botón abre X con la mención y este texto, que puedes cambiar:</p>
+      <textarea id="post" class="post" maxlength="245">le pido sanear los ríos Santiago y Las Pintas y sancionar a quien contamina, agua limpia y suficiente ya, cuentas claras y que el agua siga siendo pública. Estaré pendiente. #ElAguaEsUnDerecho</textarea>
+      <p class="note" id="post-cuenta"></p>
+      <div class="actions">
+        <a class="button" id="siguiente-x" href="#" rel="noopener" target="_blank"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#x"/></svg>Publicar</a>
+        <a class="button" id="siguiente-fb" href="#" rel="noopener" target="_blank"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#message-circle"/></svg>Messenger</a>
       </div>
+      <p class="note" id="progreso-x"></p>
+      <p class="note" id="progreso-fb"></p>
+      <p class="note" id="estado-redes" aria-live="polite"></p>
+      <p class="note">Al gobernador le escribimos a las cuentas del Gobierno de Jalisco que enlaza <a href="https://jalisco.gob.mx/gobierno/gobernador" rel="noopener">jalisco.gob.mx</a>; a las diputaciones, a las que cada una publica en su perfil del Congreso: <span id="cuentas"></span>. Messenger no deja poner el texto por adelantado, así que el botón lo copia y abre el chat: solo pégalo y envíalo.</p>
     </section>
+    </div>
 
-    <section aria-labelledby="porque">
-      <h2 id="porque" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#landmark"/></svg></span>¿Por qué a ellos?</h2>
+    <div class="panel" role="tabpanel" id="p-lista" aria-labelledby="t-lista">
+    <section aria-labelledby="uno">
+      <h2 id="uno" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg></span>El gobernador y las 38 diputaciones</h2>
+      <p>También puedes escribirle a cualquiera en el orden que quieras. A quienes ya les escribiste se marcan con <svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#check"/></svg> en este dispositivo.</p>
+      <ul class="people" id="personas"></ul>
+      <p class="note" id="estado-lista" aria-live="polite"></p>
+      <p class="note">El correo y el teléfono del gobernador son los del <a href="https://transparencia.jalisco.gob.mx/informacion/contenido/85/141" rel="noopener">directorio del Despacho del Gobernador</a> (revisado el 25 de octubre de 2026). Los de las diputaciones, con sus distritos y cuentas, los publica el Congreso del Estado de Jalisco en el perfil de cada una (revisados el 15 de octubre de 2026). «Llamar» marca el teléfono y luego su extensión. Si alguno rebota, avísanos a <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>.</p>
+    </section>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-porque" aria-labelledby="t-porque">
+    <section aria-labelledby="porque-pedimos">
+      <h2 id="porque-pedimos" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#check"/></svg></span>Lo que pedimos</h2>
       <ul>
-        <li><strong>Tu presidencia municipal.</strong> La Constitución pone a cargo de los municipios el «agua potable, drenaje, alcantarillado, tratamiento y disposición de sus aguas residuales» (<a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf" rel="noopener">artículo 115, fracción III</a>).</li>
-        <li><strong>El SIAPA.</strong> Es el organismo que da el servicio de agua en Guadalajara, Zapopan, Tlaquepaque y Tonalá (<a href="https://www.ceajalisco.gob.mx/contenido/directorio_organismos_operadores_est/Director%20de%20Organismo%20Operador%20Estatal_archivos/sheet001.html" rel="noopener">CEA</a>) y el que publica el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">calendario de la rotación</a>.</li>
-        <li><strong>La CEA.</strong> La Comisión Estatal del Agua es del Gobierno de Jalisco: su director da las cifras de la rotación (<a href="https://jalisco.quadratin.com.mx/sucesos/tandeo-deja-sin-agua-a-270-colonias-de-la-zona-metropolitana-de-guadalajara/" rel="noopener">Quadratín</a>) y la iniciativa del acueducto la autoriza a contratarlo (<a href="https://www.unotv.com/estados/jalisco/acueducto-chapala-guadalajara-iniciativa-de-lemus-llegara-al-congreso-de-jalisco-este-15-de-octubre/" rel="noopener">UnoTV</a>).</li>
-        <li><strong>El gobernador.</strong> El Gobierno de Jalisco presentó la rotación con el SIAPA (<a href="https://www.siapa.gob.mx/prensa/presenta-gobierno-de-jalisco-programa-de-rotacion-del-servicio-de-agua-limpia-y-sitio-para" rel="noopener">boletín del SIAPA, 15 de octubre</a>).</li>
+        <li><strong>Sanear los ríos.</strong> El sistema que se cerró en octubre recibe descargas de aguas residuales a lo largo del canal Las Pintas, y el Río Santiago lleva décadas envenenado por descargas industriales. Lee <a href="/contamina">quién contamina el agua</a>.</li>
+        <li><strong>Agua limpia y suficiente ya.</strong> Pipas donde no llega (<a href="/pipas">dónde pedirlas</a>) y análisis de calidad públicos. En 2022 la CEDHJ pidió al SIAPA publicar sus puntos de monitoreo y sus resultados (<a href="https://zapotlanejo.gob.mx/transparencia/archivos/Reco%2010-2022%20VP.pdf" rel="noopener" target="_blank">Recomendación 10/2022</a>), y en abril de 2026 lo volvió a pedir (<a href="https://cedhj.org.mx/assets_web/doc/recomendaciones/emitidas/2026/20260430150739/recomendacion_1777583259457.pdf" rel="noopener" target="_blank">Recomendación 10/2026</a>).</li>
+        <li><strong>Cuentas claras.</strong> Cuánta agua llega a cada zona y a qué horas, y en qué se gasta cada peso para el agua.</li>
+        <li><strong>Que el agua siga siendo pública.</strong> El 22 de octubre, la presidenta Claudia Sheinbaum dijo: «Tendríamos que elevar a rango constitucional que no se permitiera esta privatización» (<a href="https://zetatijuana.com/2026/10/sheinbaum-plantea-elevar-a-rango-constitucional-la-prohibicion-de-privatizar-el-agua/" rel="noopener" target="_blank">Zeta</a>). Pedimos que Jalisco también lo deje en la ley.</li>
       </ul>
     </section>
 
-    <section aria-labelledby="reporta">
-      <h2 id="reporta" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg></span>Y repórtalo en el mapa</h2>
-      <p>Cuenta en el <a href="/reportes">mapa de los vecinos</a> cómo está el agua en tu colonia: cada reporte es una prueba de dónde falla el gobierno. Sin cuenta y anónimo.</p>
-      <a class="button" href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Reportar mi colonia</a>
+    <section aria-labelledby="porque-acueducto">
+      <h2 id="porque-acueducto" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg></span>El acueducto no basta</h2>
+      <p>El Gobierno de Jalisco pidió al Congreso, el 8 de octubre de 2026, aprobar una asociación público-privada para que una empresa construyera y operara el acueducto sustituto Chapala–Guadalajara. El 21 de octubre, la presidenta anunció que la Federación pondrá entre 12 mil y 13 mil millones de pesos para el acueducto y las obras de la presa El Zapotillo, y que Jalisco ampliará y modernizará la potabilizadora número 1 con 7,500 millones (<a href="https://www.sopitas.com/noticias/agua-guadalajara-inversion-sheinbaum/" rel="noopener" target="_blank">Sopitas</a>). El 23, el Congreso ya no turnó a comisiones la iniciativa de la asociación público-privada (<a href="https://cronica.com.mx/jalisco/guadalajara/2026/10/23/diputados-del-bloque-opositor-piden-que-lemus-separe-del-cargo-al-secretario-de-seguridad-publica" rel="noopener" target="_blank">Crónica</a>). Pero el problema de hoy no es solo que falte un acueducto: es que el agua llega contaminada.</p>
+      <ul>
+        <li><strong>El acueducto cuesta más que toda la estrategia de Jalisco para el Río Santiago de 2019 a 2024.</strong> Jalisco reporta 7,333 millones de pesos en esos seis años, sumando saneamiento, salud (incluidos hospitales), medio ambiente y otros programas (<a href="https://riosantiago.jalisco.gob.mx/wp-content/uploads/2024/07/Presupuesto-Integral-de-la-Estrategia-Revivamos-el-Rio-Santiago-2024pdf.pdf" rel="noopener" target="_blank">Gobierno de Jalisco</a>), y la Semarnat prevé unos 7,000 millones para 2026–2030 (<a href="https://www.informador.mx/jalisco/Preven-7-mil-millones-de-pesos-para-sanear-el-Rio-Santiago-20250211-0126.html" rel="noopener" target="_blank">El Informador</a>). Solo la obra del acueducto se calculó en 11,922 millones (<a href="https://udgtv.com/noticias/jalisco-pide-aval-para-acueducto-de-casi-12-mil-mdp/334017" rel="noopener" target="_blank">UDG TV</a>).</li>
+        <li><strong>Hay obras más baratas para el agua sucia de hoy.</strong> El propio Plan Integral del Agua estima 1,197 millones para todo el sistema La Calera, que llevaría el agua de la presa La Calera a la potabilizadora Los Agaves, en Tlajomulco, y al acueducto Chapala–Guadalajara, para depender menos del último tramo del Sistema Antiguo, que va a cielo abierto. La primera etapa, una tubería de 6.7 kilómetros de La Calera a Los Agaves, se construyó en 2025 con 441 millones; la etapa de 2026, la estación de bombeo y la conexión con el tanque del acueducto, es de 756 millones (<a href="https://planintegraldelagua.jalisco.gob.mx/pdf/an-0014.pdf" rel="noopener" target="_blank">ficha oficial</a>). La primera etapa de Los Agaves abrió en noviembre de 2024 (<a href="https://www.cronica.com.mx/estados/2024/11/26/jalisco-inaugura-la-planta-potabilizadora-los-agaves-en-tlajomulco/" rel="noopener" target="_blank">Crónica</a>).</li>
+        <li><strong>Un tubo nuevo no limpia el lago.</strong> Chapala recibe la contaminación del río Lerma; sin detener las descargas, el acueducto llevaría a la ciudad la misma agua.</li>
+      </ul>
     </section>
+
+    <section aria-labelledby="porque-ellos">
+      <h2 id="porque-ellos" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#landmark"/></svg></span>¿Por qué a ellos?</h2>
+      <ul>
+        <li><strong>El gobernador.</strong> Encabeza el Gobierno de Jalisco, que lleva la estrategia para sanear el Río Santiago (<a href="https://riosantiago.jalisco.gob.mx/wp-content/uploads/2024/07/Presupuesto-Integral-de-la-Estrategia-Revivamos-el-Rio-Santiago-2024pdf.pdf" rel="noopener" target="_blank">Gobierno de Jalisco</a>) y presentó la rotación con el SIAPA (<a href="https://www.siapa.gob.mx/prensa/presenta-gobierno-de-jalisco-programa-de-rotacion-del-servicio-de-agua-limpia-y-sitio-para" rel="noopener" target="_blank">boletín del SIAPA, 15 de octubre</a>).</li>
+        <li><strong>Las 38 diputaciones.</strong> Hacen las leyes de Jalisco y deciden si el Gobierno puede comprometer el presupuesto de varios años, como pedía la asociación público-privada (<a href="https://leyes-mx.com/constitucion_jalisco/35.htm" rel="noopener" target="_blank">Constitución de Jalisco, artículo 35, fracciones I y XI</a>).</li>
+      </ul>
+    </section>
+    </div>
 
     <section aria-labelledby="ojo">
       <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#info"/></svg></span>Ten en cuenta</h2>
       <ul>
-        <li>El mensaje se arma en tu navegador y lo mandas tú desde tu cuenta: Agua GDL no lo ve ni lo guarda.</li>
-        <li>Sacamos cada correo y cada cuenta de las páginas oficiales enlazadas en cada tarjeta y los revisamos el 20 de octubre de 2026. Si alguno ya no funciona, avísanos a <span class="number">soporte@aguagdl.com</span>.</li>
-        <li>Le escribimos a quien tiene el cargo, sea del partido que sea. Agua GDL no tiene partido.</li>
+        <li>El correo sale de tu cuenta y con tu nombre. Agua GDL no lo envía, no lo ve y no guarda tus datos.</li>
+        <li>Le escribimos a quien tiene el cargo, sea del partido que sea. Agua GDL es una iniciativa ciudadana sin partido.</li>
+        <li>Cuenta también en el <a href="/reportes">mapa de los vecinos</a> cómo está el agua en tu colonia: cada reporte es una prueba de dónde falla el servicio. Sin cuenta y anónimo.</li>
         <li>¿Quieres ir más allá? Presenta una queja ante la Comisión Estatal de Derechos Humanos Jalisco: <span class="number">quejas@cedhj.org.mx</span>, su <a href="https://cedhj.org.mx/queja" rel="noopener">formulario</a> o el <a href="tel:+523336691100">33 3669 1100</a> (<a href="https://cedhj.org.mx/" rel="noopener">CEDHJ</a>).</li>
-        <li>¿Lo tuyo es el acueducto privado? <a href="/escribe">Escríbele al Congreso</a>.</li>
+        <li>La idea fue de Wen, que hizo la primera hoja para escribirle al Congreso. ¡Gracias, Wen!</li>
+        <li>Tachis Villalba compartió la tabla de diputaciones (distritos, partidos y teléfonos) y la de secciones del INE por distrito que usa «¿Quién te representa?». ¡Gracias, Tachis!</li>
       </ul>
     </section>
   </main>
 
   <footer>
-    <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con el Gobierno de Jalisco.</p>
-    <p><a href="/">Inicio</a> · <a href="/reportes">¿Hay agua en tu colonia?</a> · <a href="/mizona">¿Qué zona me toca?</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
+    <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA, con el Gobierno de Jalisco ni con el Congreso.</p>
+    <p><a href="/">Inicio</a> · <a href="/reportes">¿Hay agua en tu colonia?</a> · <a href="/avisos">Recibir avisos</a> · <a href="/mizona">¿Qué zona me toca?</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
   </footer>
 </div>
 <script>
 (() => {
-  // Each contact comes from the official page in `fuente`, checked on the date in «Ten en cuenta».
-  // `solo` limits an office to the municipios it serves.
-  const CARGOS = [{"cargo": "Gobernador de Jalisco", "nombre": "Jesús Pablo Lemus Navarro", "saludo": "Gobernador Jesús Pablo Lemus Navarro:", "email": "pablo.lemus@jalisco.gob.mx", "x": "PabloLemusN", "fb": "https://www.facebook.com/GobiernoJalisco/", "fuente": "https://transparencia.jalisco.gob.mx/informacion/contenido/85/141", "medio": "directorio del Despacho del Gobernador"}, {"cargo": "SIAPA", "nombre": "Ismael Jáuregui Castañeda, director general", "saludo": "Ismael Jáuregui Castañeda, director general del SIAPA:", "email": "siapatel@siapa.gob.mx,contraloria@siapa.gob.mx", "x": "siapagdl", "fb": "https://www.facebook.com/siapagdl", "fuente": "https://www.siapa.gob.mx/quejas-y-sugerencias", "medio": "SIAPA, quejas y sugerencias", "solo": ["Guadalajara", "Zapopan", "San Pedro Tlaquepaque", "Tonalá"]}, {"cargo": "Comisión Estatal del Agua (CEA)", "nombre": "Luis Enrique Barboza Niño, director general", "saludo": "Luis Enrique Barboza Niño, director general de la Comisión Estatal del Agua:", "email": "luis.barboza@ceajalisco.gob.mx", "fb": "https://www.facebook.com/profile.php?id=215893778571033", "fuente": "https://www.ceajalisco.gob.mx/contenido/directorio/directorio%20web_archivos/sheet001.html", "medio": "directorio de la CEA"}];
-  const MUNICIPIOS = {"Guadalajara": {"cargo": "Presidencia municipal de Guadalajara", "nombre": "Verónica Delgadillo García", "saludo": "Presidenta municipal Verónica Delgadillo García:", "email": "vero@guadalajara.gob.mx", "x": "VeroDelgadilloG", "fb": "https://www.facebook.com/VeroDelgadilloG", "fuente": "https://transparenciagdl.guadalajara.gob.mx/sites/default/files/html/directorio_sujeto_obligado.html", "medio": "directorio del Ayuntamiento de Guadalajara"}, "Zapopan": {"cargo": "Presidencia municipal de Zapopan", "nombre": "Juan José Frangie Saade", "saludo": "Presidente municipal Juan José Frangie Saade:", "email": "juan.frangie@zapopan.gob.mx", "x": "zapopangob", "fb": "https://www.facebook.com/ZapopanGob/", "fuente": "https://www.zapopan.gob.mx/gobierno/contacto-gobierno/", "medio": "Gobierno de Zapopan, contacto"}, "San Pedro Tlaquepaque": {"cargo": "Gobierno de San Pedro Tlaquepaque", "nombre": "El Ayuntamiento no publica el correo de la presidencia; escríbele por sus cuentas oficiales.", "x": "gobtlaquepaque", "fb": "https://www.facebook.com/tlaquepaquegob", "fuente": "https://tlaquepaque.gob.mx/", "medio": "Gobierno de San Pedro Tlaquepaque"}, "Tonalá": {"cargo": "Presidencia municipal de Tonalá", "nombre": "Sergio Armando Chávez Dávalos", "saludo": "Presidente municipal Sergio Armando Chávez Dávalos:", "email": "secretariaparticular@tonala.gob.mx", "x": "gobierno_tonala", "fb": "https://www.facebook.com/gobiernotonala/", "fuente": "https://tonala.gob.mx/portal/presidente/", "medio": "Gobierno de Tonalá, el presidente"}, "Tlajomulco de Zúñiga": {"cargo": "Presidencia municipal de Tlajomulco", "nombre": "Gerardo Quirino Velázquez Chávez", "saludo": "Presidente municipal Gerardo Quirino Velázquez Chávez:", "email": "gqvelazquez@tlajomulco.gob.mx", "x": "GerardoQuirinoV", "fb": "https://www.facebook.com/GerardoQuirino.V/", "fuente": "https://tlajomulco.gob.mx/presidencia", "medio": "Gobierno de Tlajomulco, presidencia"}, "El Salto": {"cargo": "Presidencia municipal de El Salto", "nombre": "María Elena Farías Villafán", "saludo": "Presidenta municipal María Elena Farías Villafán:", "email": "nena.farias@elsalto.gob.mx", "fb": "https://www.facebook.com/AytoElSalto", "fuente": "https://directorio.elsalto.gob.mx/division/615f01ad4e36bb2cbc7f6478", "medio": "directorio del Ayuntamiento de El Salto"}};
+  "use strict";
+  // [nombre, correo institucional, cuenta de X y de Facebook (para Messenger), {id del perfil, distrito (0 = representación proporcional), partido, teléfono, extensión, j = Junta de Coordinación Política}] según su perfil en congresojal.gob.mx; el partido, según el grupo parlamentario
+  const DIPUTADOS = [
+    ["Adriana Gabriela Medina Ortiz", "adriana.medina@congresojal.gob.mx", "adrianamedinaMx", "AdrianaMedinaMX", {"id": 737, "d": 12, "p": "MC", "tel": "3336791556", "ext": "1656"}],
+    ["Alberto Alfaro García", "alberto.alfaro@congresojal.gob.mx", "albertoalfaromx", "AlbertoAlfaroTlaquepaque", {"id": 741, "d": 16, "p": "PVEM", "tel": "3336791530", "ext": "1680"}],
+    ["Alejandra Margarita Giadans Valenzuela", "alejandra.giadans@congresojal.gob.mx", "AleGiadans", "AlejandraGiadansV", {"id": 607, "d": 0, "p": "MC", "tel": "3336791536", "ext": "1636"}],
+    ["Alejandro Barragán Sánchez", "alejandro.barragan@congresojal.gob.mx", null, "alejandroZapotlan", {"id": 743, "d": 19, "p": "Morena", "tel": "3336791532", "ext": "1575"}],
+    ["Alondra Getsemany Fausto de León", "alondra.fausto@congresojal.gob.mx", "alondra_fausto", "100066471646953", {"id": 764, "d": 0, "p": "PRI", "tel": "3336791577", "ext": "1506"}],
+    ["Ana Fernanda Hernández Sanmiguel", "anafer.hernandez@congresojal.gob.mx", null, null, {"id": 792, "d": 8, "p": "MC", "tel": "3336791561", "ext": "1574"}],
+    ["Brenda Guadalupe Carrera García", "brenda.carrera@congresojal.gob.mx", null, "61558257928850", {"id": 757, "d": 0, "p": "PVEM", "tel": "3336791537", "ext": "1637"}],
+    ["Claudia Murguía Torres", "claudia.murguia@congresojal.gob.mx", "ClaudiaMurguia_", "ClaudiaMurguiaTorres", {"id": 606, "d": 0, "p": "PAN", "tel": "3336791508", "ext": "1603"}],
+    ["César Octavio Madrigal Díaz", "cesar.madrigal@congresojal.gob.mx", "cesarmadrigaldi", "CesarMadrigalDi", {"id": 746, "d": 0, "p": "PAN", "tel": "3336791518", "ext": "5518"}],
+    ["Edgar Enrique Velázquez González", "enrique.velazquez@congresojal.gob.mx", "EnriqueV01", "EVelazquez01", {"id": 611, "d": 18, "p": "Hagamos", "tel": "3336791512", "ext": "1611"}],
+    ["Emmanuel Alejandro Puerto Covarrubias", "alejandro.puerto@congresojal.gob.mx", "ea_puerto", "ea.puerto", {"id": 756, "d": 0, "p": "Morena", "tel": "3336791557", "ext": "5557"}],
+    ["Isaías Cortés Berumen", "isaias.cortes@congresojal.gob.mx", "isacorber", "IsaiasCortesBerumen", {"id": 745, "d": 0, "p": "PAN", "tel": "3336791516", "ext": "1216"}],
+    ["Itzcoatl Tonatiuh Bravo Padilla", "tonatiuh.bravo@congresojal.gob.mx", "tonatiuhbp", "tonatiuhbravop", {"id": 736, "d": 11, "p": "Hagamos", "tel": "3336791527", "ext": "1627", "j": 1}],
+    ["Itzul Barrera Rodríguez", "itzul.barrera@congresojal.gob.mx", "itzulBarrera", "itzulbarrerar", {"id": 735, "d": 9, "p": "Morena", "tel": "3336791531", "ext": "1631"}],
+    ["José Aurelio Fonseca Olivares", "aurelio.fonseca@congresojal.gob.mx", null, "AurelioFonsecaOlivares", {"id": 740, "d": 15, "p": "PRI", "tel": "3336791505", "ext": "1605"}],
+    ["José Guadalupe Buenrostro Martínez", "jose.buenrostro@congresojal.gob.mx", "LBuenrostroD17", "lbuenrostrod17", {"id": 742, "d": 17, "p": "PVEM", "tel": "3336791535", "ext": "1576", "j": 1}],
+    ["José Luis Tostado Bastidas", "joseluis.tostado@congresojal.gob.mx", "jltostadob", "JLTostadoB", {"id": 751, "d": 0, "p": "MC", "tel": "3336791566", "ext": "1666", "j": 1}],
+    ["Julio César Hurtado Luna", "julio.hurtado@congresojal.gob.mx", null, "JulioHurtadoLuna", {"id": 620, "d": 2, "p": "PAN", "tel": "3336791504", "ext": "1503", "j": 1}],
+    ["Laura Gabriela Cárdenas Rodríguez", "gaby.cardenas@congresojal.gob.mx", "GabyCardenas", "GabyCardenas.Zap", {"id": 641, "d": 6, "p": "MC", "tel": "3336791542", "ext": "1570"}],
+    ["Leonardo Almaguer Castañeda", "leonardo.almaguer@congresojal.gob.mx", "LeonardAlmaguer", "61568671947606", {"id": 738, "d": 13, "p": "PT", "tel": "3336791509", "ext": "1673", "j": 1}],
+    ["Luis Octavio Vidrio Martínez", "luis.vidrio@congresojal.gob.mx", "Luisvidrio2028", "LuisVidrioM", {"id": 753, "d": 0, "p": "MC", "tel": "3336791510", "ext": "1210"}],
+    ["Marco Tulio Moya Díaz", "marco.moya@congresojal.gob.mx", "MarcoMoyaAc", "moyamarco", {"id": 731, "d": 3, "p": "PAN", "tel": "3336791507", "ext": "1607"}],
+    ["Mariana Casillas Guerrero", "mariana.casillas@congresojal.gob.mx", "marianacasge", "MarianaCasGe", {"id": 739, "d": 14, "p": "Futuro", "tel": "3336791517", "ext": "1617"}],
+    ["Marta Estela Arizmendi Fombona", "marta.arizmendi@congresojal.gob.mx", "fombonamarta", "MartaArizmendiF", {"id": 734, "d": 7, "p": "Morena", "tel": "3336791513", "ext": "1613"}],
+    ["Martín Franco Cuevas", "martin.franco@congresojal.gob.mx", "DiputadoLocal3", null, {"id": 760, "d": 0, "p": "Morena", "tel": "3336791521", "ext": "1621"}],
+    ["María Candelaria Ochoa Ávalos", "candelaria.ochoa@congresojal.gob.mx", "CandeOchoaA", "CandeOchoaA", {"id": 755, "d": 0, "p": "Morena", "tel": "3336791540", "ext": "1640"}],
+    ["María Elisa Bravo Navarro", "maria.bravo@congresojal.gob.mx", "MariaElisaBravo", "MariaBravoMC", {"id": 793, "d": 0, "p": "MC", "tel": "3336791500", "ext": "1609"}],
+    ["María del Refugio Camarena Jáuregui", "cuquis.camarena@congresojal.gob.mx", "cuquis_camarena", "CuquisCamarena", {"id": 747, "d": 0, "p": "PRI", "tel": "3336791529", "ext": "1629", "j": 1}],
+    ["Miguel De La Rosa Figueroa", "miguel.delarosa@congresojal.gob.mx", "delarosa4t", null, {"id": 759, "d": 0, "p": "Morena", "tel": "3336791534", "ext": "1006", "j": 1}],
+    ["Montserrat Pérez Cisneros", "montserrat.perez@congresojal.gob.mx", "montsepcisneros", "montsepcisneros", {"id": 752, "d": 0, "p": "MC", "tel": "3336791538", "ext": "1638"}],
+    ["Mónica Paola Magaña Mendoza", "monica.magana@congresojal.gob.mx", "MonicaMgn", "MonicaMaganaM", {"id": 627, "d": 10, "p": "MC", "tel": "3336791514", "ext": "1614"}],
+    ["Norma López Ramírez", "norma.lopez@congresojal.gob.mx", null, "Normaporsanmiguel", {"id": 758, "d": 0, "p": "Morena", "tel": "3336791533", "ext": "1632"}],
+    ["Omar Enrique Cervantes Rivera", "omar.cervantes@congresojal.gob.mx", "omarcervantes_r", "OmarCervantesRivera", {"id": 754, "d": 0, "p": "MC", "tel": "3336791539", "ext": "1672"}],
+    ["Sergio Miguel Martín Castellanos", "sergio.martin@congresojal.gob.mx", "SergioMart97360", "61557121378804", {"id": 730, "d": 1, "p": "PT", "tel": "3336791523", "ext": "1623"}],
+    ["Tonantzin Elusay Cárdenas Méndez", "tonantzin.cardenas@congresojal.gob.mx", "tonantzincarm", "Tonantzincarm", {"id": 732, "d": 4, "p": "Futuro", "tel": "3336791500", "ext": "5517", "j": 1}],
+    ["Valeria Guadalupe Ávila Gutiérrez", "valeria.avila@congresojal.gob.mx", "valeriaavila93_", "Valeriaavgu", {"id": 744, "d": 20, "p": "Hagamos", "tel": "3336791511", "ext": "5511"}],
+    ["Verónica Magdalena Jiménez Vázquez", "veronica.jimenez@congresojal.gob.mx", "verojimenezv", "VeroJimenezVqz", {"id": 749, "d": 0, "p": "MC", "tel": "3336791500", "ext": "1010"}],
+    ["Yussara Elizabeth Canales González", "yussara.canales@congresojal.gob.mx", "YussaraCG", "YussaraCanalesG", {"id": 640, "d": 5, "p": "PVEM", "tel": "3336791525", "ext": "1526"}],
+  ];
+  // The governor: email and phone from the Despacho's directory, X and Facebook from jalisco.gob.mx.
+  const GOBERNADOR = ["Jesús Pablo Lemus Navarro", "pablo.lemus@jalisco.gob.mx", "GobiernoJalisco", "GobiernoJalisco", {"gob": 1, "tel": "3336481600", "ext": "34814"}];
+  const RECIPIENTS = [GOBERNADOR, ...DIPUTADOS];
+  const byEmail = (email) => RECIPIENTS.find((d) => d[1] === email);
+  const byX = (handle) => RECIPIENTS.find((d) => d[2] === handle);
+  const saludo = (d) => d[4].gob ? "Gobernador Jesús Pablo Lemus Navarro:" : `Dip. ${d[0]}:`;
+  const vocativo = (d) => d[4].gob ? "Gobernador Lemus," : `Dip. ${d[0]},`;
+  const mention = (d) => d[4].gob ? `@${d[2]} Gobernador Lemus,` : `Dip. @${d[2]},`;
   const $ = (id) => document.getElementById(id);
-  const q = encodeURIComponent;
-  const el = (tag, attrs, ...kids) => {
-    const e = document.createElement(tag);
-    for (const [k, v] of Object.entries(attrs || {})) if (v != null) e.setAttribute(k, v);
-    e.append(...kids);
-    return e;
-  };
   const icon = (name) => {
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("class", "i");
@@ -289,121 +469,329 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     svg.append(use);
     return svg;
   };
-  const form = $("caso"), asunto = $("asunto"), cuerpo = $("cuerpo"), estado = $("estado"), rehacer = $("rehacer");
-  let editado = false;
+  const all = RECIPIENTS.map((d) => d[1]);
+  const subject = () => $("asunto").value;
+  const ALL = "Gobernador Jesús Pablo Lemus Navarro, diputadas y diputados del Congreso del Estado de Jalisco:";
+  const anon = () => $("anonimo").checked;
+  const signature = () => anon() ? "" : ["nombre", "colonia"].map((id) => $(id).value.trim()).filter(Boolean).join("\n");
+  const body = (greeting = ALL) => [`${greeting}\n\n${$("texto").value.trimEnd()}`, signature()].filter(Boolean).join("\n");
+  const missing = () => anon() ? [] : ["nombre", "colonia"].filter((id) => !$(id).value.trim());
+  // Stop a send until the signature is filled in or the person chose to go without it.
+  function ready() {
+    const gaps = missing();
+    ["nombre", "colonia"].forEach((id) => [id, `${id}-tu`].forEach((f) => $(f).classList.toggle("falta", gaps.includes(id))));
+    const onTu = !$("p-tu").hidden;
+    const status = onTu ? $("seccion-estado") : $("firma-estado");
+    status.classList.toggle("falta", gaps.length > 0);
+    if (gaps.length) {
+      status.textContent = "Escribe tu nombre y tu colonia, o marca «Enviar sin firma».";
+      if (!onTu) showTab("correo");
+      $(onTu ? `${gaps[0]}-tu` : gaps[0]).focus();
+    }
+    return !gaps.length;
+  }
+  // Take the warning back once nothing is missing.
+  function settled() {
+    if (missing().length) return;
+    for (const f of ["firma-estado", "seccion-estado"]) {
+      if ($(f).classList.contains("falta")) { $(f).classList.remove("falta"); $(f).textContent = ""; }
+    }
+  }
+  // One panel at a time; the hash keeps the chosen tab on reload and in shared links.
+  const TABS = [...document.querySelectorAll("[data-tab]")].map((b) => b.dataset.tab);
+  function showTab(name) {
+    // A link to a heading inside a tab (/exige#porque-acueducto) opens that tab and scrolls to it.
+    const target = name && !TABS.includes(name) ? document.getElementById(name) : null;
+    const panel = target && target.closest("[role=tabpanel]");
+    const tab = panel ? panel.id.slice(2) : TABS.includes(name) ? name : TABS[0];
+    for (const t of TABS) {
+      $(`p-${t}`).hidden = t !== tab;
+      $(`t-${t}`).setAttribute("aria-selected", String(t === tab));
+    }
+    if (tab === "correo") fit();
+    if (panel) {
+      target.scrollIntoView();
+      return;
+    }
+    if (location.hash.slice(1) !== tab) history.replaceState(null, "", `#${tab}`);
+  }
+  document.querySelectorAll("[data-tab]").forEach((b) => b.addEventListener("click", () => showTab(b.dataset.tab)));
+  showTab(location.hash.slice(1));
+  const q = encodeURIComponent;
+  const gmail = (to, greeting) => `https://mail.google.com/mail/?view=cm&fs=1&to=${q(to.join(","))}&su=${q(subject())}&body=${q(body(greeting))}`;
+  const mailto = (to, greeting) => `mailto:${to.join(",")}?subject=${q(subject())}&body=${q(body(greeting))}`;
 
+  // Progress through the list, remembered on this device only.
+  const KEY = "exige-enviados";
+  let sent = new Set();
+  try { sent = new Set(JSON.parse(localStorage.getItem(KEY) || "[]")); } catch {}
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify([...sent])); } catch {} };
+  const viaApp = () => document.querySelector('input[name="via"]:checked').value === "app";
+  const link = (d) => viaApp() ? mailto([d[1]], saludo(d)) : gmail([d[1]], saludo(d));
+  const nextOne = () => RECIPIENTS.find(([, email]) => !sent.has(email));
+
+  // The preview is the next email as it goes out: recipient, greeting and signature.
+  function preview(d) {
+    const [name, email] = d;
+    const who = document.createElement("b");
+    who.textContent = name;
+    const address = document.createElement("small");
+    const [user, domain] = email.split("@");
+    address.append(user, document.createElement("wbr"), `@${domain}`);
+    $("para").replaceChildren(who, address);
+    $("saludo").textContent = saludo(d);
+    const lines = anon() ? [["Sin firma", false]]
+      : [["nombre", "Tu nombre"], ["colonia", "Tu colonia y municipio"]].map(([id, hole]) => [$(id).value.trim() || hole, !!$(id).value.trim()]);
+    $("firma-vista").replaceChildren(...lines.map(([text, filled]) => {
+      const span = document.createElement("span");
+      span.textContent = text;
+      if (!filled) span.className = "ph";
+      return span;
+    }));
+  }
+
+  function refresh() {
+    const next = nextOne();
+    const done = RECIPIENTS.filter(([, email]) => sent.has(email)).length;
+    const btn = $("siguiente");
+    preview(next || RECIPIENTS[0]);
+    $("avance").hidden = !done;
+    $("barra").max = RECIPIENTS.length;
+    $("barra").value = done;
+    if (next) {
+      btn.href = link(next);
+      btn.target = viaApp() ? "" : "_blank";
+      btn.replaceChildren(icon("mail"), `Abrir el correo ${done + 1} de ${RECIPIENTS.length}`);
+      btn.hidden = false;
+      $("progreso").textContent = `Llevas ${done} de ${RECIPIENTS.length}.`;
+    } else {
+      btn.hidden = true;
+      $("progreso").replaceChildren(`¡Listo! Ya les escribiste al gobernador y a las ${DIPUTADOS.length} diputaciones. Gracias. `, reset);
+    }
+    const post = $("post").value.trim();
+    document.querySelectorAll("[data-x]").forEach((a) => { a.href = xUrl(byX(a.dataset.x)); });
+    socials.forEach((st) => st.refresh());
+    const longest = Math.max(...RECIPIENTS.filter((d) => d[2]).map((d) => mention(d).length));
+    $("post-cuenta").textContent = `${post.length + longest + 1} de 280 caracteres con la mención más larga.`;
+    document.querySelectorAll("[data-to]").forEach((a) => {
+      a.href = link(byEmail(a.dataset.to));
+      a.target = viaApp() ? "" : "_blank";
+      a.replaceChildren(icon(sent.has(a.dataset.to) ? "check" : "mail"), sent.has(a.dataset.to) ? "Escrito" : "Escribir");
+      a.classList.toggle("done", sent.has(a.dataset.to));
+    });
+  }
+
+  const reset = document.createElement("a");
+  reset.href = "#";
+  reset.textContent = "Empezar de nuevo";
+  reset.addEventListener("click", (e) => { e.preventDefault(); sent.clear(); save(); refresh(); });
+
+  // Mark after the browser has followed the link, so it opens the current person.
+  const mark = (email) => setTimeout(() => { sent.add(email); save(); refresh(); }, 0);
+  $("siguiente").addEventListener("click", (e) => { if (!ready()) return e.preventDefault(); const next = nextOne(); if (next) mark(next[1]); });
+  document.querySelectorAll('input[name="via"]').forEach((r) => r.addEventListener("change", refresh));
+
+  // The same one-by-one stepping for X posts and Messenger chats, each with its own progress.
+  const xUrl = (d) => `https://x.com/intent/tweet?text=${q(`${mention(d)} ${$("post").value.trim()}`)}`;
+  // where is the status line of the tab the button is in.
+  const copyChat = (d, where) => copy(`${vocativo(d)} ${$("post").value.replace(/\s*#\S+/g, "").trim()}`,
+    `Copiamos el mensaje para ${d[4].gob ? "el gobernador" : d[0]}: pégalo en el chat de Messenger.`, where);
+  function stepper(key, field, btnId, progressId, verb, url, onOpen, attr) {
+    const people = RECIPIENTS.filter((d) => d[field]);
+    let done = new Set();
+    try { done = new Set(JSON.parse(localStorage.getItem(key) || "[]")); } catch {}
+    const store = () => { try { localStorage.setItem(key, JSON.stringify([...done])); } catch {} };
+    const next = () => people.find((d) => !done.has(d[field]));
+    const restart = document.createElement("a");
+    restart.href = "#";
+    restart.textContent = "Empezar de nuevo";
+    restart.addEventListener("click", (e) => { e.preventDefault(); done.clear(); store(); self.refresh(); });
+    const self = {
+      mark: (id) => setTimeout(() => { done.add(id); store(); self.refresh(); }, 0),
+      refresh() {
+        const n = next();
+        const btn = $(btnId);
+        btn.hidden = !n;
+        if (n) {
+          btn.href = url(n);
+          btn.replaceChildren(icon(verb[0]), `${verb[1]} ${n[4].gob ? "el gobernador" : n[0]} (${done.size + 1} de ${people.length})`);
+          $(progressId).textContent = done.size ? `Llevas ${done.size} de ${people.length}.` : "";
+        } else {
+          $(progressId).replaceChildren(`¡Listo! ${people.length} de ${people.length}. `, restart);
+        }
+        document.querySelectorAll(`[data-${attr}]`).forEach((a) => a.classList.toggle("done", done.has(a.dataset[attr])));
+      },
+    };
+    $(btnId).addEventListener("click", () => { const n = next(); if (n) { onOpen(n); self.mark(n[field]); } });
+    return self;
+  }
+  const socials = [
+    stepper("exige-x", 2, "siguiente-x", "progreso-x", ["x", "Publicar para"], xUrl, () => {}, "x"),
+    stepper("exige-messenger", 3, "siguiente-fb", "progreso-fb", ["message-circle", "Messenger para"], (d) => `https://m.me/${d[3]}`, (d) => copyChat(d, "estado-redes"), "fb"),
+  ];
+
+  const list = $("personas");
+  const where = (info) => info.d ? `Distrito ${info.d}` : "Representación proporcional";
+  const profile = (info) => info.gob ? "https://jalisco.gob.mx/gobierno/gobernador" : `https://www.congresojal.gob.mx/diputados/perfil?id_dip=${info.id}`;
+  const call = (info) => `tel:+52${info.tel},${info.ext}`;
+  const phoneText = (info) => `${info.tel.replace(/^(\d{2})(\d{4})(\d{4})$/, "($1) $2-$3")} ext. ${info.ext}`;
+  function card(d) {
+    const [name, email, x, fb, info] = d;
+    const li = document.createElement("li");
+    const who = document.createElement("span");
+    const prof = document.createElement("a");
+    prof.className = "who";
+    prof.textContent = name;
+    prof.href = profile(info);
+    prof.rel = "noopener";
+    prof.target = "_blank";
+    const small = document.createElement("small");
+    small.textContent = info.gob ? "Gobernador de Jalisco" : `${where(info)} · ${info.p}${info.j ? " · Junta de Coordinación Política" : ""}`;
+    const contact = document.createElement("small");
+    contact.textContent = email;
+    const tel = document.createElement("small");
+    tel.textContent = `Tel. ${phoneText(info)}`;
+    who.append(prof, small, contact, tel);
+    const a = document.createElement("a");
+    a.append(icon("mail"), "Escribir");
+    a.dataset.to = email;
+    a.dataset.name = name;
+    a.rel = "noopener";
+    a.target = "_blank";
+    a.addEventListener("click", (e) => { if (!ready()) return e.preventDefault(); mark(email); });
+    const links = document.createElement("span");
+    links.className = "links";
+    links.append(a);
+    if (x) {
+      const post = document.createElement("a");
+      post.append(icon("x"), "Publicar");
+      post.dataset.x = x;
+      post.dataset.name = name;
+      post.addEventListener("click", () => socials[0].mark(x));
+      post.rel = "noopener";
+      post.target = "_blank";
+      links.append(post);
+    }
+    if (fb) {
+      // Messenger can't prefill a message: copy it first, then open the chat.
+      const chat = document.createElement("a");
+      chat.append(icon("message-circle"), "Messenger");
+      chat.href = `https://m.me/${fb}`;
+      chat.rel = "noopener";
+      chat.target = "_blank";
+      chat.dataset.fb = fb;
+      chat.addEventListener("click", () => { copyChat(d, "estado-lista"); socials[1].mark(fb); });
+      links.append(chat);
+    }
+    const phone = document.createElement("a");
+    phone.append(icon("phone"), "Llamar");
+    phone.href = call(info);
+    links.append(phone);
+    li.append(who, links);
+    return li;
+  }
+  for (const d of RECIPIENTS) list.append(card(d));
+  const withX = DIPUTADOS.filter((d) => d[2]).length, withFb = DIPUTADOS.filter((d) => d[3]).length;
+  $("cuentas").textContent = `${withX} tienen X y ${withFb} tienen Facebook`;
+
+  // District of each INE section (index = section − 1): 1–9 then a–k for 10–20, 0 if the section doesn't exist.
+  const SECCIONES = "333333330333hhhhhhhhhhh111111111111iiii11111111101111111111111111100111111111111110111111111111111111fffff0ffffffffffff3333fffffffffff33f311111iiiii555555550555fffffffff0fffffffffffffffffjjjjjjiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiffffffffff0fffffffffiiiiiiiiiiiiffffffffffffffffffffffffffffffffffff1101555555iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj0jjjjjjjjiiiiiiiiiiiiiiiiiiiiiiiiiii1111111111101111jjjjjiiiiiiiii5555333333333333hhhhhhhhhhhhhhhhhhh111iiiiffffffffffffffffii2222222222222200022222222222211111111111jjjjjjjjiiiiiiiiiiii55555550588888888888888888888888888888888888888888888888888888888888888899999999999999999999999999999999bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb9999999999999bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888ddddddddddddddddddddddddddddddd88dddddddddddddddddddddddddddddddddddddddbbbbb0bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb88888888bb88888888888888888888888888888888bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888889999990099999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999988888999999999999bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb88888888888888888888888111111011111111111111111iiiiiiiiiiiiiiiiii0hhh0h0hhhh33333333333ffffffffffffffffffffffffffffffffffffffffffffffffjj0jjjjjjjhhhh0hhhhhhhhhhhhh3333303iiiiii22222222222020222222222220222222022222222222220202222222222220222222202222iiiiii1111111111jjjjjjjjjj5555555555555jjjjjjjjj33333331111101105555hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh0hhhhhhhhh222222222222222jjjjjjjjjj0jjhhhhhhhhhhhhhhhhhhhh500555505555050555555555555555555055555555555555555555555555550505055iiiiiiiiijjjjjjjjjjjj0kkkkk0kkkk0kkkkkkk00kkkk0111110fff0fff0222022222222222222222222222222222fffffffff011011100iiiiiiiiiiiiiiiiiffffffff0ff0ffffff555555511111jjjjj0jjjjjjjjjjjjj111111111111111111111101111111155555505555jjjjjjjjjjjjjjjjjjj0jj0jjjj0jjjjjjjjjiiii0iiiijjjjjjjjjjjjjjjjiiiiiiiiiiiiihhhiiiiii22222222222222222222222jjjjjjjjjj333333333333333333330033333333333333033333333333333033331111011111111111111111111111jjjjjjjjjjjjjjccccce0000c0e0e0c0ccceee0ee0c0e0ce0ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg000gg0gggdddddddddddddd0g0ggggggdddddddddd0ddgggggg00d0d00dddddiiiiiii05555555555555555577777777770007777777777770007777770707777kkkk0k777777777777070kk77kkkkk00kkkk70kiiiiijjjjjjj11111133333333333333iiiiijjjjjjjjjjjjjjjjjjjjjjjjjjj2222222222iiiiiiiiiiii33333303jjjjjhhhhhhhhhh111101112222222233333333333333333033333330333hhhhhhhhhhhhhhhhaaaaaa444444444044444444444444444444444444444444444444444444444404444044444404444444444444444444444444444400444440404400066006066606006666666666666666aaaaaaaaa66666666a0aaaa4a44aaaaaaaaa00aaaaaaaaaaa0aaaaaaaaaaa0aa0a066caaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0c0aaaaaaaaaaaaaaaaadaaaaaaaaaaaaaaaaaaaaaaaaaadaddddaccccaaaac0cccccccccc066660666cccjjjjjjjjjjjjjjjjjjjjjiiiiii333333333333333333333333333333333333333333333gkdddddddddddddddddddddddddddddddddddddddddddd83222226666666666666666666666666ccccccccceeeeecceeeeeeeee0e00eeeeeeeeeeeeeeeeeeeeeeeeeeecccceeeee0eeeeeccccccccc0cc4444444444444444444444444666666666666666666666666666666664ccacacccaacccaaacccc5555555555566666666666666666cccccccccccccceeeeeeeeeeeccccccccccgggggggggg666666666666ccccccccccc2222222aacccceehh3111122223333450cccfhii0iijij111h22444455577777777777799999aaaaaaaaaaaccddgg11kkkkkk111111112222222222ff33333333444444455555555566666666667777777aaaacccceeeeeeeeeeeddddddfffhhhhhgggggggghhhhhhhhjjjjj777777777777711111122ffhhiikkkh55555555555555544444466666666666666666666666666666666677777777777777777777cccccceeeeeeedddddggggghhhhhkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk2222222333333333344444444444444445555555555555555556666666666666666666677777777777777777aaaaaaaaaaaaaaccccccccccccccccccddddddeeeeeeeeeeeeeeeeeeefffffffffgggggggggggggggggkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkee";
+  $("buscar-seccion").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const n = parseInt($("seccion").value.replace(/\D/g, ""), 10);
+    const d = n > 0 ? parseInt(SECCIONES[n - 1] || "0", 21) : 0;
+    const mine = DIPUTADOS.find((dip) => dip[4].d === d);
+    $("mi-dip").replaceChildren(...(d && mine ? [card(mine)] : []));
+    $("mi-dip").hidden = !(d && mine);
+    $("seccion-estado").textContent = !n ? "Escribe el número de sección de tu INE."
+      : d && mine ? `La sección ${n} está en el distrito local ${d}.`
+      : `No encontramos la sección ${n} en Jalisco. Revisa el número en tu INE.`;
+    refresh();
+  });
+
+  async function copy(text, done, where = "estado") {
+    try {
+      await navigator.clipboard.writeText(text);
+      $(where).textContent = done;
+    } catch {
+      $(where).textContent = "No se pudo copiar. Selecciona el texto y cópialo a mano.";
+    }
+  }
+  $("copiar-correos").addEventListener("click", () => copy(all.join(", "), `Copiamos los ${all.length} correos: pégalos en «Para».`));
+  $("copiar-asunto").addEventListener("click", () => copy(subject(), "Copiamos el asunto: pégalo en «Asunto»."));
+  $("copiar-texto").addEventListener("click", () => ready() && copy(body(), "Copiamos el texto: pégalo en el mensaje."));
+  $("asunto").addEventListener("input", refresh);
+  $("post").addEventListener("input", refresh);
   // /reportes links here with its colonia: ?q=name&m=municipio&cp=…
   const params = new URLSearchParams(location.search);
-  const nice = (s) => s.toLocaleLowerCase("es-MX").replace(/(^|[\s(.\-/])(\p{L})/gu, (m, a, b) => a + b.toLocaleUpperCase("es-MX"));
-  if (params.get("q")) $("colonia").value = nice(params.get("q")).slice(0, 80);
-  const enlace = params.get("m") || "";
-  const opcion = [...$("municipio").options].find((o) => o.value && enlace.startsWith(o.value));
-  if (opcion) $("municipio").value = opcion.value;
-
-  function caso() {
-    const colonia = $("colonia").value.trim(), municipio = $("municipio").value;
-    return {
-      pasa: form.elements.pasa.value,
-      dias: Math.min(99, Math.max(0, parseInt($("dias").value, 10) || 0)),
-      colonia, municipio,
-      lugar: [colonia, municipio].filter(Boolean).join(", ") || "mi colonia",
-      donde: colonia || municipio || "mi colonia",
-      nombre: $("nombre").value.trim(),
-    };
+  const nice = (t) => t.toLocaleLowerCase("es-MX").replace(/(^|[\s(.\-/])(\p{L})/gu, (m, a, b) => a + b.toLocaleUpperCase("es-MX"));
+  if (params.get("q")) {
+    const where = [nice(params.get("q")), params.get("m") || ""].filter(Boolean).join(", ").slice(0, 80);
+    $("colonia").value = $("colonia-tu").value = where;
   }
   const dias = (n) => `${n} ${n === 1 ? "día" : "días"}`;
-  function situacion(c) {
-    if (c.pasa === "presion") return "El agua llega con muy poca presión.";
-    if (c.pasa === "sucia") return "El agua llega sucia o con mal olor.";
-    return c.dias ? `Llevamos ${dias(c.dias)} sin agua.` : "No nos llega el agua.";
+  function situacion() {
+    const pasa = document.querySelector('input[name="pasa"]:checked').value;
+    const n = Math.min(99, Math.max(0, parseInt($("dias").value, 10) || 0));
+    if (pasa === "presion") return "El agua llega con muy poca presión.";
+    if (pasa === "sucia") return "El agua llega sucia o con mal olor.";
+    if (pasa === "sin") return n ? `Llevamos ${dias(n)} sin agua.` : "No nos llega el agua.";
+    return "";
   }
-  function armarAsunto(c) {
-    if (c.pasa === "presion") return `Agua sin presión en ${c.donde}`;
-    if (c.pasa === "sucia") return `Agua sucia en ${c.donde}`;
-    return c.dias ? `${dias(c.dias)} sin agua en ${c.donde}` : `Sin agua en ${c.donde}`;
+  function armar() {
+    const colonia = anon() ? "" : $("colonia").value.trim();
+    const intro = [colonia && `Le escribo desde ${colonia}.`, situacion()].filter(Boolean).join(" ");
+    return `${intro ? `${intro}\n\n` : ""}La crisis del agua no se arregla solo con un acueducto: el agua llega contaminada. Le pido:
+
+1. Sanear los ríos: detener las descargas al Río Santiago y al canal Las Pintas, sancionar a quien contamina y publicar un plan con fechas y presupuesto.
+2. Agua limpia y suficiente ya: pipas donde no llega y análisis de calidad públicos por colonia.
+3. Transparencia: cuánta agua llega a cada zona y en qué se gasta cada peso para el agua.
+4. Que el agua siga siendo pública: prohibir por ley su privatización.
+
+El agua es un derecho. Daré seguimiento a lo que haga y lo compartiré con mi comunidad.
+
+Atentamente,`;
   }
-  // SIAPA's promises only reach the municipios it serves.
-  const enSiapa = (c) => !c.municipio || CARGOS.find((d) => d.cargo === "SIAPA").solo.includes(c.municipio);
-  function armarCuerpo(c) {
-    const promesa = c.pasa === "sucia"
-      ? "El SIAPA dijo que la rotación significaría «menos agua pero de mejor calidad». En mi casa no es así."
-      : "El SIAPA anunció racionamientos «por máximo un día» y dijo que «no serán cortes totales». En mi colonia no se está cumpliendo.";
-    return `Le escribo desde ${c.lugar}. ${situacion(c)}
-
-${enSiapa(c) ? promesa + "\n\n" : ""}El agua es un derecho. El artículo 4 de la Constitución dice: «Toda persona tiene derecho al acceso, disposición y saneamiento de agua para consumo personal y doméstico en forma suficiente, salubre, aceptable y asequible». Le pido:
-
-1. Que el agua llegue a mi colonia${enSiapa(c) ? " como se anunció" : ""} y, mientras no llegue, que manden pipas.
-2. Que el agua que llegue sea limpia.
-3. Que publiquen cuánta agua llega a cada zona y a qué horas.
-
-Atentamente,
-${c.nombre ? c.nombre + "\n" : ""}${c.lugar}`;
+  let editado = false;
+  function rearmar() {
+    if (editado) return;
+    $("texto").value = armar();
+    fit();
   }
-  function corto(c) {
-    const s = c.pasa === "presion" ? `En ${c.donde} el agua llega sin presión.`
-      : c.pasa === "sucia" ? `En ${c.donde} el agua llega sucia.`
-      : c.dias ? `Llevamos ${dias(c.dias)} sin agua en ${c.donde}.` : `No nos llega el agua en ${c.donde}.`;
-    return `${s} El agua es un derecho: exijo que lo arreglen. aguagdl.com/exige`;
+  $("rehacer").addEventListener("click", () => { editado = false; $("rehacer").hidden = true; rearmar(); refresh(); });
+  for (const r of document.querySelectorAll('input[name="pasa"]')) r.addEventListener("change", () => { rearmar(); refresh(); });
+  // Typing the days picks «No llega el agua»; setting the radio from code fires no change event.
+  for (const ev of ["focus", "input"]) $("dias").addEventListener(ev, () => {
+    document.querySelector('input[name="pasa"][value="sin"]').checked = true;
+    rearmar();
+    refresh();
+  });
+  // Grow the message box to fit its text, so nothing hides behind a scrollbar and there's no empty space.
+  function fit() {
+    const t = $("texto");
+    if (t.offsetParent === null) return;
+    t.style.height = "auto";
+    t.style.height = `${t.scrollHeight + 2}px`;
   }
-  const destinos = (c) => [...CARGOS.filter((d) => !d.solo || d.solo.includes(c.municipio)), MUNICIPIOS[c.municipio]].filter(Boolean);
-
-  async function copiar(texto, listo) {
-    try {
-      await navigator.clipboard.writeText(texto);
-      estado.textContent = listo;
-    } catch {
-      estado.textContent = "No pudimos copiarlo: selecciona el mensaje y cópialo a mano.";
+  $("texto").addEventListener("input", () => { editado = true; $("rehacer").hidden = false; fit(); refresh(); });
+  addEventListener("resize", fit);
+  rearmar();
+  // The Tu diputación tab has its own copy of the signature fields, kept in sync with the Correo tab.
+  for (const id of ["nombre", "colonia"]) {
+    for (const [from, to] of [[id, `${id}-tu`], [`${id}-tu`, id]]) {
+      $(from).addEventListener("input", () => { $(to).value = $(from).value; [from, to].forEach((f) => $(f).classList.remove("falta")); settled(); rearmar(); refresh(); });
     }
   }
-
-  function tarjeta(d, c) {
-    const gmail = document.querySelector('input[name="via"]:checked').value === "gmail";
-    const texto = `${d.saludo}\n\n${cuerpo.value}`;
-    const botones = el("div", { class: "buttons" });
-    if (d.email) {
-      const href = gmail
-        ? `https://mail.google.com/mail/?view=cm&fs=1&to=${q(d.email)}&su=${q(asunto.value)}&body=${q(texto)}`
-        : `mailto:${d.email}?subject=${q(asunto.value)}&body=${q(texto)}`;
-      botones.append(el("a", { class: "button", href, target: gmail ? "_blank" : null, rel: gmail ? "noopener" : null }, icon("mail"), "Correo"));
-    }
-    if (d.x) botones.append(el("a", { class: "button alt", href: `https://x.com/intent/tweet?text=${q(`@${d.x} ${corto(c)}`)}`, target: "_blank", rel: "noopener" }, "X"));
-    if (d.fb) {
-      const fb = el("a", { class: "button alt", href: d.fb, target: "_blank", rel: "noopener" }, "Facebook");
-      fb.addEventListener("click", () => copiar(corto(c), "Copiamos tu mensaje: pégalo en un comentario o en un mensaje a su página."));
-      botones.append(fb);
-    }
-    return el("div", { class: "signup cargo" },
-      el("h3", {}, d.cargo), el("p", { class: "quien" }, d.nombre), botones,
-      el("p", { class: "via" }, "Fuente: ", el("a", { href: d.fuente, rel: "noopener" }, d.medio)));
+  for (const [from, to] of [["anonimo", "anonimo-tu"], ["anonimo-tu", "anonimo"]]) {
+    $(from).addEventListener("change", () => {
+      $(to).checked = $(from).checked;
+      ["nombre", "colonia", "nombre-tu", "colonia-tu"].forEach((f) => { $(f).disabled = anon(); $(f).classList.remove("falta"); });
+      settled();
+      rearmar();
+      refresh();
+    });
   }
-
-  function render() {
-    const c = caso();
-    if (!editado) {
-      asunto.value = armarAsunto(c);
-      cuerpo.value = armarCuerpo(c);
-    }
-    const lista = destinos(c);
-    $("cargos").replaceChildren(...lista.map((d) => tarjeta(d, c)));
-    if (!MUNICIPIOS[c.municipio]) $("cargos").append(el("p", { class: "sinx" }, c.municipio
-      ? `Todavía no tenemos los contactos oficiales de la presidencia municipal de ${c.municipio}.`
-      : "Elige tu municipio para escribirle también a tu presidencia municipal."));
-    const handles = lista.filter((d) => d.x).map((d) => `@${d.x}`);
-    $("todos").hidden = handles.length < 2;
-    const tuit = `${handles.join(" ")} ${corto(c)}`;
-    $("tuit-texto").textContent = tuit;
-    $("tuit").href = `https://x.com/intent/tweet?text=${q(tuit)}`;
-  }
-
-  form.addEventListener("input", render);
-  form.addEventListener("submit", (e) => e.preventDefault());
-  for (const r of document.querySelectorAll('input[name="via"]')) r.addEventListener("change", render);
-  for (const f of [asunto, cuerpo]) f.addEventListener("input", () => { editado = true; rehacer.hidden = false; render(); });
-  rehacer.addEventListener("click", () => { editado = false; rehacer.hidden = true; render(); });
-  $("copiar").addEventListener("click", () => copiar(`${asunto.value}\n\n${cuerpo.value}`, "Copiamos el asunto y el mensaje."));
-  // Setting the radio from code fires no input event, so the message follows by hand.
-  $("dias").addEventListener("focus", () => { if (form.elements.pasa.value !== "sin") { form.elements.pasa.value = "sin"; render(); } });
-  render();
+  refresh();
 })();
 </script>
 </body>

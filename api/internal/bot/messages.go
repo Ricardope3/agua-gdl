@@ -56,7 +56,7 @@ func whenES(channel string) string {
 func msgHelp(base, channel string) string {
 	write := ""
 	if channel == store.Telegram {
-		write = "✉️ *ESCRIBIR*: escribirle al Congreso de Jalisco sobre el agua\n"
+		write = "✉️ *ESCRIBIR*: pedirle al gobernador y al Congreso que arreglen el agua\n"
 	}
 	return `Esto es lo que puedo hacer 💧
 
@@ -155,15 +155,11 @@ Agua GDL no es del SIAPA y no puede mandar pipas.`
 }
 
 func msgWrite(base string) string {
-	return `✉️ Pídeles a las y los 38 diputados del Congreso de Jalisco que voten en contra del contrato APP del acueducto Chapala–Guadalajara, por correo, X o Messenger desde tu propia cuenta. Ahí también puedes firmar la solicitud de Contraloría Social en el IEPC:
-
-` + base + `/escribe
-
-📢 Y exígele al gobernador, al SIAPA, a la CEA y a tu presidencia municipal que arreglen el agua de tu colonia:
+	return `✉️ Pídeles al gobernador Pablo Lemus y a las 38 diputaciones del Congreso de Jalisco que saneen los ríos y arreglen la crisis del agua, por correo, X o Messenger desde tu propia cuenta:
 
 ` + base + `/exige
 
-Agua GDL no envía el correo ni guarda tus datos, y escribimos a todas las diputaciones por igual.`
+Agua GDL no envía el correo ni guarda tus datos, y les escribimos a todos por igual, sean del partido que sean.`
 }
 
 func msgFull(base string) string {

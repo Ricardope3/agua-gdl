@@ -403,14 +403,14 @@ func TestEveryMessageIsHTMLTelegramTakes(t *testing.T) {
 
 func TestWriteToCongressIsTelegramOnly(t *testing.T) {
 	h := newTGHarness(t, "2026-10-14 10:00")
-	if m := h.say(t, "/escribe"); !strings.Contains(m.Text, "https://aguagdl.test/escribe") {
+	if m := h.say(t, "/escribe"); !strings.Contains(m.Text, "https://aguagdl.test/exige") {
 		t.Errorf("/escribe: %s", m.Text)
 	}
-	if m := h.say(t, "congreso"); !strings.Contains(m.Text, "https://aguagdl.test/escribe") {
+	if m := h.say(t, "congreso"); !strings.Contains(m.Text, "https://aguagdl.test/exige") {
 		t.Errorf("Telegram CONGRESO: %s", m.Text)
 	}
-	if got := h.send(t, text("congreso")); strings.Contains(got, "/escribe") {
-		t.Errorf("WhatsApp must not link /escribe: %s", got)
+	if got := h.send(t, text("congreso")); strings.Contains(got, "38 diputaciones") {
+		t.Errorf("WhatsApp must not offer writing to the deputies: %s", got)
 	}
 	if got := h.send(t, text("ayuda")); strings.Contains(got, "ESCRIBIR") {
 		t.Errorf("WhatsApp help must not offer ESCRIBIR: %s", got)
