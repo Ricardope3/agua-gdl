@@ -366,228 +366,227 @@ DESK = r"""
   };
 """
 
-VD = {
-    # A dossier: the colonia's numbers as four figures, then every publication on a dated line, newest first.
-    "d1": ("Expediente", """
+# What a visitor can do with a colonia, on desktop (/d1 … /d5). Phones get /reportes' carousel.
+UTIL = r"""
+  // SIAPA's calendar per zone, fetched once.
+  let zonasP = null;
+  const zonas = () => zonasP || (zonasP = fetch("https://api.aguagdl.com/v1/zones").then((r) => r.json()).then((l) => new Map(l.map((z) => [z.zone, z]))).catch(() => new Map()));
+  const zonaDe = (p) => { const M = window.aguaMapa, ls = M.zonesOf(p.l || ""); return ls.length ? ls : M.zones(p).main; };
+  const WD = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+  const wd = (iso) => WD[new Date(`${iso}T12:00:00`).getDay()];
+  const largo = (iso) => `${wd(iso)} ${fecha(iso)}`;
+  const edad = (e) => Math.round((Date.parse(hoy()) - Date.parse(e.ultima)) / 864e5);
+  const ahora = (e) => !e ? ["calma", "Nadie ha publicado que falte el agua aquí."]
+    : edad(e) <= 3 ? ["activa", `Hay quejas de los últimos 3 días: la más reciente del ${fecha(e.ultima)}.`]
+    : edad(e) <= 7 ? ["reciente", `La última queja es del ${fecha(e.ultima)}, hace ${edad(e)} días.`]
+    : ["vieja", `Sin quejas nuevas desde el ${fecha(e.ultima)}. Puede que ya tenga agua: si no, repórtalo.`];
+  const nombre = (p) => p.n.toLowerCase().replace(/(^|\s)\S/g, (c) => c.toUpperCase());
+  const link = (href, txt, cls) => { const a = mk("a", cls || "", txt); a.href = href; if (/^https?:/.test(href)) { a.target = "_blank"; a.rel = "noopener"; } return a; };
+  function cortes(p, box) {
+    const zs = zonaDe(p);
+    if (!zs.length) { box.textContent = "El mapa del SIAPA no le da zona de cortes."; return; }
+    zonas().then((m) => {
+      box.replaceChildren(...zs.map((z) => {
+        const i = m.get(z), next = i && i.next.find((d) => d >= hoy());
+        return mk("p", "u-z", i ? `Zona ${z}: corta ${window.aguaMapa.joinES(i.days)}. ${next ? (next === hoy() ? "Hoy hay corte." : `Próximo corte: ${largo(next)}.`) : ""}` : `Zona ${z}.`);
+      }));
+    });
+  }
+  // The steps, each a row with what it's for.
+  function pasos(p, e) {
+    const zs = zonaDe(p), z = zs[0], q = new URLSearchParams({ q: p.n, m: p.m, cp: p.cp });
+    const rows = [
+      ["Reporta cómo está el agua", "Cuatro toques, sin cuenta. Si no se reporta, no queda registro.", () => { const b = mk("button", "button u-rep", "Reportar"); b.type = "button"; b.onclick = () => document.getElementById("reporta-btn").click(); return b; }],
+      ["¿Sin agua? Pide una pipa", `Los teléfonos del SIAPA y de ${p.m}, con su fuente.`, () => link("/pipas#municipios", "Ver teléfonos", "button alt")],
+      z ? ["Que te avisen antes del corte", `Telegram te avisa dos días antes y la noche anterior (zona ${z}).`, () => link(`https://t.me/AvisoAguaGDLbot?start=z${z}`, "Telegram", "button alt")] : null,
+      ["Exígelo", "Arma tu mensaje al SIAPA, la CEA y tu municipio.", () => link(`/exige?${q}`, "Escribir", "button alt")],
+    ].filter(Boolean);
+    const ol = mk("ol", "u-pasos");
+    for (const [t, s, btn] of rows) { const li = mk("li"); const tx = mk("div"); tx.append(mk("b", null, t), mk("span", null, s)); li.append(tx, btn()); ol.append(li); }
+    return ol;
+  }
+  // The colonia's posts as a short list that opens the quick look.
+  function pruebas(e, n) {
+    const ul = mk("ul", "u-pr");
+    for (const q of [...e.posts].sort((a, b) => b.fecha.localeCompare(a.fecha)).slice(0, n)) {
+      const li = mk("li"); li.append(mk("small", null, `${fecha(q.fecha)} · ${quien(q)}`), mk("span", null, q.titular || q.cita));
+      li.onclick = () => abre(li, q); ul.append(li);
+    }
+    return ul;
+  }
+  // Colonias with complaints within 1.5 km, from the page's own data.
+  let centros = null;
+  function cercanas(f) {
+    const d = window.__datos; if (!d) return [];
+    if (!centros) { centros = new Map(); for (const [k] of d.ev) { const fs = d.features.get(k); if (fs) centros.set(k, L.geoJSON(fs[0]).getBounds().getCenter()); } }
+    const c = L.geoJSON(f).getBounds().getCenter(), me = window.__key;
+    return [...centros].filter(([k]) => k !== me).map(([k, ll]) => [k, c.distanceTo(ll)]).filter(([, m]) => m <= 1500).sort((a, b) => a[1] - b[1]).map(([k, m]) => ({ k, m, e: d.ev.get(k) }));
+  }
+  // A square picture to post: the days, the colonia and the site, drawn on a canvas.
+  function imagen(p, e) {
+    const c = document.createElement("canvas"); c.width = c.height = 1080;
+    const g = c.getContext("2d");
+    g.fillStyle = "#0c1328"; g.fillRect(0, 0, 1080, 1080);
+    g.fillStyle = "#e4572e"; g.fillRect(0, 0, 1080, 18);
+    g.fillStyle = "#a6b1d6"; g.font = "600 40px Georgia, serif"; g.fillText(`${p.m.toUpperCase()} · ${hoy().split("-").reverse().slice(0, 2).join("/")}`, 80, 150);
+    g.fillStyle = "#ea6d56"; g.font = "800 230px Georgia, serif"; g.fillText(e && e.dias ? `${e.dias} días` : "Sin agua", 70, 420);
+    g.fillStyle = "#eef1fb"; g.font = "italic 700 76px Georgia, serif";
+    const words = `${e && e.dias ? "sin agua en " : "en "}${nombre(p)}`.split(" "); let line = "", y = 540;
+    for (const w of words) { if (g.measureText(line + w).width > 920) { g.fillText(line, 80, y); line = ""; y += 90; } line += w + " "; }
+    g.fillText(line, 80, y);
+    g.fillStyle = "#a6b1d6"; g.font = "40px Georgia, serif";
+    if (e) g.fillText(`Según ${e.medios} medios y ${e.posts.filter((q) => q.fuente !== "medio").length} publicaciones de vecinos`, 80, y + 90);
+    g.fillText("El SIAPA prometió cortes «por máximo un día».", 80, y + 150);
+    g.fillStyle = "#7f9cf5"; g.font = "700 46px Georgia, serif"; g.fillText("aguagdl.com/reportes", 80, 1000);
+    return c;
+  }
+  function compartir(p, e) {
+    const box = mk("div", "u-share"), c = imagen(p, e), img = mk("img"); img.src = c.toDataURL("image/png"); img.alt = "Imagen para compartir";
+    const name = `sin-agua-${p.n.toLowerCase().replace(/[^a-z0-9]+/g, "-")}.png`;
+    const dl = link(img.src, "Descargar imagen", "button"); dl.download = name; dl.removeAttribute("target");
+    const url = `https://aguagdl.com/reportes?${new URLSearchParams({ q: p.n, m: p.m, cp: p.cp })}`;
+    const text = e && e.dias ? `${e.dias} días sin agua en ${nombre(p)}, según medios y vecinos. Míralo y reporta tu colonia:` : `¿Hay agua en ${nombre(p)}? Míralo y reporta tu colonia:`;
+    const wa = link(`https://wa.me/?text=${encodeURIComponent(`${text} ${url}`)}`, "WhatsApp", "button alt");
+    const x = link(`https://x.com/intent/post?text=${encodeURIComponent(`${text} ${url}`)}`, "X", "button alt");
+    const row = mk("div", "u-row"); row.append(dl, wa, x);
+    if (navigator.canShare) c.toBlob((b) => { const file = new File([b], name, { type: "image/png" }); if (navigator.canShare({ files: [file] })) { const s = mk("button", "button alt", "Compartir…"); s.type = "button"; s.onclick = () => navigator.share({ files: [file], text, url }).catch(() => {}); row.append(s); } });
+    box.append(img, row);
+    return box;
+  }
+  const UCSS = true;
+"""
+
+U_CSS = """
 @media (min-width: 761px) {
   .stage .card { width: 440px }
   #reporta { display: none !important }
-  .stage .card .ev, .stage .card > .button, .stage .card .sub-head { display: none }
-  .x-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 10px 0 0 }
-  .x-stats div { padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg) }
-  .x-stats b { display: block; font: 800 1.7rem/1.05 var(--font); color: var(--s3); font-variant-numeric: tabular-nums }
-  .x-stats span { font-size: .8rem; color: var(--muted) }
-  .x-crono { list-style: none; margin: 14px 0 0; padding: 0 0 0 14px; border-left: 2px solid var(--line) }
-  .x-crono li { position: relative; padding: 0 0 12px 10px; cursor: pointer }
-  .x-crono li::before { content: ""; position: absolute; left: -21px; top: 5px; width: 10px; height: 10px; border-radius: 50%; background: #e4572e; box-shadow: 0 0 0 3px var(--surface) }
-  .x-crono li.medio::before { background: var(--brand) }
-  .x-crono small { display: block; font-size: .74rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em }
-  .x-crono span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: .92rem; line-height: 1.35 }
-  .x-crono li:hover span { color: var(--link) }
-}""", r"""
-  window.__tileD = [0, 0];
-  window.__fichaD = (card, e, form, p) => {
+  .stage .card .ev, .stage .card > .button, .stage .card .sub-head, .stage .card .conteo, .stage .card > .c-acc { display: none }
+  .u-now { margin: 10px 0 0; padding: 10px 12px; border-radius: 10px; border-left: 5px solid var(--line); background: var(--bg); font-size: .95rem; line-height: 1.4 }
+  .u-now.activa { border-color: #cc361e } .u-now.reciente { border-color: #f08c5a } .u-now.vieja, .u-now.calma { border-color: var(--muted) }
+  .u-now b { display: block; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted) }
+  .u-h { margin: 16px 0 6px; font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 800 }
+  .u-z { margin: 0 0 4px; font-size: .95rem }
+  .u-pasos { list-style: none; margin: 0; padding: 0; counter-reset: p }
+  .u-pasos li { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); counter-increment: p }
+  .u-pasos li::before { content: counter(p); flex: 0 0 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; background: var(--subtle); font-weight: 800; font-size: .85rem }
+  .u-pasos div { flex: 1; min-width: 0 } .u-pasos b { display: block; font-size: .95rem } .u-pasos span { display: block; font-size: .8rem; color: var(--muted); line-height: 1.35 }
+  .u-pasos .button { flex: 0 0 auto; padding: 7px 12px; font-size: .85rem; text-decoration: none }
+  .u-pasos .u-rep { background: #e4572e; color: #fff; font-weight: 700 }
+  .u-pr { list-style: none; margin: 0; padding: 0 }
+  .u-pr li { padding: 7px 0; border-bottom: 1px solid var(--line); cursor: pointer }
+  .u-pr small { display: block; font-size: .72rem; color: var(--muted) }
+  .u-pr span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: .9rem; line-height: 1.35 }
+  .u-pr li:hover span { color: var(--link) }
+  .u-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px } .u-row .button { text-decoration: none; padding: 8px 12px }
+  .u-share img { display: block; width: 100%; border-radius: 10px; margin-top: 6px }
+  .u-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px }
+  .u-cal div { position: relative; min-height: 46px; padding: 3px 4px; border-radius: 6px; border: 1px solid var(--line); font-size: .72rem; color: var(--muted) }
+  .u-cal div.corte { background: color-mix(in srgb, var(--brand) 18%, var(--surface)); border-color: var(--brand) }
+  .u-cal div.hoy { outline: 2px solid var(--fg) }
+  .u-cal div.futuro { border-style: dashed }
+  .u-cal i { position: absolute; right: 4px; bottom: 4px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; background: #e4572e; color: #fff; font: 700 .7rem/18px var(--font); text-align: center; font-style: normal }
+  .u-cal .wd { min-height: 0; border: 0; text-align: center; font-weight: 700; text-transform: uppercase }
+  .u-key { margin: 6px 0 0; font-size: .78rem; color: var(--muted) }
+  .u-near { list-style: none; margin: 0; padding: 0 }
+  .u-near li { display: flex; gap: 8px; align-items: baseline; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: .9rem }
+  .u-near a { flex: 1; color: var(--fg); text-decoration: none } .u-near a:hover { color: var(--link) }
+  .u-near small { color: var(--muted); font-variant-numeric: tabular-nums }
+  .u-dot { width: 10px; height: 10px; border-radius: 50%; flex: 0 0 10px; background: var(--muted) } .u-dot.activa { background: #cc361e } .u-dot.reciente { background: #f08c5a }
+  .u-big { margin: 4px 0 0; font-size: 1.05rem; line-height: 1.4 } .u-big b { font-size: 1.5rem; color: #cc361e }
+  .u-tabs { display: flex; gap: 4px; margin: 12px 0 0; border-bottom: 1px solid var(--line) }
+  .u-tabs button { flex: 1; padding: 8px 4px; border: 0; border-bottom: 3px solid transparent; background: none; color: var(--muted); font: 600 .9rem var(--font); cursor: pointer }
+  .u-tabs button[aria-selected="true"] { color: var(--fg); border-color: #e4572e }
+}"""
+
+def u(name, js):
+    return (name, U_CSS, "\n  window.__tileD = [0, 0];\n" + js)
+
+VD = {
+    # What to do now: the state, the zone's next cut, and four steps with their buttons.
+    "d1": u("Qué hacer", r"""
+  window.__fichaD = (card, e, form, p, f) => {
     compacta(card, p);
-    const row = acciones(card, e, false);
-    if (!e) return;
-    const stats = mk("div", "x-stats");
-    stats.innerHTML = `<div><b>${e.dias ?? "—"}</b><span>días sin agua, lo más largo que se publica</span></div><div><b>${e.fuentes}</b><span>fuentes distintas</span></div><div><b>${e.medios}</b><span>${e.medios === 1 ? "medio lo reporta" : "medios lo reportan"}</span></div><div><b>${fecha(e.ultima)}</b><span>la publicación más reciente</span></div>`;
-    const list = mk("ol", "x-crono");
-    for (const q of [...e.posts].sort((a, b) => b.fecha.localeCompare(a.fecha))) {
-      const li = mk("li", q.fuente === "medio" ? "medio" : "");
-      li.append(mk("small", null, `${fecha(q.fecha)} · ${quien(q)}`), mk("span", null, q.titular || q.cita));
-      li.onclick = () => abre(li, q);
-      list.append(li);
-    }
-    card.querySelector(".where").after(stats);
-    stats.after(row, list);
+    const [k, t] = ahora(e), now = mk("div", `u-now ${k}`); now.append(mk("b", null, "Ahora"), t);
+    const cal = mk("div"); cortes(p, cal);
+    const kids = [now, mk("p", "u-h", "Cortes del SIAPA"), cal, mk("p", "u-h", "Qué puedes hacer"), pasos(p, e)];
+    if (e) kids.push(mk("p", "u-h", `Lo que se publica · ${e.posts.length}`), pruebas(e, 4));
+    card.querySelector(".where").after(...kids);
   };
 """),
-    # The crisis day by day: a strip with one column per day since the first post, a dot per publication.
-    "d2": ("Día por día", """
-@media (min-width: 761px) {
-  .stage .card { top: auto; left: 12px; right: 12px; bottom: 12px; width: auto; max-height: none; overflow: visible; display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 0 26px; padding: 16px 20px }
-  #reporta { display: none !important }
-  .stage .card > .d-head { grid-column: 1 }
-  .stage .card .ev .mosaic, .stage .card .ev .posts, .stage .card .ev > .linkbtn, .stage .card .sub-head, .stage .card .conteo, .stage .card .d-head > .button { display: none }
-  .x-dias { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; min-width: 0 }
-  .x-dias h3 { margin: 0 0 6px; font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted) }
-  .x-cols { display: flex; align-items: flex-end; gap: 4px; height: 150px; border-bottom: 1px solid var(--line) }
-  .x-cols div { flex: 1; display: flex; flex-direction: column-reverse; align-items: center; gap: 3px; min-width: 0 }
-  .x-cols button { width: 14px; height: 14px; border-radius: 50%; border: 0; padding: 0; background: #e4572e; cursor: pointer }
-  .x-cols button.medio { background: var(--brand) }
-  .x-cols button:hover { transform: scale(1.4) }
-  .x-lbl { display: flex; gap: 4px; margin-top: 4px }
-  .x-lbl span { flex: 1; text-align: center; font-size: .7rem; color: var(--muted); font-variant-numeric: tabular-nums }
-  .x-key { margin: 6px 0 0; font-size: .78rem; color: var(--muted) }
-  .x-key i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin: 0 4px 0 10px; background: #e4572e } .x-key i.m { background: var(--brand) }
-}""", r"""
-  window.__tileD = [0, 0];
-  window.__fichaD = (card, e, form, p) => {
+    # Is it only my colonia? The colonias around it within 1.5 km and how they're doing.
+    "d2": u("Alrededor", r"""
+  window.__fichaD = (card, e, form, p, f) => {
     compacta(card, p);
-    acciones(card, e, false);
-    const close = card.querySelector(".close");
-    const head = mk("div", "d-head");
-    head.append(...[...card.childNodes].filter((n) => n !== close));
-    card.append(head);
-    if (!e) return;
-    const first = e.posts.reduce((m, q) => q.fecha < m ? q.fecha : m, "9999");
-    const days = [];
-    for (let d = new Date(`${first}T12:00:00Z`); d.toISOString().slice(0, 10) <= hoy(); d.setUTCDate(d.getUTCDate() + 1)) days.push(d.toISOString().slice(0, 10));
-    const box = mk("div", "x-dias"), cols = mk("div", "x-cols"), lbl = mk("div", "x-lbl");
-    box.append(mk("h3", null, `Cada publicación el día que salió · ${e.posts.length} en ${days.length} días`));
-    for (const d of days) {
-      const col = mk("div");
-      for (const q of e.posts.filter((x) => x.fecha === d).sort((a, b) => (a.fuente === "medio") - (b.fuente === "medio"))) {
-        const b = mk("button", q.fuente === "medio" ? "medio" : "");
-        b.type = "button"; b.title = `${quien(q)} · ${fecha(q.fecha)}: «${q.cita}»`; b.setAttribute("aria-label", b.title);
-        b.onclick = () => abre(b, q);
-        col.append(b);
+    const [k, t] = ahora(e), now = mk("div", `u-now ${k}`); now.append(mk("b", null, "Aquí"), t);
+    const near = cercanas(f), act = near.filter((x) => ahora(x.e)[0] === "activa").length;
+    const big = mk("p", "u-big"); big.innerHTML = near.length ? `<b>${near.length}</b> colonias a 1.5 km o menos tienen publicaciones de que no hay agua; <b>${act}</b> con quejas de los últimos 3 días.` : "Ninguna colonia a 1.5 km tiene publicaciones de que no hay agua.";
+    const ul = mk("ul", "u-near");
+    for (const x of near.slice(0, 9)) {
+      const [kk] = ahora(x.e), [n, m, cp] = x.k.split("|"), li = mk("li");
+      li.append(mk("span", `u-dot ${kk}`), link(`?${new URLSearchParams({ q: n, m, cp })}`, `${nombre({ n })} · ${m}`), mk("small", null, `${x.e.dias ? `${x.e.dias} días · ` : ""}${(x.m / 1000).toFixed(1)} km`));
+      ul.append(li);
+    }
+    const kids = [now, mk("p", "u-h", "Alrededor"), big, ul, mk("p", "u-h", "Qué puedes hacer"), pasos(p, e)];
+    card.querySelector(".where").after(...kids);
+  };
+"""),
+    # SIAPA's cut days against the days complaints were published, three weeks at a glance.
+    "d3": u("Calendario", r"""
+  window.__fichaD = (card, e, form, p, f) => {
+    compacta(card, p);
+    const grid = mk("div", "u-cal"), note = mk("p", "u-key"), summary = mk("p", "u-big");
+    for (const w of ["lun", "mar", "mié", "jue", "vie", "sáb", "dom"]) grid.append(mk("div", "wd", w));
+    const t = new Date(`${hoy()}T12:00:00`), start = new Date(t); start.setDate(t.getDate() - ((t.getDay() + 6) % 7) - 14);
+    const per = new Map(); if (e) for (const q of e.posts) per.set(q.fecha, (per.get(q.fecha) || 0) + 1);
+    zonas().then((m) => {
+      const zs = zonaDe(p), days = new Set(zs.flatMap((z) => (m.get(z) || { days: [] }).days));
+      let fuera = 0, con = 0;
+      for (let i = 0; i < 28; i++) {
+        const d = new Date(start); d.setDate(start.getDate() + i);
+        const iso = d.toLocaleDateString("en-CA"), corte = days.has(WD[d.getDay()]);
+        const cell = mk("div", [corte ? "corte" : "", iso === hoy() ? "hoy" : "", iso > hoy() ? "futuro" : ""].join(" "), String(d.getDate()));
+        if (per.get(iso)) { const b = mk("i", null, String(per.get(iso))); cell.append(b); con++; if (!corte) fuera++; }
+        cell.title = `${largo(iso)}${corte ? " · día de corte según el SIAPA" : ""}${per.get(iso) ? ` · ${per.get(iso)} publicaciones` : ""}`;
+        grid.append(cell);
       }
-      cols.append(col);
-      lbl.append(mk("span", null, String(Number(d.slice(8)))));
-    }
-    const key = mk("p", "x-key");
-    key.innerHTML = `Toca un punto para leerlo:<i class="m"></i>medio<i></i>vecina o vecino`;
-    box.append(cols, lbl, key);
-    card.append(box);
+      summary.innerHTML = con ? `Hubo publicaciones de que no hay agua en <b>${con}</b> días; <b>${fuera}</b> de ellos no eran día de corte de su zona.` : "No hay publicaciones de esta colonia en estas semanas.";
+      note.textContent = `Azul: día de corte de la zona ${zs.join(" y ")} según el SIAPA. Número: publicaciones de ese día. Punteado: lo que viene.`;
+    });
+    const kids = [mk("p", "u-h", "Cortes y quejas, día por día"), summary, grid, note, mk("p", "u-h", "Qué puedes hacer"), pasos(p, e)];
+    card.querySelector(".where").after(...kids);
   };
 """),
-    # A newspaper column: kicker, the days as the headline, the outlets' own headlines, then a few voices.
-    "d3": ("Primera plana", """
-@media (min-width: 761px) {
-  .stage .card { width: 470px; padding: 22px 26px; border-top: 6px solid var(--fg) }
-  #reporta { display: none !important }
-  .stage .card > h2, .stage .card > .where, .stage .card .ev, .stage .card > .button, .stage .card .sub-head { display: none }
-  .x-kick { margin: 0; font-size: .74rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 700 }
-  .x-tit { margin: 6px 34px 6px 0; font: italic 700 2.3rem/1.05 var(--serif, Georgia, serif); letter-spacing: -.02em }
-  .x-tit em { font-style: normal; color: #cc361e }
-  .x-deck { margin: 0 0 4px; font-size: 1rem; color: var(--muted) }
-  .x-sec { margin: 16px 0 6px; padding-top: 8px; border-top: 1px solid var(--fg); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 800 }
-  .x-heads { list-style: none; margin: 0; padding: 0 }
-  .x-heads li { padding: 8px 0; border-bottom: 1px solid var(--line); cursor: pointer }
-  .x-heads b { display: block; font: 700 1.02rem/1.3 var(--serif, Georgia, serif) }
-  .x-heads li:hover b { color: var(--link) }
-  .x-heads small { font-size: .78rem; color: var(--muted) }
-  .x-voces q { display: block; margin: 0 0 10px; padding-left: 10px; border-left: 3px solid #e4572e; font: italic 1rem/1.4 var(--serif, Georgia, serif); cursor: pointer }
-}""", r"""
-  window.__tileD = [0, 0];
-  window.__fichaD = (card, e, form, p) => {
-    const row = acciones(card, e, false);
-    const close = card.querySelector(".close");
-    const M = window.aguaMapa, ls = M.zonesOf(p.l || ""), zs = ls.length ? ls : M.zones(p).main;
-    const kick = mk("p", "x-kick", [p.m, zs.length ? `Zona ${M.joinES(zs.map(String))}` : null, e ? `Actualizado ${fecha(e.ultima)}` : null].filter(Boolean).join(" · "));
-    const name = p.n.toLowerCase().replace(/(^|\s)\S/g, (c) => c.toUpperCase());
-    const tit = mk("h3", "x-tit");
-    if (e && e.dias) tit.append(mk("em", null, `${e.dias} días`), ` sin agua en ${name}`); else tit.textContent = e ? `Sin agua en ${name}` : name;
-    close.after(kick, tit);
-    if (!e) { tit.after(row); return; }
-    const vec = e.posts.filter((q) => q.fuente !== "medio").length;
-    const deck = mk("p", "x-deck", `Lo reportan ${e.medios} ${e.medios === 1 ? "medio" : "medios"} y ${vec} ${vec === 1 ? "publicación de vecinos" : "publicaciones de vecinos"}.`);
-    tit.after(deck, row);
-    const news = e.posts.filter((q) => q.fuente === "medio").sort((a, b) => b.fecha.localeCompare(a.fecha));
-    let at = row;
-    if (news.length) {
-      const ul = mk("ul", "x-heads");
-      for (const q of news.slice(0, 6)) {
-        const li = mk("li");
-        li.append(mk("b", null, q.titular || q.cita), mk("small", null, `${quien(q)} · ${fecha(q.fecha)}`));
-        li.onclick = () => abre(li, q);
-        ul.append(li);
-      }
-      const sec = mk("p", "x-sec", "Lo que publican los medios");
-      at.after(sec, ul); at = ul;
-    }
-    const voces = e.posts.filter((q) => q.fuente !== "medio").slice(0, 3);
-    if (voces.length) {
-      const box = mk("div", "x-voces");
-      for (const q of voces) { const el = mk("q", null, q.cita.length > 160 ? `${q.cita.slice(0, 158)}…` : q.cita); el.onclick = () => abre(el, q); box.append(el); }
-      const sec = mk("p", "x-sec", "Lo que dicen los vecinos");
-      at.after(sec, box);
-    }
-  };
-"""),
-    # The promise against the reports: SIAPA's one day beside the days published, one square per day.
-    "d4": ("La promesa", """
-@media (min-width: 761px) {
-  .stage .card { width: 430px }
-  #reporta { display: none !important }
-  .stage .card .ev .mosaic, .stage .card .ev .posts, .stage .card .ev > .linkbtn, .stage .card > .button, .stage .card .ev-head { display: none }
-  .x-vs { margin: 12px 0 4px; display: grid; gap: 10px }
-  .x-vs p { margin: 0 0 4px; font-size: .85rem; color: var(--muted) }
-  .x-vs p b { color: var(--fg) }
-  .x-sq { display: flex; flex-wrap: wrap; gap: 3px }
-  .x-sq i { width: 16px; height: 16px; border-radius: 3px; background: #e4572e }
-  .x-sq.siapa i { background: var(--brand) }
-  .x-big { font: 800 2.6rem/1 var(--font); color: #cc361e; font-variant-numeric: tabular-nums }
-  .x-q { margin: 12px 0 0; padding: 10px 12px; border-radius: 10px; background: var(--bg); cursor: pointer }
-  .x-q q { display: block; font-size: .95rem; line-height: 1.4 }
-  .x-q small { display: block; margin-top: 4px; font-size: .78rem; color: var(--muted) }
-  .x-exige { margin: 12px 0 0; font-size: .92rem }
-}""", r"""
-  window.__tileD = [0, 0];
-  window.__fichaD = (card, e, form, p) => {
+    # Ready to pass on: a square picture with the days, to download or send, and the colonia's link.
+    "d4": u("Para compartir", r"""
+  window.__fichaD = (card, e, form, p, f) => {
     compacta(card, p);
-    const row = acciones(card, e, false);
-    if (!e) return;
-    const vs = mk("div", "x-vs");
-    const n = e.dias || 0;
-    vs.innerHTML = `<div><p><b>Lo que prometió el SIAPA:</b> cortes «por máximo un día»</p><div class="x-sq siapa"><i></i></div></div>`
-      + (n ? `<div><p><b>Lo que se publica de esta colonia:</b></p><div class="x-big">${n} días</div><div class="x-sq">${"<i></i>".repeat(Math.min(n, 60))}</div></div>`
-           : `<div><p><b>Lo que se publica de esta colonia:</b> que no hay agua, sin días contados</p></div>`);
-    card.querySelector(".ev").before(vs);
-    const best = [...e.posts].sort((a, b) => (b.fuente === "medio") - (a.fuente === "medio") || (b.dias || 0) - (a.dias || 0)).slice(0, 2);
-    let at = card.querySelector(".ev");
-    for (const q of best) {
-      const box = mk("div", "x-q");
-      box.append(mk("q", null, q.cita.length > 180 ? `${q.cita.slice(0, 178)}…` : q.cita), mk("small", null, `${quien(q)} · ${fecha(q.fecha)} · toca para verla`));
-      box.onclick = () => abre(box, q);
-      at.after(box); at = box;
-    }
-    at.after(row);
-    const ex = mk("p", "x-exige");
-    ex.innerHTML = `<a href="/exige?${new URLSearchParams({ q: p.n, m: p.m, cp: p.cp })}">Exígele al SIAPA, a la CEA y a tu municipio →</a>`;
-    row.after(ex);
+    const [k, t] = ahora(e), now = mk("div", `u-now ${k}`); now.append(mk("b", null, "Ahora"), t);
+    const kids = [now, mk("p", "u-h", "Pásalo a tus vecinos"), compartir(p, e), mk("p", "u-h", "Qué más puedes hacer"), pasos(p, e)];
+    card.querySelector(".where").after(...kids);
   };
 """),
-    # The colonia alone in the light: the rest of the city dimmed, its voices pinned around it as bubbles.
-    "d5": ("Foco", """
-@media (min-width: 761px) {
-  .stage .card { width: 330px }
-  #reporta { display: none !important }
-  .stage .card .ev .mosaic, .stage .card .ev .posts, .stage .card .ev > .linkbtn, .stage .card > .button, .stage .card .sub-head, .stage .card .conteo { display: none }
-  .x-bub { background: none; border: 0 }
-  .x-bub div { width: 230px; padding: 10px 12px; border-radius: 14px; background: var(--surface); color: var(--fg); box-shadow: 0 8px 24px rgb(0 0 0 / .35); font-size: .86rem; line-height: 1.35; cursor: pointer }
-  .x-bub div:hover { outline: 2px solid #e4572e }
-  .x-bub small { display: block; margin-top: 4px; font-size: .72rem; color: var(--muted) }
-}""", r"""
-  window.__tileD = [0, 0];
-  let foco = [];
-  window.__fichaD = (card, e, form, p, f) => { compacta(card, p); acciones(card, e, false); window.__sel = { e, f }; };
-  window.__cierra = () => { for (const l of foco) l.remove(); foco = []; };
-  window.__refitD = (map, b, card) => {
-    window.__cierra();
-    const { e, f } = window.__sel || {};
-    // A world-sized veil with the colonia cut out of it.
-    const rings = (g) => g.type === "Polygon" ? [g.coordinates[0]] : g.coordinates.map((x) => x[0]);
-    const holes = f ? rings(f.geometry).map((r) => r.map(([x, y]) => [y, x])) : [];
-    foco.push(L.polygon([[[-89, -179], [-89, 179], [89, 179], [89, -179]], ...holes], { interactive: false, stroke: false, fillColor: "#030814", fillOpacity: 0.55 }).addTo(map));
-    if (e) {
-      // Stacked down the colonia's right edge, in their own pane above the badges.
-      if (!map.getPane("burbujas")) map.createPane("burbujas").style.zIndex = 690;
-      const at = L.latLng(b.getCenter().lat, b.getEast());
-      const pick = [...e.posts].sort((a, c) => (c.fuente === "medio") - (a.fuente === "medio")).slice(0, 4);
-      pick.forEach((q, i) => {
-        const div = `<div>«${(q.cita.length > 80 ? q.cita.slice(0, 78) + "…" : q.cita).replace(/</g, "&lt;")}»<small>${quien(q).replace(/</g, "&lt;")} · ${fecha(q.fecha)}</small></div>`;
-        const m = L.marker(at, { pane: "burbujas", icon: L.divIcon({ className: "x-bub", html: div, iconSize: [230, 0], iconAnchor: [-40, 190 - i * 95] }), keyboard: false }).addTo(map);
-        m.on("click", () => abre(m.getElement().firstChild, q));
-        foco.push(m);
-      });
-    }
-    map.flyToBounds(b, { paddingTopLeft: [330 + 60, 80], paddingBottomRight: [320, 60], maxZoom: 15, duration: 0.6, animate: !reduce() });
+    # All of it in tabs: now, what to do, the evidence, around, share.
+    "d5": u("Todo en pestañas", r"""
+  window.__fichaD = (card, e, form, p, f) => {
+    compacta(card, p);
+    const near = cercanas(f);
+    const panes = {
+      "Ahora": () => { const [k, t] = ahora(e), now = mk("div", `u-now ${k}`); now.append(mk("b", null, "Ahora"), t); const cal = mk("div"); cortes(p, cal); return [now, mk("p", "u-h", "Cortes del SIAPA"), cal]; },
+      "Qué hacer": () => [pasos(p, e)],
+      "Pruebas": () => e ? [mk("p", "u-big", `${e.dias ? `Hasta ${e.dias} días sin agua · ` : ""}${e.fuentes} fuentes, ${e.medios} medios`), pruebas(e, 12)] : [mk("p", null, "Nadie ha publicado que falte el agua aquí.")],
+      "Alrededor": () => { const ul = mk("ul", "u-near"); for (const x of near.slice(0, 10)) { const [kk] = ahora(x.e), [n, m, cp] = x.k.split("|"), li = mk("li"); li.append(mk("span", `u-dot ${kk}`), link(`?${new URLSearchParams({ q: n, m, cp })}`, `${nombre({ n })} · ${m}`), mk("small", null, `${(x.m / 1000).toFixed(1)} km`)); ul.append(li); } return [mk("p", "u-big", `${near.length} colonias con publicaciones a 1.5 km o menos.`), ul]; },
+      "Compartir": () => [compartir(p, e)],
+    };
+    const tabs = mk("div", "u-tabs"), body = mk("div");
+    tabs.setAttribute("role", "tablist");
+    const show = (name) => { for (const b of tabs.children) b.setAttribute("aria-selected", String(b.textContent === name)); body.replaceChildren(...panes[name]()); };
+    for (const name of Object.keys(panes)) { const b = mk("button", null, name); b.type = "button"; b.setAttribute("role", "tab"); b.onclick = () => show(name); tabs.append(b); }
+    card.querySelector(".where").after(tabs, body);
+    show("Ahora");
   };
 """),
 }
+
 DNAMES = {k: v[0] for k, v in VD.items()}
 
 DEFAULT = "c1"
@@ -611,7 +610,7 @@ def build(src, v, bar=True):
     if v in VD:
         # The desktop takes ride on /reportes' own phone carousel.
         dv = V[DEFAULT]
-        css, js = BASE[0] + dv[1] + VD[v][1], BASE[1] + SLIDES + dv[2] + DESK + VD[v][2]
+        css, js = BASE[0] + dv[1] + VD[v][1], BASE[1] + SLIDES + dv[2] + DESK + UTIL + VD[v][2]
     else:
         css, js = (BASE[0] + V[v][1], BASE[1] + SLIDES + V[v][2]) if v in V else BASE
     links = f'<a href="/reportes?{(GRANJA if v in VD else AMERICANA).replace("&", "&amp;")}">Actual</a>' + "".join(
@@ -641,6 +640,8 @@ def hooks(h, js, americana=False):
     if americana: h = sub(h, "const params = new URLSearchParams(location.search);",
             'if (!new URLSearchParams(location.search).get("q")) history.replaceState(null, "", `${location.pathname}?' + americana + '${location.search.replace(/^\\?/, "&")}`);\n'
             "    const params = new URLSearchParams(location.search);")
+    h = sub(h, "    const atEnd = () => at >= DAYS.length - 1;\n", "    const atEnd = () => at >= DAYS.length - 1;\n    window.__datos = { features, ev };\n")
+    h = sub(h, "      selected = f;\n", "      selected = f;\n      window.__key = keyOf(f.properties);\n")
     h = sub(h, '      stage.classList.remove("has-card");\n',
             '      stage.classList.remove("has-card");\n      if (window.__cierra) window.__cierra(map);\n')
     h = sub(h, "      if (fit) {\n        // Room around",

@@ -1119,6 +1119,7 @@ if (window.top !== window.self) {
     let at = DAYS.length - 1;
     let evNow = DAYS.length ? evByDay[at] : ev;
     const atEnd = () => at >= DAYS.length - 1;
+    window.__datos = { features, ev };
     // Silence is the only sign the water came back: people post when it's missing, not when it returns.
     // A colonia stays «activa» up to 3 days after its latest publication, «reciente» up to 7, and then
     // has no new reports: greyed out, kept for the record. Days count to the timeline's day, or today.
@@ -1262,6 +1263,7 @@ if (window.top !== window.self) {
       // The timeline hides while a colonia is open, so the map shows today's state behind its card.
       if (!atEnd()) showDay(DAYS.length - 1);
       selected = f;
+      window.__key = keyOf(f.properties);
       selZoom = fit ? null : map.getZoom();
       for (const g of marks) g.remove();
       const all = features.get(keyOf(f.properties)) || [f];
