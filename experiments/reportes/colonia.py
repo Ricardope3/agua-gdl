@@ -514,37 +514,139 @@ def u(name, js):
     return (name, U_CSS, "\n  window.__tileD = [0, 0];\n" + js)
 
 VD = {
-    # What to do now: the state, the zone's next cut, and four steps with their buttons.
-    "d1": u("Qué hacer", r"""
+    # What to do now on the left, the news and posts on the right, the colonia between them.
+    "d1": ("Qué hacer", U_CSS + """
+@media (min-width: 761px) {
+  .stage .card { width: 420px; top: 74px; max-height: calc(100% - 86px); padding: 0; overflow: auto; border-radius: 16px; display: flex; flex-direction: column }
+  .stage .card > .close { top: 14px; right: 12px; z-index: 2 }
+  .stage .card > h2, .stage .card > .where { display: none }
+  .q-top { padding: 18px 20px 16px; background: linear-gradient(160deg, color-mix(in srgb, #e4572e 16%, var(--surface)), var(--surface) 70%); border-bottom: 1px solid var(--line) }
+  .q-top.calma, .q-top.vieja { background: linear-gradient(160deg, var(--subtle), var(--surface) 70%) }
+  .q-mun { margin: 0; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 700 }
+  .q-name { margin: 2px 36px 10px 0; font: italic 700 1.75rem/1.1 var(--serif, Georgia, serif); letter-spacing: -.01em; color: var(--fg) }
+  .q-row { display: flex; align-items: center; gap: 12px }
+  .q-days { flex: 0 0 auto; display: grid; place-items: center; min-width: 74px; padding: 8px 10px; border-radius: 12px; background: #cc361e; color: #fff; text-align: center; line-height: 1 }
+  .q-days b { font: 800 1.9rem/1 var(--font); font-variant-numeric: tabular-nums } .q-days small { font-size: .68rem; letter-spacing: .04em; text-transform: uppercase; opacity: .9 }
+  .q-top.vieja .q-days, .q-top.calma .q-days { background: var(--muted) }
+  .q-now { margin: 0; font-size: .92rem; line-height: 1.4 }
+  .q-pill { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 3px; font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #cc361e }
+  .q-pill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 25%, transparent) }
+  .q-top.reciente .q-pill { color: #d9733f } .q-top.vieja .q-pill, .q-top.calma .q-pill { color: var(--muted) }
+  .q-sec { padding: 14px 20px; border-bottom: 1px solid var(--line) }
+  .q-sec:last-child { border-bottom: 0 }
+  .q-h { margin: 0 0 8px; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 800 }
+  .q-week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px }
+  .q-week span { display: grid; place-items: center; height: 30px; border-radius: 8px; border: 1px solid var(--line); font-size: .78rem; font-weight: 700; color: var(--muted) }
+  .q-week span.on { background: var(--brand); border-color: var(--brand); color: #fff }
+  .q-week span.hoy { outline: 2px solid var(--fg); outline-offset: 1px }
+  .q-next { margin: 8px 0 0; font-size: .9rem } .q-next b { color: var(--fg) }
+  .q-cta { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 13px 16px; border: 0; border-radius: 12px; background: #e4572e; color: #fff; font: 700 1.02rem var(--font); cursor: pointer; box-shadow: 0 6px 16px rgb(228 87 46 / .3) }
+  .q-cta:hover { background: #c4421c }
+  .q-cta .i { width: 18px; height: 18px }
+  .q-acts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px }
+  .q-acts a { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 10px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); text-decoration: none; font-size: .86rem; font-weight: 700; line-height: 1.2; transition: border-color .15s, transform .15s }
+  .q-acts a:hover { border-color: var(--brand); transform: translateY(-1px) }
+  .q-acts small { font-weight: 400; font-size: .72rem; color: var(--muted) }
+  .q-acts .i { width: 20px; height: 20px; color: var(--brand) }
+  .q-mini { margin: 0; font-size: .82rem; color: var(--muted) } .q-mini b { color: var(--fg); font-variant-numeric: tabular-nums }
+  /* The publications */
+  .u-panel { top: 74px; width: 400px; padding: 0; border-radius: 16px; display: flex; flex-direction: column; overflow: hidden }
+  .p-head { padding: 16px 18px 10px; border-bottom: 1px solid var(--line) }
+  .p-head h3 { margin: 0; font: italic 700 1.25rem/1.2 var(--serif, Georgia, serif) }
+  .p-head p { margin: 2px 0 10px; font-size: .82rem; color: var(--muted) }
+  .p-chips { display: flex; gap: 6px }
+  .p-chips button { padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); font: 600 .8rem var(--font); cursor: pointer }
+  .p-chips button[aria-pressed="true"] { background: var(--fg); border-color: var(--fg); color: var(--surface) }
+  .p-list { list-style: none; margin: 0; padding: 12px 14px 16px; overflow: auto; flex: 1; display: flex; flex-direction: column; gap: 12px }
+  .p-item { flex: 0 0 auto; position: relative; border-radius: 12px; background: var(--bg); border: 1px solid var(--line); overflow: hidden; cursor: pointer; transition: border-color .15s, box-shadow .15s }
+  .p-item:hover { border-color: var(--brand); box-shadow: 0 6px 18px rgb(3 14 22 / .12) }
+  .p-item img { display: block; width: 100%; height: 150px; object-fit: cover; background: var(--subtle) }
+  .p-body { padding: 10px 12px 12px }
+  .p-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: .74rem; color: var(--muted) }
+  .p-meta .tag { padding: 1px 6px; border-radius: 4px; background: var(--brand); color: #fff; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; font-size: .64rem }
+  .p-meta .tag.v { background: var(--subtle); color: var(--fg) }
+  .p-meta .d { margin-left: auto; padding: 1px 7px; border-radius: 999px; background: #e4572e; color: #fff; font-weight: 700 }
+  .p-tit { margin: 6px 0 0; font: 700 1rem/1.3 var(--serif, Georgia, serif); color: var(--fg) }
+  .p-q { margin: 6px 0 0; font-size: .92rem; line-height: 1.42; color: var(--fg); quotes: "«" "»" }
+  .p-q::before { content: open-quote } .p-q::after { content: close-quote }
+  .p-tit, .p-q { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden }
+  .p-item.vecinos { border-left: 4px solid #e4572e }
+  .p-go { position: absolute; top: 8px; right: 8px; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; background: color-mix(in srgb, var(--surface) 85%, transparent); color: var(--fg); opacity: 0; transition: opacity .15s }
+  .p-item:hover .p-go, .p-go:focus-visible { opacity: 1 }
+  .p-go .i { width: 15px; height: 15px }
+  .p-empty { padding: 20px; color: var(--muted) }
+}""", r"""
+  window.__tileD = [0, 0];
+  const ico = (n) => { const s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.setAttribute("class", "i"); s.setAttribute("aria-hidden", "true"); const u = document.createElementNS("http://www.w3.org/2000/svg", "use"); u.setAttribute("href", `/icons.svg?v=5#${n}`); s.append(u); return s; };
+  const hace = (iso) => { const d = Math.round((Date.parse(hoy()) - Date.parse(iso)) / 864e5); return d <= 0 ? "hoy" : d === 1 ? "ayer" : `hace ${d} días`; };
   window.__fichaD = (card, e, form, p, f) => {
-    compacta(card, p);
-    const [k, t] = ahora(e), now = mk("div", `u-now ${k}`); now.append(mk("b", null, "Ahora"), t);
-    const cal = mk("div"); cortes(p, cal);
-    card.querySelector(".where").after(now, mk("p", "u-h", "Cortes del SIAPA"), cal, mk("p", "u-h", "Qué puedes hacer"), pasos(p, e));
-    // The news and posts in their own panel on the right, so the colonia sits between the two.
+    const [k, t] = ahora(e), zs = zonaDe(p), z = zs[0], q = new URLSearchParams({ q: p.n, m: p.m, cp: p.cp });
+    // Head: municipio, name, the days in a block and the state now.
+    const top = mk("div", `q-top ${k}`), row = mk("div", "q-row"), days = mk("div", "q-days"), now = mk("div");
+    days.append(mk("b", null, e && e.dias ? String(e.dias) : "—"), mk("small", null, e && e.dias ? "días sin agua" : "sin días"));
+    now.append(mk("span", "q-pill", k === "activa" ? "Quejas recientes" : k === "reciente" ? "Quejas de esta semana" : k === "vieja" ? "Sin quejas nuevas" : "Sin publicaciones"), mk("p", "q-now", t));
+    row.append(days, now);
+    top.append(mk("p", "q-mun", `${p.m}${zs.length ? ` · Zona ${window.aguaMapa.joinES(zs.map(String))}` : ""}`), mk("h2", "q-name", nombre(p)), row);
+    // The zone's week: its cut days lit, today outlined, and the next cut.
+    const sec1 = mk("div", "q-sec"), week = mk("div", "q-week"), next = mk("p", "q-next");
+    const order = [1, 2, 3, 4, 5, 6, 0], today = new Date(`${hoy()}T12:00:00`).getDay();
+    sec1.append(mk("p", "q-h", "Cortes del SIAPA en tu zona"), week, next);
+    zonas().then((m) => {
+      const on = new Set(zs.flatMap((x) => (m.get(x) || { days: [] }).days)), nx = zs.map((x) => m.get(x) && m.get(x).next.find((d) => d >= hoy())).filter(Boolean).sort()[0];
+      week.replaceChildren(...order.map((i) => { const s = mk("span", [on.has(WD[i]) ? "on" : "", i === today ? "hoy" : ""].join(" "), "DLMXJVS"[i]); s.title = WD[i]; return s; }));
+      next.innerHTML = nx ? (nx === hoy() ? "<b>Hoy hay corte.</b>" : `Próximo corte: <b>${largo(nx)}</b>`) : zs.length ? "" : "El mapa del SIAPA no le da zona.";
+    });
+    // Actions: report first and large, then three smaller ones.
+    const sec2 = mk("div", "q-sec"), cta = mk("button", "q-cta"), acts = mk("div", "q-acts");
+    cta.type = "button"; cta.append(ico("map-pin"), "Reportar cómo está el agua"); cta.onclick = () => document.getElementById("reporta-btn").click();
+    const act = (href, icon, label, sub) => { const a = link(href, ""); a.append(ico(icon), label, mk("small", null, sub)); return a; };
+    acts.append(act("/pipas#municipios", "droplet", "Pedir pipa", "Teléfonos con su fuente"));
+    if (z) acts.append(act(`https://t.me/AvisoAguaGDLbot?start=z${z}`, "send", "Avisos", "Antes de cada corte"));
+    acts.append(act(`/exige?${q}`, "megaphone", "Exigir", "Al SIAPA y la CEA"));
+    sec2.append(mk("p", "q-h", "Qué puedes hacer"), cta, acts);
+    const sec3 = mk("div", "q-sec");
+    if (e) { const mini = mk("p", "q-mini"); mini.innerHTML = `<b>${e.fuentes}</b> fuentes distintas · <b>${e.medios}</b> ${e.medios === 1 ? "medio" : "medios"} · <b>${e.posts.length}</b> publicaciones`; sec3.append(mini); }
+    const close = card.querySelector(".close");
+    card.replaceChildren(close, top, sec1, sec2, ...(e ? [sec3] : []), ...[...card.querySelectorAll("form.report, .thanks, .share, .exige")]);
     panel(e);
   };
   function panel(e) {
     document.querySelector(".u-panel")?.remove();
     if (!e) return;
-    const box = mk("aside", "u-panel"), list = mk("ul", "u-feed");
+    const box = mk("aside", "u-panel"), head = mk("div", "p-head"), chips = mk("div", "p-chips"), list = mk("ul", "p-list");
     box.setAttribute("aria-label", "Lo que se publica de esta colonia");
-    box.append(mk("p", "u-h", `Lo que se publica · ${e.posts.length}`), mk("p", "u-sub", `${e.fuentes} fuentes distintas · ${e.medios} ${e.medios === 1 ? "medio" : "medios"}. Toca una para verla.`));
-    const news = e.posts.filter((q) => q.fuente === "medio"), rest = e.posts.filter((q) => q.fuente !== "medio");
-    for (const q of [...news, ...rest].sort((a, b) => (b.fuente === "medio") - (a.fuente === "medio") || b.fecha.localeCompare(a.fecha))) {
-      const li = mk("li", q.fuente === "medio" ? "medio" : ""), src = q.captura || q.vista || (q.en && q.en.vista);
-      if (src) { const im = mk("img"); im.src = `/${src}`; im.alt = ""; im.loading = "lazy"; li.append(im); }
-      const tx = mk("div");
-      tx.append(mk("small", null, `${q.fuente === "medio" ? "Medio · " : ""}${quien(q)} · ${fecha(q.fecha)}`), mk("span", null, q.titular || q.cita));
-      li.append(tx);
-      li.onclick = () => abre(li, q);
-      list.append(li);
+    const medios = e.posts.filter((x) => x.fuente === "medio").length;
+    head.append(mk("h3", null, "Lo que se publica"), mk("p", null, `${e.posts.length} publicaciones · ${medios} de medios · la más reciente ${hace(e.ultima)}`), chips);
+    const all = [...e.posts].sort((a, b) => b.fecha.localeCompare(a.fecha) || (b.fuente === "medio") - (a.fuente === "medio"));
+    const draw = (which) => {
+      for (const b of chips.children) b.setAttribute("aria-pressed", String(b.dataset.k === which));
+      const items = all.filter((x) => which === "todo" || (which === "medio") === (x.fuente === "medio"));
+      list.replaceChildren(...(items.length ? items.map(item) : [mk("li", "p-empty", "Nada aquí todavía.")]));
+      list.scrollTop = 0;
+    };
+    for (const [kk, label] of [["todo", `Todo · ${e.posts.length}`], ["medio", `Medios · ${medios}`], ["vecinos", `Vecinos · ${e.posts.length - medios}`]]) {
+      const b = mk("button", null, label); b.type = "button"; b.dataset.k = kk; b.onclick = () => draw(kk); chips.append(b);
     }
-    box.append(list);
+    function item(x) {
+      const li = mk("li", `p-item ${x.fuente === "medio" ? "medio" : "vecinos"}`), src = x.captura || x.vista || (x.en && x.en.vista);
+      if (src && x.fuente === "medio") { const im = mk("img"); im.src = `/${src}`; im.alt = ""; im.loading = "lazy"; li.append(im); }
+      const body = mk("div", "p-body"), meta = mk("div", "p-meta");
+      meta.append(mk("span", x.fuente === "medio" ? "tag" : "tag v", x.fuente === "medio" ? "Medio" : x.red === "x" ? "X" : "Facebook"), `${quien(x)} · ${hace(x.fecha)}`);
+      if (x.dias) meta.append(mk("span", "d", `${x.dias} días`));
+      body.append(meta);
+      if (x.titular && x.fuente === "medio") body.append(mk("p", "p-tit", x.titular)); else body.append(mk("p", "p-q", x.cita));
+      const go = link(x.url, ""); go.className = "p-go"; go.title = "Abrir la publicación"; go.setAttribute("aria-label", "Abrir la publicación"); go.append(ico("external-link"));
+      go.onclick = (ev) => ev.stopPropagation();
+      li.append(body, go);
+      li.onclick = () => abre(li, x);
+      return li;
+    }
+    box.append(head, list);
     document.getElementById("escenario").append(box);
+    draw("todo");
   }
   window.__cierra = () => document.querySelector(".u-panel")?.remove();
-  window.__refitD = (map, b) => map.flyToBounds(b, { paddingTopLeft: [440 + 50, 80], paddingBottomRight: [410 + 50, 50], maxZoom: 16, duration: 0.6, animate: !reduce() });
+  window.__refitD = (map, b) => map.flyToBounds(b, { paddingTopLeft: [420 + 50, 80], paddingBottomRight: [400 + 50, 50], maxZoom: 16, duration: 0.6, animate: !reduce() });
 """),
     # Is it only my colonia? The colonias around it within 1.5 km and how they're doing.
     "d2": u("Alrededor", r"""
