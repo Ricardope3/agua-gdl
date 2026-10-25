@@ -684,7 +684,7 @@ VD = {
     compacta(card, p);
     const near = cercanas(f);
     const panes = {
-      "Ahora": () => { const [k, t] = ahora(e), now = mk("div", `u-now ${k}`); now.append(mk("b", null, "Ahora"), t); const cal = mk("div"); cortes(p, cal); return [now, mk("p", "u-h", "Cortes del SIAPA"), cal]; },
+      "Ahora": () => { const [k, t] = ahora(e), now = mk("div", `u-now ${k}`); now.append(mk("b", null, "Ahora"), t); return [now]; },
       "Qué hacer": () => [pasos(p, e)],
       "Pruebas": () => e ? [mk("p", "u-big", `${e.dias ? `Hasta ${e.dias} días sin agua · ` : ""}${e.fuentes} fuentes, ${e.medios} medios`), pruebas(e, 12)] : [mk("p", null, "Nadie ha publicado que falte el agua aquí.")],
       "Alrededor": () => { const ul = mk("ul", "u-near"); for (const x of near.slice(0, 10)) { const [kk] = ahora(x.e), [n, m, cp] = x.k.split("|"), li = mk("li"); li.append(mk("span", `u-dot ${kk}`), link(`?${new URLSearchParams({ q: n, m, cp })}`, `${nombre({ n })} · ${m}`), mk("small", null, `${(x.m / 1000).toFixed(1)} km`)); ul.append(li); } return [mk("p", "u-big", `${near.length} colonias con publicaciones a 1.5 km o menos.`), ul]; },
