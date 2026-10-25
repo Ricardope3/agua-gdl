@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Agua GDL · Prueba d2: Alrededor</title>
+<title>Agua GDL · Prueba d2: Galería</title>
 <meta name="robots" content="noindex">
 <meta name="facebook-domain-verification" content="li0vsm7edv0afccxodm5t0jvyiw0za">
 <meta name="description" content="Cuántos días llevan sin agua las colonias de Guadalajara, según medios y vecinos en Facebook y X, cada publicación con su enlace. Reporta la tuya en cuatro toques, sin cuenta y de forma anónima.">
@@ -558,6 +558,68 @@ path.nueva { animation: nueva 1.4s ease-out both; pointer-events: none }
   .u-feed li:hover span { color: var(--link) }
   .stage.has-card .leaflet-control-zoom, .stage.has-card .leaflet-control-centrar { display: none }
 }
+@media (min-width: 761px) {
+  /* The site's own pieces: 4 px corners and the double blue rule (Talavera), .button, .chip, .tag, .sevb. */
+  .stage .card { width: 400px; top: 74px; max-height: calc(100% - 86px); padding: 0; overflow: auto }
+  .stage .card > .close { top: 12px; right: 10px; z-index: 2 }
+  .stage .card > .where, .stage .card > .ev, .stage .card > .sub-head, .stage .card > .conteo, .stage .card > .button { display: none }
+  .stage .card > h2 { margin: 18px 44px 0 20px }
+  .q-mun { margin: 2px 20px 0; color: var(--muted) }
+  .q-sec { padding: 14px 20px; border-top: 1px solid var(--line) }
+  .q-sec:first-of-type { border-top: 0 }
+  .q-h { margin: 0 0 8px; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700 }
+  .q-row { display: flex; align-items: center; gap: 12px }
+  .q-row .sevb { flex: 0 0 auto; font-size: 1.05rem; padding: 6px 12px }
+  .q-now { margin: 0; font-size: .95rem; line-height: 1.4 }
+  .q-now b { display: block; font-size: .78rem; letter-spacing: .04em; text-transform: uppercase; color: var(--s3) }
+  .q-now.reciente b { color: var(--s2) } .q-now.vieja b, .q-now.calma b { color: var(--muted) }
+  .q-cta { width: 100%; justify-content: center; padding: 12px 16px; background: #e4572e; color: #fff; font-weight: 700; font-size: 1rem }
+  .q-cta:hover { background: #c4421c }
+  .q-acts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px }
+  .q-acts .button { flex-direction: column; align-items: flex-start; gap: 3px; padding: 9px 10px; font-size: .88rem; font-weight: 600; line-height: 1.2 }
+  .q-acts small { font-weight: 400; font-size: .72rem; color: var(--muted) }
+  .q-mini { margin: 0; font-size: .85rem; color: var(--muted) } .q-mini b { color: var(--fg); font-variant-numeric: tabular-nums }
+  /* The publications */
+  .u-panel { top: 74px; width: 400px; padding: 0; display: flex; flex-direction: column; overflow: hidden; border-radius: 4px; border: 3px double var(--brand); box-shadow: none }
+  .p-head { padding: 16px 18px 12px; border-bottom: 1px solid var(--line) }
+  .p-head h3 { margin: 0; font-size: 1.2rem; font-weight: 400; font-style: italic; color: var(--link) }
+  .p-head p { margin: 2px 0 10px; font-size: .85rem; color: var(--muted) }
+  .p-chips { display: flex; flex-wrap: wrap; gap: 6px }
+  .p-list { list-style: none; margin: 0; padding: 12px 14px 16px; overflow: auto; flex: 1; display: flex; flex-direction: column; gap: 10px }
+  .p-item { flex: 0 0 auto; position: relative; border-radius: 4px; background: var(--bg); border: 1px solid var(--line); overflow: hidden; cursor: pointer }
+  .p-item.vecinos { border-left: 3px double var(--brand) }
+  .p-item:hover { border-color: var(--brand) }
+  .p-item img { display: block; width: 100%; height: 150px; object-fit: cover; background: var(--subtle) }
+  .p-body { padding: 10px 12px 12px }
+  .p-meta { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; font-size: .78rem; color: var(--muted) }
+  .p-meta .sevb { margin-left: auto; font-size: .74rem; padding: 1px 7px }
+  .p-tit { margin: 6px 0 0; font-weight: 700; font-size: 1rem; line-height: 1.3 }
+  .p-q { margin: 6px 0 0; font-size: .95rem; line-height: 1.45; quotes: "«" "»" }
+  .p-q::before { content: open-quote } .p-q::after { content: close-quote }
+  .p-tit, .p-q { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden }
+  .p-item:hover .p-tit, .p-item:hover .p-q { color: var(--link) }
+  .p-go { position: absolute; top: 8px; right: 8px; padding: 6px; opacity: 0 }
+  .p-item:hover .p-go, .p-go:focus-visible { opacity: 1 }
+  .p-empty { padding: 20px; color: var(--muted) }
+}
+@media (min-width: 761px) {
+  .p-search { width: 100%; margin: 10px 0 0; padding: 8px 10px; font: inherit; font-size: .92rem; color: var(--fg); background: var(--surface); border: 1.5px solid var(--line); border-radius: 4px }
+  .p-search:focus-visible { outline: 3px solid var(--ring); border-color: var(--brand) }
+  .p-day { flex: 0 0 auto; position: sticky; top: -12px; z-index: 1; margin: 4px -14px 0; padding: 6px 14px; background: var(--surface); border-bottom: 3px double var(--brand); font-size: .74rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--link) }
+  /* Compact rows: a thumbnail beside the words. */
+  .compacto .p-item, .destacada .p-item:not(.p-top) { display: grid; grid-template-columns: 88px minmax(0, 1fr) }
+  .compacto .p-item:not(:has(img)), .destacada .p-item:not(.p-top):not(:has(img)) { grid-template-columns: minmax(0, 1fr) }
+  .compacto .p-item img, .destacada .p-item:not(.p-top) img { width: 88px; height: 100%; min-height: 78px }
+  .compacto .p-tit, .compacto .p-q, .destacada .p-item:not(.p-top) .p-tit, .destacada .p-item:not(.p-top) .p-q { -webkit-line-clamp: 3; font-size: .9rem }
+  .destacada .p-top img { height: 210px }
+  .destacada .p-top .p-tit { font-size: 1.15rem }
+  /* Gallery: two columns of pictures and quotes. */
+  .galeria .p-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: max-content; align-content: start }
+  .galeria .p-item img { height: 110px }
+  .galeria .p-tit, .galeria .p-q { -webkit-line-clamp: 3; font-size: .86rem }
+  .galeria .p-day, .galeria .p-empty { grid-column: 1 / -1 }
+  .galeria .p-meta .sevb { margin-left: 0 }
+}
 </style>
 <style>/* Talavera */
 :root { --bg:#fbfaf6; --surface:#ffffff; --subtle:#e4eaf8; --fg:#14213d; --muted:#4f5b7a; --line:#c4cfe9;
@@ -586,7 +648,7 @@ if (window.top !== window.self) {
 <script src="/theme.js"></script>
 </head>
 <body>
-<div class="variant-bar"><strong>Prueba · d2: Alrededor</strong><a href="/reportes?q=CIUDAD+GRANJA&amp;m=Zapopan&amp;cp=45010">Actual</a><a href="/d1">d1 Qué hacer</a><a href="/d2" aria-current="page">d2 Alrededor</a><a href="/d3">d3 Calendario</a><a href="/d4">d4 Para compartir</a><a href="/d5">d5 Todo en pestañas</a></div>
+<div class="variant-bar"><strong>Prueba · d2: Galería</strong><a href="/reportes?q=CIUDAD+GRANJA&amp;m=Zapopan&amp;cp=45010">Actual</a><a href="/d1">d1 Qué hacer</a><a href="/d2" aria-current="page">d2 Galería</a><a href="/d3">d3 Por día</a><a href="/d4">d4 Nota principal</a><a href="/d5">d5 Con búsqueda</a></div>
 <script>
   const isPhone = () => matchMedia("(max-width: 760px)").matches;
   // The report button and, when wanted, a toggle for the rest of the card, right under its title.
@@ -870,22 +932,97 @@ if (window.top !== window.self) {
   }
   const UCSS = true;
 
-  window.__tileD = [0, 0];
+  window.__panel = { gallery: true, width: 460 };
 
+  window.__tileD = [0, 0];
+  const ico = (n) => { const s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.setAttribute("class", "i"); s.setAttribute("aria-hidden", "true"); const u = document.createElementNS("http://www.w3.org/2000/svg", "use"); u.setAttribute("href", `/icons.svg?v=5#${n}`); s.append(u); return s; };
+  const hace = (iso) => { const d = Math.round((Date.parse(hoy()) - Date.parse(iso)) / 864e5); return d <= 0 ? "hoy" : d === 1 ? "ayer" : `hace ${d} días`; };
   window.__fichaD = (card, e, form, p, f) => {
-    compacta(card, p);
-    const [k, t] = ahora(e), now = mk("div", `u-now ${k}`); now.append(mk("b", null, "Aquí"), t);
-    const near = cercanas(f), act = near.filter((x) => ahora(x.e)[0] === "activa").length;
-    const big = mk("p", "u-big"); big.innerHTML = near.length ? `<b>${near.length}</b> colonias a 1.5 km o menos tienen publicaciones de que no hay agua; <b>${act}</b> con quejas de los últimos 3 días.` : "Ninguna colonia a 1.5 km tiene publicaciones de que no hay agua.";
-    const ul = mk("ul", "u-near");
-    for (const x of near.slice(0, 9)) {
-      const [kk] = ahora(x.e), [n, m, cp] = x.k.split("|"), li = mk("li");
-      li.append(mk("span", `u-dot ${kk}`), link(`?${new URLSearchParams({ q: n, m, cp })}`, `${nombre({ n })} · ${m}`), mk("small", null, `${x.e.dias ? `${x.e.dias} días · ` : ""}${(x.m / 1000).toFixed(1)} km`));
-      ul.append(li);
-    }
-    const kids = [now, mk("p", "u-h", "Alrededor"), big, ul, mk("p", "u-h", "Qué puedes hacer"), pasos(p, e)];
-    card.querySelector(".where").after(...kids);
+    const [k, t] = ahora(e), zs = zonaDe(p), z = zs[0], q = new URLSearchParams({ q: p.n, m: p.m, cp: p.cp });
+    const h2 = card.querySelector("h2"), mun = mk("p", "q-mun", p.m);
+    // The zone's days and calendar live on /mizona.
+    if (zs.length) mun.append(" · ", link(`/mizona?${q}`, `Zona ${window.aguaMapa.joinES(zs.map(String))}`));
+    // The state: the days in the site's own badge and what the last complaint says about now.
+    const sec0 = mk("div", "q-sec"), row = mk("div", "q-row"), now = mk("p", `q-now ${k}`);
+    now.append(mk("b", null, k === "activa" ? "Quejas recientes" : k === "reciente" ? "Quejas de esta semana" : k === "vieja" ? "Sin quejas nuevas" : "Sin publicaciones"), t);
+    if (e && e.dias) row.append(sevb(e.dias));
+    row.append(now); sec0.append(row);
+    // Report first and large, then three smaller actions.
+    const sec2 = mk("div", "q-sec"), cta = mk("button", "button q-cta"), acts = mk("div", "q-acts");
+    cta.type = "button"; cta.append(ico("map-pin"), "Reportar cómo está el agua"); cta.onclick = () => document.getElementById("reporta-btn").click();
+    const act = (href, icon, label, sub) => { const a = link(href, "", "button alt"); a.append(ico(icon), label, mk("small", null, sub)); return a; };
+    acts.append(act("/pipas#municipios", "droplet", "Pedir pipa", "Teléfonos con su fuente"));
+    if (z) acts.append(act(`https://t.me/AvisoAguaGDLbot?start=z${z}`, "send", "Avisos", "Antes de cada corte"));
+    acts.append(act(`/exige?${q}`, "megaphone", "Exigir", "Al SIAPA y la CEA"));
+    sec2.append(mk("p", "q-h", "Qué puedes hacer"), cta, acts);
+    const kids = [card.querySelector(".close"), h2, mun, sec0, sec2];
+    if (e) { const sec3 = mk("div", "q-sec"), mini = mk("p", "q-mini"); mini.innerHTML = `<b>${e.fuentes}</b> fuentes distintas · <b>${e.medios}</b> ${e.medios === 1 ? "medio" : "medios"} · <b>${e.posts.length}</b> publicaciones`; sec3.append(mini); kids.push(sec3); }
+    card.replaceChildren(...kids, ...card.querySelectorAll("form.report, .thanks, .share, .exige"));
+    panel(e);
   };
+  // The days in the same badge and colour ramp as the rest of the page.
+  const sevb = (d) => { const s = d >= 14 ? 4 : d >= 7 ? 3 : d >= 3 ? 2 : 1; const b = mk("span", "sevb", `${d} ${d === 1 ? "día" : "días"}`); b.style.cssText = `--c:var(--s${s});--k:var(--s${s}-ink)`; return b; };
+  function panel(e) {
+    document.querySelector(".u-panel")?.remove();
+    if (!e) return;
+    // Each variant of d1 sets window.__panel: gallery, grouped by day, a lead story, compact rows, search and sort.
+    const O = window.__panel || {};
+    const box = mk("aside", ["u-panel", O.gallery && "galeria", O.compact && "compacto", O.feature && "destacada"].filter(Boolean).join(" ")), head = mk("div", "p-head"), chips = mk("div", "p-chips"), list = mk("ul", "p-list");
+    if (O.width) box.style.width = `${O.width}px`;
+    box.setAttribute("aria-label", "Lo que se publica de esta colonia");
+    const medios = e.posts.filter((x) => x.fuente === "medio").length;
+    head.append(mk("h3", null, "Lo que se publica"), mk("p", null, `${e.posts.length} publicaciones · ${medios} de medios · la más reciente ${hace(e.ultima)}`), chips);
+    const all = [...e.posts].sort((a, b) => b.fecha.localeCompare(a.fecha) || (b.fuente === "medio") - (a.fuente === "medio"));
+    let which = "todo", text = "", order = "fecha";
+    const draw = (w = which) => {
+      which = w;
+      for (const b of chips.children) if (b.dataset.k) b.setAttribute("aria-pressed", String(b.dataset.k === which));
+      const fold = (t) => (t || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+      let items = all.filter((x) => which === "todo" || (which === "medio") === (x.fuente === "medio"))
+        .filter((x) => !text || fold(`${x.cita} ${x.titular || ""} ${quien(x)}`).includes(fold(text)));
+      if (order === "dias") items = [...items].sort((a, b) => (b.dias || 0) - (a.dias || 0) || b.fecha.localeCompare(a.fecha));
+      const out = [];
+      let day = "";
+      items.forEach((x, i) => {
+        if (O.group && order === "fecha" && x.fecha !== day) { day = x.fecha; out.push(mk("li", "p-day", `${hace(x.fecha).replace(/^./, (c) => c.toUpperCase())} · ${largo(x.fecha)}`)); }
+        const li = item(x);
+        if (O.feature && i === 0 && which !== "vecinos") li.classList.add("p-top");
+        out.push(li);
+      });
+      list.replaceChildren(...(out.length ? out : [mk("li", "p-empty", "Nada aquí todavía.")]));
+      list.scrollTop = 0;
+    };
+    for (const [kk, label] of [["todo", `Todo · ${e.posts.length}`], ["medio", `Medios · ${medios}`], ["vecinos", `Vecinos · ${e.posts.length - medios}`]]) {
+      const b = mk("button", "chip", label); b.type = "button"; b.dataset.k = kk; b.onclick = () => draw(kk); chips.append(b);
+    }
+    if (O.search) {
+      const f = mk("input", "p-search"); f.type = "search"; f.placeholder = "Buscar en las publicaciones"; f.setAttribute("aria-label", "Buscar en las publicaciones");
+      f.oninput = () => { text = f.value.trim(); draw(); };
+      const s = mk("button", "chip", "Más días primero"); s.type = "button"; s.setAttribute("aria-pressed", "false");
+      s.onclick = () => { order = order === "fecha" ? "dias" : "fecha"; s.setAttribute("aria-pressed", String(order === "dias")); draw(); };
+      chips.append(s);
+      head.append(f);
+    }
+    function item(x) {
+      const li = mk("li", `p-item ${x.fuente === "medio" ? "medio" : "vecinos"}`), src = x.captura || x.vista || (x.en && x.en.vista);
+      if (src && x.fuente === "medio") { const im = mk("img"); im.src = `/${src}`; im.alt = ""; im.loading = "lazy"; li.append(im); }
+      const body = mk("div", "p-body"), meta = mk("div", "p-meta");
+      meta.append(mk("span", x.fuente === "medio" ? "tag" : "tag alt", x.fuente === "medio" ? "Medio" : x.red === "x" ? "X" : "Facebook"), `${quien(x)} · ${hace(x.fecha)}`);
+      if (x.dias) meta.append(sevb(x.dias));
+      body.append(meta);
+      if (x.titular && x.fuente === "medio") body.append(mk("p", "p-tit", x.titular)); else body.append(mk("p", "p-q", x.cita));
+      const go = link(x.url, ""); go.className = "button alt p-go"; go.title = "Abrir la publicación"; go.setAttribute("aria-label", "Abrir la publicación"); go.append(ico("external-link"));
+      go.onclick = (ev) => ev.stopPropagation();
+      li.append(body, go);
+      li.onclick = () => abre(li, x);
+      return li;
+    }
+    box.append(head, list);
+    document.getElementById("escenario").append(box);
+    draw();
+  }
+  window.__cierra = () => document.querySelector(".u-panel")?.remove();
+  window.__refitD = (map, b) => map.flyToBounds(b, { paddingTopLeft: [400 + 50, 80], paddingBottomRight: [((window.__panel || {}).width || 400) + 50, 50], maxZoom: 16, duration: 0.6, animate: !reduce() });
 </script>
 <div class="wrap">
   <header class="top">
@@ -895,7 +1032,6 @@ if (window.top !== window.self) {
       <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exige</a>
       <a href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Mi zona</a>
       <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg>Noticias</a>
-      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#landmark"/></svg>Congreso</a>
       <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg>Cuentas</a>
       <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Contaminación</a>
       <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#heart"/></svg>Antisionismo</a>

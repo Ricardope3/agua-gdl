@@ -601,7 +601,7 @@ path.nueva { animation: nueva 1.4s ease-out both; pointer-events: none }
   .p-go { position: absolute; top: 8px; right: 8px; padding: 6px; opacity: 0 }
   .p-item:hover .p-go, .p-go:focus-visible { opacity: 1 }
   .p-empty { padding: 20px; color: var(--muted) }
-}}
+}
 </style>
 <style>/* Talavera */
 :root { --bg:#fbfaf6; --surface:#ffffff; --subtle:#e4eaf8; --fg:#14213d; --muted:#4f5b7a; --line:#c4cfe9;
@@ -630,7 +630,7 @@ if (window.top !== window.self) {
 <script src="/theme.js"></script>
 </head>
 <body>
-<div class="variant-bar"><strong>Prueba · d1: Qué hacer</strong><a href="/reportes?q=CIUDAD+GRANJA&amp;m=Zapopan&amp;cp=45010">Actual</a><a href="/d1" aria-current="page">d1 Qué hacer</a><a href="/d2">d2 Alrededor</a><a href="/d3">d3 Calendario</a><a href="/d4">d4 Para compartir</a><a href="/d5">d5 Todo en pestañas</a></div>
+<div class="variant-bar"><strong>Prueba · d1: Qué hacer</strong><a href="/reportes?q=CIUDAD+GRANJA&amp;m=Zapopan&amp;cp=45010">Actual</a><a href="/d1" aria-current="page">d1 Qué hacer</a><a href="/d2">d2 Galería</a><a href="/d3">d3 Por día</a><a href="/d4">d4 Nota principal</a><a href="/d5">d5 Con búsqueda</a></div>
 <script>
   const isPhone = () => matchMedia("(max-width: 760px)").matches;
   // The report button and, when wanted, a toggle for the rest of the card, right under its title.
@@ -945,19 +945,43 @@ if (window.top !== window.self) {
   function panel(e) {
     document.querySelector(".u-panel")?.remove();
     if (!e) return;
-    const box = mk("aside", "u-panel"), head = mk("div", "p-head"), chips = mk("div", "p-chips"), list = mk("ul", "p-list");
+    // Each variant of d1 sets window.__panel: gallery, grouped by day, a lead story, compact rows, search and sort.
+    const O = window.__panel || {};
+    const box = mk("aside", ["u-panel", O.gallery && "galeria", O.compact && "compacto", O.feature && "destacada"].filter(Boolean).join(" ")), head = mk("div", "p-head"), chips = mk("div", "p-chips"), list = mk("ul", "p-list");
+    if (O.width) box.style.width = `${O.width}px`;
     box.setAttribute("aria-label", "Lo que se publica de esta colonia");
     const medios = e.posts.filter((x) => x.fuente === "medio").length;
     head.append(mk("h3", null, "Lo que se publica"), mk("p", null, `${e.posts.length} publicaciones · ${medios} de medios · la más reciente ${hace(e.ultima)}`), chips);
     const all = [...e.posts].sort((a, b) => b.fecha.localeCompare(a.fecha) || (b.fuente === "medio") - (a.fuente === "medio"));
-    const draw = (which) => {
-      for (const b of chips.children) b.setAttribute("aria-pressed", String(b.dataset.k === which));
-      const items = all.filter((x) => which === "todo" || (which === "medio") === (x.fuente === "medio"));
-      list.replaceChildren(...(items.length ? items.map(item) : [mk("li", "p-empty", "Nada aquí todavía.")]));
+    let which = "todo", text = "", order = "fecha";
+    const draw = (w = which) => {
+      which = w;
+      for (const b of chips.children) if (b.dataset.k) b.setAttribute("aria-pressed", String(b.dataset.k === which));
+      const fold = (t) => (t || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+      let items = all.filter((x) => which === "todo" || (which === "medio") === (x.fuente === "medio"))
+        .filter((x) => !text || fold(`${x.cita} ${x.titular || ""} ${quien(x)}`).includes(fold(text)));
+      if (order === "dias") items = [...items].sort((a, b) => (b.dias || 0) - (a.dias || 0) || b.fecha.localeCompare(a.fecha));
+      const out = [];
+      let day = "";
+      items.forEach((x, i) => {
+        if (O.group && order === "fecha" && x.fecha !== day) { day = x.fecha; out.push(mk("li", "p-day", `${hace(x.fecha).replace(/^./, (c) => c.toUpperCase())} · ${largo(x.fecha)}`)); }
+        const li = item(x);
+        if (O.feature && i === 0 && which !== "vecinos") li.classList.add("p-top");
+        out.push(li);
+      });
+      list.replaceChildren(...(out.length ? out : [mk("li", "p-empty", "Nada aquí todavía.")]));
       list.scrollTop = 0;
     };
     for (const [kk, label] of [["todo", `Todo · ${e.posts.length}`], ["medio", `Medios · ${medios}`], ["vecinos", `Vecinos · ${e.posts.length - medios}`]]) {
       const b = mk("button", "chip", label); b.type = "button"; b.dataset.k = kk; b.onclick = () => draw(kk); chips.append(b);
+    }
+    if (O.search) {
+      const f = mk("input", "p-search"); f.type = "search"; f.placeholder = "Buscar en las publicaciones"; f.setAttribute("aria-label", "Buscar en las publicaciones");
+      f.oninput = () => { text = f.value.trim(); draw(); };
+      const s = mk("button", "chip", "Más días primero"); s.type = "button"; s.setAttribute("aria-pressed", "false");
+      s.onclick = () => { order = order === "fecha" ? "dias" : "fecha"; s.setAttribute("aria-pressed", String(order === "dias")); draw(); };
+      chips.append(s);
+      head.append(f);
     }
     function item(x) {
       const li = mk("li", `p-item ${x.fuente === "medio" ? "medio" : "vecinos"}`), src = x.captura || x.vista || (x.en && x.en.vista);
@@ -975,10 +999,10 @@ if (window.top !== window.self) {
     }
     box.append(head, list);
     document.getElementById("escenario").append(box);
-    draw("todo");
+    draw();
   }
   window.__cierra = () => document.querySelector(".u-panel")?.remove();
-  window.__refitD = (map, b) => map.flyToBounds(b, { paddingTopLeft: [420 + 50, 80], paddingBottomRight: [400 + 50, 50], maxZoom: 16, duration: 0.6, animate: !reduce() });
+  window.__refitD = (map, b) => map.flyToBounds(b, { paddingTopLeft: [400 + 50, 80], paddingBottomRight: [((window.__panel || {}).width || 400) + 50, 50], maxZoom: 16, duration: 0.6, animate: !reduce() });
 </script>
 <div class="wrap">
   <header class="top">
@@ -988,7 +1012,6 @@ if (window.top !== window.self) {
       <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exige</a>
       <a href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Mi zona</a>
       <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg>Noticias</a>
-      <a href="/escribe"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#landmark"/></svg>Congreso</a>
       <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg>Cuentas</a>
       <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Contaminación</a>
       <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#heart"/></svg>Antisionismo</a>

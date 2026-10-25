@@ -513,9 +513,7 @@ U_CSS = """
 def u(name, js):
     return (name, U_CSS, "\n  window.__tileD = [0, 0];\n" + js)
 
-VD = {
-    # What to do now on the left, the news and posts on the right, the colonia between them.
-    "d1": ("Qué hacer", U_CSS + """
+D1_CSS = """
 @media (min-width: 761px) {
   /* The site's own pieces: 4 px corners and the double blue rule (Talavera), .button, .chip, .tag, .sevb. */
   .stage .card { width: 400px; top: 74px; max-height: calc(100% - 86px); padding: 0; overflow: auto }
@@ -559,7 +557,9 @@ VD = {
   .p-go { position: absolute; top: 8px; right: 8px; padding: 6px; opacity: 0 }
   .p-item:hover .p-go, .p-go:focus-visible { opacity: 1 }
   .p-empty { padding: 20px; color: var(--muted) }
-}}""", r"""
+}"""
+
+D1_JS = r"""
   window.__tileD = [0, 0];
   const ico = (n) => { const s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.setAttribute("class", "i"); s.setAttribute("aria-hidden", "true"); const u = document.createElementNS("http://www.w3.org/2000/svg", "use"); u.setAttribute("href", `/icons.svg?v=5#${n}`); s.append(u); return s; };
   const hace = (iso) => { const d = Math.round((Date.parse(hoy()) - Date.parse(iso)) / 864e5); return d <= 0 ? "hoy" : d === 1 ? "ayer" : `hace ${d} días`; };
@@ -591,19 +591,43 @@ VD = {
   function panel(e) {
     document.querySelector(".u-panel")?.remove();
     if (!e) return;
-    const box = mk("aside", "u-panel"), head = mk("div", "p-head"), chips = mk("div", "p-chips"), list = mk("ul", "p-list");
+    // Each variant of d1 sets window.__panel: gallery, grouped by day, a lead story, compact rows, search and sort.
+    const O = window.__panel || {};
+    const box = mk("aside", ["u-panel", O.gallery && "galeria", O.compact && "compacto", O.feature && "destacada"].filter(Boolean).join(" ")), head = mk("div", "p-head"), chips = mk("div", "p-chips"), list = mk("ul", "p-list");
+    if (O.width) box.style.width = `${O.width}px`;
     box.setAttribute("aria-label", "Lo que se publica de esta colonia");
     const medios = e.posts.filter((x) => x.fuente === "medio").length;
     head.append(mk("h3", null, "Lo que se publica"), mk("p", null, `${e.posts.length} publicaciones · ${medios} de medios · la más reciente ${hace(e.ultima)}`), chips);
     const all = [...e.posts].sort((a, b) => b.fecha.localeCompare(a.fecha) || (b.fuente === "medio") - (a.fuente === "medio"));
-    const draw = (which) => {
-      for (const b of chips.children) b.setAttribute("aria-pressed", String(b.dataset.k === which));
-      const items = all.filter((x) => which === "todo" || (which === "medio") === (x.fuente === "medio"));
-      list.replaceChildren(...(items.length ? items.map(item) : [mk("li", "p-empty", "Nada aquí todavía.")]));
+    let which = "todo", text = "", order = "fecha";
+    const draw = (w = which) => {
+      which = w;
+      for (const b of chips.children) if (b.dataset.k) b.setAttribute("aria-pressed", String(b.dataset.k === which));
+      const fold = (t) => (t || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+      let items = all.filter((x) => which === "todo" || (which === "medio") === (x.fuente === "medio"))
+        .filter((x) => !text || fold(`${x.cita} ${x.titular || ""} ${quien(x)}`).includes(fold(text)));
+      if (order === "dias") items = [...items].sort((a, b) => (b.dias || 0) - (a.dias || 0) || b.fecha.localeCompare(a.fecha));
+      const out = [];
+      let day = "";
+      items.forEach((x, i) => {
+        if (O.group && order === "fecha" && x.fecha !== day) { day = x.fecha; out.push(mk("li", "p-day", `${hace(x.fecha).replace(/^./, (c) => c.toUpperCase())} · ${largo(x.fecha)}`)); }
+        const li = item(x);
+        if (O.feature && i === 0 && which !== "vecinos") li.classList.add("p-top");
+        out.push(li);
+      });
+      list.replaceChildren(...(out.length ? out : [mk("li", "p-empty", "Nada aquí todavía.")]));
       list.scrollTop = 0;
     };
     for (const [kk, label] of [["todo", `Todo · ${e.posts.length}`], ["medio", `Medios · ${medios}`], ["vecinos", `Vecinos · ${e.posts.length - medios}`]]) {
       const b = mk("button", "chip", label); b.type = "button"; b.dataset.k = kk; b.onclick = () => draw(kk); chips.append(b);
+    }
+    if (O.search) {
+      const f = mk("input", "p-search"); f.type = "search"; f.placeholder = "Buscar en las publicaciones"; f.setAttribute("aria-label", "Buscar en las publicaciones");
+      f.oninput = () => { text = f.value.trim(); draw(); };
+      const s = mk("button", "chip", "Más días primero"); s.type = "button"; s.setAttribute("aria-pressed", "false");
+      s.onclick = () => { order = order === "fecha" ? "dias" : "fecha"; s.setAttribute("aria-pressed", String(order === "dias")); draw(); };
+      chips.append(s);
+      head.append(f);
     }
     function item(x) {
       const li = mk("li", `p-item ${x.fuente === "medio" ? "medio" : "vecinos"}`), src = x.captura || x.vista || (x.en && x.en.vista);
@@ -621,83 +645,47 @@ VD = {
     }
     box.append(head, list);
     document.getElementById("escenario").append(box);
-    draw("todo");
+    draw();
   }
   window.__cierra = () => document.querySelector(".u-panel")?.remove();
-  window.__refitD = (map, b) => map.flyToBounds(b, { paddingTopLeft: [420 + 50, 80], paddingBottomRight: [400 + 50, 50], maxZoom: 16, duration: 0.6, animate: !reduce() });
-"""),
-    # Is it only my colonia? The colonias around it within 1.5 km and how they're doing.
-    "d2": u("Alrededor", r"""
-  window.__fichaD = (card, e, form, p, f) => {
-    compacta(card, p);
-    const [k, t] = ahora(e), now = mk("div", `u-now ${k}`); now.append(mk("b", null, "Aquí"), t);
-    const near = cercanas(f), act = near.filter((x) => ahora(x.e)[0] === "activa").length;
-    const big = mk("p", "u-big"); big.innerHTML = near.length ? `<b>${near.length}</b> colonias a 1.5 km o menos tienen publicaciones de que no hay agua; <b>${act}</b> con quejas de los últimos 3 días.` : "Ninguna colonia a 1.5 km tiene publicaciones de que no hay agua.";
-    const ul = mk("ul", "u-near");
-    for (const x of near.slice(0, 9)) {
-      const [kk] = ahora(x.e), [n, m, cp] = x.k.split("|"), li = mk("li");
-      li.append(mk("span", `u-dot ${kk}`), link(`?${new URLSearchParams({ q: n, m, cp })}`, `${nombre({ n })} · ${m}`), mk("small", null, `${x.e.dias ? `${x.e.dias} días · ` : ""}${(x.m / 1000).toFixed(1)} km`));
-      ul.append(li);
-    }
-    const kids = [now, mk("p", "u-h", "Alrededor"), big, ul, mk("p", "u-h", "Qué puedes hacer"), pasos(p, e)];
-    card.querySelector(".where").after(...kids);
-  };
-"""),
-    # SIAPA's cut days against the days complaints were published, three weeks at a glance.
-    "d3": u("Calendario", r"""
-  window.__fichaD = (card, e, form, p, f) => {
-    compacta(card, p);
-    const grid = mk("div", "u-cal"), note = mk("p", "u-key"), summary = mk("p", "u-big");
-    for (const w of ["lun", "mar", "mié", "jue", "vie", "sáb", "dom"]) grid.append(mk("div", "wd", w));
-    const t = new Date(`${hoy()}T12:00:00`), start = new Date(t); start.setDate(t.getDate() - ((t.getDay() + 6) % 7) - 14);
-    const per = new Map(); if (e) for (const q of e.posts) per.set(q.fecha, (per.get(q.fecha) || 0) + 1);
-    zonas().then((m) => {
-      const zs = zonaDe(p), days = new Set(zs.flatMap((z) => (m.get(z) || { days: [] }).days));
-      let fuera = 0, con = 0;
-      for (let i = 0; i < 28; i++) {
-        const d = new Date(start); d.setDate(start.getDate() + i);
-        const iso = d.toLocaleDateString("en-CA"), corte = days.has(WD[d.getDay()]);
-        const cell = mk("div", [corte ? "corte" : "", iso === hoy() ? "hoy" : "", iso > hoy() ? "futuro" : ""].join(" "), String(d.getDate()));
-        if (per.get(iso)) { const b = mk("i", null, String(per.get(iso))); cell.append(b); con++; if (!corte) fuera++; }
-        cell.title = `${largo(iso)}${corte ? " · día de corte según el SIAPA" : ""}${per.get(iso) ? ` · ${per.get(iso)} publicaciones` : ""}`;
-        grid.append(cell);
-      }
-      summary.innerHTML = con ? `Hubo publicaciones de que no hay agua en <b>${con}</b> días; <b>${fuera}</b> de ellos no eran día de corte de su zona.` : "No hay publicaciones de esta colonia en estas semanas.";
-      note.textContent = `Azul: día de corte de la zona ${zs.join(" y ")} según el SIAPA. Número: publicaciones de ese día. Punteado: lo que viene.`;
-    });
-    const kids = [mk("p", "u-h", "Cortes y quejas, día por día"), summary, grid, note, mk("p", "u-h", "Qué puedes hacer"), pasos(p, e)];
-    card.querySelector(".where").after(...kids);
-  };
-"""),
-    # Ready to pass on: a square picture with the days, to download or send, and the colonia's link.
-    "d4": u("Para compartir", r"""
-  window.__fichaD = (card, e, form, p, f) => {
-    compacta(card, p);
-    const [k, t] = ahora(e), now = mk("div", `u-now ${k}`); now.append(mk("b", null, "Ahora"), t);
-    const kids = [now, mk("p", "u-h", "Pásalo a tus vecinos"), compartir(p, e), mk("p", "u-h", "Qué más puedes hacer"), pasos(p, e)];
-    card.querySelector(".where").after(...kids);
-  };
-"""),
-    # All of it in tabs: now, what to do, the evidence, around, share.
-    "d5": u("Todo en pestañas", r"""
-  window.__fichaD = (card, e, form, p, f) => {
-    compacta(card, p);
-    const near = cercanas(f);
-    const panes = {
-      "Ahora": () => { const [k, t] = ahora(e), now = mk("div", `u-now ${k}`); now.append(mk("b", null, "Ahora"), t); return [now]; },
-      "Qué hacer": () => [pasos(p, e)],
-      "Pruebas": () => e ? [mk("p", "u-big", `${e.dias ? `Hasta ${e.dias} días sin agua · ` : ""}${e.fuentes} fuentes, ${e.medios} medios`), pruebas(e, 12)] : [mk("p", null, "Nadie ha publicado que falte el agua aquí.")],
-      "Alrededor": () => { const ul = mk("ul", "u-near"); for (const x of near.slice(0, 10)) { const [kk] = ahora(x.e), [n, m, cp] = x.k.split("|"), li = mk("li"); li.append(mk("span", `u-dot ${kk}`), link(`?${new URLSearchParams({ q: n, m, cp })}`, `${nombre({ n })} · ${m}`), mk("small", null, `${(x.m / 1000).toFixed(1)} km`)); ul.append(li); } return [mk("p", "u-big", `${near.length} colonias con publicaciones a 1.5 km o menos.`), ul]; },
-      "Compartir": () => [compartir(p, e)],
-    };
-    const tabs = mk("div", "u-tabs"), body = mk("div");
-    tabs.setAttribute("role", "tablist");
-    const show = (name) => { for (const b of tabs.children) b.setAttribute("aria-selected", String(b.textContent === name)); body.replaceChildren(...panes[name]()); };
-    for (const name of Object.keys(panes)) { const b = mk("button", null, name); b.type = "button"; b.setAttribute("role", "tab"); b.onclick = () => show(name); tabs.append(b); }
-    card.querySelector(".where").after(tabs, body);
-    show("Ahora");
-  };
-"""),
+  window.__refitD = (map, b) => map.flyToBounds(b, { paddingTopLeft: [400 + 50, 80], paddingBottomRight: [((window.__panel || {}).width || 400) + 50, 50], maxZoom: 16, duration: 0.6, animate: !reduce() });
+"""
+
+
+D1_MORE = """
+@media (min-width: 761px) {
+  .p-search { width: 100%; margin: 10px 0 0; padding: 8px 10px; font: inherit; font-size: .92rem; color: var(--fg); background: var(--surface); border: 1.5px solid var(--line); border-radius: 4px }
+  .p-search:focus-visible { outline: 3px solid var(--ring); border-color: var(--brand) }
+  .p-day { flex: 0 0 auto; position: sticky; top: -12px; z-index: 1; margin: 4px -14px 0; padding: 6px 14px; background: var(--surface); border-bottom: 3px double var(--brand); font-size: .74rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--link) }
+  /* Compact rows: a thumbnail beside the words. */
+  .compacto .p-item, .destacada .p-item:not(.p-top) { display: grid; grid-template-columns: 88px minmax(0, 1fr) }
+  .compacto .p-item:not(:has(img)), .destacada .p-item:not(.p-top):not(:has(img)) { grid-template-columns: minmax(0, 1fr) }
+  .compacto .p-item img, .destacada .p-item:not(.p-top) img { width: 88px; height: 100%; min-height: 78px }
+  .compacto .p-tit, .compacto .p-q, .destacada .p-item:not(.p-top) .p-tit, .destacada .p-item:not(.p-top) .p-q { -webkit-line-clamp: 3; font-size: .9rem }
+  .destacada .p-top img { height: 210px }
+  .destacada .p-top .p-tit { font-size: 1.15rem }
+  /* Gallery: two columns of pictures and quotes. */
+  .galeria .p-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: max-content; align-content: start }
+  .galeria .p-item img { height: 110px }
+  .galeria .p-tit, .galeria .p-q { -webkit-line-clamp: 3; font-size: .86rem }
+  .galeria .p-day, .galeria .p-empty { grid-column: 1 / -1 }
+  .galeria .p-meta .sevb { margin-left: 0 }
+}"""
+
+def d1v(name, opts, more_js=""):
+    return (name, U_CSS + D1_CSS + D1_MORE, f"\n  window.__panel = {opts};\n" + D1_JS + more_js)
+
+VD = {
+    # What to do now on the left, the news and posts on the right, the colonia between them.
+    "d1": ("Qué hacer", U_CSS + D1_CSS, D1_JS),
+    # d1 with the publications as a two-column gallery of pictures and quotes.
+    "d2": d1v("Galería", "{ gallery: true, width: 460 }"),
+    # d1 with the publications grouped under each day, as compact rows.
+    "d3": d1v("Por día", "{ group: true, compact: true }"),
+    # d1 with the newest news story large on top and the rest as compact rows.
+    "d4": d1v("Nota principal", "{ feature: true }"),
+    # d1 with a wider panel, a search box and «más días primero».
+    "d5": d1v("Con búsqueda", "{ search: true, compact: true, width: 440 }"),
 }
 
 DNAMES = {k: v[0] for k, v in VD.items()}
