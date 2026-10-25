@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Agua GDL · Prueba d4: Ficha corta y muro en el mapa</title>
+<title>Agua GDL · Prueba d4: La promesa</title>
 <meta name="robots" content="noindex">
 <meta name="facebook-domain-verification" content="li0vsm7edv0afccxodm5t0jvyiw0za">
 <meta name="description" content="Cuántos días llevan sin agua las colonias de Guadalajara, según medios y vecinos en Facebook y X, cada publicación con su enlace. Reporta la tuya en cuatro toques, sin cuenta y de forma anónima.">
@@ -507,9 +507,20 @@ path.nueva { animation: nueva 1.4s ease-out both; pointer-events: none }
   .stage .card .posts q { -webkit-line-clamp: 2 }
 }
 @media (min-width: 761px) {
-  .stage .card { width: 340px }
+  .stage .card { width: 430px }
   #reporta { display: none !important }
-  .stage .card .mosaic, .stage .card .posts, .stage .card .ev > .linkbtn, .stage .card > .button { display: none }
+  .stage .card .ev .mosaic, .stage .card .ev .posts, .stage .card .ev > .linkbtn, .stage .card > .button, .stage .card .ev-head { display: none }
+  .x-vs { margin: 12px 0 4px; display: grid; gap: 10px }
+  .x-vs p { margin: 0 0 4px; font-size: .85rem; color: var(--muted) }
+  .x-vs p b { color: var(--fg) }
+  .x-sq { display: flex; flex-wrap: wrap; gap: 3px }
+  .x-sq i { width: 16px; height: 16px; border-radius: 3px; background: #e4572e }
+  .x-sq.siapa i { background: var(--brand) }
+  .x-big { font: 800 2.6rem/1 var(--font); color: #cc361e; font-variant-numeric: tabular-nums }
+  .x-q { margin: 12px 0 0; padding: 10px 12px; border-radius: 10px; background: var(--bg); cursor: pointer }
+  .x-q q { display: block; font-size: .95rem; line-height: 1.4 }
+  .x-q small { display: block; margin-top: 4px; font-size: .78rem; color: var(--muted) }
+  .x-exige { margin: 12px 0 0; font-size: .92rem }
 }
 </style>
 <style>/* Talavera */
@@ -539,7 +550,7 @@ if (window.top !== window.self) {
 <script src="/theme.js"></script>
 </head>
 <body>
-<div class="variant-bar"><strong>Prueba · d4: Ficha corta y muro en el mapa</strong><a href="/reportes?q=AMERICANA&amp;m=Guadalajara&amp;cp=44100">Actual</a><a href="/d1">d1 Panel lateral</a><a href="/d2">d2 Carrusel abajo</a><a href="/d3">d3 Muro</a><a href="/d4" aria-current="page">d4 Ficha corta y muro en el mapa</a><a href="/d5">d5 Revista</a></div>
+<div class="variant-bar"><strong>Prueba · d4: La promesa</strong><a href="/reportes?q=CIUDAD+GRANJA&amp;m=Zapopan&amp;cp=45010">Actual</a><a href="/d1">d1 Expediente</a><a href="/d2">d2 Día por día</a><a href="/d3">d3 Primera plana</a><a href="/d4" aria-current="page">d4 La promesa</a><a href="/d5">d5 Foco</a></div>
 <script>
   const isPhone = () => matchMedia("(max-width: 760px)").matches;
   // The report button and, when wanted, a toggle for the rest of the card, right under its title.
@@ -709,6 +720,10 @@ if (window.top !== window.self) {
   };
 
   const isDesk = () => !isPhone();
+  const mk = (tag, cls, txt) => { const n = document.createElement(tag); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
+  const fecha = (iso) => new Date(`${iso}T12:00:00`).toLocaleDateString("es-MX", { day: "numeric", month: "short" }).replace(".", "");
+  const hoy = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Mexico_City" });
+  const quien = (q) => q.tipo === "comentario" ? (q.red === "x" ? "Respuesta en X" : "Comentario en Facebook") : q.fuente === "medio" || q.quien ? q.quien : "Vecina o vecino";
   // Each post with its picture above its words (the slide's own, the article's, or the post it's under).
   function imagenes(card, e) {
     if (!e) return;
@@ -732,9 +747,30 @@ if (window.top !== window.self) {
     map.flyToBounds(b, { ...pad, maxZoom: 16, duration: 0.6, animate: !reduce() });
   };
 
-  window.__tileD = [250, 188];
-  window.__padD = (s) => ({ paddingTopLeft: [340 + 300, 230], paddingBottomRight: [300, 230] });
-  window.__fichaD = (card, e, form, p) => { compacta(card, p); acciones(card, e, false); };
+  window.__tileD = [0, 0];
+  window.__fichaD = (card, e, form, p) => {
+    compacta(card, p);
+    const row = acciones(card, e, false);
+    if (!e) return;
+    const vs = mk("div", "x-vs");
+    const n = e.dias || 0;
+    vs.innerHTML = `<div><p><b>Lo que prometió el SIAPA:</b> cortes «por máximo un día»</p><div class="x-sq siapa"><i></i></div></div>`
+      + (n ? `<div><p><b>Lo que se publica de esta colonia:</b></p><div class="x-big">${n} días</div><div class="x-sq">${"<i></i>".repeat(Math.min(n, 60))}</div></div>`
+           : `<div><p><b>Lo que se publica de esta colonia:</b> que no hay agua, sin días contados</p></div>`);
+    card.querySelector(".ev").before(vs);
+    const best = [...e.posts].sort((a, b) => (b.fuente === "medio") - (a.fuente === "medio") || (b.dias || 0) - (a.dias || 0)).slice(0, 2);
+    let at = card.querySelector(".ev");
+    for (const q of best) {
+      const box = mk("div", "x-q");
+      box.append(mk("q", null, q.cita.length > 180 ? `${q.cita.slice(0, 178)}…` : q.cita), mk("small", null, `${quien(q)} · ${fecha(q.fecha)} · toca para verla`));
+      box.onclick = () => abre(box, q);
+      at.after(box); at = box;
+    }
+    at.after(row);
+    const ex = mk("p", "x-exige");
+    ex.innerHTML = `<a href="/exige?${new URLSearchParams({ q: p.n, m: p.m, cp: p.cp })}">Exígele al SIAPA, a la CEA y a tu municipio →</a>`;
+    row.after(ex);
+  };
 </script>
 <div class="wrap">
   <header class="top">
@@ -1521,7 +1557,7 @@ if (window.top !== window.self) {
       stage.classList.add("has-card");
       setOverview(false);
       if (window.__ficha && phone()) window.__ficha(card, e, openForm, f.properties);
-      else if (window.__fichaD && !phone()) window.__fichaD(card, e, openForm, f.properties);
+      else if (window.__fichaD && !phone()) window.__fichaD(card, e, openForm, f.properties, f);
       // The selected colonia's report button, top right where the summary was, while the form isn't open.
       const done = Date.now() - reportedAt(k) < SEEN;
       $("reporta").hidden = done || !!openForm;
@@ -2175,7 +2211,7 @@ if (window.top !== window.self) {
     // be shared); the postal code tells apart same-named colonias in one municipio. A bare ?q=
     // (the landing's search) opens a colonia only when one matches; otherwise it lists them.
     // &reportar=1 opens the report form.
-    if (!new URLSearchParams(location.search).get("q")) history.replaceState(null, "", `${location.pathname}?q=AMERICANA&m=Guadalajara&cp=44100${location.search.replace(/^\?/, "&")}`);
+    if (!new URLSearchParams(location.search).get("q")) history.replaceState(null, "", `${location.pathname}?q=CIUDAD+GRANJA&m=Zapopan&cp=45010${location.search.replace(/^\?/, "&")}`);
     const params = new URLSearchParams(location.search);
     const preset = (params.get("q") || "").trim().slice(0, 80);
     if (preset) {

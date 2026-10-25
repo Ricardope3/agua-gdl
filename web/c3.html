@@ -1488,7 +1488,7 @@ if (window.top !== window.self) {
       stage.classList.add("has-card");
       setOverview(false);
       if (window.__ficha && phone()) window.__ficha(card, e, openForm, f.properties);
-      else if (window.__fichaD && !phone()) window.__fichaD(card, e, openForm, f.properties);
+      else if (window.__fichaD && !phone()) window.__fichaD(card, e, openForm, f.properties, f);
       // The selected colonia's report button, top right where the summary was, while the form isn't open.
       const done = Date.now() - reportedAt(k) < SEEN;
       $("reporta").hidden = done || !!openForm;

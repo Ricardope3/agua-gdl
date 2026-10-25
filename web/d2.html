@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Agua GDL · Prueba d2: Carrusel abajo</title>
+<title>Agua GDL · Prueba d2: Día por día</title>
 <meta name="robots" content="noindex">
 <meta name="facebook-domain-verification" content="li0vsm7edv0afccxodm5t0jvyiw0za">
 <meta name="description" content="Cuántos días llevan sin agua las colonias de Guadalajara, según medios y vecinos en Facebook y X, cada publicación con su enlace. Reporta la tuya en cuatro toques, sin cuenta y de forma anónima.">
@@ -507,16 +507,21 @@ path.nueva { animation: nueva 1.4s ease-out both; pointer-events: none }
   .stage .card .posts q { -webkit-line-clamp: 2 }
 }
 @media (min-width: 761px) {
-  .stage .card { top: auto; left: 0; bottom: 0; width: 100%; max-height: none; overflow: hidden; border-radius: 18px 18px 0 0; padding: 18px 22px; display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: 0 24px; align-items: start }
-  .stage .card > .d-head { grid-column: 1 }
-  .stage .card > .posts { grid-column: 2; grid-row: 1; display: flex; gap: 12px; overflow-x: auto; margin: 0; padding: 0 0 6px; scroll-snap-type: x mandatory }
-  .stage .card > .posts li, .stage .card > .posts li[hidden] { display: block; flex: 0 0 280px; padding: 0 0 10px; overflow: hidden; scroll-snap-align: start; cursor: pointer }
-  .stage .card > .posts li > :not(.c-img) { margin-left: 12px; margin-right: 12px }
-  .stage .card > .posts q { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden }
-  .stage .card > .posts .eco { display: none }
-  .c-img { display: block; width: 100%; height: 130px; object-fit: cover; margin-bottom: 8px }
-  .stage .card .mosaic, .stage .card .ev > .linkbtn, .stage .card .sub-head, .stage .card .conteo, .stage .card .d-head > .button { display: none }
+  .stage .card { top: auto; left: 12px; right: 12px; bottom: 12px; width: auto; max-height: none; overflow: visible; display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 0 26px; padding: 16px 20px }
   #reporta { display: none !important }
+  .stage .card > .d-head { grid-column: 1 }
+  .stage .card .ev .mosaic, .stage .card .ev .posts, .stage .card .ev > .linkbtn, .stage .card .sub-head, .stage .card .conteo, .stage .card .d-head > .button { display: none }
+  .x-dias { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; min-width: 0 }
+  .x-dias h3 { margin: 0 0 6px; font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted) }
+  .x-cols { display: flex; align-items: flex-end; gap: 4px; height: 150px; border-bottom: 1px solid var(--line) }
+  .x-cols div { flex: 1; display: flex; flex-direction: column-reverse; align-items: center; gap: 3px; min-width: 0 }
+  .x-cols button { width: 14px; height: 14px; border-radius: 50%; border: 0; padding: 0; background: #e4572e; cursor: pointer }
+  .x-cols button.medio { background: var(--brand) }
+  .x-cols button:hover { transform: scale(1.4) }
+  .x-lbl { display: flex; gap: 4px; margin-top: 4px }
+  .x-lbl span { flex: 1; text-align: center; font-size: .7rem; color: var(--muted); font-variant-numeric: tabular-nums }
+  .x-key { margin: 6px 0 0; font-size: .78rem; color: var(--muted) }
+  .x-key i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin: 0 4px 0 10px; background: #e4572e } .x-key i.m { background: var(--brand) }
 }
 </style>
 <style>/* Talavera */
@@ -546,7 +551,7 @@ if (window.top !== window.self) {
 <script src="/theme.js"></script>
 </head>
 <body>
-<div class="variant-bar"><strong>Prueba · d2: Carrusel abajo</strong><a href="/reportes?q=AMERICANA&amp;m=Guadalajara&amp;cp=44100">Actual</a><a href="/d1">d1 Panel lateral</a><a href="/d2" aria-current="page">d2 Carrusel abajo</a><a href="/d3">d3 Muro</a><a href="/d4">d4 Ficha corta y muro en el mapa</a><a href="/d5">d5 Revista</a></div>
+<div class="variant-bar"><strong>Prueba · d2: Día por día</strong><a href="/reportes?q=CIUDAD+GRANJA&amp;m=Zapopan&amp;cp=45010">Actual</a><a href="/d1">d1 Expediente</a><a href="/d2" aria-current="page">d2 Día por día</a><a href="/d3">d3 Primera plana</a><a href="/d4">d4 La promesa</a><a href="/d5">d5 Foco</a></div>
 <script>
   const isPhone = () => matchMedia("(max-width: 760px)").matches;
   // The report button and, when wanted, a toggle for the rest of the card, right under its title.
@@ -716,6 +721,10 @@ if (window.top !== window.self) {
   };
 
   const isDesk = () => !isPhone();
+  const mk = (tag, cls, txt) => { const n = document.createElement(tag); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
+  const fecha = (iso) => new Date(`${iso}T12:00:00`).toLocaleDateString("es-MX", { day: "numeric", month: "short" }).replace(".", "");
+  const hoy = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Mexico_City" });
+  const quien = (q) => q.tipo === "comentario" ? (q.red === "x" ? "Respuesta en X" : "Comentario en Facebook") : q.fuente === "medio" || q.quien ? q.quien : "Vecina o vecino";
   // Each post with its picture above its words (the slide's own, the article's, or the post it's under).
   function imagenes(card, e) {
     if (!e) return;
@@ -741,13 +750,33 @@ if (window.top !== window.self) {
 
   window.__tileD = [0, 0];
   window.__fichaD = (card, e, form, p) => {
-    compacta(card, p); acciones(card, e, false); imagenes(card, e);
-    const list = card.querySelector(".posts"), close = card.querySelector(".close");
-    const head = document.createElement("div");
-    head.className = "d-head";
+    compacta(card, p);
+    acciones(card, e, false);
+    const close = card.querySelector(".close");
+    const head = mk("div", "d-head");
     head.append(...[...card.childNodes].filter((n) => n !== close));
     card.append(head);
-    if (list) card.append(list);
+    if (!e) return;
+    const first = e.posts.reduce((m, q) => q.fecha < m ? q.fecha : m, "9999");
+    const days = [];
+    for (let d = new Date(`${first}T12:00:00Z`); d.toISOString().slice(0, 10) <= hoy(); d.setUTCDate(d.getUTCDate() + 1)) days.push(d.toISOString().slice(0, 10));
+    const box = mk("div", "x-dias"), cols = mk("div", "x-cols"), lbl = mk("div", "x-lbl");
+    box.append(mk("h3", null, `Cada publicación el día que salió · ${e.posts.length} en ${days.length} días`));
+    for (const d of days) {
+      const col = mk("div");
+      for (const q of e.posts.filter((x) => x.fecha === d).sort((a, b) => (a.fuente === "medio") - (b.fuente === "medio"))) {
+        const b = mk("button", q.fuente === "medio" ? "medio" : "");
+        b.type = "button"; b.title = `${quien(q)} · ${fecha(q.fecha)}: «${q.cita}»`; b.setAttribute("aria-label", b.title);
+        b.onclick = () => abre(b, q);
+        col.append(b);
+      }
+      cols.append(col);
+      lbl.append(mk("span", null, String(Number(d.slice(8)))));
+    }
+    const key = mk("p", "x-key");
+    key.innerHTML = `Toca un punto para leerlo:<i class="m"></i>medio<i></i>vecina o vecino`;
+    box.append(cols, lbl, key);
+    card.append(box);
   };
 </script>
 <div class="wrap">
@@ -1535,7 +1564,7 @@ if (window.top !== window.self) {
       stage.classList.add("has-card");
       setOverview(false);
       if (window.__ficha && phone()) window.__ficha(card, e, openForm, f.properties);
-      else if (window.__fichaD && !phone()) window.__fichaD(card, e, openForm, f.properties);
+      else if (window.__fichaD && !phone()) window.__fichaD(card, e, openForm, f.properties, f);
       // The selected colonia's report button, top right where the summary was, while the form isn't open.
       const done = Date.now() - reportedAt(k) < SEEN;
       $("reporta").hidden = done || !!openForm;
@@ -2189,7 +2218,7 @@ if (window.top !== window.self) {
     // be shared); the postal code tells apart same-named colonias in one municipio. A bare ?q=
     // (the landing's search) opens a colonia only when one matches; otherwise it lists them.
     // &reportar=1 opens the report form.
-    if (!new URLSearchParams(location.search).get("q")) history.replaceState(null, "", `${location.pathname}?q=AMERICANA&m=Guadalajara&cp=44100${location.search.replace(/^\?/, "&")}`);
+    if (!new URLSearchParams(location.search).get("q")) history.replaceState(null, "", `${location.pathname}?q=CIUDAD+GRANJA&m=Zapopan&cp=45010${location.search.replace(/^\?/, "&")}`);
     const params = new URLSearchParams(location.search);
     const preset = (params.get("q") || "").trim().slice(0, 80);
     if (preset) {

@@ -338,6 +338,10 @@ NAMES = {k: v[0] for k, v in V.items()}
 # Desktop takes on an open colonia (/d1 … /d5). Phones get /reportes' carousel on these pages.
 DESK = r"""
   const isDesk = () => !isPhone();
+  const mk = (tag, cls, txt) => { const n = document.createElement(tag); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
+  const fecha = (iso) => new Date(`${iso}T12:00:00`).toLocaleDateString("es-MX", { day: "numeric", month: "short" }).replace(".", "");
+  const hoy = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Mexico_City" });
+  const quien = (q) => q.tipo === "comentario" ? (q.red === "x" ? "Respuesta en X" : "Comentario en Facebook") : q.fuente === "medio" || q.quien ? q.quien : "Vecina o vecino";
   // Each post with its picture above its words (the slide's own, the article's, or the post it's under).
   function imagenes(card, e) {
     if (!e) return;
@@ -363,95 +367,234 @@ DESK = r"""
 """
 
 VD = {
-    # The card becomes a panel down the right side; posts listed with their pictures; no tiles on the map.
-    "d1": ("Panel lateral", """
+    # A dossier: the colonia's numbers as four figures, then every publication on a dated line, newest first.
+    "d1": ("Expediente", """
 @media (min-width: 761px) {
-  .stage .card { top: 0; right: 0; left: auto; bottom: 0; width: min(460px, 38%); max-height: none; border-radius: 0; border-width: 0 0 0 1px; padding: 22px 24px; box-shadow: -10px 0 30px rgb(3 14 22 / .18) }
+  .stage .card { width: 440px }
   #reporta { display: none !important }
-  .stage .card .mosaic, .stage .card > .button { display: none }
-  .stage .card .posts li, .stage .card .posts li[hidden] { display: block; padding: 0 0 10px; overflow: hidden; cursor: pointer }
-  .stage .card .posts li > :not(.c-img) { margin-left: 12px; margin-right: 12px }
-  .stage .card .ev > .linkbtn { display: none }
-  .c-img { display: block; width: 100%; height: 150px; object-fit: cover; margin-bottom: 8px }
-  .stage .float-search { width: min(420px, calc(62% - 76px)) }
-}""", r"""
-  window.__tileD = [0, 0];
-  window.__fichaD = (card, e, form, p) => { compacta(card, p); acciones(card, e, false); imagenes(card, e); };
-"""),
-    # A strip across the bottom: the colonia on the left, its posts sliding sideways with their pictures.
-    "d2": ("Carrusel abajo", """
-@media (min-width: 761px) {
-  .stage .card { top: auto; left: 0; bottom: 0; width: 100%; max-height: none; overflow: hidden; border-radius: 18px 18px 0 0; padding: 18px 22px; display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: 0 24px; align-items: start }
-  .stage .card > .d-head { grid-column: 1 }
-  .stage .card > .posts { grid-column: 2; grid-row: 1; display: flex; gap: 12px; overflow-x: auto; margin: 0; padding: 0 0 6px; scroll-snap-type: x mandatory }
-  .stage .card > .posts li, .stage .card > .posts li[hidden] { display: block; flex: 0 0 280px; padding: 0 0 10px; overflow: hidden; scroll-snap-align: start; cursor: pointer }
-  .stage .card > .posts li > :not(.c-img) { margin-left: 12px; margin-right: 12px }
-  .stage .card > .posts q { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden }
-  .stage .card > .posts .eco { display: none }
-  .c-img { display: block; width: 100%; height: 130px; object-fit: cover; margin-bottom: 8px }
-  .stage .card .mosaic, .stage .card .ev > .linkbtn, .stage .card .sub-head, .stage .card .conteo, .stage .card .d-head > .button { display: none }
-  #reporta { display: none !important }
+  .stage .card .ev, .stage .card > .button, .stage .card .sub-head { display: none }
+  .x-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 10px 0 0 }
+  .x-stats div { padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg) }
+  .x-stats b { display: block; font: 800 1.7rem/1.05 var(--font); color: var(--s3); font-variant-numeric: tabular-nums }
+  .x-stats span { font-size: .8rem; color: var(--muted) }
+  .x-crono { list-style: none; margin: 14px 0 0; padding: 0 0 0 14px; border-left: 2px solid var(--line) }
+  .x-crono li { position: relative; padding: 0 0 12px 10px; cursor: pointer }
+  .x-crono li::before { content: ""; position: absolute; left: -21px; top: 5px; width: 10px; height: 10px; border-radius: 50%; background: #e4572e; box-shadow: 0 0 0 3px var(--surface) }
+  .x-crono li.medio::before { background: var(--brand) }
+  .x-crono small { display: block; font-size: .74rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em }
+  .x-crono span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: .92rem; line-height: 1.35 }
+  .x-crono li:hover span { color: var(--link) }
 }""", r"""
   window.__tileD = [0, 0];
   window.__fichaD = (card, e, form, p) => {
-    compacta(card, p); acciones(card, e, false); imagenes(card, e);
-    const list = card.querySelector(".posts"), close = card.querySelector(".close");
-    const head = document.createElement("div");
-    head.className = "d-head";
-    head.append(...[...card.childNodes].filter((n) => n !== close));
-    card.append(head);
-    if (list) card.append(list);
+    compacta(card, p);
+    const row = acciones(card, e, false);
+    if (!e) return;
+    const stats = mk("div", "x-stats");
+    stats.innerHTML = `<div><b>${e.dias ?? "—"}</b><span>días sin agua, lo más largo que se publica</span></div><div><b>${e.fuentes}</b><span>fuentes distintas</span></div><div><b>${e.medios}</b><span>${e.medios === 1 ? "medio lo reporta" : "medios lo reportan"}</span></div><div><b>${fecha(e.ultima)}</b><span>la publicación más reciente</span></div>`;
+    const list = mk("ol", "x-crono");
+    for (const q of [...e.posts].sort((a, b) => b.fecha.localeCompare(a.fecha))) {
+      const li = mk("li", q.fuente === "medio" ? "medio" : "");
+      li.append(mk("small", null, `${fecha(q.fecha)} · ${quien(q)}`), mk("span", null, q.titular || q.cita));
+      li.onclick = () => abre(li, q);
+      list.append(li);
+    }
+    card.querySelector(".where").after(stats);
+    stats.after(row, list);
   };
 """),
-    # The posts take most of the screen as a wall of pictures and quotes; the map keeps a strip on the left.
-    "d3": ("Muro", """
+    # The crisis day by day: a strip with one column per day since the first post, a dot per publication.
+    "d2": ("Día por día", """
 @media (min-width: 761px) {
-  .stage .card { top: 0; right: 0; left: auto; bottom: 0; width: 62%; max-height: none; border-radius: 0; border-width: 0 0 0 1px; padding: 22px 26px }
+  .stage .card { top: auto; left: 12px; right: 12px; bottom: 12px; width: auto; max-height: none; overflow: visible; display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 0 26px; padding: 16px 20px }
   #reporta { display: none !important }
-  .stage .card .mosaic, .stage .card > .button, .stage .card .ev > .linkbtn { display: none }
-  .stage .card .posts { display: block; columns: 2 260px; column-gap: 12px }
-  .stage .card .posts li, .stage .card .posts li[hidden] { display: block; break-inside: avoid; margin: 0 0 12px; padding: 0 0 10px; overflow: hidden; cursor: pointer }
-  .stage .card .posts li > :not(.c-img) { margin-left: 12px; margin-right: 12px }
-  .c-img { display: block; width: 100%; height: auto; max-height: 220px; object-fit: cover; margin-bottom: 8px }
-  .stage .card h2 { font-size: 1.7rem }
-  .stage .float-search { width: min(360px, calc(38% - 76px)) }
+  .stage .card > .d-head { grid-column: 1 }
+  .stage .card .ev .mosaic, .stage .card .ev .posts, .stage .card .ev > .linkbtn, .stage .card .sub-head, .stage .card .conteo, .stage .card .d-head > .button { display: none }
+  .x-dias { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; min-width: 0 }
+  .x-dias h3 { margin: 0 0 6px; font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted) }
+  .x-cols { display: flex; align-items: flex-end; gap: 4px; height: 150px; border-bottom: 1px solid var(--line) }
+  .x-cols div { flex: 1; display: flex; flex-direction: column-reverse; align-items: center; gap: 3px; min-width: 0 }
+  .x-cols button { width: 14px; height: 14px; border-radius: 50%; border: 0; padding: 0; background: #e4572e; cursor: pointer }
+  .x-cols button.medio { background: var(--brand) }
+  .x-cols button:hover { transform: scale(1.4) }
+  .x-lbl { display: flex; gap: 4px; margin-top: 4px }
+  .x-lbl span { flex: 1; text-align: center; font-size: .7rem; color: var(--muted); font-variant-numeric: tabular-nums }
+  .x-key { margin: 6px 0 0; font-size: .78rem; color: var(--muted) }
+  .x-key i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin: 0 4px 0 10px; background: #e4572e } .x-key i.m { background: var(--brand) }
 }""", r"""
   window.__tileD = [0, 0];
-  window.__fichaD = (card, e, form, p) => { compacta(card, p); acciones(card, e, false); imagenes(card, e); };
+  window.__fichaD = (card, e, form, p) => {
+    compacta(card, p);
+    acciones(card, e, false);
+    const close = card.querySelector(".close");
+    const head = mk("div", "d-head");
+    head.append(...[...card.childNodes].filter((n) => n !== close));
+    card.append(head);
+    if (!e) return;
+    const first = e.posts.reduce((m, q) => q.fecha < m ? q.fecha : m, "9999");
+    const days = [];
+    for (let d = new Date(`${first}T12:00:00Z`); d.toISOString().slice(0, 10) <= hoy(); d.setUTCDate(d.getUTCDate() + 1)) days.push(d.toISOString().slice(0, 10));
+    const box = mk("div", "x-dias"), cols = mk("div", "x-cols"), lbl = mk("div", "x-lbl");
+    box.append(mk("h3", null, `Cada publicación el día que salió · ${e.posts.length} en ${days.length} días`));
+    for (const d of days) {
+      const col = mk("div");
+      for (const q of e.posts.filter((x) => x.fecha === d).sort((a, b) => (a.fuente === "medio") - (b.fuente === "medio"))) {
+        const b = mk("button", q.fuente === "medio" ? "medio" : "");
+        b.type = "button"; b.title = `${quien(q)} · ${fecha(q.fecha)}: «${q.cita}»`; b.setAttribute("aria-label", b.title);
+        b.onclick = () => abre(b, q);
+        col.append(b);
+      }
+      cols.append(col);
+      lbl.append(mk("span", null, String(Number(d.slice(8)))));
+    }
+    const key = mk("p", "x-key");
+    key.innerHTML = `Toca un punto para leerlo:<i class="m"></i>medio<i></i>vecina o vecino`;
+    box.append(cols, lbl, key);
+    card.append(box);
+  };
 """),
-    # A short card with the essentials; the evidence stays on the map as larger tiles around the colonia.
-    "d4": ("Ficha corta y muro en el mapa", """
+    # A newspaper column: kicker, the days as the headline, the outlets' own headlines, then a few voices.
+    "d3": ("Primera plana", """
 @media (min-width: 761px) {
-  .stage .card { width: 340px }
+  .stage .card { width: 470px; padding: 22px 26px; border-top: 6px solid var(--fg) }
   #reporta { display: none !important }
-  .stage .card .mosaic, .stage .card .posts, .stage .card .ev > .linkbtn, .stage .card > .button { display: none }
-}""", r"""
-  window.__tileD = [250, 188];
-  window.__padD = (s) => ({ paddingTopLeft: [340 + 300, 230], paddingBottomRight: [300, 230] });
-  window.__fichaD = (card, e, form, p) => { compacta(card, p); acciones(card, e, false); };
-"""),
-    # A magazine page over the dimmed map: the days as a headline, a large picture, the posts in two columns.
-    "d5": ("Revista", """
-@media (min-width: 761px) {
-  .stage .card { top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(940px, 90%); max-height: 88%; overflow: auto; border-radius: 18px; padding: 28px 34px; box-shadow: 0 0 0 100vmax rgb(3 8 20 / .5), 0 24px 60px rgb(0 0 0 / .4) }
-  #reporta { display: none !important }
-  .stage .card h2 { font-size: 2rem }
-  .stage .card .ev-head { font-size: 1.5rem }
-  .stage .card .ev-head .sevb { font-size: 1.3rem; padding: 6px 12px }
-  .stage .card .mosaic { max-height: 340px }
-  .stage .card .posts { grid-template-columns: repeat(2, minmax(0, 1fr)) }
-  .stage .card .posts li, .stage .card .posts li[hidden] { display: block; cursor: pointer }
-  .stage .card .ev > .linkbtn, .stage .card > .button { display: none }
-  .stage .float-search { display: none }
+  .stage .card > h2, .stage .card > .where, .stage .card .ev, .stage .card > .button, .stage .card .sub-head { display: none }
+  .x-kick { margin: 0; font-size: .74rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 700 }
+  .x-tit { margin: 6px 34px 6px 0; font: italic 700 2.3rem/1.05 var(--serif, Georgia, serif); letter-spacing: -.02em }
+  .x-tit em { font-style: normal; color: #cc361e }
+  .x-deck { margin: 0 0 4px; font-size: 1rem; color: var(--muted) }
+  .x-sec { margin: 16px 0 6px; padding-top: 8px; border-top: 1px solid var(--fg); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 800 }
+  .x-heads { list-style: none; margin: 0; padding: 0 }
+  .x-heads li { padding: 8px 0; border-bottom: 1px solid var(--line); cursor: pointer }
+  .x-heads b { display: block; font: 700 1.02rem/1.3 var(--serif, Georgia, serif) }
+  .x-heads li:hover b { color: var(--link) }
+  .x-heads small { font-size: .78rem; color: var(--muted) }
+  .x-voces q { display: block; margin: 0 0 10px; padding-left: 10px; border-left: 3px solid #e4572e; font: italic 1rem/1.4 var(--serif, Georgia, serif); cursor: pointer }
 }""", r"""
   window.__tileD = [0, 0];
-  window.__fichaD = (card, e, form, p) => { compacta(card, p); acciones(card, e, false); };
-  window.__refitD = (map, b) => map.flyToBounds(b, { padding: [60, 60], maxZoom: 16, duration: 0.6, animate: !reduce() });
+  window.__fichaD = (card, e, form, p) => {
+    const row = acciones(card, e, false);
+    const close = card.querySelector(".close");
+    const M = window.aguaMapa, ls = M.zonesOf(p.l || ""), zs = ls.length ? ls : M.zones(p).main;
+    const kick = mk("p", "x-kick", [p.m, zs.length ? `Zona ${M.joinES(zs.map(String))}` : null, e ? `Actualizado ${fecha(e.ultima)}` : null].filter(Boolean).join(" · "));
+    const name = p.n.toLowerCase().replace(/(^|\s)\S/g, (c) => c.toUpperCase());
+    const tit = mk("h3", "x-tit");
+    if (e && e.dias) tit.append(mk("em", null, `${e.dias} días`), ` sin agua en ${name}`); else tit.textContent = e ? `Sin agua en ${name}` : name;
+    close.after(kick, tit);
+    if (!e) { tit.after(row); return; }
+    const vec = e.posts.filter((q) => q.fuente !== "medio").length;
+    const deck = mk("p", "x-deck", `Lo reportan ${e.medios} ${e.medios === 1 ? "medio" : "medios"} y ${vec} ${vec === 1 ? "publicación de vecinos" : "publicaciones de vecinos"}.`);
+    tit.after(deck, row);
+    const news = e.posts.filter((q) => q.fuente === "medio").sort((a, b) => b.fecha.localeCompare(a.fecha));
+    let at = row;
+    if (news.length) {
+      const ul = mk("ul", "x-heads");
+      for (const q of news.slice(0, 6)) {
+        const li = mk("li");
+        li.append(mk("b", null, q.titular || q.cita), mk("small", null, `${quien(q)} · ${fecha(q.fecha)}`));
+        li.onclick = () => abre(li, q);
+        ul.append(li);
+      }
+      const sec = mk("p", "x-sec", "Lo que publican los medios");
+      at.after(sec, ul); at = ul;
+    }
+    const voces = e.posts.filter((q) => q.fuente !== "medio").slice(0, 3);
+    if (voces.length) {
+      const box = mk("div", "x-voces");
+      for (const q of voces) { const el = mk("q", null, q.cita.length > 160 ? `${q.cita.slice(0, 158)}…` : q.cita); el.onclick = () => abre(el, q); box.append(el); }
+      const sec = mk("p", "x-sec", "Lo que dicen los vecinos");
+      at.after(sec, box);
+    }
+  };
+"""),
+    # The promise against the reports: SIAPA's one day beside the days published, one square per day.
+    "d4": ("La promesa", """
+@media (min-width: 761px) {
+  .stage .card { width: 430px }
+  #reporta { display: none !important }
+  .stage .card .ev .mosaic, .stage .card .ev .posts, .stage .card .ev > .linkbtn, .stage .card > .button, .stage .card .ev-head { display: none }
+  .x-vs { margin: 12px 0 4px; display: grid; gap: 10px }
+  .x-vs p { margin: 0 0 4px; font-size: .85rem; color: var(--muted) }
+  .x-vs p b { color: var(--fg) }
+  .x-sq { display: flex; flex-wrap: wrap; gap: 3px }
+  .x-sq i { width: 16px; height: 16px; border-radius: 3px; background: #e4572e }
+  .x-sq.siapa i { background: var(--brand) }
+  .x-big { font: 800 2.6rem/1 var(--font); color: #cc361e; font-variant-numeric: tabular-nums }
+  .x-q { margin: 12px 0 0; padding: 10px 12px; border-radius: 10px; background: var(--bg); cursor: pointer }
+  .x-q q { display: block; font-size: .95rem; line-height: 1.4 }
+  .x-q small { display: block; margin-top: 4px; font-size: .78rem; color: var(--muted) }
+  .x-exige { margin: 12px 0 0; font-size: .92rem }
+}""", r"""
+  window.__tileD = [0, 0];
+  window.__fichaD = (card, e, form, p) => {
+    compacta(card, p);
+    const row = acciones(card, e, false);
+    if (!e) return;
+    const vs = mk("div", "x-vs");
+    const n = e.dias || 0;
+    vs.innerHTML = `<div><p><b>Lo que prometió el SIAPA:</b> cortes «por máximo un día»</p><div class="x-sq siapa"><i></i></div></div>`
+      + (n ? `<div><p><b>Lo que se publica de esta colonia:</b></p><div class="x-big">${n} días</div><div class="x-sq">${"<i></i>".repeat(Math.min(n, 60))}</div></div>`
+           : `<div><p><b>Lo que se publica de esta colonia:</b> que no hay agua, sin días contados</p></div>`);
+    card.querySelector(".ev").before(vs);
+    const best = [...e.posts].sort((a, b) => (b.fuente === "medio") - (a.fuente === "medio") || (b.dias || 0) - (a.dias || 0)).slice(0, 2);
+    let at = card.querySelector(".ev");
+    for (const q of best) {
+      const box = mk("div", "x-q");
+      box.append(mk("q", null, q.cita.length > 180 ? `${q.cita.slice(0, 178)}…` : q.cita), mk("small", null, `${quien(q)} · ${fecha(q.fecha)} · toca para verla`));
+      box.onclick = () => abre(box, q);
+      at.after(box); at = box;
+    }
+    at.after(row);
+    const ex = mk("p", "x-exige");
+    ex.innerHTML = `<a href="/exige?${new URLSearchParams({ q: p.n, m: p.m, cp: p.cp })}">Exígele al SIAPA, a la CEA y a tu municipio →</a>`;
+    row.after(ex);
+  };
+"""),
+    # The colonia alone in the light: the rest of the city dimmed, its voices pinned around it as bubbles.
+    "d5": ("Foco", """
+@media (min-width: 761px) {
+  .stage .card { width: 330px }
+  #reporta { display: none !important }
+  .stage .card .ev .mosaic, .stage .card .ev .posts, .stage .card .ev > .linkbtn, .stage .card > .button, .stage .card .sub-head, .stage .card .conteo { display: none }
+  .x-bub { background: none; border: 0 }
+  .x-bub div { width: 230px; padding: 10px 12px; border-radius: 14px; background: var(--surface); color: var(--fg); box-shadow: 0 8px 24px rgb(0 0 0 / .35); font-size: .86rem; line-height: 1.35; cursor: pointer }
+  .x-bub div:hover { outline: 2px solid #e4572e }
+  .x-bub small { display: block; margin-top: 4px; font-size: .72rem; color: var(--muted) }
+}""", r"""
+  window.__tileD = [0, 0];
+  let foco = [];
+  window.__fichaD = (card, e, form, p, f) => { compacta(card, p); acciones(card, e, false); window.__sel = { e, f }; };
+  window.__cierra = () => { for (const l of foco) l.remove(); foco = []; };
+  window.__refitD = (map, b, card) => {
+    window.__cierra();
+    const { e, f } = window.__sel || {};
+    // A world-sized veil with the colonia cut out of it.
+    const rings = (g) => g.type === "Polygon" ? [g.coordinates[0]] : g.coordinates.map((x) => x[0]);
+    const holes = f ? rings(f.geometry).map((r) => r.map(([x, y]) => [y, x])) : [];
+    foco.push(L.polygon([[[-89, -179], [-89, 179], [89, 179], [89, -179]], ...holes], { interactive: false, stroke: false, fillColor: "#030814", fillOpacity: 0.55 }).addTo(map));
+    if (e) {
+      // Stacked down the colonia's right edge, in their own pane above the badges.
+      if (!map.getPane("burbujas")) map.createPane("burbujas").style.zIndex = 690;
+      const at = L.latLng(b.getCenter().lat, b.getEast());
+      const pick = [...e.posts].sort((a, c) => (c.fuente === "medio") - (a.fuente === "medio")).slice(0, 4);
+      pick.forEach((q, i) => {
+        const div = `<div>«${(q.cita.length > 80 ? q.cita.slice(0, 78) + "…" : q.cita).replace(/</g, "&lt;")}»<small>${quien(q).replace(/</g, "&lt;")} · ${fecha(q.fecha)}</small></div>`;
+        const m = L.marker(at, { pane: "burbujas", icon: L.divIcon({ className: "x-bub", html: div, iconSize: [230, 0], iconAnchor: [-40, 190 - i * 95] }), keyboard: false }).addTo(map);
+        m.on("click", () => abre(m.getElement().firstChild, q));
+        foco.push(m);
+      });
+    }
+    map.flyToBounds(b, { paddingTopLeft: [330 + 60, 80], paddingBottomRight: [320, 60], maxZoom: 15, duration: 0.6, animate: !reduce() });
+  };
 """),
 }
 DNAMES = {k: v[0] for k, v in VD.items()}
 
 DEFAULT = "c1"
+
+
+AMERICANA = "q=AMERICANA&m=Guadalajara&cp=44100"
+GRANJA = "q=CIUDAD+GRANJA&m=Zapopan&cp=45010"
 
 
 def sub(html, old, new):
@@ -471,7 +614,7 @@ def build(src, v, bar=True):
         css, js = BASE[0] + dv[1] + VD[v][1], BASE[1] + SLIDES + dv[2] + DESK + VD[v][2]
     else:
         css, js = (BASE[0] + V[v][1], BASE[1] + SLIDES + V[v][2]) if v in V else BASE
-    links = '<a href="/reportes?q=AMERICANA&amp;m=Guadalajara&amp;cp=44100">Actual</a>' + "".join(
+    links = f'<a href="/reportes?{(GRANJA if v in VD else AMERICANA).replace("&", "&amp;")}">Actual</a>' + "".join(
         f'<a href="/{k}"{CUR if k == v else ""}>{k} {n}</a>' for k, n in fam.items())
     h = src
     if not bar:
@@ -488,7 +631,7 @@ def build(src, v, bar=True):
             'const stage = $("escenario"), top = document.querySelector("header.top"), vbar = document.querySelector(".variant-bar");\n'
             '  const fitStage = () => { document.documentElement.style.setProperty("--hh", `${top.offsetHeight + (vbar && vbar.offsetParent ? vbar.offsetHeight : 0)}px`); map.invalidateSize(); };\n'
             '  if (window.ResizeObserver) { const ro = new ResizeObserver(fitStage); ro.observe(top); if (vbar) ro.observe(vbar); }')
-    return hooks(h, js, americana=True)
+    return hooks(h, js, americana=GRANJA if v in VD else AMERICANA)
 
 
 def hooks(h, js, americana=False):
@@ -496,7 +639,7 @@ def hooks(h, js, americana=False):
         h = sub(h, "<body>\n<div class=\"wrap\">", f'<body>\n<script>{COMMON}{js}</script>\n<div class="wrap">')
     # Americana unless the link names a colonia.
     if americana: h = sub(h, "const params = new URLSearchParams(location.search);",
-            'if (!new URLSearchParams(location.search).get("q")) history.replaceState(null, "", `${location.pathname}?q=AMERICANA&m=Guadalajara&cp=44100${location.search.replace(/^\\?/, "&")}`);\n'
+            'if (!new URLSearchParams(location.search).get("q")) history.replaceState(null, "", `${location.pathname}?' + americana + '${location.search.replace(/^\\?/, "&")}`);\n'
             "    const params = new URLSearchParams(location.search);")
     h = sub(h, '      stage.classList.remove("has-card");\n',
             '      stage.classList.remove("has-card");\n      if (window.__cierra) window.__cierra(map);\n')
@@ -510,7 +653,7 @@ def hooks(h, js, americana=False):
             "        if (!W) return;")
     h = sub(h, '      stage.classList.add("has-card");\n      setOverview(false);\n',
             '      stage.classList.add("has-card");\n      setOverview(false);\n      if (window.__ficha && phone()) window.__ficha(card, e, openForm, f.properties);\n'
-            '      else if (window.__fichaD && !phone()) window.__fichaD(card, e, openForm, f.properties);\n')
+            '      else if (window.__fichaD && !phone()) window.__fichaD(card, e, openForm, f.properties, f);\n')
     return h
 
 

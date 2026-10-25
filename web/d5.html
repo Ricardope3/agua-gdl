@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Agua GDL · Prueba d5: Revista</title>
+<title>Agua GDL · Prueba d5: Foco</title>
 <meta name="robots" content="noindex">
 <meta name="facebook-domain-verification" content="li0vsm7edv0afccxodm5t0jvyiw0za">
 <meta name="description" content="Cuántos días llevan sin agua las colonias de Guadalajara, según medios y vecinos en Facebook y X, cada publicación con su enlace. Reporta la tuya en cuatro toques, sin cuenta y de forma anónima.">
@@ -507,16 +507,13 @@ path.nueva { animation: nueva 1.4s ease-out both; pointer-events: none }
   .stage .card .posts q { -webkit-line-clamp: 2 }
 }
 @media (min-width: 761px) {
-  .stage .card { top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(940px, 90%); max-height: 88%; overflow: auto; border-radius: 18px; padding: 28px 34px; box-shadow: 0 0 0 100vmax rgb(3 8 20 / .5), 0 24px 60px rgb(0 0 0 / .4) }
+  .stage .card { width: 330px }
   #reporta { display: none !important }
-  .stage .card h2 { font-size: 2rem }
-  .stage .card .ev-head { font-size: 1.5rem }
-  .stage .card .ev-head .sevb { font-size: 1.3rem; padding: 6px 12px }
-  .stage .card .mosaic { max-height: 340px }
-  .stage .card .posts { grid-template-columns: repeat(2, minmax(0, 1fr)) }
-  .stage .card .posts li, .stage .card .posts li[hidden] { display: block; cursor: pointer }
-  .stage .card .ev > .linkbtn, .stage .card > .button { display: none }
-  .stage .float-search { display: none }
+  .stage .card .ev .mosaic, .stage .card .ev .posts, .stage .card .ev > .linkbtn, .stage .card > .button, .stage .card .sub-head, .stage .card .conteo { display: none }
+  .x-bub { background: none; border: 0 }
+  .x-bub div { width: 230px; padding: 10px 12px; border-radius: 14px; background: var(--surface); color: var(--fg); box-shadow: 0 8px 24px rgb(0 0 0 / .35); font-size: .86rem; line-height: 1.35; cursor: pointer }
+  .x-bub div:hover { outline: 2px solid #e4572e }
+  .x-bub small { display: block; margin-top: 4px; font-size: .72rem; color: var(--muted) }
 }
 </style>
 <style>/* Talavera */
@@ -546,7 +543,7 @@ if (window.top !== window.self) {
 <script src="/theme.js"></script>
 </head>
 <body>
-<div class="variant-bar"><strong>Prueba · d5: Revista</strong><a href="/reportes?q=AMERICANA&amp;m=Guadalajara&amp;cp=44100">Actual</a><a href="/d1">d1 Panel lateral</a><a href="/d2">d2 Carrusel abajo</a><a href="/d3">d3 Muro</a><a href="/d4">d4 Ficha corta y muro en el mapa</a><a href="/d5" aria-current="page">d5 Revista</a></div>
+<div class="variant-bar"><strong>Prueba · d5: Foco</strong><a href="/reportes?q=CIUDAD+GRANJA&amp;m=Zapopan&amp;cp=45010">Actual</a><a href="/d1">d1 Expediente</a><a href="/d2">d2 Día por día</a><a href="/d3">d3 Primera plana</a><a href="/d4">d4 La promesa</a><a href="/d5" aria-current="page">d5 Foco</a></div>
 <script>
   const isPhone = () => matchMedia("(max-width: 760px)").matches;
   // The report button and, when wanted, a toggle for the rest of the card, right under its title.
@@ -716,6 +713,10 @@ if (window.top !== window.self) {
   };
 
   const isDesk = () => !isPhone();
+  const mk = (tag, cls, txt) => { const n = document.createElement(tag); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
+  const fecha = (iso) => new Date(`${iso}T12:00:00`).toLocaleDateString("es-MX", { day: "numeric", month: "short" }).replace(".", "");
+  const hoy = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Mexico_City" });
+  const quien = (q) => q.tipo === "comentario" ? (q.red === "x" ? "Respuesta en X" : "Comentario en Facebook") : q.fuente === "medio" || q.quien ? q.quien : "Vecina o vecino";
   // Each post with its picture above its words (the slide's own, the article's, or the post it's under).
   function imagenes(card, e) {
     if (!e) return;
@@ -740,8 +741,30 @@ if (window.top !== window.self) {
   };
 
   window.__tileD = [0, 0];
-  window.__fichaD = (card, e, form, p) => { compacta(card, p); acciones(card, e, false); };
-  window.__refitD = (map, b) => map.flyToBounds(b, { padding: [60, 60], maxZoom: 16, duration: 0.6, animate: !reduce() });
+  let foco = [];
+  window.__fichaD = (card, e, form, p, f) => { compacta(card, p); acciones(card, e, false); window.__sel = { e, f }; };
+  window.__cierra = () => { for (const l of foco) l.remove(); foco = []; };
+  window.__refitD = (map, b, card) => {
+    window.__cierra();
+    const { e, f } = window.__sel || {};
+    // A world-sized veil with the colonia cut out of it.
+    const rings = (g) => g.type === "Polygon" ? [g.coordinates[0]] : g.coordinates.map((x) => x[0]);
+    const holes = f ? rings(f.geometry).map((r) => r.map(([x, y]) => [y, x])) : [];
+    foco.push(L.polygon([[[-89, -179], [-89, 179], [89, 179], [89, -179]], ...holes], { interactive: false, stroke: false, fillColor: "#030814", fillOpacity: 0.55 }).addTo(map));
+    if (e) {
+      // Stacked down the colonia's right edge, in their own pane above the badges.
+      if (!map.getPane("burbujas")) map.createPane("burbujas").style.zIndex = 690;
+      const at = L.latLng(b.getCenter().lat, b.getEast());
+      const pick = [...e.posts].sort((a, c) => (c.fuente === "medio") - (a.fuente === "medio")).slice(0, 4);
+      pick.forEach((q, i) => {
+        const div = `<div>«${(q.cita.length > 80 ? q.cita.slice(0, 78) + "…" : q.cita).replace(/</g, "&lt;")}»<small>${quien(q).replace(/</g, "&lt;")} · ${fecha(q.fecha)}</small></div>`;
+        const m = L.marker(at, { pane: "burbujas", icon: L.divIcon({ className: "x-bub", html: div, iconSize: [230, 0], iconAnchor: [-40, 190 - i * 95] }), keyboard: false }).addTo(map);
+        m.on("click", () => abre(m.getElement().firstChild, q));
+        foco.push(m);
+      });
+    }
+    map.flyToBounds(b, { paddingTopLeft: [330 + 60, 80], paddingBottomRight: [320, 60], maxZoom: 15, duration: 0.6, animate: !reduce() });
+  };
 </script>
 <div class="wrap">
   <header class="top">
@@ -1528,7 +1551,7 @@ if (window.top !== window.self) {
       stage.classList.add("has-card");
       setOverview(false);
       if (window.__ficha && phone()) window.__ficha(card, e, openForm, f.properties);
-      else if (window.__fichaD && !phone()) window.__fichaD(card, e, openForm, f.properties);
+      else if (window.__fichaD && !phone()) window.__fichaD(card, e, openForm, f.properties, f);
       // The selected colonia's report button, top right where the summary was, while the form isn't open.
       const done = Date.now() - reportedAt(k) < SEEN;
       $("reporta").hidden = done || !!openForm;
@@ -2182,7 +2205,7 @@ if (window.top !== window.self) {
     // be shared); the postal code tells apart same-named colonias in one municipio. A bare ?q=
     // (the landing's search) opens a colonia only when one matches; otherwise it lists them.
     // &reportar=1 opens the report form.
-    if (!new URLSearchParams(location.search).get("q")) history.replaceState(null, "", `${location.pathname}?q=AMERICANA&m=Guadalajara&cp=44100${location.search.replace(/^\?/, "&")}`);
+    if (!new URLSearchParams(location.search).get("q")) history.replaceState(null, "", `${location.pathname}?q=CIUDAD+GRANJA&m=Zapopan&cp=45010${location.search.replace(/^\?/, "&")}`);
     const params = new URLSearchParams(location.search);
     const preset = (params.get("q") || "").trim().slice(0, 80);
     if (preset) {

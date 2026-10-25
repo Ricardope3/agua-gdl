@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Agua GDL · Prueba d1: Panel lateral</title>
+<title>Agua GDL · Prueba d1: Expediente</title>
 <meta name="robots" content="noindex">
 <meta name="facebook-domain-verification" content="li0vsm7edv0afccxodm5t0jvyiw0za">
 <meta name="description" content="Cuántos días llevan sin agua las colonias de Guadalajara, según medios y vecinos en Facebook y X, cada publicación con su enlace. Reporta la tuya en cuatro toques, sin cuenta y de forma anónima.">
@@ -507,14 +507,20 @@ path.nueva { animation: nueva 1.4s ease-out both; pointer-events: none }
   .stage .card .posts q { -webkit-line-clamp: 2 }
 }
 @media (min-width: 761px) {
-  .stage .card { top: 0; right: 0; left: auto; bottom: 0; width: min(460px, 38%); max-height: none; border-radius: 0; border-width: 0 0 0 1px; padding: 22px 24px; box-shadow: -10px 0 30px rgb(3 14 22 / .18) }
+  .stage .card { width: 440px }
   #reporta { display: none !important }
-  .stage .card .mosaic, .stage .card > .button { display: none }
-  .stage .card .posts li, .stage .card .posts li[hidden] { display: block; padding: 0 0 10px; overflow: hidden; cursor: pointer }
-  .stage .card .posts li > :not(.c-img) { margin-left: 12px; margin-right: 12px }
-  .stage .card .ev > .linkbtn { display: none }
-  .c-img { display: block; width: 100%; height: 150px; object-fit: cover; margin-bottom: 8px }
-  .stage .float-search { width: min(420px, calc(62% - 76px)) }
+  .stage .card .ev, .stage .card > .button, .stage .card .sub-head { display: none }
+  .x-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 10px 0 0 }
+  .x-stats div { padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg) }
+  .x-stats b { display: block; font: 800 1.7rem/1.05 var(--font); color: var(--s3); font-variant-numeric: tabular-nums }
+  .x-stats span { font-size: .8rem; color: var(--muted) }
+  .x-crono { list-style: none; margin: 14px 0 0; padding: 0 0 0 14px; border-left: 2px solid var(--line) }
+  .x-crono li { position: relative; padding: 0 0 12px 10px; cursor: pointer }
+  .x-crono li::before { content: ""; position: absolute; left: -21px; top: 5px; width: 10px; height: 10px; border-radius: 50%; background: #e4572e; box-shadow: 0 0 0 3px var(--surface) }
+  .x-crono li.medio::before { background: var(--brand) }
+  .x-crono small { display: block; font-size: .74rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em }
+  .x-crono span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: .92rem; line-height: 1.35 }
+  .x-crono li:hover span { color: var(--link) }
 }
 </style>
 <style>/* Talavera */
@@ -544,7 +550,7 @@ if (window.top !== window.self) {
 <script src="/theme.js"></script>
 </head>
 <body>
-<div class="variant-bar"><strong>Prueba · d1: Panel lateral</strong><a href="/reportes?q=AMERICANA&amp;m=Guadalajara&amp;cp=44100">Actual</a><a href="/d1" aria-current="page">d1 Panel lateral</a><a href="/d2">d2 Carrusel abajo</a><a href="/d3">d3 Muro</a><a href="/d4">d4 Ficha corta y muro en el mapa</a><a href="/d5">d5 Revista</a></div>
+<div class="variant-bar"><strong>Prueba · d1: Expediente</strong><a href="/reportes?q=CIUDAD+GRANJA&amp;m=Zapopan&amp;cp=45010">Actual</a><a href="/d1" aria-current="page">d1 Expediente</a><a href="/d2">d2 Día por día</a><a href="/d3">d3 Primera plana</a><a href="/d4">d4 La promesa</a><a href="/d5">d5 Foco</a></div>
 <script>
   const isPhone = () => matchMedia("(max-width: 760px)").matches;
   // The report button and, when wanted, a toggle for the rest of the card, right under its title.
@@ -714,6 +720,10 @@ if (window.top !== window.self) {
   };
 
   const isDesk = () => !isPhone();
+  const mk = (tag, cls, txt) => { const n = document.createElement(tag); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
+  const fecha = (iso) => new Date(`${iso}T12:00:00`).toLocaleDateString("es-MX", { day: "numeric", month: "short" }).replace(".", "");
+  const hoy = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Mexico_City" });
+  const quien = (q) => q.tipo === "comentario" ? (q.red === "x" ? "Respuesta en X" : "Comentario en Facebook") : q.fuente === "medio" || q.quien ? q.quien : "Vecina o vecino";
   // Each post with its picture above its words (the slide's own, the article's, or the post it's under).
   function imagenes(card, e) {
     if (!e) return;
@@ -738,7 +748,22 @@ if (window.top !== window.self) {
   };
 
   window.__tileD = [0, 0];
-  window.__fichaD = (card, e, form, p) => { compacta(card, p); acciones(card, e, false); imagenes(card, e); };
+  window.__fichaD = (card, e, form, p) => {
+    compacta(card, p);
+    const row = acciones(card, e, false);
+    if (!e) return;
+    const stats = mk("div", "x-stats");
+    stats.innerHTML = `<div><b>${e.dias ?? "—"}</b><span>días sin agua, lo más largo que se publica</span></div><div><b>${e.fuentes}</b><span>fuentes distintas</span></div><div><b>${e.medios}</b><span>${e.medios === 1 ? "medio lo reporta" : "medios lo reportan"}</span></div><div><b>${fecha(e.ultima)}</b><span>la publicación más reciente</span></div>`;
+    const list = mk("ol", "x-crono");
+    for (const q of [...e.posts].sort((a, b) => b.fecha.localeCompare(a.fecha))) {
+      const li = mk("li", q.fuente === "medio" ? "medio" : "");
+      li.append(mk("small", null, `${fecha(q.fecha)} · ${quien(q)}`), mk("span", null, q.titular || q.cita));
+      li.onclick = () => abre(li, q);
+      list.append(li);
+    }
+    card.querySelector(".where").after(stats);
+    stats.after(row, list);
+  };
 </script>
 <div class="wrap">
   <header class="top">
@@ -1525,7 +1550,7 @@ if (window.top !== window.self) {
       stage.classList.add("has-card");
       setOverview(false);
       if (window.__ficha && phone()) window.__ficha(card, e, openForm, f.properties);
-      else if (window.__fichaD && !phone()) window.__fichaD(card, e, openForm, f.properties);
+      else if (window.__fichaD && !phone()) window.__fichaD(card, e, openForm, f.properties, f);
       // The selected colonia's report button, top right where the summary was, while the form isn't open.
       const done = Date.now() - reportedAt(k) < SEEN;
       $("reporta").hidden = done || !!openForm;
@@ -2179,7 +2204,7 @@ if (window.top !== window.self) {
     // be shared); the postal code tells apart same-named colonias in one municipio. A bare ?q=
     // (the landing's search) opens a colonia only when one matches; otherwise it lists them.
     // &reportar=1 opens the report form.
-    if (!new URLSearchParams(location.search).get("q")) history.replaceState(null, "", `${location.pathname}?q=AMERICANA&m=Guadalajara&cp=44100${location.search.replace(/^\?/, "&")}`);
+    if (!new URLSearchParams(location.search).get("q")) history.replaceState(null, "", `${location.pathname}?q=CIUDAD+GRANJA&m=Zapopan&cp=45010${location.search.replace(/^\?/, "&")}`);
     const params = new URLSearchParams(location.search);
     const preset = (params.get("q") || "").trim().slice(0, 80);
     if (preset) {
