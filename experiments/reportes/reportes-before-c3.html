@@ -1116,6 +1116,8 @@ if (window.top !== window.self) {
         frame.replaceChildren();
         const box = stage.getBoundingClientRect();
         const b = outline.getBounds();
+        // Once the visitor pans the colonia off screen, its publications leave with it.
+        if (!map.getBounds().contains(b.getCenter())) return;
         const nw = map.latLngToContainerPoint(b.getNorthWest()), se = map.latLngToContainerPoint(b.getSouthEast());
         const W = phone() ? 120 : 210, H = phone() ? 90 : 158, G = 8;
         const hits = blocked().map((r) => ({ l: r.left - box.left - G, t: r.top - box.top - G, r: r.right - box.left + G, b: r.bottom - box.top + G }));
