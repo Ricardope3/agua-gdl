@@ -2574,6 +2574,7 @@
    "red": "x",
    "quien": "Tráfico ZMG",
    "url": "https://x.com/Trafico_ZMG/status/2110777791277130173",
+   "de": "https://x.com/Jazv1977Jorge/status/2110772993551159359",
    "fecha": "2026-10-15",
    "colonias": [
     "SUTAJ|Guadalajara|44840"
@@ -2592,7 +2593,7 @@
    "red": "x",
    "quien": "Tráfico ZMG",
    "url": "https://x.com/Trafico_ZMG/status/2112355018930057394",
-   "fecha": "2026-10-20",
+   "fecha": "2026-10-19",
    "colonias": [
     "DR VALENTIN GOMEZ FARIAS|Guadalajara|44940"
    ],
@@ -2612,7 +2613,7 @@
    "red": "x",
    "quien": "Tráfico ZMG",
    "url": "https://x.com/Trafico_ZMG/status/2112705535971623421",
-   "fecha": "2026-10-21",
+   "fecha": "2026-10-20",
    "colonias": [
     "DR VALENTIN GOMEZ FARIAS|Guadalajara|44940"
    ],
@@ -2632,7 +2633,7 @@
    "red": "x",
    "quien": "Tráfico ZMG",
    "url": "https://x.com/Trafico_ZMG/status/2112353618049323222",
-   "fecha": "2026-10-20",
+   "fecha": "2026-10-19",
    "colonias": [
     "CIUDAD GRANJA|Zapopan|45010"
    ],
@@ -2671,7 +2672,7 @@
    "red": "x",
    "quien": "Tráfico ZMG",
    "url": "https://x.com/Trafico_ZMG/status/2110178223313314158",
-   "fecha": "2026-10-14",
+   "fecha": "2026-10-13",
    "colonias": [
     "ALBEREDA RESIDENCIAL|Tlajomulco de Zúñiga|45694"
    ],
@@ -17267,27 +17268,9 @@
    }
   },
   {
-   "fuente": "vecinos",
-   "red": "x",
-   "quien": "",
-   "url": "https://x.com/Fannyiniguez/status/2110924508349579503",
-   "fecha": "2026-10-15",
-   "colonias": [
-    "GUADALAJARA ORIENTE|Guadalajara|44700"
-   ],
-   "lugar": "Guadalajara Oriente, Guadalajara",
-   "cita": "Y cuando nos van a decir por qué en colonia Guadalajara Oriente tenemos 2 semanas sin agua",
-   "dias": 14,
-   "eco": {
-    "reacciones": 8,
-    "comentarios": 1,
-    "al": "2026-10-22"
-   }
-  },
-  {
    "fuente": "medio",
    "red": "web",
-   "quien": "La BCSA (retoma a Mural)",
+   "quien": "Mural",
    "url": "https://labcsa.org/2026/10/17/cubetas-garrafones-botellas-asi-sobreviven-a-tandeos/",
    "fecha": "2026-10-17",
    "colonias": [
@@ -19516,7 +19499,7 @@
   {
    "fuente": "medio",
    "red": "web",
-   "quien": "La BCSA (retoma a Mural)",
+   "quien": "Mural",
    "url": "https://labcsa.org/2026/10/19/saturan-pipas-y-tambien-pozos-de-particulares-en-zmg/",
    "fecha": "2026-10-18",
    "colonias": [
