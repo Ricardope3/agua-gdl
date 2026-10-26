@@ -26,10 +26,11 @@ jobs:
           TITLE: SIAPA cambió sus fuentes
           FINGERPRINT: ${{ steps.watch.outputs.fingerprint }}
         run: |
-          n=$(gh issue list --state open --limit 500 --json number,title --jq "[.[] | select(.title == \"$TITLE\")][0].number // empty")
+          # Only the workflow's own issue and comments can acknowledge a fingerprint.
+          n=$(gh issue list --state open --limit 500 --json number,title,author --jq "[.[] | select(.title == \"$TITLE\" and .author.login == \"github-actions[bot]\")][0].number // empty")
           if [ -z "$n" ]; then
             gh issue create --title "$TITLE" --body-file "$RUNNER_TEMP/report.md"
-          elif gh issue view "$n" --json body,comments --jq '[.body, .comments[].body] | join("\n")' | grep -qF "siapa-watch $FINGERPRINT"; then
+          elif gh issue view "$n" --json body,comments --jq '[.body, (.comments[] | select(.author.login == "github-actions[bot]") | .body)] | join("\n")' | grep -qF "siapa-watch $FINGERPRINT"; then
             echo "Issue #$n already reports this state"
           else
             gh issue comment "$n" --body-file "$RUNNER_TEMP/report.md"

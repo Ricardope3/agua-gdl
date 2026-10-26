@@ -1,6 +1,7 @@
 package webreports
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
@@ -378,11 +379,8 @@ func TestBotAnswersByZone(t *testing.T) {
 		t.Fatal(err)
 	}
 	z := b.Summary().Bot.Zones
-	if len(z) != 2 || z[0].Zone != 4 || z[0].Answers != 4 || z[0].Detail == nil || z[0].Detail.SinAgua != 3 || z[0].Detail.ConAgua != 1 || z[0].Detail.Turbia != 1 {
-		t.Fatalf("zone 4: %+v", z)
-	}
-	if z[1].Answers != 1 || z[1].Detail != nil {
-		t.Fatalf("below the minimum only the number of answers shows: %+v", z[1])
+	if len(z) != 2 || z[0].Zone != 4 || z[0].Answers != 4 || z[1].Zone != 6 || z[1].Answers != 1 {
+		t.Fatalf("only answer totals are public: %+v", z)
 	}
 	calls := st.botCalls
 	b.refreshBot(context.Background())
@@ -396,6 +394,42 @@ func TestBotAnswersByZone(t *testing.T) {
 	if st.botCalls != calls+1 {
 		t.Fatal("nobody looked at the map since: no query")
 	}
+}
+
+func TestBotSplitsStayPrivateAcrossSnapshotsAndRestarts(t *testing.T) {
+	clock := start(t)
+	st := &fakeStore{bot: []store.BotAnswer{{Zone: 3, Answer: "si", Count: 5}}}
+	b := board(t, st, clock)
+	assertTotalsOnly := func(b *Board, want int) {
+		t.Helper()
+		raw, _, err := b.SummaryJSON()
+		if err != nil {
+			t.Fatal(err)
+		}
+		if bytes.Contains(raw, []byte(`"detalle"`)) {
+			t.Fatalf("the public JSON contains an exact split: %s", raw)
+		}
+		if z := b.Summary().Bot.Zones[0]; z.Answers != want {
+			t.Fatalf("got %d answers, want %d", z.Answers, want)
+		}
+	}
+	if err := b.Load(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	assertTotalsOnly(b, 5)
+
+	st.bot = append(st.bot, store.BotAnswer{Zone: 3, Answer: "no", Count: 1})
+	*clock = clock.Add(botTTL)
+	if err := b.refreshBot(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	assertTotalsOnly(b, 6)
+
+	afterRestart := board(t, st, clock)
+	if err := afterRestart.Load(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	assertTotalsOnly(afterRestart, 6)
 }
 
 func TestWeekComparesReportsWithTheCalendar(t *testing.T) {
@@ -428,8 +462,8 @@ func TestWeekComparesReportsWithTheCalendar(t *testing.T) {
 	if z3.Zone != 3 || !z3.Cuts[2] || !z3.Cuts[5] || z3.Cuts[4] {
 		t.Fatalf("zone 3's cut days: %+v", z3.Cuts)
 	}
-	if fri := z3.Days[4]; fri.Total != 10 || fri.Detail == nil || fri.Detail.SinAgua != 9 || fri.Detail.ConAgua != 1 {
-		t.Fatalf("Friday, no cut: the map's reports and the bot's answers together: %+v", fri)
+	if fri := z3.Days[4]; fri.Total != 10 || fri.Detail != nil {
+		t.Fatalf("Friday combines both totals without publishing the bot's split: %+v", fri)
 	}
 	if w.Dry.OnCut != 8 || w.Dry.OffCut != 6 {
 		t.Fatalf("the map's «sin agua» on cut days and on other days; the bot asks only on evenings that aren't cut days, so its answers stay out: %+v", w.Dry)
@@ -442,7 +476,7 @@ func TestWeekComparesReportsWithTheCalendar(t *testing.T) {
 	}
 }
 
-func TestWeekHidesASplitWithFewBotAnswers(t *testing.T) {
+func TestWeekPublishesBotDaysAsTotalsOnly(t *testing.T) {
 	clock := start(t) // Sunday 18 October: the week starts on Monday 12
 	day := func(d int) time.Time { return time.Date(2026, 10, d, 0, 0, 0, 0, time.UTC) }
 	const oblatos = "OBLATOS|Guadalajara|44360" // zone 3
@@ -462,53 +496,36 @@ func TestWeekHidesASplitWithFewBotAnswers(t *testing.T) {
 	if err := b.Load(context.Background()); err != nil {
 		t.Fatal(err)
 	}
-	w := b.Summary().Week
-	days := w.Zones[2].Days
-	if thu := days[3]; thu.Total != 3 || thu.Detail != nil {
-		t.Fatalf("Thursday: two map reports and one answer reach the minimum, but the map's are public by colonia, so the split would give the answer away: %+v", thu)
-	}
-	for i, why := range map[int]string{1: "the bot's answers alone", 2: "both, each reaching the minimum", 4: "the map's reports alone"} {
-		if days[i].Detail == nil {
-			t.Errorf("%s, %s: the split shows", w.Days[i], why)
+	days := b.Summary().Week.Zones[2].Days
+	for i, want := range map[int]int{1: 3, 2: 6, 3: 3} {
+		if days[i].Total != want || days[i].Detail != nil {
+			t.Errorf("day %d: a day with bot answers must show only its total: %+v", i, days[i])
 		}
+	}
+	if friday := days[4]; friday.Total != 3 || friday.Detail == nil || friday.Detail.ConAgua != 3 {
+		t.Errorf("map-only days keep their breakdown: %+v", friday)
 	}
 }
 
-func TestBotSplitCantBeSubtractedFromTheWeek(t *testing.T) {
+func TestWeeklyBotSplitsStayPrivateAcrossSnapshots(t *testing.T) {
 	clock := start(t)
-	*clock = clock.Add(3 * time.Hour) // Sunday 18 October, 23:00: the window starts on Saturday at 23:00
-	day := func(d int) time.Time { return time.Date(2026, 10, d, 0, 0, 0, 0, time.UTC) }
-	st := &fakeStore{
-		bot: []store.BotAnswer{
-			{Zone: 1, Answer: "no", Count: 2}, {Zone: 1, Answer: "poca", Count: 2}, {Zone: 1, Answer: "si", Count: 1},
-			{Zone: 2, Answer: "no", Count: 3}, {Zone: 2, Answer: "si", Count: 3},
-			{Zone: 3, Answer: "no", Count: 5}, {Zone: 3, Answer: "si", Count: 1},
-		},
-		botDays: []store.DayCount{
-			// zone 1: Saturday's two «no» came after 23:00, inside the window
-			{Zone: 1, Day: day(17), Answer: "no", Count: 2}, {Zone: 1, Day: day(18), Answer: "poca", Count: 2}, {Zone: 1, Day: day(18), Answer: "si", Count: 1},
-			{Zone: 2, Day: day(17), Answer: "no", Count: 3}, {Zone: 2, Day: day(18), Answer: "si", Count: 3},
-			// zone 3: one answer today, and one of Saturday's before the window
-			{Zone: 3, Day: day(17), Answer: "no", Count: 6}, {Zone: 3, Day: day(18), Answer: "si", Count: 1},
-		},
-	}
-	b := board(t, st, clock) // the minimum is 3
+	day := time.Date(2026, 10, 17, 0, 0, 0, 0, time.UTC)
+	st := &fakeStore{botDays: []store.DayCount{{Zone: 3, Day: day, Answer: "si", Count: 5}}}
+	b := board(t, st, clock)
 	if err := b.Load(context.Background()); err != nil {
 		t.Fatal(err)
 	}
-	s := b.Summary()
-	if today := s.Week.Zones[0].Days[6]; today.Detail == nil {
-		t.Fatalf("zone 1's Sunday shows its split: %+v", today)
+	if cell := b.Summary().Week.Zones[2].Days[5]; cell.Total != 5 || cell.Detail != nil {
+		t.Fatalf("the first snapshot must show only the total: %+v", cell)
 	}
-	z := s.Bot.Zones
-	if len(z) != 3 || z[0].Answers != 5 || z[0].Detail != nil {
-		t.Fatalf("zone 1: the window minus Sunday's split would show Saturday's two answers: %+v", z[0])
+
+	st.botDays = append(st.botDays, store.DayCount{Zone: 3, Day: day, Answer: "no", Count: 1})
+	*clock = clock.Add(botTTL)
+	if err := b.refreshBot(context.Background()); err != nil {
+		t.Fatal(err)
 	}
-	if z[1].Detail == nil {
-		t.Fatalf("zone 2: Saturday's and Sunday's answers each reach the minimum: %+v", z[1])
-	}
-	if z[2].Detail != nil {
-		t.Fatalf("zone 3: the window minus Saturday's split would show Sunday's answer: %+v", z[2])
+	if cell := b.Summary().Week.Zones[2].Days[5]; cell.Total != 6 || cell.Detail != nil {
+		t.Fatalf("the next snapshot must show only the total: %+v", cell)
 	}
 }
 

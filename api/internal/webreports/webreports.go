@@ -128,20 +128,11 @@ type Colonia struct {
 	LastStatus string `json:"ultimo_estado,omitempty"` // the answer in that report
 }
 
-// ZoneAnswers is what the bot's subscribers in a zone answered in the window. The detail is
-// shown only from MinShown answers, as the privacy notice promises for reports, and only
-// when the week's days can't be subtracted from it to show fewer (see windowSafe).
+// ZoneAnswers is how many answers the bot's subscribers in a zone gave in the window. Exact
+// splits are never public: comparing two otherwise-correct snapshots could reveal a small group.
 type ZoneAnswers struct {
-	Zone    int       `json:"zone"`
-	Answers int       `json:"respuestas"`
-	Detail  *BotCount `json:"detalle,omitempty"`
-}
-
-// BotCount maps the bot's answers onto the map's: Sí/normal → con agua, Poca/baja → baja
-// presión, No/no regresó → sin agua; «turbia» came back, but murky.
-type BotCount struct {
-	Counts
-	Turbia int `json:"turbia"`
+	Zone    int `json:"zone"`
+	Answers int `json:"respuestas"`
 }
 
 // Summary is what /v1/reportes serves.
@@ -169,9 +160,8 @@ type Summary struct {
 // A map report counts for its colonia's main zone; zone 0 is colonias outside the rotation.
 type Week struct {
 	Days []string `json:"dias"` // oldest first
-	// Min is how many reports a day needs before its split shows, and how many of the bot's
-	// answers if it has any: the map's reports are public by colonia, so subtracting them
-	// would give a few answers away.
+	// Min is how many map reports a day needs before its split shows. A day with any bot
+	// answers shows only its total, so public snapshots can't be subtracted to reveal a few.
 	Min     int          `json:"min"`
 	Zones   []WeekZone   `json:"zonas"`
 	Reports []ColoniaDay `json:"reportes"` // the map's own daily history, for the timeline
@@ -181,13 +171,6 @@ type Week struct {
 		OnCut  int `json:"en_corte"`
 		OffCut int `json:"fuera_de_corte"`
 	} `json:"sin_agua"`
-	last map[int]lastDays // by zone, for the bot's 24-hour split
-}
-
-// lastDays is a zone's bot answers yesterday and today, and whether yesterday shows its split.
-type lastDays struct {
-	yesterday, today int
-	yesterdayShown   bool
 }
 
 type WeekZone struct {
@@ -561,53 +544,25 @@ func cmpStrings(a, b string) int {
 	return 0
 }
 
-// botZones groups the bot's answers by zone. Called with mu held.
+// botZones counts the bot's answers by zone without publishing their split. Called with mu held.
 func (b *Board) botZones() []ZoneAnswers {
-	byZone := map[int]*BotCount{}
+	byZone := map[int]int{}
 	var zones []int
 	for _, a := range b.bot {
-		c := byZone[a.Zone]
-		if c == nil {
-			c = &BotCount{}
-			byZone[a.Zone] = c
+		if _, ok := byZone[a.Zone]; !ok {
 			zones = append(zones, a.Zone)
 		}
 		switch a.Answer {
-		case "si", "normal":
-			c.ConAgua += a.Count
-		case "turbia":
-			c.ConAgua += a.Count
-			c.Turbia += a.Count
-		case "poca", "baja":
-			c.Baja += a.Count
-		case "no", "no_regreso":
-			c.SinAgua += a.Count
+		case "si", "normal", "turbia", "poca", "baja", "no", "no_regreso":
+			byZone[a.Zone] += a.Count
 		}
 	}
 	slices.Sort(zones)
 	out := []ZoneAnswers{}
 	for _, z := range zones {
-		c := byZone[z]
-		za := ZoneAnswers{Zone: z, Answers: c.total()}
-		if za.Answers >= b.minShown && b.windowSafe(z, za.Answers) {
-			za.Detail = c
-		}
-		out = append(out, za)
+		out = append(out, ZoneAnswers{Zone: z, Answers: byZone[z]})
 	}
 	return out
-}
-
-// windowSafe reports whether a zone's split over the window can show beside the week's, which
-// shows yesterday and today apart: the window holds today's answers and the end of yesterday's,
-// so subtracting the days from it must not leave fewer than minShown answers. Called with mu held.
-func (b *Board) windowSafe(zone, answers int) bool {
-	if b.week == nil {
-		return true
-	}
-	ok := func(n int) bool { return n <= 0 || n >= b.minShown }
-	d := b.week.last[zone]
-	late := answers - d.today // yesterday's answers inside the window
-	return ok(d.today) && ok(late) && (!d.yesterdayShown || ok(d.yesterday-late))
 }
 
 // Flush writes the reports not yet in Postgres. On failure they stay for the next try.
@@ -664,7 +619,7 @@ func (b *Board) loadWeek(ctx context.Context, now time.Time) (*Week, error) {
 	if err != nil {
 		return nil, err
 	}
-	w := &Week{Min: b.minShown, Reports: []ColoniaDay{}, last: map[int]lastDays{}}
+	w := &Week{Min: b.minShown, Reports: []ColoniaDay{}}
 	days := map[string]int{}
 	for i := range weekDays {
 		d := first.AddDate(0, 0, i).Format(dateLayout)
@@ -722,7 +677,7 @@ func (b *Board) loadWeek(ctx context.Context, now time.Time) (*Week, error) {
 			all := Counts{c.web.SinAgua + c.bot.SinAgua, c.web.Baja + c.bot.Baja, c.web.ConAgua + c.bot.ConAgua}
 			wz.Cuts[i] = zone > 0 && b.Cuts != nil && b.Cuts(zone, first.AddDate(0, 0, i))
 			wz.Days[i].Total = all.total()
-			if all.total() > 0 && all.total() >= b.minShown && (c.bot.total() == 0 || c.bot.total() >= b.minShown) {
+			if c.bot.total() == 0 && all.total() >= b.minShown {
 				wz.Days[i].Detail = &all
 			}
 			switch {
@@ -732,9 +687,6 @@ func (b *Board) loadWeek(ctx context.Context, now time.Time) (*Week, error) {
 			default:
 				w.Dry.OffCut += c.web.SinAgua
 			}
-		}
-		if zc := cells[zone]; zc != nil {
-			w.last[zone] = lastDays{zc[weekDays-2].bot.total(), zc[weekDays-1].bot.total(), wz.Days[weekDays-2].Detail != nil}
 		}
 		w.Zones = append(w.Zones, wz)
 	}

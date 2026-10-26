@@ -81,23 +81,27 @@ func (a *api) routes() http.Handler {
 // v1PerMinute is generous because mobile carriers put many phones behind one IP.
 const v1PerMinute = 120
 
-// maxTracked bounds the limiter's memory if requests come from many addresses at once.
+// maxTracked bounds every key the limiter holds, including wider IPv6 networks.
 const maxTracked = 10_000
 
 // overflowPerMinute is what every address past maxTracked shares in one window.
 const overflowPerMinute = 10 * v1PerMinute
 
-// limiter allows max requests per client IP in each one-minute window. IPv6
-// clients count per /64, the block one subscriber usually gets. When too many
-// addresses arrive in one minute, the new ones share one bigger budget instead of
-// each getting its own, so memory stays bounded without locking every new visitor
-// out or letting them through unlimited.
+// limiter allows max requests per client IP in each one-minute window. IPv6 clients
+// also share wider /56 and /48 budgets, so rotating /64s doesn't multiply the limit.
+// When the bounded key map fills, new clients share one bigger budget instead of each
+// getting their own or passing unlimited.
 type limiter struct {
 	mu       sync.Mutex
 	max      int
 	start    time.Time
 	counts   map[string]int
 	overflow int
+}
+
+type rateLimit struct {
+	key string
+	max int
 }
 
 func (l *limiter) allow(ip string, now time.Time) bool {
@@ -107,14 +111,42 @@ func (l *limiter) allow(ip string, now time.Time) bool {
 		l.start, l.overflow = now, 0
 		clear(l.counts)
 	}
-	ip = limitKey(ip)
-	n, seen := l.counts[ip]
-	if !seen && len(l.counts) >= maxTracked {
+	limits := limitKeys(ip, l.max)
+	unseen := 0
+	for _, limit := range limits {
+		n, seen := l.counts[limit.key]
+		if n >= limit.max {
+			return false
+		}
+		if !seen {
+			unseen++
+		}
+	}
+	if len(l.counts)+unseen > maxTracked {
 		l.overflow++
 		return l.overflow <= overflowPerMinute
 	}
-	l.counts[ip] = n + 1
-	return n < l.max
+	for _, limit := range limits {
+		l.counts[limit.key]++
+	}
+	return true
+}
+
+func limitKeys(ip string, maximum int) []rateLimit {
+	limits := []rateLimit{{"ip:" + limitKey(ip), maximum}}
+	addr, err := netip.ParseAddr(ip)
+	if err != nil || !addr.Is6() || addr.Is4In6() {
+		return limits
+	}
+	for _, network := range []struct {
+		bits int
+		max  int
+	}{{56, 2 * maximum}, {48, 10 * maximum}} {
+		if p, err := addr.Prefix(network.bits); err == nil {
+			limits = append(limits, rateLimit{strconv.Itoa(network.bits) + ":" + p.String(), network.max})
+		}
+	}
+	return limits
 }
 
 func limitKey(ip string) string {

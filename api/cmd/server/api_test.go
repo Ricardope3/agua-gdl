@@ -194,6 +194,43 @@ func TestLimiterCountsIPv6PerSlash64(t *testing.T) {
 	}
 }
 
+func TestLimiterCountsIPv6PerSlash56And48(t *testing.T) {
+	now := time.Now()
+	l56 := &limiter{max: 1, counts: map[string]int{}}
+	if !l56.allow("2001:db8:1:1::1", now) || !l56.allow("2001:db8:1:2::1", now) || l56.allow("2001:db8:1:3::1", now) {
+		t.Fatal("different /64s in one /56 share its wider budget")
+	}
+
+	l48 := &limiter{max: 1, counts: map[string]int{}}
+	for i := 0; i <= 10; i++ {
+		// The fourth hextet's high byte selects a new /56 inside the same /48.
+		ip := "2001:db8:1:" + strconv.FormatInt(int64(i<<8), 16) + "::1"
+		if got := l48.allow(ip, now); got != (i < 10) {
+			t.Fatalf("request %d from a new /56 in one /48: allowed=%v", i, got)
+		}
+	}
+}
+
+func TestLimiterSlash48RotationCannotExhaustTracker(t *testing.T) {
+	l := &limiter{max: v1PerMinute, counts: map[string]int{}}
+	now := time.Now()
+	allowed := 0
+	for i := 0; i <= 10*v1PerMinute; i++ {
+		// Every address is a different /64 in 2001:db8:1::/48, spread across its /56s.
+		fourth := (i%256)<<8 | i/256
+		ip := "2001:db8:1:" + strconv.FormatInt(int64(fourth), 16) + "::1"
+		if l.allow(ip, now) {
+			allowed++
+		}
+	}
+	if allowed != 10*v1PerMinute || len(l.counts) != allowed+256+1 || l.overflow != 0 {
+		t.Fatalf("one /48 got %d requests and %d tracked keys, overflow %d", allowed, len(l.counts), l.overflow)
+	}
+	if !l.allow("2001:db8:2:1::1", now) {
+		t.Fatal("the exhausted /48 must not deny a visitor outside it")
+	}
+}
+
 func TestTelegramWebhookChecksTheSecret(t *testing.T) {
 	st, tel, sched := fake.NewStore(), &fake.Telegram{}, testSchedule(t)
 	// Inside the rotation: once it's over, the bot takes no subscriptions.

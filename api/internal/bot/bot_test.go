@@ -421,8 +421,8 @@ func TestWordingAgreesInNumber(t *testing.T) {
 
 func TestColoniaOffTheList(t *testing.T) {
 	h := newHarness(t, "2026-10-14 10:00")
-	if got := h.send(t, text("Jardín Real")); !strings.Contains(got, "*JARDIN REAL* (Zapopan) no está en la lista") || !strings.Contains(got, "no le toca racionamiento") {
-		t.Errorf("a colonia outside the rotation should say so, got:\n%s", got)
+	if got := h.send(t, text("Jardín Real")); !strings.Contains(got, "*JARDIN REAL* (Zapopan) no aparece en la lista") || !strings.Contains(got, "no confirma que tenga servicio continuo") || strings.Contains(got, "no le toca racionamiento") {
+		t.Errorf("a colonia outside the rotation must not be promised continuous service, got:\n%s", got)
 	}
 	if len(h.store.Subs) != 0 {
 		t.Error("must not subscribe")

@@ -122,7 +122,7 @@ const msgPickOneColonia = "Encontré una colonia parecida. ¿Es la tuya? 👇"
 // mun is its municipio as people write it, and zones the zones whose map area it overlaps.
 func msgOtherColonia(name, mun string, zones []int) string {
 	if len(zones) == 0 {
-		return fmt.Sprintf("✅ *%s* (%s) no está en la lista de colonias de la rotación del SIAPA y queda fuera de las zonas de su mapa, así que no le toca racionamiento.", name, mun)
+		return fmt.Sprintf("ℹ️ *%s* (%s) no aparece en la lista ni dentro de las zonas del mapa de rotación del SIAPA. Eso no confirma que tenga servicio continuo: consulta el SIAPA o avísanos si falta el agua.", name, mun)
 	}
 	return fmt.Sprintf("⚠️ *%s* (%s) no está en la lista de colonias de la rotación del SIAPA, pero queda dentro del mapa de %s. El mapa y la lista no siempre coinciden: mándame tu 📍 *ubicación* para confirmarlo.", name, mun, theZoneLabel(zones))
 }
