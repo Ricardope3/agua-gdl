@@ -34,8 +34,10 @@ type Store interface {
 }
 
 const (
-	// Window is how far back the map counts reports.
-	Window = 24 * time.Hour
+	// Window is how far back the map counts current reports. StaleWindow keeps the previous
+	// two days visible as explicitly stale information, never as evidence that water returned.
+	Window      = 24 * time.Hour
+	StaleWindow = 72 * time.Hour
 	// A client address may send this many reports an hour, and this many for one colonia. An
 	// IPv6 client comes as its /64; an IPv4 address gets more, since carriers and home providers
 	// share one among many customers.
@@ -113,16 +115,17 @@ func (c *Counts) addN(answer string, n int) {
 	}
 }
 
-// Colonia is one colonia's reports in the window.
+// Colonia is one colonia's reports in a current or stale window.
 type Colonia struct {
 	Name      string `json:"n"`
 	Municipio string `json:"m"`
 	CP        string `json:"cp"`
 	Counts
-	Turbia    int    `json:"turbia"`
-	Olor      int    `json:"olor"`
-	Sedimento int    `json:"sedimento"`
-	Last      string `json:"ultimo,omitempty"` // to the minute
+	Turbia     int    `json:"turbia"`
+	Olor       int    `json:"olor"`
+	Sedimento  int    `json:"sedimento"`
+	Last       string `json:"ultimo,omitempty"`        // to the minute
+	LastStatus string `json:"ultimo_estado,omitempty"` // the answer in that report
 }
 
 // ZoneAnswers is what the bot's subscribers in a zone answered in the window. The detail is
@@ -146,12 +149,14 @@ type Summary struct {
 	Updated string `json:"updated"`
 	Hours   int    `json:"hours"`
 	Counts
-	Total     int       `json:"total"`
-	Colonias  int       `json:"colonias_con_reportes"`
-	MostlyDry int       `json:"mayormente_sin_agua"`
-	AllTime   int       `json:"historico"`
-	Reports   []Colonia `json:"colonias"`
-	Bot       struct {
+	Total      int       `json:"total"`
+	Colonias   int       `json:"colonias_con_reportes"`
+	MostlyDry  int       `json:"mayormente_sin_agua"`
+	AllTime    int       `json:"historico"`
+	Reports    []Colonia `json:"colonias"`
+	StaleHours int       `json:"horas_anteriores"`
+	Stale      []Colonia `json:"anteriores"` // no reports in Window; last report within StaleWindow
+	Bot        struct {
 		Hours int           `json:"hours"`
 		Min   int           `json:"min"`
 		Zones []ZoneAnswers `json:"zonas"`
@@ -167,8 +172,9 @@ type Week struct {
 	// Min is how many reports a day needs before its split shows, and how many of the bot's
 	// answers if it has any: the map's reports are public by colonia, so subtracting them
 	// would give a few answers away.
-	Min   int        `json:"min"`
-	Zones []WeekZone `json:"zonas"`
+	Min     int          `json:"min"`
+	Zones   []WeekZone   `json:"zonas"`
+	Reports []ColoniaDay `json:"reportes"` // the map's own daily history, for the timeline
 	// The map's «sin agua» in zones 1 to 7, on their cut days and on other days. The bot's
 	// answers stay out: it asks only on evenings that aren't its zone's cut days.
 	Dry struct {
@@ -193,6 +199,15 @@ type WeekZone struct {
 type DayCell struct {
 	Total  int     `json:"total"`
 	Detail *Counts `json:"detalle,omitempty"`
+}
+
+// ColoniaDay is the map's anonymous report history for one colonia and local day.
+type ColoniaDay struct {
+	Name      string `json:"n"`
+	Municipio string `json:"m"`
+	CP        string `json:"cp"`
+	Day       string `json:"dia"`
+	Counts
 }
 
 type colonia struct {
@@ -243,10 +258,10 @@ func New(st Store, coloniasJSON []byte, minShown int, loc *time.Location, now fu
 	return b, nil
 }
 
-// Load reads the window's reports, the all-time count and the bot's answers.
+// Load reads the current and stale windows, the all-time count and the bot's answers.
 func (b *Board) Load(ctx context.Context) error {
 	now := b.now()
-	recent, err := b.store.WebReportsSince(ctx, now.Add(-Window))
+	recent, err := b.store.WebReportsSince(ctx, now.Add(-StaleWindow))
 	if err != nil {
 		return err
 	}
@@ -307,7 +322,7 @@ func (b *Board) Add(addr, name, municipio, cp, status string, turbia, olor, sedi
 	b.allTime++
 	b.cached = nil
 	b.trim(now)
-	return b.coloniaCounts(key), nil
+	return b.coloniaCounts(key, now), nil
 }
 
 // lastHour counts everyone's reports in the last hour. Called with mu held.
@@ -414,21 +429,21 @@ func ipv4(addr string) bool {
 	return err == nil && a.Unmap().Is4()
 }
 
-// trim drops reports older than the window. Called with mu held.
+// trim drops reports older than the stale window. Called with mu held.
 func (b *Board) trim(now time.Time) {
 	i := 0
-	for i < len(b.recent) && now.Sub(b.recent[i].At) >= Window {
+	for i < len(b.recent) && now.Sub(b.recent[i].At) >= StaleWindow {
 		i++
 	}
 	b.recent = b.recent[i:]
 }
 
-// coloniaCounts sums one colonia's reports in the window. Called with mu held.
-func (b *Board) coloniaCounts(key string) Colonia {
+// coloniaCounts sums one colonia's current reports. Called with mu held.
+func (b *Board) coloniaCounts(key string, now time.Time) Colonia {
 	c := b.colonias[key]
 	out := Colonia{Name: c.name, Municipio: c.municipio, CP: c.cp}
 	for _, r := range b.recent {
-		if r.Colonia == key {
+		if r.Colonia == key && now.Sub(r.At) < Window {
 			out.tally(r, b.loc)
 		}
 	}
@@ -446,8 +461,9 @@ func (c *Colonia) tally(r store.WebReport, loc *time.Location) {
 	if r.Sedimento {
 		c.Sedimento++
 	}
-	if last := r.At.In(loc).Truncate(time.Minute).Format(time.RFC3339); last > c.Last {
-		c.Last = last
+	last := r.At.In(loc).Truncate(time.Minute).Format(time.RFC3339)
+	if last >= c.Last {
+		c.Last, c.LastStatus = last, r.Status
 	}
 }
 
@@ -487,20 +503,27 @@ func (b *Board) summary(now time.Time) *Summary {
 		return b.cached
 	}
 	b.trim(now)
-	s := Summary{Updated: now.In(b.loc).Truncate(time.Minute).Format(time.RFC3339), Hours: int(Window / time.Hour), AllTime: b.allTime, Reports: []Colonia{}}
-	byKey := map[string]*Colonia{}
+	s := Summary{Updated: now.In(b.loc).Truncate(time.Minute).Format(time.RFC3339), Hours: int(Window / time.Hour),
+		AllTime: b.allTime, Reports: []Colonia{}, StaleHours: int(StaleWindow / time.Hour), Stale: []Colonia{}}
+	byKey, staleByKey := map[string]*Colonia{}, map[string]*Colonia{}
 	for _, r := range b.recent {
 		col, ok := b.colonias[r.Colonia]
 		if !ok {
 			continue // a colonia no longer on SIAPA's map
 		}
-		c := byKey[r.Colonia]
+		group, current := staleByKey, false
+		if now.Sub(r.At) < Window {
+			group, current = byKey, true
+		}
+		c := group[r.Colonia]
 		if c == nil {
 			c = &Colonia{Name: col.name, Municipio: col.municipio, CP: col.cp}
-			byKey[r.Colonia] = c
+			group[r.Colonia] = c
 		}
 		c.tally(r, b.loc)
-		s.add(r.Status)
+		if current {
+			s.add(r.Status)
+		}
 	}
 	for _, c := range byKey {
 		s.Reports = append(s.Reports, *c)
@@ -508,12 +531,19 @@ func (b *Board) summary(now time.Time) *Summary {
 			s.MostlyDry++
 		}
 	}
-	slices.SortFunc(s.Reports, func(x, y Colonia) int {
+	for key, c := range staleByKey {
+		if byKey[key] == nil {
+			s.Stale = append(s.Stale, *c)
+		}
+	}
+	byCount := func(x, y Colonia) int {
 		if d := y.total() - x.total(); d != 0 {
 			return d
 		}
 		return cmpStrings(Key(x.Name, x.Municipio, x.CP), Key(y.Name, y.Municipio, y.CP))
-	})
+	}
+	slices.SortFunc(s.Reports, byCount)
+	slices.SortFunc(s.Stale, byCount)
 	s.Total, s.Colonias = s.Counts.total(), len(s.Reports)
 	s.Bot.Hours, s.Bot.Min, s.Bot.Zones = int(Window/time.Hour), b.minShown, b.botZones()
 	s.Week = b.week
@@ -634,7 +664,7 @@ func (b *Board) loadWeek(ctx context.Context, now time.Time) (*Week, error) {
 	if err != nil {
 		return nil, err
 	}
-	w := &Week{Min: b.minShown, last: map[int]lastDays{}}
+	w := &Week{Min: b.minShown, Reports: []ColoniaDay{}, last: map[int]lastDays{}}
 	days := map[string]int{}
 	for i := range weekDays {
 		d := first.AddDate(0, 0, i).Format(dateLayout)
@@ -645,6 +675,7 @@ func (b *Board) loadWeek(ctx context.Context, now time.Time) (*Week, error) {
 	// share of «sin agua» treat differently.
 	type cell struct{ web, bot Counts }
 	cells := map[int]*[weekDays]cell{}
+	history := map[[2]string]*ColoniaDay{}
 	at := func(zone int, day time.Time) *cell {
 		i, ok := days[day.Format(dateLayout)]
 		if !ok {
@@ -659,9 +690,23 @@ func (b *Board) loadWeek(ctx context.Context, now time.Time) (*Week, error) {
 		if col, ok := b.colonias[r.Colonia]; ok {
 			if c := at(col.zone, r.Day); c != nil {
 				c.web.addN(r.Answer, r.Count)
+				day := r.Day.Format(dateLayout)
+				key := [2]string{r.Colonia, day}
+				h := history[key]
+				if h == nil {
+					h = &ColoniaDay{Name: col.name, Municipio: col.municipio, CP: col.cp, Day: day}
+					history[key] = h
+				}
+				h.addN(r.Answer, r.Count)
 			}
 		}
 	}
+	for _, h := range history {
+		w.Reports = append(w.Reports, *h)
+	}
+	slices.SortFunc(w.Reports, func(x, y ColoniaDay) int {
+		return cmpStrings(x.Day+"|"+Key(x.Name, x.Municipio, x.CP), y.Day+"|"+Key(y.Name, y.Municipio, y.CP))
+	})
 	for _, r := range bot {
 		if c := at(r.Zone, r.Day); c != nil {
 			c.bot.addN(r.Answer, r.Count)

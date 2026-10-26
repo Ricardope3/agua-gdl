@@ -28,7 +28,7 @@
   --shadow: 0 1px 2px rgb(3 105 161 / .08);
   --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --warn: #8a5a00; --warn-bg: #fff3d6;
-  --dry: #d1352c; --low: #d79a00; --ok: #2b9150; --none: #c9d8e2;
+  --dry: #d1352c; --low: #d79a00; --ok: #2b9150; --mixed: #7c3aed; --none: #c9d8e2;
   /* Days without water, one red ramp light→dark (1–2, 3–6, 7–13, 14+), and the ink each step takes. */
   --s1: #f59d8b; --s2: #ea6d56; --s3: #cc361e; --s4: #90200e; --s0: #ea6d56;
   --s1-ink: #0c1e2c; --s2-ink: #0c1e2c; --s3-ink: #ffffff; --s4-ink: #ffffff;
@@ -38,7 +38,7 @@
     --bg: #06141d; --surface: #0a1c28; --subtle: #0c3149; --fg: #f0f9ff; --muted: #9bb8ca; --line: #18384d;
     --link: #7dd3fc; --primary: #0ea5e9; --on-primary: #ffffff; --ring: #38bdf866; --brand: #0ea5e9; --brand-deep: #0284c7;
     --warn: #ffd27a; --warn-bg: #3a2c10;
-    --dry: #f06a61; --low: #f2b84b; --ok: #5cc98a; --none: #2a4558;
+    --dry: #f06a61; --low: #f2b84b; --ok: #5cc98a; --mixed: #c4b5fd; --none: #2a4558;
     --s1: #993b2b; --s2: #cb4832; --s3: #ea6d56; --s4: #fca391; --s0: #cb4832;
     --s1-ink: #ffffff; --s2-ink: #ffffff; --s3-ink: #06141d; --s4-ink: #06141d;
     color-scheme: dark;
@@ -102,6 +102,8 @@ h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.08; letter-spacing: -
 .map-label .sub { display: block; font-weight: 500; color: var(--muted) }
 .donut { background: none; border: 0 }
 .donut svg { display: block; filter: drop-shadow(0 1px 2px rgb(3 14 22 / .35)) }
+.donut.stale svg { filter: grayscale(1) drop-shadow(0 1px 2px rgb(3 14 22 / .25)); opacity: .6 }
+.donut.stale { z-index: 400 !important }
 .pin { background: var(--surface); border: 3px solid var(--fg); border-radius: 50%; width: 16px; height: 16px; box-shadow: var(--shadow) }
 .card { position: absolute; z-index: 1200; top: 12px; left: 12px; width: min(380px, calc(100% - 24px)); max-height: calc(100% - 24px); overflow: auto; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; box-shadow: 0 10px 30px rgb(3 14 22 / .22) }
 @media (max-width: 760px) { .card { top: auto; bottom: 10px; left: 10px; width: calc(100% - 20px); max-height: 62% } }
@@ -128,8 +130,11 @@ h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.08; letter-spacing: -
 .split b { font-variant-numeric: tabular-nums }
 .split small { color: var(--muted) }
 .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--dc) }
-.dry { --dc: var(--dry) } .low { --dc: var(--low) } .ok { --dc: var(--ok) } .nodata { --dc: var(--none) }
+.dry { --dc: var(--dry) } .low { --dc: var(--low) } .ok { --dc: var(--ok) } .mixed { --dc: var(--mixed) } .nodata { --dc: var(--none) }
 .quality { margin: 8px 0 0; font-size: .9rem; color: var(--muted) }
+.latest { margin: 0 0 10px; padding: 10px 12px; border-left: 5px solid var(--dc); border-radius: 8px; background: color-mix(in srgb, var(--dc) 10%, var(--surface)); font-size: .95rem; line-height: 1.4 }
+.latest strong { display: block }
+.stale-note { margin: 0 0 12px; padding: 10px 12px; border-left: 5px solid var(--muted); border-radius: 8px; background: var(--subtle); font-size: .95rem }
 .report { margin: 14px 0 0; border-top: 1px solid var(--line); padding-top: 14px; display: grid; gap: 12px }
 .report fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 8px }
 .report legend { font-weight: 600; margin: 0 0 4px; padding: 0 }
@@ -1144,7 +1149,8 @@ if (window.top !== window.self) {
     <section aria-labelledby="como">
       <h2 class="sec" id="como">Cómo funciona</h2>
       <ul class="plain">
-        <li><strong>Las publicaciones.</strong> Buscamos en las notas de los medios, en Facebook, incluidos los grupos públicos de colonias, y en X lo que se publica desde el 12 de octubre sobre colonias sin agua. De los medios va todo lo que nombra una colonia, y va primero en cada ficha. De los vecinos, solo publicaciones con al menos 5 reacciones y 1 comentario, o comentarios en publicaciones así. Citamos sus palabras con la fecha y el enlace. Cada colonia toma el color del número de días más alto que dicen, y el número sobre ella cuenta todos sus reportes: las publicaciones más los reportes de este mapa en las últimas 24 horas.</li>
+        <li><strong>Las publicaciones.</strong> Buscamos en las notas de los medios, en Facebook, incluidos los grupos públicos de colonias, y en X lo que se publica desde el 12 de octubre sobre colonias sin agua. De los medios va todo lo que nombra una colonia, y va primero en cada ficha. De los vecinos, solo publicaciones con al menos 5 reacciones y 1 comentario, o comentarios en publicaciones así. Citamos sus palabras con la fecha y el enlace. Su número y su color por días sin agua cuentan solo las publicaciones: son evidencia histórica, separada de los reportes actuales.</li>
+        <li><strong>Cómo se lee el mapa.</strong> Los reportes hechos aquí en las últimas 24 horas tienen su propio círculo y dan el color actual de la colonia: mayoría sin agua, con baja presión o con agua, o reportes mixtos cuando no hay una mayoría. La ficha muestra primero el último reporte y su hora; uno solo no establece que toda la colonia tenga agua. Si no hay reportes nuevos en 24 horas pero sí entre hace 24 y 72 horas, la colonia queda gris y punteada, y el último reporte se muestra como información desactualizada. La línea de tiempo conserva los reportes por colonia y día durante la última semana. Que dejen de llegar reportes no significa que el agua haya regresado: significa que no hay información reciente.</li>
         <li><strong>Las imágenes</strong> son la vista previa que cada nota o publicación comparte (su foto o el cuadro de su video). Guardamos una copia pequeña en aguagdl.com, así tu navegador no se conecta a Facebook, a X ni a los medios para verlas; tocarlas abre la publicación. Las notas y publicaciones de solo texto no tienen imagen.</li>
         <li><strong>Contamos fuentes, no «me gusta».</strong> Mucho eco no prueba que algo sea cierto: en Twitter, las noticias falsas tenían 70 % más probabilidad de ser retuiteadas que las verdaderas (<a href="https://doi.org/10.1126/science.aap9559" rel="noopener">Vosoughi, Roy y Aral, 2018</a>). Por eso el color sale de los días que dicen las publicaciones, y la confianza, de cuántas fuentes distintas lo dicen y de si lo reporta un medio; varias publicaciones de la misma cuenta, página o grupo cuentan como una sola fuente. El eco (reacciones, comentarios y veces compartida) se muestra aparte.</li>
         <li><strong>No publicamos nombres de personas.</strong> De los vecinos mostramos la colonia, la fecha y el enlace a lo que publicaron; de los medios y los grupos públicos, su nombre. Si una publicación es tuya y quieres que la quitemos, escríbenos a <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>.</li>
@@ -1206,7 +1212,7 @@ if (window.top !== window.self) {
   // The map's canvas needs the colours themselves, read again when the visitor switches the theme.
   let COLORS, SEV;
   const palette = () => {
-    COLORS = { dry: css("--dry"), low: css("--low"), ok: css("--ok"), none: css("--none"), ink: css("--fg"), surface: css("--surface"), muted: css("--muted") };
+    COLORS = { dry: css("--dry"), low: css("--low"), ok: css("--ok"), mixed: css("--mixed"), none: css("--none"), ink: css("--fg"), surface: css("--surface"), muted: css("--muted") };
     // Days without water: 0 is "no days given", then 1–2, 3–6, 7–13 and 14 or more.
     SEV = [0, 1, 2, 3, 4].map((i) => css(`--s${i}`));
   };
@@ -1223,8 +1229,12 @@ if (window.top !== window.self) {
   const daysWord = (d) => `${d} ${d === 1 ? "día" : "días"}`;
   const pct = (n, t) => t ? Math.round(100 * n / t) : 0;
   const totalOf = (c) => c.sin_agua + c.baja + c.con_agua;
-  // statusOf: the colour a colonia gets: most say no water, most say water, or anything in between.
-  const statusOf = (c) => !c ? null : 2 * c.sin_agua > totalOf(c) ? "dry" : 2 * c.con_agua > totalOf(c) ? "ok" : "low";
+  const ANSWERS = { sin_agua: "sin agua", baja: "baja presión", con_agua: "con agua" };
+  // Only an actual majority gets one status. A tie or a split without a majority is mixed,
+  // never low pressure unless low-pressure reports themselves are the majority.
+  const statusOf = (c) => !c ? null : 2 * c.sin_agua > totalOf(c) ? "dry" : 2 * c.con_agua > totalOf(c) ? "ok" : 2 * c.baja > totalOf(c) ? "low" : "mixed";
+  const statusLabel = (c) => ({ dry: "Mayoría sin agua", low: "Mayoría con baja presión", ok: "Mayoría con agua", mixed: "Reportes mixtos" })[statusOf(c)] || "Sin reportes";
+  const answerLabel = (answer) => ANSWERS[answer] || "estado no disponible";
   const timeES = (iso) => new Date(iso).toLocaleTimeString("es-MX", { hour: "numeric", minute: "2-digit", timeZone: "America/Mexico_City" });
   function ago(iso) {
     const min = Math.max(0, Math.round((Date.now() - Date.parse(iso)) / 60000));
@@ -1341,7 +1351,9 @@ if (window.top !== window.self) {
   if (phone()) wantOpen = false;
   setOverview(wantOpen);
 
-  let byKey = new Map();      // colonia key → its counts in the last 24 h
+  let byKey = new Map();       // colonia key → current counts in the last 24 h
+  let staleByKey = new Map();  // no current reports; last report between 24 and 72 h ago
+  let historyByDay = new Map();// local date → colonia key → that day's anonymous reports
   let summary = null;
 
   // The privacy notice promises only the last hour's reports: older marks go, even if the map never loads.
@@ -1420,9 +1432,11 @@ if (window.top !== window.self) {
     let evNow = DAYS.length ? evByDay[at] : ev;
     const atEnd = () => at >= DAYS.length - 1;
     window.__datos = { features, ev };
-    // Silence is the only sign the water came back: people post when it's missing, not when it returns.
+    const emptyReports = new Map();
+    const reportsNow = () => atEnd() ? byKey : historyByDay.get(DAYS[at]) || emptyReports;
+    // Silence is not evidence that the water came back: people post when it's missing, not when it returns.
     // A colonia stays «activa» up to 3 days after its latest publication, «reciente» up to 7, and then
-    // has no new reports: greyed out, kept for the record. Days count to the timeline's day, or today.
+    // has no new publications: greyed out, kept for the record. Days count to the timeline's day, or today.
     const today = new Date().toLocaleDateString("en-CA", { timeZone: "America/Mexico_City" });
     const refDay = () => atEnd() ? (today > (DAYS[at] || "") ? today : DAYS[at]) : DAYS[at];
     const ageOf = (e) => Math.round((Date.parse(refDay()) - Date.parse(e.ultima)) / 864e5);
@@ -1432,11 +1446,16 @@ if (window.top !== window.self) {
     const zoneLayer = L.geoJSON({ type: "FeatureCollection", features: zonas }, { interactive: false, style: zoneStyle }).addTo(map);
     const home = zoneLayer.getBounds().pad(0.04);
     M.recenter(L, map, () => map.flyToBounds(home, { duration: 0.6 }));
-    // A colonia with publications takes the colour of the most days they give (dashed when none gives
-    // days); otherwise the majority of this map's last 24 hours, or nothing.
+    // Current reports colour the outline first. Stale reports make it neutral and dashed. Publication
+    // history has its own badge and colours the outline only when there are no current or stale reports.
     const styleOf = (f) => {
       const k = keyOf(f.properties);
-      const e = evNow.get(k);
+      const e = evNow.get(k), c = reportsNow().get(k), stale = atEnd() ? staleByKey.get(k) : null;
+      if (c) {
+        const s = statusOf(c);
+        return { color: COLORS[s], weight: 1.4, opacity: 0.95, dashArray: null, fillColor: COLORS[s], fillOpacity: Math.min(0.65, 0.3 + 0.07 * totalOf(c)) };
+      }
+      if (stale) return { color: COLORS.muted, weight: 1.2, opacity: 0.75, dashArray: "4 3", fillColor: COLORS.muted, fillOpacity: 0.08 };
       if (e) {
         const s = sevOf(e.dias), st = stateOf(e);
         if (st === "vieja") return { color: COLORS.muted, weight: 0.8, opacity: 0.6, dashArray: null, fillColor: COLORS.muted, fillOpacity: 0.14 };
@@ -1445,10 +1464,7 @@ if (window.top !== window.self) {
         return s ? { color: SEV[s], weight: 1.2, opacity: 0.95, dashArray: null, fillColor: SEV[s], fillOpacity: 0.62 }
           : { color: SEV[0], weight: 1.8, opacity: 0.95, dashArray: "4 3", fillColor: SEV[0], fillOpacity: 0.2 };
       }
-      const c = atEnd() ? byKey.get(k) : null;
-      const s = statusOf(c);
-      if (!s) return { color: COLORS.muted, weight: 0.4, opacity: 0.5, dashArray: null, fillColor: COLORS.none, fillOpacity: 0.06 };
-      return { color: COLORS[s], weight: 1, opacity: 0.9, dashArray: null, fillColor: COLORS[s], fillOpacity: Math.min(0.65, 0.3 + 0.07 * totalOf(c)) };
+      return { color: COLORS.muted, weight: 0.4, opacity: 0.5, dashArray: null, fillColor: COLORS.none, fillOpacity: 0.06 };
     };
     const evLine = (e) => stateOf(e) === "vieja" ? `Sin reportes nuevos desde el ${dateES(e.ultima)} · ${plural(e.fuentes, "fuente", "fuentes")}` : e.dias != null ? `Hasta ${daysWord(e.dias)} sin agua · ${plural(e.fuentes, "fuente", "fuentes")}` : `Sin agua, sin días contados · ${plural(e.fuentes, "fuente", "fuentes")}`;
     let closedAt = 0;
@@ -1460,12 +1476,14 @@ if (window.top !== window.self) {
       onEachFeature: (f, l) => {
         l.bindTooltip(() => {
           const k = keyOf(f.properties);
-          const c = atEnd() ? byKey.get(k) : null, e = evNow.get(k);
+          const c = reportsNow().get(k), stale = atEnd() ? staleByKey.get(k) : null, e = evNow.get(k);
           const later = !e && firstSeen.get(k);
           return el("span", {}, `${f.properties.n} · ${f.properties.m}`,
             e ? el("span", { class: "sub" }, `${atEnd() ? "" : `Al ${dateES(DAYS[at])}: `}${evLine(e)}`) : null,
             later ? el("span", { class: "sub" }, `Su primera publicación llega el ${dateES(later, true)}`) : null,
-            c ? el("span", { class: "sub" }, `${totalOf(c)} ${totalOf(c) === 1 ? "reporte" : "reportes"} en este mapa en 24 h`) : summary && !e && !later && atEnd() ? el("span", { class: "sub" }, "Sin reportes en 24 h") : null);
+            c ? el("span", { class: "sub" }, `${statusLabel(c)} · ${plural(totalOf(c), "reporte", "reportes")}${atEnd() ? " en 24 h" : " ese día"}`) : null,
+            stale ? el("span", { class: "sub" }, `Sin reportes nuevos en 24 h · último: ${answerLabel(stale.ultimo_estado)} ${ago(stale.ultimo)}`) : null,
+            summary && !c && !stale && !e && !later && atEnd() ? el("span", { class: "sub" }, "Sin reportes en 72 h") : null);
         }, { sticky: true, className: "map-label" });
         l.on("click", () => { if (Date.now() - closedAt > 500) select(f); });
       },
@@ -1490,41 +1508,46 @@ if (window.top !== window.self) {
     }
     function drawMarkers() {
       markers.clearLayers();
-      // Publications: a badge with every report of the colonia, its publications plus this map's last
-      // 24 hours, coloured by the most days given (dashed when none gives days). They shrink when the
-      // whole city is in view, where neighbouring colonias' badges overlap.
-      // r1: the count and the colour as they stood on the timeline's day (this map's 24 hours only on
-      // the latest); a badge whose number went up since the last day shown pops.
+      // Publication badges count only publications and keep their historical severity. Anonymous
+      // reports have separate donuts, including on days in the timeline and over published colonias.
       const far = map.getZoom() < 12, counts = new Map();
       for (const [k, e] of evNow) {
         const fs = features.get(k);
         if (!fs) continue;
-        const c = atEnd() ? byKey.get(k) : null, total = e.posts.length + (c ? totalOf(c) : 0), n = total > 99 ? "99+" : String(total);
-        // Logarithmic, so it levels off: 1 report is a small dot, 10 about twice as wide, 44 a bit more.
-        // Past 99 the badge stops growing, as its number does.
+        const total = e.posts.length, n = total > 99 ? "99+" : String(total);
+        // Logarithmic, so it levels off: 1 publication is a small dot, 10 about twice as wide.
         const s = sevOf(e.dias), size = Math.round((far ? 13 : 16) + (far ? 4.6 : 6.2) * Math.log(Math.min(total, 100)) + (n.length > 2 ? 2 : 0));
         counts.set(k, total);
         const was = shown.get(k), pop = reduced ? "" : was != null ? (total > was ? " pop" : "") : shown.size ? " nace" : "";
         if (!centers.has(k)) centers.set(k, L.geoJSON(fs[0]).getBounds().getCenter());
         const m = L.marker(centers.get(k), {
           icon: L.divIcon({ className: `sev${far ? " far" : ""}${s ? "" : " nodays"} ${stateOf(e)}${pop}`, html: `<span style="${sevVars(s)};font-size:${Math.max(far ? 9 : 10, Math.round(size * (n.length > 2 ? 0.3 : 0.42)))}px">${n}</span>`, iconSize: [size, size] }),
-          keyboard: false, zIndexOffset: 2000 - Math.min(total, 999), title: `${fs[0].properties.n}: ${plural(total, "reporte", "reportes")} · ${evLine(e)}`,
+          keyboard: false, zIndexOffset: 2000 - Math.min(total, 999), title: `${fs[0].properties.n}: ${plural(total, "publicación", "publicaciones")} · ${evLine(e)}`,
         });
         m.on("click", () => select(fs[0]));
         markers.addLayer(m);
       }
       shown = counts;
-      // This map's own reports: rings with the count, where there are no publications.
-      const show = atEnd() && (map.getZoom() >= 13 || byKey.size <= 60);
-      if (!show) return;
-      for (const [k, c] of byKey) {
-        const fs = features.get(k);
-        if (!fs || evNow.has(k)) continue;
-        const center = L.geoJSON(fs[0]).getBounds().getCenter();
-        const m = L.marker(center, { icon: L.divIcon({ className: "donut", html: donut(c), iconSize: [40, 40] }), keyboard: false, title: `${fs[0].properties.n}: ${totalOf(c)} ${totalOf(c) === 1 ? "reporte" : "reportes"}` });
-        m.on("click", () => select(fs[0]));
-        markers.addLayer(m);
-      }
+      const current = reportsNow(), stale = atEnd() ? staleByKey : emptyReports;
+      if (map.getZoom() < 13 && current.size + stale.size > 60) return;
+      const addReports = (rows, isStale) => {
+        for (const [k, c] of rows) {
+          const fs = features.get(k);
+          if (!fs) continue;
+          if (!centers.has(k)) centers.set(k, L.geoJSON(fs[0]).getBounds().getCenter());
+          const withPublication = evNow.has(k);
+          const title = isStale ? `${fs[0].properties.n}: sin reportes nuevos en 24 h · último: ${answerLabel(c.ultimo_estado)} ${ago(c.ultimo)}`
+            : `${fs[0].properties.n}: ${statusLabel(c)} · ${plural(totalOf(c), "reporte", "reportes")}${atEnd() ? " en 24 h" : " ese día"}`;
+          const m = L.marker(centers.get(k), {
+            icon: L.divIcon({ className: `donut${isStale ? " stale" : ""}`, html: donut(c), iconSize: [40, 40], iconAnchor: withPublication ? [4, 4] : [20, 20] }),
+            keyboard: false, zIndexOffset: isStale ? 1200 : 3000, title,
+          });
+          m.on("click", () => select(fs[0]));
+          markers.addLayer(m);
+        }
+      };
+      addReports(current, false);
+      addReports(stale, true);
     }
     map.on("zoomend", drawMarkers);
     drawMarkers();
@@ -1532,7 +1555,13 @@ if (window.top !== window.self) {
     function apply(s) {
       if (!s) return;
       summary = s;
-      byKey = new Map(s.colonias.map((c) => [`${c.n}|${c.m}|${c.cp}`, c]));
+      byKey = new Map((s.colonias || []).map((c) => [`${c.n}|${c.m}|${c.cp}`, c]));
+      staleByKey = new Map((s.anteriores || []).map((c) => [`${c.n}|${c.m}|${c.cp}`, c]));
+      historyByDay = new Map();
+      for (const c of s.semana?.reportes || []) {
+        if (!historyByDay.has(c.dia)) historyByDay.set(c.dia, new Map());
+        historyByDay.get(c.dia).set(`${c.n}|${c.m}|${c.cp}`, c);
+      }
       layer.setStyle(styleOf);
       drawMarkers();
       renderSummary(s);
@@ -1737,7 +1766,7 @@ if (window.top !== window.self) {
     const reportedAt = (k) => { let at = mine.get(k) || 0; try { at = Math.max(at, Number(localStorage.getItem(seenKey(k))) || 0); } catch {} return at; };
     const remember = (k) => { mine.set(k, Date.now()); try { localStorage.setItem(seenKey(k), String(Date.now())); } catch {} };
 
-    function countsBlock(c) {
+    function countsBlock(c, stale = false) {
       const t = totalOf(c);
       const bar = el("div", { class: "rbar", "aria-hidden": "true" });
       for (const [k, cls] of [["sin_agua", "s"], ["baja", "b"], ["con_agua", "c"]]) {
@@ -1747,14 +1776,17 @@ if (window.top !== window.self) {
       }
       const q = [["turbia", "turbia"], ["olor", "con olor"], ["sedimento", "con sedimento o color raro"]].filter(([k]) => c[k]).map(([k, w]) => `${c[k]} ${w}`);
       return [
-        el("p", { style: "margin:0;font-weight:600" }, `${fmt(t)} ${t === 1 ? "reporte" : "reportes"} en las últimas 24 horas`),
+        stale ? el("p", { class: "stale-note" }, el("strong", {}, "Sin reportes nuevos en las últimas 24 horas. "), "No sabemos si el agua regresó: la falta de reportes solo significa falta de información reciente.") : null,
+        el("p", { class: `latest ${stale ? "nodata" : statusOf(c)}` },
+          el("strong", {}, `Último reporte: ${answerLabel(c.ultimo_estado)}`), c.ultimo ? `${ago(c.ultimo)}.` : null),
+        el("p", { style: "margin:0;font-weight:600" }, stale ? `${plural(t, "reporte", "reportes")} entre hace 24 y 72 horas` : `${plural(t, "reporte", "reportes")} en las últimas 24 horas · ${statusLabel(c).toLowerCase()}`),
         bar,
         el("ul", { class: "split" },
           el("li", {}, el("span", { class: "dot dry" }), "Sin agua ", el("b", {}, fmt(c.sin_agua))),
           el("li", {}, el("span", { class: "dot low" }), "Baja presión ", el("b", {}, fmt(c.baja))),
           el("li", {}, el("span", { class: "dot ok" }), "Con agua ", el("b", {}, fmt(c.con_agua)))),
+        !stale && statusOf(c) === "mixed" ? el("p", { class: "quality" }, "Los reportes no coinciden; el mapa no deduce un solo estado para toda la colonia.") : null,
         q.length ? el("p", { class: "quality" }, `Cuando sale: ${M.joinES(q)}.`) : null,
-        c.ultimo ? el("p", { class: "quality" }, `Último reporte: ${ago(c.ultimo)}.`) : null,
       ].filter(Boolean);
     }
 
@@ -1770,9 +1802,10 @@ if (window.top !== window.self) {
       if (ls.length && ls.join() !== [...zs].sort().join()) kids.push(el("p", { class: "where" }, `La lista de colonias del SIAPA la pone en ${M.theZones(ls)}.`));
       const e = ev.get(k);
       if (!pubs) kids.push(el("p", { class: "none" }, "No pudimos cargar lo que publican medios y vecinos. Intenta de nuevo en unos minutos."));
-      if (e) kids.push(evidenceBlock(e), el("p", { class: "sub-head" }, "Reportes en este mapa"));
-      // The refresh every two minutes replaces only these counts, so a list of posts the visitor opened stays open.
+      // Current information leads; publications remain below as historical evidence. The refresh every
+      // two minutes replaces only these counts, so a list of posts the visitor opened stays open.
       kids.push(el("div", { class: "conteo" }, ...countsOf(k, e)));
+      if (e) kids.push(el("p", { class: "sub-head" }, "Publicaciones de medios y vecinos"), evidenceBlock(e));
       const when = reportedAt(k);
       if (Date.now() - when < 2 * 60 * 1000) {
         kids.push(el("p", { class: "thanks" }, "¡Gracias! Tu reporte ya está en el mapa."), share(p), exige(p));
@@ -1802,11 +1835,12 @@ if (window.top !== window.self) {
       };
     }
 
-    // A colonia's reports in the last 24 hours: their counts, none, or why they aren't there.
+    // Current reports first, then explicitly stale ones; neither case infers recovery from silence.
     function countsOf(k, e) {
-      const c = byKey.get(k);
+      const c = byKey.get(k), stale = staleByKey.get(k);
       if (c) return countsBlock(c);
-      return [el("p", { class: "none" }, summary ? `Nadie ha reportado esta colonia${e ? " aquí" : ""} en las últimas 24 horas.`
+      if (stale) return countsBlock(stale, true);
+      return [el("p", { class: "none" }, summary ? `Nadie ha reportado esta colonia${e ? " aquí" : ""} en las últimas 72 horas.`
         : apiFailed ? "No pudimos cargar los reportes de esta colonia." : "Cargando los reportes de esta colonia…")];
     }
     function refreshCounts() {
@@ -1881,7 +1915,7 @@ if (window.top !== window.self) {
       const wa = el("a", { class: "button wa", href: `https://wa.me/?text=${encodeURIComponent(`${text} ${url}`)}`, target: "_blank", rel: "noopener" }, icon("message-circle"), "WhatsApp");
       const fb = el("a", { class: "button alt", href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, target: "_blank", rel: "noopener" }, "Facebook");
       const box = el("div", { class: "share" },
-        el("p", {}, el("strong", {}, "Pásalo a tus vecinos."), " Entre más reportes, más clara la prueba de dónde falta el agua."),
+        el("p", {}, el("strong", {}, "Pásalo a tus vecinos."), " Con más testimonios se ve mejor dónde falta el agua; no son mediciones oficiales."),
         el("div", { class: "share-buttons" }, wa, fb));
       if (navigator.share) {
         const more = el("button", { type: "button", class: "button alt" }, "Más opciones");
@@ -1938,6 +1972,7 @@ if (window.top !== window.self) {
           });
           remember(keyOf(p));
           byKey.set(keyOf(p), c);
+          staleByKey.delete(keyOf(p));
           layer.setStyle(styleOf);
           drawMarkers();
           renderCard(f);
@@ -2367,10 +2402,11 @@ if (window.top !== window.self) {
       if (!options.length) { closeList(); return; }
       list.replaceChildren(...options.map((f, i) => {
         const p = f.properties;
-        const c = byKey.get(keyOf(p)), e = ev.get(keyOf(p));
-        const said = e ? ` · ${e.dias != null ? `hasta ${daysWord(e.dias)} sin agua` : "sin agua"}` : "";
+        const c = byKey.get(keyOf(p)), stale = staleByKey.get(keyOf(p)), e = ev.get(keyOf(p));
+        const said = e ? ` · publicaciones: ${e.dias != null ? `hasta ${daysWord(e.dias)} sin agua` : "sin agua"}` : "";
+        const current = c ? ` · ${statusLabel(c).toLowerCase()} en 24 h` : stale ? " · sin reportes nuevos en 24 h" : summary && !e ? " · sin reportes en 72 h" : "";
         const li = el("li", { role: "option", id: `op-${i}`, "aria-selected": "false" }, el("strong", {}, p.n),
-          el("span", { class: "sub" }, `${p.m}${p.cp ? ` · C.P. ${p.cp}` : ""}${said}${c ? ` · ${totalOf(c)} ${totalOf(c) === 1 ? "reporte" : "reportes"} en 24 h` : summary && !e ? " · sin reportes" : ""}`));
+          el("span", { class: "sub" }, `${p.m}${p.cp ? ` · C.P. ${p.cp}` : ""}${said}${current}`));
         li.addEventListener("mousedown", (e) => e.preventDefault());
         li.addEventListener("click", () => pick(f));
         return li;

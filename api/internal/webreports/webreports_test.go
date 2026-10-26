@@ -307,12 +307,39 @@ func TestSummaryCountsTheLastDay(t *testing.T) {
 	if s.Total != 5 || s.SinAgua != 3 || s.ConAgua != 2 || s.Colonias != 2 || s.MostlyDry != 1 || s.AllTime != 5 {
 		t.Fatalf("summary: %+v", s)
 	}
-	if s.Reports[0].Name != "12 DE DICIEMBRE" || s.Reports[0].Turbia != 1 || s.Reports[0].Last != "2026-10-18T22:00:00-06:00" {
+	if s.Reports[0].Name != "12 DE DICIEMBRE" || s.Reports[0].Turbia != 1 || s.Reports[0].Last != "2026-10-18T22:00:00-06:00" || s.Reports[0].LastStatus != "con_agua" {
 		t.Fatalf("busiest colonia first, with its last report: %+v", s.Reports[0])
 	}
 	*clock = clock.Add(23 * time.Hour)
-	if s := b.Summary(); s.Total != 4 || s.Colonias != 1 || s.AllTime != 5 {
-		t.Fatalf("a day later the first report no longer counts, but stays in the total: %+v", s)
+	if s := b.Summary(); s.Total != 4 || s.Colonias != 1 || s.AllTime != 5 || len(s.Stale) != 1 || s.Stale[0].LastStatus != "con_agua" {
+		t.Fatalf("a day later the first report is stale, but stays in the total: %+v", s)
+	}
+}
+
+func TestSummarySeparatesCurrentStaleAndExpiredReports(t *testing.T) {
+	clock := start(t)
+	now := *clock
+	st := &fakeStore{saved: []store.WebReport{ // WebReportsSince returns oldest first
+		{Colonia: "1 DE MAYO|Guadalajara|44940", Status: "sin_agua", At: now.Add(-StaleWindow)},      // exactly 72 hours: expired
+		{Colonia: "OBLATOS|Guadalajara|44360", Status: "baja", At: now.Add(-StaleWindow)},            // exactly 72 hours: expired
+		{Colonia: "12 DE DICIEMBRE|Zapopan|45068", Status: "sin_agua", At: now.Add(-30 * time.Hour)}, // hidden by newer current reports
+		{Colonia: "1 DE MAYO|Guadalajara|44940", Status: "con_agua", At: now.Add(-Window)},           // exactly 24 hours: stale
+		{Colonia: "12 DE DICIEMBRE|Zapopan|45068", Status: "sin_agua", At: now.Add(-2 * time.Hour)},
+		{Colonia: "12 DE DICIEMBRE|Zapopan|45068", Status: "con_agua", At: now.Add(-time.Hour)},
+	}}
+	b := board(t, st, clock)
+	if err := b.Load(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	s := b.Summary()
+	if s.Total != 2 || s.SinAgua != 1 || s.ConAgua != 1 || s.Colonias != 1 || s.AllTime != 6 || s.StaleHours != 72 {
+		t.Fatalf("only the current 24 hours count in the summary: %+v", s)
+	}
+	if len(s.Reports) != 1 || s.Reports[0].LastStatus != "con_agua" {
+		t.Fatalf("the latest answer comes from the latest report, not the majority: %+v", s.Reports)
+	}
+	if len(s.Stale) != 1 || s.Stale[0].Name != "1 DE MAYO" || s.Stale[0].ConAgua != 1 || s.Stale[0].LastStatus != "con_agua" {
+		t.Fatalf("only a colonia without current reports is stale: %+v", s.Stale)
 	}
 }
 
@@ -409,6 +436,9 @@ func TestWeekComparesReportsWithTheCalendar(t *testing.T) {
 	}
 	if out := w.Zones[7]; out.Zone != 0 || out.Days[6].Total != 2 || out.Days[6].Detail != nil {
 		t.Fatalf("outside the rotation, below the minimum only the number shows: %+v", out)
+	}
+	if len(w.Reports) != 3 || w.Reports[0].Day != "2026-10-16" || w.Reports[0].SinAgua != 6 || w.Reports[2].Name != "20 DE NOVIEMBRE" {
+		t.Fatalf("the timeline gets the map's daily history, but nothing before the week: %+v", w.Reports)
 	}
 }
 
