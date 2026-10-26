@@ -3,6 +3,7 @@ package bot
 import (
 	"context"
 	"fmt"
+	"slices"
 	"strings"
 	"testing"
 	"time"
@@ -58,7 +59,7 @@ func (h *tgHarness) sub(t *testing.T) (store.Subscriber, bool) {
 func TestTelegramStartAsksForLocation(t *testing.T) {
 	h := newTGHarness(t, "2026-10-14 10:00")
 	m := h.say(t, "/start")
-	if m.ChatID != 777 || m.ParseMode != "HTML" || !strings.Contains(m.Text, "te aviso por Telegram") || !strings.Contains(m.Text, "<b>Agua GDL</b>") || !strings.Contains(m.Text, "https://aguagdl.test/reportes") {
+	if m.ChatID != 777 || m.ParseMode != "HTML" || !strings.Contains(m.Text, "Te aviso por Telegram") || !strings.Contains(m.Text, "<b>Agua GDL</b>") || !strings.Contains(m.Text, "https://aguagdl.test/reportes") {
 		t.Errorf("welcome: %+v", m)
 	}
 	kb, ok := m.ReplyMarkup.(tg.ReplyKeyboard)
@@ -94,7 +95,7 @@ func TestTypedAnswersPointToTheButtons(t *testing.T) {
 			t.Fatalf("%q changed the subscription: %+v %v", text, s, ok)
 		}
 		// The bot can't tell a «no» to a reminder from a «no» to «¿Es la tuya?» about a colonia.
-		if !strings.Contains(m.Text, "toca uno de los botones") || !strings.Contains(m.Text, "<b>BAJA</b>") || !strings.Contains(m.Text, "Si es sobre tu colonia") {
+		if !strings.Contains(m.Text, "toca uno de sus botones") || !strings.Contains(m.Text, "<b>BAJA</b>") || !strings.Contains(m.Text, "https://aguagdl.test/reportes") {
 			t.Errorf("%q: %s", text, m.Text)
 		}
 	}
@@ -254,7 +255,7 @@ func TestNoSubscriptionsOnceTheRotationIsOver(t *testing.T) {
 	_, end := h.bot.Schedule.Span()
 	h.bot.Now = func() time.Time { return end.Add(24*time.Hour - time.Minute) }
 	m := h.say(t, "zona 4")
-	if s, ok := h.sub(t); !ok || s.Zone != 4 || !strings.Contains(m.Text, "<b>ZONA 1</b> a <b>ZONA 7</b> para cambiar de zona") {
+	if s, ok := h.sub(t); !ok || s.Zone != 4 || !strings.Contains(m.Text, "<b>ZONA 1</b> a <b>ZONA 7</b> para agregar una zona") {
 		t.Fatalf("the rotation's last day still takes subscriptions and zone changes: %+v %v\n%s", s, ok, m.Text)
 	}
 	h.bot.Now = func() time.Time { return end.AddDate(0, 0, 1) }
@@ -280,6 +281,17 @@ func TestNoSubscriptionsOnceTheRotationIsOver(t *testing.T) {
 	m = h.say(t, "/start")
 	if _, asks := m.ReplyMarkup.(tg.ReplyKeyboard); asks || !strings.Contains(m.Text, "ya terminó") {
 		t.Fatalf("/start says the rotation is over instead of asking for a location: %+v", m)
+	}
+}
+
+func TestZoneChangeDoesNotAuthorizeAnUnsignedOldCutReport(t *testing.T) {
+	h := newTGHarness(t, "2026-10-18 09:00")
+	h.say(t, "/start z4")
+	h.store.Now = h.bot.Now
+	h.say(t, "zona 1")
+	h.press(t, "R:1:2026-10-16:no_regreso") // older buttons have no signature
+	if len(h.store.Reports) != 0 {
+		t.Fatalf("changing zones authorized a cut the subscription never received: %+v", h.store.Reports)
 	}
 }
 
@@ -357,7 +369,7 @@ func TestEveryMessageIsHTMLTelegramTakes(t *testing.T) {
 	const base = "https://aguagdl.test"
 	texts := []string{
 		msgWelcome(base, store.Telegram), msgWelcome(base, store.WhatsApp), msgHelp(base, store.Telegram), msgHelp(base, store.WhatsApp),
-		msgUseButtons, msgCancelled, msgNotFound("*a _b* c_"), msgOutside, msgColoniaOutside("AMERICANA"), msgMunicipio("Tonalá"),
+		msgUseButtons(base), msgCancelled, msgNotFound("*a _b* c_"), msgOutside, msgColoniaOutside("AMERICANA"), msgMunicipio("Tonalá"),
 		msgPickColonia, msgPickOneColonia, msgOtherColonia("EL MIRADOR", "Tonalá", nil), msgOtherColonia("EL MIRADOR", "Tonalá", []int{5, 6}),
 		msgOrOneOfThese, msgOrThisOne, msgPickZone("AMERICANA", []int{6}), msgPickZone("AMERICANA", []int{5, 6}), msgPickZoneAtPoint,
 		msgPipa(base), msgWrite(base), msgFull(base), msgUnsubscribed, msgNotSubscribed, msgNoUserID, msgUnsupported,
@@ -423,7 +435,7 @@ func TestWriteToCongressIsTelegramOnly(t *testing.T) {
 func TestJoinInTheMiddleOfABlock(t *testing.T) {
 	for _, c := range []struct{ now, zone, later string }{
 		{"2026-10-23 10:00", "1", "domingo 25"}, // zone 1: Friday and Sunday are one block
-		{"2026-10-18 10:00", "2", "martes 20"}, // zone 2: Sunday, Tuesday and Thursday
+		{"2026-10-18 10:00", "2", "martes 20"},  // zone 2: Sunday, Tuesday and Thursday
 		{"2026-10-20 10:00", "2", "jueves 22"},
 	} {
 		h := newTGHarness(t, c.now)
@@ -555,5 +567,49 @@ func TestAnswersOpenWithTheNotice(t *testing.T) {
 	h.bot.Now = func() time.Time { return time.Date(2026, 10, 17, 21, 0, 0, 0, loc) }
 	if m := h.press(t, "A:5:2026-10-20:si"); !strings.Contains(m.Text, "ya cerró") || h.store.Water[0].Answer != "no" {
 		t.Errorf("not before the notice's evening: %s %+v", m.Text, h.store.Water)
+	}
+}
+
+func TestMultipleZonesAndSelectiveBaja(t *testing.T) {
+	h := newTGHarness(t, "2026-10-14 10:00")
+	h.say(t, "/start z3")
+	m := h.say(t, "zona 5")
+	s, ok := h.sub(t)
+	if !ok || !slices.Equal(s.Memberships(), []int{3, 5}) || s.Zone != 5 {
+		t.Fatalf("adding a zone keeps both memberships: %+v", s)
+	}
+	if !strings.Contains(m.Text, "También: Zona 3") {
+		t.Fatalf("the confirmation includes every zone: %s", m.Text)
+	}
+	h.say(t, "/baja zona 5")
+	s, ok = h.sub(t)
+	if !ok || !slices.Equal(s.Memberships(), []int{3}) {
+		t.Fatalf("selective BAJA leaves the other zone: %+v", s)
+	}
+	h.say(t, "BAJA ZONA 3")
+	if _, ok := h.sub(t); ok {
+		t.Fatal("removing the last zone deletes the subscription")
+	}
+}
+
+func TestMultipleZoneReportChoiceAndAnonymousFallback(t *testing.T) {
+	h := newTGHarness(t, "2026-10-19 10:00")
+	h.say(t, "/start z3")
+	h.say(t, "/start z6")
+	m := h.say(t, "/reportar")
+	if !strings.Contains(m.Text, "¿De qué zona") {
+		t.Fatalf("multiple reportable cuts need an explicit choice: %s", m.Text)
+	}
+	var payloads []string
+	for _, row := range m.ReplyMarkup.(tg.InlineKeyboard).InlineKeyboard {
+		payloads = append(payloads, row[0].CallbackData)
+	}
+	if !slices.ContainsFunc(payloads, func(p string) bool { return strings.HasPrefix(p, "REPORT:3:") }) ||
+		!slices.ContainsFunc(payloads, func(p string) bool { return strings.HasPrefix(p, "REPORT:6:") }) {
+		t.Fatalf("choices identify zone and date: %v", payloads)
+	}
+	h.say(t, "/baja")
+	if m := h.say(t, "/reportar"); !strings.Contains(m.Text, "/reportes") || !strings.Contains(m.Text, "/pipas") {
+		t.Fatalf("REPORTAR helps non-subscribers without requiring registration: %s", m.Text)
 	}
 }

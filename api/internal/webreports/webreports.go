@@ -207,6 +207,7 @@ type Board struct {
 	log         *slog.Logger
 	colonias    map[string]colonia
 	forgetEvery time.Duration
+	journal     *journal
 
 	mu        sync.Mutex
 	recent    []store.WebReport // the window's reports, oldest first
@@ -228,6 +229,15 @@ type Board struct {
 
 // New reads the colonias people may report on (api/data/colonias_mapa.json).
 func New(st Store, coloniasJSON []byte, minShown int, loc *time.Location, now func() time.Time, log *slog.Logger) (*Board, error) {
+	return newBoard(st, coloniasJSON, minShown, loc, now, log, "")
+}
+
+// NewWithWAL also replays the durable acknowledgement log at walPath.
+func NewWithWAL(st Store, coloniasJSON []byte, minShown int, loc *time.Location, now func() time.Time, log *slog.Logger, walPath string) (*Board, error) {
+	return newBoard(st, coloniasJSON, minShown, loc, now, log, walPath)
+}
+
+func newBoard(st Store, coloniasJSON []byte, minShown int, loc *time.Location, now func() time.Time, log *slog.Logger, walPath string) (*Board, error) {
 	var rows [][4]string
 	if err := json.Unmarshal(coloniasJSON, &rows); err != nil {
 		return nil, fmt.Errorf("colonias_mapa.json: %w", err)
@@ -237,6 +247,18 @@ func New(st Store, coloniasJSON []byte, minShown int, loc *time.Location, now fu
 	for _, r := range rows {
 		zone, _ := strconv.Atoi(strings.Split(r[3], ",")[0])
 		b.colonias[Key(r[0], r[1], r[2])] = colonia{r[0], r[1], r[2], zone}
+	}
+	if walPath != "" {
+		j, err := openJournal(walPath)
+		if err != nil {
+			return nil, fmt.Errorf("web report WAL: %w", err)
+		}
+		b.journal = j
+		b.pending, err = j.replay()
+		if err != nil {
+			j.close()
+			return nil, err
+		}
 	}
 	return b, nil
 }
@@ -262,7 +284,29 @@ func (b *Board) Load(ctx context.Context) error {
 	}
 	b.mu.Lock()
 	defer b.mu.Unlock()
+	saved := make(map[string]bool, len(recent))
+	for _, r := range recent {
+		if r.RequestID != "" {
+			saved[r.RequestID] = true
+		}
+	}
+	pending := b.pending[:0]
+	for _, r := range b.pending {
+		if !saved[r.RequestID] {
+			pending = append(pending, r)
+			if now.Sub(r.At) < StaleWindow {
+				recent = append(recent, r)
+			}
+		}
+	}
+	b.pending = pending
+	slices.SortFunc(recent, func(a, b store.WebReport) int { return a.At.Compare(b.At) })
 	b.recent, b.allTime, b.bot, b.week, b.botAt, b.cached = recent, all+len(b.pending), bot, week, now, nil
+	if b.journal != nil {
+		if err := b.journal.rewrite(b.pending); err != nil {
+			return fmt.Errorf("compact web report WAL: %w", err)
+		}
+	}
 	return nil
 }
 
@@ -282,7 +326,7 @@ func (b *Board) Add(addr, name, municipio, cp, status string, turbia, olor, sedi
 	now, net := b.now(), netOf(addr)
 	b.mu.Lock()
 	defer b.mu.Unlock()
-	if b.lastHour(now) >= maxPerHour {
+	if len(b.pending) >= maxPending || b.lastHour(now) >= maxPerHour {
 		return Colonia{}, ErrBusy
 	}
 	if b.coloniaFull(key, net, now) {
@@ -291,16 +335,17 @@ func (b *Board) Add(addr, name, municipio, cp, status string, turbia, olor, sedi
 	if !b.allow(addr, key, now) {
 		return Colonia{}, ErrTooMany
 	}
+	r := store.WebReport{Colonia: key, Status: status, Turbia: turbia, Olor: olor, Sedimento: sedimento, At: now}
+	if b.journal != nil {
+		if err := b.journal.append(&r); err != nil {
+			return Colonia{}, fmt.Errorf("durable report acknowledgement: %w", err)
+		}
+	}
 	if b.nets[key] == nil {
 		b.nets[key] = map[string]time.Time{}
 	}
 	b.nets[key][net] = now
-	r := store.WebReport{Colonia: key, Status: status, Turbia: turbia, Olor: olor, Sedimento: sedimento, At: now}
 	b.recent = append(b.recent, r)
-	if len(b.pending) >= maxPending {
-		b.log.Error("web reports: database unreachable for too long; dropping the oldest unsaved report")
-		b.pending = b.pending[1:]
-	}
 	b.pending = append(b.pending, r)
 	b.allTime++
 	b.cached = nil
@@ -450,6 +495,23 @@ func (c *Colonia) tally(r store.WebReport, loc *time.Location) {
 	}
 }
 
+// coarsenSmall keeps a small colonia's useful no-water counts while withholding details
+// that would make one person's report easy to isolate: exact recency, latest answer and
+// water-quality flags. Its last-public-report date remains available at day precision.
+func (b *Board) coarsenSmall(c Colonia) Colonia {
+	if c.total() >= b.minShown {
+		return c
+	}
+	c.Turbia, c.Olor, c.Sedimento, c.LastStatus = 0, 0, 0, ""
+	if c.Last != "" {
+		if at, err := time.Parse(time.RFC3339, c.Last); err == nil {
+			at = at.In(b.loc)
+			c.Last = time.Date(at.Year(), at.Month(), at.Day(), 0, 0, 0, 0, b.loc).Format(time.RFC3339)
+		}
+	}
+	return c
+}
+
 // Summary is the map's numbers, reused for summaryTTL.
 func (b *Board) Summary() Summary {
 	b.mu.Lock()
@@ -509,14 +571,14 @@ func (b *Board) summary(now time.Time) *Summary {
 		}
 	}
 	for _, c := range byKey {
-		s.Reports = append(s.Reports, *c)
+		s.Reports = append(s.Reports, b.coarsenSmall(*c))
 		if 2*c.SinAgua > c.total() {
 			s.MostlyDry++
 		}
 	}
 	for key, c := range staleByKey {
 		if byKey[key] == nil {
-			s.Stale = append(s.Stale, *c)
+			s.Stale = append(s.Stale, b.coarsenSmall(*c))
 		}
 	}
 	byCount := func(x, y Colonia) int {
@@ -568,17 +630,30 @@ func (b *Board) botZones() []ZoneAnswers {
 // Flush writes the reports not yet in Postgres. On failure they stay for the next try.
 func (b *Board) Flush(ctx context.Context) error {
 	b.mu.Lock()
-	batch := b.pending
-	b.pending = nil
+	batch := slices.Clone(b.pending)
 	b.mu.Unlock()
 	if len(batch) == 0 {
 		return nil
 	}
 	if err := b.store.SaveWebReports(ctx, batch); err != nil {
-		b.mu.Lock()
-		b.pending = append(batch, b.pending...)
-		b.mu.Unlock()
+		b.log.Warn("web reports pending", "count", len(batch), "oldest", batch[0].At)
 		return err
+	}
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	if len(b.pending) < len(batch) {
+		return errors.New("web report queue changed during flush")
+	}
+	for i, r := range batch {
+		if b.pending[i] != r {
+			return errors.New("web report queue reordered during flush")
+		}
+	}
+	b.pending = slices.Clone(b.pending[len(batch):])
+	if b.journal != nil {
+		if err := b.journal.rewrite(b.pending); err != nil {
+			return fmt.Errorf("compact web report WAL: %w", err)
+		}
 	}
 	return nil
 }

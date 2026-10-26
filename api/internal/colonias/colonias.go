@@ -74,7 +74,22 @@ func (ix *Index) Others(q string) []Other {
 	nq := Normalize(q)
 	var out []Other
 	for _, o := range ix.others {
-		if o.norm == nq || nq == o.norm+" "+o.munNorm || (o.munNorm == "TLAQUEPAQUE" && nq == o.norm+" SAN PEDRO TLAQUEPAQUE") {
+		if o.norm == nq {
+			out = append(out, o)
+		}
+	}
+	if len(out) > 0 {
+		return out
+	}
+	name, municipio := "", ""
+	for _, m := range municipios {
+		if rest, ok := strings.CutSuffix(nq, " "+m.alias); ok {
+			name, municipio = rest, m.norm
+			break
+		}
+	}
+	for _, o := range ix.others {
+		if municipio != "" && o.norm == name && o.munNorm == municipio {
 			out = append(out, o)
 		}
 	}

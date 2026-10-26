@@ -1,0 +1,32 @@
+name: Mejora del servicio
+description: Propón una mejora técnica, de accesibilidad o experiencia vecinal
+title: "[Mejora]: "
+labels: [mejora]
+body:
+  - type: textarea
+    id: problema
+    attributes:
+      label: Problema y personas afectadas
+      description: Describe la necesidad sin incluir datos personales.
+    validations:
+      required: true
+  - type: textarea
+    id: propuesta
+    attributes:
+      label: Cambio propuesto
+    validations:
+      required: true
+  - type: textarea
+    id: validacion
+    attributes:
+      label: Cómo comprobamos que ayuda
+      description: Incluye accesibilidad, privacidad, errores y pruebas aplicables.
+    validations:
+      required: true
+  - type: dropdown
+    id: datos
+    attributes:
+      label: ¿Requiere recolectar datos nuevos?
+      options: [No, Sí, No lo sé]
+    validations:
+      required: true

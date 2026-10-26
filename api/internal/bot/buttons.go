@@ -5,6 +5,7 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"fmt"
+	"slices"
 )
 
 // buttonKey signs the zone and date in answer buttons, so the bot can tell its own buttons
@@ -38,8 +39,8 @@ func signed(data, chat, kind string, zone int, date string) string {
 
 // zoneTrusted reports whether to believe a button's zone: it's the subscriber's own, or the
 // bot signed it for this chat (a report keeps the zone it was asked about after a zone change).
-func zoneTrusted(chat, kind string, zone int, date, sig string, current int) bool {
-	if zone == current {
+func zoneTrusted(chat, kind string, zone int, date, sig string, current ...int) bool {
+	if slices.Contains(current, zone) {
 		return true
 	}
 	want := signature(chat, kind, zone, date)

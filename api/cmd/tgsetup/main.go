@@ -25,7 +25,7 @@ const (
 	shortDescription = "El agua es un derecho. Exígelo. Reporta tu colonia, pide una pipa y recibe avisos de los cortes del SIAPA. Sin partido."
 	description      = `El agua es un derecho. Exígelo.
 
-Reporta cómo está el agua en tu colonia: cada reporte es una prueba de dónde falla el gobierno. Exígele a quien le toca que lo arregle: https://aguagdl.com/exige. ¿Sin agua? Te digo cómo pedir una pipa. Y te aviso gratis dos días antes de los cortes de tu zona y la noche antes.
+Reporta cómo está el agua en tu colonia: cada reporte es un testimonio vecinal que ayuda a ver dónde falta el agua. Exígele a quien le toca que lo arregle: https://aguagdl.com/exige. ¿Sin agua? Te digo cómo pedir una pipa. Y te aviso gratis dos días antes de los cortes de tu zona y la noche antes.
 
 Iniciativa ciudadana: no es del SIAPA ni del gobierno y no tiene partido. Toca «Iniciar».
 
@@ -43,7 +43,7 @@ var commands = []command{
 	{"reportar", "Contar cómo regresó el agua"},
 	{"pipa", "Cómo pedir una pipa al SIAPA"},
 	{"escribe", "Pedirles a Lemus y al Congreso agua limpia y ríos sanos"},
-	{"baja", "Dejar de recibir avisos y borrar tus datos"},
+	{"baja", "Dejar de recibir avisos y borrar tu suscripción"},
 	{"ayuda", "Ver lo que puedo hacer"},
 }
 

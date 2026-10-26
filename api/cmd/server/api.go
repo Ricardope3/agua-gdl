@@ -39,9 +39,10 @@ type api struct {
 }
 
 type zoneInfo struct {
-	Zone int      `json:"zone"`
-	Days []string `json:"days"`
-	Next []string `json:"next"`
+	Zone     int      `json:"zone"`
+	Days     []string `json:"days"`
+	Weekdays []int    `json:"weekdays"`
+	Next     []string `json:"next"`
 }
 
 func (a *api) routes() http.Handler {
@@ -49,7 +50,11 @@ func (a *api) routes() http.Handler {
 	mux.HandleFunc("GET /healthz", func(w http.ResponseWriter, _ *http.Request) { io.WriteString(w, "ok") })
 	mux.HandleFunc("GET /v1/zones", a.zonesList)
 	mux.HandleFunc("GET /v1/zone", a.zoneAt)
+	mux.HandleFunc("POST /v1/zone", a.zoneAt)
 	mux.HandleFunc("GET /v1/colonias", a.coloniaSearch)
+	mux.HandleFunc("POST /v1/colonias", a.coloniaSearch)
+	mux.HandleFunc("OPTIONS /v1/zone", a.privateOptions)
+	mux.HandleFunc("OPTIONS /v1/colonias", a.privateOptions)
 	if a.reports != nil {
 		mux.HandleFunc("GET /v1/reportes", a.reportesGet)
 		mux.HandleFunc("POST /v1/reportes", a.reportesPost)
@@ -174,9 +179,10 @@ func clientIP(r *http.Request) string {
 }
 
 func (a *api) info(zone int) zoneInfo {
-	z := zoneInfo{Zone: zone, Days: []string{}, Next: []string{}}
+	z := zoneInfo{Zone: zone, Days: []string{}, Weekdays: []int{}, Next: []string{}}
 	for _, d := range a.sched.Weekdays(zone) {
 		z.Days = append(z.Days, rotation.WeekdayES(d))
+		z.Weekdays = append(z.Weekdays, int(d))
 	}
 	for _, d := range a.sched.NextCuts(zone, time.Now(), 6) {
 		z.Next = append(z.Next, d.Format(rotation.DateLayout))
@@ -185,17 +191,32 @@ func (a *api) info(zone int) zoneInfo {
 }
 
 func (a *api) zonesList(w http.ResponseWriter, _ *http.Request) {
-	var out []zoneInfo
+	out := []zoneInfo{}
 	for _, z := range a.sched.Zones() {
 		out = append(out, a.info(z))
 	}
-	writeJSON(w, out, publicFiveMinutes)
+	checked, source := a.sched.Provenance()
+	writeJSON(w, map[string]any{"zones": out, "checked": checked, "source": source}, publicFiveMinutes)
 }
 
 func (a *api) zoneAt(w http.ResponseWriter, r *http.Request) {
-	lat, err1 := strconv.ParseFloat(r.URL.Query().Get("lat"), 64)
-	lon, err2 := strconv.ParseFloat(r.URL.Query().Get("lon"), 64)
-	if err1 != nil || err2 != nil || math.IsNaN(lat) || math.IsNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180 {
+	var lat, lon float64
+	var err1, err2 error
+	if r.Method == http.MethodPost {
+		var in struct {
+			Lat *float64 `json:"lat"`
+			Lon *float64 `json:"lon"`
+		}
+		if err := json.NewDecoder(io.LimitReader(r.Body, 1024)).Decode(&in); err != nil || in.Lat == nil || in.Lon == nil {
+			http.Error(w, "lat and lon required", http.StatusBadRequest)
+			return
+		}
+		lat, lon = *in.Lat, *in.Lon
+	} else {
+		lat, err1 = strconv.ParseFloat(r.URL.Query().Get("lat"), 64)
+		lon, err2 = strconv.ParseFloat(r.URL.Query().Get("lon"), 64)
+	}
+	if err1 != nil || err2 != nil || math.IsNaN(lat) || math.IsNaN(lon) || math.IsInf(lat, 0) || math.IsInf(lon, 0) || lat < -90 || lat > 90 || lon < -180 || lon > 180 {
 		http.Error(w, "lat and lon required", http.StatusBadRequest)
 		return
 	}
@@ -203,12 +224,23 @@ func (a *api) zoneAt(w http.ResponseWriter, r *http.Request) {
 	for _, z := range a.zones.Lookup(lat, lon) {
 		out = append(out, a.info(z))
 	}
-	// The request carries the visitor's coordinates: keep it out of every cache.
+	// Coordinates and searches stay out of URLs, browser history, proxies and caches.
 	writeJSON(w, map[string]any{"zones": out}, "no-store")
 }
 
 func (a *api) coloniaSearch(w http.ResponseWriter, r *http.Request) {
 	q := strings.TrimSpace(r.URL.Query().Get("q"))
+	cache := publicFiveMinutes
+	if r.Method == http.MethodPost {
+		var in struct {
+			Q string `json:"q"`
+		}
+		if err := json.NewDecoder(io.LimitReader(r.Body, 1024)).Decode(&in); err != nil {
+			http.Error(w, "bad request", http.StatusBadRequest)
+			return
+		}
+		q, cache = strings.TrimSpace(in.Q), "no-store"
+	}
 	if n := len([]rune(q)); n < 1 || n > colonias.MaxQuery {
 		http.Error(w, "q must have 1 to 80 characters", http.StatusBadRequest)
 		return
@@ -223,7 +255,15 @@ func (a *api) coloniaSearch(w http.ResponseWriter, r *http.Request) {
 			res["others"] = others
 		}
 	}
-	writeJSON(w, res, publicFiveMinutes)
+	writeJSON(w, res, cache)
+}
+
+func (a *api) privateOptions(w http.ResponseWriter, _ *http.Request) {
+	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Set("Cache-Control", "no-store")
+	w.Header().Set("Access-Control-Max-Age", "86400")
+	w.WriteHeader(http.StatusNoContent)
 }
 
 // reportesGet serves the map's numbers: the day's reports by colonia, the totals, the bot's

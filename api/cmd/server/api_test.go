@@ -16,6 +16,7 @@ import (
 
 	"aguagdl/api/data"
 	"aguagdl/api/internal/bot"
+	"aguagdl/api/internal/colonias"
 	"aguagdl/api/internal/fake"
 	"aguagdl/api/internal/geo"
 	"aguagdl/api/internal/rotation"
@@ -104,6 +105,39 @@ func TestZoneLookupIsNotCached(t *testing.T) {
 	h.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/v1/zone?lat=20.6767&lon=-103.3475", nil))
 	if rec.Code != http.StatusOK || !strings.Contains(rec.Body.String(), `"zone":6`) || rec.Header().Get("Cache-Control") != "no-store" {
 		t.Fatalf("status %d, cache %q, body %s", rec.Code, rec.Header().Get("Cache-Control"), rec.Body.String())
+	}
+}
+
+func TestPrivateLookupsAcceptJSONPosts(t *testing.T) {
+	zones, err := geo.Load(data.Zonas)
+	if err != nil {
+		t.Fatal(err)
+	}
+	cols, err := colonias.Load(data.Colonias)
+	if err != nil {
+		t.Fatal(err)
+	}
+	h := (&api{zones: zones, sched: testSchedule(t), cols: cols}).routes()
+	for _, tc := range []struct {
+		path, body, want string
+	}{
+		{"/v1/zone", `{"lat":20.6767,"lon":-103.3475}`, `"zone":6`},
+		{"/v1/colonias", `{"q":"Americana"}`, `"colonias"`},
+	} {
+		req := httptest.NewRequest(http.MethodPost, tc.path, strings.NewReader(tc.body))
+		req.Header.Set("Content-Type", "application/json")
+		rec := httptest.NewRecorder()
+		h.ServeHTTP(rec, req)
+		if rec.Code != http.StatusOK || rec.Header().Get("Cache-Control") != "no-store" || !strings.Contains(rec.Body.String(), tc.want) {
+			t.Errorf("POST %s: status %d, cache %q, body %s", tc.path, rec.Code, rec.Header().Get("Cache-Control"), rec.Body.String())
+		}
+	}
+	for _, path := range []string{"/v1/zone", "/v1/colonias"} {
+		rec := httptest.NewRecorder()
+		h.ServeHTTP(rec, httptest.NewRequest(http.MethodOptions, path, nil))
+		if rec.Code != http.StatusNoContent || rec.Header().Get("Cache-Control") != "no-store" {
+			t.Errorf("OPTIONS %s: status %d, headers %v", path, rec.Code, rec.Header())
+		}
 	}
 }
 

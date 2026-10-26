@@ -312,8 +312,8 @@ func TestSummaryCountsTheLastDay(t *testing.T) {
 		t.Fatalf("busiest colonia first, with its last report: %+v", s.Reports[0])
 	}
 	*clock = clock.Add(23 * time.Hour)
-	if s := b.Summary(); s.Total != 4 || s.Colonias != 1 || s.AllTime != 5 || len(s.Stale) != 1 || s.Stale[0].LastStatus != "con_agua" {
-		t.Fatalf("a day later the first report is stale, but stays in the total: %+v", s)
+	if s := b.Summary(); s.Total != 4 || s.Colonias != 1 || s.AllTime != 5 || len(s.Stale) != 1 || s.Stale[0].LastStatus != "" || s.Stale[0].Last != "2026-10-18T00:00:00-06:00" {
+		t.Fatalf("a small stale colonia keeps its total but withholds its latest answer and exact recency: %+v", s)
 	}
 }
 
@@ -336,11 +336,11 @@ func TestSummarySeparatesCurrentStaleAndExpiredReports(t *testing.T) {
 	if s.Total != 2 || s.SinAgua != 1 || s.ConAgua != 1 || s.Colonias != 1 || s.AllTime != 6 || s.StaleHours != 72 {
 		t.Fatalf("only the current 24 hours count in the summary: %+v", s)
 	}
-	if len(s.Reports) != 1 || s.Reports[0].LastStatus != "con_agua" {
-		t.Fatalf("the latest answer comes from the latest report, not the majority: %+v", s.Reports)
+	if len(s.Reports) != 1 || s.Reports[0].LastStatus != "" || s.Reports[0].Last != "2026-10-18T00:00:00-06:00" {
+		t.Fatalf("a small current colonia withholds its latest answer and exact recency: %+v", s.Reports)
 	}
-	if len(s.Stale) != 1 || s.Stale[0].Name != "1 DE MAYO" || s.Stale[0].ConAgua != 1 || s.Stale[0].LastStatus != "con_agua" {
-		t.Fatalf("only a colonia without current reports is stale: %+v", s.Stale)
+	if len(s.Stale) != 1 || s.Stale[0].Name != "1 DE MAYO" || s.Stale[0].ConAgua != 1 || s.Stale[0].LastStatus != "" || s.Stale[0].Last != "2026-10-17T00:00:00-06:00" {
+		t.Fatalf("a small stale colonia is coarsened too: %+v", s.Stale)
 	}
 }
 
@@ -365,6 +365,61 @@ func TestFlushKeepsReportsUntilSaved(t *testing.T) {
 	}
 	if s := after.Summary(); s.Total != 2 || s.AllTime != 2 {
 		t.Fatalf("a restart reads the day's reports back: %+v", s)
+	}
+}
+
+func TestWALReplaysAnAcceptedReportAfterRestart(t *testing.T) {
+	clock := start(t)
+	st := &fakeStore{}
+	path := filepath.Join(t.TempDir(), "reports.wal")
+	log := slog.New(slog.NewTextHandler(io.Discard, nil))
+	loc, _ := time.LoadLocation("America/Mexico_City")
+	now := func() time.Time { return *clock }
+	b, err := NewWithWAL(st, data.ColoniasMapa, 3, loc, now, log, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer b.journal.close()
+	if _, err := b.Add("1.1.1.1", "1 DE MAYO", "Guadalajara", "44940", "sin_agua", false, false, false); err != nil {
+		t.Fatal(err)
+	}
+	// No Flush: the accepted report exists only in the WAL and memory.
+	restarted, err := NewWithWAL(st, data.ColoniasMapa, 3, loc, now, log, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer restarted.journal.close()
+	if err := restarted.Load(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	if s := restarted.Summary(); s.Total != 1 || s.AllTime != 1 {
+		t.Fatalf("replayed report missing or counted twice: %+v", s)
+	}
+	if err := restarted.Flush(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	again, err := NewWithWAL(st, data.ColoniasMapa, 3, loc, now, log, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer again.journal.close()
+	if err := again.Load(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	if s := again.Summary(); s.Total != 1 || s.AllTime != 1 || len(again.pending) != 0 {
+		t.Fatalf("flushed replay duplicated the report: %+v, pending %d", s, len(again.pending))
+	}
+}
+
+func TestFullPendingQueueAppliesBackpressure(t *testing.T) {
+	clock := start(t)
+	b := board(t, &fakeStore{}, clock)
+	b.pending = make([]store.WebReport, maxPending)
+	if _, err := b.Add("1.1.1.1", "1 DE MAYO", "Guadalajara", "44940", "sin_agua", false, false, false); !errors.Is(err, ErrBusy) {
+		t.Fatalf("a full queue must refuse, not drop, a report: %v", err)
+	}
+	if len(b.pending) != maxPending {
+		t.Fatal("an accepted report was dropped")
 	}
 }
 

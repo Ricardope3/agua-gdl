@@ -98,7 +98,17 @@ func Key(channel, userID string) string {
 
 func (s *Store) Subscriber(_ context.Context, channel, userID string) (store.Subscriber, bool, error) {
 	sub, ok := s.Subs[Key(channel, userID)]
+	sub.Zones = slices.Clone(sub.Zones)
 	return sub, ok, nil
+}
+
+func matchingZone(sub store.Subscriber, zones []int) (int, bool) {
+	for _, candidate := range sub.Memberships() {
+		if slices.Contains(zones, candidate) {
+			return candidate, true
+		}
+	}
+	return 0, false
 }
 
 func (s *Store) Subscribe(_ context.Context, channel, userID, phone string, zone int) error {
@@ -115,6 +125,12 @@ func (s *Store) Subscribe(_ context.Context, channel, userID, phone string, zone
 	}
 	if phone != "" {
 		sub.Phone = phone
+	}
+	if len(sub.Zones) == 0 {
+		sub.Zones = []int{zone}
+	} else if !sub.HasZone(zone) {
+		sub.Zones = append(slices.Clone(sub.Zones), zone)
+		slices.Sort(sub.Zones)
 	}
 	sub.Zone, sub.UpdatedAt = zone, s.Now()
 	s.Subs[id] = sub
@@ -160,10 +176,46 @@ func (s *Store) ZoneCounts(context.Context) (map[int]int, error) {
 	counts := map[int]int{}
 	for _, sub := range s.Subs {
 		if sub.Channel == store.WhatsApp {
-			counts[sub.Zone]++
+			for _, zone := range sub.Memberships() {
+				counts[zone]++
+			}
 		}
 	}
 	return counts, nil
+}
+
+func (s *Store) NightLoad(_ context.Context, zones []int) (int, error) {
+	n := 0
+	for _, sub := range s.Subs {
+		if sub.Channel == store.WhatsApp {
+			if _, ok := matchingZone(sub, zones); ok {
+				n++
+			}
+		}
+	}
+	return n, nil
+}
+
+func (s *Store) UnsubscribeZone(_ context.Context, channel, userID string, zone int) (bool, bool, error) {
+	id := Key(channel, userID)
+	sub, ok := s.Subs[id]
+	if !ok || !sub.HasZone(zone) {
+		return false, ok, nil
+	}
+	if len(sub.Zones) == 0 {
+		sub.Zones = []int{sub.Zone}
+	}
+	sub.Zones = slices.DeleteFunc(sub.Zones, func(z int) bool { return z == zone })
+	if len(sub.Zones) == 0 {
+		delete(s.Subs, id)
+		return true, false, nil
+	}
+	if sub.Zone == zone {
+		sub.Zone = sub.Zones[0]
+	}
+	sub.UpdatedAt = s.Now()
+	s.Subs[id] = sub
+	return true, true, nil
 }
 
 func (s *Store) Unsubscribe(_ context.Context, channel, userID, phone string) (bool, error) {
@@ -226,7 +278,7 @@ func (s *Store) NoWater(_ context.Context, start time.Time) (map[int64]bool, err
 func (s *Store) ReturnRecipients(_ context.Context, channel string, zone int, start, last time.Time) ([]store.Subscriber, error) {
 	var out []store.Subscriber
 	for _, sub := range s.Subs {
-		if sub.Channel != channel || sub.Zone != zone || s.Notices[fmt.Sprintf("%d/%s", sub.ID, store.ReturnKey(start))] {
+		if sub.Channel != channel || !sub.HasZone(zone) || s.Notices[fmt.Sprintf("%d/%s", sub.ID, store.ReturnKey(start))] {
 			continue
 		}
 		dry := slices.ContainsFunc(s.Water, func(w Report) bool {
@@ -236,6 +288,7 @@ func (s *Store) ReturnRecipients(_ context.Context, channel string, zone int, st
 			return r.SubscriberID == sub.ID && r.Date >= start.Format("2006-01-02") && r.Date <= last.Format("2006-01-02")
 		})
 		if dry && !reported {
+			sub.Zone = zone
 			out = append(out, sub)
 		}
 	}
@@ -264,7 +317,9 @@ func (s *Store) DueSubscribers(_ context.Context, channel string, zones []int, d
 	}
 	var out []store.Subscriber
 	for _, sub := range s.Subs {
-		if sub.Channel == channel && slices.Contains(zones, sub.Zone) && !s.Reminders[key(sub.ID, d)] {
+		zone, match := matchingZone(sub, zones)
+		if sub.Channel == channel && match && !s.Reminders[key(sub.ID, d)] {
+			sub.Zone = zone
 			out = append(out, sub)
 		}
 	}
@@ -275,9 +330,11 @@ func (s *Store) DueSubscribers(_ context.Context, channel string, zones []int, d
 func (s *Store) SendReminder(ctx context.Context, sub store.Subscriber, d time.Time, zones []int, budget *store.Budget, send func(store.Subscriber) (string, error)) (bool, error) {
 	current, ok := s.Subs[Key(sub.Channel, sub.UserID)]
 	k := key(sub.ID, d)
-	if !ok || current.ID != sub.ID || !slices.Contains(zones, current.Zone) || s.Reminders[k] {
+	zone, match := matchingZone(current, zones)
+	if !ok || current.ID != sub.ID || !match || s.Reminders[k] {
 		return false, nil
 	}
+	current.Zone = zone
 	if s.overBudget(budget) {
 		return false, store.ErrOverBudget
 	}
@@ -341,7 +398,8 @@ func (s *Store) RecipientsSince(_ context.Context, since time.Time) (int, error)
 func (s *Store) NoticeRecipients(_ context.Context, channel string, zone int, k string) ([]store.Subscriber, error) {
 	var out []store.Subscriber
 	for _, sub := range s.Subs {
-		if sub.Channel == channel && sub.Zone == zone && !s.Notices[fmt.Sprintf("%d/%s", sub.ID, k)] {
+		if sub.Channel == channel && sub.HasZone(zone) && !s.Notices[fmt.Sprintf("%d/%s", sub.ID, k)] {
+			sub.Zone = zone
 			out = append(out, sub)
 		}
 	}
@@ -354,9 +412,10 @@ func (s *Store) NoticeRecipients(_ context.Context, channel string, zone int, k 
 func (s *Store) SendNotice(_ context.Context, sub store.Subscriber, k string, budget *store.Budget, send func(store.Subscriber) (string, error)) (bool, error) {
 	nk := fmt.Sprintf("%d/%s", sub.ID, k)
 	current, ok := s.Subs[Key(sub.Channel, sub.UserID)]
-	if !ok || current.ID != sub.ID || current.Zone != sub.Zone || s.Notices[nk] {
+	if !ok || current.ID != sub.ID || !current.HasZone(sub.Zone) || s.Notices[nk] {
 		return false, nil
 	}
+	current.Zone = sub.Zone
 	if s.overBudget(budget) {
 		return false, store.ErrOverBudget
 	}

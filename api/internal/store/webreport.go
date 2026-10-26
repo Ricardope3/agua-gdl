@@ -2,43 +2,78 @@ package store
 
 import (
 	"context"
+	"encoding/json"
 	"time"
 
 	"github.com/jackc/pgx/v5"
 )
 
 // WebReport is one report from the map on /reportes. Colonia is "name|municipio|postal code".
+// RequestID is a random receipt, not a visitor identifier; it makes WAL replay idempotent.
 type WebReport struct {
-	Colonia                 string
-	Status                  string // sin_agua, baja or con_agua
-	Turbia, Olor, Sedimento bool
-	At                      time.Time
+	RequestID               string    `json:"request_id"`
+	Colonia                 string    `json:"colonia"`
+	Status                  string    `json:"status"` // sin_agua, baja or con_agua
+	Turbia, Olor, Sedimento bool      `json:"-"`
+	At                      time.Time `json:"at"`
 }
 
-// SaveWebReports stores a batch of reports in one statement.
+// MarshalJSON keeps the quality flags in the local WAL without changing their Go API.
+func (r WebReport) MarshalJSON() ([]byte, error) {
+	type wire struct {
+		RequestID string    `json:"request_id"`
+		Colonia   string    `json:"colonia"`
+		Status    string    `json:"status"`
+		Turbia    bool      `json:"turbia"`
+		Olor      bool      `json:"olor"`
+		Sedimento bool      `json:"sedimento"`
+		At        time.Time `json:"at"`
+	}
+	return json.Marshal(wire{r.RequestID, r.Colonia, r.Status, r.Turbia, r.Olor, r.Sedimento, r.At})
+}
+
+// UnmarshalJSON restores a WAL line.
+func (r *WebReport) UnmarshalJSON(raw []byte) error {
+	var w struct {
+		RequestID string    `json:"request_id"`
+		Colonia   string    `json:"colonia"`
+		Status    string    `json:"status"`
+		Turbia    bool      `json:"turbia"`
+		Olor      bool      `json:"olor"`
+		Sedimento bool      `json:"sedimento"`
+		At        time.Time `json:"at"`
+	}
+	if err := json.Unmarshal(raw, &w); err != nil {
+		return err
+	}
+	*r = WebReport{RequestID: w.RequestID, Colonia: w.Colonia, Status: w.Status, Turbia: w.Turbia, Olor: w.Olor, Sedimento: w.Sedimento, At: w.At}
+	return nil
+}
+
+// SaveWebReports stores a batch atomically. Replaying receipts is safe.
 func (db *DB) SaveWebReports(ctx context.Context, rs []WebReport) error {
-	if len(rs) == 0 {
+	return pgx.BeginFunc(ctx, db.pool, func(tx pgx.Tx) error {
+		for _, r := range rs {
+			if _, err := tx.Exec(ctx, `insert into web_report (request_id, colonia, status, turbia, olor, sedimento, created_at)
+				values (nullif($1, ''), $2, $3, $4, $5, $6, $7) on conflict (request_id) where request_id is not null do nothing`,
+				r.RequestID, r.Colonia, r.Status, r.Turbia, r.Olor, r.Sedimento, r.At); err != nil {
+				return err
+			}
+		}
 		return nil
-	}
-	rows := make([][]any, len(rs))
-	for i, r := range rs {
-		rows[i] = []any{r.Colonia, r.Status, r.Turbia, r.Olor, r.Sedimento, r.At}
-	}
-	_, err := db.pool.CopyFrom(ctx, pgx.Identifier{"web_report"},
-		[]string{"colonia", "status", "turbia", "olor", "sedimento", "created_at"}, pgx.CopyFromRows(rows))
-	return err
+	})
 }
 
 // WebReportsSince returns the reports made since the given time, oldest first.
 func (db *DB) WebReportsSince(ctx context.Context, since time.Time) ([]WebReport, error) {
-	rows, err := db.q.Query(ctx, `select colonia, status, turbia, olor, sedimento, created_at
+	rows, err := db.q.Query(ctx, `select coalesce(request_id, ''), colonia, status, turbia, olor, sedimento, created_at
 		from web_report where created_at >= $1 order by created_at, id`, since)
 	if err != nil {
 		return nil, err
 	}
 	return pgx.CollectRows(rows, func(r pgx.CollectableRow) (WebReport, error) {
 		var w WebReport
-		err := r.Scan(&w.Colonia, &w.Status, &w.Turbia, &w.Olor, &w.Sedimento, &w.At)
+		err := r.Scan(&w.RequestID, &w.Colonia, &w.Status, &w.Turbia, &w.Olor, &w.Sedimento, &w.At)
 		return w, err
 	})
 }

@@ -325,8 +325,9 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
         <button class="button alt" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Usar mi ubicación</button>
         <p><strong>Recomendado:</strong> usa el mapa de zonas del SIAPA, no los nombres. No guardamos tu ubicación. <a href="#lista">Por qué</a></p>
       </div>
+      <p class="note" id="calendario-fuente"></p>
       <p class="status" id="estado" aria-live="polite">Cargando el mapa de colonias…</p>
-      <noscript><p class="status">Esta página necesita JavaScript. Consulta tu zona en el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa oficial del SIAPA</a>.</p></noscript>
+      <noscript><p class="status">Consulta la <a href="/simple">versión sencilla</a> o el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa oficial del SIAPA</a>.</p></noscript>
     </div>
     <div class="modo" id="modo" role="group" aria-label="Colorear el mapa por"><span>Colorear por:</span><button type="button" data-modo="dias" aria-pressed="true">Días sin agua</button><button type="button" data-modo="zona" aria-pressed="false">Zona del SIAPA</button>
       <ul class="dkey" id="clave-dias" aria-label="Colores del mapa: días sin agua según medios y vecinos" hidden>
@@ -372,7 +373,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
 <div class="wrap">
   <footer>
     <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con el Gobierno de Jalisco.</p>
-    <p><a href="/">Inicio</a> · <a href="/mapa">Mapa de la rotación</a> · <a href="/avisos">Recibir avisos</a> · <a href="/exige">Escríbele a Lemus y al Congreso</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
+    <p><a href="/">Inicio</a> · <a href="/simple">Versión sencilla</a> · <a href="/mapa">Mapa de la rotación</a> · <a href="/avisos">Recibir avisos</a> · <a href="/correcciones">Corregir el calendario o una colonia</a> · <a href="/exige">Escríbele a Lemus y al Congreso</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
   </footer>
 </div>
 <script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
@@ -455,13 +456,32 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   };
   const mapLink = (text) => el("a", { href: SIAPA, rel: "noopener" }, text || "mapa oficial del SIAPA");
 
-  // ——— SIAPA's calendar: each zone's cut days, from the API. ———
-  let zinfo = new Map(), zonesState = "loading";
+  // ——— SIAPA's calendar: API first, then the checked static copy during an outage. ———
+  let zinfo = new Map(), zonesState = "loading", calendarEnd = "";
+  function useZones(data, fallback) {
+    for (const z of data.zones || []) zinfo.set(z.zone, z);
+    calendarEnd = data.end || "";
+    zonesState = "ok";
+    const age = data.checked ? Math.floor((dayOf(today) - dayOf(data.checked)) / 86400000) : 0;
+    const stale = age > 7 ? ` Lleva ${age} días sin una nueva verificación.` : "";
+    $("calendario-fuente").textContent = `Calendario del SIAPA verificado el ${data.checked ? pubDate(data.checked, true) : "día no indicado"}.${stale}${fallback ? " Estás usando la copia local porque el servidor no respondió." : ""}`;
+  }
   const zonesLoad = get("/v1/zones")
-    .then((list) => { for (const z of list) zinfo.set(z.zone, z); zonesState = "ok"; })
-    .catch(() => { zonesState = zinfo.size ? "ok" : "failed"; });
+    .then((data) => useZones(data, false))
+    .catch(() => fetch("/zones.json").then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then((data) => useZones(data, true))
+      .catch(() => { zonesState = zinfo.size ? "ok" : "failed"; $("calendario-fuente").textContent = "No pudimos cargar el calendario. Confirma los días en el SIAPA."; }));
   const daysText = (z) => zinfo.has(z) ? cap(joinES(zinfo.get(z).days)) : zonesState === "loading" ? "Cargando los días…" : null;
-  const nextCut = (z, after) => { const i = zinfo.get(z); return i ? (i.next || []).find((d) => after ? d > after : d >= today) || null : null; };
+  const nextCut = (z, after) => {
+    const i = zinfo.get(z); if (!i) return null;
+    const listed = (i.next || []).find((d) => after ? d > after : d >= today);
+    if (listed) return listed;
+    for (let n = after ? Math.max(1, Math.round((dayOf(after) - dayOf(today)) / 86400000) + 1) : 0; n < 370; n++) {
+      const d = isoToday(n);
+      if ((i.weekdays || []).includes(dayOf(d).getUTCDay()) && (!calendarEnd || d <= calendarEnd) && (!after || d > after)) return d;
+    }
+    return null;
+  };
 
   // ——— Telegram and the calendars, as before. ———
   const TELEGRAM = "https://t.me/AvisoAguaGDLbot";
@@ -583,7 +603,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   function apiSearch(q, signal) {
     const k = q.toLowerCase();
     if (apiCache.has(k)) return Promise.resolve(apiCache.get(k));
-    return get("/v1/colonias?q=" + encodeURIComponent(q.slice(0, 80)), signal ? { signal } : undefined).then((r) => {
+    return get("/v1/colonias", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ q: q.slice(0, 80) }), ...(signal ? { signal } : {}) }).then((r) => {
       apiCache.set(k, r);
       if (apiCache.size > 60) apiCache.delete(apiCache.keys().next().value);
       return r;
@@ -1221,7 +1241,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     const render = () => {
       const card = M.card({ ...cardOpts(), title: o.name, subtitle: `${municipio(o.municipio)} · no está en la lista del SIAPA`, main: o.zones,
         sentence: o.zones.length ? `No está en la lista de colonias de la rotación del SIAPA, pero queda dentro del mapa de ${o.zones.length > 1 ? "las zonas" : "la zona"} ${joinES(o.zones)}. El mapa y la lista no siempre coinciden: usa tu ubicación para confirmarlo.` : null });
-      if (!o.zones.length) card.querySelector(".zbox .zd").textContent = "No está en la lista de colonias de la rotación del SIAPA y queda fuera de las zonas de su mapa, así que no le toca racionamiento.";
+      if (!o.zones.length) card.querySelector(".zbox .zd").textContent = "No aparece en la lista ni en las zonas del mapa del SIAPA que consultamos. Eso no confirma que tengas agua ni que estés fuera de la rotación: revisa el mapa oficial.";
       return finish(card, o.zones, [el("p", { class: "note" }, "¿No es tu colonia? ", linkTo("Usa tu ubicación", locate), " o toca tu calle en el mapa.")]);
     };
     openSheet("colonia", render, { focusZones: o.zones });
@@ -1301,7 +1321,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     }
     addStreets();
     try {
-      r = await get(`/v1/zone?lat=${latlng.lat.toFixed(mine ? 4 : 5)}&lon=${latlng.lng.toFixed(mine ? 4 : 5)}`);
+      r = await get("/v1/zone", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ lat: Number(latlng.lat.toFixed(mine ? 4 : 5)), lon: Number(latlng.lng.toFixed(mine ? 4 : 5)) }) });
       for (const z of r.zones) if (!zinfo.has(z.zone)) zinfo.set(z.zone, z);
     } catch {
       failed = true;

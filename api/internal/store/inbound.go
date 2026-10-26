@@ -16,8 +16,10 @@ type BotStore interface {
 	Subscriber(ctx context.Context, channel, userID string) (Subscriber, bool, error)
 	Subscribe(ctx context.Context, channel, userID, phone string, zone int) error
 	Unsubscribe(ctx context.Context, channel, userID, phone string) (bool, error)
+	UnsubscribeZone(ctx context.Context, channel, userID string, zone int) (bool, bool, error)
 	ChangeUser(ctx context.Context, oldUserID, oldPhone, newUserID, newPhone string) error
 	ZoneCounts(context.Context) (map[int]int, error)
+	NightLoad(context.Context, []int) (int, error)
 	SaveReport(context.Context, int64, int, time.Time, string) error
 	SaveWater(context.Context, int64, int, time.Time, string) (bool, error)
 	NoWater(context.Context, time.Time) (map[int64]bool, error)

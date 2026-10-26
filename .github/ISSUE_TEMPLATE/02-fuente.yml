@@ -1,0 +1,32 @@
+name: Proponer una fuente pública
+description: Comparte una nota, publicación pública o fuente oficial
+title: "[Fuente]: "
+labels: [fuente]
+body:
+  - type: markdown
+    attributes:
+      value: Solo fuentes públicas. No envíes nombres de personas privadas, capturas con datos personales ni conversaciones privadas.
+  - type: input
+    id: url
+    attributes:
+      label: Enlace público
+    validations:
+      required: true
+  - type: input
+    id: colonia
+    attributes:
+      label: Colonia, municipio y fecha del hecho
+    validations:
+      required: true
+  - type: textarea
+    id: cita
+    attributes:
+      label: Cita exacta o dato verificable
+      description: Incluye los días sin agua solo si la fuente los dice.
+    validations:
+      required: true
+  - type: checkboxes
+    id: revision
+    options:
+      - label: La fuente es pública y la cita coincide con lo publicado.
+        required: true

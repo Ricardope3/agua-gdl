@@ -209,8 +209,13 @@ func TestQueuedReminderRechecksSubscriber(t *testing.T) {
 				if _, err := db.Unsubscribe(ctx, WhatsApp, s.UserID, ""); err != nil {
 					t.Fatal(err)
 				}
-			} else if err := db.Subscribe(ctx, WhatsApp, s.UserID, "521111", 6); err != nil {
-				t.Fatal(err)
+			} else {
+				if err := db.Subscribe(ctx, WhatsApp, s.UserID, "521111", 6); err != nil {
+					t.Fatal(err)
+				}
+				if _, _, err := db.UnsubscribeZone(ctx, WhatsApp, s.UserID, 4); err != nil {
+					t.Fatal(err)
+				}
 			}
 			attempted, err := db.SendReminder(ctx, s, date, []int{4}, nil, func(Subscriber) (string, error) { t.Error("stale reminder sent"); return "id", nil })
 			if err != nil || attempted {
@@ -228,6 +233,9 @@ func TestZoneChangeBetweenZonesCutTheSameDay(t *testing.T) {
 	if err := db.Subscribe(ctx, WhatsApp, s.UserID, "521111", 6); err != nil {
 		t.Fatal(err)
 	}
+	if _, _, err := db.UnsubscribeZone(ctx, WhatsApp, s.UserID, 4); err != nil {
+		t.Fatal(err)
+	}
 	var got Subscriber
 	attempted, err := db.SendReminder(ctx, s, date, []int{4, 6}, nil, func(current Subscriber) (string, error) { got = current; return "wamid.z6", nil })
 	if err != nil || !attempted || got.Zone != 6 {
@@ -236,6 +244,68 @@ func TestZoneChangeBetweenZonesCutTheSameDay(t *testing.T) {
 	var zone int
 	if err := db.pool.QueryRow(ctx, `select zone from reminder where subscriber_id = $1`, s.ID).Scan(&zone); err != nil || zone != 6 {
 		t.Fatalf("recorded zone %d %v", zone, err)
+	}
+}
+
+func TestMultipleZoneMembershipDeduplicatesAndSurvivesSelectiveRemoval(t *testing.T) {
+	db := testDB(t)
+	ctx, cut := context.Background(), time.Now()
+	for _, zone := range []int{4, 6, 4} {
+		if err := db.Subscribe(ctx, WhatsApp, "MX.multi", "", zone); err != nil {
+			t.Fatal(err)
+		}
+	}
+	s, ok, err := db.Subscriber(ctx, WhatsApp, "MX.multi")
+	if err != nil || !ok || s.Zone != 4 || len(s.Zones) != 2 || s.Zones[0] != 4 || s.Zones[1] != 6 {
+		t.Fatalf("memberships: %+v, ok=%v, err=%v", s, ok, err)
+	}
+	if n, err := db.NightLoad(ctx, []int{4, 6}); err != nil || n != 1 {
+		t.Fatalf("coincident zones must use one nightly slot: %d, %v", n, err)
+	}
+	if counts, err := db.ZoneCounts(ctx); err != nil || counts[4] != 1 || counts[6] != 1 {
+		t.Fatalf("membership counts: %v, %v", counts, err)
+	}
+	due, err := db.DueSubscribers(ctx, WhatsApp, []int{4, 6}, cut)
+	if err != nil || len(due) != 1 {
+		t.Fatalf("coincident zones must produce one recipient: %+v, %v", due, err)
+	}
+	calls := 0
+	if attempted, err := db.SendReminder(ctx, s, cut, []int{4, 6}, nil, func(current Subscriber) (string, error) {
+		calls++
+		if current.Zone != 4 {
+			t.Errorf("sent for zone %d, want 4", current.Zone)
+		}
+		return "accepted", nil
+	}); err != nil || !attempted || calls != 1 {
+		t.Fatalf("send: attempted=%v, calls=%d, err=%v", attempted, calls, err)
+	}
+	if due, err := db.DueSubscribers(ctx, WhatsApp, []int{4, 6}, cut); err != nil || len(due) != 0 {
+		t.Fatalf("same block became due again: %+v, %v", due, err)
+	}
+	if n, err := db.RecipientsSince(ctx, cut.Add(-time.Hour)); err != nil || n != 1 {
+		t.Fatalf("daily recipients = %d, %v", n, err)
+	}
+	if removed, subscribed, err := db.UnsubscribeZone(ctx, WhatsApp, s.UserID, 4); err != nil || !removed || !subscribed {
+		t.Fatalf("selective BAJA: removed=%v, subscribed=%v, err=%v", removed, subscribed, err)
+	}
+	if kept, err := db.SaveWater(ctx, s.ID, 4, cut, "no"); err != nil || !kept {
+		t.Fatalf("a signed answer for the sent block must still count: kept=%v, err=%v", kept, err)
+	}
+	s, ok, err = db.Subscriber(ctx, WhatsApp, s.UserID)
+	if err != nil || !ok || len(s.Zones) != 1 || s.Zones[0] != 6 || s.Zone != 6 {
+		t.Fatalf("remaining membership: %+v, ok=%v, err=%v", s, ok, err)
+	}
+	if attempted, err := db.SendReminder(ctx, s, cut.AddDate(0, 0, 1), []int{4}, nil, func(Subscriber) (string, error) {
+		t.Error("sent for removed zone")
+		return "", nil
+	}); err != nil || attempted {
+		t.Fatalf("removed zone send: attempted=%v, err=%v", attempted, err)
+	}
+	if removed, subscribed, err := db.UnsubscribeZone(ctx, WhatsApp, s.UserID, 6); err != nil || !removed || subscribed {
+		t.Fatalf("last-zone BAJA: removed=%v, subscribed=%v, err=%v", removed, subscribed, err)
+	}
+	if _, ok, err := db.Subscriber(ctx, WhatsApp, s.UserID); err != nil || ok {
+		t.Fatalf("last-zone BAJA left subscription: ok=%v, err=%v", ok, err)
 	}
 }
 
@@ -1071,6 +1141,29 @@ func TestUnsubscribeCancelsQueuedReplies(t *testing.T) {
 	}
 	if err := db.SendReplies(ctx, "tg:2", func([]byte) error { sent++; return nil }); err != nil || sent != 1 {
 		t.Fatalf("other people's replies stay: %d %v", sent, err)
+	}
+}
+
+func TestUnsubscribeWithNoIDOrPhoneDeletesNothing(t *testing.T) {
+	db := testDB(t)
+	ctx := context.Background()
+	if err := db.Subscribe(ctx, WhatsApp, "", "", 4); err != nil {
+		t.Fatal(err)
+	}
+	if err := db.ProcessInbound(ctx, "wa:empty", func(tx BotStore) error {
+		return tx.QueueReply(ctx, "wa:empty", WhatsApp, "", "", []byte(`"keep"`))
+	}); err != nil {
+		t.Fatal(err)
+	}
+	if removed, err := db.Unsubscribe(ctx, WhatsApp, "", ""); err != nil || removed {
+		t.Fatalf("an empty ID and phone must not match every empty-ID row: %v %v", removed, err)
+	}
+	if _, ok, err := db.Subscriber(ctx, WhatsApp, ""); err != nil || !ok {
+		t.Fatalf("the empty-ID subscription must remain: %v %v", ok, err)
+	}
+	var n int
+	if err := db.pool.QueryRow(ctx, `select count(*) from pending_reply where channel = 'wa' and user_id = ''`).Scan(&n); err != nil || n != 1 {
+		t.Fatalf("the empty-ID reply must remain: %d %v", n, err)
 	}
 }
 

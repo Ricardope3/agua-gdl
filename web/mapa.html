@@ -184,7 +184,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     <ul class="legend" id="leyenda" aria-label="Zonas"></ul>
     <p class="note" id="estado" aria-live="polite">Cargando el mapa de colonias…</p>
     <p class="note">Fuente: datos del <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa de la rotación del SIAPA</a> (colonias, códigos postales y zonas<span id="consultado"></span>) y <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>. Los contornos son aproximados. Los días son los del calendario del SIAPA con el que mandamos los avisos. Agua GDL no es del SIAPA.</p>
-    <noscript><p class="note">Esta página necesita JavaScript. Consulta tu zona en el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa oficial del SIAPA</a>.</p></noscript>
+    <noscript><p class="note">Esta página necesita JavaScript. Consulta la <a href="/simple">versión sencilla</a> o tu zona en el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa oficial del SIAPA</a>.</p></noscript>
 
     <section aria-labelledby="ojo">
       <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#info"/></svg></span>Ten en cuenta</h2>
@@ -274,18 +274,31 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   // zoneInfo: zone → { days, next } from the API, the same calendar the reminders use. The map
   // doesn't wait for it: the days fill in when they arrive.
   let zoneInfo = new Map();
-  let zonesDone = false, zonesFailed = false;
+  let zonesDone = false, zonesFailed = false, zonesFallback = false, zonesChecked = "";
   const daysText = (z) => zoneInfo.has(z) ? cap(joinES(zoneInfo.get(z).days)) : null;
-  const nextCut = (z) => zoneInfo.has(z) ? zoneInfo.get(z).next.find((d) => d >= isoToday(0)) : null;
+  const nextCut = (z) => {
+    const i = zoneInfo.get(z); if (!i) return null;
+    const listed = (i.next || []).find((d) => d >= isoToday(0)); if (listed) return listed;
+    for (let n = 0; n < 370; n++) { const d = isoToday(n); if ((i.weekdays || []).includes(new Date(d + "T00:00:00Z").getUTCDay())) return d; }
+    return null;
+  };
 
-  const zonesLoad = get("/v1/zones").catch(() => null);
+  const zonesLoad = get("/v1/zones").catch(() => fetch("/zones.json").then((r) => {
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    zonesFallback = true;
+    return r.json();
+  })).catch(() => null);
   M.load()
     .then((data) => build(data))
     .catch(() => say("No pudimos cargar el mapa de colonias. Intenta de nuevo en unos minutos o consulta el ", SIAPALink(), "."));
 
   function build({ colonias, zonas, meta }) {
     // idle is the status with nothing else to say: empty, or that the days didn't load.
-    const idle = () => zonesFailed ? say("No pudimos cargar los días de cada zona. El mapa funciona, pero revisa los días en el ", SIAPALink(), ".") : say("");
+    const idle = () => {
+      if (zonesFailed) return say("No pudimos cargar los días de cada zona. El mapa funciona, pero revisa los días en el ", SIAPALink(), ".");
+      if (zonesFallback) return say(`Copia local del calendario verificado el ${zonesChecked || "día no indicado"}; el servidor no respondió. Confirma en el `, SIAPALink(), ".");
+      say("");
+    };
     if (meta && meta.fetched) {
       const [y, m, d] = meta.fetched.split("-").map(Number);
       $("consultado").textContent = `, consultados el ${d} de ${MONTHS[m - 1]} de ${y}`;
@@ -393,11 +406,13 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     idle();
     zonesLoad.then((zones) => {
       zonesDone = true;
-      if (Array.isArray(zones)) zoneInfo = new Map(zones.map((z) => [z.zone, z]));
-      else zonesFailed = true;
+      if (Array.isArray(zones?.zones)) {
+        zoneInfo = new Map(zones.zones.map((z) => [z.zone, z]));
+        zonesChecked = zones.checked || "";
+      } else zonesFailed = true;
       for (const [z, chip] of chips) chip.title = chipTitle(z);
       if (selected) renderCard(selected);
-      if (!status.textContent) idle();
+      idle();
     });
     // The visitor switched the theme: the map, the outline and the zone colours follow.
     document.addEventListener("tema", () => {
@@ -520,8 +535,10 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
         const zs = zonas.filter((zf) => M.contains(zf, [lon, lat])).map((zf) => zf.properties.z);
         if (f) {
           select(f);
-          // In a colonia with several zones, the zone under the visitor tells which part is theirs.
-          const part = M.zones(f.properties).all.length > 1 && zs.length ? [", en la parte de ", el("strong", {}, M.theZones(zs))] : [];
+          // In a colonia with several zones, an assigned zone under the visitor tells which part
+          // is theirs. SIAPA's zone polygons can overlap a colonia assigned to other zones.
+          const own = M.zones(f.properties).all, hereZones = zs.filter((z) => own.includes(z));
+          const part = own.length > 1 && hereZones.length ? [", en la parte de ", el("strong", {}, M.theZones(hereZones))] : [];
           say("Tu ubicación está en ", el("strong", {}, f.properties.n), `, ${f.properties.m}`, ...part, ".");
           return;
         }

@@ -28,7 +28,7 @@ import (
 )
 
 type config struct {
-	Port, DatabaseURL, BaseURL, HeartbeatURL                   string
+	Port, DatabaseURL, BaseURL, HeartbeatURL, ReportWAL        string
 	WAToken, WAPhoneNumberID, WAAppSecret, WAVerifyToken       string
 	WAGraphVersion, WATemplate, WALanguage                     string
 	TGToken, TGWebhookSecret                                   string
@@ -43,6 +43,7 @@ func loadConfig() (config, error) {
 		WATemplate:     env("WA_TEMPLATE", "aviso_corte"),
 		WALanguage:     env("WA_LANGUAGE", "es_MX"),
 		HeartbeatURL:   os.Getenv("HEARTBEAT_URL"),
+		ReportWAL:      env("REPORT_WAL", "/data/web-reports.wal"),
 	}
 	required := map[string]*string{"DATABASE_URL": &c.DatabaseURL, "PUBLIC_BASE_URL": &c.BaseURL}
 	// WhatsApp is optional: off unless WA_TOKEN is set, and then it needs the rest.
@@ -175,8 +176,8 @@ func run(log *slog.Logger) error {
 	}
 	go purge(ctx, db, sched, log)
 
-	// The map on /reportes keeps the day's reports in memory and saves them every quarter hour.
-	reports, err := webreports.New(db, data.ColoniasMapa, cfg.MinShown, loc, time.Now, log)
+	// fsync acknowledges each map report before the batched Postgres write; replay is idempotent.
+	reports, err := webreports.NewWithWAL(db, data.ColoniasMapa, cfg.MinShown, loc, time.Now, log, cfg.ReportWAL)
 	if err != nil {
 		return err
 	}

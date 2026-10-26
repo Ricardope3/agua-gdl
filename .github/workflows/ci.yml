@@ -39,8 +39,9 @@ jobs:
       - run: go run golang.org/x/vuln/cmd/govulncheck@v1.9.0 ./...
       - run: go test -race ./...
       - run: node --test ../experiments/reportes/status_test.mjs
+      - run: python3 -m unittest discover -s ../pipelines -p 'test_*.py'
       # The Go tests only compare colonias_mapa.json's keys with the map.
-      - run: python3 ../pipelines/mapa_colonias.py --check && python3 ../pipelines/promesas.py --check && python3 ../pipelines/publicaciones.py --check
+      - run: python3 ../pipelines/mapa_colonias.py --check && python3 ../pipelines/promesas.py --check && python3 ../pipelines/publicaciones.py --check && python3 ../pipelines/zonas_json.py --check && python3 ../pipelines/simple_page.py --check
   docker:
     runs-on: ubuntu-latest
     timeout-minutes: 15

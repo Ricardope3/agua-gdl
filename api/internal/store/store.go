@@ -42,9 +42,31 @@ type Subscriber struct {
 	Channel   string
 	UserID    string // WhatsApp's business-scoped user ID, or the Telegram chat ID
 	Phone     string
-	Zone      int
-	UpdatedAt time.Time // last subscription or zone change; set by DueSubscribers and NoticeRecipients only
+	Zone      int   // most recently selected zone; the zone relevant to a pending send
+	Zones     []int // every subscribed zone, sorted; empty only in old test fixtures
+	UpdatedAt time.Time
 	CreatedAt time.Time // set by Subscriber only
+}
+
+// Memberships returns all zones, including the primary one. The fallback keeps older
+// fixtures and manually constructed send candidates compatible with the store.
+func (s Subscriber) Memberships() []int {
+	if len(s.Zones) == 0 {
+		return []int{s.Zone}
+	}
+	zones := append([]int(nil), s.Zones...)
+	sort.Ints(zones)
+	return zones
+}
+
+// HasZone reports whether the subscription includes zone.
+func (s Subscriber) HasZone(zone int) bool {
+	for _, z := range s.Memberships() {
+		if z == zone {
+			return true
+		}
+	}
+	return false
 }
 
 type querier interface {
@@ -147,23 +169,30 @@ func (db *DB) PurgeSeen(ctx context.Context, before time.Time) error {
 
 func (db *DB) Subscriber(ctx context.Context, channel, userID string) (Subscriber, bool, error) {
 	s := Subscriber{Channel: channel, UserID: userID}
-	err := db.q.QueryRow(ctx, `select id, zone, created_at from subscriber where channel = $1 and user_id = $2`, channel, userID).Scan(&s.ID, &s.Zone, &s.CreatedAt)
+	err := db.q.QueryRow(ctx, `select s.id, s.zone,
+		(select array_agg(z.zone order by z.zone)::int[] from subscriber_zone z where z.subscriber_id = s.id),
+		s.created_at, s.updated_at from subscriber s where s.channel = $1 and s.user_id = $2`, channel, userID).
+		Scan(&s.ID, &s.Zone, &s.Zones, &s.CreatedAt, &s.UpdatedAt)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return Subscriber{}, false, nil
 	}
 	return s, err == nil, err
 }
 
-// Subscribe stores userID's zone. WhatsApp reminders go to the phone, so whoever writes
-// from a number now owns it: any other subscription holding that number is dropped.
+// Subscribe adds userID's zone without removing the others. WhatsApp reminders go to the
+// phone, so whoever writes from a number now owns all of its subscriptions.
 func (db *DB) Subscribe(ctx context.Context, channel, userID, phone string, zone int) error {
 	if _, err := db.q.Exec(ctx, `delete from subscriber where phone = nullif($3, '')
 		and not (channel = $1 and user_id = $2)`, channel, userID, phone); err != nil {
 		return err
 	}
-	_, err := db.q.Exec(ctx, `insert into subscriber (channel, user_id, phone, zone) values ($1, $2, nullif($3, ''), $4)
+	if _, err := db.q.Exec(ctx, `insert into subscriber (channel, user_id, phone, zone) values ($1, $2, nullif($3, ''), $4)
 		on conflict (channel, user_id) do update set zone = excluded.zone,
-			phone = coalesce(excluded.phone, subscriber.phone), updated_at = now()`, channel, userID, phone, zone)
+			phone = coalesce(excluded.phone, subscriber.phone), updated_at = now()`, channel, userID, phone, zone); err != nil {
+		return err
+	}
+	_, err := db.q.Exec(ctx, `insert into subscriber_zone (subscriber_id, zone)
+		select id, $3 from subscriber where channel = $1 and user_id = $2 on conflict do nothing`, channel, userID, zone)
 	return err
 }
 
@@ -201,14 +230,14 @@ func (db *DB) ChangeUser(ctx context.Context, oldUserID, oldPhone, newUserID, ne
 // admissionLock serializes the capacity check with the subscription that follows it.
 const admissionLock = 7_103_115_241_818
 
-// ZoneCounts returns the number of WhatsApp subscribers in each zone, the ones Meta's
-// messaging limit applies to. Inside ProcessInbound it holds a lock until the transaction
-// ends, so two people can't both take a night's last slot.
+// ZoneCounts returns WhatsApp memberships by zone. NightLoad, used for admission,
+// counts distinct people so following two zones with the same cut costs only one slot.
 func (db *DB) ZoneCounts(ctx context.Context) (map[int]int, error) {
 	if _, err := db.q.Exec(ctx, `select pg_advisory_xact_lock($1)`, admissionLock); err != nil {
 		return nil, err
 	}
-	rows, err := db.q.Query(ctx, `select zone, count(*) from subscriber where channel = 'wa' group by zone`)
+	rows, err := db.q.Query(ctx, `select z.zone, count(*) from subscriber_zone z
+		join subscriber s on s.id = z.subscriber_id where s.channel = 'wa' group by z.zone`)
 	if err != nil {
 		return nil, err
 	}
@@ -221,15 +250,46 @@ func (db *DB) ZoneCounts(ctx context.Context) (map[int]int, error) {
 	return counts, err
 }
 
+// NightLoad counts distinct WhatsApp recipients subscribed to any of zones. The
+// transaction-level lock serializes this check with the subscription that follows it.
+func (db *DB) NightLoad(ctx context.Context, zones []int) (int, error) {
+	if _, err := db.q.Exec(ctx, `select pg_advisory_xact_lock($1)`, admissionLock); err != nil {
+		return 0, err
+	}
+	var n int
+	err := db.q.QueryRow(ctx, `select count(distinct s.id) from subscriber s
+		where s.channel = 'wa' and exists (select 1 from subscriber_zone z
+		where z.subscriber_id = s.id and z.zone = any($1::int[]))`, zones).Scan(&n)
+	return n, err
+}
+
 // Unsubscribe deletes userID's subscription and any holding phone, so BAJA stops
 // every reminder to that number, and cancels the replies still queued for them, so an
 // earlier confirmation can't arrive after the goodbye and the chat ID isn't kept.
 func (db *DB) Unsubscribe(ctx context.Context, channel, userID, phone string) (bool, error) {
-	if _, err := db.q.Exec(ctx, `delete from pending_reply where (channel = $1 and user_id = $2) or phone = nullif($3, '')`, channel, userID, phone); err != nil {
+	if _, err := db.q.Exec(ctx, `delete from pending_reply where (channel = $1 and user_id = nullif($2, '')) or phone = nullif($3, '')`, channel, userID, phone); err != nil {
 		return false, err
 	}
-	tag, err := db.q.Exec(ctx, `delete from subscriber where (channel = $1 and user_id = $2) or phone = nullif($3, '')`, channel, userID, phone)
+	tag, err := db.q.Exec(ctx, `delete from subscriber where (channel = $1 and user_id = nullif($2, '')) or phone = nullif($3, '')`, channel, userID, phone)
 	return tag.RowsAffected() > 0, err
+}
+
+// UnsubscribeZone removes one membership and the whole subscription when it was the last.
+// The second return says whether any zone remains.
+func (db *DB) UnsubscribeZone(ctx context.Context, channel, userID string, zone int) (removed, subscribed bool, err error) {
+	tag, err := db.q.Exec(ctx, `delete from subscriber_zone z using subscriber s
+		where z.subscriber_id = s.id and s.channel = $1 and s.user_id = $2 and z.zone = $3`, channel, userID, zone)
+	if err != nil || tag.RowsAffected() == 0 {
+		return false, true, err
+	}
+	if _, err = db.q.Exec(ctx, `update subscriber s set zone = coalesce(
+		(select min(z.zone) from subscriber_zone z where z.subscriber_id = s.id), s.zone),
+		updated_at = now() where s.channel = $1 and s.user_id = $2`, channel, userID); err != nil {
+		return true, false, err
+	}
+	tag, err = db.q.Exec(ctx, `delete from subscriber s where s.channel = $1 and s.user_id = $2
+		and not exists (select 1 from subscriber_zone z where z.subscriber_id = s.id)`, channel, userID)
+	return true, tag.RowsAffected() == 0, err
 }
 
 func (db *DB) SaveReport(ctx context.Context, subscriberID int64, zone int, cutDate time.Time, answer string) error {
@@ -279,8 +339,8 @@ func (db *DB) NoWater(ctx context.Context, start time.Time) (map[int64]bool, err
 // before the block from start to last, haven't reported since how it came back, and haven't
 // been asked yet.
 func (db *DB) ReturnRecipients(ctx context.Context, channel string, zone int, start, last time.Time) ([]Subscriber, error) {
-	rows, err := db.q.Query(ctx, `select s.id, s.channel, s.user_id, coalesce(s.phone, ''), s.zone from subscriber s
-		where s.channel = $1 and s.zone = $2
+	rows, err := db.q.Query(ctx, `select s.id, s.channel, s.user_id, coalesce(s.phone, ''), $2::int from subscriber s
+		where s.channel = $1 and exists (select 1 from subscriber_zone z where z.subscriber_id = s.id and z.zone = $2::int)
 			and exists (select 1 from water_report w where w.subscriber_id = s.id and w.cut_date = $3::date and w.answer in ('no', 'poca'))
 			and not exists (select 1 from cut_report c where c.subscriber_id = s.id and c.cut_date between $3::date and $4::date)
 			and not exists (select 1 from notice n where n.subscriber_id = s.id and n.key = $5 and n.status <> 'rejected')
@@ -308,8 +368,10 @@ func (db *DB) UpdateStatus(ctx context.Context, wamid, status string) (bool, err
 // DueSubscribers lists a channel's subscribers in zones that haven't been reminded about
 // cutDate yet, including those whose earlier attempt was rejected.
 func (db *DB) DueSubscribers(ctx context.Context, channel string, zones []int, cutDate time.Time) ([]Subscriber, error) {
-	rows, err := db.q.Query(ctx, `select s.id, s.channel, s.user_id, coalesce(s.phone, ''), s.zone, s.updated_at from subscriber s
-		where s.channel = $3 and s.zone = any($1::int[]) and not exists (
+	rows, err := db.q.Query(ctx, `select s.id, s.channel, s.user_id, coalesce(s.phone, ''), z.zone, s.updated_at from subscriber s
+		join lateral (select z.zone from subscriber_zone z where z.subscriber_id = s.id
+			and z.zone = any($1::int[]) order by z.zone limit 1) z on true
+		where s.channel = $3 and not exists (
 			select 1 from reminder r where r.subscriber_id = s.id and r.cut_date = $2::date and r.status <> 'rejected')
 		order by s.id`, zones, cutDate.Format(dateLayout), channel)
 	if err != nil {

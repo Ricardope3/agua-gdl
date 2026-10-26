@@ -93,6 +93,9 @@ func (b *Bot) onCommand(ctx context.Context, r User, text string) error {
 	case "escribe":
 		return b.text(ctx, r, msgWrite(b.BaseURL))
 	case "baja":
+		if arg != "" {
+			return b.onText(ctx, r, "BAJA "+arg)
+		}
 		return b.unsubscribe(ctx, r)
 	}
 	return b.text(ctx, r, msgHelp(b.BaseURL, r.Channel))

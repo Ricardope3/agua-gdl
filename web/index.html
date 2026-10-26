@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aguagdl.com/">
 <meta property="og:title" content="Agua GDL · El agua es un derecho. Exígelo.">
-<meta property="og:description" content="En Guadalajara el agua llega sucia y racionada. Reporta tu colonia: cada reporte es una prueba de dónde falla el gobierno. Y exígele a quien le toca que lo arregle; no lo arregla un acueducto privado, lo arregla sanear los ríos.">
+<meta property="og:description" content="En Guadalajara el agua llega sucia y racionada. Reporta tu colonia: cada reporte es un testimonio vecinal que ayuda a documentar dónde falta el agua. Y exígele a quien le toca que lo arregle; no lo arregla un acueducto privado, lo arregla sanear los ríos.">
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary">
@@ -411,6 +411,8 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
       <div>
         <p class="kicker">El agua es un derecho. Exígelo.</p>
         <h1>El SIAPA prometió un día. Hay vecinos con semanas sin agua.</h1>
+        <p>Agua GDL es un servicio ciudadano, gratuito y no oficial: te ayuda a saber cómo está el agua en tu colonia, prepararte para los cortes y pedir apoyo.</p>
+        <p class="buttons"><a class="button" href="/reportes">¿Hay agua en tu colonia?</a><a class="button alt" href="/mizona">Mi zona y avisos</a><a class="button alt" href="/pipas">Pedir una pipa</a></p>
       </div>
       <img class="ilus" src="/img/ilustracion.png" alt="Caricatura de Pablo Lemus con la mano en una llave de la que cae una gota, sobre la Catedral de Guadalajara y una multitud que protesta" width="517" height="640">
     </div>
@@ -423,7 +425,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     <article class="m4-card"><p class="m-k">¿Hay agua en tu colonia?</p><div class="m-num" id="m4-num">—</div><p>colonias llevan <strong>una semana o más sin agua</strong>, según medios y vecinos.</p><p class="who">Desliza para ver más →</p></article>
     <article class="m4-card"><div class="m4-vs"><div><p class="m-k">Lo que prometió el SIAPA</p><div class="m-num">1</div>día de corte «por máximo»</div><div><p class="m-k">La realidad</p><div class="m-num" id="m4-max">—</div>días sin agua, lo más largo que publica un medio</div></div><p class="who">Fuente: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">página de la rotación del SIAPA</a></p></article>
     <article class="m4-card"><h3>Por municipio</h3><ol class="m-rank" id="m4-munis"></ol></article>
-    <article class="m4-card"><h3>¿Y en tu colonia?</h3><p>Cada reporte es una prueba de dónde falla el gobierno. Sin cuenta y anónimo.</p><a class="button" href="/reportes?reportar=1">Reportar mi colonia</a><p><a href="/exige">Exígele a quien le toca →</a></p></article>
+    <article class="m4-card"><h3>¿Y en tu colonia?</h3><p>Cada reporte es un testimonio vecinal que ayuda a ver dónde falta el agua. Sin cuenta y anónimo; no es una medición oficial.</p><a class="button" href="/reportes?reportar=1">Reportar mi colonia</a><p><a href="/exige">Exígele a quien le toca →</a></p></article>
   </div>
   <div class="m4-dots" id="m4-dots" aria-hidden="true"></div>
 </section>
@@ -451,7 +453,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     </div>
     <section class="yours" aria-labelledby="tuya">
       <h2 id="tuya">¿Y en tu colonia?</h2>
-      <p class="lede">El <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">SIAPA</a> dijo «por máximo un día»; hay vecinos con <a href="https://www.nmas.com.mx/jalisco/sociedad/colonias-limitrofes-entre-tlaquepaque-y-guadalajara-carecen-de-agua/" rel="noopener">semanas sin agua</a>. Reporta tu colonia: <mark>cada reporte es una prueba</mark> de dónde falla el gobierno, y con ella puedes exigirle que lo arregle. Sin cuenta y anónimo.</p>
+      <p class="lede">El <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">SIAPA</a> dijo «por máximo un día»; hay vecinos con <a href="https://www.nmas.com.mx/jalisco/sociedad/colonias-limitrofes-entre-tlaquepaque-y-guadalajara-carecen-de-agua/" rel="noopener">semanas sin agua</a>. Reporta tu colonia: <mark>cada reporte es un testimonio vecinal</mark> que ayuda a documentar dónde falta el agua. No es una medición oficial; puedes usarlo al exigir una solución. Sin cuenta y anónimo.</p>
       <p class="pulse" id="pulse" aria-live="polite" hidden></p>
       <form class="quick" action="/reportes" method="get" role="search">
         <label for="q">Tu colonia</label>
@@ -493,7 +495,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     </section>
     <div class="boxes">
       <div class="alerta">
-        <p class="alerta-head"><span class="alerta-i" aria-hidden="true">!</span><span>El SIAPA dijo <span class="nw">«no serán cortes totales».</span><br>No es cierto.</span></p>
+        <p class="alerta-head"><span class="alerta-i" aria-hidden="true">!</span><span>El SIAPA dijo <span class="nw">«no serán cortes totales».</span><br>La CEA documentó afectaciones mayores.</span></p>
         <p>La propia CEA reconoció <a href="https://siker.com.mx/zmg/94-colonias-se-quedan-sin-agua-o-reciben-caudal-minimo-tras-inicio-de-rotacion-en-la-zmg/" rel="noopener">94 colonias sin agua o con un caudal mínimo</a>.</p>
       </div>
       <a class="aviso" href="/exige">
@@ -526,6 +528,16 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     <section aria-labelledby="mas">
       <h2 id="mas">También puedes</h2>
       <ul class="cards">
+        <li class="card">
+          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bell"/></svg></span>Recibir avisos de tu zona</h3>
+          <p>Avisos ciudadanos por Telegram o en tu calendario antes de una tanda de cortes. Confirma siempre con el SIAPA.</p>
+          <a href="/avisos">Activar avisos</a>
+        </li>
+        <li class="card">
+          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#check"/></svg></span>Revisar cómo trabajamos</h3>
+          <p>Fuentes, privacidad, criterios editoriales, correcciones y formas de participar. También hay una versión sencilla para conexiones lentas.</p>
+          <a href="/transparencia">Transparencia</a> · <a href="/simple">Versión sencilla</a>
+        </li>
         <li class="card">
           <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#phone"/></svg></span>Pedir una pipa</h3>
           <p>Los teléfonos y WhatsApp oficiales del SIAPA y de Guadalajara, Zapopan, Tlaquepaque y Tonalá, cada uno con su fuente.</p>
@@ -588,7 +600,7 @@ const aguaM = (() => {
     }
     const cols = [...m.values()], medios = d.publicaciones.filter((e) => e.fuente === "medio");
     const munis = new Map();
-    for (const c of cols) if (!c.muni.includes(" y ")) munis.set(c.muni, (munis.get(c.muni) || 0) + 1);
+    for (const c of cols) for (const muni of c.muni.split(" y ")) munis.set(muni, (munis.get(muni) || 0) + 1);
     return {
       pubs: d.publicaciones, cols, semana: cols.filter((c) => c.dias >= 7).length, medios: medios.length,
       max: Math.max(...medios.map((e) => e.dias || 0)),
@@ -630,16 +642,18 @@ if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.
     const r = polys.map((p) => p[0]).sort((a, b) => b.length - a.length)[0];
     return [r.reduce((t, p) => t + p[1], 0) / r.length, r.reduce((t, p) => t + p[0], 0) / r.length];
   };
-  const mine = (n) => g.colonias.filter((f) => aguaMapa.zones(f.properties).main.includes(n))
-    .map((f) => ({ f, pub: pubs.get(`${f.properties.n}|${f.properties.m}|${f.properties.cp}`) })).filter((c) => c.pub);
+  const key = (f) => `${f.properties.n}|${f.properties.m}|${f.properties.cp}`;
+  const inZone = (f, n) => aguaMapa.zones(f.properties).main.includes(n);
+  const mine = (n) => g.colonias.filter((f) => inZone(f, n)).map((f) => ({ f, pub: pubs.get(key(f)) })).filter((c) => c.pub);
+  const unique = (list) => [...new Map(list.map((c) => [key(c.f), c])).values()];
   // Each card's map is a still picture: no dragging or zooming, so the cards swipe; a tap opens /mizona.
   const draw = (el, z) => {
     const n = z.properties.z, map = L.map(el, { zoomControl: false, dragging: false, touchZoom: false, scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false, keyboard: false, zoomSnap: 0.25 });
     aguaMapa.tiles(L, map);
     const zone = L.geoJSON(z, { interactive: false, style: { color: zc(n), weight: 3, fillColor: zc(n), fillOpacity: 0.06 } }).addTo(map);
-    const cs = mine(n);
-    L.geoJSON({ type: "FeatureCollection", features: cs.map((c) => c.f) }, { interactive: false, style: (f) => {
-      const c = RED[STEP(pubs.get(`${f.properties.n}|${f.properties.m}|${f.properties.cp}`).n)];
+    const all = mine(n), cs = unique(all);
+    L.geoJSON({ type: "FeatureCollection", features: all.map((c) => c.f) }, { interactive: false, style: (f) => {
+      const c = RED[STEP(pubs.get(key(f)).n)];
       return { color: c, weight: 1, fillColor: c, fillOpacity: 0.45 };
     } }).addTo(map);
     for (const c of cs) {
@@ -651,7 +665,7 @@ if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.
     }
     const foot = el.closest(".m5-card").querySelector(".m5-over");
     // Zoomed onto where the zone's reports are (the whole zone when it has none), a step closer than a plain fit.
-    const where = cs.length ? L.latLngBounds(cs.map((c) => mid(c.f))) : zone.getBounds();
+    const where = all.length ? L.latLngBounds(all.map((c) => mid(c.f))) : zone.getBounds();
     map.fitBounds(where, { paddingTopLeft: [24, 56], paddingBottomRight: [24, 24 + (foot ? foot.offsetHeight - 24 : 0)], maxZoom: 15 });
     map.setZoom(map.getZoom() + (n === 2 ? 0 : n === 3 ? 0.5 : 0.25), { animate: false }); // zone 2's two pieces need the whole width
     if (n === 3) map.panBy([-30, 0], { animate: false }); // zone 3's reports sit left of its outline's middle
@@ -662,7 +676,7 @@ if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.
   const dayName = (iso) => new Date(iso + "T12:00").toLocaleDateString("es-MX", { weekday: "long", day: "numeric", month: "long" });
   const info = (n) => {
     const z = api.find((x) => x.zone === n) || { days: [], next: [] };
-    const cs = mine(n), total = g.colonias.filter((f) => aguaMapa.zones(f.properties).main.includes(n)).length;
+    const cs = unique(mine(n)), total = new Set(g.colonias.filter((f) => inZone(f, n)).map(key)).size;
     const next = z.next.find((x) => x >= hoyISO);
     return { days: z.days, hoy: next === hoyISO, next: z.next.find((x) => x > hoyISO), total, cs,
       week: cs.filter((c) => c.pub.dias >= 7).length, top: [...cs].sort((a, b) => b.pub.n - a.pub.n)[0] };

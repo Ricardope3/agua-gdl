@@ -3,7 +3,6 @@ package store
 import (
 	"context"
 	"errors"
-	"slices"
 	"time"
 
 	"github.com/jackc/pgx/v5"
@@ -24,7 +23,9 @@ type gone interface{ Gone() bool }
 // A nil budget means no caps, as on Telegram.
 func (db *DB) SendReminder(ctx context.Context, s Subscriber, cutDate time.Time, zones []int, budget *Budget, send func(Subscriber) (string, error)) (attempted bool, err error) {
 	reminderID, err := db.reserve(ctx, budget, `insert into reminder (subscriber_id, zone, cut_date, status, channel)
-		select id, zone, $3::date, 'sending', channel from subscriber where id = $1 and zone = any($2::int[])
+		select s.id, z.zone, $3::date, 'sending', s.channel from subscriber s
+		join lateral (select z.zone from subscriber_zone z where z.subscriber_id = s.id
+			and z.zone = any($2::int[]) order by z.zone limit 1) z on true where s.id = $1
 		on conflict (subscriber_id, cut_date) do update set status = 'sending', zone = excluded.zone, sent_at = now()
 			where reminder.status = 'rejected'
 		returning id`, s.ID, zones, cutDate.Format(dateLayout))
@@ -91,11 +92,13 @@ func (db *DB) sendReserved(ctx context.Context, table string, id, subscriberID i
 		// Serialize the actual send with BAJA and zone changes. Once BAJA commits,
 		// no queued message can start sending to that subscription.
 		var current Subscriber
-		err := tx.QueryRow(ctx, `select id, channel, user_id, coalesce(phone, ''), zone
-			from subscriber where id = $1 for update`, subscriberID).
+		err := tx.QueryRow(ctx, `select s.id, s.channel, s.user_id, coalesce(s.phone, ''), z.zone
+			from subscriber s join lateral (select z.zone from subscriber_zone z
+			where z.subscriber_id = s.id and z.zone = any($2::int[]) order by z.zone limit 1) z on true
+			where s.id = $1 for update of s`, subscriberID, zones).
 			Scan(&current.ID, &current.Channel, &current.UserID, &current.Phone, &current.Zone)
-		if errors.Is(err, pgx.ErrNoRows) || (err == nil && !slices.Contains(zones, current.Zone)) {
-			// No HTTP request was made, so removing this reservation is safe.
+		if errors.Is(err, pgx.ErrNoRows) {
+			// BAJA or removing this zone won before the send: no HTTP request was made.
 			_, err = tx.Exec(ctx, `delete from `+table+` where id = $1`, id)
 			return err
 		}
@@ -139,9 +142,9 @@ func (db *DB) sendReserved(ctx context.Context, table string, id, subscriberID i
 // NoticeRecipients lists a channel's subscribers in zone who haven't received the notice
 // key, including those whose earlier attempt was rejected.
 func (db *DB) NoticeRecipients(ctx context.Context, channel string, zone int, key string) ([]Subscriber, error) {
-	rows, err := db.q.Query(ctx, `select s.id, s.channel, s.user_id, coalesce(s.phone, ''), s.zone, s.updated_at from subscriber s
-		where s.channel = $3 and s.zone = $1 and not exists (
-			select 1 from notice n where n.subscriber_id = s.id and n.key = $2 and n.status <> 'rejected')
+	rows, err := db.q.Query(ctx, `select s.id, s.channel, s.user_id, coalesce(s.phone, ''), $1::int, s.updated_at from subscriber s
+		where s.channel = $3 and exists (select 1 from subscriber_zone z where z.subscriber_id = s.id and z.zone = $1::int)
+			and not exists (select 1 from notice n where n.subscriber_id = s.id and n.key = $2 and n.status <> 'rejected')
 		order by s.id`, zone, key, channel)
 	if err != nil {
 		return nil, err
@@ -157,7 +160,8 @@ func (db *DB) NoticeRecipients(ctx context.Context, channel string, zone int, ke
 // subscriber and key, with the same guarantees as SendReminder.
 func (db *DB) SendNotice(ctx context.Context, s Subscriber, key string, budget *Budget, send func(Subscriber) (string, error)) (attempted bool, err error) {
 	id, err := db.reserve(ctx, budget, `insert into notice (subscriber_id, key, zone, status, channel)
-		select id, $2, zone, 'sending', channel from subscriber where id = $1 and zone = $3
+		select s.id, $2, $3, 'sending', s.channel from subscriber s where s.id = $1
+		and exists (select 1 from subscriber_zone z where z.subscriber_id = s.id and z.zone = $3)
 		on conflict (subscriber_id, key) do update set status = 'sending', sent_at = now()
 			where notice.status = 'rejected'
 		returning id`, s.ID, key, s.Zone)

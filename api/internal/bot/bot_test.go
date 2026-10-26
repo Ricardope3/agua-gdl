@@ -344,6 +344,19 @@ func TestRefusesSubscriptionsPastTheNightlyCap(t *testing.T) {
 	}
 }
 
+func TestNightlyCapCountsOnlyBlockStarts(t *testing.T) {
+	ctx := context.Background()
+	h := newHarness(t, "2026-10-15 10:00")
+	h.bot.NightCap = 3
+	h.store.Subscribe(ctx, store.WhatsApp, "MX.1", "1", 2)
+	h.store.Subscribe(ctx, store.WhatsApp, "MX.2", "2", 2)
+	h.store.Subscribe(ctx, store.WhatsApp, "MX.3", "3", 4)
+	// Thursday continues zone 2's Tuesday block, so only zone 4 starts one that night.
+	if got := h.send(t, text("zona 4")); !strings.Contains(got, "¡Listo!") {
+		t.Fatalf("continuation days must not count as another night of reminders:\n%s", got)
+	}
+}
+
 func TestZoneLabels(t *testing.T) {
 	if got := msgPickZone("MEDRANO", []int{3}); !strings.Contains(got, "solo la lista en la zona 3") {
 		t.Errorf("one zone:\n%s", got)

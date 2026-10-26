@@ -14,7 +14,9 @@ cp .env.example .env   # llena los valores
 cd api && go test ./... && set -a && . ../.env && go run ./cmd/server
 ```
 
-Endpoints: `GET /healthz`, `GET /v1/zones`, `GET /v1/zone?lat=&lon=`, `GET /v1/colonias?q=`, `GET|POST /v1/reportes`, `POST /tg/webhook` (con `TG_TOKEN` y `TG_WEBHOOK_SECRET`) y `GET|POST /wa/webhook` (solo con `WA_TOKEN`).
+Endpoints: `GET /healthz`, `GET /v1/zones`, `GET|POST /v1/zone`, `GET|POST /v1/colonias`, `GET|POST /v1/reportes`, `POST /tg/webhook` (con `TG_TOKEN` y `TG_WEBHOOK_SECRET`) y `GET|POST /wa/webhook` (solo con `WA_TOKEN`). Las búsquedas por POST no ponen coordenadas o nombres de colonias en la URL y responden `no-store`.
+
+La participación y las reglas del proyecto están en [CONTRIBUTING.md](CONTRIBUTING.md), [GOVERNANCE.md](GOVERNANCE.md), [SECURITY.md](SECURITY.md) y [docs/](docs/). Los datos vecinales no se usan para política, publicidad ni propaganda.
 
 Las pruebas de integración crean y borran esquemas aislados en una base de pruebas:
 `cd api && TEST_DATABASE_URL=postgres://postgres:dev@localhost:55432/aguagdl?sslmode=disable go test -race ./...`.
@@ -22,7 +24,7 @@ CI las ejecuta con PostgreSQL 17. Sin `TEST_DATABASE_URL`, esas pruebas se omite
 
 ## Despliegue
 
-`fly launch --copy-config --no-deploy`, luego `fly secrets set DATABASE_URL='…' PUBLIC_BASE_URL=https://aguagdl.com HEARTBEAT_URL='…'` (con comillas simples: el `?` y el `&` de la URL de Neon rompen el comando en zsh), los secretos de Telegram (abajo) y `fly deploy --ha=false`. Sin `--ha=false`, el primer despliegue crea dos máquinas: no duplican avisos, pero la que termina primero cuenta como `sending` el envío en curso de la otra y manda una falsa alarma al heartbeat, y cada una guardaría en memoria sus propios reportes del mapa y sus límites, así que el mapa quedaría partido. Despliega desde `main` limpio: `fly deploy` sube la carpeta local. Los avisos solo salen con `TG_REMINDERS_ENABLED=true` (Telegram) o `REMINDERS_ENABLED=true` (WhatsApp, que además necesita `WA_TOKEN`, `WA_PHONE_NUMBER_ID`, `WA_APP_SECRET` y `WA_VERIFY_TOKEN`); cada canal se envía aparte y la falla de uno no detiene al otro.
+`fly launch --copy-config --no-deploy`, luego `fly secrets set DATABASE_URL='…' PUBLIC_BASE_URL=https://aguagdl.com HEARTBEAT_URL='…'` (con comillas simples: el `?` y el `&` de la URL de Neon rompen el comando en zsh), los secretos de Telegram (abajo) y `fly deploy --ha=false`. Producción requiere **una sola instancia activa** y un volumen persistente montado en `/data`, con `REPORT_WAL=/data/web-reports.wal`: cada reporte se sincroniza en ese WAL antes de reconocerse, se reproduce al arrancar y se guarda en Postgres de forma idempotente. Sin volumen, un reinicio puede perder lo aún no volcado; con dos máquinas, el mapa y sus WAL quedan divididos. Detén la máquina anterior antes de activar otra y verifica el inventario después de desplegar. Despliega desde `main` limpio: `fly deploy` sube la carpeta local. Los avisos solo salen con `TG_REMINDERS_ENABLED=true` (Telegram) o `REMINDERS_ENABLED=true` (WhatsApp, que además necesita `WA_TOKEN`, `WA_PHONE_NUMBER_ID`, `WA_APP_SECRET` y `WA_VERIFY_TOKEN`); cada canal se envía aparte y la falla de uno no detiene al otro. La lista completa de revisión, monitores y restauración está en [docs/OPERATIONS.md](docs/OPERATIONS.md); la secuencia verificable para publicar este cambio está en [docs/RELEASE.md](docs/RELEASE.md).
 
 Telegram: crea el bot con @BotFather, guarda `TG_TOKEN` y `TG_WEBHOOK_SECRET` (`openssl rand -hex 32`) con `fly secrets import`, despliega y corre una vez `cd api && TG_TOKEN='…' TG_WEBHOOK_SECRET='…' go run ./cmd/tgsetup`: registra el webhook, el nombre, las descripciones y el menú de comandos. Telegram no tiene plantillas, ventana de 24 horas ni tope diario; guardamos el ID de usuario de Telegram, no el número. Después de cambiar sus descripciones o comandos, vuelve a correr `tgsetup`. Si alguien bloquea el bot, se borra su suscripción. El enlace `https://t.me/<bot>?start=z4` suscribe directo a la zona 4.
 
@@ -86,7 +88,7 @@ confirmarlo, conserva `uncertain`.
 Sitio estático de aguagdl.com, sin framework. Cloudflare Pages lo publica en cada push a `main` (carpeta de salida `web`). Su comando de build corre las revisiones de CI, para que un archivo de datos roto detenga la publicación en vez de llegar al sitio:
 
 ```sh
-python3 pipelines/publicaciones.py --check && python3 pipelines/promesas.py --check && python3 pipelines/mapa_colonias.py --check
+python3 pipelines/publicaciones.py --check && python3 pipelines/promesas.py --check && python3 pipelines/mapa_colonias.py --check && python3 pipelines/zonas_json.py --check && python3 pipelines/simple_page.py --check
 ```
 
 Todo lo que está en `web/` es público: las notas, los datos que no se usan y los borradores van fuera. Las visitas se cuentan con Cloudflare Web Analytics (sin cookies; se activa en la pestaña Metrics del proyecto de Pages, Cloudflare inserta el script y el aviso de privacidad lo describe en el punto 7). La portada carga el mapa de /reportes como `/reportes-portada`, así que en las estadísticas esas cargas no cuentan como visitas a /reportes. `www.aguagdl.com` redirige a `aguagdl.com` con una regla de Cloudflare. Las páginas que llaman a la API usan `https://api.aguagdl.com`; para probarlas con la API local, agrega `?api=http://localhost:8080` (solo acepta localhost o 127.0.0.1).
@@ -96,7 +98,8 @@ Todo lo que está en `web/` es público: las notas, los datos que no se usan y l
 - `exige.html` (/exige) arma un mensaje con tu colonia y lo que pasa ahí, y lo mandas tú desde tu correo, X o Messenger al gobernador y a las 38 diputaciones, para pedir agua limpia y suficiente y ríos sanos. Incluye la búsqueda de tu diputación por la sección de tu INE. Cada contacto lleva su fuente oficial y la fecha en que se revisó. Agua GDL no ve ni guarda nada. /escribe redirige aquí.
 - `pipas.html` (/pipas) da el SIAPATEL y la línea de cada municipio con su fuente, y el artículo 90, fracción VI, de la Ley del Agua. Publica un número solo si una fuente lo da, y actualiza la fecha de revisión cuando los revises.
 - `mizona.html` busca la zona por ubicación o colonia, y `mapa.html` muestra todas las colonias coloreadas por zona (datos de `colonias_siapa.topo.json`, de `pipelines/siapa_mapa.py`; las dos y /reportes comparten `mapa.js`). Cuando una colonia apenas toca el límite de otra zona, dicen «al límite con la zona N».
-- `avisos.html`: suscribirse por Telegram o con el calendario de la zona.
+- `avisos.html`: suscribirse por Telegram o con el calendario de la zona; se pueden seguir varias zonas y quitar una con `BAJA ZONA N`.
+- `simple.html`: versión ligera y sin JavaScript con calendario, pipas y publicaciones recientes. Se genera desde los datos compartidos con `python3 pipelines/simple_page.py`; CI comprueba que esté al día.
 - `noticias.html`: la crisis al día, curada a mano. Cada nota enlaza a su fuente; actualiza «Última actualización» al editarla. Los videos se cargan de YouTube, TikTok o X solo al tocarlos.
 - `promesas.html` (/promesas): sus tarjetas y su gráfica se generan desde `promesas.json` con `python3 pipelines/promesas.py`; no las edites a mano.
 - `exige.html`, `contamina.html` y `antisionismo.html`: cada afirmación enlaza su fuente.
@@ -104,7 +107,7 @@ Todo lo que está en `web/` es público: las notas, los datos que no se usan y l
 - `theme.js` (en el `<head>` de cada página) pone el botón de tema claro u oscuro; el claro es el predeterminado. También cambia el color de la barra del navegador, así que cada página lleva un solo `<meta name="theme-color" content="#ffffff">`, sin `media`. Al cambiar de tema lanza el evento `tema` en `document`, con el que los mapas se vuelven a pintar.
 - `404.html`: la página para las direcciones que no existen. Por ahora Cloudflare responde a esas direcciones con un 404 vacío; la muestra solo cuando el proyecto se configura para servir `404.html`.
 
-El conteo semanal (`informes.html`, que escribe `api/cmd/informe`) y `resultados.html` (con `GET /v1/results`) se quitaron hasta que haya suficientes reportes; están en el historial de git.
+`informes.html` ya está restaurado y enlaza los conteos semanales que genera `api/cmd/informe`; mientras no se genere y revise uno, indica que aún no hay semanas publicadas. Genera los archivos contra la base de producción y revisa denominadores, umbrales de privacidad y redacción antes de publicarlos. `resultados.html` (con `GET /v1/results`) sigue retirado y está en el historial de git.
 
 ## Datos
 

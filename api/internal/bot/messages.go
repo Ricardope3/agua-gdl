@@ -29,18 +29,18 @@ func msgWelcome(base, channel string) string {
 	}
 	return `¡Hola! 👋 Soy *Agua GDL*.
 
-*El agua es un derecho. Exígelo.*
-
-🗺️ ¿Hay agua en tu colonia? Reporta la tuya, sin registrarte: cada reporte es una prueba de dónde falla el gobierno. Mira lo que reportan tus vecinos: ` + base + `/reportes
-📢 Exígele a quien le toca que lo arregle: ` + base + `/exige
-🚚 ¿Sin agua? Escribe *PIPA* y te digo cómo pedir una.
-
-🔔 También te aviso por ` + appName(channel) + ` de los cortes de agua de tu zona por la rotación del SIAPA: ` + whenES(channel) + `. Para recibir los avisos, mándame una de estas:
+🔔 Para recibir avisos de tus días sin agua, mándame una de estas tres cosas:
 📍 Tu *ubicación* (` + how + `)
 🏘️ El *nombre de tu colonia*, por ejemplo: _Las Juntas_
 🔢 Tu zona, por ejemplo: *ZONA 4*
 
-Servicio ciudadano, gratuito, no oficial y sin partido.
+Te aviso por ` + appName(channel) + ` ` + whenES(channel) + `.
+
+🗺️ También puedes reportar cómo está el agua, sin registrarte: ` + base + `/reportes
+🚚 ¿Sin agua? Escribe *PIPA* y te digo cómo pedir una.
+📢 Para escribir al gobernador y al Congreso: ` + base + `/exige
+
+Servicio ciudadano, gratuito, no oficial y sin partido. Cada reporte es un testimonio vecinal, no una medición oficial.
 🔒 Aviso de privacidad: ` + base + `/privacidad`
 }
 
@@ -63,27 +63,30 @@ func msgHelp(base, channel string) string {
 🗺️ Mira y reporta cómo está el agua en tu colonia: ` + base + `/reportes
 📢 Exígele a quien le toca que lo arregle: ` + base + `/exige
 📍 Manda tu *ubicación* o el *nombre de tu colonia*: te digo tu zona y te suscribo a sus avisos
-🔢 *ZONA 1* a *ZONA 7*: suscribirte o cambiar de zona
+🔢 *ZONA 1* a *ZONA 7*: suscribirte o agregar otra zona
 📝 *REPORTAR*: contar cómo regresó el agua después del último corte
 🚚 *PIPA*: cómo pedir una pipa
-` + write + `🛑 *BAJA*: dejar de recibir avisos y borrar tus datos
+` + write + `🛑 *BAJA ZONA 4*: quitar solo esa zona; *BAJA*: borrar toda tu suscripción
 
 🗺️ Mapa oficial del SIAPA: ` + MapURL + `
 🔒 Aviso de privacidad: ` + base + `/privacidad`
 }
 
-// msgUseButtons answers a typed «sí», «ya no» or «poca»: the buttons carry the answer, and the
-// bot can't tell whether it answers a reminder or «¿Es la tuya?» about a colonia.
-const msgUseButtons = `Para contestar, toca uno de los botones del mensaje 👆
+// msgUseButtons answers a typed «sí», «ya no» or «poca». Since the bot is stateless it
+// can't safely attach that word to an earlier question, so it offers an actionable fallback.
+func msgUseButtons(base string) string {
+	return `Si contestas una pregunta de un aviso, toca uno de sus botones 👆
 
-Si es sobre tu colonia, mándame tu 📍 *ubicación* o escribe su nombre de otra forma.
+Si nos cuentas cómo está el agua en tu colonia, repórtalo aquí, sin suscribirte: ` + base + `/reportes
+🚚 Si no tienes agua, llama al SIAPATEL: *33 3668 2482* o *073*. Más líneas: ` + base + `/pipas
 
-Si lo que quieres es dejar de recibir avisos, escribe *BAJA*. Para ver todo lo que puedo hacer, escribe *AYUDA*.`
+Para elegir o agregar una zona, manda tu 📍 *ubicación*, el nombre de tu colonia o *ZONA 4*. Escribe *BAJA* para borrar tu suscripción.`
+}
 
 // msgCancelled answers «cancelar», typed to back out of a list rather than to unsubscribe.
 const msgCancelled = `Listo, no cambié nada.
 
-Si lo que quieres es dejar de recibir avisos y borrar tus datos, escribe *BAJA*. Para ver todo lo que puedo hacer, escribe *AYUDA*.`
+Si lo que quieres es dejar de recibir avisos y borrar tu suscripción, escribe *BAJA*. Para ver todo lo que puedo hacer, escribe *AYUDA*.`
 
 // echoed drops the * and _ from what someone typed before it's shown back, so it can't turn
 // into bold or italics (on Telegram, tags that don't nest and a refused message).
@@ -170,7 +173,21 @@ Vuelve a escribir *HOLA* en unos días. Mientras tanto, revisa tus días de cort
 Novedades: ` + base
 }
 
-const msgUnsubscribed = "👋 Listo, ya no recibirás avisos y borramos tus datos. Si quieres volver, escribe *HOLA*."
+const msgUnsubscribed = "👋 Listo, ya no recibirás avisos y borramos tu suscripción. Los reportes y avisos anteriores quedan como estadísticas anónimas, sin tu contacto. Si quieres volver, escribe *HOLA*."
+
+func msgZoneNotSubscribed(zone int) string {
+	return fmt.Sprintf("No estás suscrito a los avisos de la *Zona %d*. Escribe *BAJA* para borrar toda tu suscripción.", zone)
+}
+
+func msgZoneUnsubscribed(zone int) string {
+	return fmt.Sprintf("👋 Listo, ya no recibirás avisos de la *Zona %d*. Tus otras zonas siguen activas. Escribe *BAJA* para borrar toda tu suscripción.", zone)
+}
+
+func msgAnonymousReport(base string) string {
+	return "Puedes contar cómo está el agua en tu colonia sin suscribirte: " + base + "/reportes\n\n🚚 Si no tienes agua, aquí están los teléfonos para pedir pipa: " + base + "/pipas"
+}
+
+const msgPickReportZone = "¿De qué zona quieres reportar el último corte? 👇"
 
 const msgNotSubscribed = "No tienes avisos activos. Escribe *HOLA* para empezar."
 
@@ -247,12 +264,24 @@ func msgSubscribed(i subscribedInfo) string {
 	default:
 		b.WriteString("🔔 Por ahora no hay más cortes programados en tu zona.\n")
 	}
-	commands := "Escribe *ZONA 1* a *ZONA 7* para cambiar de zona o *BAJA* para dejar de recibir avisos."
+	commands := "Escribe *ZONA 1* a *ZONA 7* para agregar una zona, *BAJA ZONA 4* para quitar solo esa o *BAJA* para borrarlas todas."
 	if i.over {
 		commands = "Escribe *BAJA* para borrar tu suscripción."
 	}
 	fmt.Fprintf(&b, "\n🗺️ ¿Cómo está el agua en tu colonia? Repórtalo y mira la de tus vecinos: %s/reportes\n📢 Exígele a quien le toca que lo arregle: %[1]s/exige\n%s\n🔒 Guardamos %s, tu zona y tus reportes. Todo lo que guardamos: %s/privacidad", i.base, commands, storedID(i.channel), i.base)
 	return b.String()
+}
+
+func msgOtherZone(zone int, days string, next []time.Time) string {
+	text := fmt.Sprintf("\n*También: Zona %d* · Días de corte: *%s*.", zone, days)
+	if len(next) == 0 {
+		return text + " Por ahora no hay más cortes programados."
+	}
+	label := " Próximos cortes: *"
+	if len(next) == 1 {
+		label = " Próximo corte: *"
+	}
+	return text + label + rotation.DatesES(next) + "*."
 }
 
 func storedID(channel string) string {

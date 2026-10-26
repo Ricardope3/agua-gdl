@@ -78,9 +78,10 @@ type queued struct {
 }
 
 var (
-	zoneRe    = regexp.MustCompile(`^(?:ZONA ?)?([1-7])$`)
-	badZoneRe = regexp.MustCompile(`^ZONA ?\d*$`)
-	stopWords = []string{"BAJA", "ALTO", "STOP", "DARME DE BAJA", "DEJAR DE RECIBIR AVISOS"}
+	zoneRe     = regexp.MustCompile(`^(?:ZONA ?)?([1-7])$`)
+	zoneStopRe = regexp.MustCompile(`^BAJA (?:ZONA )?([1-7])$`)
+	badZoneRe  = regexp.MustCompile(`^ZONA ?\d*$`)
+	stopWords  = []string{"BAJA", "ALTO", "STOP", "DARME DE BAJA", "DEJAR DE RECIBIR AVISOS"}
 	// cancelWords back out of a list of colonias or zones; they don't unsubscribe.
 	cancelWords = []string{"CANCELAR", "CANCELA", "CANCEL"}
 	// answerWords are typed answers to the reminders' questions, whose buttons carry the
@@ -204,10 +205,13 @@ func (b *Bot) onText(ctx context.Context, r User, body string) error {
 		return b.text(ctx, r, msgHelp(b.BaseURL, r.Channel))
 	case slices.Contains(stopWords, n):
 		return b.unsubscribe(ctx, r)
+	case zoneStopRe.MatchString(n):
+		zone, _ := strconv.Atoi(zoneStopRe.FindStringSubmatch(n)[1])
+		return b.unsubscribeZone(ctx, r, zone)
 	case slices.Contains(cancelWords, n):
 		return b.text(ctx, r, msgCancelled)
 	case slices.Contains(answerWords, n):
-		return b.text(ctx, r, msgUseButtons)
+		return b.text(ctx, r, msgUseButtons(b.BaseURL))
 	case slices.Contains(reportWords, n):
 		return b.reportLastCut(ctx, r)
 	case slices.Contains(pipaWords, n):
@@ -308,7 +312,12 @@ func (b *Bot) onPayload(ctx context.Context, r User, p string) error {
 			return b.onColonia(ctx, r, c)
 		}
 	case "REPORT":
-		return b.askReport(ctx, r, 0, rest)
+		zoneText, date, found := strings.Cut(rest, ":")
+		zone, err := strconv.Atoi(zoneText)
+		if found && err == nil {
+			return b.askReport(ctx, r, zone, date)
+		}
+		return b.askReport(ctx, r, 0, rest) // older REPORT:date buttons
 	case "R":
 		// R:zone:date:answer:signature; older buttons are R:zone:date:answer or R:date:answer.
 		parts, zone, sig := strings.Split(rest, ":"), 0, ""
@@ -430,22 +439,30 @@ func (b *Bot) nightFull(ctx context.Context, r User, zone int) (bool, error) {
 		return false, nil
 	}
 	current, subscribed, err := b.Store.Subscriber(ctx, r.Channel, r.ID)
-	if err != nil || (subscribed && current.Zone == zone) {
+	if err != nil || (subscribed && current.HasZone(zone)) {
 		return false, err
 	}
-	counts, err := b.Store.ZoneCounts(ctx)
-	if err != nil {
-		return false, err
-	}
-	for _, day := range b.Schedule.Weekdays(zone) {
-		load := 1
-		for z, n := range counts {
-			if slices.Contains(b.Schedule.Weekdays(z), day) {
-				load += n
+	tomorrow := b.Schedule.Day(b.Now()).AddDate(0, 0, 1)
+	for i := range 7 {
+		day := tomorrow.AddDate(0, 0, i)
+		if !b.Schedule.StartsBlock(zone, day) {
+			continue
+		}
+		zones := []int{zone}
+		for z := 1; z <= 7; z++ {
+			if z != zone && b.Schedule.StartsBlock(z, day) {
+				zones = append(zones, z)
 			}
 		}
-		if subscribed && slices.Contains(b.Schedule.Weekdays(current.Zone), day) {
-			load-- // already counted on that night
+		load, err := b.Store.NightLoad(ctx, zones)
+		if err != nil {
+			return false, err
+		}
+		already := subscribed && slices.ContainsFunc(current.Memberships(), func(z int) bool {
+			return b.Schedule.StartsBlock(z, day)
+		})
+		if !already {
+			load++
 		}
 		if load > b.NightCap {
 			return true, nil
@@ -532,7 +549,15 @@ func (b *Bot) subscribedText(ctx context.Context, s store.Subscriber, fresh bool
 		info.nextCut = b.Schedule.Block(zone, cut)
 		break
 	}
-	return msgSubscribed(info), nil
+	text := msgSubscribed(info)
+	for _, other := range s.Memberships() {
+		if other == zone {
+			continue
+		}
+		next := b.Schedule.NextCuts(other, today, 3)
+		text += "\n" + msgOtherZone(other, rotation.DaysES(b.Schedule.Weekdays(other)), next)
+	}
+	return text, nil
 }
 
 func (b *Bot) unsubscribe(ctx context.Context, r User) error {
@@ -549,27 +574,68 @@ func (b *Bot) unsubscribe(ctx context.Context, r User) error {
 	return b.text(ctx, r, msgUnsubscribed)
 }
 
-// reportLastCut asks about the subscriber's most recent cut, today included.
+func (b *Bot) unsubscribeZone(ctx context.Context, r User, zone int) error {
+	if r.ID == "" {
+		return b.text(ctx, r, msgNotSubscribed)
+	}
+	removed, subscribed, err := b.Store.UnsubscribeZone(ctx, r.Channel, r.ID, zone)
+	if err != nil {
+		return err
+	}
+	if !removed {
+		return b.text(ctx, r, msgZoneNotSubscribed(zone))
+	}
+	if !subscribed {
+		return b.text(ctx, r, msgUnsubscribed)
+	}
+	return b.text(ctx, r, msgZoneUnsubscribed(zone))
+}
+
+// reportLastCut asks about each subscribed zone's most recent cut, today included.
 func (b *Bot) reportLastCut(ctx context.Context, r User) error {
 	if r.ID == "" {
-		return b.welcome(ctx, r)
+		return b.text(ctx, r, msgAnonymousReport(b.BaseURL))
 	}
 	s, ok, err := b.Store.Subscriber(ctx, r.Channel, r.ID)
 	if err != nil {
 		return err
 	}
 	if !ok {
-		return b.welcome(ctx, r)
+		return b.text(ctx, r, msgAnonymousReport(b.BaseURL))
 	}
+	type candidate struct {
+		zone int
+		cut  time.Time
+	}
+	var candidates []candidate
+	beforeJoin := false
 	tomorrow := b.Schedule.Day(b.Now()).AddDate(0, 0, 1)
-	prev, ok := b.Schedule.PrevCut(s.Zone, tomorrow)
-	if !ok {
+	for _, zone := range s.Memberships() {
+		prev, found := b.Schedule.PrevCut(zone, tomorrow)
+		if !found {
+			continue
+		}
+		if !s.CreatedAt.Before(prev) {
+			beforeJoin = true
+			continue
+		}
+		candidates = append(candidates, candidate{zone, prev})
+	}
+	if len(candidates) == 0 {
+		if beforeJoin {
+			return b.text(ctx, r, msgReportBeforeJoin)
+		}
 		return b.text(ctx, r, msgNoReportYet)
 	}
-	if !s.CreatedAt.Before(prev) {
-		return b.text(ctx, r, msgReportBeforeJoin)
+	if len(candidates) == 1 {
+		return b.askReport(ctx, r, candidates[0].zone, candidates[0].cut.Format(rotation.DateLayout))
 	}
-	return b.askReport(ctx, r, s.Zone, prev.Format(rotation.DateLayout))
+	choices := make([]Choice, len(candidates))
+	for i, c := range candidates {
+		date := c.cut.Format(rotation.DateLayout)
+		choices[i] = Choice{ID: fmt.Sprintf("REPORT:%d:%s", c.zone, date), Title: fmt.Sprintf("Zona %d · %s", c.zone, rotation.DateES(c.cut))}
+	}
+	return b.reply(ctx, r, Reply{Text: msgPickReportZone, Button: labelPickZone, Choices: choices})
 }
 
 // askReport offers the answers for zone's cut on date; zone 0 means the subscriber's zone when they answer.
@@ -609,7 +675,7 @@ func (b *Bot) saveReport(ctx context.Context, r User, zone int, date, answer, si
 	}
 	if zone == 0 {
 		zone = s.Zone
-	} else if !zoneTrusted(r.ID, "R", zone, date, sig, s.Zone) {
+	} else if !zoneTrusted(r.ID, "R", zone, date, sig, s.Memberships()...) {
 		return b.text(ctx, r, msgReportClosed) // made-up callback data for another zone
 	}
 	d, err := b.Schedule.ParseDate(date)
@@ -621,6 +687,12 @@ func (b *Bot) saveReport(ctx context.Context, r User, zone int, date, answer, si
 	// when the cut began may report it, so nobody can report the same cut twice.
 	if !s.CreatedAt.Before(d) {
 		return b.text(ctx, r, msgReportBeforeJoin)
+	}
+	// An unsigned current-zone button predates signatures. It proves no zone or date, so after
+	// a zone change it must not authorize a cut from before that change. Signed buttons keep
+	// the zone and date the bot actually offered, including after a change.
+	if sig == "" && !s.UpdatedAt.Before(d) {
+		return b.text(ctx, r, msgReportClosed)
 	}
 	if err := b.Store.SaveReport(ctx, s.ID, zone, d, answer); err != nil {
 		return err
@@ -642,7 +714,7 @@ func (b *Bot) saveWater(ctx context.Context, r User, zone int, date, answer, sig
 	if !ok {
 		return b.welcome(ctx, r)
 	}
-	if !zoneTrusted(r.ID, "A", zone, date, sig, s.Zone) {
+	if !zoneTrusted(r.ID, "A", zone, date, sig, s.Memberships()...) {
 		return b.text(ctx, r, msgReportClosed) // made-up callback data for another zone
 	}
 	d, err := b.Schedule.ParseDate(date)

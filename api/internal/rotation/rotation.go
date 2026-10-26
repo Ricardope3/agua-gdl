@@ -17,12 +17,14 @@ var weekdayKeys = map[string]time.Weekday{
 }
 
 type Schedule struct {
-	loc   *time.Location
-	start time.Time
-	end   time.Time
-	days  map[int][]time.Weekday
-	skip  map[string]bool
-	extra map[string]bool
+	loc     *time.Location
+	start   time.Time
+	end     time.Time
+	days    map[int][]time.Weekday
+	skip    map[string]bool
+	extra   map[string]bool
+	checked string
+	source  string
 }
 
 type override struct {
@@ -32,16 +34,23 @@ type override struct {
 
 func Load(raw []byte, loc *time.Location) (*Schedule, error) {
 	var f struct {
-		Start string              `json:"start"`
-		End   string              `json:"end"`
-		Zones map[string][]string `json:"zones"`
-		Skip  []override          `json:"skip"`
-		Extra []override          `json:"extra"`
+		Start   string              `json:"start"`
+		End     string              `json:"end"`
+		Zones   map[string][]string `json:"zones"`
+		Skip    []override          `json:"skip"`
+		Extra   []override          `json:"extra"`
+		Checked string              `json:"checked"`
+		Source  string              `json:"source"`
 	}
 	if err := json.Unmarshal(raw, &f); err != nil {
 		return nil, fmt.Errorf("rotation: %w", err)
 	}
-	s := &Schedule{loc: loc, days: map[int][]time.Weekday{}, skip: map[string]bool{}, extra: map[string]bool{}}
+	if f.Checked != "" {
+		if _, err := time.Parse(DateLayout, f.Checked); err != nil {
+			return nil, fmt.Errorf("rotation checked: %w", err)
+		}
+	}
+	s := &Schedule{loc: loc, days: map[int][]time.Weekday{}, skip: map[string]bool{}, extra: map[string]bool{}, checked: f.Checked, source: f.Source}
 	var err error
 	if s.start, err = time.ParseInLocation(DateLayout, f.Start, loc); err != nil {
 		return nil, fmt.Errorf("rotation start: %w", err)
@@ -84,6 +93,9 @@ func key(date string, zone int) string { return date + "/" + strconv.Itoa(zone) 
 func isoDay(w time.Weekday) int { return (int(w) + 6) % 7 }
 
 func (s *Schedule) Location() *time.Location { return s.loc }
+
+// Provenance is when the maintainer last checked SIAPA's calendar and where it came from.
+func (s *Schedule) Provenance() (checked, source string) { return s.checked, s.source }
 
 // Span returns the rotation's first and last day; end is zero when the rotation has no end date.
 func (s *Schedule) Span() (start, end time.Time) { return s.start, s.end }

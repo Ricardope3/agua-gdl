@@ -38,7 +38,11 @@ func week(t *testing.T) *Week {
 		{Zone: 3, Day: day(20), Answer: "no", Count: 6},
 		{Zone: 3, Day: day(21), Answer: "poca", Count: 2},
 		{Zone: 3, Day: day(24), Answer: "si", Count: 2},
+		{Zone: 3, Day: day(25), Answer: "normal", Count: 2},
+		{Zone: 3, Day: day(25), Answer: "turbia", Count: 1},
 		{Zone: 5, Day: day(22), Answer: "no", Count: 1},
+		{Zone: 5, Day: day(24), Answer: "normal", Count: 10},
+		{Zone: 5, Day: day(24), Answer: "baja", Count: 2},
 		{Zone: 5, Day: day(27), Answer: "no", Count: 30}, // next week
 	}
 	w, err := Build(at(19, 0), reports, bot, []byte(colonias), sched, 10)
@@ -66,8 +70,14 @@ func TestBuildCountsTheWeekByColonia(t *testing.T) {
 	if w.LongDry() != 1 {
 		t.Errorf("LongDry = %d, want 1", w.LongDry())
 	}
-	if len(w.Zones) != 2 || !w.Zones[0].Shown || w.Zones[0].No != 6 || w.Zones[1].Shown || w.Zones[1].No != 1 {
-		t.Errorf("bot zones: %+v", w.Zones)
+	if len(w.Zones) != 2 {
+		t.Fatalf("bot zones: %+v", w.Zones)
+	}
+	if z := w.Zones[0]; !z.Shown || z.ReturnShown || z.No != 6 || z.WaterTotal() != 10 || z.ReturnTotal() != 3 {
+		t.Errorf("zone 3: %+v", z)
+	}
+	if z := w.Zones[1]; z.Shown || !z.ReturnShown || z.No != 1 || z.Normal != 10 || z.Baja != 2 || z.ReturnTotal() != 12 {
+		t.Errorf("zone 5: %+v", z)
 	}
 }
 
@@ -78,9 +88,16 @@ func TestPageAndCSV(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, want := range []string{"Semana del 19 al 25 de octubre de 2026", "LAS JUNTAS", "En <strong>1 colonia</strong> hubo reportes «sin agua» en más de un día",
-		"Zona 3: 6 sin agua, 2 con poca y 2 con agua", "Zona 5: menos de 10 respuestas", `href="/semana/2026-10-19.csv"`} {
+		"Zona 3: antes del corte, 6 sin agua, 2 con poca y 2 con agua (10 respuestas); sobre el regreso, menos de 10 respuestas.",
+		"Zona 5: antes del corte, menos de 10 respuestas; sobre el regreso, 10 normal, 2 con poca presión, 0 sin regreso y 0 turbia o con olor (12 respuestas).",
+		`href="/semana/2026-10-19.csv"`} {
 		if !strings.Contains(main, want) {
 			t.Errorf("page lacks %q", want)
+		}
+	}
+	for _, leaked := range []string{"2 normal, 0 con poca presión, 0 sin regreso y 1 turbia", "1 sin agua, 0 con poca y 0 con agua"} {
+		if strings.Contains(main, leaked) {
+			t.Errorf("page leaks a suppressed split: %q", leaked)
 		}
 	}
 	csv, err := w.CSV()

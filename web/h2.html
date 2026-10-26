@@ -11,7 +11,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aguagdl.com/">
 <meta property="og:title" content="Agua GDL · El agua es un derecho. Exígelo.">
-<meta property="og:description" content="En Guadalajara el agua llega sucia y racionada. Reporta tu colonia: cada reporte es una prueba de dónde falla el gobierno. Y exígele a quien le toca que lo arregle; no lo arregla un acueducto privado, lo arregla sanear los ríos.">
+<meta property="og:description" content="En Guadalajara el agua llega sucia y racionada. Reporta tu colonia: cada reporte es un testimonio vecinal que ayuda a documentar dónde falta el agua. Y exígele a quien le toca que lo arregle; no lo arregla un acueducto privado, lo arregla sanear los ríos.">
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary">
@@ -414,6 +414,8 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
       <div>
         <p class="kicker">El agua es un derecho. Exígelo.</p>
         <h1>El SIAPA prometió un día. Hay vecinos con semanas sin agua.</h1>
+        <p>Agua GDL es un servicio ciudadano, gratuito y no oficial: te ayuda a saber cómo está el agua en tu colonia, prepararte para los cortes y pedir apoyo.</p>
+        <p class="buttons"><a class="button" href="/reportes">¿Hay agua en tu colonia?</a><a class="button alt" href="/mizona">Mi zona y avisos</a><a class="button alt" href="/pipas">Pedir una pipa</a></p>
       </div>
       <img class="ilus" src="/img/ilustracion.png" alt="Caricatura de Pablo Lemus con la mano en una llave de la que cae una gota, sobre la Catedral de Guadalajara y una multitud que protesta" width="517" height="640">
     </div>
@@ -426,7 +428,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     <article class="m4-card"><p class="m-k">¿Hay agua en tu colonia?</p><div class="m-num" id="m4-num">—</div><p>colonias llevan <strong>una semana o más sin agua</strong>, según medios y vecinos.</p><p class="who">Desliza para ver más →</p></article>
     <article class="m4-card"><div class="m4-vs"><div><p class="m-k">Lo que prometió el SIAPA</p><div class="m-num">1</div>día de corte «por máximo»</div><div><p class="m-k">La realidad</p><div class="m-num" id="m4-max">—</div>días sin agua, lo más largo que publica un medio</div></div><p class="who">Fuente: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">página de la rotación del SIAPA</a></p></article>
     <article class="m4-card"><h3>Por municipio</h3><ol class="m-rank" id="m4-munis"></ol></article>
-    <article class="m4-card"><h3>¿Y en tu colonia?</h3><p>Cada reporte es una prueba de dónde falla el gobierno. Sin cuenta y anónimo.</p><a class="button" href="/reportes?reportar=1">Reportar mi colonia</a><p><a href="/exige">Exígele a quien le toca →</a></p></article>
+    <article class="m4-card"><h3>¿Y en tu colonia?</h3><p>Cada reporte es un testimonio vecinal que ayuda a ver dónde falta el agua. Sin cuenta y anónimo; no es una medición oficial.</p><a class="button" href="/reportes?reportar=1">Reportar mi colonia</a><p><a href="/exige">Exígele a quien le toca →</a></p></article>
   </div>
   <div class="m4-dots" id="m4-dots" aria-hidden="true"></div>
 </section>
@@ -454,7 +456,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     </div>
     <section class="yours" aria-labelledby="tuya">
       <h2 id="tuya">¿Y en tu colonia?</h2>
-      <p class="lede">El <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">SIAPA</a> dijo «por máximo un día»; hay vecinos con <a href="https://www.nmas.com.mx/jalisco/sociedad/colonias-limitrofes-entre-tlaquepaque-y-guadalajara-carecen-de-agua/" rel="noopener">semanas sin agua</a>. Reporta tu colonia: <mark>cada reporte es una prueba</mark> de dónde falla el gobierno, y con ella puedes exigirle que lo arregle. Sin cuenta y anónimo.</p>
+      <p class="lede">El <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">SIAPA</a> dijo «por máximo un día»; hay vecinos con <a href="https://www.nmas.com.mx/jalisco/sociedad/colonias-limitrofes-entre-tlaquepaque-y-guadalajara-carecen-de-agua/" rel="noopener">semanas sin agua</a>. Reporta tu colonia: <mark>cada reporte es un testimonio vecinal</mark> que ayuda a documentar dónde falta el agua. No es una medición oficial; puedes usarlo al exigir una solución. Sin cuenta y anónimo.</p>
       <p class="pulse" id="pulse" aria-live="polite" hidden></p>
       <form class="quick" action="/reportes" method="get" role="search">
         <label for="q">Tu colonia</label>
@@ -496,7 +498,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     </section>
     <div class="boxes">
       <div class="alerta">
-        <p class="alerta-head"><span class="alerta-i" aria-hidden="true">!</span><span>El SIAPA dijo <span class="nw">«no serán cortes totales».</span><br>No es cierto.</span></p>
+        <p class="alerta-head"><span class="alerta-i" aria-hidden="true">!</span><span>El SIAPA dijo <span class="nw">«no serán cortes totales».</span><br>La CEA documentó afectaciones mayores.</span></p>
         <p>La propia CEA reconoció <a href="https://siker.com.mx/zmg/94-colonias-se-quedan-sin-agua-o-reciben-caudal-minimo-tras-inicio-de-rotacion-en-la-zmg/" rel="noopener">94 colonias sin agua o con un caudal mínimo</a>.</p>
       </div>
       <a class="aviso" href="/exige">
@@ -529,6 +531,16 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     <section aria-labelledby="mas">
       <h2 id="mas">También puedes</h2>
       <ul class="cards">
+        <li class="card">
+          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bell"/></svg></span>Recibir avisos de tu zona</h3>
+          <p>Avisos ciudadanos por Telegram o en tu calendario antes de una tanda de cortes. Confirma siempre con el SIAPA.</p>
+          <a href="/avisos">Activar avisos</a>
+        </li>
+        <li class="card">
+          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#check"/></svg></span>Revisar cómo trabajamos</h3>
+          <p>Fuentes, privacidad, criterios editoriales, correcciones y formas de participar. También hay una versión sencilla para conexiones lentas.</p>
+          <a href="/transparencia">Transparencia</a> · <a href="/simple">Versión sencilla</a>
+        </li>
         <li class="card">
           <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#phone"/></svg></span>Pedir una pipa</h3>
           <p>Los teléfonos y WhatsApp oficiales del SIAPA y de Guadalajara, Zapopan, Tlaquepaque y Tonalá, cada uno con su fuente.</p>

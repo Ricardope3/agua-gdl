@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-10-20",
+  "actualizado": "2026-10-25",
   "replica": {"enviada": "2026-10-17", "cierra": "2026-10-26T23:59"},
   "promesas": [
     {
@@ -264,9 +264,9 @@
         {"texto": "A más tardar el 28 de febrero de 2027 confirman la fecha de fin o anuncian una extensión.", "estado": "pendiente"},
         {"texto": "Termina a más tardar el 31 de marzo de 2027 en las siete zonas.", "estado": "pendiente", "core": true}
       ],
-      "veredicto": "se_cumple",
-      "veredicto_fecha": "2026-10-16",
-      "nota": "Empezó en la fecha anunciada y con calendario público. Falta ver si termina a tiempo.",
+      "veredicto": "en_curso",
+      "veredicto_fecha": "2026-10-25",
+      "nota": "Empezó en la fecha anunciada y con calendario público. El paso clave sigue pendiente: falta ver si termina a tiempo.",
       "respuesta": null,
       "historial": []
     },

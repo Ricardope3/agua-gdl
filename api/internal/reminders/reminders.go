@@ -434,8 +434,8 @@ type Manual struct {
 // inside the window, and how many are due in all.
 func (r *Runner) ManualRecipients(ctx context.Context, m Manual) (inWindow []store.Subscriber, due int, err error) {
 	tomorrow := r.Schedule.Day(r.Now()).AddDate(0, 0, 1)
-	if !r.Schedule.IsCut(m.Zone, tomorrow) {
-		return nil, 0, fmt.Errorf("zone %d has no cut on %s", m.Zone, tomorrow.Format(rotation.DateLayout))
+	if !r.Schedule.StartsBlock(m.Zone, tomorrow) {
+		return nil, 0, fmt.Errorf("zone %d starts no block on %s", m.Zone, tomorrow.Format(rotation.DateLayout))
 	}
 	subs, err := r.Store.DueSubscribers(ctx, store.WhatsApp, []int{m.Zone}, tomorrow)
 	if err != nil {

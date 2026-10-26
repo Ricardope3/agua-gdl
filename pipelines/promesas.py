@@ -24,6 +24,7 @@ PAGE = root / "web/promesas.html"
 
 VERDICTS = {
     "se_cumple": "Se cumple",
+    "en_curso": "En curso",
     "sin_pruebas": "Sin pruebas",
     "en_riesgo": "En riesgo",
     "incumplida": "Incumplida",
@@ -150,8 +151,9 @@ def validate(data):
                 fail(f"{where}: «Incumplida» needs two independent sources")
             if core.get("estado") != "incumplido":
                 fail(f"{where}: «Incumplida» but the core paso isn't incumplido")
-        if verdict == "se_cumple" and not any(s.get("estado") == "cumplido" for s in steps):
-            fail(f"{where}: «Se cumple» needs at least one cumplido paso")
+        core = next((s for s in steps if s.get("core")), {})
+        if verdict == "se_cumple" and core.get("estado") != "cumplido":
+            fail(f"{where}: «Se cumple» needs the core paso to be cumplido")
         for path, text in strings(p):
             if path in {"id", "veredicto", "seccion"} or path.endswith((".url", ".archive", ".tipo", ".estado")):
                 continue
@@ -293,7 +295,7 @@ def render(data):
     by = {k: [card(p, data) for p in data["promesas"] if p["seccion"] == k] for k in SECTIONS}
     graphic, counts = meter(data)
     n = len(data["promesas"])
-    headline = f'<p class="m-head">De {n} compromisos, hoy: <strong>{counts["se_contradice"]}</strong> se contradicen con los documentos · <strong>{counts["incumplida"]}</strong> incumplido{"s" if counts["incumplida"] != 1 else ""} · <strong>{counts["en_riesgo"]}</strong> en riesgo · <strong>{counts["sin_pruebas"]}</strong> sin pruebas · <strong>{counts["se_cumple"]}</strong> se cumple{"n" if counts["se_cumple"] != 1 else ""}.</p>'
+    headline = f'<p class="m-head">De {n} compromisos, hoy: <strong>{counts["se_contradice"]}</strong> se contradicen con los documentos · <strong>{counts["incumplida"]}</strong> incumplido{"s" if counts["incumplida"] != 1 else ""} · <strong>{counts["en_riesgo"]}</strong> en riesgo · <strong>{counts["sin_pruebas"]}</strong> sin pruebas · <strong>{counts["en_curso"]}</strong> en curso · <strong>{counts["se_cumple"]}</strong> se cumple{"n" if counts["se_cumple"] != 1 else ""}.</p>'
     requests = "\n".join(
         f'<li><strong>{e(r["a"])}</strong>, folio {e(r["folio"])}, presentada el {long_date(r["fecha"])}: {e(r["tema"])}. Estado: {e(r["estado"])}.' + (f' {link({"url": r["url"], "medio": "Respuesta"})}' if r.get("url") else "") + "</li>"
         for r in data.get("solicitudes", [])

@@ -291,6 +291,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
           </fieldset>
           <a class="button big" id="siguiente" href="#" rel="noopener" target="_blank"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#mail"/></svg>Abrir el correo 1 de 39</a>
           <p class="note" id="avance" hidden><progress id="barra" max="39" value="0"></progress><span id="progreso"></span></p>
+          <p class="note"><button class="linklike" type="button" id="borrar-actividad">Borrar mi actividad guardada en este dispositivo</button></p>
           <details class="otra">
             <summary>¿Prefieres mandar un solo correo a los 39?</summary>
             <p class="note">Abre un correo nuevo y pega cada cosa en su lugar:</p>
@@ -629,6 +630,10 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     stepper("exige-x", 2, "siguiente-x", "progreso-x", ["x", "Publicar para"], xUrl, () => {}, "x"),
     stepper("exige-messenger", 3, "siguiente-fb", "progreso-fb", ["message-circle", "Messenger para"], (d) => `https://m.me/${d[3]}`, (d) => copyChat(d, "estado-redes"), "fb"),
   ];
+  $("borrar-actividad").addEventListener("click", () => {
+    try { for (const key of [KEY, "exige-x", "exige-messenger"]) localStorage.removeItem(key); } catch {}
+    location.reload();
+  });
 
   const list = $("personas");
   const where = (info) => info.d ? `Distrito ${info.d}` : "Representación proporcional";

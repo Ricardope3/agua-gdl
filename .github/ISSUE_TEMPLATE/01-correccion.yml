@@ -1,0 +1,27 @@
+name: Corrección de información
+description: Señala un dato, cita o enlace que debe revisarse
+title: "[Corrección]: "
+labels: [correccion]
+body:
+  - type: markdown
+    attributes:
+      value: No incluyas teléfonos, domicilios, identificadores de bot, conversaciones privadas ni datos de otras personas. Para seguridad usa soporte@aguagdl.com.
+  - type: input
+    id: pagina
+    attributes:
+      label: Página o dato afectado
+      placeholder: /mizona, zona 4, miércoles
+    validations:
+      required: true
+  - type: textarea
+    id: evidencia
+    attributes:
+      label: Qué dice la fuente
+      description: Incluye enlace público, fecha y el texto relevante.
+    validations:
+      required: true
+  - type: textarea
+    id: impacto
+    attributes:
+      label: Impacto para vecinas y vecinos
+      description: ¿Puede cambiar un horario, una zona, un teléfono o una decisión?

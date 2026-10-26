@@ -271,6 +271,7 @@ func TestZoneChangeMidBatchToAnotherZoneCutTomorrow(t *testing.T) {
 	r.Sender = senderFunc(func(ctx context.Context, m wa.Message) (string, error) {
 		if m.To == "a" {
 			st.Subscribe(ctx, store.WhatsApp, "b", "b", 6)
+			st.UnsubscribeZone(ctx, store.WhatsApp, "b", 4)
 		}
 		return snd.Send(ctx, m)
 	})
@@ -321,10 +322,14 @@ func TestManualReminderReachesTheWindowOnceAndTheNightlyRunSkipsIt(t *testing.T)
 	}
 }
 
-func TestManualReminderNeedsACutTomorrow(t *testing.T) {
+func TestManualReminderNeedsABlockStartTomorrow(t *testing.T) {
 	r := runner(t, "2026-10-15 19:00", fake.NewStore(), &fake.Sender{})
 	if _, err := r.SendManual(context.Background(), Manual{Zone: 4, Text: "aviso"}); err == nil {
 		t.Fatal("zone 4 has no cut on Friday 16")
+	}
+	r = runner(t, "2026-10-17 19:00", fake.NewStore(), &fake.Sender{})
+	if _, err := r.SendManual(context.Background(), Manual{Zone: 1, Text: "aviso"}); err == nil {
+		t.Fatal("zone 1's Sunday cut continues Friday's block and already got its reminder")
 	}
 }
 

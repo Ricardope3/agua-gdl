@@ -150,6 +150,9 @@ func TestOthers(t *testing.T) {
 			t.Errorf("%q: got %+v", q, got)
 		}
 	}
+	if got := ix.Others("Colinas de Huentitán, GDL"); len(got) != 1 || got[0].Municipio != "GUADALAJARA" {
+		t.Errorf("GDL must work as the Guadalajara alias: %+v", got)
+	}
 	if got := ix.Others("Chapalita"); len(got) != 0 {
 		t.Errorf("a colonia on SIAPA's list is not an other: %+v", got)
 	}

@@ -30,12 +30,17 @@ type Colonia struct {
 
 func (c Colonia) total() int { return c.SinAgua + c.Baja + c.ConAgua }
 
-// Zone is the bot's answers in one zone; the split shows only from Min answers.
+// Zone is the bot's answers in one zone. The two questions have separate denominators
+// and suppression: a full week of water answers must not make a few restoration answers public.
 type Zone struct {
-	Zone         int
-	No, Poca, Si int
-	Shown        bool
+	Zone                            int
+	No, Poca, Si                    int
+	Normal, Baja, NoRegreso, Turbia int
+	Shown, ReturnShown              bool
 }
+
+func (z Zone) WaterTotal() int  { return z.No + z.Poca + z.Si }
+func (z Zone) ReturnTotal() int { return z.Normal + z.Baja + z.NoRegreso + z.Turbia }
 
 // Week is the count for the seven days from From.
 type Week struct {
@@ -119,18 +124,28 @@ func Build(from time.Time, reports []store.WebReport, bot []store.DayCount, colo
 			z = &Zone{Zone: d.Zone}
 			byZone[d.Zone] = z
 		}
-		// The same answers as the map's: «no» and «no regresó» are without water.
+		// Keep the two questions apart: «¿Ahorita tienes agua?» is not a restoration report,
+		// and turbid water is not evidence of normal restoration.
 		switch d.Answer {
-		case "no", "no_regreso":
+		case "no":
 			z.No += d.Count
 		case "poca":
 			z.Poca += d.Count
-		case "si", "normal", "turbia":
+		case "si":
 			z.Si += d.Count
+		case "normal":
+			z.Normal += d.Count
+		case "baja":
+			z.Baja += d.Count
+		case "no_regreso":
+			z.NoRegreso += d.Count
+		case "turbia":
+			z.Turbia += d.Count
 		}
 	}
 	for _, z := range byZone {
-		z.Shown = z.No+z.Poca+z.Si >= min
+		z.Shown = z.WaterTotal() >= min
+		z.ReturnShown = z.ReturnTotal() >= min
 		w.Zones = append(w.Zones, *z)
 	}
 	slices.SortFunc(w.Zones, func(a, b Zone) int { return cmp.Compare(a.Zone, b.Zone) })
@@ -254,10 +269,10 @@ var page = template.Must(template.New("week").Funcs(template.FuncMap{
 
     <section aria-labelledby="telegram">
       <h2 id="telegram">Lo que contestaron en Telegram</h2>
-      <p>Quienes reciben nuestros avisos contestan si tienen agua. Mostramos cuántos dijeron que no, que poca o que sí cuando en su zona son al menos {{.Min}} respuestas, para no exponer a nadie.</p>
+      <p>Antes del corte preguntamos «¿Ahorita tienes agua?»; después, «¿Cómo regresó?». Son preguntas y denominadores distintos. Cada desglose aparece solo con al menos {{.Min}} respuestas de esa pregunta en la zona.</p>
       <ul>
 {{- range .Zones}}
-        <li>Zona {{.Zone}}: {{if .Shown}}{{.No}} sin agua, {{.Poca}} con poca y {{.Si}} con agua{{else}}menos de {{$.Min}} respuestas{{end}}.</li>
+        <li>Zona {{.Zone}}: antes del corte, {{if .Shown}}{{.No}} sin agua, {{.Poca}} con poca y {{.Si}} con agua ({{.WaterTotal}} respuestas){{else}}menos de {{$.Min}} respuestas{{end}}; sobre el regreso, {{if .ReturnShown}}{{.Normal}} normal, {{.Baja}} con poca presión, {{.NoRegreso}} sin regreso y {{.Turbia}} turbia o con olor ({{.ReturnTotal}} respuestas){{else}}menos de {{$.Min}} respuestas{{end}}.</li>
 {{- end}}
       </ul>
     </section>
@@ -268,7 +283,8 @@ var page = template.Must(template.New("week").Funcs(template.FuncMap{
       <ul>
         <li>Son los reportes del <a href="/reportes">mapa de los vecinos</a> de lunes a domingo, en hora de Guadalajara. Son anónimos: no guardamos IP, ubicación ni nombre.</li>
         <li>Los días de corte son los del calendario del SIAPA para la zona principal de cada colonia.</li>
-        <li>No son datos oficiales: son lo que dicen los vecinos. Por eso le pedimos al SIAPA que publique cuánta agua llega a cada zona y cuándo.</li>
+        <li>No son datos oficiales ni una muestra representativa: participa más quien tiene internet, conoce el proyecto y decide reportar. Los porcentajes tienen como denominador solo los testimonios recibidos, no las viviendas ni toda la colonia.</li>
+        <li>Estos conteos no demuestran que un aviso, una autoridad o Agua GDL haya causado que el agua regrese. Tampoco prueban calidad del agua: turbia, olor y sedimento son percepciones vecinales, no análisis de laboratorio. Pedimos al SIAPA que publique cuánta agua llega a cada zona y cuándo.</li>
       </ul>
       <a class="button glow" href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Reportar mi colonia</a>
     </section>
