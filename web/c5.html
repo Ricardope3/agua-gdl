@@ -1976,7 +1976,7 @@ if (window.top !== window.self) {
       if (playing) stage.classList.remove("acabo"); else acaboT = setTimeout(() => stage.classList.add("acabo"), 2000);
     }
     function stop() { if (!playing) return; playing = false; clearTimeout(timer); setPlay(); }
-    const STEP_MS = 1000;
+    const STEP_MS = 650;
     function play() {
       if (!DAYS.length) return;
       if (atEnd()) showDay(0);
