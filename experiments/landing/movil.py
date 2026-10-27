@@ -8,7 +8,6 @@ import re
 from pathlib import Path
 
 WEB = Path(__file__).resolve().parents[2] / "web"
-MUESTRA = "?muestra=CIUDAD+GRANJA%7CZapopan%7C45010"
 
 NAMES = {"m1": "Mapa limpio", "m2": "Cifras primero", "m3": "Pantalla completa", "m4": "Historias", "m5": "Zonas"}
 
@@ -287,9 +286,6 @@ def build(key, v, src):
     s = s.replace("</style>", BASE_CSS + v["css"] + "\n</style>", 1)
     if v.get("head"):
         s = s.replace('<script src="/theme.js"></script>', '<script src="/theme.js"></script>\n' + v["head"], 1)
-    if v.get("map_only"):
-        assert MUESTRA in s
-        s = s.replace(MUESTRA, "", 1)
     if v.get("lazy_frame"):
         s = s.replace('<iframe class="mapframe" src="', '<iframe class="mapframe" data-src="', 1)
     hero = '    <div class="maphero">'
