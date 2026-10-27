@@ -11,6 +11,11 @@ kill_timeout = "30s"
   REMINDER_HOUR = "20"
   DAILY_CAP = "250"
   MONTHLY_CAP = "5000"
+  REPORT_WAL = "/data/web-reports.wal"
+
+[mounts]
+  source = "agua_gdl_data"
+  destination = "/data"
 
 [http_service]
   internal_port = 8080
