@@ -229,6 +229,8 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     curvas: L.geoJSON(null, { style: () => ({ color: ink().curva, weight: 0.8, opacity: 0.7 }), onEachFeature: (f, l) => l.bindTooltip(`${f.properties.elev} m`, { sticky: true }) }),
     colonias: L.geoJSON(null, { style: () => ({ color: ink().colonia, weight: 0.5, opacity: 0.45, fill: false }), interactive: false }),
   };
+  // Simplifying can shrink a tiny loop to a point; without this, Leaflet would draw it as a marker.
+  for (const k of ["rios", "curvas"]) layers[k].options.filter = (f) => /LineString$/.test(f.geometry.type);
   const loaded = {};
   const sources = { rios: "/capas/rios.json", curvas: "/capas/curvas.json" };
   async function show(name, on) {
