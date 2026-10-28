@@ -153,8 +153,8 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
 .capas button[aria-pressed="true"] { background: var(--subtle); border-color: var(--brand); font-weight: 600 }
 .capas .sw { width: 18px; height: 4px; border-radius: 2px; background: var(--sw) }
 .capas .sw.area { height: 12px; border-radius: 3px }
-.bigmap .relieve { mix-blend-mode: multiply }
-@media (prefers-color-scheme: dark) { .bigmap .relieve { filter: invert(1); mix-blend-mode: screen } }
+.alturas { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 8px 0 0; font-size: .85rem; color: var(--muted) }
+.alturas .bar { width: min(320px, 60vw); height: 10px; border-radius: 3px; background: linear-gradient(90deg, #4a8c52 0%, #8cb264 22%, #c4ce80 33%, #e6d696 44%, #d4aa6e 61%, #b07c50 78%, #8c6046 100%) }
 </style>
 <script src="/theme.js"></script>
 </head>
@@ -187,6 +187,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     <div class="mapwrap">
       <div id="mapa" class="bigmap" role="region" aria-label="Mapa de relieve, ríos y arroyos del área metropolitana de Guadalajara" tabindex="0"></div>
     </div>
+    <p class="alturas" id="alturas"><span>1,200 m</span><span class="bar" aria-hidden="true"></span><span>2,300 m o más</span><span>· Relieve: verde lo bajo, café lo alto</span></p>
     <p class="note" id="estado" aria-live="polite">Cargando el mapa…</p>
     <p class="note">Fuente: INEGI, <a href="https://www.inegi.org.mx/app/geo2/elevacionesmex/" rel="noopener">Continuo de Elevaciones Mexicano 3.0</a> (30 m) y <a href="https://www.inegi.org.mx/temas/hidrografia/" rel="noopener">Red Hidrográfica escala 1:50 000, edición 2.0</a> (subregión RH12E, Río Santiago-Guadalajara). Agua GDL recortó los datos al área metropolitana, sombreó el relieve, trazó curvas cada 100 m, simplificó las líneas y dejó fuera los arroyos más pequeños. Colonias: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa de la rotación del SIAPA</a>. Calles: <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>. Agua GDL no es del INEGI ni del SIAPA.</p>
     <noscript><p class="note">Este mapa necesita JavaScript.</p></noscript>
@@ -224,7 +225,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     ? { rio: "#7cb8ff", curva: "#c9a26b", colonia: "#a9bdfa" }
     : { rio: "#1d6fd6", curva: "#a0743c", colonia: "#14213d" };
   const layers = {
-    relieve: L.imageOverlay("/capas/relieve.jpg", BOUNDS, { className: "relieve", opacity: 0.55, alt: "", attribution: '<a href="https://www.inegi.org.mx/">INEGI</a>' }),
+    relieve: L.imageOverlay("/capas/relieve.jpg", BOUNDS, { className: "relieve", opacity: 0.72, alt: "", attribution: '<a href="https://www.inegi.org.mx/">INEGI</a>' }),
     rios: L.geoJSON(null, { style: (f) => ({ color: ink().rio, weight: f.properties.t === "perenne" || f.properties.t === "canal" ? 2.4 : f.properties.o >= 4 ? 1.4 : 0.8, opacity: 0.9 }) }),
     curvas: L.geoJSON(null, { style: () => ({ color: ink().curva, weight: 0.8, opacity: 0.7 }), onEachFeature: (f, l) => l.bindTooltip(`${f.properties.elev} m`, { sticky: true }) }),
     colonias: L.geoJSON(null, { style: () => ({ color: ink().colonia, weight: 0.5, opacity: 0.45, fill: false }), interactive: false }),
@@ -235,6 +236,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   const sources = { rios: "/capas/rios.json", curvas: "/capas/curvas.json" };
   async function show(name, on) {
     const layer = layers[name];
+    if (name === "relieve") $("alturas").hidden = !on;
     if (!on) { map.removeLayer(layer); return; }
     layer.addTo(map);
     if (loaded[name] || !sources[name]) return;
