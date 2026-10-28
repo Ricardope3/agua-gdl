@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Relieve y ríos · Agua GDL</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="El relieve, las curvas de nivel y los ríos y arroyos del área metropolitana de Guadalajara, con datos del INEGI, sobre las colonias del SIAPA.">
+<link rel="canonical" href="https://aguagdl.com/capas">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aguagdl.com/capas">
+<meta property="og:title" content="Relieve y ríos del área metropolitana de Guadalajara">
+<meta property="og:description" content="Por dónde baja el agua: relieve, curvas de nivel y ríos y arroyos, con datos del INEGI. El agua es un derecho. Exígelo.">
+<meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
+<style>
+:root {
+  --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
+  --brand: #0284c7; --brand-deep: #0369a1; --link: #0369a1; --on-brand: #ffffff;
+  --primary: #0284c7; --on-primary: #ffffff; --ring: #0284c766;
+  --shadow: 0 1px 2px rgb(3 105 161 / .08);
+  --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --warn: #8a5a00; --warn-bg: #fff3d6;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #06141d; --surface: #0a1c28; --subtle: #0c3149; --fg: #f0f9ff; --muted: #9bb8ca; --line: #18384d;
+    --link: #7dd3fc; --primary: #0ea5e9; --on-primary: #ffffff; --ring: #38bdf866; --brand: #0ea5e9; --brand-deep: #0284c7;
+    --warn: #ffd27a; --warn-bg: #3a2c10;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+[hidden] { display: none !important }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased }
+a { color: var(--link); text-underline-offset: 3px }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); border-radius: 6px }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px }
+header.top { position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px; background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); margin: 0 -16px 20px; padding: 12px 16px }
+.brand { display: inline-flex; align-items: center; gap: 8px; color: var(--fg); text-decoration: none; font-weight: 600; font-size: 1rem; letter-spacing: -.01em }
+.brand img { width: 20px; height: auto }
+.site-nav { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; margin: 0 -6px }
+.site-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 8px; color: var(--muted); font-size: .9rem; font-weight: 500; text-decoration: none; white-space: nowrap }
+.site-nav a:hover { color: var(--fg); background: var(--subtle) }
+.site-nav a[aria-current="page"] { color: var(--link); background: var(--subtle) }
+@media (max-width: 980px) { .site-nav .i { display: none } }
+@media (max-width: 760px) { .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center } .site-nav a { flex: 1 1 22%; justify-content: center } }
+@media (max-width: 560px) { header.top { position: static; padding: 8px 16px } .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center; gap: 2px } .site-nav a { flex: 1 1 22%; justify-content: center; padding: 4px; font-size: .82rem; line-height: 1.35 } .site-nav .i { display: none } }
+h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.08; letter-spacing: -.03em; font-weight: 700; margin: 12px 0 10px; text-wrap: balance }
+.lede { font-size: 1.05rem; color: var(--muted); margin: 0 0 16px; max-width: 64ch }
+.i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
+.i { --ic: var(--brand) }
+.i:has(use[href$="#megaphone"]) { --ic: #d97706 }
+.i:has(use[href$="#landmark"]) { --ic: #7c3aed }
+.i:has(use[href$="#heart"]) { --ic: #dc2626 }
+.i:has(use[href$="#map-pin"]) { --ic: #e11d48 }
+.i:has(use[href$="#calendar"]) { --ic: #4f46e5 }
+.i:has(use[href$="#send"]) { --ic: #229ed9 }
+@media (prefers-color-scheme: dark) { .i:has(use[href$="#megaphone"]) { --ic: #fbbf24 } .i:has(use[href$="#landmark"]) { --ic: #a78bfa } .i:has(use[href$="#heart"]) { --ic: #f87171 } .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#calendar"]) { --ic: #818cf8 } .i:has(use[href$="#send"]) { --ic: #2aabee } }
+.site-nav .i, p > .i, h2 > .i { color: var(--ic) }
+.site-nav a[aria-current="page"] .i { color: inherit }
+.button { display: inline-flex; align-items: center; gap: 6px; background: var(--primary); color: var(--on-primary); font: inherit; font-weight: 500; font-size: .95rem; text-decoration: none; padding: 10px 16px; border: 1px solid transparent; border-radius: 8px; box-shadow: var(--shadow); cursor: pointer; transition: background .15s }
+.button:hover { background: var(--brand-deep) }
+.button:disabled { opacity: .6; cursor: progress }
+.button.alt { background: color-mix(in srgb, var(--brand) 12%, var(--surface)); color: var(--link); border: 1.5px solid var(--brand) }
+.button.alt:hover { background: color-mix(in srgb, var(--brand) 22%, var(--surface)) }
+.button .i { color: inherit }
+.note { margin: 10px 0 0; font-size: .92rem; color: var(--muted); max-width: 80ch }
+.finder { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; margin: 0 0 12px }
+.search { position: relative; flex: 1 1 320px; min-width: 0 }
+.search label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap }
+.search input { width: 100%; font: inherit; font-size: 1.05rem; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 40px 12px 42px; box-shadow: var(--shadow); transition: border-color .15s }
+.search input:focus-visible { border-color: var(--brand) }
+.search > .i { position: absolute; left: 14px; top: 15px; color: var(--muted) }
+.search .clear { position: absolute; right: 6px; top: 7px; width: 36px; height: 36px; display: grid; place-items: center; font: inherit; color: var(--muted); background: none; border: 0; border-radius: 8px; cursor: pointer }
+.search .clear:hover { color: var(--fg); background: var(--subtle) }
+.suggest { position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 1100; margin: 0; padding: 4px; list-style: none; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 24px rgb(3 14 22 / .18); max-height: 320px; overflow: auto }
+.suggest li { padding: 8px 10px; border-radius: 8px; cursor: pointer; line-height: 1.35 }
+.suggest li[aria-selected="true"], .suggest li:hover { background: var(--subtle) }
+.suggest .sub { display: block; color: var(--muted); font-size: .85rem }
+.suggest .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--zc, var(--muted)); margin-right: 6px; vertical-align: -1px }
+.mapwrap { position: relative }
+.bigmap { height: clamp(420px, 72vh, 760px); border-radius: 12px; border: 1px solid var(--line); background: var(--subtle) }
+.bigmap:focus-visible { outline: 3px solid var(--brand) }
+@media (prefers-color-scheme: dark) { .bigmap .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) } .bigmap.leaflet-container { background: #0c1e2c } }
+.map-label { background: var(--surface); color: var(--fg); border: 1px solid var(--line); font: 600 13px/1.3 var(--font); box-shadow: var(--shadow); padding: 6px 8px }
+.map-label::before { display: none }
+.map-label .sub { display: block; font-weight: 500; color: var(--muted) }
+.map-label .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--zc, var(--muted)); margin-right: 5px }
+.card { position: absolute; z-index: 1200; top: 12px; left: 12px; width: min(360px, calc(100% - 24px)); max-height: calc(100% - 24px); overflow: auto; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; box-shadow: 0 10px 30px rgb(3 14 22 / .22) }
+@media (max-width: 760px) { .card { top: auto; bottom: 10px; left: 10px; width: calc(100% - 20px); max-height: 58% } }
+.card h2 { margin: 0 32px 2px 0; font-size: 1.3rem; line-height: 1.2; letter-spacing: -.02em; color: var(--link); text-transform: uppercase }
+.card .where { margin: 0 0 10px; color: var(--muted) }
+.card .close { position: absolute; top: 10px; right: 10px; width: 34px; height: 34px; display: grid; place-items: center; font: inherit; color: var(--muted); background: none; border: 0; border-radius: 8px; cursor: pointer }
+.card .close:hover { color: var(--fg); background: var(--subtle) }
+.zbox { border-left: 6px solid var(--zc, var(--muted)); background: var(--subtle); border-radius: 10px; padding: 10px 12px; margin: 0 0 10px }
+.zbox.side { background: transparent; border: 1px dashed var(--line); border-left: 6px solid var(--zc, var(--muted)) }
+.zbox p { margin: 0 }
+.zbox .zn { font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted) }
+.zbox .zd { font-weight: 700; font-size: 1.1rem; line-height: 1.3 }
+.zbox.side .zd { font-weight: 600; font-size: 1rem }
+.zbox .next { margin-top: 4px; font-size: .95rem }
+.card .warn { background: var(--warn-bg); border-left: 5px solid var(--warn); border-radius: 8px; padding: 10px 12px; margin: 0 0 10px; font-size: .95rem }
+.card .subscribe { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0 }
+.card .subscribe .button { font-size: .9rem; padding: 8px 12px }
+.card .note { margin-top: 10px; font-size: .85rem }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 10px; justify-content: center; margin: 10px 0 0; padding: 0; list-style: none }
+.legend button { display: inline-flex; align-items: center; gap: 7px; font: inherit; font-weight: 600; font-size: .95rem; color: var(--fg); background: none; border: 1px solid transparent; padding: 5px 9px; border-radius: 999px; cursor: pointer }
+.legend button:hover { background: var(--subtle) }
+.legend button[aria-pressed="true"] { background: var(--subtle); border-color: var(--zc) }
+.legend .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--zc); border: 1px solid rgb(0 0 0 / .25) }
+.pin { background: var(--surface); border: 3px solid var(--fg); border-radius: 50%; width: 16px; height: 16px; box-shadow: var(--shadow) }
+section { padding: 30px 0 8px }
+h2.ih { display: flex; align-items: center; gap: 10px; font-size: 1.4rem; line-height: 1.2; margin: 0 0 12px; letter-spacing: -.02em; font-weight: 600 }
+.ih .i-badge { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--brand); color: var(--on-primary); flex-shrink: 0 }
+.ih .i { color: inherit }
+section p, section li { max-width: 70ch }
+ul.plain { padding-left: 1.3em; margin: 0 0 14px }
+ul.plain li { margin: 0 0 8px }
+footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .85rem }
+footer p { margin: 0 0 8px; max-width: 70ch }
+/* The top menu as on the landing: its frame is 960 px wide, and 1320 px from 1100 px, so it sits on one row. */
+.wrap:has(> header.top) { max-width: 960px }
+@media (min-width: 1100px) { .wrap:has(> header.top) { max-width: 1320px } }
+.wrap:has(> header.top) > :not(header.top) { max-width: 1068px; margin-left: auto; margin-right: auto }
+</style>
+<style>/* Talavera */
+:root { --bg:#fbfaf6; --surface:#ffffff; --subtle:#e4eaf8; --fg:#14213d; --muted:#4f5b7a; --line:#c4cfe9;
+ --brand:#1d3f9e; --brand-deep:#142d75; --link:#1d3f9e; --primary:#1d3f9e; --on-primary:#fff; --ring:#1d3f9e55; --alarm:#1d3f9e; --mark:#f2c84b; --mark-fg:#14213d;
+ --font: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; --serif: Baskerville, "Baskerville Old Face", "Libre Baskerville", Georgia, serif; --shadow:none;
+ --tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M12 2l4 10-4 10-4-10z M2 12l10-4 10 4-10 4z' fill='%231d3f9e'/%3E%3C/svg%3E") }
+@media (prefers-color-scheme: dark) { :root { --bg:#0c1328; --surface:#121b36; --subtle:#1a2850; --fg:#eef1fb; --muted:#a6b1d6; --line:#2a3a6e; --brand:#7f9cf5; --brand-deep:#5b7be8; --link:#a9bdfa; --primary:#5b7be8; --alarm:#9fb4ff; --mark:#c9a12f; --tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M12 2l4 10-4 10-4-10z M2 12l10-4 10 4-10 4z' fill='%237f9cf5'/%3E%3C/svg%3E") } }
+header.top { position: relative; border-bottom: 0 } html { overflow-x: clip } header.top::after { content: ""; position: absolute; left: calc(50% - 50vw); width: 100vw; bottom: -6px; height: 12px; background: var(--tile) center/12px 12px repeat-x; transition: opacity .2s }
+main h1, main h2 { font-weight: 400; font-style: italic }
+.vs-grid, .wall { border-top: 3px double var(--brand) }
+.card, .congreso, .signup, .finder, .summary, .boxes > * { border-radius: 4px !important; border: 3px double var(--brand) !important; box-shadow: none !important }
+.posts li { border-left: 3px double var(--brand) }
+.button { border-radius: 4px }
+footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-top: 34px }
+</style>
+<style>
+.capas { display: flex; flex-wrap: wrap; gap: 6px 8px; margin: 0 0 12px; padding: 0; list-style: none }
+.capas button { display: inline-flex; align-items: center; gap: 7px; font: inherit; font-size: .95rem; color: var(--fg); background: var(--surface); border: 1px solid var(--line); padding: 6px 12px; border-radius: 999px; cursor: pointer }
+.capas button:hover { background: var(--subtle) }
+.capas button[aria-pressed="true"] { background: var(--subtle); border-color: var(--brand); font-weight: 600 }
+.capas .sw { width: 18px; height: 4px; border-radius: 2px; background: var(--sw) }
+.capas .sw.area { height: 12px; border-radius: 3px }
+.bigmap .relieve { mix-blend-mode: multiply }
+@media (prefers-color-scheme: dark) { .bigmap .relieve { filter: invert(1); mix-blend-mode: screen } }
+</style>
+<script src="/theme.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
+    <nav class="site-nav" aria-label="Secciones">
+      <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg>¿Hay agua?</a>
+      <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exige</a>
+      <a href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Mi zona</a>
+      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg>Noticias</a>
+      <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg>Cuentas</a>
+      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Contaminación</a>
+      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#heart"/></svg>Antisionismo</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Relieve y ríos</h1>
+    <p class="lede">Por dónde baja el agua en el área metropolitana: el relieve, las curvas de nivel y los ríos y arroyos que dibuja el INEGI, sobre las colonias del SIAPA. Prende y apaga cada capa.</p>
+
+    <ul class="capas" id="capas" aria-label="Capas del mapa">
+      <li><button type="button" data-capa="relieve" aria-pressed="true"><span class="sw area" style="--sw: linear-gradient(135deg,#eee,#777)"></span>Relieve</button></li>
+      <li><button type="button" data-capa="rios" aria-pressed="true"><span class="sw" style="--sw:#1d6fd6"></span>Ríos y arroyos</button></li>
+      <li><button type="button" data-capa="curvas" aria-pressed="false"><span class="sw" style="--sw:#a0743c"></span>Curvas de nivel</button></li>
+      <li><button type="button" data-capa="colonias" aria-pressed="true"><span class="sw" style="--sw:#14213d"></span>Colonias</button></li>
+    </ul>
+
+    <div class="mapwrap">
+      <div id="mapa" class="bigmap" role="region" aria-label="Mapa de relieve, ríos y arroyos del área metropolitana de Guadalajara" tabindex="0"></div>
+    </div>
+    <p class="note" id="estado" aria-live="polite">Cargando el mapa…</p>
+    <p class="note">Fuente: INEGI, <a href="https://www.inegi.org.mx/app/geo2/elevacionesmex/" rel="noopener">Continuo de Elevaciones Mexicano 3.0</a> (30 m) y <a href="https://www.inegi.org.mx/temas/hidrografia/" rel="noopener">Red Hidrográfica escala 1:50 000, edición 2.0</a> (subregión RH12E, Río Santiago-Guadalajara). Agua GDL recortó los datos al área metropolitana, sombreó el relieve, trazó curvas cada 100 m, simplificó las líneas y dejó fuera los arroyos más pequeños. Colonias: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa de la rotación del SIAPA</a>. Calles: <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>. Agua GDL no es del INEGI ni del SIAPA.</p>
+    <noscript><p class="note">Este mapa necesita JavaScript.</p></noscript>
+
+    <section aria-labelledby="ojo">
+      <h2 id="ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#info"/></svg></span>Ten en cuenta</h2>
+      <ul class="plain">
+        <li><strong>Los ríos y arroyos son los que dibujó el INEGI</strong>, casi todos intermitentes: llevan agua solo en lluvias. Muchos ya no se ven en la calle porque la ciudad los entubó o los cubrió; el mapa marca por dónde corría el agua, no si hoy corre.</li>
+        <li><strong>Que un arroyo pase cerca no quiere decir que tu calle se inunde</strong>, ni que esa agua sirva para tomar. El relieve viene de un modelo de 30 m, que es menos preciso en lo plano, justo donde más se encharca.</li>
+        <li>El trazo azul más grueso son las corrientes perennes y los canales; el delgado, las intermitentes.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con el Gobierno de Jalisco.</p>
+    <p><a href="/">Inicio</a> · <a href="/mizona">¿Qué zona me toca?</a> · <a href="/avisos">Recibir avisos</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
+  </footer>
+</div>
+<script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script src="/mapa.js"></script>
+<script>
+(() => {
+  "use strict";
+  const M = window.aguaMapa;
+  const $ = (id) => document.getElementById(id);
+  const status = $("estado");
+  const map = L.map("mapa", { preferCanvas: true, zoomSnap: 0.25 });
+  M.tiles(L, map);
+  map.setView([20.66, -103.37], 11);
+
+  // relieve.jpg is the INEGI model shaded in Web Mercator, so its corners line up with the tiles.
+  const BOUNDS = [[20.330297, -103.660125], [21.000178, -102.860150]];
+  const ink = () => aguaDark()
+    ? { rio: "#7cb8ff", curva: "#c9a26b", colonia: "#a9bdfa" }
+    : { rio: "#1d6fd6", curva: "#a0743c", colonia: "#14213d" };
+  const layers = {
+    relieve: L.imageOverlay("/capas/relieve.jpg", BOUNDS, { className: "relieve", opacity: 0.55, alt: "", attribution: '<a href="https://www.inegi.org.mx/">INEGI</a>' }),
+    rios: L.geoJSON(null, { style: (f) => ({ color: ink().rio, weight: f.properties.t === "perenne" || f.properties.t === "canal" ? 2.4 : f.properties.o >= 4 ? 1.4 : 0.8, opacity: 0.9 }) }),
+    curvas: L.geoJSON(null, { style: () => ({ color: ink().curva, weight: 0.8, opacity: 0.7 }), onEachFeature: (f, l) => l.bindTooltip(`${f.properties.elev} m`, { sticky: true }) }),
+    colonias: L.geoJSON(null, { style: () => ({ color: ink().colonia, weight: 0.5, opacity: 0.45, fill: false }), interactive: false }),
+  };
+  const loaded = {};
+  const sources = { rios: "/capas/rios.json", curvas: "/capas/curvas.json" };
+  async function show(name, on) {
+    const layer = layers[name];
+    if (!on) { map.removeLayer(layer); return; }
+    layer.addTo(map);
+    if (loaded[name] || !sources[name]) return;
+    loaded[name] = true;
+    try {
+      const r = await fetch(sources[name]);
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      layer.addData(await r.json());
+    } catch {
+      loaded[name] = false;
+      status.textContent = "No pudimos cargar una de las capas. Intenta de nuevo en unos minutos.";
+    }
+  }
+  M.load().then(({ colonias }) => layers.colonias.addData(colonias)).catch(() => {});
+  for (const b of document.querySelectorAll("#capas button")) {
+    show(b.dataset.capa, b.getAttribute("aria-pressed") === "true");
+    b.addEventListener("click", () => {
+      const on = b.getAttribute("aria-pressed") !== "true";
+      b.setAttribute("aria-pressed", String(on));
+      show(b.dataset.capa, on);
+    });
+  }
+  status.textContent = "";
+  document.addEventListener("tema", () => { for (const k of ["rios", "curvas", "colonias"]) layers[k].setStyle(layers[k].options.style); });
+})();
+</script>
+</body>
+</html>
