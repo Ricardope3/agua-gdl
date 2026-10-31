@@ -1160,6 +1160,11 @@ if (window.top !== window.self) {
     const ageOf = (e) => Math.round((Date.parse(refDay()) - Date.parse(e.ultima)) / 864e5);
     const ACTIVE = 3, RECENT = 7;
     const stateOf = (e) => { const a = ageOf(e); return a <= ACTIVE ? "activa" : a <= RECENT ? "reciente" : "vieja"; };
+    // While the timeline plays, a colonia with publications keeps its full strength: the story is which
+    // colonias had publications by that day, and fading them by news age would wash the whole map out
+    // as the days near the present. The ageing applies only to the live latest-day view, where grey
+    // means a week without new publications.
+    const stateMap = (e) => atEnd() ? stateOf(e) : "activa";
     const zoneStyle = (f) => ({ color: M.COLORS[aguaDark() ? "dark" : "light"][f.properties.z], weight: 1.5, dashArray: "5 4", fill: false, opacity: 0.7 });
     const zoneLayer = L.geoJSON({ type: "FeatureCollection", features: zonas }, { interactive: false, style: zoneStyle }).addTo(map);
     const home = zoneLayer.getBounds().pad(0.04);
@@ -1175,7 +1180,7 @@ if (window.top !== window.self) {
       }
       if (stale) return { color: COLORS.muted, weight: 1.2, opacity: 0.75, dashArray: "4 3", fillColor: COLORS.muted, fillOpacity: 0.08 };
       if (e) {
-        const s = sevOf(e.dias), st = stateOf(e);
+        const s = sevOf(e.dias), st = stateMap(e);
         if (st === "vieja") return { color: COLORS.muted, weight: 0.8, opacity: 0.6, dashArray: null, fillColor: COLORS.muted, fillOpacity: 0.14 };
         if (st === "reciente") return s ? { color: SEV[s], weight: 1, opacity: 0.7, dashArray: null, fillColor: SEV[s], fillOpacity: 0.3 }
           : { color: SEV[0], weight: 1.4, opacity: 0.7, dashArray: "4 3", fillColor: SEV[0], fillOpacity: 0.1 };
@@ -1240,7 +1245,7 @@ if (window.top !== window.self) {
         const was = shown.get(k), pop = reduced ? "" : was != null ? (total > was ? " pop" : "") : shown.size ? " nace" : "";
         if (!centers.has(k)) centers.set(k, L.geoJSON(fs[0]).getBounds().getCenter());
         const m = L.marker(centers.get(k), {
-          icon: L.divIcon({ className: `sev${far ? " far" : ""}${s ? "" : " nodays"} ${stateOf(e)}${pop}`, html: `<span style="${sevVars(s)};font-size:${Math.max(far ? 9 : 10, Math.round(size * (n.length > 2 ? 0.3 : 0.42)))}px">${n}</span>`, iconSize: [size, size] }),
+          icon: L.divIcon({ className: `sev${far ? " far" : ""}${s ? "" : " nodays"} ${stateMap(e)}${pop}`, html: `<span style="${sevVars(s)};font-size:${Math.max(far ? 9 : 10, Math.round(size * (n.length > 2 ? 0.3 : 0.42)))}px">${n}</span>`, iconSize: [size, size] }),
           keyboard: false, zIndexOffset: 2000 - Math.min(total, 999), title: `${fs[0].properties.n}: ${plural(total, "publicación", "publicaciones")} · ${evLine(e)}`,
         });
         m.on("click", () => select(fs[0]));
