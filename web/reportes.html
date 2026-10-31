@@ -103,6 +103,15 @@ h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.08; letter-spacing: -
 .donut svg { display: block; filter: drop-shadow(0 1px 2px rgb(3 14 22 / .35)) }
 .donut.stale svg { filter: grayscale(1) drop-shadow(0 1px 2px rgb(3 14 22 / .25)); opacity: .6 }
 .donut.stale { z-index: 400 !important }
+/* The two counters on the map, spelled out: solid circles count publications, donuts count reports. */
+.map-key { position: absolute; z-index: 1150; left: 12px; top: 74px; max-width: min(340px, calc(100% - 24px)); background: color-mix(in srgb, var(--surface) 92%, transparent); backdrop-filter: blur(6px); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; box-shadow: 0 4px 14px rgb(3 14 22 / .18); font-size: .8rem; line-height: 1.35; color: var(--muted) }
+@media (min-width: 761px) { .stage.has-card .map-key { display: none } }
+.map-key p { margin: 0; display: flex; gap: 9px; align-items: center }
+.map-key p + p { margin-top: 6px }
+.map-key strong { color: var(--fg); font-weight: 600 }
+.map-key .mk-sev { flex-shrink: 0; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--s3); color: var(--s3-ink); font: 700 11px/1 var(--font); box-shadow: 0 0 0 1.5px var(--surface), 0 1px 2px rgb(3 14 22 / .45) }
+.map-key .mk-donut { flex-shrink: 0; width: 24px; height: 24px }
+@media (max-width: 760px) { .map-key { font-size: .74rem; padding: 6px 10px } }
 .pin { background: var(--surface); border: 3px solid var(--fg); border-radius: 50%; width: 16px; height: 16px; box-shadow: var(--shadow) }
 .card { position: absolute; z-index: 1200; top: 12px; left: 12px; width: min(380px, calc(100% - 24px)); max-height: calc(100% - 24px); overflow: auto; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; box-shadow: 0 10px 30px rgb(3 14 22 / .22) }
 @media (max-width: 760px) { .card { top: auto; bottom: 10px; left: 10px; width: calc(100% - 20px); max-height: 62% } }
@@ -767,6 +776,10 @@ if (window.top !== window.self) {
           </div>
         </div>
       </section>
+      <div class="map-key" role="note" aria-label="Qué muestran los círculos del mapa">
+        <p><span class="mk-sev" aria-hidden="true">3</span><span><strong>Círculo lleno: publicaciones</strong> de medios y vecinos. El número es cuántas; el color, los días sin agua que dicen.</span></p>
+        <p><svg class="mk-donut" viewBox="0 0 40 40" aria-hidden="true"><circle r="12" cx="20" cy="20" fill="var(--surface)"/><circle r="15" cx="20" cy="20" fill="none" stroke="var(--dry)" stroke-width="6" stroke-dasharray="31.4 62.8" transform="rotate(-90 20 20)"/><circle r="15" cx="20" cy="20" fill="none" stroke="var(--low)" stroke-width="6" stroke-dasharray="31.4 62.8" stroke-dashoffset="-31.4" transform="rotate(-90 20 20)"/><circle r="15" cx="20" cy="20" fill="none" stroke="var(--ok)" stroke-width="6" stroke-dasharray="31.4 62.8" stroke-dashoffset="-62.8" transform="rotate(-90 20 20)"/><text x="20" y="24" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="var(--fg)">2</text></svg><span><strong>Aro: reportes de vecinos</strong> hechos aquí. El número es cuántos; el aro, cómo está el agua (sin agua, baja presión, con agua). En gris, sin reportes nuevos en 24 h.</span></p>
+      </div>
       <section class="tl" id="linea" aria-labelledby="tl-fecha" hidden>
         <div class="tl-top">
           <button class="button tl-play" type="button" id="tl-play" aria-label="Reproducir día por día" title="Reproducir día por día"></button>
@@ -928,8 +941,9 @@ if (window.top !== window.self) {
   const fmt = (n) => n.toLocaleString("es-MX");
   const plural = (n, one, many) => `${fmt(n)} ${n === 1 ? one : many}`;
   const MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
-  // dateES("2026-10-19") → "19 oct"; with long, "19 de octubre".
-  const dateES = (iso, long) => { const [, m, d] = iso.split("-").map(Number); return long ? `${d} de ${MESES[m - 1]}` : `${d} ${MESES[m - 1].slice(0, 3)}`; };
+  // dateES("2026-10-19") → "19 oct"; with long, "19 de octubre". The API can also send a full
+  // RFC 3339 timestamp ("…T00:00:00-06:00"), so only the day part is read.
+  const dateES = (iso, long) => { const [, m, d] = String(iso).slice(0, 10).split("-").map(Number); return long ? `${d} de ${MESES[m - 1]}` : `${d} ${MESES[m - 1].slice(0, 3)}`; };
   const daysWord = (d) => `${d} ${d === 1 ? "día" : "días"}`;
   const pct = (n, t) => t ? Math.round(100 * n / t) : 0;
   const totalOf = (c) => c.sin_agua + c.baja + c.con_agua;
@@ -1214,7 +1228,7 @@ if (window.top !== window.self) {
       markers.clearLayers();
       // Publication badges count only publications and keep their historical severity. Anonymous
       // reports have separate donuts, including on days in the timeline and over published colonias.
-      const far = map.getZoom() < 12, counts = new Map();
+      const far = map.getZoom() < 12, counts = new Map(), badgeSizes = new Map();
       for (const [k, e] of evNow) {
         const fs = features.get(k);
         if (!fs) continue;
@@ -1222,6 +1236,7 @@ if (window.top !== window.self) {
         // Logarithmic, so it levels off: 1 publication is a small dot, 10 about twice as wide.
         const s = sevOf(e.dias), size = Math.round((far ? 13 : 16) + (far ? 4.6 : 6.2) * Math.log(Math.min(total, 100)) + (n.length > 2 ? 2 : 0));
         counts.set(k, total);
+        badgeSizes.set(k, size);
         const was = shown.get(k), pop = reduced ? "" : was != null ? (total > was ? " pop" : "") : shown.size ? " nace" : "";
         if (!centers.has(k)) centers.set(k, L.geoJSON(fs[0]).getBounds().getCenter());
         const m = L.marker(centers.get(k), {
@@ -1240,10 +1255,13 @@ if (window.top !== window.self) {
           if (!fs) continue;
           if (!centers.has(k)) centers.set(k, L.geoJSON(fs[0]).getBounds().getCenter());
           const withPublication = evNow.has(k);
+          // Beside a publication badge, not on top of it: the donut's left edge starts a small
+          // gap past the badge's right edge, vertically centred on the same point.
+          const r = withPublication ? (badgeSizes.get(k) || 30) / 2 : 0;
           const title = isStale ? `${fs[0].properties.n}: sin reportes nuevos en 24 h · último: ${answerLabel(c.ultimo_estado)} ${ago(c.ultimo)}`
             : `${fs[0].properties.n}: ${statusLabel(c)} · ${plural(totalOf(c), "reporte", "reportes")}${atEnd() ? " en 24 h" : " ese día"}`;
           const m = L.marker(centers.get(k), {
-            icon: L.divIcon({ className: `donut${isStale ? " stale" : ""}`, html: donut(c), iconSize: [40, 40], iconAnchor: withPublication ? [4, 4] : [20, 20] }),
+            icon: L.divIcon({ className: `donut${isStale ? " stale" : ""}`, html: donut(c), iconSize: [40, 40], iconAnchor: withPublication ? [-(r + 8), 20] : [20, 20] }),
             keyboard: false, zIndexOffset: isStale ? 1200 : 3000, title,
           });
           m.on("click", () => select(fs[0]));

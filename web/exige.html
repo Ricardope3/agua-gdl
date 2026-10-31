@@ -500,11 +500,12 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   }
   // One panel at a time; the hash keeps the chosen tab on reload and in shared links.
   const TABS = [...document.querySelectorAll("[data-tab]")].map((b) => b.dataset.tab);
+  const HOME = "tu"; // the tab that opens by default
   function showTab(name) {
     // A link to a heading inside a tab (/exige#porque-acueducto) opens that tab and scrolls to it.
     const target = name && !TABS.includes(name) ? document.getElementById(name) : null;
     const panel = target && target.closest("[role=tabpanel]");
-    const tab = panel ? panel.id.slice(2) : TABS.includes(name) ? name : TABS[0];
+    const tab = panel ? panel.id.slice(2) : TABS.includes(name) ? name : HOME;
     for (const t of TABS) {
       $(`p-${t}`).hidden = t !== tab;
       $(`t-${t}`).setAttribute("aria-selected", String(t === tab));
