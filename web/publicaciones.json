@@ -30505,6 +30505,112 @@
    },
    "vista": null,
    "video": true
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "Grupo «Col. Monumental»",
+   "url": "https://www.facebook.com/groups/3784325564967031/posts/29121075044198734/",
+   "fecha": "2026-10-31",
+   "colonias": [
+    "MONUMENTAL|Guadalajara|44320"
+   ],
+   "lugar": "Colonia Monumental, Guadalajara",
+   "cita": "De casualidad a alguien le está saliendo el agua así de sucia? El día de hoy salí a las 5:00am a revisar si estaba cayendo agua y sí, sí estaba cayendo pero con demasiada tierra o no sé qué sea ya después como a las 12 ya empezó a salir más limpia. Ya me desesperé! Y creo no llevamos ni el mes así",
+   "dias": null,
+   "eco": {
+    "reacciones": 28,
+    "comentarios": 31,
+    "al": "2026-11-01"
+   },
+   "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "Grupo «Col. Monumental»",
+    "url": "https://www.facebook.com/groups/3784325564967031/posts/29121075044198734/",
+    "eco": {
+     "reacciones": 28,
+     "comentarios": 31,
+     "al": "2026-11-01"
+    }
+   },
+   "url": "https://www.facebook.com/groups/3784325564967031/posts/29121075044198734/?comment_id=29121104944195744",
+   "fecha": "2026-10-31",
+   "colonias": [
+    "MONUMENTAL|Guadalajara|44320"
+   ],
+   "lugar": "Colonia Monumental, Guadalajara",
+   "cita": "Yo vivo en la monumental y no ha salido agua en una semana. Ni gotitas",
+   "dias": 7,
+   "eco": {
+    "reacciones": 5,
+    "comentarios": 0,
+    "al": "2026-11-01"
+   },
+   "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "Grupo «Col. Monumental»",
+    "url": "https://www.facebook.com/groups/3784325564967031/posts/29121075044198734/",
+    "eco": {
+     "reacciones": 28,
+     "comentarios": 31,
+     "al": "2026-11-01"
+    }
+   },
+   "url": "https://www.facebook.com/groups/3784325564967031/posts/29121075044198734/?comment_id=29130945393211699",
+   "fecha": "2026-11-01",
+   "colonias": [
+    "MONUMENTAL|Guadalajara|44320"
+   ],
+   "lugar": "Colonia Monumental, Guadalajara",
+   "cita": "Ni gota desde el miércoles 5 días sin agua y según sus mendigos tandeos son lunes y viernes pero valen queso no hay agua que va a pasar media cuidad sin agua bola de ineptos el gobernador y sus 2bdisque gobernantes y el bueno para nada",
+   "dias": 5,
+   "eco": {
+    "reacciones": 2,
+    "comentarios": 0,
+    "al": "2026-11-01"
+   },
+   "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "Grupo «Col. Monumental»",
+    "url": "https://www.facebook.com/groups/3784325564967031/posts/29121075044198734/",
+    "eco": {
+     "reacciones": 28,
+     "comentarios": 31,
+     "al": "2026-11-01"
+    }
+   },
+   "url": "https://www.facebook.com/groups/3784325564967031/posts/29121075044198734/?comment_id=29132845916354980",
+   "fecha": "2026-11-01",
+   "colonias": [
+    "CHAPALITA INN|Zapopan|45037"
+   ],
+   "lugar": "Chapalita Inn, Zapopan",
+   "cita": "Chapalita Inn no cae hace más de un mes !!",
+   "dias": 30,
+   "eco": {
+    "reacciones": 0,
+    "comentarios": 0,
+    "al": "2026-11-01"
+   },
+   "vista": null
   }
  ]
 }
