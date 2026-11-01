@@ -30216,6 +30216,95 @@
     "al": "2026-11-01"
    },
    "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "Gobierno de Zapopan",
+    "url": "https://www.facebook.com/ZapopanGob/posts/pfbid02HKd4Q6As7SAsRfgeLEPf7uWkdYKGYfEUR9R7tCWTVJsqH4FALCY8avXoEu5QVNtrl",
+    "eco": {
+     "reacciones": 55,
+     "comentarios": 38,
+     "al": "2026-11-01"
+    }
+   },
+   "url": "https://www.facebook.com/ZapopanGob/posts/pfbid02HKd4Q6As7SAsRfgeLEPf7uWkdYKGYfEUR9R7tCWTVJsqH4FALCY8avXoEu5QVNtrl?comment_id=1850310663061454",
+   "fecha": "2026-11-01",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Ciudad Granja, Zapopan",
+   "cita": "Segunda ronda consecutiva para Cd. Granja? Ya suéltenos agua unos días no? Una semana completa sin una gota después de pasar 17 días consecutivos.",
+   "dias": 7,
+   "eco": {
+    "reacciones": 2,
+    "comentarios": 0,
+    "al": "2026-11-01"
+   },
+   "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "Gobierno de Zapopan",
+    "url": "https://www.facebook.com/ZapopanGob/posts/pfbid02HKd4Q6As7SAsRfgeLEPf7uWkdYKGYfEUR9R7tCWTVJsqH4FALCY8avXoEu5QVNtrl",
+    "eco": {
+     "reacciones": 55,
+     "comentarios": 38,
+     "al": "2026-11-01"
+    }
+   },
+   "url": "https://www.facebook.com/ZapopanGob/posts/pfbid02HKd4Q6As7SAsRfgeLEPf7uWkdYKGYfEUR9R7tCWTVJsqH4FALCY8avXoEu5QVNtrl?comment_id=1995250191435650",
+   "fecha": "2026-11-01",
+   "colonias": [
+    "REAL VALLARTA|Zapopan|45020"
+   ],
+   "lugar": "Real Vallarta, Zapopan",
+   "cita": "Real Vallarta no tiene agua desde el 13 de octubre, no llega nada de agua. Por favor, suban la presión del agua para que se puedan llenar los aljibes en esta colonia.",
+   "dias": 19,
+   "eco": {
+    "reacciones": 0,
+    "comentarios": 0,
+    "al": "2026-11-01"
+   },
+   "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "Gobierno de Zapopan",
+    "url": "https://www.facebook.com/ZapopanGob/posts/pfbid02HKd4Q6As7SAsRfgeLEPf7uWkdYKGYfEUR9R7tCWTVJsqH4FALCY8avXoEu5QVNtrl",
+    "eco": {
+     "reacciones": 55,
+     "comentarios": 38,
+     "al": "2026-11-01"
+    }
+   },
+   "url": "https://www.facebook.com/ZapopanGob/posts/pfbid02HKd4Q6As7SAsRfgeLEPf7uWkdYKGYfEUR9R7tCWTVJsqH4FALCY8avXoEu5QVNtrl?comment_id=1154932620805832",
+   "fecha": "2026-11-01",
+   "colonias": [
+    "EL COLLI URBANO|Zapopan|45070",
+    "COLLI PRIMAVERA|Zapopan|45056",
+    "VILLAS DEL TEPEYAC|Zapopan|45070"
+   ],
+   "lugar": "El Colli Urbano, Colli Primavera y Villas del Tepeyac, Zapopan",
+   "cita": "Colli urbano , primavera, villas del Tepeyac, tenemos muchos días sin agua",
+   "dias": null,
+   "eco": {
+    "reacciones": 0,
+    "comentarios": 0,
+    "al": "2026-11-01"
+   },
+   "vista": null
   }
  ]
 }
