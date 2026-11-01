@@ -192,10 +192,12 @@ table.week td.dry { background: color-mix(in srgb, var(--dry) 38%, var(--surface
 table.week td.low { background: color-mix(in srgb, var(--low) 38%, var(--surface)) }
 table.week td.ok { background: color-mix(in srgb, var(--ok) 32%, var(--surface)) }
 table.week td.few { background: var(--subtle); font-weight: 500 }
+table.week td.carry { background: var(--subtle); color: var(--muted); font-weight: 500 }
 table.week td.none { color: var(--muted); font-weight: 400 }
 table.week td.cut { box-shadow: inset 0 0 0 2.5px var(--fg) }
 @media (max-width: 560px) { table.week { min-width: 0; font-size: .85rem } table.week th[scope="row"] { width: 5.2em; padding-left: 8px } table.week th, table.week td { padding: 7px 1px } }
 .legend .cutmark { width: 14px; height: 14px; border-radius: 3px; box-shadow: inset 0 0 0 2.5px var(--fg); display: inline-block }
+.legend .carrymark { width: 14px; height: 14px; border-radius: 3px; background: var(--subtle); border: 1px solid var(--line); display: inline-block; opacity: .75 }
 .legend .fewmark { width: 14px; height: 14px; border-radius: 3px; background: var(--subtle); border: 1px solid var(--line); display: inline-block }
 .legend-title { margin: 12px 0 0; text-align: center; font-size: .9rem; font-weight: 600; color: var(--muted) }
 .legend .sw { width: 16px; height: 12px; border-radius: 3px; background: var(--c); display: inline-block }
@@ -852,6 +854,7 @@ if (window.top !== window.self) {
         <li><span class="dot low"></span>Baja presión o mixto</li>
         <li><span class="dot ok"></span>Mayoría con agua</li>
         <li><span class="fewmark"></span><span id="semana-min">Pocos reportes: solo el número</span></li>
+        <li><span class="carrymark"></span>Gris: sin reportes nuevos ese día; el número es el último, de hace hasta 3 días</li>
         <li><span class="cutmark"></span>Día de corte según el SIAPA</li>
       </ul>
     </section>
@@ -1857,11 +1860,16 @@ if (window.top !== window.self) {
       const rows = w.zonas.map((z) => el("tr", {}, el("th", { scope: "row", class: z.zone ? "zn" : "" }, z.zone ? `Zona ${z.zone}` : "Fuera de la rotación"),
         ...z.dias.map((c, i) => {
           const d = dates[i], cut = z.cortes[i];
-          const t = Number(c.total) || 0, det = c.detalle;
+          // As on the map, a report stays visible up to 3 days: a quiet day shows the zone's most
+          // recent counts greyed out, with the age. Silence is not evidence the water came back.
+          let t = Number(c.total) || 0, det = c.detalle, age = 0;
+          if (!t) for (let j = i - 1; j >= Math.max(0, i - 3); j--) {
+            if (Number(z.dias[j].total) > 0) { t = Number(z.dias[j].total); det = z.dias[j].detalle; age = i - j; break; }
+          }
           const cls = !t ? "none" : !det ? "few" : 2 * det.sin_agua > t ? "dry" : 2 * det.con_agua > t ? "ok" : "low";
           const said = !t ? "sin reportes" : det ? `${t} ${t === 1 ? "reporte" : "reportes"}: ${det.sin_agua} sin agua, ${det.baja} con baja presión, ${det.con_agua} con agua` : `${t} ${t === 1 ? "reporte" : "reportes"}`;
-          const label = `${DOW_LONG[d.getUTCDay()]} ${d.getUTCDate()}: ${said}${cut ? "; día de corte" : ""}`;
-          return el("td", { class: `${cls}${cut ? " cut" : ""}`, title: label, "aria-label": label }, t ? fmt(t) : "–");
+          const label = `${DOW_LONG[d.getUTCDay()]} ${d.getUTCDate()}: ${age ? `sin reportes nuevos ese día; último: hace ${age} ${age === 1 ? "día" : "días"} (${said})` : said}${cut ? "; día de corte" : ""}`;
+          return el("td", { class: `${cls}${cut ? " cut" : ""}${age ? " carry" : ""}`, title: label, "aria-label": label }, t ? fmt(t) : "–");
         })));
       $("semana-tabla").replaceChildren($("semana-tabla").querySelector("caption"), el("thead", {}, head), el("tbody", {}, ...rows));
       $("semana-min").textContent = `Menos de ${w.min} reportes del mapa, o cualquier día con respuestas del bot: solo el número`;
