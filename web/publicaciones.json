@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-10-31",
+ "actualizado": "2026-11-01",
  "desde": "2026-10-12",
  "regla": {
   "reacciones": 5,
@@ -29710,6 +29710,93 @@
    "eco": {
     "reacciones": 6,
     "comentarios": 5,
+    "al": "2026-11-01"
+   },
+   "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "Gobierno de Jalisco",
+    "url": "https://x.com/GobiernoJalisco/status/2116545732396114287",
+    "eco": {
+     "reacciones": 84,
+     "comentarios": 37,
+     "al": "2026-11-01"
+    }
+   },
+   "url": "https://x.com/Ferny_AL_/status/2116956085961543829",
+   "fecha": "2026-11-01",
+   "colonias": [
+    "20 DE NOVIEMBRE|Tonalá|45404"
+   ],
+   "lugar": "20 de Noviembre, Tonalá",
+   "cita": "@PabloLemusN @siapagdl en la colonia 20 de noviembre de Tonalá LLEVAMOS 2 SEMANAS SIN AGUA. Esta colonia no salió en la lista de afectados ni en la lista de los tandeos.🖕🏻",
+   "dias": 14,
+   "eco": {
+    "reacciones": 0,
+    "comentarios": 0,
+    "al": "2026-11-01"
+   },
+   "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2115830773362106680",
+    "eco": {
+     "reacciones": 29,
+     "comentarios": 25,
+     "al": "2026-11-01"
+    }
+   },
+   "url": "https://x.com/rtt13/status/2116949007796744472",
+   "fecha": "2026-11-01",
+   "colonias": [
+    "SAN JUAN DE DIOS|Guadalajara|44360"
+   ],
+   "lugar": "San Juan de Dios, Guadalajara",
+   "cita": "@siapagdl A ver si algún día se dan una vuelta por la colonia San Juan de Dios (LaPerla), un mes sin agua y @siapagdl ni sus luces.",
+   "dias": 30,
+   "eco": {
+    "reacciones": 0,
+    "comentarios": 0,
+    "al": "2026-11-01"
+   },
+   "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "Gobierno de Jalisco",
+    "url": "https://x.com/GobiernoJalisco/status/2116545732396114287",
+    "eco": {
+     "reacciones": 84,
+     "comentarios": 37,
+     "al": "2026-11-01"
+    }
+   },
+   "url": "https://x.com/AdonaisLee/status/2116948886514241693",
+   "fecha": "2026-11-01",
+   "colonias": [
+    "EL SAUZ|Guadalajara|45080"
+   ],
+   "lugar": "El Sauz, Tlaquepaque",
+   "cita": "3er. día sin agua en colonia El Sauz, Tlaquepaque.\nTandeo inicio el viernes y no a regresado el servicio  1 de noviembre.\n(Zona 6).\n\nPrograma de tandeos es un fracaso.\n\n@siapagdl @PabloLemusN @LauraImelPerezS @Trafico_ZMG @informador",
+   "dias": 3,
+   "eco": {
+    "reacciones": 1,
+    "comentarios": 0,
     "al": "2026-11-01"
    },
    "vista": null
