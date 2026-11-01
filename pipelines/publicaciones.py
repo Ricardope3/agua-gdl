@@ -159,6 +159,12 @@ def validate(doc):
             fail(f"{where}: titular is a news article's headline, 1 to 300 characters")
         eco = p.get("eco")
         check_eco(eco, where)
+        # "video": true marks a post whose link carries a video (a reel, a YouTube video, an X post
+        # whose embed serves one), so a future run can download the evidence. Absent means unknown.
+        if p.get("video") not in (None, True):
+            fail(f"{where}: video is true or absent")
+        if re.search(r"facebook\.com/(reel|watch)/|youtube\.com|youtu\.be/|tiktok\.com/", url) and not p.get("video"):
+            fail(f"{where}: a reel, watch, YouTube or TikTok link carries a video: set \"video\": true")
         # A comment counts by the thread it is in: the post's reactions and comments meet the rule.
         tipo = p.get("tipo")
         if tipo not in (None, "comentario"):

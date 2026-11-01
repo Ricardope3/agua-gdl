@@ -204,7 +204,8 @@
     "compartidos": 23,
     "al": "2026-10-20"
    },
-   "vista": "fuentes/1eaf1666aedc.jpg"
+   "vista": "fuentes/1eaf1666aedc.jpg",
+   "video": true
   },
   {
    "fuente": "medio",
@@ -910,7 +911,8 @@
     "compartidos": 1,
     "al": "2026-10-20"
    },
-   "vista": "fuentes/0c674a3dc95d.jpg"
+   "vista": "fuentes/0c674a3dc95d.jpg",
+   "video": true
   },
   {
    "fuente": "medio",
@@ -930,7 +932,8 @@
     "compartidos": 6,
     "al": "2026-10-20"
    },
-   "vista": "fuentes/91c5930dde05.jpg"
+   "vista": "fuentes/91c5930dde05.jpg",
+   "video": true
   },
   {
    "fuente": "medio",
@@ -1016,7 +1019,8 @@
     "comentarios": 4,
     "al": "2026-10-22"
    },
-   "vista": null
+   "vista": null,
+   "video": true
   },
   {
    "fuente": "vecinos",
@@ -2528,7 +2532,8 @@
     "comentarios": 0,
     "compartidos": 4
    },
-   "vista": null
+   "vista": null,
+   "video": true
   },
   {
    "fuente": "vecinos",
@@ -2567,7 +2572,8 @@
     "reacciones": 310,
     "comentarios": 20
    },
-   "vista": "fuentes/b8cc1dcf0838.jpg"
+   "vista": "fuentes/b8cc1dcf0838.jpg",
+   "video": true
   },
   {
    "fuente": "medio",
@@ -2606,7 +2612,8 @@
     "reacciones": 279,
     "comentarios": 13
    },
-   "vista": "fuentes/0f2fe029c2ab.jpg"
+   "vista": "fuentes/0f2fe029c2ab.jpg",
+   "video": true
   },
   {
    "fuente": "medio",
@@ -2646,7 +2653,8 @@
     "reacciones": 657,
     "comentarios": 22
    },
-   "vista": "fuentes/c25c5eea042d.jpg"
+   "vista": "fuentes/c25c5eea042d.jpg",
+   "video": true
   },
   {
    "fuente": "medio",
@@ -2665,7 +2673,8 @@
     "reacciones": 76,
     "comentarios": 20
    },
-   "vista": "fuentes/171767392ee9.jpg"
+   "vista": "fuentes/171767392ee9.jpg",
+   "video": true
   },
   {
    "fuente": "medio",
@@ -2685,7 +2694,8 @@
     "reacciones": 2,
     "comentarios": 0
    },
-   "vista": "fuentes/888544fff843.jpg"
+   "vista": "fuentes/888544fff843.jpg",
+   "video": true
   },
   {
    "fuente": "vecinos",
@@ -2773,7 +2783,8 @@
    "cita": "Vecinos de la colonia La Normal, en Guadalajara, reportaron baja presión, mal olor y agua de color café desde días antes del inicio oficial de los tandeos",
    "dias": null,
    "eco": null,
-   "vista": null
+   "vista": null,
+   "video": true
   },
   {
    "fuente": "vecinos",
@@ -3056,7 +3067,8 @@
     "compartidos": 75,
     "al": "2026-10-21"
    },
-   "vista": "fuentes/f7becfd8956e.jpg"
+   "vista": "fuentes/f7becfd8956e.jpg",
+   "video": true
   },
   {
    "fuente": "vecinos",
@@ -16956,7 +16968,8 @@
    "dias": 18,
    "eco": null,
    "captura": null,
-   "titular": "Vecinos de dos colonias llevan 18 días sin agua y se manifestaron durante partido Atlas vs. América"
+   "titular": "Vecinos de dos colonias llevan 18 días sin agua y se manifestaron durante partido Atlas vs. América",
+   "video": true
   },
   {
    "fuente": "medio",
@@ -16972,7 +16985,8 @@
    "dias": null,
    "eco": null,
    "captura": null,
-   "titular": "Vecinos de Miravalle llevan días sin agua y temen por los tandeos"
+   "titular": "Vecinos de Miravalle llevan días sin agua y temen por los tandeos",
+   "video": true
   },
   {
    "fuente": "medio",
@@ -17354,7 +17368,8 @@
    "dias": 7,
    "eco": null,
    "captura": null,
-   "titular": "¡Gobierno federal rescata a Jalisco! Claudia Sheinbaum dará 13 mmdp para atender agua contaminada"
+   "titular": "¡Gobierno federal rescata a Jalisco! Claudia Sheinbaum dará 13 mmdp para atender agua contaminada",
+   "video": true
   },
   {
    "fuente": "medio",
@@ -17492,7 +17507,8 @@
    "dias": null,
    "eco": null,
    "captura": null,
-   "titular": "Falta de agua afecta a negocios de Tonalá"
+   "titular": "Falta de agua afecta a negocios de Tonalá",
+   "video": true
   },
   {
    "fuente": "medio",
@@ -19600,7 +19616,8 @@
    "eco": null,
    "titular": "15 días sin agua en Ciudad Granja, Zapopan; habitantes suman cuatro días de protestas.",
    "vista": "fuentes/2b592dae3bcc.jpg",
-   "captura": null
+   "captura": null,
+   "video": true
   },
   {
    "fuente": "medio",
@@ -19746,7 +19763,8 @@
    "dias": null,
    "eco": null,
    "titular": "Sin agua y sin aviso oportuno, vecinos enfrentan cortes en Cruz del Sur",
-   "captura": null
+   "captura": null,
+   "video": true
   },
   {
    "fuente": "medio",
@@ -19908,7 +19926,8 @@
     "comentarios": 7,
     "al": "2026-10-22"
    },
-   "vista": "fuentes/c12f6038b0d5.jpg"
+   "vista": "fuentes/c12f6038b0d5.jpg",
+   "video": true
   },
   {
    "fuente": "medio",
@@ -20254,7 +20273,8 @@
    "dias": null,
    "eco": null,
    "captura": null,
-   "titular": "Siguen con agua sucia y algunas colonias no tienen agua antes del tandeo"
+   "titular": "Siguen con agua sucia y algunas colonias no tienen agua antes del tandeo",
+   "video": true
   },
   {
    "fuente": "medio",
@@ -22383,7 +22403,8 @@
     "compartidos": 28,
     "al": "2026-10-23"
    },
-   "vista": "fuentes/f3c34d16217d.jpg"
+   "vista": "fuentes/f3c34d16217d.jpg",
+   "video": true
   },
   {
    "fuente": "medio",
@@ -23554,7 +23575,8 @@
     "comentarios": 6,
     "al": "2026-10-24"
    },
-   "vista": "fuentes/cf6db3b93edc.jpg"
+   "vista": "fuentes/cf6db3b93edc.jpg",
+   "video": true
   },
   {
    "fuente": "vecinos",
@@ -23965,7 +23987,8 @@
     "comentarios": 2,
     "al": "2026-10-25"
    },
-   "vista": "fuentes/437a40dca048.jpg"
+   "vista": "fuentes/437a40dca048.jpg",
+   "video": true
   },
   {
    "fuente": "medio",
@@ -24794,7 +24817,8 @@
     "comentarios": 0,
     "al": "2026-10-24"
    },
-   "vista": "fuentes/28d8f5f93db4.jpg"
+   "vista": "fuentes/28d8f5f93db4.jpg",
+   "video": true
   },
   {
    "fuente": "medio",
@@ -24814,7 +24838,8 @@
     "comentarios": 1,
     "al": "2026-10-24"
    },
-   "vista": "fuentes/7dea597ff7e0.jpg"
+   "vista": "fuentes/7dea597ff7e0.jpg",
+   "video": true
   },
   {
    "fuente": "medio",
@@ -24885,7 +24910,8 @@
     "comentarios": 54,
     "al": "2026-10-24"
    },
-   "vista": "fuentes/fc603f73acca.jpg"
+   "vista": "fuentes/fc603f73acca.jpg",
+   "video": true
   },
   {
    "fuente": "medio",
@@ -28249,7 +28275,8 @@
     "comentarios": 2,
     "al": "2026-10-27"
    },
-   "vista": null
+   "vista": null,
+   "video": true
   },
   {
    "fuente": "vecinos",
@@ -28419,7 +28446,8 @@
    "dias": 25,
    "bloqueo": true,
    "eco": null,
-   "vista": null
+   "vista": null,
+   "video": true
   },
   {
    "fuente": "vecinos",
@@ -29505,7 +29533,8 @@
     "comentarios": 19,
     "al": "2026-10-31"
    },
-   "vista": null
+   "vista": null,
+   "video": true
   },
   {
    "fuente": "vecinos",
@@ -29524,7 +29553,8 @@
     "comentarios": 2,
     "al": "2026-10-31"
    },
-   "vista": null
+   "vista": null,
+   "video": true
   },
   {
    "fuente": "vecinos",
@@ -29637,7 +29667,8 @@
     "comentarios": 1,
     "al": "2026-11-01"
    },
-   "vista": null
+   "vista": null,
+   "video": true
   },
   {
    "fuente": "medio",
@@ -29657,7 +29688,8 @@
     "comentarios": 2,
     "al": "2026-11-01"
    },
-   "vista": null
+   "vista": null,
+   "video": true
   },
   {
    "fuente": "medio",
@@ -29677,7 +29709,8 @@
     "comentarios": 11,
     "al": "2026-11-01"
    },
-   "vista": null
+   "vista": null,
+   "video": true
   },
   {
    "fuente": "vecinos",
@@ -30215,7 +30248,8 @@
     "compartidos": 50,
     "al": "2026-11-01"
    },
-   "vista": null
+   "vista": null,
+   "video": true
   },
   {
    "fuente": "vecinos",
@@ -30469,7 +30503,8 @@
     "comentarios": 156,
     "al": "2026-11-01"
    },
-   "vista": null
+   "vista": null,
+   "video": true
   }
  ]
 }

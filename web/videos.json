@@ -1,0 +1,466 @@
+{
+ "actualizado": "2026-11-01",
+ "videos": [
+  {
+   "url": "https://www.facebook.com/reel/1600459298762122/",
+   "red": "facebook",
+   "quien": "El Jalisciense Diario",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Ciudad Granja, Zapopan",
+   "cita": "Vecinos de Ciudad Granja bloquearon esta tarde los carriles centrales de avenida Vallarta para exigir el restablecimiento del servicio de agua potable.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1007560859044382/",
+   "red": "facebook",
+   "quien": "Mayra Zaldívar Noticias",
+   "fecha": "2026-10-19",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "Primaria José Clemente Orozco, Oblatos, Guadalajara",
+   "cita": "Padres de familia de la escuela José Clemente Orozco, en la colonia Oblatos, Guadalajara, urgen al SIAPA el envío de una pipa ante la falta de suministro en el plantel.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/4519943431605417/",
+   "red": "facebook",
+   "quien": "DK 1250 AM",
+   "fecha": "2026-10-19",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "Primaria José Clemente Orozco, Oblatos, Guadalajara",
+   "cita": "Primaria Urbana 849 “José Clemente Orozco” en col. Oblatos, Guadalajara, se queda sin agua en aljibe y tinacos.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://x.com/Izkallii/status/2112258094591787242",
+   "red": "x",
+   "quien": "",
+   "fecha": "2026-10-19",
+   "colonias": [
+    "GUADALAJARA ORIENTE|Guadalajara|44700",
+    "SANTA ROSA|Guadalajara|44330",
+    "SANTA CECILIA|Guadalajara|44700"
+   ],
+   "lugar": "Guadalajara Oriente, Santa Rosa y Santa Cecilia",
+   "cita": "Vecinas de Guadalajara Oriente, Santa Rosa y Santa Cecilia tenemos al menos 16 días sin agua y ni siquiera puedo hacer reporte porque no entran las llamadas",
+   "dias": 16,
+   "video": null
+  },
+  {
+   "url": "https://x.com/TelediarioGDL/status/2112713606668157243",
+   "red": "x",
+   "quien": "Telediario Guadalajara",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Ciudad Granja, Zapopan",
+   "cita": "Vecinos de Ciudad Granja realizan bloqueo en Avenida Vallarta, Zapopan, exigiendo un servicio digno tras sumar más de 10 días sin agua",
+   "dias": 10,
+   "video": null
+  },
+  {
+   "url": "https://x.com/Trafico_ZMG/status/2111496965535989865",
+   "red": "x",
+   "quien": "Tráfico ZMG",
+   "fecha": "2026-10-17",
+   "colonias": [
+    "VISTAS DEL PEDREGAL|Tonalá|45429"
+   ],
+   "lugar": "Autopista Guadalajara-Zapotlanejo, a la altura de Mismaloya (Vistas del Pedregal, Tonalá)",
+   "cita": "Se registra un bloqueo total a la circulación sobre la Autopista Guadalajara-Zapotlanejo, a la altura de Mismaloya, en sentido hacia Zapotlanejo.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://x.com/Trafico_ZMG/status/2112355018930057394",
+   "red": "x",
+   "quien": "Tráfico ZMG",
+   "fecha": "2026-10-19",
+   "colonias": [
+    "DR VALENTIN GOMEZ FARIAS|Guadalajara|44940"
+   ],
+   "lugar": "Av. 8 de Julio y Av. Jesús Reyes Heroles, Dr. Valentín Gómez Farías, Guadalajara",
+   "cita": "Manifestantes protestan por la falta de agua en el cruce de avenida 8 de Julio y avenida Jesús Reyes Heroles, en la colonia Dr. Valentín Gómez Farías.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://x.com/Trafico_ZMG/status/2112353618049323222",
+   "red": "x",
+   "quien": "Tráfico ZMG",
+   "fecha": "2026-10-19",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Av. Vallarta, Glorieta de los Pirules, Ciudad Granja, Zapopan",
+   "cita": "Se registra una manifestación que mantiene bloqueados todos los carriles de avenida Vallarta, en ambos sentidos, a la altura de la Glorieta de los Pirules, en la colonia Ciudad Granja.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://x.com/Trafico_ZMG/status/2110083456373846249",
+   "red": "x",
+   "quien": "Tráfico ZMG",
+   "fecha": "2026-10-13",
+   "colonias": [
+    "LOS OLIVOS|Zapopan|45030"
+   ],
+   "lugar": "Los Olivos y Nueva Primavera, Zapopan",
+   "cita": "Reportan malas condiciones del agua en las colonias Los Olivos y Nueva Primavera, en Zapopan.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://x.com/Trafico_ZMG/status/2110178223313314158",
+   "red": "x",
+   "quien": "Tráfico ZMG",
+   "fecha": "2026-10-13",
+   "colonias": [
+    "ALBEREDA RESIDENCIAL|Tlajomulco de Zúñiga|45694"
+   ],
+   "lugar": "Carretera a El Salto, Albereda Residencial",
+   "cita": "el tráfico se encuentra detenido tras varias horas por una manifestación de vecinos por la falta de agua",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1022982324133620/",
+   "red": "facebook",
+   "quien": "Meganoticias",
+   "fecha": "2026-10-16",
+   "colonias": [
+    "LA NORMAL|Guadalajara|44200"
+   ],
+   "lugar": "La Normal, Guadalajara",
+   "cita": "Vecinos de la colonia La Normal, en Guadalajara, reportaron baja presión, mal olor y agua de color café desde días antes del inicio oficial de los tandeos",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/2900700006950200/",
+   "red": "facebook",
+   "quien": "Las Noticias en GDL",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "PRADOS VALLARTA|Zapopan|45020"
+   ],
+   "lugar": "Prados Vallarta, Zapopan",
+   "cita": "¡En Prados Vallarta sale el agua más negra y apestosa que antes!",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.youtube.com/watch?v=FD7P-Zw6MAk",
+   "red": "web",
+   "quien": "UDG TV",
+   "fecha": "2026-10-21",
+   "colonias": [
+    "BELISARIO DOMINGUEZ|Guadalajara|44320",
+    "BELISARIO DOMINGUEZ|Guadalajara|44340",
+    "LA ESPERANZA (LA FEDERACHA)|Guadalajara|44300"
+   ],
+   "lugar": "Fidel Velázquez y Calzada Independencia, Guadalajara",
+   "cita": "Vecinos de dos colonias llevan 18 días sin agua y se manifestaron durante partido Atlas vs. América",
+   "dias": 18,
+   "video": null
+  },
+  {
+   "url": "https://www.youtube.com/watch?v=JyRT08y7H08",
+   "red": "web",
+   "quien": "Telediario Guadalajara",
+   "fecha": "2026-10-15",
+   "colonias": [
+    "FOVISSSTE MIRAVALLE|San Pedro Tlaquepaque y Guadalajara|44990"
+   ],
+   "lugar": "Fovissste Miravalle, en los límites de Guadalajara y Tlaquepaque",
+   "cita": "Habitantes de Fovissste Miravalle y colonias aledañas, ubicadas en los límites de Guadalajara y Tlaquepaque, manifestaron incertidumbre y preocupación ante los tandeos de agua previstos a partir de este jueves, pues aseguraron que desde el sábado dejaron de recibir el servicio",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.youtube.com/watch?v=6HkEmkigk1s",
+   "red": "web",
+   "quien": "El Heraldo de México",
+   "fecha": "2026-10-21",
+   "colonias": [
+    "JARDINES ALCALDE|Guadalajara|44290"
+   ],
+   "lugar": "Jardines Alcalde, Guadalajara",
+   "cita": "En Jardines Alcalde, Guadalajara, […] lleva más de una semana sin agua después de una reparación fallida de una fuga. Antes recibía agua sucia y maloliente, que relaciona con problemas de salud; ahora depende del apoyo de familiares y vecinos para cubrir sus necesidades básicas.",
+   "dias": 7,
+   "video": null
+  },
+  {
+   "url": "https://www.youtube.com/watch?v=paiceeg3t2I",
+   "red": "web",
+   "quien": "Telediario Guadalajara",
+   "fecha": "2026-10-16",
+   "colonias": [
+    "COLINAS DE TONALA|Tonalá|45418"
+   ],
+   "lugar": "Colinas de Tonala, Tonalá",
+   "cita": "Meses sin agua. Así lo refieren vecinos de la colonia Colinas de Tonalá, donde la falta del suministro golpea con más fuerza a quienes tienen un negocio.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.youtube.com/watch?v=gkaYmZ5Dppw",
+   "red": "web",
+   "quien": "Somos El Medio",
+   "fecha": "2026-10-22",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Ciudad Granja, Zapopan",
+   "cita": "15 días sin agua en Ciudad Granja, Zapopan; habitantes suman cuatro días de protestas.",
+   "dias": 15,
+   "video": null
+  },
+  {
+   "url": "https://www.youtube.com/watch?v=ukVAt39bXZo",
+   "red": "web",
+   "quien": "UDG TV",
+   "fecha": "2026-10-16",
+   "colonias": [
+    "JARDINES DE LA CRUZ|Guadalajara|44950"
+   ],
+   "lugar": "Jardines de la Cruz, Guadalajara",
+   "cita": "Los cortes de agua en Guadalajara comenzaron antes de lo previsto para algunos habitantes de Jardines de la Cruz, quienes no tuvieron oportunidad de almacenar suficiente líquido para enfrentar la suspensión.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://x.com/vallartanortesl/status/2113075712299278820",
+   "red": "x",
+   "quien": "Cuenta de vecinos Colonos Vallarta Norte San Lucas",
+   "fecha": "2026-10-21",
+   "colonias": [
+    "VALLARTA NORTE|Guadalajara|44690"
+   ],
+   "lugar": "Vallarta Norte, Guadalajara",
+   "cita": "No salimos en las listas de tandeos , sin embargo no hay agua en varias cuadras de la colonia",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.youtube.com/watch?v=jecJxt1uzs0",
+   "red": "web",
+   "quien": "UDG TV",
+   "fecha": "2026-10-14",
+   "colonias": [
+    "MIRAVALLE|Guadalajara|44990"
+   ],
+   "lugar": "Miravalle, Guadalajara",
+   "cita": "aunque los tandeos de agua iban a empezar hasta el 15 de octubre en algunas colonias comenzaron antes, como en la Atlas, Miravalle o Villa Fontana donde no se redujo el servicio como aseguró el director del Siapa Ismael Jauregui sino que no hay ni gota.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/2331509790722883",
+   "red": "facebook",
+   "quien": "Meganoticias",
+   "fecha": "2026-10-22",
+   "colonias": [
+    "VILLA HERMOSA|Guadalajara|44970"
+   ],
+   "lugar": "Villa Hermosa, Guadalajara",
+   "cita": "Vecinos de la colonia Villa Hermosa en Guadalajara denuncian que no cuentan con agua desde hace 15 dias.",
+   "dias": 15,
+   "video": null
+  },
+  {
+   "url": "https://x.com/TelediarioGDL/status/2113734982841643072",
+   "red": "x",
+   "quien": "Telediario Guadalajara",
+   "fecha": "2026-10-23",
+   "colonias": [
+    "CHAPALITA INN|Zapopan|45037"
+   ],
+   "lugar": "Chapalita Inn, Zapopan",
+   "cita": "Veinte días sin una gota de agua. Así lo aseguran vecinos de la colonia Chapalita Inn, quienes protestan en el cruce de Periférico y avenida Guadalupe para exigir que se respeten los tandeos.",
+   "dias": 20,
+   "video": null
+  },
+  {
+   "url": "https://x.com/TelediarioGDL/status/2114148340640121209",
+   "red": "x",
+   "quien": "Telediario Guadalajara",
+   "fecha": "2026-10-24",
+   "colonias": [
+    "GUADALAJARA ORIENTE|Guadalajara|44700"
+   ],
+   "lugar": "Guadalajara Oriente, Guadalajara",
+   "cita": "Al grito de “¡Queremos agua!”, vecinos de la colonia Guadalajara Oriente bloquearon la Avenida Juan Pablo II, al cruce con Himno; aseguran que llevan un mes sin suministro de agua.",
+   "dias": 30,
+   "video": null
+  },
+  {
+   "url": "https://x.com/dk1250/status/2114074485145960846",
+   "red": "x",
+   "quien": "DK 1250 AM",
+   "fecha": "2026-10-24",
+   "colonias": [
+    "VISTAS DEL PEDREGAL|Tonalá|45429"
+   ],
+   "lugar": "Vistas del Pedregal, Tonalá",
+   "cita": "Habitantes del fraccionamiento Vistas del Pedregal bloquean la autopista Zapotlanejo-Morelia, a la altura de El Vado en Tonalá, en protesta por la falta y mala calidad del agua.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://x.com/Trafico_ZMG/status/2114190000854122556",
+   "red": "x",
+   "quien": "Tráfico ZMG",
+   "fecha": "2026-10-24",
+   "colonias": [
+    "GUADALAJARA ORIENTE|Guadalajara|44700"
+   ],
+   "lugar": "Guadalajara Oriente, Guadalajara",
+   "cita": "durante la manifestación en el cruce de la avenida Juan Pablo II y la calle Himno, en Guadalajara Oriente, para denunciar la falta de agua potable.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/948714917961180/",
+   "red": "facebook",
+   "quien": "Las Noticias en GDL",
+   "fecha": "2026-10-24",
+   "colonias": [
+    "CIRCUNVALACION BELISARIO|Guadalajara|44330"
+   ],
+   "lugar": "Circunvalación Belisario, Guadalajara",
+   "cita": "Habitantes de la colonia Circunvalación Belisario se manifiestan y bloquean la circulación en avenida Belisario Domínguez, al cruce con Circunvalación, en el sentido de Guadalajara hacia Tlaquepaque, para exigir una solución ante la falta de agua.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://x.com/Trafico_ZMG/status/2114919261940387859",
+   "red": "x",
+   "quien": "Tráfico ZMG",
+   "fecha": "2026-10-26",
+   "colonias": [
+    "SAN MARCOS|Guadalajara|44330"
+   ],
+   "lugar": "San Marcos, Guadalajara",
+   "cita": "🚧💧 Cierre vial en la colonia San Marcos por protesta ante falta de agua.\n\nVecinos se manifiestan en el cruce de las calles Monte la Luna y Ónix, debido a que llevan 22 días sin servicio de agua potable. Señalan que los tandeos anunciados no se cumplen y denuncian cortes prolongados en el suministro.",
+   "dias": 22,
+   "video": null
+  },
+  {
+   "url": "https://x.com/TNnoticiasMx/status/2115137127704842604",
+   "red": "x",
+   "quien": "TN Noticias",
+   "fecha": "2026-10-27",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700",
+    "BELISARIO DOMINGUEZ|Guadalajara|44320",
+    "BELISARIO DOMINGUEZ|Guadalajara|44340"
+   ],
+   "lugar": "Oblatos y Belisario Domínguez, Guadalajara",
+   "cita": "#Guadalajara | 🚨Vecinos de Oblatos y Belisario Domínguez bloquean Av. Javier Mina y Belisario Domínguez rumbo al Centro. Denuncian 25 días sin agua y exigen una solución al SIAPA.",
+   "dias": 25,
+   "video": null
+  },
+  {
+   "url": "https://x.com/LadronVecinos/status/2116002258542276848",
+   "red": "x",
+   "quien": "",
+   "fecha": "2026-10-29",
+   "colonias": [
+    "LADRON DE GUEVARA|Guadalajara|44600"
+   ],
+   "lugar": "Ladrón de Guevara, Guadalajara",
+   "cita": "@siapagdl @Trafico_ZMG @VisorZmg @quierotv_gdl @TVAztecaJalisco @Canal4 urge apoyo fuga de agua potable y la colonia ladron se Guevara 4 dias tenemos sin agua, ubicada en Av Mexico y Av López Mateos",
+   "dias": 4,
+   "video": null
+  },
+  {
+   "url": "https://x.com/AdonaisLee/status/2116586847014912130",
+   "red": "x",
+   "quien": "",
+   "fecha": "2026-10-31",
+   "colonias": [
+    "EL SAUZ|Guadalajara|45080"
+   ],
+   "lugar": "El Sauz, Guadalajara",
+   "cita": "@siapagdl colonia El Sauz sin servicio de agua.\nEl tandeo de la zona 5 fue ayer viernes, pero continuamos sin agua hoy sábado  31 de octubre.",
+   "dias": 1,
+   "video": null
+  },
+  {
+   "url": "https://x.com/laevidenciaweb/status/2116322063048741257",
+   "red": "x",
+   "quien": "La Evidencia",
+   "fecha": "2026-10-30",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "Javier Mina y Oblatos, Guadalajara",
+   "cita": "Manifestantes detienen la circulación en Javier Mina y Oblatos porque reportan que llevan días sin agua y el @siapagdl no cumple con calendario de tandeos.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://x.com/ilsemreportera/status/2116329310277538066",
+   "red": "x",
+   "quien": "La Evidencia",
+   "fecha": "2026-10-30",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "Oblatos, Guadalajara",
+   "cita": "Vecinas y vecinos de Oblatos cierran Javier Mina al referir que llevan un mes sin agua. Personal de Gobierno del Estado intentó detener el cierre al ofrecer pipas que \"tenían cerca\".",
+   "dias": 30,
+   "video": null
+  },
+  {
+   "url": "https://x.com/Trafico_ZMG/status/2115517873938382976",
+   "red": "x",
+   "quien": "Tráfico ZMG",
+   "fecha": "2026-10-28",
+   "colonias": [
+    "EL VADO|Tonalá|45429"
+   ],
+   "lugar": "El Vado, Tonalá",
+   "cita": "¡Cierran la autopista Guadalajara-Zapotlanejo! Manifestantes mantienen cerrado el paso a la circulación a la altura de El Vado en Tonalá, en sentido de Guadalajara hacia Zapotlanejo, para exigir el suministro de agua potable. Refieren que llevan un mes sin agua",
+   "dias": 30,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1588307619721099",
+   "red": "facebook",
+   "quien": "Tráfico ZMG",
+   "fecha": "2026-10-31",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "Oblatos, Guadalajara",
+   "cita": "Señalan que llevan mes y medio sin suministro y que la compra de pipas representa un gasto que sus familias ya no pueden sostener.",
+   "dias": 45,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1679589256838955",
+   "red": "facebook",
+   "quien": "Tony Martínez",
+   "fecha": "2026-10-24",
+   "colonias": [
+    "GUADALAJARA ORIENTE|Guadalajara|44700"
+   ],
+   "lugar": "Guadalajara Oriente, Guadalajara",
+   "cita": "🚱 ¡UN MES SIN AGUA! 💦 Vecinos de #Guadalajara Oriente bloquearon avenida Juan Pablo II, al cruce con Himno, al grito de “¡Queremos #agua!” y para exigir que se restablezca el suministro. #Manifestacion #Tadeos #SIAPA",
+   "dias": 30,
+   "video": null
+  }
+ ]
+}
