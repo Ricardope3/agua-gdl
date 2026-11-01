@@ -43,6 +43,7 @@ def build():
     post_html = "\n".join(posts) or "<li>No hay publicaciones recientes registradas.</li>"
     return f'''<!doctype html>
 <html lang="es-MX"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="facebook-domain-verification" content="li0vsm7edv0afccxodm5t0jvyiw0za">
 <title>Agua GDL · Información sencilla</title><meta name="description" content="Días de corte, avisos, pipas y testimonios recientes, sin mapas ni JavaScript.">
 <link rel="canonical" href="https://aguagdl.com/simple"><meta name="theme-color" content="#ffffff"><link rel="icon" href="/favicon.ico" sizes="any"><script src="/theme.js"></script>
 <style>:root{{--bg:#fbfaf6;--fg:#14213d;--muted:#4f5b7a;--brand:#1d3f9e;--line:#c4cfe9}}*{{box-sizing:border-box}}body{{margin:0;background:var(--bg);color:var(--fg);font:18px/1.6 system-ui,-apple-system,sans-serif}}main{{max-width:800px;margin:auto;padding:20px}}h1{{font-size:2rem;line-height:1.15}}h2{{font-size:1.3rem;margin:0 0 8px}}section{{border-top:3px double var(--brand);padding:18px 0}}a{{color:var(--brand);text-underline-offset:3px}}a:focus-visible{{outline:3px solid var(--brand);outline-offset:4px}}nav ul{{padding-left:20px}}.notice{{background:#fff;border:2px solid var(--brand);padding:14px}}.zone{{padding:14px 0}}small,.muted{{color:var(--muted)}}li{{margin-bottom:12px}}@media(prefers-color-scheme:dark){{:root{{--bg:#0c1328;--fg:#eef1fb;--muted:#a6b1d6;--brand:#a9bdfa;--line:#2a3a6e}}.notice{{background:#121b36}}}}</style></head>
