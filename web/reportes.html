@@ -1322,6 +1322,7 @@ if (window.top !== window.self) {
     function clearSelection() {
       const restore = card.getAttribute("aria-modal") === "true" && cardReturnFocus;
       selected = null;
+      cardDay = null;
       closedAt = Date.now();
       for (const g of marks) g.remove();
       marks = [];
@@ -1336,10 +1337,12 @@ if (window.top !== window.self) {
       cardReturnFocus = null;
       history.replaceState(null, "", location.pathname + (location.search.includes("api=") ? `?api=${encodeURIComponent(API)}` : ""));
     }
+    let cardDay = null; // the timeline day a selection was made from, so its report shows in the card
     function select(f, { fit = true, form = false, animate = true } = {}) {
       stop();
       if (!selected) cardReturnFocus = document.activeElement;
       // The timeline hides while a colonia is open, so the map shows today's state behind its card.
+      cardDay = atEnd() ? null : DAYS[at];
       if (!atEnd()) showDay(DAYS.length - 1);
       selected = f;
       window.__key = keyOf(f.properties);
@@ -1605,9 +1608,13 @@ if (window.top !== window.self) {
     // Current reports first, then explicitly stale ones; neither case infers recovery from silence.
     function countsOf(k, e) {
       const c = byKey.get(k), stale = staleByKey.get(k);
-      if (c) return countsBlock(c);
-      if (stale) return countsBlock(stale, true);
-      return [el("p", { class: "none" }, summary ? `Nadie ha reportado esta colonia${e ? " aquí" : ""} en las últimas 72 horas.`
+      // Opened from a past timeline day: say what that day held, since the counts below are today's.
+      const dayLine = !cardDay ? [] : [historyByDay.get(cardDay)?.get(k)
+        ? el("p", { class: "quality", style: "margin-top:0" }, `El ${dateES(cardDay, true)}: ${plural(totalOf(historyByDay.get(cardDay).get(k)), "reporte", "reportes")} · ${statusLabel(historyByDay.get(cardDay).get(k)).toLowerCase()}.`)
+        : el("p", { class: "quality", style: "margin-top:0" }, `El ${dateES(cardDay, true)} nadie reportó esta colonia.`)];
+      if (c) return [...dayLine, ...countsBlock(c)];
+      if (stale) return [...dayLine, ...countsBlock(stale, true)];
+      return [...dayLine, el("p", { class: "none" }, summary ? `Nadie ha reportado esta colonia${e ? " aquí" : ""} en las últimas 72 horas.`
         : apiFailed ? "No pudimos cargar los reportes de esta colonia." : "Cargando los reportes de esta colonia…")];
     }
     function refreshCounts() {
