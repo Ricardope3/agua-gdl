@@ -910,8 +910,16 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
       const m = L.marker(centers.get(k), {
         icon: L.divIcon({ className: `sev${far ? " far" : ""}${s ? "" : " nodays"}`, html: `<span style="${sevVars(s)}">${n}</span>`, iconSize: [size, size] }),
         keyboard: false, zIndexOffset: 1000 + total, opacity: !focus || zs.some((z) => focus.has(z)) ? 1 : 0.15,
-        title: `${fs[0].properties.n}: ${plural(total, "reporte", "reportes")}${e.dias != null ? `, hasta ${daysWord(e.dias)} sin agua` : ""}`,
       });
+      m.bindTooltip(() => {
+        const box = el("span", {},
+          el("strong", {}, fs[0].properties.n),
+          el("span", {}, `${plural(total, "publicación y reporte", "publicaciones y reportes")}`),
+          el("span", { class: "sub" }, "Lo que tiene la colonia publicado más los reportes de las últimas 24 horas en ¿Hay agua?"),
+          el("span", { class: "sub" }, e.dias != null ? `Su color: hasta ${daysWord(e.dias)} sin agua` : "Su color: sin días contados"),
+        );
+        return box;
+      }, { sticky: true, className: "map-label" });
       m.on("click", () => select(fs[0]));
       markers.addLayer(m);
     }
