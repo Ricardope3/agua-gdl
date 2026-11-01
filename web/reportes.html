@@ -112,6 +112,7 @@ h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.08; letter-spacing: -
 .map-key .mk-sev { flex-shrink: 0; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--s3); color: var(--s3-ink); font: 700 11px/1 var(--font); box-shadow: 0 0 0 1.5px var(--surface), 0 1px 2px rgb(3 14 22 / .45) }
 .map-key .mk-donut { flex-shrink: 0; width: 24px; height: 24px }
 @media (max-width: 760px) { .map-key { font-size: .74rem; padding: 6px 10px } }
+@media (max-width: 760px) { .map-key .mk-donut-line { display: none } }
 .pin { background: var(--surface); border: 3px solid var(--fg); border-radius: 50%; width: 16px; height: 16px; box-shadow: var(--shadow) }
 .card { position: absolute; z-index: 1200; top: 12px; left: 12px; width: min(380px, calc(100% - 24px)); max-height: calc(100% - 24px); overflow: auto; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; box-shadow: 0 10px 30px rgb(3 14 22 / .22) }
 @media (max-width: 760px) { .card { top: auto; bottom: 10px; left: 10px; width: calc(100% - 20px); max-height: 62% } }
@@ -778,7 +779,7 @@ if (window.top !== window.self) {
       </section>
       <div class="map-key" role="note" aria-label="Qué muestran los círculos del mapa">
         <p><span class="mk-sev" aria-hidden="true">3</span><span><strong>Círculo lleno: publicaciones</strong> de medios y vecinos. El número es cuántas; el color, los días sin agua que dicen.</span></p>
-        <p><svg class="mk-donut" viewBox="0 0 40 40" aria-hidden="true"><circle r="12" cx="20" cy="20" fill="var(--surface)"/><circle r="15" cx="20" cy="20" fill="none" stroke="var(--dry)" stroke-width="6" stroke-dasharray="31.4 62.8" transform="rotate(-90 20 20)"/><circle r="15" cx="20" cy="20" fill="none" stroke="var(--low)" stroke-width="6" stroke-dasharray="31.4 62.8" stroke-dashoffset="-31.4" transform="rotate(-90 20 20)"/><circle r="15" cx="20" cy="20" fill="none" stroke="var(--ok)" stroke-width="6" stroke-dasharray="31.4 62.8" stroke-dashoffset="-62.8" transform="rotate(-90 20 20)"/><text x="20" y="24" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="var(--fg)">2</text></svg><span><strong>Aro: reportes de vecinos</strong> hechos aquí. El número es cuántos; el aro, cómo está el agua (sin agua, baja presión, con agua). En gris, sin reportes nuevos en 24 h.</span></p>
+        <p class="mk-donut-line"><svg class="mk-donut" viewBox="0 0 40 40" aria-hidden="true"><circle r="12" cx="20" cy="20" fill="var(--surface)"/><circle r="15" cx="20" cy="20" fill="none" stroke="var(--dry)" stroke-width="6" stroke-dasharray="31.4 62.8" transform="rotate(-90 20 20)"/><circle r="15" cx="20" cy="20" fill="none" stroke="var(--low)" stroke-width="6" stroke-dasharray="31.4 62.8" stroke-dashoffset="-31.4" transform="rotate(-90 20 20)"/><circle r="15" cx="20" cy="20" fill="none" stroke="var(--ok)" stroke-width="6" stroke-dasharray="31.4 62.8" stroke-dashoffset="-62.8" transform="rotate(-90 20 20)"/><text x="20" y="24" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="var(--fg)">2</text></svg><span><strong>Aro: reportes de vecinos</strong> hechos aquí. El número es cuántos; el aro, cómo está el agua (sin agua, baja presión, con agua). En gris, sin reportes nuevos en 24 h.</span></p>
       </div>
       <section class="tl" id="linea" aria-labelledby="tl-fecha" hidden>
         <div class="tl-top">
@@ -1254,6 +1255,9 @@ if (window.top !== window.self) {
       shown = counts;
       const current = reportsNow(), stale = atEnd() ? staleByKey : emptyReports;
       if (map.getZoom() < 13 && current.size + stale.size > 60) return;
+      // On phones one circle per colonia is enough: the filled publication badge stays, the
+      // donut of reports made here hides (the card still leads with those reports).
+      if (phone()) return;
       const addReports = (rows, isStale) => {
         for (const [k, c] of rows) {
           const fs = features.get(k);
@@ -2056,7 +2060,7 @@ if (window.top !== window.self) {
       const active = [...evNow.values()].filter((e) => stateOf(e) === "activa").length;
       $("tl-cuenta").replaceChildren(`Al ${dateES(iso, true)}: `, n,
         ` ${d.total === 1 ? "colonia con publicaciones que dicen" : "colonias con publicaciones que dicen"} que no tenían agua`, ...week, `; ${fmt(active)} con quejas de los últimos ${ACTIVE} días. `,
-        at && d.total > prev ? el("span", { class: "tl-new" }, `+${fmt(d.total - prev)} ese día`) : null);
+        at && d.total > prev ? el("span", { class: "tl-new" }, `+${fmt(d.total - prev)} ese día`) : "");
       $("tl-clave").replaceChildren(...STEPS.map(([s, w], k) => el("li", {}, el("span", { class: s ? "sw" : "sw nodays", style: `--c:var(--s${s})` }), w, " ", el("b", {}, fmt(d.sev[k])))));
       chart.setAttribute("aria-valuemax", String(DAYS.length - 1));
       chart.setAttribute("aria-valuenow", String(at));
