@@ -30195,6 +30195,27 @@
     "al": "2026-11-01"
    },
    "vista": null
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "Tráfico ZMG",
+   "url": "https://www.facebook.com/reel/1588307619721099",
+   "fecha": "2026-10-31",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "Oblatos, Guadalajara",
+   "cita": "Señalan que llevan mes y medio sin suministro y que la compra de pipas representa un gasto que sus familias ya no pueden sostener.",
+   "dias": 45,
+   "bloqueo": true,
+   "eco": {
+    "reacciones": 482,
+    "comentarios": 108,
+    "compartidos": 50,
+    "al": "2026-11-01"
+   },
+   "vista": null
   }
  ]
 }
