@@ -30450,6 +30450,26 @@
     "al": "2026-11-01"
    },
    "vista": null
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "Tony Martínez",
+   "url": "https://www.facebook.com/reel/1679589256838955",
+   "fecha": "2026-10-24",
+   "colonias": [
+    "GUADALAJARA ORIENTE|Guadalajara|44700"
+   ],
+   "lugar": "Guadalajara Oriente, Guadalajara",
+   "cita": "🚱 ¡UN MES SIN AGUA! 💦 Vecinos de #Guadalajara Oriente bloquearon avenida Juan Pablo II, al cruce con Himno, al grito de “¡Queremos #agua!” y para exigir que se restablezca el suministro. #Manifestacion #Tadeos #SIAPA",
+   "dias": 30,
+   "bloqueo": true,
+   "eco": {
+    "reacciones": 601,
+    "comentarios": 156,
+    "al": "2026-11-01"
+   },
+   "vista": null
   }
  ]
 }
