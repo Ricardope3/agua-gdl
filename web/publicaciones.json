@@ -29596,6 +29596,26 @@
    "bloqueo": true,
    "eco": null,
    "titular": "Denuncian fallas en los tandeos y falta de pipas gratuitas; bloquean periférico."
+  },
+  {
+   "fuente": "medio",
+   "red": "x",
+   "quien": "La Evidencia",
+   "url": "https://x.com/laevidenciaweb/status/2116322063048741257",
+   "fecha": "2026-10-30",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "Javier Mina y Oblatos, Guadalajara",
+   "cita": "Manifestantes detienen la circulación en Javier Mina y Oblatos porque reportan que llevan días sin agua y el @siapagdl no cumple con calendario de tandeos.",
+   "dias": null,
+   "bloqueo": true,
+   "eco": {
+    "reacciones": 46,
+    "comentarios": 1,
+    "al": "2026-11-01"
+   },
+   "vista": null
   }
  ]
 }
