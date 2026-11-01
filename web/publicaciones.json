@@ -29675,6 +29675,44 @@
     "al": "2026-11-01"
    },
    "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/picheau/status/2116699549708206564",
+   "fecha": "2026-10-31",
+   "colonias": [
+    "CHAPALITA INN|Zapopan|45037"
+   ],
+   "lugar": "Chapalita Inn, Zapopan",
+   "cita": "A ver @PabloLemusN y @siapagdl, dejen de mentir. Llevamos un mes sin agua y cientos de reportes y nada.\n\nYa los vecinos vamos por otra manifestación, a cerrar periférico.\n\nEn Chapalita Inn nos alimenta un pozo, no viene de sus plantas.",
+   "dias": 30,
+   "eco": {
+    "reacciones": 65,
+    "comentarios": 2,
+    "al": "2026-11-01"
+   },
+   "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/m_gutram/status/2116690926949015556",
+   "fecha": "2026-10-31",
+   "colonias": [
+    "MOCTEZUMA|Zapopan|45054"
+   ],
+   "lugar": "Residencial Moctezuma, Zapopan",
+   "cita": "@siapagdl sin agua en zona 6, Col. Residencial Moctezuma, esta zona solo se corta lunes y viernes, sigue sin respetarse el recorte @ZapopanDen @Trafico_ZMG",
+   "dias": null,
+   "eco": {
+    "reacciones": 6,
+    "comentarios": 5,
+    "al": "2026-11-01"
+   },
+   "vista": null
   }
  ]
 }
