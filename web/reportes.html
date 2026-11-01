@@ -1075,6 +1075,11 @@ if (window.top !== window.self) {
   let byKey = new Map();       // colonia key → current counts in the last 24 h
   let staleByKey = new Map();  // no current reports; last report between 24 and 72 h ago
   let historyByDay = new Map();// local date → colonia key → that day's anonymous reports
+  // A report also stays on the map 1–3 days after its day, as the live view's stale state does: silence
+  // is not evidence the water came back. Per past timeline day: colonia key → { c: counts, age }.
+  let carriedByDay = new Map();
+  // Noon UTC keeps the ISO day intact when formatted in America/Mexico_City (UTC−6).
+  const dayShift = (iso, days) => new Date(Date.parse(iso) + days * 864e5 + 12 * 36e5).toLocaleDateString("en-CA", { timeZone: "America/Mexico_City" });
   let summary = null;
 
   // The privacy notice promises only the last hour's reports: older marks go, even if the map never loads.
@@ -1176,7 +1181,7 @@ if (window.top !== window.self) {
     // history has its own badge and colours the outline only when there are no current or stale reports.
     const styleOf = (f) => {
       const k = keyOf(f.properties);
-      const e = evNow.get(k), c = reportsNow().get(k), stale = atEnd() ? staleByKey.get(k) : null;
+      const e = evNow.get(k), c = reportsNow().get(k), stale = atEnd() ? staleByKey.get(k) : carriedByDay.get(DAYS[at])?.get(k) || null;
       if (c) {
         const s = statusOf(c);
         return { color: COLORS[s], weight: 1.4, opacity: 0.95, dashArray: null, fillColor: COLORS[s], fillOpacity: Math.min(0.65, 0.3 + 0.07 * totalOf(c)) };
@@ -1202,13 +1207,15 @@ if (window.top !== window.self) {
       onEachFeature: (f, l) => {
         l.bindTooltip(() => {
           const k = keyOf(f.properties);
-          const c = reportsNow().get(k), stale = atEnd() ? staleByKey.get(k) : null, e = evNow.get(k);
+          const c = reportsNow().get(k), stale = atEnd() ? staleByKey.get(k) : carriedByDay.get(DAYS[at])?.get(k) || null, e = evNow.get(k);
           const later = !e && firstSeen.get(k);
           return el("span", {}, `${f.properties.n} · ${f.properties.m}`,
             e ? el("span", { class: "sub" }, `${atEnd() ? "" : `Al ${dateES(DAYS[at])}: `}${evLine(e)}`) : null,
             later ? el("span", { class: "sub" }, `Su primera publicación llega el ${dateES(later, true)}`) : null,
             c ? el("span", { class: "sub" }, `${statusLabel(c)} · ${plural(totalOf(c), "reporte", "reportes")}${atEnd() ? " en 24 h" : " ese día"}`) : null,
-            stale ? el("span", { class: "sub" }, `Sin reportes nuevos en 24 h · último: ${answerLabel(stale.ultimo_estado)} ${ago(stale.ultimo)}`) : null,
+            stale ? el("span", { class: "sub" }, atEnd()
+              ? `Sin reportes nuevos en 24 h · último: ${answerLabel(stale.ultimo_estado)} ${ago(stale.ultimo)}`
+              : `Sin reportes nuevos ese día · último: hace ${stale.age} ${stale.age === 1 ? "día" : "días"} · ${statusLabel(stale.c).toLowerCase()} (${plural(totalOf(stale.c), "reporte", "reportes")})`) : null,
             summary && !c && !stale && !e && !later && atEnd() ? el("span", { class: "sub" }, "Sin reportes en 72 h") : null);
         }, { sticky: true, className: "map-label" });
         l.on("click", () => { if (Date.now() - closedAt > 500) select(f); });
@@ -1255,13 +1262,14 @@ if (window.top !== window.self) {
         markers.addLayer(m);
       }
       shown = counts;
-      const current = reportsNow(), stale = atEnd() ? staleByKey : emptyReports;
+      const current = reportsNow(), stale = atEnd() ? staleByKey : carriedByDay.get(DAYS[at]) || emptyReports;
       if (map.getZoom() < 13 && current.size + stale.size > 60) return;
       // On phones one circle per colonia is enough: the filled publication badge stays, the
       // donut of reports made here hides (the card still leads with those reports).
       if (phone()) return;
       const addReports = (rows, isStale) => {
-        for (const [k, c] of rows) {
+        for (const [k, v] of rows) {
+          const c = v.c || v, age = v.age || 0;
           const fs = features.get(k);
           if (!fs) continue;
           if (!centers.has(k)) centers.set(k, L.geoJSON(fs[0]).getBounds().getCenter());
@@ -1269,10 +1277,11 @@ if (window.top !== window.self) {
           // Beside a publication badge, not on top of it: the donut's left edge starts a small
           // gap past the badge's right edge, vertically centred on the same point.
           const r = withPublication ? (badgeSizes.get(k) || 30) / 2 : 0;
-          const title = isStale ? `${fs[0].properties.n}: sin reportes nuevos en 24 h · último: ${answerLabel(c.ultimo_estado)} ${ago(c.ultimo)}`
+          const title = age ? `${fs[0].properties.n}: sin reportes nuevos ese día · último: hace ${age} ${age === 1 ? "día" : "días"} · ${statusLabel(c).toLowerCase()}`
+            : isStale ? `${fs[0].properties.n}: sin reportes nuevos en 24 h · último: ${answerLabel(c.ultimo_estado)} ${ago(c.ultimo)}`
             : `${fs[0].properties.n}: ${statusLabel(c)} · ${plural(totalOf(c), "reporte", "reportes")}${atEnd() ? " en 24 h" : " ese día"}`;
           const m = L.marker(centers.get(k), {
-            icon: L.divIcon({ className: `donut${isStale ? " stale" : ""}`, html: donut(c), iconSize: [40, 40], iconAnchor: withPublication ? [-(r + 8), 20] : [20, 20] }),
+            icon: L.divIcon({ className: `donut${isStale || age ? " stale" : ""}`, html: donut(c), iconSize: [40, 40], iconAnchor: withPublication ? [-(r + 8), 20] : [20, 20] }),
             keyboard: false, zIndexOffset: isStale ? 1200 : 3000, title,
           });
           m.on("click", () => select(fs[0]));
@@ -1294,6 +1303,17 @@ if (window.top !== window.self) {
       for (const c of s.semana?.reportes || []) {
         if (!historyByDay.has(c.dia)) historyByDay.set(c.dia, new Map());
         historyByDay.get(c.dia).set(`${c.n}|${c.m}|${c.cp}`, c);
+      }
+      carriedByDay = new Map();
+      for (const dia of historyByDay.keys()) {
+        const carried = new Map();
+        for (let age = 3; age >= 1; age--) {
+          for (const [k, c] of historyByDay.get(dayShift(dia, -age)) || []) {
+            if (!carried.has(k)) carried.set(k, { c, age });
+          }
+        }
+        for (const k of historyByDay.get(dia).keys()) carried.delete(k);
+        if (carried.size) carriedByDay.set(dia, carried);
       }
       layer.setStyle(styleOf);
       drawMarkers();
@@ -1609,9 +1629,12 @@ if (window.top !== window.self) {
     function countsOf(k, e) {
       const c = byKey.get(k), stale = staleByKey.get(k);
       // Opened from a past timeline day: say what that day held, since the counts below are today's.
+      const carried = cardDay && carriedByDay.get(cardDay)?.get(k);
       const dayLine = !cardDay ? [] : [historyByDay.get(cardDay)?.get(k)
         ? el("p", { class: "quality", style: "margin-top:0" }, `El ${dateES(cardDay, true)}: ${plural(totalOf(historyByDay.get(cardDay).get(k)), "reporte", "reportes")} · ${statusLabel(historyByDay.get(cardDay).get(k)).toLowerCase()}.`)
-        : el("p", { class: "quality", style: "margin-top:0" }, `El ${dateES(cardDay, true)} nadie reportó esta colonia.`)];
+        : carried
+          ? el("p", { class: "quality", style: "margin-top:0" }, `El ${dateES(cardDay, true)} nadie reportó; el último fue hace ${carried.age} ${carried.age === 1 ? "día" : "días"}: ${plural(totalOf(carried.c), "reporte", "reportes")} · ${statusLabel(carried.c).toLowerCase()}.`)
+          : el("p", { class: "quality", style: "margin-top:0" }, `El ${dateES(cardDay, true)} nadie reportó esta colonia.`)];
       if (c) return [...dayLine, ...countsBlock(c)];
       if (stale) return [...dayLine, ...countsBlock(stale, true)];
       return [...dayLine, el("p", { class: "none" }, summary ? `Nadie ha reportado esta colonia${e ? " aquí" : ""} en las últimas 72 horas.`
