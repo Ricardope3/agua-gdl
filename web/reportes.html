@@ -1489,7 +1489,7 @@ if (window.top !== window.self) {
       if (!selected) return;
       const z = map.getZoom();
       if (selZoom == null || z > selZoom) selZoom = z;
-      else if (z < Math.min(12, selZoom - 2)) clearSelection();
+      else if (z < Math.min(12, selZoom - 1)) clearSelection();
     });
     // The fifth-highest count of publications: colonias at or above it are the top five (ties included).
     const TOP = [...ev.values()].map((x) => x.posts.length).sort((a, b) => b - a)[4] || Infinity;
