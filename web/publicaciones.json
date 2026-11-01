@@ -29800,6 +29800,54 @@
     "al": "2026-11-01"
    },
    "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "Gobierno de Jalisco",
+    "url": "https://x.com/GobiernoJalisco/status/2113299321772757394",
+    "eco": {
+     "reacciones": 8,
+     "comentarios": 47,
+     "al": "2026-11-01"
+    }
+   },
+   "url": "https://x.com/neopractik/status/2113339322577338733",
+   "fecha": "2026-10-22",
+   "colonias": [
+    "JARDINES DE GUADALUPE|Zapopan|45030"
+   ],
+   "lugar": "Jardines de Guadalupe, Zapopan",
+   "cita": "@GobiernoJalisco Llevamos 14 días sin agua en Jardines de Guadalupe las pipas que hemos comprado los vecinos y yo han subido de $800.00 pesos la semana pasada a $2000.00 pesos solo en las últimas 4 hrs subieron $500.00. Está empezando la crisis y los buitres de los piperos haciendo su agosto. A qué precio estará dentro de un mes?",
+   "dias": 14,
+   "eco": {
+    "reacciones": 8,
+    "comentarios": 0,
+    "al": "2026-11-01"
+   },
+   "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/arcosdguadalupe/status/2112634741824602239",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "ARCOS DE GUADALUPE|Zapopan|45030"
+   ],
+   "lugar": "Arcos de Guadalupe, Zapopan",
+   "cita": "Sin agua desde hace 9 dias",
+   "dias": 9,
+   "eco": {
+    "reacciones": 160,
+    "comentarios": 42,
+    "al": "2026-11-01"
+   },
+   "vista": null
   }
  ]
 }
