@@ -29616,6 +29616,26 @@
     "al": "2026-11-01"
    },
    "vista": null
+  },
+  {
+   "fuente": "medio",
+   "red": "x",
+   "quien": "La Evidencia",
+   "url": "https://x.com/ilsemreportera/status/2116329310277538066",
+   "fecha": "2026-10-30",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "Oblatos, Guadalajara",
+   "cita": "Vecinas y vecinos de Oblatos cierran Javier Mina al referir que llevan un mes sin agua. Personal de Gobierno del Estado intentó detener el cierre al ofrecer pipas que \"tenían cerca\".",
+   "dias": 30,
+   "bloqueo": true,
+   "eco": {
+    "reacciones": 64,
+    "comentarios": 2,
+    "al": "2026-11-01"
+   },
+   "vista": null
   }
  ]
 }
