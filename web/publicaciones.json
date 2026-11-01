@@ -30174,6 +30174,27 @@
     "al": "2026-11-01"
    },
    "vista": null
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "Las Noticias en GDL",
+   "url": "https://www.facebook.com/LasNoticiasGDL/posts/pfbid02BhrA4JA3wmsxqYgx1qeCLUUi8hACWEuwHri4KSmtCNCu7tpUYB91A3KZd1Ci5DC6l",
+   "fecha": "2026-10-31",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "Oblatos, Guadalajara",
+   "cita": "Vecinos de la colonia Oblatos se manifestaron y bloquearon totalmente la circulación sobre la avenida Javier Mina, en protesta por la falta de suministro de agua potable.",
+   "dias": null,
+   "bloqueo": true,
+   "eco": {
+    "reacciones": 1100,
+    "comentarios": 112,
+    "compartidos": 118,
+    "al": "2026-11-01"
+   },
+   "vista": null
   }
  ]
 }
