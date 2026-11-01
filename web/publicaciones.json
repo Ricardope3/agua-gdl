@@ -22549,7 +22549,8 @@
    "cita": "Entre las colonias que reportan desabasto se encuentran Ciudad Granja, 8 de Julio y Basilio Badillo.",
    "dias": null,
    "eco": null,
-   "titular": "Con 22 pipas atienden desabasto de agua en 53 colonias de Guadalajara"
+   "titular": "Con 22 pipas atienden desabasto de agua en 53 colonias de Guadalajara",
+   "captura": "fuentes/2229da0ca050-t.jpg"
   },
   {
    "fuente": "medio",
@@ -22568,7 +22569,8 @@
    "bloqueo": true,
    "eco": null,
    "titular": "Cierran avenida Javier Mina, en Guadalajara, en protesta por falta de agua",
-   "vista": "fuentes/f137047d1c16.jpg"
+   "vista": "fuentes/f137047d1c16.jpg",
+   "captura": "fuentes/f137047d1c16-t.jpg"
   },
   {
    "fuente": "medio",
@@ -22585,7 +22587,8 @@
    "dias": null,
    "bloqueo": true,
    "eco": null,
-   "titular": "Vecinos bloquean Periférico y avenida Guadalupe por falta de agua en Zapopan"
+   "titular": "Vecinos bloquean Periférico y avenida Guadalupe por falta de agua en Zapopan",
+   "captura": "fuentes/0113b01474e5-t.jpg"
   },
   {
    "fuente": "medio",
@@ -22603,7 +22606,8 @@
    "bloqueo": true,
    "eco": null,
    "titular": "Vecinos con hasta 22 días sin agua anuncian bloqueos en Guadalajara y Zapopan este fin de semana",
-   "vista": "fuentes/c3a8296656d5.jpg"
+   "vista": "fuentes/c3a8296656d5.jpg",
+   "captura": "fuentes/c3a8296656d5-t.jpg"
   },
   {
    "fuente": "medio",
@@ -22620,8 +22624,9 @@
    "cita": "Habitantes de Oblatos, San Andrés, Talpita y colonias aledañas contemplan cerrar la avenida Javier Mina, en Guadalajara",
    "dias": null,
    "eco": null,
-   "titular": "Habitantes de la Zona de Oblatos Preparan Manifestación por Falta de Agua Este Sábado",
-   "vista": null
+   "titular": "Habitantes de la Zona de Oblatos Preparan Manifestación por Falta de Agua Este Sábado | N+",
+   "vista": null,
+   "captura": "fuentes/90b391ab08e7-t.jpg"
   },
   {
    "fuente": "vecinos",
@@ -24000,7 +24005,8 @@
    "bloqueo": true,
    "eco": null,
    "titular": "Continúa la exigencia por agua limpia en Guadalajara; vecinos bloquean Javier Mina",
-   "vista": "fuentes/ae11d386e50e.jpg"
+   "vista": "fuentes/ae11d386e50e.jpg",
+   "captura": "fuentes/ae11d386e50e-t.jpg"
   },
   {
    "fuente": "medio",
@@ -24552,7 +24558,8 @@
    "bloqueo": true,
    "eco": null,
    "titular": "“Llevamos 15 días sin una gota”: vecinos bloquean avenidas de Guadalajara por falta de agua",
-   "vista": "fuentes/48b377e439df.jpg"
+   "vista": "fuentes/48b377e439df.jpg",
+   "captura": "fuentes/48b377e439df-t.jpg"
   },
   {
    "fuente": "medio",
@@ -24569,7 +24576,8 @@
    "bloqueo": true,
    "eco": null,
    "titular": "SIAPA: Guadalajara reparte más de dos millones de litros de agua en 80 colonias ante tandeos",
-   "vista": null
+   "vista": null,
+   "captura": "fuentes/7d3e4ff4e5ac-t.jpg"
   },
   {
    "fuente": "medio",
@@ -24586,7 +24594,8 @@
    "bloqueo": true,
    "eco": null,
    "titular": "Protestan con bloqueos en Javier Mina y la autopista a Zapotlanejo por crisis de agua del SIAPA",
-   "vista": "fuentes/6c863aaf7348.jpg"
+   "vista": "fuentes/6c863aaf7348.jpg",
+   "captura": "fuentes/6c863aaf7348-t.jpg"
   },
   {
    "fuente": "medio",
@@ -24604,7 +24613,8 @@
    "bloqueo": true,
    "eco": null,
    "titular": "Bloquean Javier Mina al cruce con Celestino Negrete por falta de agua",
-   "vista": "fuentes/dff6c21b9a74.jpg"
+   "vista": "fuentes/dff6c21b9a74.jpg",
+   "captura": "fuentes/dff6c21b9a74-t.jpg"
   },
   {
    "fuente": "medio",
@@ -24621,7 +24631,8 @@
    "bloqueo": true,
    "eco": null,
    "titular": "Suman meses de reclamos por problemas con el agua en Ciudad Granja",
-   "vista": "fuentes/d86b0ae0ef3d.jpg"
+   "vista": "fuentes/d86b0ae0ef3d.jpg",
+   "captura": "fuentes/d86b0ae0ef3d-t.jpg"
   },
   {
    "fuente": "medio",
@@ -24637,7 +24648,8 @@
    "dias": null,
    "eco": null,
    "titular": "SIAPA reajustará calendario de tandeos tras fallas y descontento social en la ZMG",
-   "vista": null
+   "vista": null,
+   "captura": "fuentes/c006082aad64-t.jpg"
   },
   {
    "fuente": "vecinos",
@@ -28825,7 +28837,9 @@
    "cita": "Con bidones de 20 litros, cubetas y tambos, así como con camionetas, motocicletas y todo lo que ayude a trasladar agua a sus hogares, habitantes de la Francisco Villa, La Mezquitera, Loma Linda, Gómez Farías y Echeverría acuden a estos nacimientos de agua para cubrir necesidades básicas, como lavar trastes, ropa y utilizar los sanitarios.",
    "dias": null,
    "eco": null,
-   "vista": null
+   "vista": null,
+   "captura": "fuentes/fc629efe88dd-t.jpg",
+   "titular": "Recurren a venero ante escasez de agua  | NTR Guadalajara"
   },
   {
    "fuente": "medio",
@@ -28848,7 +28862,9 @@
    "dias": null,
    "eco": null,
    "nota": "El especialista atribuye las fallas a la presión; no da una duración individual para cada colonia.",
-   "vista": null
+   "vista": null,
+   "captura": "fuentes/0a640bacd85a-t.jpg",
+   "titular": "Las zonas altas sufrirán más los tandeos: Macías | NTR Guadalajara"
   },
   {
    "fuente": "medio",
@@ -28864,7 +28880,9 @@
    "dias": null,
    "eco": null,
    "nota": "Los cinco días se refieren a la coloración del agua, no a una interrupción del servicio.",
-   "vista": null
+   "vista": null,
+   "captura": "fuentes/aacf0eb4b99b-t.jpg",
+   "titular": "SIAPA acumula más de seis mil reportes por mala calidad del agua"
   },
   {
    "fuente": "medio",
@@ -28897,7 +28915,9 @@
    "dias": null,
    "bloqueo": true,
    "eco": null,
-   "vista": null
+   "vista": null,
+   "captura": "fuentes/00fd155d5d8f-t.jpg",
+   "titular": "Tres manifestaciones por falta de agua afectan a Guadalajara y Tonalá - Tráfico ZMG"
   },
   {
    "fuente": "vecinos",
@@ -29578,7 +29598,8 @@
    "dias": 22,
    "bloqueo": true,
    "eco": null,
-   "titular": "Vecinos de Guadalajara y Zapopan Tienen Casi 22 Días sin Agua | N+"
+   "titular": "Vecinos de Guadalajara y Zapopan Tienen Casi 22 Días Sin Agua | N+",
+   "captura": "fuentes/8f1a73e2ada3-t.jpg"
   },
   {
    "fuente": "medio",
@@ -29595,7 +29616,8 @@
    "dias": 21,
    "bloqueo": true,
    "eco": null,
-   "titular": "Denuncian fallas en los tandeos y falta de pipas gratuitas; bloquean periférico."
+   "titular": "Denuncian fallas en los tandeos y falta de pipas gratuitas; bloquean periférico.",
+   "captura": "fuentes/7147fa92d9a6-t.jpg"
   },
   {
    "fuente": "medio",
@@ -29848,6 +29870,42 @@
     "al": "2026-11-01"
    },
    "vista": null
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "N+",
+   "url": "https://www.nmas.com.mx/jalisco/sociedad/familias-llevan-25-dias-sin-agua-en-la-federacha-y-belisario-dominguez/",
+   "fecha": "2026-10-29",
+   "colonias": [
+    "LA ESPERANZA (LA FEDERACHA)|Guadalajara|44300",
+    "BELISARIO DOMINGUEZ|Guadalajara|44320",
+    "BELISARIO DOMINGUEZ|Guadalajara|44340"
+   ],
+   "lugar": "La Federacha y Belisario Domínguez, Guadalajara",
+   "cita": "Es la historia que últimamente se repite entre las familias de las colonias La Federacha y Belisario Domínguez al norte de Guadalajara. La noche de este miércoles se manifestaron en el cruce de la calzada Independencia y Mesa del Norte.",
+   "dias": 25,
+   "eco": null,
+   "vista": null,
+   "captura": "fuentes/b88970a6ad28-t.jpg",
+   "titular": "Familias Llevan 25 Días sin Agua en La Federacha y Belisario Domínguez | N+"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "N+",
+   "url": "https://www.nmas.com.mx/jalisco/sociedad/familias-llevan-25-dias-sin-agua-en-la-federacha-y-belisario-dominguez/",
+   "fecha": "2026-10-29",
+   "colonias": [
+    "GUAYABITOS|San Pedro Tlaquepaque|45530"
+   ],
+   "lugar": "Guayabitos, Tlaquepaque",
+   "cita": "A la par vecinos de la colonia Guayabitos en Tlaquepaque se manifestaron por la avenida 8 de julio al cruce de Cuyucuata. Ellos también padecen el mismo problema.",
+   "dias": null,
+   "eco": null,
+   "vista": null,
+   "captura": "fuentes/b88970a6ad28-t.jpg",
+   "titular": "Familias Llevan 25 Días sin Agua en La Federacha y Belisario Domínguez | N+"
   }
  ]
 }
