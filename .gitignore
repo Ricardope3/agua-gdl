@@ -4,3 +4,5 @@ pipelines/.venv/
 .DS_Store
 *.kml
 /aguagdl_nowhite.png
+__pycache__/
+*.pyc
