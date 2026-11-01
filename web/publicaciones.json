@@ -29636,6 +29636,45 @@
     "al": "2026-11-01"
    },
    "vista": null
+  },
+  {
+   "fuente": "medio",
+   "red": "x",
+   "quien": "Tráfico ZMG",
+   "url": "https://x.com/Trafico_ZMG/status/2115517873938382976",
+   "fecha": "2026-10-28",
+   "colonias": [
+    "EL VADO|Tonalá|45429"
+   ],
+   "lugar": "El Vado, Tonalá",
+   "cita": "¡Cierran la autopista Guadalajara-Zapotlanejo! Manifestantes mantienen cerrado el paso a la circulación a la altura de El Vado en Tonalá, en sentido de Guadalajara hacia Zapotlanejo, para exigir el suministro de agua potable. Refieren que llevan un mes sin agua",
+   "dias": 30,
+   "bloqueo": true,
+   "eco": {
+    "reacciones": 249,
+    "comentarios": 11,
+    "al": "2026-11-01"
+   },
+   "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/JSTapetillo/status/2116568176070672392",
+   "fecha": "2026-10-31",
+   "colonias": [
+    "CAMPO REAL|Zapopan|45160"
+   ],
+   "lugar": "Campo Real, Zapopan",
+   "cita": "Atención @siapagdl: reportan que en Campo Real, Zapopan hay una especie de \"tandeo\" (aunque está fuera de su plan fallido) debido a problemas con un equipo de bombeo. Lo peor, es que es de los desarrollos que uds autorizaron sin cisternas ni tinacos. Hay viviendas sin agua. URGE.",
+   "dias": null,
+   "eco": {
+    "reacciones": 69,
+    "comentarios": 3,
+    "al": "2026-11-01"
+   },
+   "vista": null
   }
  ]
 }
