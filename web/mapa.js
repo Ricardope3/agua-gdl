@@ -1,4 +1,4 @@
-// The rotation map shared by /mapa and /mizona: SIAPA's colonias and zones from
+// The rotation map shared by /mapa and /avisos: SIAPA's colonias and zones from
 // /colonias_siapa.topo.json (built by pipelines/siapa_mapa.py), decoded here without a library.
 window.aguaMapa = (() => {
   "use strict";

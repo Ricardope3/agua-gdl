@@ -1,6 +1,6 @@
 """Write pipelines/colonias.geojson, the outline of each SIAPA colonia with the zones of
 api/data/zonas.geojson it overlaps (SIAPA's list can name others; only mymaps_kml.py reads
-it, since /mizona draws SIAPA's own map), and api/data/otras_colonias.json, the colonias INE
+it, since /avisos draws SIAPA's own map), and api/data/otras_colonias.json, the colonias INE
 knows that aren't on SIAPA's rotation list, with the zones they overlap (none = not affected
 by the rotation). pipelines/mapa_colonias.py then gives those the zones SIAPA's map draws.
 

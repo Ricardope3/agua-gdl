@@ -933,8 +933,8 @@ if (window.top !== window.self) {
   window.__fichaD = (card, e, form, p, f) => {
     const [k, t] = ahora(e), zs = zonaDe(p), z = zs[0], q = new URLSearchParams({ q: p.n, m: p.m, cp: p.cp });
     const h2 = card.querySelector("h2"), mun = mk("p", "q-mun", p.m);
-    // The zone's days and calendar live on /mizona.
-    if (zs.length) mun.append(" · ", link(`/mizona?${q}`, `Zona ${window.aguaMapa.joinES(zs.map(String))}`));
+    // The zone's days and calendar live on /avisos.
+    if (zs.length) mun.append(" · ", link(`/avisos?${q}`, `Zona ${window.aguaMapa.joinES(zs.map(String))}`));
     // The state: the days in the site's own badge and what the last complaint says about now.
     const sec0 = mk("div", "q-sec"), row = mk("div", "q-row"), now = mk("p", `q-now ${k}`);
     now.append(mk("b", null, k === "activa" ? "Quejas recientes" : k === "reciente" ? "Quejas de esta semana" : k === "vieja" ? "Sin quejas nuevas" : "Sin publicaciones"), t);
@@ -1023,7 +1023,7 @@ if (window.top !== window.self) {
     <nav class="site-nav" aria-label="Secciones">
       <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg>¿Hay agua?</a>
       <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exige</a>
-      <a href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Mi zona</a>
+      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Avisos</a>
       <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg>Noticias</a>
       <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg>Cuentas</a>
       <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Contaminación</a>
@@ -1177,7 +1177,7 @@ if (window.top !== window.self) {
   <div class="wrap">
   <footer>
     <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con el Gobierno de Jalisco.</p>
-    <p><a href="/">Inicio</a> · <a href="/mapa">Mapa de la rotación</a> · <a href="/avisos">Recibir avisos</a> · <a href="/informes">Conteos semanales</a> · <a href="/correcciones">Fuentes y correcciones</a> · <a href="/transparencia">Transparencia</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
+    <p><a href="/">Inicio</a> · <a href="/mapa">Mapa de la rotación</a> · <a href="/avisos">¿Qué zona me toca?</a> · <a href="/informes">Conteos semanales</a> · <a href="/correcciones">Fuentes y correcciones</a> · <a href="/transparencia">Transparencia</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
   </footer>
 </div>
 <script src="/vendor/leaflet-1.9.4/leaflet.js"></script>

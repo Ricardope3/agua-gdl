@@ -384,7 +384,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     <nav class="site-nav" aria-label="Secciones">
       <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg>¿Hay agua?</a>
       <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exige</a>
-      <a href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Mi zona</a>
+      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Avisos</a>
       <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg>Noticias</a>
       <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg>Cuentas</a>
       <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Contaminación</a>
@@ -630,7 +630,7 @@ if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.
   };
   const mine = (n) => g.colonias.filter((f) => aguaMapa.zones(f.properties).main.includes(n))
     .map((f) => ({ f, pub: pubs.get(`${f.properties.n}|${f.properties.m}|${f.properties.cp}`) })).filter((c) => c.pub);
-  // Each card's map is a still picture: no dragging or zooming, so the cards swipe; a tap opens /mizona.
+  // Each card's map is a still picture: no dragging or zooming, so the cards swipe; a tap opens /avisos.
   const draw = (el, z) => {
     const n = z.properties.z, map = L.map(el, { zoomControl: false, dragging: false, touchZoom: false, scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false, keyboard: false, zoomSnap: 0.25 });
     aguaMapa.tiles(L, map);

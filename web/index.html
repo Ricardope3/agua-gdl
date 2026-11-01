@@ -398,7 +398,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     <nav class="site-nav" aria-label="Secciones">
       <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg>¿Hay agua?</a>
       <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exige</a>
-      <a href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Mi zona</a>
+      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Avisos</a>
       <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg>Noticias</a>
       <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg>Cuentas</a>
       <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Contaminación</a>
@@ -412,7 +412,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
         <p class="kicker">El agua es un derecho. Exígelo.</p>
         <h1>El SIAPA prometió un día. Hay vecinos con semanas sin agua.</h1>
         <p>Agua GDL es un servicio ciudadano, gratuito y no oficial: te ayuda a saber cómo está el agua en tu colonia, prepararte para los cortes y pedir apoyo.</p>
-        <p class="buttons"><a class="button" href="/reportes">¿Hay agua en tu colonia?</a><a class="button alt" href="/mizona">Mi zona y avisos</a><a class="button alt" href="/pipas">Pedir una pipa</a></p>
+        <p class="buttons"><a class="button" href="/reportes">¿Hay agua en tu colonia?</a><a class="button alt" href="/avisos">Mi zona y avisos</a><a class="button alt" href="/pipas">Pedir una pipa</a></p>
       </div>
       <img class="ilus" src="/img/ilustracion.png" alt="Caricatura de Pablo Lemus con la mano en una llave de la que cae una gota, sobre la Catedral de Guadalajara y una multitud que protesta" width="517" height="640">
     </div>
@@ -646,7 +646,7 @@ if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.
   const inZone = (f, n) => aguaMapa.zones(f.properties).main.includes(n);
   const mine = (n) => g.colonias.filter((f) => inZone(f, n)).map((f) => ({ f, pub: pubs.get(key(f)) })).filter((c) => c.pub);
   const unique = (list) => [...new Map(list.map((c) => [key(c.f), c])).values()];
-  // Each card's map is a still picture: no dragging or zooming, so the cards swipe; a tap opens /mizona.
+  // Each card's map is a still picture: no dragging or zooming, so the cards swipe; a tap opens /avisos.
   const draw = (el, z) => {
     const n = z.properties.z, map = L.map(el, { zoomControl: false, dragging: false, touchZoom: false, scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false, keyboard: false, zoomSnap: 0.25 });
     aguaMapa.tiles(L, map);

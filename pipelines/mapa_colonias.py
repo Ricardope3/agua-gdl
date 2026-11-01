@@ -10,7 +10,7 @@ pipelines/siapa_mapa.py):
 - the zones of api/data/otras_colonias.json, the colonias INE knows that aren't on SIAPA's
   list (pipelines/colonias_poligonos.py writes the names): when SIAPA's map draws a colonia
   with the same name in the same municipio, its zones are the ones SIAPA's map gives it
-  (none when the map leaves it out of the rotation), so the bot and /mizona answer what
+  (none when the map leaves it out of the rotation), so the bot and /avisos answer what
   SIAPA's map shows. The others keep the zones their INE outline overlaps.
 
 Usage: python3 pipelines/mapa_colonias.py [--check]

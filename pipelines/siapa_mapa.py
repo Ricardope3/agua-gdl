@@ -16,7 +16,7 @@ n (name), m (municipio), cp and z (the map's zones, "1,5" when several), gets l 
 PDF list (api/data/colonias.json) gives that name and municipio other zones, and, when z has
 several zones, p: the share of the colonia's area inside each zone, in percent ("5:93,6:7",
 estimated on a grid of sample points), so the pages can tell a colonia split between zones
-from one that merely touches a border. /mapa and /mizona decode the file in the browser.
+from one that merely touches a border. /mapa and /avisos decode the file in the browser.
 Days per zone are not copied: the pages read them from the API, i.e. api/data/rotation.json.
 When ajustes gives other days this prints a warning, since someone must check SIAPA's
 calendar before changing rotation.json; colonia overrides in ajustes are reported, not
