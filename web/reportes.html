@@ -369,20 +369,20 @@ html.en-portada { overflow: hidden }
 @media (prefers-reduced-motion: reduce) { .gesto { transition: none } }
 /* r1: the timeline. A panel over the map's lower left: the date, the running count, a play button and
    a stacked step chart of colonias by days without water that doubles as the scrubber. */
-.tl { position: absolute; z-index: 1150; left: 12px; bottom: 24px; width: min(640px, calc(100% - 380px)); background: color-mix(in srgb, var(--surface) 95%, transparent); backdrop-filter: blur(6px); border: 1px solid var(--line); border-radius: 14px; padding: 12px 16px 10px; box-shadow: 0 8px 24px rgb(3 14 22 / .22) }
+.tl { position: absolute; z-index: 1150; left: 12px; bottom: 12px; width: min(600px, calc(100% - 380px)); background: color-mix(in srgb, var(--surface) 95%, transparent); backdrop-filter: blur(6px); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px 6px; box-shadow: 0 8px 24px rgb(3 14 22 / .22) }
 /* With a colonia open, the history steps aside: the card and its publications are what matter. */
 .stage.has-card .tl { display: none }
-.tl-top { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: center }
-.tl-play { width: 48px; height: 48px; border-radius: 50%; padding: 0; justify-content: center; flex-shrink: 0 }
-.tl-play svg { width: 20px; height: 20px; fill: currentColor; stroke: none }
-.tl-date { margin: 0; font-size: .74rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 700 }
-.tl-date b { color: var(--fg); font-size: 1.05rem; letter-spacing: -.01em; text-transform: none; margin-right: 6px }
-.tl-count { margin: 2px 0 0; font-size: 1rem; line-height: 1.3; font-weight: 600; text-wrap: balance }
-.tl-count .n { font-size: 1.55rem; font-weight: 800; color: var(--s3); font-variant-numeric: tabular-nums; vertical-align: -2px; margin-right: 2px }
+.tl-top { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; align-items: center }
+.tl-play { width: 36px; height: 36px; border-radius: 50%; padding: 0; justify-content: center; flex-shrink: 0 }
+.tl-play svg { width: 15px; height: 15px; fill: currentColor; stroke: none }
+.tl-date { margin: 0; font-size: .66rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 700 }
+.tl-date b { color: var(--fg); font-size: .92rem; letter-spacing: -.01em; text-transform: none; margin-right: 6px }
+.tl-count { margin: 1px 0 0; font-size: .86rem; line-height: 1.3; font-weight: 600; text-wrap: balance }
+.tl-count .n { font-size: 1.2rem; font-weight: 800; color: var(--s3); font-variant-numeric: tabular-nums; vertical-align: -2px; margin-right: 2px }
 .tl-count .w { font-variant-numeric: tabular-nums; color: var(--s4); font-weight: 800 }
 @media (prefers-color-scheme: dark) { .tl-count .w { color: var(--s4) } }
 .tl-new { color: var(--muted); font-weight: 500; font-size: .85rem; white-space: nowrap }
-.tl-chart { position: relative; margin: 10px 0 0; height: 92px; cursor: ew-resize; touch-action: none; border-radius: 6px }
+.tl-chart { position: relative; margin: 6px 0 0; height: 58px; cursor: ew-resize; touch-action: none; border-radius: 6px }
 .tl-chart:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring) }
 .tl-chart svg { display: block; width: 100%; height: 100%; overflow: visible }
 .tl-chart .ax { font: 600 10.5px/1 var(--font); fill: var(--muted); font-variant-numeric: tabular-nums }
@@ -394,8 +394,8 @@ html.en-portada { overflow: hidden }
 .tl-chart .tot { font: 800 11px/1 var(--font); fill: var(--fg); font-variant-numeric: tabular-nums }
 .tl-chart .slide { transition: transform .45s cubic-bezier(.3, .7, .3, 1) }
 @media (prefers-reduced-motion: reduce) { .tl-chart .slide { transition: none } }
-.tl-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 12px; margin: 6px 0 0; font-size: .74rem; color: var(--muted); line-height: 1.35 }
-.tl-foot .sevkey { font-size: .72rem }
+.tl-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 10px; margin: 4px 0 0; font-size: .68rem; color: var(--muted); line-height: 1.3 }
+.tl-foot .sevkey { font-size: .66rem }
 /* On phones the summary shrinks to its headline under the search and the timeline to a slim bar,
    so the map keeps the screen; the chart keeps enough height for its bars. */
 @media (max-width: 760px) {
