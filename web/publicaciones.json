@@ -30305,6 +30305,151 @@
     "al": "2026-11-01"
    },
    "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "Revista Jalisco",
+    "url": "https://www.facebook.com/100063518380492/posts/1724847246309205",
+    "eco": {
+     "reacciones": 536,
+     "comentarios": 1100,
+     "al": "2026-11-01"
+    }
+   },
+   "url": "https://www.facebook.com/100063518380492/posts/1724847246309205?comment_id=1452071270205027",
+   "fecha": "2026-10-31",
+   "colonias": [
+    "LOMAS DE INDEPENDENCIA|Guadalajara|44240"
+   ],
+   "lugar": "Lomas de Independencia, Guadalajara",
+   "cita": "Ni gota, en Lomas de Independencia, me baño con agua de garrafón ya me siento purificada.",
+   "dias": null,
+   "eco": {
+    "reacciones": 55,
+    "comentarios": 0,
+    "al": "2026-11-01"
+   },
+   "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "Revista Jalisco",
+    "url": "https://www.facebook.com/100063518380492/posts/1724847246309205",
+    "eco": {
+     "reacciones": 536,
+     "comentarios": 1100,
+     "al": "2026-11-01"
+    }
+   },
+   "url": "https://www.facebook.com/100063518380492/posts/1724847246309205?comment_id=1678904864021530",
+   "fecha": "2026-10-31",
+   "colonias": [
+    "JARDINES ALCALDE|Guadalajara|44290"
+   ],
+   "lugar": "Jardines Alcalde, Guadalajara",
+   "cita": "Jardines alcalde sale pero color azul Jajaa me voy hacer unos azulitos",
+   "dias": null,
+   "eco": {
+    "reacciones": 18,
+    "comentarios": 0,
+    "al": "2026-11-01"
+   },
+   "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "Revista Jalisco",
+    "url": "https://www.facebook.com/100063518380492/posts/1724847246309205",
+    "eco": {
+     "reacciones": 536,
+     "comentarios": 1100,
+     "al": "2026-11-01"
+    }
+   },
+   "url": "https://www.facebook.com/100063518380492/posts/1724847246309205?comment_id=1609668976818005",
+   "fecha": "2026-10-31",
+   "colonias": [
+    "VILLASEÑOR (SANTA TERESITA)|Guadalajara|44600"
+   ],
+   "lugar": "Santa Teresita, Guadalajara",
+   "cita": "En Santa Tere le sale más sudor a un oso de peluche que una gota de agua a mi tinaco.",
+   "dias": null,
+   "eco": {
+    "reacciones": 13,
+    "comentarios": 0,
+    "al": "2026-11-01"
+   },
+   "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "Revista Jalisco",
+    "url": "https://www.facebook.com/100063518380492/posts/1724847246309205",
+    "eco": {
+     "reacciones": 536,
+     "comentarios": 1100,
+     "al": "2026-11-01"
+    }
+   },
+   "url": "https://www.facebook.com/100063518380492/posts/1724847246309205?comment_id=980376181806986",
+   "fecha": "2026-10-31",
+   "colonias": [
+    "ARTESANOS (SAGRADA FAMILIA Y/O JESUS)|Guadalajara|44200"
+   ],
+   "lugar": "Artesanos, Guadalajara",
+   "cita": "La dejan un día y te la quitan 8 (col. Artesanos, centro)",
+   "dias": 8,
+   "eco": {
+    "reacciones": 22,
+    "comentarios": 0,
+    "al": "2026-11-01"
+   },
+   "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "Revista Jalisco",
+    "url": "https://www.facebook.com/100063518380492/posts/1724847246309205",
+    "eco": {
+     "reacciones": 536,
+     "comentarios": 1100,
+     "al": "2026-11-01"
+    }
+   },
+   "url": "https://www.facebook.com/100063518380492/posts/1724847246309205?comment_id=2704738739984517",
+   "fecha": "2026-10-31",
+   "colonias": [
+    "BALCONES DE SANTA MARIA|San Pedro Tlaquepaque y Guadalajara|45530"
+   ],
+   "lugar": "Balcones de Santa María, Tlaquepaque",
+   "cita": "Acá X Bslcones De Santa Maria .. Ni Madre De Agua .. Nos Bañamos Con Agua De Garrafón",
+   "dias": null,
+   "eco": {
+    "reacciones": 10,
+    "comentarios": 0,
+    "al": "2026-11-01"
+   },
+   "vista": null
   }
  ]
 }
