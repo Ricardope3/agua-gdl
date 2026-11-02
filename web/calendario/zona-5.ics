@@ -26,7 +26,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 17 de octubre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -52,7 +52,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 20 y miércoles 21 de octubre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -92,7 +92,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 24 de octubre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -118,7 +118,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 27 y miércoles 28 de octubre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -158,7 +158,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 31 de octubre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -184,7 +184,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 3 y miércoles 4 de noviembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -224,7 +224,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 7 de noviembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -250,7 +250,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 10 y miércoles 11 de noviembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -290,7 +290,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 14 de noviembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -316,7 +316,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 17 y miércoles 18 de noviembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -356,7 +356,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 21 de noviembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -382,7 +382,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 24 y miércoles 25 de noviembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -422,7 +422,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 28 de noviembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -448,7 +448,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 1 y miércoles 2 de diciembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -488,7 +488,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 5 de diciembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -514,7 +514,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 8 y miércoles 9 de diciembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -554,7 +554,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 12 de diciembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -580,7 +580,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 15 y miércoles 16 de diciembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -620,7 +620,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 19 de diciembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -646,7 +646,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 22 y miércoles 23 de diciembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -686,7 +686,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 26 de diciembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -712,7 +712,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 29 y miércoles 30 de diciembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -752,7 +752,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 2 de enero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -778,7 +778,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 5 y miércoles 6 de enero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -818,7 +818,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 9 de enero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -844,7 +844,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 12 y miércoles 13 de enero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -884,7 +884,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 16 de enero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -910,7 +910,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 19 y miércoles 20 de enero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -950,7 +950,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 23 de enero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -976,7 +976,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 26 y miércoles 27 de enero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1016,7 +1016,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 30 de enero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1042,7 +1042,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 2 y miércoles 3 de febrero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1082,7 +1082,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 6 de febrero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1108,7 +1108,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 9 y miércoles 10 de febrero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1148,7 +1148,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 13 de febrero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1174,7 +1174,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 16 y miércoles 17 de febrero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1214,7 +1214,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 20 de febrero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1240,7 +1240,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 23 y miércoles 24 de febrero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1280,7 +1280,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 27 de febrero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1306,7 +1306,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 2 y miércoles 3 de marzo
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1346,7 +1346,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 6 de marzo
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1372,7 +1372,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 9 y miércoles 10 de marzo
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1412,7 +1412,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 13 de marzo
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1438,7 +1438,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 16 y miércoles 17 de marzo
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1478,7 +1478,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 20 de marzo
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1504,7 +1504,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 23 y miércoles 24 de marzo
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1544,7 +1544,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
  bado 27 de marzo
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1570,7 +1570,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
  tes 30 y miércoles 31 de marzo
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY

@@ -26,7 +26,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 16 y domingo 18 de octubre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -66,7 +66,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 23 y domingo 25 de octubre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -106,7 +106,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 30 de octubre y domingo 1 de noviembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -146,7 +146,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 6 y domingo 8 de noviembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -186,7 +186,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 13 y domingo 15 de noviembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -226,7 +226,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 20 y domingo 22 de noviembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -266,7 +266,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 27 y domingo 29 de noviembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -306,7 +306,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 4 y domingo 6 de diciembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -346,7 +346,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 11 y domingo 13 de diciembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -386,7 +386,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 18 y domingo 20 de diciembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -426,7 +426,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 25 y domingo 27 de diciembre
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -466,7 +466,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 1 y domingo 3 de enero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -506,7 +506,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 8 y domingo 10 de enero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -546,7 +546,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 15 y domingo 17 de enero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -586,7 +586,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 22 y domingo 24 de enero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -626,7 +626,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 29 y domingo 31 de enero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -666,7 +666,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 5 y domingo 7 de febrero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -706,7 +706,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 12 y domingo 14 de febrero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -746,7 +746,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 19 y domingo 21 de febrero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -786,7 +786,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 26 y domingo 28 de febrero
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -826,7 +826,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 5 y domingo 7 de marzo
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -866,7 +866,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 12 y domingo 14 de marzo
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -906,7 +906,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 19 y domingo 21 de marzo
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -946,7 +946,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 1: vie
  rnes 26 y domingo 28 de marzo
-TRIGGER:-P1DT4H
+TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY

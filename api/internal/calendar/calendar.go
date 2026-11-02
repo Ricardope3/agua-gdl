@@ -45,7 +45,7 @@ func Zone(s *rotation.Schedule, zone int) []byte {
 		line("TRANSP:TRANSPARENT")
 		if s.StartsBlock(zone, d) {
 			days := rotation.DatesES(s.Block(zone, d))
-			for _, a := range []struct{ trigger, when string }{{"-P1DT4H", "En dos días"}, {"-PT4H", "Mañana"}} {
+			for _, a := range []struct{ trigger, when string }{{"-P2DT4H", "En dos días"}, {"-PT4H", "Mañana"}} {
 				line("BEGIN:VALARM")
 				line("ACTION:DISPLAY")
 				line("DESCRIPTION:%s", escape(fmt.Sprintf("%s empieza el racionamiento de agua en la zona %d: %s", a.when, zone, days)))

@@ -64,7 +64,7 @@ func TestAlarmsOnlyBeforeEachBlock(t *testing.T) {
 	}
 	zone2 := string(Zone(schedule(t), 2))
 	sunday := event(zone2, "20261018")
-	for _, want := range []string{"TRIGGER:-P1DT4H", "TRIGGER:-PT4H", "zona 2: domingo 18\\, martes 20 y jueves 22 de octubre"} {
+	for _, want := range []string{"TRIGGER:-P2DT4H", "TRIGGER:-PT4H", "zona 2: domingo 18\\, martes 20 y jueves 22 de octubre"} {
 		if !strings.Contains(sunday, want) {
 			t.Errorf("zone 2's Sunday starts the block; missing %q in:\n%s", want, sunday)
 		}
