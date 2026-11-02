@@ -92,8 +92,13 @@ func TestAddChecksTheColoniaAndTheAnswer(t *testing.T) {
 		t.Fatalf("no water can't be muddy: %+v %v", c, err)
 	}
 	c, _ = b.Add("2.2.2.2", "1 DE MAYO", "Guadalajara", "44940", "baja", true, false, true)
-	if c.SinAgua != 1 || c.Baja != 1 || c.Turbia != 1 || c.Sedimento != 1 || c.Olor != 0 {
-		t.Fatalf("colonia counts: %+v", c)
+	if c.SinAgua != 1 || c.Baja != 1 || c.Turbia+c.Olor+c.Sedimento != 0 || c.LastStatus != "" {
+		t.Fatalf("below MIN_REPORTS_SHOWN the response withholds what GET withholds: %+v", c)
+	}
+	// The third report reaches the threshold: the same fields come back, as in GET.
+	c, _ = b.Add("3.3.3.3", "1 DE MAYO", "Guadalajara", "44940", "baja", false, true, false)
+	if c.SinAgua != 1 || c.Baja != 2 || c.Turbia != 1 || c.Olor != 1 || c.Sedimento != 1 || c.LastStatus != "baja" {
+		t.Fatalf("at MIN_REPORTS_SHOWN the details return: %+v", c)
 	}
 }
 

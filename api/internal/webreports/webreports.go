@@ -350,7 +350,9 @@ func (b *Board) Add(addr, name, municipio, cp, status string, turbia, olor, sedi
 	b.allTime++
 	b.cached = nil
 	b.trim(now)
-	return b.coloniaCounts(key, now), nil
+	// The response is public like GET's: a small colonia's latest answer, exact recency
+	// and quality flags are withheld the same way.
+	return b.coarsenSmall(b.coloniaCounts(key, now)), nil
 }
 
 // lastHour counts everyone's reports in the last hour. Called with mu held.
