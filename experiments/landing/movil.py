@@ -5,6 +5,7 @@ Each one changes only what shows at 760 px or less; on a wider screen it is the 
 Run from the repo root: python3 experiments/landing/movil.py
 """
 import re
+import sys
 from pathlib import Path
 
 WEB = Path(__file__).resolve().parents[2] / "web"
@@ -246,7 +247,7 @@ if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.
   };
   const mine = (n) => g.colonias.filter((f) => aguaMapa.zones(f.properties).main.includes(n))
     .map((f) => ({ f, pub: pubs.get(`${f.properties.n}|${f.properties.m}|${f.properties.cp}`) })).filter((c) => c.pub);
-  // Each card's map is a still picture: no dragging or zooming, so the cards swipe; a tap opens /mizona.
+  // Each card's map is a still picture: no dragging or zooming, so the cards swipe; a tap opens that zone in /reportes.
   const draw = (el, z) => {
     const n = z.properties.z, map = L.map(el, { zoomControl: false, dragging: false, touchZoom: false, scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false, keyboard: false, zoomSnap: 0.25 });
     aguaMapa.tiles(L, map);
@@ -312,6 +313,17 @@ def build(key, v, src):
 def main():
     # The landing became m5 on phones; the variants build from the landing as it was before.
     src = (Path(__file__).parent / "index-before-m5.html").read_text()
+    if "--force" not in sys.argv:
+        # The snapshot rots as the live landing evolves; regenerating from a stale one
+        # would clobber the live pages with old copy (index.html is m5-derived, so this
+        # also protects it). Refuse loudly instead, unless --force says clobber on purpose.
+        drifted = [k for k, v in V.items() if (WEB / f"{k}.html").exists()
+                   and (WEB / f"{k}.html").read_text() != build(k, v, src)]
+        if drifted:
+            sys.exit(f"{', '.join(drifted)} no longer match a rebuild from index-before-m5.html: "
+                     "the snapshot is stale. Refresh it from the current landing (and reconcile "
+                     "web/index.html, which is m5 without its noindex and variant bar) or pass "
+                     "--force to overwrite the pages with the snapshot's copy anyway.")
     for key, v in V.items():
         (WEB / f"{key}.html").write_text(build(key, v, src))
         print("wrote", key)

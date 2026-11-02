@@ -87,6 +87,14 @@ def variant(key):
 def main():
     src = (Path(__file__).parent / "index-before-m5.html").read_text()
     movil.NAMES = NAMES
+    if "--force" not in sys.argv and (movil.WEB / "h2.html").exists() \
+            and (movil.WEB / "h2.html").read_text() != movil.build("h2", variant("h2"), src):
+        # h2 is the page index.html is derived from; a stale snapshot would overwrite the
+        # synced copy with old text. Refuse loudly unless --force says clobber on purpose.
+        sys.exit("h2.html no longer matches a rebuild from index-before-m5.html: the snapshot is "
+                 "stale. Refresh it from the current landing (and reconcile web/index.html, which "
+                 "is h2 without its noindex and variant bar) or pass --force to overwrite the "
+                 "pages with the snapshot's copy anyway.")
     for key in NAMES:
         (movil.WEB / f"{key}.html").write_text(movil.build(key, variant(key), src))
         print("wrote", key)
