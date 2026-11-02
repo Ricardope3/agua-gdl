@@ -230,36 +230,54 @@ func (db *DB) ChangeUser(ctx context.Context, oldUserID, oldPhone, newUserID, ne
 // admissionLock serializes the capacity check with the subscription that follows it.
 const admissionLock = 7_103_115_241_818
 
+// onOneConn runs fn on a single dedicated connection. Callers on the pool use it
+// for the admission check: without an explicit transaction, pg_advisory_xact_lock
+// would release at the end of its own statement and serialize nothing. Inside a
+// caller's transaction the lock holds for the whole transaction, so it is used
+// as-is.
+func (db *DB) onOneConn(ctx context.Context, fn func(querier) error) error {
+	if _, inTx := db.q.(pgx.Tx); inTx {
+		return fn(db.q)
+	}
+	return pgx.BeginFunc(ctx, db.pool, func(tx pgx.Tx) error { return fn(tx) })
+}
+
 // ZoneCounts returns WhatsApp memberships by zone. NightLoad, used for admission,
 // counts distinct people so following two zones with the same cut costs only one slot.
 func (db *DB) ZoneCounts(ctx context.Context) (map[int]int, error) {
-	if _, err := db.q.Exec(ctx, `select pg_advisory_xact_lock($1)`, admissionLock); err != nil {
-		return nil, err
-	}
-	rows, err := db.q.Query(ctx, `select z.zone, count(*) from subscriber_zone z
-		join subscriber s on s.id = z.subscriber_id where s.channel = 'wa' group by z.zone`)
-	if err != nil {
-		return nil, err
-	}
-	counts := map[int]int{}
-	var zone, n int
-	_, err = pgx.ForEachRow(rows, []any{&zone, &n}, func() error {
-		counts[zone] = n
-		return nil
+	var counts map[int]int
+	err := db.onOneConn(ctx, func(q querier) error {
+		if _, err := q.Exec(ctx, `select pg_advisory_xact_lock($1)`, admissionLock); err != nil {
+			return err
+		}
+		rows, err := q.Query(ctx, `select z.zone, count(*) from subscriber_zone z
+			join subscriber s on s.id = z.subscriber_id where s.channel = 'wa' group by z.zone`)
+		if err != nil {
+			return err
+		}
+		counts = map[int]int{}
+		var zone, n int
+		_, err = pgx.ForEachRow(rows, []any{&zone, &n}, func() error {
+			counts[zone] = n
+			return nil
+		})
+		return err
 	})
 	return counts, err
 }
 
 // NightLoad counts distinct WhatsApp recipients subscribed to any of zones. The
-// transaction-level lock serializes this check with the subscription that follows it.
+// lock serializes this check with the subscription that follows it.
 func (db *DB) NightLoad(ctx context.Context, zones []int) (int, error) {
-	if _, err := db.q.Exec(ctx, `select pg_advisory_xact_lock($1)`, admissionLock); err != nil {
-		return 0, err
-	}
 	var n int
-	err := db.q.QueryRow(ctx, `select count(distinct s.id) from subscriber s
-		where s.channel = 'wa' and exists (select 1 from subscriber_zone z
-		where z.subscriber_id = s.id and z.zone = any($1::int[]))`, zones).Scan(&n)
+	err := db.onOneConn(ctx, func(q querier) error {
+		if _, err := q.Exec(ctx, `select pg_advisory_xact_lock($1)`, admissionLock); err != nil {
+			return err
+		}
+		return q.QueryRow(ctx, `select count(distinct s.id) from subscriber s
+			where s.channel = 'wa' and exists (select 1 from subscriber_zone z
+			where z.subscriber_id = s.id and z.zone = any($1::int[]))`, zones).Scan(&n)
+	})
 	return n, err
 }
 
