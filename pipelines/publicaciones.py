@@ -170,6 +170,20 @@ def validate(doc):
                 fail(f"{where}: desde after fecha")
         if "bloqueo" in p and p["bloqueo"] is not True:
             fail(f"{where}: bloqueo is true or absent")
+        # The other side, always as the source's own claim, never our conclusion:
+        # regreso: the day the source says the water came back; parcial: the source describes
+        # low or intermittent supply rather than a cut; causa: a non-SIAPA cause or system the
+        # source names; calidad: water quality (smell, color, sediment), not absence.
+        if "regreso" in p:
+            r = date(p.get("regreso"), where)
+            if not r or r < since or (d and r > d):
+                fail(f"{where}: regreso is an ISO date within desde..fecha")
+        if p.get("parcial") not in (None, True):
+            fail(f"{where}: parcial is true or absent")
+        if p.get("calidad") not in (None, True):
+            fail(f"{where}: calidad is true or absent")
+        if "causa" in p and not (isinstance(p["causa"], str) and 0 < len(p["causa"]) <= 80):
+            fail(f"{where}: causa is the non-SIAPA cause the source names, 1 to 80 characters")
         if p.get("vista") is not None and not (isinstance(p["vista"], str) and IMAGEN.match(p["vista"]) and (WEB / p["vista"]).is_file()):
             fail(f"{where}: vista is null (no useful image) or fuentes/<12 hex>.jpg, in web/")
         if p.get("captura") is not None and not (isinstance(p["captura"], str) and CAPTURA.match(p["captura"]) and (WEB / p["captura"]).is_file()):

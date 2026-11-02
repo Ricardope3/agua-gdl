@@ -2687,7 +2687,8 @@
     "comentarios": 20
    },
    "vista": "fuentes/171767392ee9.jpg",
-   "video": true
+   "video": true,
+   "calidad": true
   },
   {
    "fuente": "medio",
@@ -17382,7 +17383,8 @@
    "eco": null,
    "captura": null,
    "titular": "¡Gobierno federal rescata a Jalisco! Claudia Sheinbaum dará 13 mmdp para atender agua contaminada",
-   "video": true
+   "video": true,
+   "causa": "una reparación fallida de una fuga"
   },
   {
    "fuente": "medio",
@@ -20305,7 +20307,8 @@
    "eco": null,
    "titular": "'Persiguen' en Guadalajara el agua con cubetas, pipas...",
    "vista": "fuentes/c295667928d4.jpg",
-   "captura": null
+   "captura": null,
+   "parcial": true
   },
   {
    "fuente": "medio",
@@ -22568,7 +22571,8 @@
     "comentarios": 5,
     "al": "2026-10-24"
    },
-   "vista": "fuentes/f194dc68ca54.jpg"
+   "vista": "fuentes/f194dc68ca54.jpg",
+   "calidad": true
   },
   {
    "fuente": "medio",
@@ -25027,7 +25031,8 @@
    "eco": null,
    "vista": "fuentes/039edb03d87a.jpg",
    "captura": "fuentes/039edb03d87a-t.jpg",
-   "titular": "Vecinos de Guadalajara y Tonalá protestan por falta de agua"
+   "titular": "Vecinos de Guadalajara y Tonalá protestan por falta de agua",
+   "calidad": true
   },
   {
    "fuente": "medio",
@@ -28352,7 +28357,9 @@
     "comentarios": 0,
     "al": "2026-10-27"
    },
-   "vista": null
+   "vista": null,
+   "regreso": "2026-10-25",
+   "parcial": true
   },
   {
    "fuente": "vecinos",
@@ -28926,7 +28933,8 @@
    "nota": "Los cinco días se refieren a la coloración del agua, no a una interrupción del servicio.",
    "vista": null,
    "captura": "fuentes/aacf0eb4b99b-t.jpg",
-   "titular": "SIAPA acumula más de seis mil reportes por mala calidad del agua"
+   "titular": "SIAPA acumula más de seis mil reportes por mala calidad del agua",
+   "calidad": true
   },
   {
    "fuente": "medio",
@@ -29384,6 +29392,20 @@
   {
    "fuente": "medio",
    "red": "web",
+   "fecha": "2026-10-28",
+   "quien": "Notisistema",
+   "url": "https://www.notisistema.com/noticias/bloqueo-en-carretera-a-chapala-deja-automovilistas-varados-mas-de-12-horas/",
+   "colonias": [
+    "LAS JUNTAS|San Pedro Tlaquepaque|45590"
+   ],
+   "lugar": "Las Juntitas, Tlaquepaque",
+   "cita": "la circulación fue restablecida alrededor de las 3:30 de la mañana, después de que los manifestantes confirmaron la reanudación del suministro en sus viviendas",
+   "regreso": "2026-10-28",
+   "nota": "La protesta la encabezaron vecinos de Las Juntitas, que el mapa del SIAPA no lista aparte de Las Juntas."
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
    "quien": "Milenio",
    "eco": null,
    "vista": null,
@@ -29747,7 +29769,8 @@
     "comentarios": 3,
     "al": "2026-11-01"
    },
-   "vista": null
+   "vista": null,
+   "causa": "un equipo de bombeo"
   },
   {
    "fuente": "vecinos",
@@ -29766,7 +29789,8 @@
     "comentarios": 2,
     "al": "2026-11-01"
    },
-   "vista": null
+   "vista": null,
+   "causa": "un pozo, no la red del SIAPA"
   },
   {
    "fuente": "vecinos",

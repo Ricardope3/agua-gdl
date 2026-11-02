@@ -27,7 +27,7 @@
   --shadow: 0 1px 2px rgb(3 105 161 / .08);
   --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --warn: #8a5a00; --warn-bg: #fff3d6;
-  --dry: #d1352c; --low: #d79a00; --ok: #2b9150; --mixed: #7c3aed; --none: #c9d8e2;
+  --dry: #d1352c; --low: #d79a00; --ok: #2b9150; --ok-ink: #ffffff; --mixed: #7c3aed; --none: #c9d8e2;
   /* Days without water, one red ramp light→dark (1–2, 3–6, 7–13, 14+), and the ink each step takes. */
   --s1: #f59d8b; --s2: #ea6d56; --s3: #cc361e; --s4: #90200e; --s0: #ea6d56;
   --s1-ink: #0c1e2c; --s2-ink: #0c1e2c; --s3-ink: #ffffff; --s4-ink: #ffffff;
@@ -37,7 +37,7 @@
     --bg: #06141d; --surface: #0a1c28; --subtle: #0c3149; --fg: #f0f9ff; --muted: #9bb8ca; --line: #18384d;
     --link: #7dd3fc; --primary: #0ea5e9; --on-primary: #ffffff; --ring: #38bdf866; --brand: #0ea5e9; --brand-deep: #0284c7;
     --warn: #ffd27a; --warn-bg: #3a2c10;
-    --dry: #f06a61; --low: #f2b84b; --ok: #5cc98a; --mixed: #c4b5fd; --none: #2a4558;
+    --dry: #f06a61; --low: #f2b84b; --ok: #5cc98a; --ok-ink: #06141d; --mixed: #c4b5fd; --none: #2a4558;
     --s1: #993b2b; --s2: #cb4832; --s3: #ea6d56; --s4: #fca391; --s0: #cb4832;
     --s1-ink: #ffffff; --s2-ink: #ffffff; --s3-ink: #06141d; --s4-ink: #06141d;
     color-scheme: dark;
@@ -915,6 +915,7 @@ if (window.top !== window.self) {
         // 1: a news outlet gives the days; 2: three or more neighbours' voices; 3: one or two voices.
         tier: pool.some((p) => p.fuente === "medio") ? 1 : voices >= 3 ? 2 : 3,
         ultima: posts.reduce((m, p) => p.fecha > m ? p.fecha : m, ""),
+        regreso: posts.filter((p) => p.regreso).reduce((m, p) => !m || p.regreso > m.regreso ? p : m, null),
         eco: posts.reduce((t, p) => t + ecoOf(p), 0),
       });
     }
@@ -976,7 +977,8 @@ if (window.top !== window.self) {
       }
       return { color: COLORS.muted, weight: 0.4, opacity: 0.5, dashArray: null, fillColor: COLORS.none, fillOpacity: 0.06 };
     };
-    const evLine = (e) => stateOf(e) === "vieja" ? `Sin publicaciones nuevas desde el ${dateES(e.ultima)} · ${plural(e.fuentes, "fuente", "fuentes")}` : e.dias != null ? `Hasta ${daysWord(e.dias)} sin agua · ${plural(e.fuentes, "fuente", "fuentes")}` : `Sin agua, sin días contados · ${plural(e.fuentes, "fuente", "fuentes")}`;
+    const back = (e) => e.regreso && e.regreso.fecha >= e.ultima;
+    const evLine = (e) => back(e) ? `El agua regresó el ${dateES(e.regreso.regreso)}, según una publicación · ${plural(e.fuentes, "fuente", "fuentes")}` : stateOf(e) === "vieja" ? `Sin publicaciones nuevas desde el ${dateES(e.ultima)} · ${plural(e.fuentes, "fuente", "fuentes")}` : e.dias != null ? `Hasta ${daysWord(e.dias)} sin agua · ${plural(e.fuentes, "fuente", "fuentes")}` : `Sin agua, sin días contados · ${plural(e.fuentes, "fuente", "fuentes")}`;
     let closedAt = 0;
     // One canvas for the colonias and the dots over them: a second canvas on top would take their clicks.
     const colRenderer = L.canvas({ padding: 0.5 });
@@ -1385,15 +1387,19 @@ if (window.top !== window.self) {
     // quoted with who published it, where, when and its reactions (none of it names a private person).
     function evidenceBlock(e) {
       const s = sevOf(e.dias);
-      const badge = el("span", { class: s ? "sevb" : "sevb nodays", style: sevVars(s) }, s ? daysWord(e.dias) : "sin días");
+      // The water is back when the newest publication says so: the headline names the return,
+      // and the older days stay below as history.
+      const back = e.regreso && e.regreso.fecha >= e.ultima;
+      const badge = back ? el("span", { class: "sevb", style: "--c:var(--ok);--k:var(--ok-ink)" }, "regresó")
+        : el("span", { class: s ? "sevb" : "sevb nodays", style: sevVars(s) }, s ? daysWord(e.dias) : "sin días");
       // Once a week has passed without new publications, the days are told in the past.
       const old = stateOf(e) === "vieja";
-      const head = el("p", { class: "ev-head" }, badge, el("strong", {}, s ? `${old ? "Llegó a" : "Hasta"} ${daysWord(e.dias)} sin agua` : "Sin agua, sin días contados"), el("span", { class: "ev-tier" }, TIERS[e.tier - 1]));
+      const head = el("p", { class: "ev-head" }, badge, el("strong", {}, back ? `El agua regresó el ${dateES(e.regreso.regreso, true)}, según una publicación` : s ? `${old ? "Llegó a" : "Hasta"} ${daysWord(e.dias)} sin agua` : "Sin agua, sin días contados"), el("span", { class: "ev-tier" }, TIERS[e.tier - 1]));
       // The post that gives the counted days goes first, and the card names it up front.
-      const giver = e.posts.find((p) => p.dias != null && p.dias === e.dias);
+      const giver = back ? e.regreso : e.posts.find((p) => p.dias != null && p.dias === e.dias);
       const ordered = giver ? [giver, ...e.posts.filter((p) => p !== giver)] : e.posts;
       const gives = (p) => p.tipo === "comentario" ? `un comentario de ${p.red === "x" ? "X" : "Facebook"}` : p.fuente === "medio" ? (p.red === "web" ? `una nota de ${p.quien}` : p.quien) : `una publicación de vecinos en ${p.red === "x" ? "X" : "Facebook"}`;
-      const src = [plural(e.fuentes, "fuente", "fuentes distintas"), e.comentarios ? plural(e.comentarios, "comentario", "comentarios") : null, e.medios ? (e.medios === 1 ? "lo reporta un medio" : `lo reportan ${e.medios} medios`) : null, old ? `sin publicaciones nuevas desde el ${dateES(e.ultima, true)}` : `la más reciente del ${dateES(e.ultima, true)}`].filter(Boolean).join(" · ");
+      const src = [plural(e.fuentes, "fuente", "fuentes distintas"), e.comentarios ? plural(e.comentarios, "comentario", "comentarios") : null, e.medios ? (e.medios === 1 ? "lo reporta un medio" : `lo reportan ${e.medios} medios`) : null, back && s ? `antes: hasta ${daysWord(e.dias)} sin agua` : null, old ? `sin publicaciones nuevas desde el ${dateES(e.ultima, true)}` : `la más reciente del ${dateES(e.ultima, true)}`].filter(Boolean).join(" · ");
       const list = el("ol", { class: "posts" }, ...ordered.map(post));
       const box = el("div", { class: "ev" }, head,
         giver ? el("p", { class: "ev-src" }, "Lo dice ", el("a", { href: giver.url, target: "_blank", rel: "noopener nofollow" }, `${gives(giver)}, ${dateES(giver.fecha, true)}`), ".") : null,
@@ -1431,12 +1437,17 @@ if (window.top !== window.self) {
       const lines = [];
       if (p.tipo === "comentario") lines.push(`La publicación: ${eco(p.en.eco)}${p.eco && p.eco.reacciones ? `; el comentario: ${plural(p.eco.reacciones, "reacción", "reacciones")}` : ""}.`);
       else if (p.eco) lines.push(`${eco(p.eco)}, al ${dateES(p.eco.al)}.`);
+      if (p.regreso) lines.push(`Según esta publicación, el agua regresó el ${dateES(p.regreso, true)}.`);
+      if (p.causa) lines.push(`Causa que señala la fuente: ${p.causa}.`);
       if (p.nota) lines.push(p.nota);
       return el("li", { class: `post ${p.fuente}`, title: p.lugar },
         el("q", {}, p.cita),
         el("p", { class: "who" },
           p.fuente === "medio" ? el("span", { class: "tag" }, "Medio") : null,
           p.bloqueo ? el("span", { class: "tag alt" }, "Bloqueo") : null,
+          p.parcial ? el("span", { class: "tag alt" }, "Baja o intermitente") : null,
+          p.calidad ? el("span", { class: "tag alt" }, "Calidad del agua") : null,
+          p.regreso ? el("span", { class: "tag alt" }, "Regresó") : null,
           `${who} · ${net} · ${dateES(p.fecha)} · `,
           el("a", { href: p.url, rel: "noopener nofollow", target: "_blank" }, p.tipo === "comentario" ? (p.red === "x" ? "Ver la respuesta" : "Ver el comentario") : p.red === "web" ? "Leer la nota" : "Ver la publicación")),
         ...lines.map((t) => el("p", { class: "eco" }, t)));
@@ -1628,12 +1639,17 @@ if (window.top !== window.self) {
       if (!framed) toList.addEventListener("click", () => { weekOnly = everything = true; renderRanking(); });
       const conMedio = weekEvs.filter((e) => e.posts.some((p) => p.fuente === "medio" && p.dias >= 7)).length;
       const unaPub = weekEvs.filter((e) => e.posts.length === 1).length;
-      $("pruebas").replaceChildren(toList, `, según medios y vecinos: ${fmt(conMedio)} con los días dichos por un medio y ${fmt(unaPub)} con una sola publicación; ${fmt(active)} con quejas de los últimos ${ACTIVE} días`);
+      // When did the longest count start: with the rotation or before it.
+      const startOf = (e) => { const g = e.posts.find((p) => p.dias != null && p.dias === e.dias); if (!g) return null; const d = new Date(g.fecha.slice(0, 10) + "T00:00:00Z"); d.setUTCDate(d.getUTCDate() - g.dias); return d.getTime(); };
+      const PRE6 = Date.UTC(2026, 9, 6), ROT = Date.UTC(2026, 9, 15);
+      const nRot = weekEvs.filter((e) => { const s = startOf(e); return s != null && s >= ROT; }).length;
+      const nPre6 = weekEvs.filter((e) => { const s = startOf(e); return s != null && s < PRE6; }).length;
+      $("pruebas").replaceChildren(toList, `, según medios y vecinos: ${fmt(conMedio)} con los días dichos por un medio y ${fmt(unaPub)} con una sola publicación; ${fmt(active)} con quejas de los últimos ${ACTIVE} días. De las de una semana, ${fmt(nRot)} cuentan desde el inicio de la rotación (15 oct.) y ${fmt(nPre6)} desde antes del 6 de oct., cuando cerró Las Pintas`);
       $("solo-semana").textContent = `Solo una semana o más (${fmt(weekEvs.length)})`;
       renderMunicipios();
       renderSlices();
       const n = pubs.publicaciones.length, medios = pubs.publicaciones.filter((x) => x.fuente === "medio").length;
-      $("pruebas-nota").textContent = `El SIAPA prometió racionamientos «por máximo un día». Son ${plural(n, "publicación", "publicaciones")} del ${dateES(pubs.desde, true)} al ${dateES(pubs.actualizado, true)}: ${fmt(medios)} de medios, en sus notas, Facebook y X, y ${fmt(n - medios)} de vecinos con eco en redes. Toca una colonia para ver sus publicaciones.`;
+      $("pruebas-nota").textContent = `El SIAPA prometió racionamientos «por máximo un día». Son ${plural(n, "publicación", "publicaciones")} del ${dateES(pubs.desde, true)} al ${dateES(pubs.actualizado, true)}: ${fmt(medios)} de medios, en sus notas, Facebook y X, y ${fmt(n - medios)} de vecinos con eco en redes. Toca una colonia para ver sus publicaciones. La promesa del «por máximo un día» aplica desde el inicio de la rotación, el 15 de octubre.`;
       const ultimaBusqueda = pubs.busquedas && pubs.busquedas.length ? pubs.busquedas[pubs.busquedas.length - 1] : null;
       if (ultimaBusqueda) $("ultima-busqueda").textContent = dateES(ultimaBusqueda, true);
       // The bar splits the colonias by the most days their posts give, and doubles as the map's key.
