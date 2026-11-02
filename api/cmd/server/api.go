@@ -196,7 +196,12 @@ func (a *api) zonesList(w http.ResponseWriter, _ *http.Request) {
 		out = append(out, a.info(z))
 	}
 	checked, source := a.sched.Provenance()
-	writeJSON(w, map[string]any{"zones": out, "checked": checked, "source": source}, publicFiveMinutes)
+	_, end := a.sched.Span()
+	endAt := ""
+	if !end.IsZero() {
+		endAt = end.Format(rotation.DateLayout)
+	}
+	writeJSON(w, map[string]any{"zones": out, "checked": checked, "source": source, "end": endAt}, publicFiveMinutes)
 }
 
 func (a *api) zoneAt(w http.ResponseWriter, r *http.Request) {
