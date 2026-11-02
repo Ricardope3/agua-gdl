@@ -30885,6 +30885,44 @@
     "comentarios": 1,
     "al": "2026-11-01"
    }
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "Cuenta de vecinos El Vergel",
+   "url": "https://www.facebook.com/ElVergel1Tlaquepaque/posts/pfbid02Dx8sBKCHL7NGAZ9HRAcBFEuhieMF62uu2v49rtBHa5trczcy9355ERqAidS8Znkfl",
+   "fecha": "2026-10-30",
+   "colonias": [
+    "EL VERGEL|San Pedro Tlaquepaque|45595"
+   ],
+   "lugar": "El Vergel, San Pedro Tlaquepaque",
+   "cita": "Vecinos de la Colonia El Vergel, Tlaquepaque, informamos que desde el 23 de octubre hasta hoy 29 de octubre llevamos 7 días sin una gota de agua.",
+   "dias": 7,
+   "eco": {
+    "reacciones": 296,
+    "comentarios": 59,
+    "compartidos": 53,
+    "al": "2026-11-02"
+   }
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "Cuenta de vecinos El Vergel",
+   "url": "https://www.facebook.com/ElVergel1Tlaquepaque/posts/pfbid02Dx8sBKCHL7NGAZ9HRAcBFEuhieMF62uu2v49rtBHa5trczcy9355ERqAidS8Znkfl",
+   "fecha": "2026-10-30",
+   "colonias": [
+    "EL VERGEL|San Pedro Tlaquepaque|45595"
+   ],
+   "lugar": "El Vergel, San Pedro Tlaquepaque",
+   "cita": "SIAPA anunció un calendario de tandeo con días en que supuestamente NO se quitaría el servicio, pero NO se está cumpliendo. En los días que nos tocaba agua, tampoco llegó.",
+   "dias": 7,
+   "eco": {
+    "reacciones": 296,
+    "comentarios": 59,
+    "compartidos": 53,
+    "al": "2026-11-02"
+   }
   }
  ]
 }
