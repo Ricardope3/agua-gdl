@@ -155,6 +155,32 @@ def zone_shares(colonia_polys, zone_polys, zone_boxes):
     return {z: 100 * n / total for z, n in counts.items()}
 
 
+def round_shares(shares):
+    """Integer shares that sum to exactly 100.
+
+    Largest-remainder rounding with a floor of 1: plain max(1, round(v)) can
+    sum to 99 or 101, and the map shows the parts next to each other.
+    """
+    pos = sorted((k for k in shares if shares[k] > 0), key=lambda k: -shares[k])
+    out = {k: max(1, int(shares[k])) for k in pos}
+    by_frac = sorted(pos, key=lambda k: -(shares[k] - int(shares[k])))
+    diff = 100 - sum(out.values())
+    while diff > 0:
+        for k in by_frac:
+            if diff == 0:
+                break
+            out[k] += 1
+            diff -= 1
+    while diff < 0:
+        for k in reversed(by_frac):
+            if diff == 0:
+                break
+            if out[k] > 1:
+                out[k] -= 1
+                diff += 1
+    return {k: out.get(k, 0) for k in shares}
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--input", help="local copy of SIAPA's TopoJSON (default: download)")
@@ -193,7 +219,7 @@ def main():
         if len(z) > 1:
             shares = zone_shares(polygons(g, arcs), {k: zone_polys[k] for k in z}, zone_boxes)
             if shares:
-                rounded = {k: max(1, round(v)) if v > 0 else 0 for k, v in shares.items()}
+                rounded = round_shares(shares)
                 props["p"] = ",".join(f"{k}:{rounded[k]}" for k in sorted(rounded, key=lambda k: -shares[k]))
                 if min(shares.values()) < BORDER and len(shares) == len(z):
                     border += 1
