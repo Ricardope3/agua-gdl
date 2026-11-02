@@ -83,7 +83,7 @@ VIDEO_JS = r"""
     const seen = new Set();
     return e.posts.filter((p) => p.tipo !== "comentario" && /(?:youtube\.com\/watch|youtu\.be\/|tiktok\.com\/|facebook\.com\/(?:[^/]+\/)?(?:videos|watch|reel)|fb\.watch)/i.test(p.url || ""))
       .filter((p) => { const id = (p.url || "").split("?")[0].replace(/\/$/, ""); return !seen.has(id) && seen.add(id); })
-      .sort((a, b) => b.fecha.localeCompare(a.fecha));
+      .sort((a, b) => impactOf(b) - impactOf(a) || b.fecha.localeCompare(a.fecha));
   };
   const vEl = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
   const vDate = (iso) => new Date(`${iso}T12:00:00`).toLocaleDateString("es-MX", { day: "numeric", month: "short", year: "numeric" }).replaceAll(".", "");

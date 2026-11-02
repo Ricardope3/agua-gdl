@@ -1119,7 +1119,9 @@ if (window.top !== window.self) {
     return `w:${new URL(p.url).hostname}`;
   }
   const ecoOf = (p) => p.eco ? p.eco.reacciones + p.eco.comentarios + (p.eco.compartidos || 0) : 0;
-  // evidence: colonia key → its posts (news first, then newest), the most days any of them gives,
+  const visualOf = (p) => p.vista || p.captura || (p.en && p.en.vista);
+  const impactOf = (p) => !!(p.bloqueo && visualOf(p));
+  // evidence: visual protest coverage first, then news and newest; the most days any post gives,
   // how many distinct sources and outlets, the newest date and the reactions, comments and shares.
   function evidence(doc) {
     const out = new Map();
@@ -1127,7 +1129,7 @@ if (window.top !== window.self) {
     const byCol = new Map();
     for (const p of doc.publicaciones) for (const k of p.colonias) { if (!byCol.has(k)) byCol.set(k, []); byCol.get(k).push(p); }
     for (const [k, posts] of byCol) {
-      posts.sort((a, b) => (b.fuente === "medio") - (a.fuente === "medio") || b.fecha.localeCompare(a.fecha) || ecoOf(b) - ecoOf(a));
+      posts.sort((a, b) => impactOf(b) - impactOf(a) || (b.fuente === "medio") - (a.fuente === "medio") || b.fecha.localeCompare(a.fecha) || ecoOf(b) - ecoOf(a));
       const days = posts.map((p) => p.dias).filter((d) => d != null);
       out.set(k, {
         posts,

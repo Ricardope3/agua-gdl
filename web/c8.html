@@ -877,6 +877,7 @@ if (window.top !== window.self) {
   };
 
   const isDesk = () => !isPhone();
+  const impactOf = (p) => !!(p.bloqueo && (p.vista || p.captura || (p.en && p.en.vista)));
   const mk = (tag, cls, txt) => { const n = document.createElement(tag); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
   const fecha = (iso) => new Date(`${iso}T12:00:00`).toLocaleDateString("es-MX", { day: "numeric", month: "short" }).replace(".", "");
   const hoy = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Mexico_City" });
@@ -944,7 +945,7 @@ if (window.top !== window.self) {
   // The colonia's posts as a short list that opens the quick look.
   function pruebas(e, n) {
     const ul = mk("ul", "u-pr");
-    for (const q of [...e.posts].sort((a, b) => b.fecha.localeCompare(a.fecha)).slice(0, n)) {
+    for (const q of [...e.posts].sort((a, b) => impactOf(b) - impactOf(a) || b.fecha.localeCompare(a.fecha)).slice(0, n)) {
       const li = mk("li"); li.append(mk("small", null, `${fecha(q.fecha)} · ${quien(q)}`), mk("span", null, q.titular || q.cita));
       li.onclick = () => abre(li, q); ul.append(li);
     }
@@ -997,8 +998,8 @@ if (window.top !== window.self) {
   window.__fichaD = (card, e, form, p, f) => {
     const [k, t] = ahora(e), zs = zonaDe(p), z = zs[0], q = new URLSearchParams({ q: p.n, m: p.m, cp: p.cp });
     const h2 = card.querySelector("h2"), mun = mk("p", "q-mun", p.m);
-    // The zone's days and calendar live on /mizona.
-    if (zs.length) mun.append(" · ", link(`/mizona?${q}`, `Zona ${window.aguaMapa.joinES(zs.map(String))}`));
+    // The zone's days and calendar live on /avisos.
+    if (zs.length) mun.append(" · ", link(`/avisos?${q}`, `Zona ${window.aguaMapa.joinES(zs.map(String))}`));
     // The state: the days in the site's own badge and what the last complaint says about now.
     const sec0 = mk("div", "q-sec"), row = mk("div", "q-row"), now = mk("p", `q-now ${k}`);
     now.append(mk("b", null, k === "activa" ? "Quejas recientes" : k === "reciente" ? "Quejas de esta semana" : k === "vieja" ? "Sin quejas nuevas" : "Sin publicaciones"), t);
@@ -1029,7 +1030,7 @@ if (window.top !== window.self) {
     box.setAttribute("aria-label", "Lo que se publica de esta colonia");
     const medios = e.posts.filter((x) => x.fuente === "medio").length;
     head.append(mk("h3", null, "Lo que se publica"), mk("p", null, `${e.posts.length} publicaciones · ${medios} de medios · la más reciente ${hace(e.ultima)}`), chips);
-    const all = [...e.posts].sort((a, b) => b.fecha.localeCompare(a.fecha) || (b.fuente === "medio") - (a.fuente === "medio"));
+    const all = [...e.posts].sort((a, b) => impactOf(b) - impactOf(a) || b.fecha.localeCompare(a.fecha) || (b.fuente === "medio") - (a.fuente === "medio"));
     let which = "todo", text = "", order = "fecha";
     const draw = (w = which) => {
       which = w;
@@ -1037,7 +1038,7 @@ if (window.top !== window.self) {
       const fold = (t) => (t || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
       let items = all.filter((x) => which === "todo" || (which === "medio") === (x.fuente === "medio"))
         .filter((x) => !text || fold(`${x.cita} ${x.titular || ""} ${quien(x)}`).includes(fold(text)));
-      if (order === "dias") items = [...items].sort((a, b) => (b.dias || 0) - (a.dias || 0) || b.fecha.localeCompare(a.fecha));
+      if (order === "dias") items = [...items].sort((a, b) => impactOf(b) - impactOf(a) || (b.dias || 0) - (a.dias || 0) || b.fecha.localeCompare(a.fecha));
       const out = [];
       let day = "";
       items.forEach((x, i) => {
@@ -1087,7 +1088,7 @@ if (window.top !== window.self) {
     const seen = new Set();
     return e.posts.filter((p) => p.tipo !== "comentario" && /(?:youtube\.com\/watch|youtu\.be\/|tiktok\.com\/|facebook\.com\/(?:[^/]+\/)?(?:videos|watch|reel)|fb\.watch)/i.test(p.url || ""))
       .filter((p) => { const id = (p.url || "").split("?")[0].replace(/\/$/, ""); return !seen.has(id) && seen.add(id); })
-      .sort((a, b) => b.fecha.localeCompare(a.fecha));
+      .sort((a, b) => impactOf(b) - impactOf(a) || b.fecha.localeCompare(a.fecha));
   };
   const vEl = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
   const vDate = (iso) => new Date(`${iso}T12:00:00`).toLocaleDateString("es-MX", { day: "numeric", month: "short", year: "numeric" }).replaceAll(".", "");
@@ -1186,7 +1187,7 @@ if (window.top !== window.self) {
     <nav class="site-nav" aria-label="Secciones">
       <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg>¿Hay agua?</a>
       <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exige</a>
-      <a href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Mi zona</a>
+      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Avisos</a>
       <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg>Noticias</a>
       <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg>Cuentas</a>
       <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Contaminación</a>
@@ -1340,7 +1341,7 @@ if (window.top !== window.self) {
   <div class="wrap">
   <footer>
     <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con el Gobierno de Jalisco.</p>
-    <p><a href="/">Inicio</a> · <a href="/mapa">Mapa de la rotación</a> · <a href="/avisos">Recibir avisos</a> · <a href="/informes">Conteos semanales</a> · <a href="/correcciones">Fuentes y correcciones</a> · <a href="/transparencia">Transparencia</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
+    <p><a href="/">Inicio</a> · <a href="/mapa">Mapa de la rotación</a> · <a href="/avisos">¿Qué zona me toca?</a> · <a href="/informes">Conteos semanales</a> · <a href="/correcciones">Fuentes y correcciones</a> · <a href="/transparencia">Transparencia</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
   </footer>
 </div>
 <script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
@@ -1560,7 +1561,9 @@ if (window.top !== window.self) {
     return `w:${new URL(p.url).hostname}`;
   }
   const ecoOf = (p) => p.eco ? p.eco.reacciones + p.eco.comentarios + (p.eco.compartidos || 0) : 0;
-  // evidence: colonia key → its posts (news first, then newest), the most days any of them gives,
+  const visualOf = (p) => p.vista || p.captura || (p.en && p.en.vista);
+  const impactOf = (p) => !!(p.bloqueo && visualOf(p));
+  // evidence: visual protest coverage first, then news and newest; the most days any post gives,
   // how many distinct sources and outlets, the newest date and the reactions, comments and shares.
   function evidence(doc) {
     const out = new Map();
@@ -1568,7 +1571,7 @@ if (window.top !== window.self) {
     const byCol = new Map();
     for (const p of doc.publicaciones) for (const k of p.colonias) { if (!byCol.has(k)) byCol.set(k, []); byCol.get(k).push(p); }
     for (const [k, posts] of byCol) {
-      posts.sort((a, b) => (b.fuente === "medio") - (a.fuente === "medio") || b.fecha.localeCompare(a.fecha) || ecoOf(b) - ecoOf(a));
+      posts.sort((a, b) => impactOf(b) - impactOf(a) || (b.fuente === "medio") - (a.fuente === "medio") || b.fecha.localeCompare(a.fecha) || ecoOf(b) - ecoOf(a));
       const days = posts.map((p) => p.dias).filter((d) => d != null);
       out.set(k, {
         posts,

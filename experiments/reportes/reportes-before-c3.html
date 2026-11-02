@@ -503,7 +503,7 @@ if (window.top !== window.self) {
     <nav class="site-nav" aria-label="Secciones">
       <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg>¿Hay agua?</a>
       <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exige</a>
-      <a href="/mizona"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Mi zona</a>
+      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Avisos</a>
       <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg>Noticias</a>
       <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg>Cuentas</a>
       <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Contaminación</a>
@@ -657,7 +657,7 @@ if (window.top !== window.self) {
   <div class="wrap">
   <footer>
     <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con el Gobierno de Jalisco.</p>
-    <p><a href="/">Inicio</a> · <a href="/mapa">Mapa de la rotación</a> · <a href="/avisos">Recibir avisos</a> · <a href="/informes">Conteos semanales</a> · <a href="/correcciones">Fuentes y correcciones</a> · <a href="/transparencia">Transparencia</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
+    <p><a href="/">Inicio</a> · <a href="/mapa">Mapa de la rotación</a> · <a href="/avisos">¿Qué zona me toca?</a> · <a href="/informes">Conteos semanales</a> · <a href="/correcciones">Fuentes y correcciones</a> · <a href="/transparencia">Transparencia</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
   </footer>
 </div>
 <script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
@@ -877,7 +877,9 @@ if (window.top !== window.self) {
     return `w:${new URL(p.url).hostname}`;
   }
   const ecoOf = (p) => p.eco ? p.eco.reacciones + p.eco.comentarios + (p.eco.compartidos || 0) : 0;
-  // evidence: colonia key → its posts (news first, then newest), the most days any of them gives,
+  const visualOf = (p) => p.vista || p.captura || (p.en && p.en.vista);
+  const impactOf = (p) => !!(p.bloqueo && visualOf(p));
+  // evidence: visual protest coverage first, then news and newest; the most days any post gives,
   // how many distinct sources and outlets, the newest date and the reactions, comments and shares.
   function evidence(doc) {
     const out = new Map();
@@ -885,7 +887,7 @@ if (window.top !== window.self) {
     const byCol = new Map();
     for (const p of doc.publicaciones) for (const k of p.colonias) { if (!byCol.has(k)) byCol.set(k, []); byCol.get(k).push(p); }
     for (const [k, posts] of byCol) {
-      posts.sort((a, b) => (b.fuente === "medio") - (a.fuente === "medio") || b.fecha.localeCompare(a.fecha) || ecoOf(b) - ecoOf(a));
+      posts.sort((a, b) => impactOf(b) - impactOf(a) || (b.fuente === "medio") - (a.fuente === "medio") || b.fecha.localeCompare(a.fecha) || ecoOf(b) - ecoOf(a));
       const days = posts.map((p) => p.dias).filter((d) => d != null);
       out.set(k, {
         posts,

@@ -298,7 +298,7 @@ V = {
     acciones(card, e, false);
     if (!e) return;
     const all = slides(card, e), list = card.querySelector(".posts");
-    all.sort(([, a], [, b]) => (b.fuente === "medio") - (a.fuente === "medio"));
+    all.sort(([, a], [, b]) => impactOf(b) - impactOf(a) || (b.fuente === "medio") - (a.fuente === "medio"));
     for (const [li, p] of all) {
       const w = document.createElement("span");
       w.className = "c-who";
@@ -338,6 +338,7 @@ NAMES = {k: v[0] for k, v in V.items()}
 # Desktop takes on an open colonia (/d1 … /d5). Phones get /reportes' carousel on these pages.
 DESK = r"""
   const isDesk = () => !isPhone();
+  const impactOf = (p) => !!(p.bloqueo && (p.vista || p.captura || (p.en && p.en.vista)));
   const mk = (tag, cls, txt) => { const n = document.createElement(tag); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
   const fecha = (iso) => new Date(`${iso}T12:00:00`).toLocaleDateString("es-MX", { day: "numeric", month: "short" }).replace(".", "");
   const hoy = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Mexico_City" });
@@ -408,7 +409,7 @@ UTIL = r"""
   // The colonia's posts as a short list that opens the quick look.
   function pruebas(e, n) {
     const ul = mk("ul", "u-pr");
-    for (const q of [...e.posts].sort((a, b) => b.fecha.localeCompare(a.fecha)).slice(0, n)) {
+    for (const q of [...e.posts].sort((a, b) => impactOf(b) - impactOf(a) || b.fecha.localeCompare(a.fecha)).slice(0, n)) {
       const li = mk("li"); li.append(mk("small", null, `${fecha(q.fecha)} · ${quien(q)}`), mk("span", null, q.titular || q.cita));
       li.onclick = () => abre(li, q); ul.append(li);
     }
@@ -566,8 +567,8 @@ D1_JS = r"""
   window.__fichaD = (card, e, form, p, f) => {
     const [k, t] = ahora(e), zs = zonaDe(p), z = zs[0], q = new URLSearchParams({ q: p.n, m: p.m, cp: p.cp });
     const h2 = card.querySelector("h2"), mun = mk("p", "q-mun", p.m);
-    // The zone's days and calendar live on /mizona.
-    if (zs.length) mun.append(" · ", link(`/mizona?${q}`, `Zona ${window.aguaMapa.joinES(zs.map(String))}`));
+    // The zone's days and calendar live on /avisos.
+    if (zs.length) mun.append(" · ", link(`/avisos?${q}`, `Zona ${window.aguaMapa.joinES(zs.map(String))}`));
     // The state: the days in the site's own badge and what the last complaint says about now.
     const sec0 = mk("div", "q-sec"), row = mk("div", "q-row"), now = mk("p", `q-now ${k}`);
     now.append(mk("b", null, k === "activa" ? "Quejas recientes" : k === "reciente" ? "Quejas de esta semana" : k === "vieja" ? "Sin quejas nuevas" : "Sin publicaciones"), t);
@@ -598,7 +599,7 @@ D1_JS = r"""
     box.setAttribute("aria-label", "Lo que se publica de esta colonia");
     const medios = e.posts.filter((x) => x.fuente === "medio").length;
     head.append(mk("h3", null, "Lo que se publica"), mk("p", null, `${e.posts.length} publicaciones · ${medios} de medios · la más reciente ${hace(e.ultima)}`), chips);
-    const all = [...e.posts].sort((a, b) => b.fecha.localeCompare(a.fecha) || (b.fuente === "medio") - (a.fuente === "medio"));
+    const all = [...e.posts].sort((a, b) => impactOf(b) - impactOf(a) || b.fecha.localeCompare(a.fecha) || (b.fuente === "medio") - (a.fuente === "medio"));
     let which = "todo", text = "", order = "fecha";
     const draw = (w = which) => {
       which = w;
@@ -606,7 +607,7 @@ D1_JS = r"""
       const fold = (t) => (t || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
       let items = all.filter((x) => which === "todo" || (which === "medio") === (x.fuente === "medio"))
         .filter((x) => !text || fold(`${x.cita} ${x.titular || ""} ${quien(x)}`).includes(fold(text)));
-      if (order === "dias") items = [...items].sort((a, b) => (b.dias || 0) - (a.dias || 0) || b.fecha.localeCompare(a.fecha));
+      if (order === "dias") items = [...items].sort((a, b) => impactOf(b) - impactOf(a) || (b.dias || 0) - (a.dias || 0) || b.fecha.localeCompare(a.fecha));
       const out = [];
       let day = "";
       items.forEach((x, i) => {

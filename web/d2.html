@@ -831,6 +831,7 @@ if (window.top !== window.self) {
   };
 
   const isDesk = () => !isPhone();
+  const impactOf = (p) => !!(p.bloqueo && (p.vista || p.captura || (p.en && p.en.vista)));
   const mk = (tag, cls, txt) => { const n = document.createElement(tag); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
   const fecha = (iso) => new Date(`${iso}T12:00:00`).toLocaleDateString("es-MX", { day: "numeric", month: "short" }).replace(".", "");
   const hoy = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Mexico_City" });
@@ -898,7 +899,7 @@ if (window.top !== window.self) {
   // The colonia's posts as a short list that opens the quick look.
   function pruebas(e, n) {
     const ul = mk("ul", "u-pr");
-    for (const q of [...e.posts].sort((a, b) => b.fecha.localeCompare(a.fecha)).slice(0, n)) {
+    for (const q of [...e.posts].sort((a, b) => impactOf(b) - impactOf(a) || b.fecha.localeCompare(a.fecha)).slice(0, n)) {
       const li = mk("li"); li.append(mk("small", null, `${fecha(q.fecha)} · ${quien(q)}`), mk("span", null, q.titular || q.cita));
       li.onclick = () => abre(li, q); ul.append(li);
     }
@@ -985,7 +986,7 @@ if (window.top !== window.self) {
     box.setAttribute("aria-label", "Lo que se publica de esta colonia");
     const medios = e.posts.filter((x) => x.fuente === "medio").length;
     head.append(mk("h3", null, "Lo que se publica"), mk("p", null, `${e.posts.length} publicaciones · ${medios} de medios · la más reciente ${hace(e.ultima)}`), chips);
-    const all = [...e.posts].sort((a, b) => b.fecha.localeCompare(a.fecha) || (b.fuente === "medio") - (a.fuente === "medio"));
+    const all = [...e.posts].sort((a, b) => impactOf(b) - impactOf(a) || b.fecha.localeCompare(a.fecha) || (b.fuente === "medio") - (a.fuente === "medio"));
     let which = "todo", text = "", order = "fecha";
     const draw = (w = which) => {
       which = w;
@@ -993,7 +994,7 @@ if (window.top !== window.self) {
       const fold = (t) => (t || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
       let items = all.filter((x) => which === "todo" || (which === "medio") === (x.fuente === "medio"))
         .filter((x) => !text || fold(`${x.cita} ${x.titular || ""} ${quien(x)}`).includes(fold(text)));
-      if (order === "dias") items = [...items].sort((a, b) => (b.dias || 0) - (a.dias || 0) || b.fecha.localeCompare(a.fecha));
+      if (order === "dias") items = [...items].sort((a, b) => impactOf(b) - impactOf(a) || (b.dias || 0) - (a.dias || 0) || b.fecha.localeCompare(a.fecha));
       const out = [];
       let day = "";
       items.forEach((x, i) => {
@@ -1417,7 +1418,9 @@ if (window.top !== window.self) {
     return `w:${new URL(p.url).hostname}`;
   }
   const ecoOf = (p) => p.eco ? p.eco.reacciones + p.eco.comentarios + (p.eco.compartidos || 0) : 0;
-  // evidence: colonia key → its posts (news first, then newest), the most days any of them gives,
+  const visualOf = (p) => p.vista || p.captura || (p.en && p.en.vista);
+  const impactOf = (p) => !!(p.bloqueo && visualOf(p));
+  // evidence: visual protest coverage first, then news and newest; the most days any post gives,
   // how many distinct sources and outlets, the newest date and the reactions, comments and shares.
   function evidence(doc) {
     const out = new Map();
@@ -1425,7 +1428,7 @@ if (window.top !== window.self) {
     const byCol = new Map();
     for (const p of doc.publicaciones) for (const k of p.colonias) { if (!byCol.has(k)) byCol.set(k, []); byCol.get(k).push(p); }
     for (const [k, posts] of byCol) {
-      posts.sort((a, b) => (b.fuente === "medio") - (a.fuente === "medio") || b.fecha.localeCompare(a.fecha) || ecoOf(b) - ecoOf(a));
+      posts.sort((a, b) => impactOf(b) - impactOf(a) || (b.fuente === "medio") - (a.fuente === "medio") || b.fecha.localeCompare(a.fecha) || ecoOf(b) - ecoOf(a));
       const days = posts.map((p) => p.dias).filter((d) => d != null);
       out.set(k, {
         posts,
