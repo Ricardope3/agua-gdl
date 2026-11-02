@@ -1089,10 +1089,16 @@ if (window.top !== window.self) {
 
   // The privacy notice promises only the last hour's reports: older marks go, even if the map never loads.
   try {
+    const seenAt = (raw) => {
+      if (raw == null) return 0;
+      const n = Number(raw);
+      if (Number.isFinite(n)) return n; // marks saved before they became JSON
+      try { return Number(JSON.parse(raw)?.at) || 0; } catch { return 0; }
+    };
     const old = [];
     for (let i = 0; i < localStorage.length; i++) {
       const k = localStorage.key(i);
-      if (k && k.startsWith("reporte:") && !(Date.now() - Number(localStorage.getItem(k)) < 60 * 60 * 1000)) old.push(k);
+      if (k && k.startsWith("reporte:") && !(Date.now() - seenAt(localStorage.getItem(k)) < 60 * 60 * 1000)) old.push(k);
     }
     for (const k of old) localStorage.removeItem(k);
   } catch {}
