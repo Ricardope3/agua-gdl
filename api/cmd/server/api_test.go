@@ -160,6 +160,7 @@ func TestV1IsRateLimitedPerClient(t *testing.T) {
 	h := (&api{}).routes()
 	do := func(method, path, ip string) *httptest.ResponseRecorder {
 		req := httptest.NewRequest(method, path, nil)
+		req.RemoteAddr = "10.0.0.1:1234" // Fly's proxy connects over the private network
 		req.Header.Set("Fly-Client-IP", ip)
 		rec := httptest.NewRecorder()
 		h.ServeHTTP(rec, req)
@@ -189,6 +190,30 @@ func TestV1IsRateLimitedPerClient(t *testing.T) {
 	}
 	if get("/healthz", "1.1.1.1").Code != http.StatusOK {
 		t.Fatal("only /v1 is limited")
+	}
+}
+
+func TestFlyClientIPOnlyCountsFromTheProxy(t *testing.T) {
+	// Fly's edge connects over the private network, so its header is the client address.
+	r := httptest.NewRequest(http.MethodGet, "/v1/nope", nil)
+	r.RemoteAddr = "[fdaa:0:1:a7b:102:2d78:0:1]:1234"
+	r.Header.Set("Fly-Client-IP", "2001:db8::7")
+	if got := clientIP(r); got != "2001:db8::7" {
+		t.Fatalf("the proxy's header is trusted: %q", got)
+	}
+	// A direct client (any deployment not behind Fly) has a public RemoteAddr: its
+	// spoofed header must not defeat the per-address limits.
+	r = httptest.NewRequest(http.MethodGet, "/v1/nope", nil)
+	r.Header.Set("Fly-Client-IP", "2001:db8::7")
+	if got := clientIP(r); got == "2001:db8::7" {
+		t.Fatalf("a spoofed header from a public address was trusted: %q", got)
+	}
+	// Loopback (local runs) still trusts the header, so tests and dev keep working.
+	r = httptest.NewRequest(http.MethodGet, "/v1/nope", nil)
+	r.RemoteAddr = "127.0.0.1:54321"
+	r.Header.Set("Fly-Client-IP", "2001:db8::7")
+	if got := clientIP(r); got != "2001:db8::7" {
+		t.Fatalf("loopback should trust the header: %q", got)
 	}
 }
 
@@ -377,6 +402,7 @@ func TestReportsFromTheMap(t *testing.T) {
 	h := (&api{reports: board}).routes()
 	post := func(origin, body string) *httptest.ResponseRecorder {
 		req := httptest.NewRequest(http.MethodPost, "/v1/reportes", strings.NewReader(body))
+		req.RemoteAddr = "10.0.0.1:1234"
 		req.Header.Set("Content-Type", "application/json")
 		req.Header.Set("Fly-Client-IP", "2001:db8::7")
 		if origin != "" {

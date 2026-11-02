@@ -166,10 +166,20 @@ func limitKey(ip string) string {
 	return p.String()
 }
 
-// clientIP is the address Fly's proxy saw; without the proxy (local runs) it's the connection's.
+// clientIP is the address Fly's proxy saw. The header is trusted only when the
+// connection itself came from a private or loopback address: Fly's proxy reaches the
+// app over its private network, while a client connecting directly (any deployment
+// that isn't behind Fly's edge) has a public RemoteAddr, so its spoofed header is
+// ignored and every per-address limit falls back to the connection's address.
 func clientIP(r *http.Request) string {
 	if ip := r.Header.Get("Fly-Client-IP"); ip != "" {
-		return ip
+		if a, err := netip.ParseAddr(ip); err == nil {
+			if host, _, err := net.SplitHostPort(r.RemoteAddr); err == nil {
+				if h, err := netip.ParseAddr(host); err == nil && (h.IsPrivate() || h.IsLoopback()) {
+					return a.String()
+				}
+			}
+		}
 	}
 	host, _, err := net.SplitHostPort(r.RemoteAddr)
 	if err != nil {
