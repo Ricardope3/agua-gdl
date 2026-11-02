@@ -550,8 +550,9 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
       out.set(k, {
         posts,
         dias: days.length ? Math.max(...days) : null,
-        fuentes: new Set(posts.map((p) => sourceOf(p, byUrl))).size,
+        fuentes: new Set(posts.filter((p) => p.tipo !== "comentario").map((p) => sourceOf(p, byUrl))).size,
         medios: new Set(posts.filter((p) => p.fuente === "medio").map((p) => sourceOf(p, byUrl))).size,
+        comentarios: posts.filter((p) => p.tipo === "comentario").length,
         ultima: posts.reduce((m, p) => p.fecha > m ? p.fecha : m, ""),
       });
     }
@@ -1203,7 +1204,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     const s = sevOf(e.dias);
     const badge = el("span", { class: s ? "sevb" : "sevb nodays", style: sevVars(s) }, s ? daysWord(e.dias) : "sin días");
     const head = el("p", { class: "ev-head" }, badge, el("strong", {}, s ? `Hasta ${daysWord(e.dias)} sin agua` : "Sin agua, sin días contados"));
-    const src = [`según ${plural(e.fuentes, "fuente", "fuentes distintas")}`, e.medios ? (e.medios === 1 ? "lo reporta un medio" : `lo reportan ${e.medios} medios`) : null, `la más reciente del ${pubDate(e.ultima, true)}`].filter(Boolean).join(" · ");
+    const src = [`según ${plural(e.fuentes, "fuente", "fuentes distintas")}`, e.comentarios ? plural(e.comentarios, "comentario", "comentarios") : null, e.medios ? (e.medios === 1 ? "lo reporta un medio" : `lo reportan ${e.medios} medios`) : null, `la más reciente del ${pubDate(e.ultima, true)}`].filter(Boolean).join(" · ");
     const shown = e.posts.slice(0, 2);
     const box = el("div", {}, head, el("p", { class: "ev-src" }, cap(src)), mosaic(e.posts), el("ol", { class: "posts" }, ...shown.map(post)));
     if (e.posts.length > shown.length) {
