@@ -216,6 +216,7 @@ table.week td.cut { box-shadow: inset 0 0 0 2.5px var(--fg) }
 .ev { margin: 4px 0 0 }
 .ev-head { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 1.05rem; line-height: 1.3 }
 .ev-src { margin: 6px 0 0; font-size: .9rem; color: var(--muted) }
+.ev-tier { margin-left: auto; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); font-size: .78rem; font-weight: 600; white-space: nowrap }
 .posts { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 10px }
 .post { padding: 10px 12px; border-radius: 10px; background: var(--bg); border-left: 4px solid var(--line) }
 .post.medio { border-left-color: var(--brand) }
@@ -945,6 +946,7 @@ if (window.top !== window.self) {
   // Badges take the variables, each level with its ink, so they follow the theme by themselves.
   const sevVars = (s) => `--c:var(--s${s});--k:var(${s ? `--s${s}-ink` : "--fg"})`;
   const sevOf = (d) => d == null ? 0 : d <= 2 ? 1 : d <= 6 ? 2 : d <= 13 ? 3 : 4;
+  const TIERS = ["Lo reporta un medio", "Varias fuentes de vecinos", "Una o dos voces"];
   const keyOf = (p) => `${p.n}|${p.m}|${p.cp}`;
   const fmt = (n) => n.toLocaleString("es-MX");
   const plural = (n, one, many) => `${fmt(n)} ${n === 1 ? one : many}`;
@@ -1146,11 +1148,19 @@ if (window.top !== window.self) {
     for (const [k, posts] of byCol) {
       posts.sort((a, b) => impactOf(b) - impactOf(a) || (b.fuente === "medio") - (a.fuente === "medio") || b.fecha.localeCompare(a.fecha) || ecoOf(b) - ecoOf(a));
       const days = posts.map((p) => p.dias).filter((d) => d != null);
+      const daysPosts = posts.filter((p) => p.dias != null);
+      // Voices are the sources of the posts that give days (a comment counts its parent post);
+      // when nobody gives days, every post counts.
+      const pool = daysPosts.length ? daysPosts : posts;
+      const voices = new Set(pool.map((p) => p.tipo === "comentario" ? "h:" + p.en.url : sourceOf(p, byUrl))).size;
       out.set(k, {
         posts,
         dias: days.length ? Math.max(...days) : null,
-        fuentes: new Set(posts.map((p) => sourceOf(p, byUrl))).size,
+        fuentes: new Set(posts.filter((p) => p.tipo !== "comentario").map((p) => sourceOf(p, byUrl))).size,
         medios: new Set(posts.filter((p) => p.fuente === "medio").map((p) => sourceOf(p, byUrl))).size,
+        comentarios: posts.filter((p) => p.tipo === "comentario").length,
+        // 1: a news outlet gives the days; 2: three or more neighbours' voices; 3: one or two voices.
+        tier: pool.some((p) => p.fuente === "medio") ? 1 : voices >= 3 ? 2 : 3,
         ultima: posts.reduce((m, p) => p.fecha > m ? p.fecha : m, ""),
         eco: posts.reduce((t, p) => t + ecoOf(p), 0),
       });
@@ -1222,12 +1232,12 @@ if (window.top !== window.self) {
         if (st === "vieja") return { color: COLORS.muted, weight: 0.8, opacity: 0.6, dashArray: null, fillColor: COLORS.muted, fillOpacity: 0.14 };
         if (st === "reciente") return s ? { color: SEV[s], weight: 1, opacity: 0.7, dashArray: null, fillColor: SEV[s], fillOpacity: 0.3 }
           : { color: SEV[0], weight: 1.4, opacity: 0.7, dashArray: "4 3", fillColor: SEV[0], fillOpacity: 0.1 };
-        return s ? { color: SEV[s], weight: 1.2, opacity: 0.95, dashArray: null, fillColor: SEV[s], fillOpacity: 0.62 }
+        return s ? { color: SEV[s], weight: 1.2, opacity: 0.95, dashArray: null, fillColor: SEV[s], fillOpacity: e.fuentes <= 2 ? 0.38 : 0.62 }
           : { color: SEV[0], weight: 1.8, opacity: 0.95, dashArray: "4 3", fillColor: SEV[0], fillOpacity: 0.2 };
       }
       return { color: COLORS.muted, weight: 0.4, opacity: 0.5, dashArray: null, fillColor: COLORS.none, fillOpacity: 0.06 };
     };
-    const evLine = (e) => stateOf(e) === "vieja" ? `Sin reportes nuevos desde el ${dateES(e.ultima)} · ${plural(e.fuentes, "fuente", "fuentes")}` : e.dias != null ? `Hasta ${daysWord(e.dias)} sin agua · ${plural(e.fuentes, "fuente", "fuentes")}` : `Sin agua, sin días contados · ${plural(e.fuentes, "fuente", "fuentes")}`;
+    const evLine = (e) => stateOf(e) === "vieja" ? `Sin publicaciones nuevas desde el ${dateES(e.ultima)} · ${plural(e.fuentes, "fuente", "fuentes")}` : e.dias != null ? `Hasta ${daysWord(e.dias)} sin agua · ${plural(e.fuentes, "fuente", "fuentes")}` : `Sin agua, sin días contados · ${plural(e.fuentes, "fuente", "fuentes")}`;
     let closedAt = 0;
     // One canvas for the colonias and the dots over them: a second canvas on top would take their clicks.
     const colRenderer = L.canvas({ padding: 0.5 });
@@ -1682,10 +1692,16 @@ if (window.top !== window.self) {
       const badge = el("span", { class: s ? "sevb" : "sevb nodays", style: sevVars(s) }, s ? daysWord(e.dias) : "sin días");
       // Once a week has passed without new publications, the days are told in the past.
       const old = stateOf(e) === "vieja";
-      const head = el("p", { class: "ev-head" }, badge, el("strong", {}, s ? `${old ? "Llegó a" : "Hasta"} ${daysWord(e.dias)} sin agua` : "Sin agua, sin días contados"));
-      const src = [plural(e.fuentes, "fuente", "fuentes distintas"), e.medios ? (e.medios === 1 ? "lo reporta un medio" : `lo reportan ${e.medios} medios`) : null, old ? `sin reportes nuevos desde el ${dateES(e.ultima, true)}` : `la más reciente del ${dateES(e.ultima, true)}`].filter(Boolean).join(" · ");
-      const list = el("ol", { class: "posts" }, ...e.posts.map(post));
-      const box = el("div", { class: "ev" }, head, el("p", { class: "ev-src" }, src), mosaic(e.posts), list);
+      const head = el("p", { class: "ev-head" }, badge, el("strong", {}, s ? `${old ? "Llegó a" : "Hasta"} ${daysWord(e.dias)} sin agua` : "Sin agua, sin días contados"), el("span", { class: "ev-tier" }, TIERS[e.tier - 1]));
+      // The post that gives the counted days goes first, and the card names it up front.
+      const giver = e.posts.find((p) => p.dias != null && p.dias === e.dias);
+      const ordered = giver ? [giver, ...e.posts.filter((p) => p !== giver)] : e.posts;
+      const gives = (p) => p.tipo === "comentario" ? `un comentario de ${p.red === "x" ? "X" : "Facebook"}` : p.fuente === "medio" ? (p.red === "web" ? `una nota de ${p.quien}` : p.quien) : `una publicación de vecinos en ${p.red === "x" ? "X" : "Facebook"}`;
+      const src = [plural(e.fuentes, "fuente", "fuentes distintas"), e.comentarios ? plural(e.comentarios, "comentario", "comentarios") : null, e.medios ? (e.medios === 1 ? "lo reporta un medio" : `lo reportan ${e.medios} medios`) : null, old ? `sin publicaciones nuevas desde el ${dateES(e.ultima, true)}` : `la más reciente del ${dateES(e.ultima, true)}`].filter(Boolean).join(" · ");
+      const list = el("ol", { class: "posts" }, ...ordered.map(post));
+      const box = el("div", { class: "ev" }, head,
+        giver ? el("p", { class: "ev-src" }, "Lo dice ", el("a", { href: giver.url, target: "_blank", rel: "noopener nofollow" }, `${gives(giver)}, ${dateES(giver.fecha, true)}`), ".") : null,
+        el("p", { class: "ev-src" }, src), mosaic(e.posts), list);
       const SHOWN = 3;
       if (e.posts.length > SHOWN) {
         [...list.children].slice(SHOWN).forEach((li) => { li.hidden = true; });
@@ -1914,13 +1930,15 @@ if (window.top !== window.self) {
         return;
       }
       const all = [...ev.values()];
-      const week = all.filter((e) => e.dias >= 7).length;
+      const weekEvs = all.filter((e) => e.dias >= 7);
       // The count opens the list of those colonias, in the whole window when inside the landing's frame.
       const active = [...ev.values()].filter((e) => stateOf(e) === "activa").length;
-      const toList = el("a", framed ? { href: "/reportes#lista-semana", target: "_top" } : { href: "#lista" }, el("b", {}, fmt(week)), ` ${week === 1 ? "colonia llegó" : "colonias llegaron"} a una semana o más sin agua`);
+      const toList = el("a", framed ? { href: "/reportes#lista-semana", target: "_top" } : { href: "#lista" }, el("b", {}, fmt(weekEvs.length)), ` ${weekEvs.length === 1 ? "colonia llegó" : "colonias llegaron"} a una semana o más sin agua`);
       if (!framed) toList.addEventListener("click", () => { weekOnly = everything = true; renderRanking(); });
-      $("pruebas").replaceChildren(toList, `, según medios y vecinos; ${fmt(active)} con quejas de los últimos ${ACTIVE} días`);
-      $("solo-semana").textContent = `Solo una semana o más (${fmt(week)})`;
+      const conMedio = weekEvs.filter((e) => e.posts.some((p) => p.fuente === "medio" && p.dias >= 7)).length;
+      const unaPub = weekEvs.filter((e) => e.posts.length === 1).length;
+      $("pruebas").replaceChildren(toList, `, según medios y vecinos: ${fmt(conMedio)} con los días dichos por un medio y ${fmt(unaPub)} con una sola publicación; ${fmt(active)} con quejas de los últimos ${ACTIVE} días`);
+      $("solo-semana").textContent = `Solo una semana o más (${fmt(weekEvs.length)})`;
       renderMunicipios();
       renderSlices();
       const n = pubs.publicaciones.length, medios = pubs.publicaciones.filter((x) => x.fuente === "medio").length;
