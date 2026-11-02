@@ -130,6 +130,8 @@ def validate(doc):
             fail(f"{where}: a news outlet is named")
         elif p.get("fuente") == "vecinos" and quien and not quien.startswith(VECINOS_QUIEN):
             fail(f"{where}: neighbours are never named; quien is empty, «Grupo «…»» or «Cuenta de vecinos …»")
+        if isinstance(quien, str) and "@" in quien:
+            fail(f"{where}: quien never carries an @handle; the link keeps it")
         d = date(p.get("fecha"), where)
         if d and since and d < since:
             fail(f"{where}: fecha before desde")
@@ -146,6 +148,8 @@ def validate(doc):
         cita = p.get("cita")
         if not isinstance(cita, str) or not cita.strip() or len(cita) > 400 or "http" in cita:
             fail(f"{where}: cita is the post's own words, 1 to 400 characters, without links")
+        elif re.search(r"#\s*\d", cita):
+            fail(f"{where}: cita never carries a street number (#14); redact it visibly")
         dias = p.get("dias")
         if dias is not None and not (count(dias) and 1 <= dias <= 120):
             fail(f"{where}: dias is null or 1 to 120")
@@ -187,6 +191,8 @@ def validate(doc):
                 fail(f"{where}: a comment links its post with ?comment_id=")
             if en.get("quien") and not (str(en["quien"]) in pages or str(en["quien"]).startswith(VECINOS_QUIEN)):
                 fail(f"{where}: en.quien is never a person: an outlet with a medio entry, «Grupo «…»», «Cuenta de vecinos …» or one of PAGINAS")
+            if en.get("quien") and "@" in str(en["quien"]):
+                fail(f"{where}: en.quien never carries an @handle; the link keeps it")
             check_eco(en.get("eco"), where + " en")
             eco = en.get("eco")
         if p.get("fuente") == "vecinos":

@@ -248,7 +248,7 @@
     "al": "2026-10-20"
    },
    "nota": "Facebook marca la imagen de esta publicación como hecha con IA; aquí citamos solo el texto.",
-   "vista": "fuentes/2355c4f597e3.jpg"
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -997,8 +997,8 @@
     "compartidos": 41,
     "al": "2026-10-20"
    },
-   "nota": "Es el texto de una imagen que Facebook marca como hecha con IA.",
-   "vista": "fuentes/c8cb7b8b4655.jpg"
+   "nota": "Es el texto de una imagen que Facebook marca como hecha con IA; la imagen no se muestra.",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -1111,7 +1111,8 @@
     "comentarios": 2,
     "al": "2026-10-22"
    },
-   "vista": "fuentes/e6d580ca4b05.jpg"
+   "nota": "La vista era un anuncio inmobiliario sin relación con el reporte; no se muestra.",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -26056,8 +26057,9 @@
     "CIUDAD GRANJA|Zapopan|45010"
    ],
    "lugar": "Ciudad Granja, Zapopan",
-   "cita": "CIUDAD GRANJA SIN AGUA DESDE HACE 14 DIAS TENGO FOLIO DEL AYUNTAMIENTO ZAPOPAN 072 DE PIPA Y NO LLEGA Y FOLIO CON SIAPA 11626952 SIN ATENCION",
+   "cita": "CIUDAD GRANJA SIN AGUA DESDE HACE 14 DIAS TENGO FOLIO DEL AYUNTAMIENTO ZAPOPAN 072 DE PIPA Y NO LLEGA Y FOLIO CON SIAPA [folio omitido] SIN ATENCION",
    "dias": 14,
+   "nota": "Folio personal de atención omitido el 2 de noviembre de 2026; el resto de la cita es textual.",
    "eco": {
     "al": "2026-10-26",
     "reacciones": 1,
@@ -28039,8 +28041,9 @@
     "ALFREDO BARBA|San Pedro Tlaquepaque|45580"
    ],
    "lugar": "Alfredo Barba, Tlaquepaque",
-   "cita": "Siapa Gdl a ver si hace algo! Calle rosal #14, cruza con avenida patria y 16 de septiembre. Colonia Alfredo barba San Pedro Tlaquepaque, ya tenemos un mes sin agua! Hasta cuando estaremos así",
+   "cita": "Siapa Gdl a ver si hace algo! [dirección omitida]. Colonia Alfredo barba San Pedro Tlaquepaque, ya tenemos un mes sin agua! Hasta cuando estaremos así",
    "dias": 30,
+   "nota": "Dirección personal omitida el 2 de noviembre de 2026; el resto de la cita es textual.",
    "eco": {
     "al": "2026-10-27",
     "reacciones": 0,
@@ -28622,7 +28625,7 @@
    "tipo": "comentario",
    "quien": "",
    "en": {
-    "quien": "Cuenta de vecinos @cruizch",
+    "quien": "Cuenta de vecinos de Camichines (Tonalá)",
     "url": "https://x.com/cruizch/status/2114718880673489273",
     "eco": {
      "reacciones": 142,
@@ -29847,7 +29850,7 @@
    "url": "https://x.com/AdonaisLee/status/2116948886514241693",
    "fecha": "2026-11-01",
    "colonias": [
-    "EL SAUZ|Guadalajara|45080"
+    "EL SAUZ|San Pedro Tlaquepaque|45080"
    ],
    "lugar": "El Sauz, Tlaquepaque",
    "cita": "3er. día sin agua en colonia El Sauz, Tlaquepaque.\nTandeo inicio el viernes y no a regresado el servicio  1 de noviembre.\n(Zona 6).\n\nPrograma de tandeos es un fracaso.\n\n@siapagdl @PabloLemusN @LauraImelPerezS @Trafico_ZMG @informador",
