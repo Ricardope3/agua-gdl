@@ -26,7 +26,7 @@ func (db *DB) SendReminder(ctx context.Context, s Subscriber, cutDate time.Time,
 		select s.id, z.zone, $3::date, 'sending', s.channel from subscriber s
 		join lateral (select z.zone from subscriber_zone z where z.subscriber_id = s.id
 			and z.zone = any($2::int[]) order by z.zone limit 1) z on true where s.id = $1
-		on conflict (subscriber_id, cut_date) do update set status = 'sending', zone = excluded.zone, sent_at = now()
+		on conflict (subscriber_id, cut_date) do update set status = 'sending', zone = excluded.zone, sent_at = now(), wamid_hash = null
 			where reminder.status = 'rejected'
 		returning id`, s.ID, zones, cutDate.Format(dateLayout))
 	if errors.Is(err, pgx.ErrNoRows) {
@@ -162,7 +162,7 @@ func (db *DB) SendNotice(ctx context.Context, s Subscriber, key string, budget *
 	id, err := db.reserve(ctx, budget, `insert into notice (subscriber_id, key, zone, status, channel)
 		select s.id, $2, $3, 'sending', s.channel from subscriber s where s.id = $1
 		and exists (select 1 from subscriber_zone z where z.subscriber_id = s.id and z.zone = $3)
-		on conflict (subscriber_id, key) do update set status = 'sending', sent_at = now()
+		on conflict (subscriber_id, key) do update set status = 'sending', sent_at = now(), wamid_hash = null
 			where notice.status = 'rejected'
 		returning id`, s.ID, key, s.Zone)
 	if errors.Is(err, pgx.ErrNoRows) {

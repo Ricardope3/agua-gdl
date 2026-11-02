@@ -356,8 +356,11 @@ func (db *DB) ReturnRecipients(ctx context.Context, channel string, zone int, st
 }
 
 // UpdateStatus records a delivery status and reports whether it changed a reminder.
+// A row outside the progression ('sending', 'uncertain') has no position: treat it as 0
+// so a late webhook can still settle it, otherwise NULL < x is never true and an
+// uncertain reminder stays uncertain forever.
 func (db *DB) UpdateStatus(ctx context.Context, wamid, status string) (bool, error) {
-	const progress = `array_position(array['sent','delivered','read','failed'], status) < array_position(array['sent','delivered','read','failed'], $2)`
+	const progress = `coalesce(array_position(array['sent','delivered','read','failed'], status), 0) < array_position(array['sent','delivered','read','failed'], $2)`
 	if _, err := db.q.Exec(ctx, `update notice set status = $2 where wamid_hash = $1 and `+progress, hashID(wamid), status); err != nil {
 		return false, err
 	}

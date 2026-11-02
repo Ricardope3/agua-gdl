@@ -434,6 +434,31 @@ func TestUpdateStatusReportsReminders(t *testing.T) {
 	}
 }
 
+func TestUpdateStatusSettlesUncertainReminders(t *testing.T) {
+	db := testDB(t)
+	s := testSubscriber(t, db)
+	ctx := context.Background()
+	boom := errors.New("reply never arrived")
+	if _, err := db.SendReminder(ctx, s, time.Now(), []int{4}, nil, func(Subscriber) (string, error) { return "wamid.maybe", boom }); !errors.Is(err, boom) {
+		t.Fatalf("send error: %v", err)
+	}
+	// The provider accepted the message but the reply never arrived: the row is
+	// 'uncertain', outside the progression array, and must still accept the
+	// provider's later delivery status instead of staying uncertain forever.
+	if ok, err := db.UpdateStatus(ctx, "wamid.maybe", "sent"); err != nil || !ok {
+		t.Fatalf("uncertain → sent: %v %v", ok, err)
+	}
+	if ok, err := db.UpdateStatus(ctx, "wamid.maybe", "delivered"); err != nil || !ok {
+		t.Fatalf("sent → delivered: %v %v", ok, err)
+	}
+	if ok, err := db.UpdateStatus(ctx, "wamid.maybe", "weird"); err != nil || ok {
+		t.Fatalf("an unknown webhook status must be ignored: %v %v", ok, err)
+	}
+	if ok, err := db.UpdateStatus(ctx, "wamid.maybe", "sent"); err != nil || ok {
+		t.Fatalf("delivered → sent must not regress: %v %v", ok, err)
+	}
+}
+
 func TestStoresOnlyHashesOfMessageIDs(t *testing.T) {
 	db := testDB(t)
 	s := testSubscriber(t, db)
