@@ -128,7 +128,7 @@ func TestAnyFailedSendFailsHeartbeatIncludingAfterRestart(t *testing.T) {
 	for sendErr, wantCalls := range map[error]int{
 		errors.New("network timeout"): 1, // WhatsApp may have accepted it: never resend
 		// Meta rejected it: nothing was sent, so each run retries with backoff until the 22:00 deadline.
-		&wa.APIError{Status: 400, Code: 131026}: 18,
+		&wa.APIError{Status: 400, Code: 100}: 18,
 	} {
 		t.Run(sendErr.Error(), func(t *testing.T) {
 			st, snd := fake.NewStore(), &fake.Sender{}

@@ -25,6 +25,19 @@ type APIError struct {
 // Rejected reports that Meta refused the request, so the message was not sent.
 func (e *APIError) Rejected() bool { return e.Status >= 400 && e.Status < 500 }
 
+// Gone reports that the recipient can't be reached because they blocked the bot or
+// their number left WhatsApp, as Telegram's 403 does: the subscription is an opt-out,
+// so the caller forgets it like BAJA instead of retrying forever.
+func (e *APIError) Gone() bool {
+	if e.Status == http.StatusForbidden {
+		return true
+	}
+	// Meta's undeliverable codes: 131026 (can't deliver, e.g. blocked) and
+	// 131047 (re-engagement required), when the request itself was refused.
+	// A 429 means throttling, not an opt-out: wait it out.
+	return e.Rejected() && e.Status != http.StatusTooManyRequests && (e.Code == 131026 || e.Code == 131047)
+}
+
 // Permanent reports errors that retrying won't fix, like a recipient who can't receive messages.
 func (e *APIError) Permanent() bool {
 	return e.Rejected() && e.Status != 401 && e.Status != 429

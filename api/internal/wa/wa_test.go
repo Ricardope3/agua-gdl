@@ -56,3 +56,16 @@ func TestAPIErrorTruncatesMetaMessage(t *testing.T) {
 		t.Errorf("error is %d bytes; Meta's message must be cut before it reaches the logs", n)
 	}
 }
+
+func TestAPIErrorGone(t *testing.T) {
+	for _, e := range []*APIError{{Status: 403, Code: 0}, {Status: 400, Code: 131026}, {Status: 400, Code: 131047}} {
+		if !e.Gone() {
+			t.Errorf("%+v must count as an opt-out", e)
+		}
+	}
+	for _, e := range []*APIError{{Status: 400, Code: 100}, {Status: 429, Code: 131026}, {Status: 500, Code: 131026}, {Status: 401, Code: 0}} {
+		if e.Gone() {
+			t.Errorf("%+v must not count as an opt-out", e)
+		}
+	}
+}
