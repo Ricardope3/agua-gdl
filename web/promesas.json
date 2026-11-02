@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-10-28",
+  "actualizado": "2026-10-31",
   "replica": {"enviada": "2026-10-17", "cierra": "2026-10-26T23:59"},
   "promesas": [
     {
@@ -207,9 +207,9 @@
       "tambien": [],
       "documento": {
         "titulo": "En julio ya había propuestas de empresas",
-        "citas": [{"ref": "Azteca Jalisco, 29 de julio de 2026", "texto": "informó que cuatro empresas han presentado propuestas formales para financiar el nuevo acueducto Chapala-Guadalajara y la renovación de la planta potabilizadora de Miravalle bajo un modelo de asociación público-privada"}],
+        "citas": [{"ref": "Azteca Jalisco, 30 de julio de 2026", "texto": "informó que cuatro empresas han presentado propuestas formales para financiar el nuevo acueducto Chapala-Guadalajara y la renovación de la planta potabilizadora de Miravalle bajo un modelo de asociación público-privada"}],
         "texto": "La nota se refiere al gobernador. No se sabe quiénes son las cuatro empresas.",
-        "fuentes": [{"url": "https://www.aztecajalisco.com/local/inversionistas-presentan-propuestas-para-acueducto-chapala-guadalajara/", "archive": "https://web.archive.org/web/20261017133701/https://www.aztecajalisco.com/local/inversionistas-presentan-propuestas-para-acueducto-chapala-guadalajara/", "medio": "Azteca Jalisco", "fecha": "2026-07-29", "tipo": "prensa"}]
+        "fuentes": [{"url": "https://www.aztecajalisco.com/local/inversionistas-presentan-propuestas-para-acueducto-chapala-guadalajara/", "archive": "https://web.archive.org/web/20261017133701/https://www.aztecajalisco.com/local/inversionistas-presentan-propuestas-para-acueducto-chapala-guadalajara/", "medio": "Azteca Jalisco", "fecha": "2026-07-30", "tipo": "prensa"}]
       },
       "plazo": {"fecha": null, "tipo": "lectura", "texto": "Lo revisamos con las bases, la apertura de propuestas y el fallo."},
       "pasos": [
@@ -303,8 +303,13 @@
       "documento": {
         "titulo": "La propuesta técnica presentada a los alcaldes (12 de octubre)",
         "citas": [{"ref": "Resumen de UDG TV", "texto": "entre marzo y julio de 2027 podría recurrirse nuevamente al suministro de Las Pintas durante el estiaje, dependiendo de las necesidades y las condiciones técnicas"}],
-        "texto": "La misma propuesta pone la limpieza entre noviembre de 2026 y marzo de 2027. No dice que antes de volver a usar Las Pintas se garantizará que el agua se puede potabilizar.",
-        "fuentes": [{"url": "https://udgtv.com/noticias/siapa-contempla-suspensiones-de-hasta-3-dias-por-semana/334344", "archive": "https://web.archive.org/web/20261017060328/https://udgtv.com/noticias/siapa-contempla-suspensiones-de-hasta-3-dias-por-semana/334344", "medio": "UDG TV", "fecha": "2026-10-12", "tipo": "prensa"}]
+        "texto": "La misma propuesta pone la limpieza entre noviembre de 2026 y marzo de 2027. No dice que antes de volver a usar Las Pintas se garantizará que el agua se puede potabilizar. Las respuestas de transparencia de la CEA, el SIAPA y la SGIA describen trabajos y coordinación, pero no aportan la orden de cierre ni el programa y el plan con calendario, presupuesto y contratos.",
+        "fuentes": [
+          {"url": "https://udgtv.com/noticias/siapa-contempla-suspensiones-de-hasta-3-dias-por-semana/334344", "archive": "https://web.archive.org/web/20261017060328/https://udgtv.com/noticias/siapa-contempla-suspensiones-de-hasta-3-dias-por-semana/334344", "medio": "UDG TV", "fecha": "2026-10-12", "tipo": "prensa"},
+          {"url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/8F077B15A383695472832BF9142473C6", "archive": null, "medio": "CEA, respuesta CEAJ/DJ/UT-329/2026", "fecha": "2026-10-21", "tipo": "primaria", "captura": "privada"},
+          {"url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/6D1BDC9116F3F7F55B0392D76E5830BD", "archive": null, "medio": "SIAPA, respuesta UT/2301/2026", "fecha": "2026-10-29", "tipo": "primaria", "captura": "privada"},
+          {"url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/B5D521639D5F1F3751F5DCF8A15ED28B", "archive": null, "medio": "SGIA, respuesta CGEGT/UT/1758/2026", "fecha": "2026-10-28", "tipo": "primaria", "captura": "privada"}
+        ]
       },
       "plazo": {"fecha": "2027-03-31", "tipo": "lectura", "texto": "Limpieza: de noviembre de 2026 a marzo de 2027, según la propuesta técnica. Volver a usarla: sin fecha, solo con la garantía de que el agua se puede potabilizar."},
       "pasos": [
@@ -319,7 +324,7 @@
       ],
       "veredicto": "en_riesgo",
       "veredicto_fecha": "2026-10-16",
-      "nota": "El cierre está anunciado, pero la propia propuesta del gobierno contempla volver a usar Las Pintas en el estiaje sin mencionar la garantía. Le pedimos a la Comisión Estatal del Agua la orden de cierre, el programa de limpieza y el plan de remediación; en su respuesta del 21 de octubre no entregó ningún documento, calendario, presupuesto ni contrato, solo dijo que se hacen trabajos de desazolve y retiro de maleza.",
+      "nota": "El cierre está anunciado, pero la propuesta contempla volver a usar Las Pintas sin mencionar la garantía. Las respuestas de transparencia describen desazolve y coordinación, sin entregar la orden, el programa de limpieza o el plan de remediación solicitados.",
       "respuesta": null,
       "historial": []
     },
@@ -336,10 +341,13 @@
       "fuentes": [{"url": "https://www.informador.mx/jalisco/siapa-comienzan-tandeos-en-la-zmg-con-113-colonias-piden-paciencia-y-verificar-calendario-de-rotacion-de-servicio-20261015-0177.html", "archive": "https://web.archive.org/web/20261017134828/https://www.informador.mx/jalisco/siapa-comienzan-tandeos-en-la-zmg-con-113-colonias-piden-paciencia-y-verificar-calendario-de-rotacion-de-servicio-20261015-0177.html", "medio": "El Informador", "fecha": "2026-10-15", "tipo": "prensa"}],
       "tambien": [],
       "documento": {
-        "titulo": "Lo que encontramos",
+        "titulo": "Lo que encontramos y la respuesta del SIAPA",
         "citas": [],
-        "texto": "Al 17 de octubre, lo más reciente en la sección de prensa del SIAPA era el boletín del 15 de octubre.",
-        "fuentes": [{"url": "https://www.siapa.gob.mx/prensa", "archive": null, "medio": "SIAPA", "fecha": "2026-10-17", "tipo": "primaria", "captura": "privada"}]
+        "texto": "Al 17 de octubre, lo más reciente en la sección de prensa del SIAPA era el boletín del 15 de octubre. El 29 de octubre el SIAPA respondió que no tiene registros con la especificidad solicitada para informes diarios, ajustes al calendario o presión por zona; remitió al sitio general de la rotación y reportó 565 reportes por falta de agua desde el 15 de octubre, sin desglosarlos por día y zona.",
+        "fuentes": [
+          {"url": "https://www.siapa.gob.mx/prensa", "archive": null, "medio": "SIAPA", "fecha": "2026-10-17", "tipo": "primaria", "captura": "privada"},
+          {"url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/39F32BC1E5CC74C6930E2D0A1BF8D5A8", "archive": null, "medio": "SIAPA, respuesta UT/2302/2026", "fecha": "2026-10-29", "tipo": "primaria", "captura": "privada"}
+        ]
       },
       "plazo": {"fecha": "2027-03-31", "tipo": "lectura", "texto": "Todos los días mientras dure la rotación; tomamos el 31 de marzo de 2027."},
       "pasos": [
@@ -349,7 +357,7 @@
       ],
       "veredicto": "sin_pruebas",
       "veredicto_fecha": "2026-10-16",
-      "nota": "Vamos a contar cuántos días hubo informe.",
+      "nota": "La respuesta de transparencia no proporciona informes diarios ni identifica dónde se publica esa serie. Vamos a contar cuántos días hubo informe.",
       "respuesta": null,
       "historial": []
     },
@@ -380,13 +388,26 @@
           "estado": "cumplido",
           "evidencia": [{"url": "https://www.informador.mx/jalisco/siapa-lemus-anuncia-rotacion-del-agua-en-guadalajara-inicia-el-15-de-octubre-20261012-0187.html", "archive": "https://web.archive.org/web/20261017135044/https://www.informador.mx/jalisco/siapa-lemus-anuncia-rotacion-del-agua-en-guadalajara-inicia-el-15-de-octubre-20261012-0187.html", "medio": "El Informador", "fecha": "2026-10-12"}]
         },
-        {"texto": "El SIAPA publica los puntos, horarios y rutas, como pide el decreto. No los encontramos.", "estado": "pendiente", "core": true},
-        {"texto": "Hay un registro público de entregas (lo pedimos por transparencia).", "estado": "pendiente"},
+        {
+          "texto": "El SIAPA publica los puntos, horarios y rutas. Entregó una hoja de enlaces a publicaciones que termina el 31 de agosto; no acredita difusión permanente durante la rotación.",
+          "estado": "pendiente",
+          "core": true,
+          "evidencia": [
+            {"url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/011376FC37A4F7209F7E690D7A30BDE5", "archive": null, "medio": "SIAPA, primer informe mensual incluido en UT/2304/2026", "fecha": "2026-10-29", "tipo": "primaria", "captura": "privada"},
+            {"url": "https://docs.google.com/spreadsheets/d/1MZuIZr6Gkau_LmREOXrp9sKwfKJFBD0tKN5uT4epXSQ/edit?gid=439750857#gid=439750857", "archive": null, "medio": "SIAPA, hoja de enlaces a publicaciones", "fecha": "2026-10-31", "tipo": "primaria", "captura": "privada"}
+          ]
+        },
+        {"texto": "Hay un registro público de entregas. La respuesta no lo incluye.", "estado": "pendiente"},
+        {
+          "texto": "El SIAPA reporta 16 solicitudes de pipa el 28 de julio, 443 en agosto, 431 en septiembre y 1,574 en octubre hasta el 29; no entrega el detalle por colonia, atención, litros o gratuidad.",
+          "estado": "declarado",
+          "evidencia": [{"url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/510F34BF55F47B5807E54524619172D3", "archive": null, "medio": "SIAPA, respuesta UT/2303/2026", "fecha": "2026-10-29", "tipo": "primaria", "captura": "privada"}]
+        },
         {"texto": "No hay reportes creíbles de cobros por pipas gratuitas.", "estado": "pendiente"}
       ],
       "veredicto": "en_riesgo",
       "veredicto_fecha": "2026-10-16",
-      "nota": "El canal para pedir pipas existe, pero no encontramos la publicación de puntos, horarios y rutas que pide el decreto.",
+      "nota": "Existe el canal y hay cifras oficiales de solicitudes, pero no un registro público de entregas ni prueba de difusión permanente de puntos, horarios y rutas durante la rotación.",
       "respuesta": null,
       "historial": []
     },
@@ -411,12 +432,13 @@
         }
       ],
       "documento": {
-        "titulo": "Lo publicado en el Periódico Oficial",
+        "titulo": "Las listas y el primer informe mensual",
         "citas": [],
-        "texto": "La primera lista salió el 14 de agosto con 235 colonias. La segunda salió el 8 de octubre con 342 colonias, 55 días después. No encontramos ningún informe mensual al Congreso.",
+        "texto": "La primera lista salió el 14 de agosto con 235 colonias. La segunda salió el 8 de octubre con 342 colonias, 55 días después. La respuesta de transparencia incluye el primer informe al Congreso, presentado el 24 de septiembre; al 29 de octubre el segundo estaba en integración y aún no había cifras de descuentos por el proceso de facturación.",
         "fuentes": [
           {"url": "https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25557/1786740179-2026-08-14-.pdf", "archive": "https://web.archive.org/web/20261017132124/https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper%2F25557%2F1786740179-2026-08-14-.pdf", "medio": "Periódico Oficial, 14 de agosto de 2026", "fecha": "2026-08-14", "tipo": "primaria"},
-          {"url": "https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25862/1791483823-2026-10-08-IV.pdf", "archive": null, "medio": "Periódico Oficial, 8 de octubre de 2026", "fecha": "2026-10-08", "tipo": "primaria", "captura": "privada"}
+          {"url": "https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25862/1791483823-2026-10-08-IV.pdf", "archive": null, "medio": "Periódico Oficial, 8 de octubre de 2026", "fecha": "2026-10-08", "tipo": "primaria", "captura": "privada"},
+          {"url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/011376FC37A4F7209F7E690D7A30BDE5", "archive": null, "medio": "SIAPA, respuesta UT/2304/2026 y primer informe mensual", "fecha": "2026-10-29", "tipo": "primaria", "captura": "privada"}
         ]
       },
       "plazo": {"fecha": "2026-12-15", "tipo": "explicito", "texto": "Cada mes, hasta el 15 de diciembre de 2026, cuando vence el decreto."},
@@ -431,13 +453,18 @@
           "estado": "cumplido",
           "evidencia": [{"url": "https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25862/1791483823-2026-10-08-IV.pdf", "archive": null, "medio": "Periódico Oficial", "fecha": "2026-10-08", "captura": "privada"}]
         },
-        {"texto": "Informes mensuales del SIAPA al Congreso (agosto, septiembre, octubre y noviembre).", "estado": "pendiente", "core": true},
+        {
+          "texto": "Primer informe al Congreso, por el periodo del 28 de julio al 28 de agosto: oficio DG-635/2026, presentado el 24 de septiembre.",
+          "estado": "cumplido",
+          "evidencia": [{"url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/011376FC37A4F7209F7E690D7A30BDE5", "archive": null, "medio": "SIAPA, oficio DG-635/2026 y acuse", "fecha": "2026-09-24", "tipo": "primaria", "captura": "privada"}]
+        },
+        {"texto": "Los informes mensuales posteriores se presentan y permiten comprobar los descuentos; al 29 de octubre el segundo estaba en integración.", "estado": "pendiente", "core": true},
         {"texto": "El descuento aparece en los recibos de las colonias de la lista.", "estado": "pendiente"},
         {"texto": "Antes del 15 de diciembre se decide si el descuento sigue mientras dure la rotación.", "estado": "pendiente"}
       ],
       "veredicto": "en_riesgo",
       "veredicto_fecha": "2026-10-16",
-      "nota": "La segunda lista salió 55 días después de la primera, y no encontramos ningún informe mensual al Congreso.",
+      "nota": "La segunda lista salió 55 días después de la primera. El primer informe ya está comprobado; al 29 de octubre el segundo seguía en integración.",
       "respuesta": null,
       "historial": []
     },
@@ -570,19 +597,20 @@
       "quien": "Comisión Estatal de Derechos Humanos Jalisco",
       "cargo": "Recomendación 10/2026, punto Cuarta, fracción II, al SIAPA",
       "fecha": "2026-04-30",
-      "donde": "recomendación dirigida a nueve autoridades, con 39 puntos",
+      "donde": "recomendación dirigida a nueve autoridades, con 40 puntos",
       "fuentes": [
         {"url": "https://cedhj.org.mx/assets_web/doc/recomendaciones/emitidas/2026/20260430150739/recomendacion_1777583259457.pdf", "archive": null, "medio": "CEDHJ", "fecha": "2026-04-30", "tipo": "primaria", "captura": "privada"},
         {"url": "https://udgtv.com/noticias/contaminacion-del-agua-afecta-a-650-colonias-de-la-zmg/322372", "archive": "https://web.archive.org/web/20261017133444/https://udgtv.com/noticias/contaminacion-del-agua-afecta-a-650-colonias-de-la-zmg/322372", "medio": "UDG TV", "fecha": "2026-06-25", "tipo": "prensa"}
       ],
       "tambien": [],
       "documento": {
-        "titulo": "Ley de la CEDHJ, artículo 72",
+        "titulo": "Ley de la CEDHJ y seguimiento oficial",
         "citas": [{"texto": "deberá informar, dentro de los diez días siguientes a su notificación, si acepta dicha recomendación. En su caso, deberá acreditar dentro de los quince días siguientes, que ha cumplido con la misma. Dicho plazo podrá ser ampliado cuando la naturaleza de la recomendación así lo requiera"}],
-        "texto": "Según UDG TV, la recomendación fue aceptada por las autoridades. En marzo de 2026, la presidenta de la CEDHJ dijo que de la Recomendación 10/2022, también sobre el agua, «de los puntos recomendatorios solamente tenemos un avance del dieciocho por ciento».",
+        "texto": "Según UDG TV, la recomendación fue aceptada por las autoridades. La ficha de seguimiento entregada por la CEDHJ clasifica todos los puntos de la Recomendación 10/2026 como «en vías de cumplimiento»; para el punto Cuarta remite a páginas del SIAPA, no a una constancia de cumplimiento. En marzo de 2026, la presidenta de la CEDHJ dijo que de la Recomendación 10/2022 «de los puntos recomendatorios solamente tenemos un avance del dieciocho por ciento».",
         "fuentes": [
           {"url": "https://transparencia.info.jalisco.gob.mx/sites/default/files/Ley%20de%20la%20Comisi%C3%B3n%20Estatal%20de%20Derechos%20Humanos_11.pdf", "archive": "https://web.archive.org/web/20250810045232/https://transparencia.info.jalisco.gob.mx/sites/default/files/Ley%20de%20la%20Comisi%C3%B3n%20Estatal%20de%20Derechos%20Humanos_11.pdf", "medio": "Ley de la CEDHJ", "fecha": "2026-10-16", "tipo": "primaria"},
-          {"url": "https://www.milenio.com/comunidad/cedhj-suma-26-quejas-servicio-agua-amg", "archive": "https://web.archive.org/web/20261017135228/https://www.milenio.com/comunidad/cedhj-suma-26-quejas-servicio-agua-amg", "medio": "Milenio", "fecha": "2026-03-11", "tipo": "prensa"}
+          {"url": "https://www.milenio.com/comunidad/cedhj-suma-26-quejas-servicio-agua-amg", "archive": "https://web.archive.org/web/20261017135228/https://www.milenio.com/comunidad/cedhj-suma-26-quejas-servicio-agua-amg", "medio": "Milenio", "fecha": "2026-03-11", "tipo": "prensa"},
+          {"url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/0BD5450FF9F7C497FCBE1B85D4F9A692", "archive": null, "medio": "CEDHJ, respuesta DT/660/2026 y ficha de seguimiento", "fecha": "2026-10-29", "tipo": "primaria", "captura": "privada"}
         ]
       },
       "plazo": {"fecha": null, "tipo": "explicito", "texto": "Por ley, diez días para aceptarla y quince para acreditar que se cumplió; el plazo se puede ampliar."},
@@ -591,29 +619,35 @@
         {"texto": "El SIAPA publica los resultados de los laboratorios externos de 2026.", "estado": "pendiente", "core": true},
         {"texto": "El SIAPA publica cómo elige sus puntos de monitoreo y sus resultados.", "estado": "pendiente"},
         {"texto": "La COPRISJAL vigila al azar y de forma permanente el agua contra la NOM-127 y avisa al SIAPA cuando falla.", "estado": "pendiente"},
-        {"texto": "La CEDHJ informa cuánto ha cumplido cada autoridad (lo pedimos por transparencia).", "estado": "pendiente"}
+        {
+          "texto": "La CEDHJ informa el seguimiento por autoridad: todos los puntos de la Recomendación 10/2026 aparecen «en vías de cumplimiento».",
+          "estado": "cumplido",
+          "evidencia": [{"url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/0BD5450FF9F7C497FCBE1B85D4F9A692", "archive": null, "medio": "CEDHJ, ficha de seguimiento del 22 de octubre", "fecha": "2026-10-22", "tipo": "primaria", "captura": "privada"}]
+        }
       ],
       "veredicto": "en_riesgo",
       "veredicto_fecha": "2026-10-16",
-      "nota": "No encontramos publicados los resultados que pide el punto Cuarta. En 2022 la CEDHJ ya había pedido al SIAPA casi lo mismo.",
+      "nota": "La CEDHJ ya informó el seguimiento: todos los puntos de 2026 siguen en vías de cumplimiento. Los resultados que pide el punto Cuarta aún no están comprobados.",
       "respuesta": null,
       "historial": []
     }
   ],
   "solicitudes": [
-    {"a": "SIAPA", "folio": "140279226001093", "fecha": "2026-10-17", "tema": "la presa Las Pintas (la orden de dejar de usarla, los caudales que llegaban a la planta de Miravalle, el programa de limpieza, el plan de remediación y los análisis del agua)", "estado": "en proceso; el plazo para responder vence el 29 de octubre"},
-    {"a": "SIAPA", "folio": "140279226001094", "fecha": "2026-10-17", "tema": "los informes diarios de la rotación, los ajustes al calendario, los registros de presión por zona y los reportes de falta de agua", "estado": "en proceso; el plazo para responder vence el 29 de octubre"},
-    {"a": "Comisión Estatal del Agua", "folio": "140239726000217", "fecha": "2026-10-17", "tema": "la presa Las Pintas (la orden de dejar de usarla, los caudales que llegaban a la planta de Miravalle, el programa de limpieza, el plan de remediación y los análisis del agua)", "estado": "respondida el 21 de octubre (oficio CEAJ/DJ/UT-329/2026) como «parcialmente afirmativa», sin entregar ningún documento: de la orden dice que se adoptó «a partir de consultas realizadas con expertos en la materia»; de la limpieza y la remediación, que «se realizan trabajos de desazolve y retiro de maleza acuática»; no opera la planta de Miravalle y no tiene los análisis del agua"},
-    {"a": "Congreso del Estado de Jalisco", "folio": "140280126000477", "fecha": "2026-10-17", "tema": "los informes mensuales del SIAPA al Congreso que pide el Decreto 30216/LXIV/26", "estado": "en proceso; el plazo para responder vence el 29 de octubre"},
-    {"a": "Comisión Estatal de Derechos Humanos Jalisco", "folio": "140293226000184", "fecha": "2026-10-17", "tema": "la aceptación y el cumplimiento de la Recomendación 10/2026, y de la 10/2022", "estado": "en proceso; el plazo para responder vence el 29 de octubre"},
-    {"a": "Secretaría de la Hacienda Pública", "folio": "142042226003448", "fecha": "2026-10-17", "tema": "la APP del acueducto (la opinión de la CONAGUA, las propuestas de empresas, los estudios de factibilidad y capacidad de pago, y si el contrato se registrará como obligación)", "estado": "en proceso; el plazo para responder vence el 29 de octubre"},
-    {"a": "Comisión Estatal del Agua", "folio": "140239726000218", "fecha": "2026-10-17", "tema": "la APP del acueducto (la opinión de la CONAGUA, las propuestas de empresas, los estudios de factibilidad y capacidad de pago, y si el contrato se registrará como obligación)", "estado": "en proceso; el plazo para responder vence el 29 de octubre"},
+    {"a": "SIAPA", "folio": "140279226001091", "fecha": "2026-10-16", "tema": "el catálogo y los polígonos de colonias y zonas de la rotación, y la metodología para asignarlas", "estado": "respondida el 28 de octubre (oficio UT/2299/2026) como negativa por inexistente: dice que no tiene archivos con esa desagregación y no entrega el catálogo, los polígonos ni la metodología", "url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/EB60FEE725CFC42398B6AA9C5CF77D12"},
+    {"a": "SIAPA", "folio": "140279226001093", "fecha": "2026-10-17", "tema": "la presa Las Pintas (la orden de dejar de usarla, los caudales que llegaban a la planta de Miravalle, el programa de limpieza, el plan de remediación y los análisis del agua)", "estado": "respondida el 29 de octubre (oficio UT/2301/2026) como afirmativa: remite a portales para caudales y análisis y describe desazolve y coordinación con la CEA, pero no adjunta la orden, el programa con calendario, presupuesto y contratos, ni el plan de remediación", "url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/6D1BDC9116F3F7F55B0392D76E5830BD"},
+    {"a": "SIAPA", "folio": "140279226001094", "fecha": "2026-10-17", "tema": "los informes diarios de la rotación, los ajustes al calendario, los registros de presión por zona y los reportes de falta de agua", "estado": "respondida el 29 de octubre (oficio UT/2302/2026) como afirmativa: dice no tener registros con la especificidad pedida para los tres primeros puntos, remite al sitio de la rotación y reporta 565 reportes por falta de agua desde el 15 de octubre, sin desglose por día y zona", "url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/39F32BC1E5CC74C6930E2D0A1BF8D5A8"},
+    {"a": "Comisión Estatal del Agua", "folio": "140239726000217", "fecha": "2026-10-17", "tema": "la presa Las Pintas (la orden de dejar de usarla, los caudales que llegaban a la planta de Miravalle, el programa de limpieza, el plan de remediación y los análisis del agua)", "estado": "respondida el 21 de octubre (oficio CEAJ/DJ/UT-329/2026) como «parcialmente afirmativa», sin entregar ningún documento: de la orden dice que se adoptó «a partir de consultas realizadas con expertos en la materia»; de la limpieza y la remediación, que «se realizan trabajos de desazolve y retiro de maleza acuática»; no opera la planta de Miravalle y no tiene los análisis del agua", "url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/8F077B15A383695472832BF9142473C6"},
+    {"a": "Congreso del Estado de Jalisco", "folio": "140280126000477", "fecha": "2026-10-17", "tema": "los informes mensuales del SIAPA al Congreso que pide el Decreto 30216/LXIV/26", "estado": "respondida el 27 de octubre (expediente UTI-600/2026) como afirmativa: remite a INFOLEJ para la información recibida por el Congreso y al SIAPA para los listados; no adjunta informes ni cifras de descuentos", "url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/C6A9D1E577F8337B3A8D86422199BBE6"},
+    {"a": "Comisión Estatal de Derechos Humanos Jalisco", "folio": "140293226000184", "fecha": "2026-10-17", "tema": "la aceptación y el cumplimiento de la Recomendación 10/2026, y de la 10/2022", "estado": "respondida el 29 de octubre (oficio DT/660/2026) como afirmativa: la ficha de seguimiento clasifica todos los puntos de 2026 como «en vías de cumplimiento»; para el punto Cuarta del SIAPA proporciona enlaces a sus páginas, no una constancia de cumplimiento", "url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/0BD5450FF9F7C497FCBE1B85D4F9A692"},
+    {"a": "Secretaría de la Hacienda Pública", "folio": "142042226003448", "fecha": "2026-10-17", "tema": "la APP del acueducto (la opinión de la CONAGUA, las propuestas de empresas, los estudios de factibilidad y capacidad de pago, y si el contrato se registrará como obligación)", "estado": "respondida el 29 de octubre (oficio SHP/UTI-11656/2026) como negativa por inexistente: dice que no genera, posee ni administra la información y orienta a la CONAGUA", "url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/83554794C57751D200EF48A68CDDEB99"},
+    {"a": "Comisión Estatal del Agua", "folio": "140239726000218", "fecha": "2026-10-17", "tema": "la APP del acueducto (la opinión de la CONAGUA, las propuestas de empresas, los estudios de factibilidad y capacidad de pago, y si el contrato se registrará como obligación)", "estado": "respondida el 28 de octubre (oficio CEAJ/DJ/UT-332/2026) como negativa: orienta a la CONAGUA por tratarse de un proyecto a cargo del Gobierno federal; no entrega los documentos solicitados", "url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/B6F083C7AFD0EFB7E04E7460CF4321AF"},
     {"a": "CONAGUA", "folio": "340009400276526", "fecha": "2026-10-17", "tema": "la APP del acueducto (la opinión de la CONAGUA, las propuestas de empresas, los estudios de factibilidad y capacidad de pago, y si el contrato se registrará como obligación)", "estado": "en proceso; el plazo para responder vence el 18 de noviembre"},
-    {"a": "SIAPA", "folio": "140279226001095", "fecha": "2026-10-18", "tema": "las pipas: las solicitudes de agua en pipa desde el 28 de julio, cuántas pipas propias y rentadas operan, las cisternas y potabilizadoras portátiles, los puntos de abastecimiento y lo que han costado", "estado": "el 20 de octubre el SIAPA se declaró competente solo en parte (oficio UT/2191/2026) y envió a la Comisión Estatal del Agua lo de las potabilizadoras portátiles, los puntos de abastecimiento, horarios y rutas, y el costo; lo demás vence el 29 de octubre"},
-    {"a": "Comisión Estatal del Agua", "folio": "140239726000224", "fecha": "2026-10-21", "tema": "la parte de la solicitud de pipas que le envió el SIAPA: las potabilizadoras portátiles, los puntos de abastecimiento, horarios y rutas que pide difundir el Decreto 30216/LXIV/26, y lo que han costado", "estado": "en proceso; el plazo para responder vence el 2 de noviembre"},
-    {"a": "SIAPA", "folio": "140279226001096", "fecha": "2026-10-18", "tema": "los informes mensuales del SIAPA al Congreso que pide el Decreto 30216/LXIV/26, las listas mensuales de colonias con descuento y cuánto se ha descontado", "estado": "en proceso; el plazo para responder vence el 29 de octubre"},
-    {"a": "Secretaría de Gestión Integral del Agua, por la Coordinación General Estratégica de Gestión del Territorio", "folio": "142042126005499", "fecha": "2026-10-18", "tema": "la presa Las Pintas (la orden de dejar de usarla, los caudales que llegaban a la planta de Miravalle, el programa de limpieza, el plan de remediación y los análisis del agua)", "estado": "en proceso; el plazo para responder vence el 29 de octubre"},
-    {"a": "Secretaría de Gestión Integral del Agua, por la Coordinación General Estratégica de Gestión del Territorio", "folio": "142042126005500", "fecha": "2026-10-18", "tema": "la APP del acueducto (la opinión de la CONAGUA, las propuestas de empresas, los estudios de factibilidad y capacidad de pago, y si el contrato se registrará como obligación)", "estado": "en proceso; el plazo para responder vence el 29 de octubre"}
+    {"a": "SIAPA", "folio": "140279226001095", "fecha": "2026-10-18", "tema": "las pipas: las solicitudes de agua en pipa desde el 28 de julio, cuántas pipas propias y rentadas operan, las cisternas y potabilizadoras portátiles, los puntos de abastecimiento y lo que han costado", "estado": "respondida el 29 de octubre (oficio UT/2303/2026) como afirmativa: reporta 16 solicitudes el 28 de julio, 443 en agosto, 431 en septiembre y 1,574 en octubre, siete pipas propias operativas y 28 cisternas; no entrega el detalle de atención, litros, gratuidad, pipas rentadas, costos o contratos", "url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/510F34BF55F47B5807E54524619172D3"},
+    {"a": "CONAGUA", "folio": "340009400276426", "fecha": "2026-10-19", "tema": "el registro de solicitudes y entregas de agua en pipa desde el 28 de julio", "estado": "en proceso; el plazo para responder vence el 18 de noviembre"},
+    {"a": "Comisión Estatal del Agua", "folio": "140239726000224", "fecha": "2026-10-21", "tema": "la parte de la solicitud de pipas que le envió el SIAPA: las potabilizadoras portátiles, los puntos de abastecimiento, horarios y rutas que pide difundir el Decreto 30216/LXIV/26, y lo que han costado", "estado": "respondida el 26 de octubre (oficio CEAJ/DJ/UT-343/2026) como parcialmente afirmativa: entrega la bitácora de su planta potabilizadora móvil con fechas, colonias, garrafones, litros y horarios hasta el 26 de octubre; no entrega costos ni contratos", "url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/50E4DA49F4C96365EA7D5F5D68CE9CE9"},
+    {"a": "SIAPA", "folio": "140279226001096", "fecha": "2026-10-18", "tema": "los informes mensuales del SIAPA al Congreso que pide el Decreto 30216/LXIV/26, las listas mensuales de colonias con descuento y cuánto se ha descontado", "estado": "respondida el 29 de octubre (oficio UT/2304/2026) como afirmativa: adjunta el primer informe, presentado el 24 de septiembre mediante el oficio DG-635/2026; dice que el segundo está en integración y que aún no hay cifras de descuentos por el proceso de facturación", "url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/011376FC37A4F7209F7E690D7A30BDE5"},
+    {"a": "Secretaría de Gestión Integral del Agua, por la Coordinación General Estratégica de Gestión del Territorio", "folio": "142042126005499", "fecha": "2026-10-18", "tema": "la presa Las Pintas (la orden de dejar de usarla, los caudales que llegaban a la planta de Miravalle, el programa de limpieza, el plan de remediación y los análisis del agua)", "estado": "respondida el 28 de octubre (oficio CGEGT/UT/1758/2026) como afirmativa parcial: dice no tener la información de los puntos 1, 2, 3 y 5 y remite a CEA y SIAPA; sobre el plan solo describe reuniones, mesas de trabajo y recorridos, sin entregarlo", "url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/B5D521639D5F1F3751F5DCF8A15ED28B"},
+    {"a": "Secretaría de Gestión Integral del Agua, por la Coordinación General Estratégica de Gestión del Territorio", "folio": "142042126005500", "fecha": "2026-10-18", "tema": "la APP del acueducto (la opinión de la CONAGUA, las propuestas de empresas, los estudios de factibilidad y capacidad de pago, y si el contrato se registrará como obligación)", "estado": "respondida el 29 de octubre (oficio CGEGT/UT/1762/2026) como negativa por inexistente: orienta a la CONAGUA y no entrega los documentos solicitados", "url": "https://servicios.plataformadetransparencia.org.mx/inai3/rest/organoGarante/administracionControlDescarga/descargarAdjuntosPorSolicitud/9A267087ADCFE6321F398FB619E385AA"}
   ],
   "correcciones": [
     {"fecha": "2026-10-20", "codigo": "Cómo calificamos", "texto": "«En riesgo» también cuenta cuando un hecho o un documento oficial pone en duda que se cumpla; así calificamos A6 y B2 desde el 16 de octubre. Y la fecha que tomamos para un plazo que no es exacto se fija la primera vez que publicamos la promesa, como en B6, cuyo plazo ya había pasado cuando la publicamos."},
