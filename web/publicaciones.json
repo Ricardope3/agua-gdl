@@ -29630,7 +29630,8 @@
    "bloqueo": true,
    "eco": null,
    "titular": "Vecinos de Guadalajara y Zapopan Tienen Casi 22 Días Sin Agua | N+",
-   "captura": "fuentes/8f1a73e2ada3-t.jpg"
+   "captura": "fuentes/8f1a73e2ada3-t.jpg",
+   "vista": "fuentes/8f1a73e2ada3.jpg"
   },
   {
    "fuente": "medio",
@@ -29648,7 +29649,8 @@
    "bloqueo": true,
    "eco": null,
    "titular": "Denuncian fallas en los tandeos y falta de pipas gratuitas; bloquean periférico.",
-   "captura": "fuentes/7147fa92d9a6-t.jpg"
+   "captura": "fuentes/7147fa92d9a6-t.jpg",
+   "vista": "fuentes/7147fa92d9a6.jpg"
   },
   {
    "fuente": "medio",
@@ -30657,7 +30659,8 @@
     "comentarios": 37,
     "compartidos": 11,
     "al": "2026-11-01"
-   }
+   },
+   "vista": "fuentes/24d275e55a25.jpg"
   },
   {
    "fuente": "medio",
@@ -30677,7 +30680,8 @@
    "cita": "Los inconformes señalaron que llevan 32 días sin que se les garantice el acceso al agua.",
    "dias": 32,
    "bloqueo": true,
-   "de": "https://www.facebook.com/traficozmg.periodismociudadano/posts/pfbid02vq62RzrLPuHsRVSVK9YWqWAYgacRDtXoQjoFT4PHnAdeMRsXzGv1qkuGT2voQ23il"
+   "de": "https://www.facebook.com/traficozmg.periodismociudadano/posts/pfbid02vq62RzrLPuHsRVSVK9YWqWAYgacRDtXoQjoFT4PHnAdeMRsXzGv1qkuGT2voQ23il",
+   "vista": "fuentes/6b587d55c910.jpg"
   },
   {
    "fuente": "medio",
@@ -30697,7 +30701,8 @@
    "cita": "los vecinos llevaron una cubeta con una muestra del agua que, según explicaron, comenzó a salir aproximadamente media hora antes, luego de más de un mes sin contar con el servicio",
    "dias": 32,
    "bloqueo": true,
-   "de": "https://www.facebook.com/traficozmg.periodismociudadano/posts/pfbid02vq62RzrLPuHsRVSVK9YWqWAYgacRDtXoQjoFT4PHnAdeMRsXzGv1qkuGT2voQ23il"
+   "de": "https://www.facebook.com/traficozmg.periodismociudadano/posts/pfbid02vq62RzrLPuHsRVSVK9YWqWAYgacRDtXoQjoFT4PHnAdeMRsXzGv1qkuGT2voQ23il",
+   "vista": "fuentes/6b587d55c910.jpg"
   },
   {
    "fuente": "medio",
@@ -30722,7 +30727,8 @@
     "comentarios": 52,
     "compartidos": 65,
     "al": "2026-11-01"
-   }
+   },
+   "vista": "fuentes/aa3d51e00677.jpg"
   },
   {
    "fuente": "medio",
@@ -30748,6 +30754,135 @@
     "reacciones": 400,
     "comentarios": 59,
     "compartidos": 28,
+    "al": "2026-11-01"
+   },
+   "vista": "fuentes/367ae1535a9e.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "Grupo «Ciudad Granja Facebook»",
+   "url": "https://www.facebook.com/groups/GroupCiudadGranja/posts/3234244476779710/",
+   "fecha": "2026-11-01",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Ciudad Granja, Zapopan",
+   "cita": "Hemos intentado distintas vías: presentamos oficios al SIAPA, quejas y firmas ante la CEDHJ, nos manifestamos con cierre de avenidas. Sin embargo, nada de esto ha sido suficiente para obtener una solución de fondo. Por eso, necesitamos dar un paso más y exigir nuestros derechos por la vía legal, a través de un amparo colectivo que permita llevar nuestra demanda ante un juez.",
+   "dias": null,
+   "eco": {
+    "reacciones": 89,
+    "comentarios": 19,
+    "compartidos": 7,
+    "al": "2026-11-01"
+   },
+   "nota": "Anuncia una sesión informativa el miércoles 4 de noviembre, 7:30 pm, Terraza Los Girasoles, para organizar el amparo colectivo.",
+   "video": true,
+   "vista": "fuentes/211f604badff.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "Grupo «Ciudad Granja Facebook»",
+    "url": "https://www.facebook.com/groups/GroupCiudadGranja/posts/3234244476779710/",
+    "eco": {
+     "reacciones": 89,
+     "comentarios": 19,
+     "compartidos": 7,
+     "al": "2026-11-01"
+    }
+   },
+   "url": "https://www.facebook.com/groups/GroupCiudadGranja/posts/3234244476779710/?comment_id=3234880113382813",
+   "fecha": "2026-11-01",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Ciudad Granja, Zapopan",
+   "cita": "Ya que nos fuimos a formar varios y estuvimos más de 1 hora y media bajo en sol para pedir pipa y que encima te limiten a mil litros de agua! Ya es patético estar así, pero la culpa es de nosotros por agachones y por no exigir!",
+   "eco": {
+    "reacciones": 4,
+    "comentarios": 0,
+    "al": "2026-11-01"
+   },
+   "vista": "fuentes/211f604badff.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "Grupo «Ciudad Granja Facebook»",
+    "url": "https://www.facebook.com/groups/GroupCiudadGranja/posts/3234244476779710/",
+    "eco": {
+     "reacciones": 89,
+     "comentarios": 19,
+     "compartidos": 7,
+     "al": "2026-11-01"
+    }
+   },
+   "url": "https://www.facebook.com/groups/GroupCiudadGranja/posts/3234244476779710/?comment_id=3234816003389224",
+   "fecha": "2026-11-01",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Ciudad Granja, Zapopan",
+   "cita": "Cumplieran con los tandeos, pero ni eso se está cumpliendo",
+   "eco": {
+    "reacciones": 5,
+    "comentarios": 0,
+    "al": "2026-11-01"
+   },
+   "vista": "fuentes/211f604badff.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "Grupo «Ciudad Granja Facebook»",
+    "url": "https://www.facebook.com/groups/GroupCiudadGranja/posts/3234244476779710/",
+    "eco": {
+     "reacciones": 89,
+     "comentarios": 19,
+     "compartidos": 7,
+     "al": "2026-11-01"
+    }
+   },
+   "url": "https://www.facebook.com/groups/GroupCiudadGranja/posts/3234244476779710/?comment_id=3234703580067133",
+   "fecha": "2026-11-01",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Ciudad Granja, Zapopan",
+   "cita": "Es una colonia con 3 0 4 pozos de Agua y no es justo que otras Colonia tengan nuestro beneficio, mientras nosotros sin Agua y pagando grandes cantidades de dinero por obtenerla.",
+   "eco": {
+    "reacciones": 2,
+    "comentarios": 0,
+    "al": "2026-11-01"
+   },
+   "vista": "fuentes/211f604badff.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "Partidero",
+   "url": "https://www.facebook.com/partidero/posts/pfbid037ozzwxTxeMSm6B7TNAADveFNvhAqCJhD1URYbV6Ez46k2cuLAtsmWxFAcZCHj1QEl",
+   "fecha": "2026-11-01",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "Estación Oblatos, Línea 2 del Tren Ligero, Guadalajara",
+   "cita": "Los inconformes señalaron que tienen alrededor de mes y medio sin el servicio y rechazaron que la solución se limite a instalar tinacos para que las familias tengan que trasladarse a acarrear el líquido.",
+   "dias": 45,
+   "video": true,
+   "eco": {
+    "reacciones": 20,
+    "comentarios": 1,
     "al": "2026-11-01"
    }
   }
