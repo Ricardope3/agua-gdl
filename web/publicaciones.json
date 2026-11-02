@@ -30698,6 +30698,31 @@
    "dias": 32,
    "bloqueo": true,
    "de": "https://www.facebook.com/traficozmg.periodismociudadano/posts/pfbid02vq62RzrLPuHsRVSVK9YWqWAYgacRDtXoQjoFT4PHnAdeMRsXzGv1qkuGT2voQ23il"
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "AP Jalisco",
+   "url": "https://www.facebook.com/reel/1669372814538733",
+   "fecha": "2026-11-01",
+   "colonias": [
+    "LA PENAL|Guadalajara|44730",
+    "OBLATOS|Guadalajara|44700",
+    "SAN JUAN BOSCO|Guadalajara|44730",
+    "TALPITA|Guadalajara|44710",
+    "BELISARIO DOMINGUEZ|Guadalajara|44340"
+   ],
+   "lugar": "Oriente de Guadalajara",
+   "cita": "¡32 días sin agua en la Ex Penal de Oblatos, San Felipe, San Juan Bosco, Talpita y Belisario!",
+   "dias": 32,
+   "video": true,
+   "bloqueo": true,
+   "eco": {
+    "reacciones": 432,
+    "comentarios": 52,
+    "compartidos": 65,
+    "al": "2026-11-01"
+   }
   }
  ]
 }
