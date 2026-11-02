@@ -30723,6 +30723,33 @@
     "compartidos": 65,
     "al": "2026-11-01"
    }
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "Tráfico ZMG",
+   "url": "https://www.facebook.com/reel/2016348162394597",
+   "fecha": "2026-11-01",
+   "colonias": [
+    "LA PENAL|Guadalajara|44730",
+    "OBLATOS|Guadalajara|44700",
+    "TALPITA|Guadalajara|44710",
+    "BLANCO Y CUELLAR|Guadalajara|44710",
+    "LA LOMA|Guadalajara|44410",
+    "SAN JUAN BOSCO|Guadalajara|44730"
+   ],
+   "lugar": "Avenida Javier Mina y Pedro Celestino Negrete, Guadalajara",
+   "cita": "Se registra cierre vial en el cruce de avenida Javier Mina y Pedro Celestino Negrete, en Guadalajara. Personas se manifiestan en este punto con respecto a la falta de agua en sus colonias.",
+   "dias": 32,
+   "video": true,
+   "bloqueo": true,
+   "de": "https://traficozmg.com/2026/11/vecinos-del-oriente-de-guadalajara-se-manifiestan-por-falta-de-agua/",
+   "eco": {
+    "reacciones": 400,
+    "comentarios": 59,
+    "compartidos": 28,
+    "al": "2026-11-01"
+   }
   }
  ]
 }
