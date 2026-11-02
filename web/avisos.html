@@ -521,8 +521,14 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   let ev = new Map(), pubsState = null, summary = null, summaryState = null;
   const sevOf = (d) => d == null ? 0 : d <= 2 ? 1 : d <= 6 ? 2 : d <= 13 ? 3 : 4;
   const sevVars = (s) => `--c:var(--s${s});--k:var(${s ? `--s${s}-ink` : "--fg"})`;
-  function sourceOf(p) {
-    if (p.de) return sourceOf({ red: /^https:\/\/x\.com\//.test(p.de) ? "x" : "facebook", url: p.de });
+  function sourceOf(p, byUrl) {
+    if (p.de) {
+      const orig = byUrl && byUrl.get(p.de);
+      if (orig) return sourceOf({ ...orig, de: undefined }, byUrl);
+      if (/^https:\/\/x\.com\//.test(p.de)) return sourceOf({ red: "x", url: p.de }, byUrl);
+      if (/^https:\/\/(www\.)?facebook\.com\//.test(p.de)) return sourceOf({ red: "facebook", url: p.de }, byUrl);
+      try { return `w:${new URL(p.de).hostname}`; } catch { return "w:externo"; }
+    }
     if (p.tipo === "comentario") return `c:${p.url}`;
     if (p.fuente === "medio") return `m:${p.quien}`;
     const seg = new URL(p.url).pathname.split("/").filter(Boolean);
@@ -533,16 +539,19 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   const ecoOf = (p) => p.eco ? p.eco.reacciones + p.eco.comentarios + (p.eco.compartidos || 0) : 0;
   function evidence(doc) {
     const out = new Map();
-    const byCol = new Map();
-    for (const p of doc.publicaciones) for (const k of p.colonias) { if (!byCol.has(k)) byCol.set(k, []); byCol.get(k).push(p); }
+    const byCol = new Map(), byUrl = new Map();
+    for (const p of doc.publicaciones) {
+      if (!byUrl.has(p.url)) byUrl.set(p.url, p);
+      for (const k of p.colonias) { if (!byCol.has(k)) byCol.set(k, []); byCol.get(k).push(p); }
+    }
     for (const [k, posts] of byCol) {
       posts.sort((a, b) => (b.fuente === "medio") - (a.fuente === "medio") || b.fecha.localeCompare(a.fecha) || ecoOf(b) - ecoOf(a));
       const days = posts.map((p) => p.dias).filter((d) => d != null);
       out.set(k, {
         posts,
         dias: days.length ? Math.max(...days) : null,
-        fuentes: new Set(posts.map(sourceOf)).size,
-        medios: new Set(posts.filter((p) => p.fuente === "medio").map(sourceOf)).size,
+        fuentes: new Set(posts.map((p) => sourceOf(p, byUrl))).size,
+        medios: new Set(posts.filter((p) => p.fuente === "medio").map((p) => sourceOf(p, byUrl))).size,
         ultima: posts.reduce((m, p) => p.fecha > m ? p.fecha : m, ""),
       });
     }

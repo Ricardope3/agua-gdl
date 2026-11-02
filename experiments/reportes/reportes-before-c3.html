@@ -867,8 +867,14 @@ if (window.top !== window.self) {
 
   // Each account, page, group or comment is one source: several posts from one of them count once,
   // and a news story that retells a post ("de") counts as that post.
-  function sourceOf(p) {
-    if (p.de) return sourceOf({ red: /^https:\/\/x\.com\//.test(p.de) ? "x" : "facebook", url: p.de });
+  function sourceOf(p, byUrl) {
+    if (p.de) {
+      const orig = byUrl && byUrl.get(p.de);
+      if (orig) return sourceOf({ ...orig, de: undefined }, byUrl);
+      if (/^https:\/\/x\.com\//.test(p.de)) return sourceOf({ red: "x", url: p.de }, byUrl);
+      if (/^https:\/\/(www\.)?facebook\.com\//.test(p.de)) return sourceOf({ red: "facebook", url: p.de }, byUrl);
+      try { return `w:${new URL(p.de).hostname}`; } catch { return "w:externo"; }
+    }
     if (p.tipo === "comentario") return `c:${p.url}`;
     if (p.fuente === "medio") return `m:${p.quien}`;
     const seg = new URL(p.url).pathname.split("/").filter(Boolean);
@@ -884,16 +890,19 @@ if (window.top !== window.self) {
   function evidence(doc) {
     const out = new Map();
     if (!doc) return out;
-    const byCol = new Map();
-    for (const p of doc.publicaciones) for (const k of p.colonias) { if (!byCol.has(k)) byCol.set(k, []); byCol.get(k).push(p); }
+    const byCol = new Map(), byUrl = new Map();
+    for (const p of doc.publicaciones) {
+      if (!byUrl.has(p.url)) byUrl.set(p.url, p);
+      for (const k of p.colonias) { if (!byCol.has(k)) byCol.set(k, []); byCol.get(k).push(p); }
+    }
     for (const [k, posts] of byCol) {
       posts.sort((a, b) => impactOf(b) - impactOf(a) || (b.fuente === "medio") - (a.fuente === "medio") || b.fecha.localeCompare(a.fecha) || ecoOf(b) - ecoOf(a));
       const days = posts.map((p) => p.dias).filter((d) => d != null);
       out.set(k, {
         posts,
         dias: days.length ? Math.max(...days) : null,
-        fuentes: new Set(posts.map(sourceOf)).size,
-        medios: new Set(posts.filter((p) => p.fuente === "medio").map(sourceOf)).size,
+        fuentes: new Set(posts.map((p) => sourceOf(p, byUrl))).size,
+        medios: new Set(posts.filter((p) => p.fuente === "medio").map((p) => sourceOf(p, byUrl))).size,
         ultima: posts.reduce((m, p) => p.fecha > m ? p.fecha : m, ""),
         eco: posts.reduce((t, p) => t + ecoOf(p), 0),
       });
