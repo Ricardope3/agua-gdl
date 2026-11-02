@@ -93,6 +93,17 @@ def validate(doc):
     rule = doc.get("regla") or {}
     if not (count(rule.get("reacciones")) and count(rule.get("comentarios"))):
         fail("regla: needs reacciones and comentarios")
+    # busquedas logs the days collection ran, newest last; the pages show the last one.
+    busquedas = doc.get("busquedas")
+    if busquedas is not None:
+        if not (isinstance(busquedas, list) and busquedas and all(isinstance(b, str) for b in busquedas)):
+            fail("busquedas: a nonempty list of ISO dates, newest last")
+        else:
+            dias = [date(b, "busquedas") for b in busquedas]
+            if any(not d for d in dias) or dias != sorted(dias) or len(set(dias)) != len(dias):
+                fail("busquedas: valid distinct dates, oldest first")
+            elif since and dias[0] < since or updated and dias[-1] > updated:
+                fail("busquedas: within desde..actualizado")
     seen = set()
     said = set()
     pages = PAGINAS | {p["quien"] for p in doc.get("publicaciones") or [] if p.get("fuente") == "medio" and isinstance(p.get("quien"), str)}

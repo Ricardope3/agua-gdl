@@ -774,7 +774,7 @@ if (window.top !== window.self) {
           <details class="munis" id="municipios" open hidden>
             <summary>Por municipio · % de colonias</summary>
             <ol id="munis-lista"></ol>
-            <p>De las colonias del mapa del SIAPA, las que tienen publicaciones de medios o vecinos que dicen que no tenían agua, <span id="munis-al">hasta hoy</span>.</p>
+            <p>De las colonias que la rotación del SIAPA cubre (las con zona asignada), las que tienen publicaciones de medios o vecinos que dicen que no tenían agua, <span id="munis-al">hasta hoy</span>. Tlajomulco y El Salto no tienen colonias en la rotación; sus publicaciones se listan como fuera de ella.</p>
           </details>
           <div id="top-box" hidden><p class="lv-h" id="top-h">Las que tienen más reportes</p><ol class="lv-top" id="top-reportes"></ol></div>
           <p class="note" id="estado" aria-live="polite">Cargando el mapa de colonias…</p>
@@ -787,6 +787,7 @@ if (window.top !== window.self) {
       <div class="map-key" role="note" aria-label="Qué muestran los círculos del mapa">
         <p><span class="mk-sev" aria-hidden="true">3</span><span><strong>Círculo lleno: publicaciones</strong> de medios y vecinos. El número es cuántas; el color, los días sin agua que dicen.</span></p>
         <p class="mk-donut-line"><svg class="mk-donut" viewBox="0 0 40 40" aria-hidden="true"><circle r="12" cx="20" cy="20" fill="var(--surface)"/><circle r="15" cx="20" cy="20" fill="none" stroke="var(--dry)" stroke-width="6" stroke-dasharray="31.4 62.8" transform="rotate(-90 20 20)"/><circle r="15" cx="20" cy="20" fill="none" stroke="var(--low)" stroke-width="6" stroke-dasharray="31.4 62.8" stroke-dashoffset="-31.4" transform="rotate(-90 20 20)"/><circle r="15" cx="20" cy="20" fill="none" stroke="var(--ok)" stroke-width="6" stroke-dasharray="31.4 62.8" stroke-dashoffset="-62.8" transform="rotate(-90 20 20)"/><text x="20" y="24" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="var(--fg)">2</text></svg><span><strong>Aro: reportes de vecinos</strong> hechos aquí. El número es cuántos; el aro, cómo está el agua (sin agua, baja presión, con agua). En gris, sin reportes nuevos en 24 h.</span></p>
+        <p><span class="mk-sev" aria-hidden="true" style="background:var(--subtle);color:var(--muted);box-shadow:none">·</span><span><strong>Sin círculo ni aro:</strong> nadie ha publicado ni reportado. Eso no significa que haya agua: es «no sabemos».</span></p>
       </div>
       <section class="tl" id="linea" aria-labelledby="tl-fecha" hidden>
         <div class="tl-top">
@@ -875,6 +876,7 @@ if (window.top !== window.self) {
       <h2 class="sec" id="como">Cómo funciona</h2>
       <ul class="plain">
         <li><strong>Las publicaciones.</strong> Buscamos en las notas de los medios, en Facebook, incluidos los grupos públicos de colonias, y en X lo que se publica desde el 12 de octubre sobre colonias sin agua. De los medios va todo lo que nombra una colonia. De los vecinos, solo publicaciones con al menos 5 reacciones y 1 comentario, o comentarios en publicaciones así. Citamos sus palabras con la fecha y el enlace. Su número y su color por días sin agua cuentan solo las publicaciones: son evidencia histórica, separada de los reportes actuales.</li>
+        <li><strong>Cómo se recolecta.</strong> Las búsquedas buscan «sin agua»: casi no captan cuándo regresa el agua. Y la recolección va por rachas: la mayor parte del registro se sumó entre el 20 y el 22 de octubre, así que la línea de tiempo refleja en parte cuándo buscamos, no solo cuándo faltó. Última búsqueda: <span id="ultima-busqueda">—</span>.</li>
         <li><strong>Cómo se lee el mapa.</strong> Los reportes hechos aquí en las últimas 24 horas tienen su propio círculo y dan el color actual de la colonia: mayoría sin agua, con baja presión o con agua, o reportes mixtos cuando no hay una mayoría. La ficha muestra primero el último reporte y su hora; uno solo no establece que toda la colonia tenga agua. Si no hay reportes nuevos en 24 horas pero sí entre hace 24 y 72 horas, la colonia queda gris y punteada, y el último reporte se muestra como información desactualizada. En la línea de tiempo y en la tabla de la semana, cada reporte se sigue viendo hasta 3 días después de su día, en gris y con la edad («último: hace 2 días»). Que dejen de llegar reportes no significa que el agua haya regresado: significa que no hay información reciente.</li>
         <li><strong>Las imágenes</strong> son la vista previa que cada nota o publicación comparte (su foto o el cuadro de su video). Guardamos una copia pequeña en aguagdl.com, así tu navegador no se conecta a Facebook, a X ni a los medios para verlas; tocarlas abre la publicación. Las notas y publicaciones de solo texto no tienen imagen.</li>
         <li><strong>Contamos fuentes, no «me gusta».</strong> Mucho eco no prueba que algo sea cierto: en Twitter, las noticias falsas tenían 70 % más probabilidad de ser retuiteadas que las verdaderas (<a href="https://doi.org/10.1126/science.aap9559" rel="noopener">Vosoughi, Roy y Aral, 2018</a>). Por eso el color sale de los días que dicen las publicaciones, y la confianza, de cuántas fuentes distintas lo dicen y de si lo reporta un medio; varias publicaciones de la misma cuenta, página o grupo cuentan como una sola fuente. El eco (reacciones, comentarios y veces compartida) se muestra aparte.</li>
@@ -1256,7 +1258,7 @@ if (window.top !== window.self) {
             stale ? el("span", { class: "sub" }, atEnd()
               ? `Sin reportes nuevos en 24 h · último: ${answerLabel(stale.ultimo_estado)} ${ago(stale.ultimo)}`
               : `Sin reportes nuevos ese día · último: hace ${stale.age} ${stale.age === 1 ? "día" : "días"} · ${statusLabel(stale.c).toLowerCase()} (${plural(totalOf(stale.c), "reporte", "reportes")})`) : null,
-            summary && !c && !stale && !e && !later && atEnd() ? el("span", { class: "sub" }, "Sin reportes en 72 h") : null);
+            summary && !c && !stale && !e && !later && atEnd() ? el("span", { class: "sub" }, "Sin reportes en 72 h: no sabemos si hay agua") : null);
         }, { sticky: true, className: "map-label" });
         l.on("click", () => { if (Date.now() - closedAt > 500) select(f); });
       },
@@ -1677,7 +1679,7 @@ if (window.top !== window.self) {
           : el("p", { class: "quality", style: "margin-top:0" }, `El ${dateES(cardDay, true)} nadie reportó esta colonia.`)];
       if (c) return [...dayLine, ...countsBlock(c)];
       if (stale) return [...dayLine, ...countsBlock(stale, true)];
-      return [...dayLine, el("p", { class: "none" }, summary ? `Nadie ha reportado esta colonia${e ? " aquí" : ""} en las últimas 72 horas.`
+      return [...dayLine, el("p", { class: "none" }, summary ? `Nadie ha reportado esta colonia${e ? " aquí" : ""} en las últimas 72 horas. No sabemos si el agua llega: el silencio no significa que haya agua.`
         : apiFailed ? "No pudimos cargar los reportes de esta colonia." : "Cargando los reportes de esta colonia…")];
     }
     function refreshCounts() {
@@ -1701,7 +1703,7 @@ if (window.top !== window.self) {
       const list = el("ol", { class: "posts" }, ...ordered.map(post));
       const box = el("div", { class: "ev" }, head,
         giver ? el("p", { class: "ev-src" }, "Lo dice ", el("a", { href: giver.url, target: "_blank", rel: "noopener nofollow" }, `${gives(giver)}, ${dateES(giver.fecha, true)}`), ".") : null,
-        el("p", { class: "ev-src" }, src), mosaic(e.posts), list);
+        el("p", { class: "ev-src" }, src, " · ", el("a", { href: "/reportes#como" }, "cómo se recolecta")), mosaic(e.posts), list);
       const SHOWN = 3;
       if (e.posts.length > SHOWN) {
         [...list.children].slice(SHOWN).forEach((li) => { li.hidden = true; });
@@ -1943,6 +1945,8 @@ if (window.top !== window.self) {
       renderSlices();
       const n = pubs.publicaciones.length, medios = pubs.publicaciones.filter((x) => x.fuente === "medio").length;
       $("pruebas-nota").textContent = `El SIAPA prometió racionamientos «por máximo un día». Son ${plural(n, "publicación", "publicaciones")} del ${dateES(pubs.desde, true)} al ${dateES(pubs.actualizado, true)}: ${fmt(medios)} de medios, en sus notas, Facebook y X, y ${fmt(n - medios)} de vecinos con eco en redes. Toca una colonia para ver sus publicaciones.`;
+      const ultimaBusqueda = pubs.busquedas && pubs.busquedas.length ? pubs.busquedas[pubs.busquedas.length - 1] : null;
+      if (ultimaBusqueda) $("ultima-busqueda").textContent = dateES(ultimaBusqueda, true);
       // The bar splits the colonias by the most days their posts give, and doubles as the map's key.
       // r1: the map's key lives in the timeline, with the counts of its day.
       $("p-colonias").textContent = fmt(ev.size);
@@ -1964,19 +1968,28 @@ if (window.top !== window.self) {
     // on a border ("Zapopan y Guadalajara") counts in both.
     function renderMunicipios() {
       const munis = (k) => k.split("|")[1].split(" y ").filter(Boolean);
+      // El porcentaje usa como denominador las colonias con zona asignada: las que la rotación
+      // cubre (Guadalajara, San Pedro Tlaquepaque, Tonalá y Zapopan); las demás van aparte.
+      const inRot = (k) => features.get(k).some((f) => f.properties.z !== "");
       const per = new Map();
-      for (const k of features.keys()) for (const m of munis(k)) {
-        if (!per.has(m)) per.set(m, { m, total: 0, sin: 0 });
+      for (const k of features.keys()) if (inRot(k)) for (const m of munis(k)) {
+        if (!per.has(m)) per.set(m, { m, total: 0, sin: 0, fuera: 0 });
         per.get(m).total++;
       }
-      for (const k of evNow.keys()) if (features.has(k)) for (const m of munis(k)) per.get(m).sin++;
+      for (const k of evNow.keys()) if (features.has(k)) for (const m of munis(k)) {
+        const r = per.get(m) || per.set(m, { m, total: 0, sin: 0, fuera: 0 }).get(m);
+        if (inRot(k)) r.sin++; else r.fuera++;
+      }
       $("munis-al").textContent = atEnd() ? `hasta el ${dateES(DAYS[at] || pubs.actualizado, true)}` : `al ${dateES(DAYS[at], true)}`;
-      const rows = [...per.values()].filter((r) => r.sin).sort((a, b) => b.sin / b.total - a.sin / a.total);
+      const rows = [...per.values()].filter((r) => r.sin || r.fuera)
+        .sort((a, b) => (b.sin / Math.max(1, b.total)) - (a.sin / Math.max(1, a.total)));
       $("munis-lista").replaceChildren(...rows.map((r) => {
+        if (!r.total) return el("li", {}, el("span", {}, r.m), el("b", {}, "—"),
+          el("small", {}, `${plural(r.fuera, "colonia con publicaciones", "colonias con publicaciones")}, fuera de la rotación (sin colonias en el tandeo)`));
         const pct = 100 * r.sin / r.total;
         return el("li", {}, el("span", {}, r.m), el("b", {}, `${pct < 1 ? "<1" : Math.round(pct)} %`),
           el("span", { class: "bar" }, el("span", { style: `width:${pct}%` })),
-          el("small", {}, `${fmt(r.sin)} de ${plural(r.total, "colonia", "colonias")}`));
+          el("small", {}, `${fmt(r.sin)} de ${plural(r.total, "colonia", "colonias")} en la rotación`));
       }));
       $("municipios").hidden = !rows.length;
     }
@@ -2283,7 +2296,7 @@ if (window.top !== window.self) {
         const p = f.properties;
         const c = byKey.get(keyOf(p)), stale = staleByKey.get(keyOf(p)), e = ev.get(keyOf(p));
         const said = e ? ` · publicaciones: ${e.dias != null ? `hasta ${daysWord(e.dias)} sin agua` : "sin agua"}` : "";
-        const current = c ? ` · ${statusLabel(c).toLowerCase()} en 24 h` : stale ? " · sin reportes nuevos en 24 h" : summary && !e ? " · sin reportes en 72 h" : "";
+        const current = c ? ` · ${statusLabel(c).toLowerCase()} en 24 h` : stale ? " · sin reportes nuevos en 24 h" : summary && !e ? " · sin reportes en 72 h (no sabemos)" : "";
         const li = el("li", { role: "option", id: `op-${i}`, "aria-selected": "false" }, el("strong", {}, p.n),
           el("span", { class: "sub" }, `${p.m}${p.cp ? ` · C.P. ${p.cp}` : ""}${said}${current}`));
         li.addEventListener("mousedown", (e) => e.preventDefault());
