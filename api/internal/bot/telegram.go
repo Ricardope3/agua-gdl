@@ -171,7 +171,7 @@ func withWaterButtons(chatID, text string, zone int, start time.Time) (tg.Messag
 	answers := make([]tg.InlineButton, len(waterAnswers))
 	for i, a := range waterAnswers {
 		date := start.Format(rotation.DateLayout)
-		answers[i] = tg.InlineButton{Text: a.title, CallbackData: signed(fmt.Sprintf("A:%d:%s:%s", zone, date, a.key), chatID, "A", zone, date)}
+		answers[i] = tg.InlineButton{Text: a.title, CallbackData: signed(fmt.Sprintf("A:%d:%s:%s", zone, date, a.key), chatID, "A", zone, date, a.key)}
 	}
 	m.ReplyMarkup = tg.InlineKeyboard{InlineKeyboard: [][]tg.InlineButton{
 		answers,
@@ -190,7 +190,7 @@ func TelegramFollowUp(chatID string, zone int, days []time.Time) (tg.Message, er
 	last := days[len(days)-1].Format(rotation.DateLayout)
 	choices := make([]Choice, len(reportAnswers))
 	for i, a := range reportAnswers {
-		choices[i] = Choice{ID: signed(fmt.Sprintf("R:%d:%s:%s", zone, last, a.key), chatID, "R", zone, last), Title: a.title}
+		choices[i] = Choice{ID: signed(fmt.Sprintf("R:%d:%s:%s", zone, last, a.key), chatID, "R", zone, last, a.key), Title: a.title}
 	}
 	return TelegramMessage(chatID, Reply{Text: msgFollowUp(days, zone), Choices: choices})
 }

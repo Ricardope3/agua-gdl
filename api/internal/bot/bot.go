@@ -653,7 +653,7 @@ func (b *Bot) askReport(ctx context.Context, r User, zone int, date string) erro
 	for i, a := range reportAnswers {
 		id := prefix + a.key
 		if zone > 0 {
-			id = signed(id, r.ID, "R", zone, date)
+			id = signed(id, r.ID, "R", zone, date, a.key)
 		}
 		choices[i] = Choice{ID: id, Title: a.title}
 	}
@@ -676,7 +676,7 @@ func (b *Bot) saveReport(ctx context.Context, r User, zone int, date, answer, si
 	}
 	if zone == 0 {
 		zone = s.Zone
-	} else if !zoneTrusted(r.ID, "R", zone, date, sig, s.Memberships()...) {
+	} else if !zoneTrusted(r.ID, "R", zone, date, answer, sig, s.Memberships()...) {
 		return b.text(ctx, r, msgReportClosed) // made-up callback data for another zone
 	}
 	d, err := b.Schedule.ParseDate(date)
@@ -715,7 +715,7 @@ func (b *Bot) saveWater(ctx context.Context, r User, zone int, date, answer, sig
 	if !ok {
 		return b.welcome(ctx, r)
 	}
-	if !zoneTrusted(r.ID, "A", zone, date, sig, s.Memberships()...) {
+	if !zoneTrusted(r.ID, "A", zone, date, answer, sig, s.Memberships()...) {
 		return b.text(ctx, r, msgReportClosed) // made-up callback data for another zone
 	}
 	d, err := b.Schedule.ParseDate(date)
