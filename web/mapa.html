@@ -275,12 +275,17 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   // zoneInfo: zone → { days, next } from the API, the same calendar the reminders use. The map
   // doesn't wait for it: the days fill in when they arrive.
   let zoneInfo = new Map();
-  let zonesDone = false, zonesFailed = false, zonesFallback = false, zonesChecked = "";
+  let zonesDone = false, zonesFailed = false, zonesFallback = false, zonesChecked = "", calendarEnd = "";
   const daysText = (z) => zoneInfo.has(z) ? cap(joinES(zoneInfo.get(z).days)) : null;
   const nextCut = (z) => {
     const i = zoneInfo.get(z); if (!i) return null;
     const listed = (i.next || []).find((d) => d >= isoToday(0)); if (listed) return listed;
-    for (let n = 0; n < 370; n++) { const d = isoToday(n); if ((i.weekdays || []).includes(new Date(d + "T00:00:00Z").getUTCDay())) return d; }
+    // The listed days stop at the rotation's last day (IsCut does); the weekday loop
+    // must not invent dates past it either (avisos.html's nextCut guards the same way).
+    for (let n = 0; n < 370; n++) {
+      const d = isoToday(n);
+      if ((i.weekdays || []).includes(new Date(d + "T00:00:00Z").getUTCDay()) && (!calendarEnd || d <= calendarEnd)) return d;
+    }
     return null;
   };
 
@@ -410,6 +415,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
       if (Array.isArray(zones?.zones)) {
         zoneInfo = new Map(zones.zones.map((z) => [z.zone, z]));
         zonesChecked = zones.checked || "";
+        calendarEnd = zones.end || "";
       } else zonesFailed = true;
       for (const [z, chip] of chips) chip.title = chipTitle(z);
       if (selected) renderCard(selected);
