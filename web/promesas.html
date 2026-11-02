@@ -14,6 +14,7 @@
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#ffffff">
+<meta name="facebook-domain-verification" content="li0vsm7edv0afccxodm5t0jvyiw0za">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -24,14 +25,14 @@
   --brand: #0284c7; --brand-deep: #0369a1; --link: #0369a1; --on-brand: #ffffff;
   --primary: #0284c7; --on-primary: #ffffff; --ring: #0284c766;
   --shadow: 0 1px 2px rgb(3 105 161 / .08);
-  --v-se_cumple: #0369a1; --v-sin_pruebas: #cbd5e1; --v-en_riesgo: #ca8a04; --v-incumplida: #a16207; --v-se_contradice: #713f12;
+  --v-se_cumple: #0369a1; --v-en_curso: #16a34a; --v-sin_pruebas: #cbd5e1; --v-en_riesgo: #ca8a04; --v-incumplida: #a16207; --v-se_contradice: #713f12;
   --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #06141d; --surface: #0a1c28; --subtle: #0c3149; --fg: #f0f9ff; --muted: #9bb8ca; --line: #18384d;
     --link: #7dd3fc; --primary: #0ea5e9; --on-primary: #ffffff; --ring: #38bdf866; --brand: #0ea5e9; --brand-deep: #0284c7;
-    --v-se_cumple: #0284c7; --v-sin_pruebas: #334155; --v-en_riesgo: #a16207; --v-incumplida: #ca8a04; --v-se_contradice: #facc15;
+    --v-se_cumple: #0284c7; --v-en_curso: #4ade80; --v-sin_pruebas: #334155; --v-en_riesgo: #a16207; --v-incumplida: #ca8a04; --v-se_contradice: #facc15;
     color-scheme: dark;
   }
 }
@@ -82,6 +83,7 @@ footer p { margin: 0 0 8px; max-width: 70ch }
 .m-bar .seg:hover { opacity: .8 }
 .m-stamp { text-align: right; font-size: .8rem; color: var(--muted); margin: -6px 0 0 }
 .seg.v-se_cumple, .sw.v-se_cumple, .chip.v-se_cumple::before { background: var(--v-se_cumple) }
+.seg.v-en_curso, .sw.v-en_curso, .chip.v-en_curso::before { background: var(--v-en_curso) }
 .seg.v-sin_pruebas, .sw.v-sin_pruebas, .chip.v-sin_pruebas::before { background: var(--v-sin_pruebas) }
 .seg.v-en_riesgo, .sw.v-en_riesgo, .chip.v-en_riesgo::before { background: var(--v-en_riesgo) }
 .seg.v-incumplida, .sw.v-incumplida, .chip.v-incumplida::before { background: var(--v-incumplida) }
