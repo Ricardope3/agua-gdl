@@ -14,6 +14,10 @@
                                                   "captura", and keep its og:title as "titular"; then validate
                                                   and write. Check the pictures: a cookie banner or an ad can
                                                   cover the headline (set "captura": null to leave it out).
+    python3 pipelines/publicaciones.py --videos   set "video": true on the X posts whose public embed serves a
+                                                  video, so a future run can download the evidence; then
+                                                  validate and write. Facebook needs a browser session, so its
+                                                  posts are tagged by hand when added.
 
 Each entry quotes a news outlet ("medio") or neighbours ("vecinos") saying a colonia has no water, with
 its link, date and SIAPA colonias. Neighbours' posts count only with at least regla.reacciones reactions
@@ -269,6 +273,31 @@ def refresh_x(doc):
     return changed
 
 
+def detect_x_videos(doc):
+    """Tag the X posts whose embed serves a video, for a future evidence download."""
+    changed = 0
+    for p in doc.get("publicaciones") or []:
+        m = X_URL.match(p.get("url", ""))
+        if p.get("red") != "x" or not m or p.get("video"):
+            continue
+        q = urllib.parse.urlencode({"id": m.group(2), "token": token(m.group(2)), "lang": "es"})
+        req = urllib.request.Request(f"https://cdn.syndication.twimg.com/tweet-result?{q}", headers={"User-Agent": "aguagdl-publicaciones"})
+        try:
+            with urllib.request.urlopen(req, timeout=20) as r:
+                t = json.load(r)
+        except (OSError, ValueError) as e:
+            print(f"  {p['url']}: not checked ({e})", file=sys.stderr)
+            continue
+        if t.get("__typename") == "TweetTombstone" or "favorite_count" not in t:
+            continue
+        media = t.get("mediaDetails") or []
+        if t.get("video") or any(d.get("type") in ("video", "animated_gif") for d in media):
+            p["video"] = True
+            changed += 1
+        time.sleep(0.4)
+    return changed
+
+
 def get(url, ua="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130 Safari/537.36"):
     # An og:image can carry raw accents, which urllib can't send: percent-encode them, as browsers do.
     req = urllib.request.Request(urllib.parse.quote(url, safe=string.punctuation), headers={"User-Agent": ua, "Accept-Language": "es-MX,es;q=0.9"})
@@ -415,10 +444,13 @@ def main():
     ap.add_argument("--eco", action="store_true", help="refresh the X posts' likes and replies, then write")
     ap.add_argument("--imagenes", action="store_true", help="download the posts' preview images, then write")
     ap.add_argument("--capturas", action="store_true", help="screenshot the news articles' headlines, then write")
+    ap.add_argument("--videos", action="store_true", help="tag the X posts whose embed serves a video, then write")
     args = ap.parse_args()
     doc = json.loads(DATA.read_text())
     if args.eco and not args.check:
         print(f"publicaciones: {refresh_x(doc)} X posts changed")
+    if args.videos and not args.check:
+        print(f"publicaciones: {detect_x_videos(doc)} X posts tagged as video")
     if args.capturas and not args.check:
         print(f"publicaciones: {fetch_captures(doc)} headline screenshots")
     if args.imagenes and not args.check:
@@ -426,7 +458,7 @@ def main():
     validate(doc)
     if errors:
         sys.exit("publicaciones: " + "\n  ".join(["invalid data:", *errors]))
-    if (args.eco or args.imagenes or args.capturas) and not args.check:
+    if (args.eco or args.imagenes or args.capturas or args.videos) and not args.check:
         DATA.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
     pubs = doc["publicaciones"]
     cols = {k for p in pubs for k in p["colonias"]}
