@@ -463,19 +463,24 @@ func TestNeverSubscribesToAZoneWithoutDays(t *testing.T) {
 			t.Errorf("%s: a colonia without a zone that has days is outside the rotation, got:\n%s", name, got)
 		}
 	}
-	// Two zones with days are left to pick from; SIAPA's * on a colonia it lists in one zone,
-	// all with days, still asks, as before.
-	for name, want := range map[string]string{"prueba tres": "Z:3 Z:4", "prueba asterisco": "Z:4"} {
-		h.send(t, text(name))
-		var ids []string
-		if m := h.sender.Sent[len(h.sender.Sent)-1]; m.Interactive != nil {
-			for _, row := range m.Interactive.Action.Sections[0].Rows {
-				ids = append(ids, row.ID)
-			}
+	// Two zones with days are left to pick from; asking subscribes no one.
+	h.send(t, text("prueba tres"))
+	var ids []string
+	if m := h.sender.Sent[len(h.sender.Sent)-1]; m.Interactive != nil {
+		for _, row := range m.Interactive.Action.Sections[0].Rows {
+			ids = append(ids, row.ID)
 		}
-		if got := strings.Join(ids, " "); got != want {
-			t.Errorf("%s: choices %q, want %q", name, got, want)
-		}
+	}
+	if got := strings.Join(ids, " "); got != "Z:3 Z:4" {
+		t.Errorf("prueba tres: choices %q, want %q", got, "Z:3 Z:4")
+	}
+	if len(h.store.Subs) != 0 {
+		t.Fatalf("picking must not subscribe: %+v", h.store.Subs)
+	}
+	// SIAPA's * on a colonia it lists in one zone, with days, subscribes directly: a
+	// single-choice «¿En qué zona?» would ask without offering anything.
+	if got := h.send(t, text("prueba asterisco")); !strings.Contains(got, "¡Listo!") {
+		t.Errorf("prueba asterisco should subscribe to its only zone with days:\n%s", got)
 	}
 	// Catedral is in zone 6, which this rotation doesn't have.
 	if got := h.send(t, wa.Inbound{Type: "location", Location: &wa.Location{Latitude: 20.6767, Longitude: -103.3475}}); got != msgOutside {
@@ -484,7 +489,7 @@ func TestNeverSubscribesToAZoneWithoutDays(t *testing.T) {
 	if got := h.send(t, text("zona 6")); got != msgHelp(h.bot.BaseURL, store.WhatsApp) {
 		t.Errorf("unexpected:\n%s", got)
 	}
-	if len(h.store.Subs) != 0 {
+	if s, ok := h.store.Subs["MX.42"]; !ok || s.Zone != 4 {
 		t.Fatalf("subscribed to a zone without days: %+v", h.store.Subs)
 	}
 	// With one zone with days left, there's nothing to pick.

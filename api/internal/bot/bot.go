@@ -354,8 +354,9 @@ func (b *Bot) onPayload(ctx context.Context, r User, p string) error {
 func (b *Bot) onColonia(ctx context.Context, r User, c colonias.Colonia) error {
 	zones := b.scheduled(c.Zones)
 	// Multi is the * on SIAPA's list: the colonia is split among zones even when the list
-	// names one. Once a zone without days is dropped, only the zones left decide.
-	split := len(zones) > 1 || (c.Multi && len(zones) == len(c.Zones))
+	// names one. But with a single scheduled zone there's only one choice to offer, so we
+	// subscribe directly instead of asking «¿En qué zona?» with one button.
+	split := len(zones) > 1
 	switch {
 	case len(zones) == 0:
 		return b.text(ctx, r, msgColoniaOutside(c.Name))
