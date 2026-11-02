@@ -30632,6 +30632,72 @@
     "al": "2026-11-01"
    },
    "vista": null
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "Tráfico ZMG",
+   "url": "https://www.facebook.com/traficozmg.periodismociudadano/posts/pfbid02vq62RzrLPuHsRVSVK9YWqWAYgacRDtXoQjoFT4PHnAdeMRsXzGv1qkuGT2voQ23il",
+   "fecha": "2026-11-01",
+   "colonias": [
+    "LA PENAL|Guadalajara|44730",
+    "OBLATOS|Guadalajara|44700",
+    "TALPITA|Guadalajara|44710",
+    "BLANCO Y CUELLAR|Guadalajara|44710",
+    "LA LOMA|Guadalajara|44410",
+    "SAN JUAN BOSCO|Guadalajara|44730"
+   ],
+   "lugar": "Avenida Javier Mina y Pedro Celestino Negrete, Guadalajara",
+   "cita": "Por tercera ocasión, habitantes de colonias del oriente de Guadalajara protestaron para exigir agua.",
+   "dias": 32,
+   "video": true,
+   "bloqueo": true,
+   "eco": {
+    "reacciones": 103,
+    "comentarios": 37,
+    "compartidos": 11,
+    "al": "2026-11-01"
+   }
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Tráfico ZMG",
+   "url": "https://traficozmg.com/2026/11/vecinos-del-oriente-de-guadalajara-se-manifiestan-por-falta-de-agua/",
+   "fecha": "2026-11-01",
+   "colonias": [
+    "LA PENAL|Guadalajara|44730",
+    "OBLATOS|Guadalajara|44700",
+    "TALPITA|Guadalajara|44710",
+    "BLANCO Y CUELLAR|Guadalajara|44710",
+    "LA LOMA|Guadalajara|44410",
+    "SAN JUAN BOSCO|Guadalajara|44730"
+   ],
+   "lugar": "Avenida Javier Mina y Pedro Celestino Negrete, Guadalajara",
+   "cita": "Los inconformes señalaron que llevan 32 días sin que se les garantice el acceso al agua.",
+   "dias": 32,
+   "bloqueo": true,
+   "de": "https://www.facebook.com/traficozmg.periodismociudadano/posts/pfbid02vq62RzrLPuHsRVSVK9YWqWAYgacRDtXoQjoFT4PHnAdeMRsXzGv1qkuGT2voQ23il"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Tráfico ZMG",
+   "url": "https://traficozmg.com/2026/11/vecinos-del-oriente-de-guadalajara-se-manifiestan-por-falta-de-agua/",
+   "fecha": "2026-11-01",
+   "colonias": [
+    "LA PENAL|Guadalajara|44730",
+    "OBLATOS|Guadalajara|44700",
+    "TALPITA|Guadalajara|44710",
+    "BLANCO Y CUELLAR|Guadalajara|44710",
+    "LA LOMA|Guadalajara|44410",
+    "SAN JUAN BOSCO|Guadalajara|44730"
+   ],
+   "lugar": "Avenida Javier Mina y Pedro Celestino Negrete, Guadalajara",
+   "cita": "los vecinos llevaron una cubeta con una muestra del agua que, según explicaron, comenzó a salir aproximadamente media hora antes, luego de más de un mes sin contar con el servicio",
+   "dias": 32,
+   "bloqueo": true,
+   "de": "https://www.facebook.com/traficozmg.periodismociudadano/posts/pfbid02vq62RzrLPuHsRVSVK9YWqWAYgacRDtXoQjoFT4PHnAdeMRsXzGv1qkuGT2voQ23il"
   }
  ]
 }
