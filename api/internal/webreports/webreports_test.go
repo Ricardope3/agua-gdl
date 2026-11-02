@@ -411,6 +411,52 @@ func TestWALReplaysAnAcceptedReportAfterRestart(t *testing.T) {
 	}
 }
 
+func TestWALSalvagesACorruptLineInsteadOfRefusingToBoot(t *testing.T) {
+	clock := start(t)
+	st := &fakeStore{}
+	path := filepath.Join(t.TempDir(), "reports.wal")
+	log := slog.New(slog.NewTextHandler(io.Discard, nil))
+	loc, _ := time.LoadLocation("America/Mexico_City")
+	now := func() time.Time { return *clock }
+	b, err := NewWithWAL(st, data.ColoniasMapa, 3, loc, now, log, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer b.journal.close()
+	if _, err := b.Add("1.1.1.1", "1 DE MAYO", "Guadalajara", "44940", "sin_agua", false, false, false); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := b.Add("2.2.2.2", "1 DE MAYO", "Guadalajara", "44940", "baja", false, false, false); err != nil {
+		t.Fatal(err)
+	}
+	// A crash between write and fsync can leave a torn tail; corruption could also
+	// strike mid-file. Both must be dropped on replay, keeping the good lines.
+	if _, err := b.journal.file.Write([]byte(`{"RequestID":"torn`)); err != nil {
+		t.Fatal(err)
+	}
+	restarted, err := NewWithWAL(st, data.ColoniasMapa, 3, loc, now, log, path)
+	if err != nil {
+		t.Fatalf("a corrupt line must not brick startup: %v", err)
+	}
+	defer restarted.journal.close()
+	if err := restarted.Load(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	if s := restarted.Summary(); s.Total != 2 || s.AllTime != 2 {
+		t.Fatalf("good lines must survive the salvage: %+v", s)
+	}
+	raw, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if bytes.Contains(raw, []byte("torn")) || bytes.Count(raw, []byte("\n")) != 2 {
+		t.Fatalf("the WAL must be compacted without the corrupt line: %q", raw)
+	}
+	if _, err := restarted.Add("3.3.3.3", "1 DE MAYO", "Guadalajara", "44940", "con_agua", false, false, false); err != nil {
+		t.Fatalf("the salvaged journal must keep accepting reports: %v", err)
+	}
+}
+
 func TestFullPendingQueueAppliesBackpressure(t *testing.T) {
 	clock := start(t)
 	b := board(t, &fakeStore{}, clock)

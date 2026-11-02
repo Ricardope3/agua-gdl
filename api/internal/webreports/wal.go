@@ -43,18 +43,31 @@ func (j *journal) replay() ([]store.WebReport, error) {
 	s := bufio.NewScanner(j.file)
 	s.Buffer(make([]byte, 4096), 64*1024)
 	var out []store.WebReport
+	dropped := 0
 	for s.Scan() {
 		var r store.WebReport
-		if err := json.Unmarshal(s.Bytes(), &r); err != nil {
-			return nil, fmt.Errorf("web report WAL: %w", err)
-		}
-		if r.RequestID == "" {
-			return nil, errors.New("web report WAL: report without receipt")
+		if err := json.Unmarshal(s.Bytes(), &r); err != nil || r.RequestID == "" {
+			// A torn tail (crash between write and fsync) or a corrupt line must not
+			// brick startup: skip it and compact the log below. A dropped line was
+			// never acknowledged, or was already flushed to Postgres, which
+			// de-duplicates by receipt.
+			dropped++
+			continue
 		}
 		out = append(out, r)
 	}
-	if err := s.Err(); err != nil {
-		return nil, err
+	switch err := s.Err(); {
+	case errors.Is(err, bufio.ErrTooLong):
+		// An oversized line is corruption (writes are small); the rest of the file is
+		// dropped with it by the compaction below.
+		dropped++
+	case err != nil:
+		return nil, fmt.Errorf("web report WAL: %w", err)
+	}
+	if dropped > 0 {
+		if err := j.rewrite(out); err != nil {
+			return nil, fmt.Errorf("salvage web report WAL: %w", err)
+		}
 	}
 	_, err := j.file.Seek(0, io.SeekEnd)
 	return out, err
