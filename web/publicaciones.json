@@ -908,27 +908,6 @@
   {
    "fuente": "medio",
    "red": "facebook",
-   "quien": "Mayra Zaldívar Noticias",
-   "url": "https://www.facebook.com/reel/1007560859044382/",
-   "fecha": "2026-10-19",
-   "colonias": [
-    "OBLATOS|Guadalajara|44700"
-   ],
-   "lugar": "Primaria José Clemente Orozco, Oblatos, Guadalajara",
-   "cita": "Padres de familia de la escuela José Clemente Orozco, en la colonia Oblatos, Guadalajara, urgen al SIAPA el envío de una pipa ante la falta de suministro en el plantel.",
-   "dias": null,
-   "eco": {
-    "reacciones": 0,
-    "comentarios": 0,
-    "compartidos": 1,
-    "al": "2026-10-20"
-   },
-   "vista": "fuentes/0c674a3dc95d.jpg",
-   "video": true
-  },
-  {
-   "fuente": "medio",
-   "red": "facebook",
    "quien": "DK 1250 AM",
    "url": "https://www.facebook.com/reel/4519943431605417/",
    "fecha": "2026-10-19",
@@ -17683,7 +17662,7 @@
   {
    "fuente": "vecinos",
    "red": "facebook",
-   "quien": "Grupo «Las Huertas Tlaquepaque Chiris Aldaz»",
+   "quien": "Grupo «Las Huertas Tlaquepaque»",
    "url": "https://www.facebook.com/groups/1052597430350113/posts/1431896829086836/",
    "fecha": "2026-10-21",
    "colonias": [
@@ -25423,14 +25402,15 @@
     "JARDINES DEL SUR|Guadalajara|44950"
    ],
    "lugar": "Jardines del Sur, Guadalajara",
-   "cita": "Siapa Gdl Isla pantenaria 2597 casi esquina cruz del sur, colonia jardines del sur, Guadalajara Jalisco, entre cruz del sur e Isla pomona. Urge agua, ya una semana sin agua",
+   "cita": "Siapa Gdl [dirección omitida], colonia jardines del sur, Guadalajara Jalisco, [dirección omitida]. Urge agua, ya una semana sin agua",
    "dias": 7,
    "eco": {
     "al": "2026-10-26",
     "reacciones": 0,
     "comentarios": 0
    },
-   "vista": null
+   "vista": null,
+   "nota": "Dirección personal omitida el 2 de noviembre de 2026; el resto de la cita es textual."
   },
   {
    "fuente": "vecinos",
@@ -25543,14 +25523,15 @@
     "SUTAJ|Guadalajara|44840"
    ],
    "lugar": "SUTAJ, Guadalajara",
-   "cita": "Lu Amoren también en la colonia sutaj sin agua, no sube agua a los tinacos.",
+   "cita": "[nombre omitido] también en la colonia sutaj sin agua, no sube agua a los tinacos.",
    "dias": null,
    "eco": {
     "al": "2026-10-26",
     "reacciones": 0,
     "comentarios": 0
    },
-   "vista": null
+   "vista": null,
+   "nota": "Nombre de una persona omitido el 2 de noviembre de 2026; el resto de la cita es textual."
   },
   {
    "fuente": "vecinos",
@@ -25693,14 +25674,15 @@
     "ALFREDO BARBA|San Pedro Tlaquepaque|45580"
    ],
    "lugar": "Alfredo Barba, Tlaquepaque",
-   "cita": "Brenda Paz en la Colonia Alfredo Barba tenemos tres semanas sin agua nomás les llega Alos que viven en parte baja pero aquí no porque estamos en parte alta ya estamos desesperados",
+   "cita": "[nombre omitido] en la Colonia Alfredo Barba tenemos tres semanas sin agua nomás les llega Alos que viven en parte baja pero aquí no porque estamos en parte alta ya estamos desesperados",
    "dias": 21,
    "eco": {
     "al": "2026-10-26",
     "reacciones": 1,
     "comentarios": 0
    },
-   "vista": null
+   "vista": null,
+   "nota": "Nombre de una persona omitido el 2 de noviembre de 2026; el resto de la cita es textual."
   },
   {
    "fuente": "vecinos",
@@ -28644,7 +28626,7 @@
    "tipo": "comentario",
    "quien": "",
    "en": {
-    "quien": "Cuenta de vecinos de Camichines (Tonalá)",
+    "quien": "Cuenta personal en X",
     "url": "https://x.com/cruizch/status/2114718880673489273",
     "eco": {
      "reacciones": 142,
@@ -30528,9 +30510,9 @@
    "vista": null
   },
   {
-   "fuente": "medio",
+   "fuente": "vecinos",
    "red": "facebook",
-   "quien": "Tony Martínez",
+   "quien": "",
    "url": "https://www.facebook.com/reel/1679589256838955",
    "fecha": "2026-10-24",
    "colonias": [
