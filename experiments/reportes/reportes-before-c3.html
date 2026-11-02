@@ -1421,7 +1421,8 @@ if (window.top !== window.self) {
       const n = shown.length;
       const grid = el("div", { class: `mosaic n${n}${n === 3 || n >= 5 ? " big" : ""}`, role: "list", "aria-label": "Imágenes de las publicaciones" });
       shown.forEach((p, i) => {
-        const who = p.fuente === "medio" || p.quien ? p.quien : "Vecinos";
+        // A comment shows the parent post's image: name the parent, not "Vecinos".
+        const who = p.tipo === "comentario" ? p.en.quien : p.fuente === "medio" || p.quien ? p.quien : "Vecinos";
         const a = el("a", { href: p.url, target: "_blank", rel: "noopener nofollow", role: "listitem", title: `${who} · ${dateES(p.fecha)}: «${p.cita}»` },
           el("img", { loading: "lazy", src: `/${p.vista}`, alt: `Imagen de la publicación de ${who} del ${dateES(p.fecha, true)}`, decoding: "async" }),
           el("span", { class: "lbl" }, `${who} · ${dateES(p.fecha)}`));
