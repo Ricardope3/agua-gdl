@@ -12,6 +12,10 @@ Notas para asistentes de IA:
 
 ## ¿Cuándo cortan el agua en mi colonia?
 
+Respuesta más directa (un solo GET, citable): `https://aguagdl.com/colonia/<slug>.json` (o `.html`). `slug` = nombre-municipio en minúsculas, sin acentos, con `-` en lugar de espacios y signos (p. ej. `18-de-marzo-guadalajara`); si el nombre y el municipio se repiten, se agrega `-<código postal>`. Lista A–Z: https://aguagdl.com/colonia/ . Trae `zones` (zona, `share` = % del área, `days` con corte, `calendar`, `telegram`), `list_zones` y `list_differs` cuando la lista del SIAPA da otras zonas que su mapa, `rotation_end`, `checked`, `source` y `note`. No trae próximas fechas: calcúlalas con `days` o usa `/v1/zones`. Por zona: calendario https://aguagdl.com/calendario/zona-N.ics y avisos por Telegram https://t.me/AvisoAguaGDLbot?start=zN (N = 1 a 7).
+
+Si no encuentras el slug: `GET https://api.aguagdl.com/v1/colonias?q=Americana` devuelve lo mismo que el POST de abajo (el nombre de una colonia no es un dato personal; aun así, si quien pregunta da su dirección, no la pongas en la URL).
+
 1. `POST https://api.aguagdl.com/v1/colonias` con `{"q": "Americana"}` (1 a 80 caracteres; agrega el municipio si hay varias: «Centro Tlaquepaque»). Devuelve `colonias` (lista del SIAPA, con `zones`), `exact`, `others` (colonias fuera de la lista, con las zonas del mapa), `status` y `meta`. `map` da cada polígono del mapa del SIAPA con `shares` (porcentaje del área por zona) y `list_differs` cuando la lista y el mapa del SIAPA no coinciden. Si una colonia tiene varias zonas, la zona depende de la calle: pide la ubicación (paso alterno) o manda a https://aguagdl.com/avisos
 2. `GET https://api.aguagdl.com/v1/zones`: por zona, `days` (días de la semana con corte) y `next_cuts` (las próximas 6 fechas con corte, desde hoy, hora de Ciudad de México; `next` es lo mismo). `meta.valid_until` es el fin de la rotación.
 
