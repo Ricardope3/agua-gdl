@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-01",
+ "actualizado": "2026-11-03",
  "desde": "2026-10-12",
  "regla": {
   "reacciones": 5,
@@ -15,7 +15,8 @@
   "2026-10-27",
   "2026-10-28",
   "2026-10-31",
-  "2026-11-01"
+  "2026-11-01",
+  "2026-11-03"
  ],
  "publicaciones": [
   {
@@ -29383,7 +29384,10 @@
    "lugar": "Las Juntitas, Tlaquepaque",
    "cita": "la circulación fue restablecida alrededor de las 3:30 de la mañana, después de que los manifestantes confirmaron la reanudación del suministro en sus viviendas",
    "regreso": "2026-10-28",
-   "nota": "La protesta la encabezaron vecinos de Las Juntitas, que el mapa del SIAPA no lista aparte de Las Juntas."
+   "nota": "La protesta la encabezaron vecinos de Las Juntitas, que el mapa del SIAPA no lista aparte de Las Juntas.",
+   "vista": "fuentes/6f910bc4cc66.jpg",
+   "captura": "fuentes/6f910bc4cc66-t.jpg",
+   "titular": "Bloqueo en carretera a Chapala deja automovilistas varados más de 12 horas"
   },
   {
    "fuente": "medio",
@@ -30702,7 +30706,9 @@
    "dias": 32,
    "bloqueo": true,
    "de": "https://www.facebook.com/traficozmg.periodismociudadano/posts/pfbid02vq62RzrLPuHsRVSVK9YWqWAYgacRDtXoQjoFT4PHnAdeMRsXzGv1qkuGT2voQ23il",
-   "vista": "fuentes/6b587d55c910.jpg"
+   "vista": "fuentes/6b587d55c910.jpg",
+   "captura": "fuentes/6b587d55c910-t.jpg",
+   "titular": "Vecinos del oriente de Guadalajara se manifiestan por falta de agua - Tráfico ZMG"
   },
   {
    "fuente": "medio",
@@ -30723,7 +30729,9 @@
    "dias": 32,
    "bloqueo": true,
    "de": "https://www.facebook.com/traficozmg.periodismociudadano/posts/pfbid02vq62RzrLPuHsRVSVK9YWqWAYgacRDtXoQjoFT4PHnAdeMRsXzGv1qkuGT2voQ23il",
-   "vista": "fuentes/6b587d55c910.jpg"
+   "vista": "fuentes/6b587d55c910.jpg",
+   "captura": "fuentes/6b587d55c910-t.jpg",
+   "titular": "Vecinos del oriente de Guadalajara se manifiestan por falta de agua - Tráfico ZMG"
   },
   {
    "fuente": "medio",
@@ -30986,6 +30994,206 @@
     "al": "2026-11-02"
    },
    "vista": null
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "UDG TV",
+   "url": "https://udgtv.com/noticias/vecinos-cierran-av-javier-mina-tras-32-dias-sin-agua/336455",
+   "fecha": "2026-11-02",
+   "colonias": [
+    "SAN JUAN BOSCO|Guadalajara|44730"
+   ],
+   "lugar": "San Felipe y San Juan Bosco, Guadalajara",
+   "cita": "Los colonos exigen agua, ya que aseguran que tienen 32 días sin el servicio, aún antes del comienzo del programa de tandeos del SIAPA.",
+   "dias": 32,
+   "bloqueo": true,
+   "eco": null,
+   "vista": "fuentes/cc932b2ee590.jpg",
+   "captura": "fuentes/cc932b2ee590-t.jpg",
+   "titular": "Vecinos cierran Av. Javier Mina, tras 32 días sin agua"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "UnoTV",
+   "url": "https://www.unotv.com/estados/jalisco/bloquean-el-desfile-de-catrinas-en-guadalajara-tras-cumplir-mas-de-un-mes-sin-agua-potable/",
+   "fecha": "2026-11-02",
+   "colonias": [
+    "SAN ANDRES|Guadalajara|44810",
+    "LA PENAL|Guadalajara|44730",
+    "OBLATOS|Guadalajara|44700",
+    "BLANCO Y CUELLAR|Guadalajara|44710",
+    "LA LOMA|Guadalajara|44410"
+   ],
+   "lugar": "Javier Mina y Pedro Celestino Negrete, Guadalajara",
+   "cita": "tenemos más de un mes sin gota de agua […] en la protesta participaron vecinos de San Andrés, La Expenal, Oblatos, Blanco y Cuellar y La Loma",
+   "dias": 30,
+   "bloqueo": true,
+   "parcial": true,
+   "eco": null,
+   "vista": "fuentes/d4297034e0f9.jpg",
+   "captura": "fuentes/d4297034e0f9-t.jpg",
+   "titular": "Bloquean el Desfile de Catrinas en Guadalajara tras cumplir más de un mes sin agua potable"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Zona Docs",
+   "url": "https://www.zonadocs.mx/2026/11/01/es-lamentable-que-tengas-que-exigir-algo-tan-basico-el-agua/",
+   "fecha": "2026-11-01",
+   "colonias": [
+    "ATLAS|Guadalajara|44870",
+    "EL ROSARIO|Guadalajara|44890"
+   ],
+   "lugar": "Atlas y El Rosario, Guadalajara",
+   "cita": "Según la lista de tandeos, a estas colonias les toca los días miércoles y sábados, pero las y los vecinos denuncian que ya van 15 días sin agua, que si bien, ha habido un día en el que se escuchó como llegó, este no llenó ni el cuarto de sus tinacos.",
+   "dias": 15,
+   "parcial": true,
+   "eco": null,
+   "vista": "fuentes/2e87045c5eaa.jpg",
+   "captura": "fuentes/2e87045c5eaa-t.jpg",
+   "titular": "“Es lamentable que tengas que exigir algo tan básico”: la vida cotidiana bajo los tandeos en la ZMG"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Zona Docs",
+   "url": "https://www.zonadocs.mx/2026/11/01/es-lamentable-que-tengas-que-exigir-algo-tan-basico-el-agua/",
+   "fecha": "2026-11-01",
+   "colonias": [
+    "SAN MIGUEL DE HUENTITAN|Guadalajara|44300"
+   ],
+   "lugar": "San Miguel de Huentitán, Guadalajara",
+   "cita": "ni siquiera teníamos agua cuando se supone que nos tendría que tocar, nosotros no nos damos cuenta de cuándo se supone que nos quitan el agua porque en realidad no hay agua la mayor parte de la semana",
+   "dias": null,
+   "parcial": true,
+   "eco": null,
+   "vista": "fuentes/2e87045c5eaa.jpg",
+   "captura": "fuentes/2e87045c5eaa-t.jpg",
+   "titular": "“Es lamentable que tengas que exigir algo tan básico”: la vida cotidiana bajo los tandeos en la ZMG"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Zona Docs",
+   "url": "https://www.zonadocs.mx/2026/11/01/mala-calidad-del-agua-en-el-amg-las-dificultades-de-las-familias-del-cerro-del-4/",
+   "fecha": "2026-11-01",
+   "colonias": [
+    "CERRO DEL CUATRO|San Pedro Tlaquepaque|45599"
+   ],
+   "lugar": "Cerro del 4, Tlaquepaque",
+   "cita": "Habitantes de la zona del Cerro del 4 mencionaron que este tandeo no se ha respetado e, incluso, hay colonias que tienen prácticamente un mes sin agua, lo que ha generado manifestaciones en las avenidas principales del área: 8 de julio, Reyes Heroles y Cuyucuata.",
+   "dias": null,
+   "eco": null,
+   "vista": null,
+   "captura": "fuentes/eb93db736083-t.jpg",
+   "titular": "Mala calidad del agua en el AMG: las dificultades de las familias del Cerro del 4"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "La BCSA",
+   "url": "https://labcsa.org/2026/11/01/vecinos-de-el-salto-exigen-agua-y-son-hostigados/",
+   "fecha": "2026-11-01",
+   "colonias": [
+    "LOMAS DE SAN JUAN|El Salto|45620"
+   ],
+   "lugar": "Lomas de San Juan, El Salto",
+   "cita": "Vecinos de la Colonia Lomas de San Juan, en El Salto, denunciaron que llevan un año sin agua potable en sus viviendas",
+   "dias": null,
+   "causa": "obras inconclusas del municipio en la Calle Privada Límite",
+   "eco": null,
+   "captura": "fuentes/d40916f8d118-t.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "El Informador",
+   "url": "https://www.informador.mx/jalisco/agua-enfrentan-acuiferos-presion-y-deficit-20261102-0018.html",
+   "fecha": "2026-11-02",
+   "colonias": [
+    "JARDINES DEL COUNTRY|Guadalajara|44210"
+   ],
+   "lugar": "Jardines del Country, Guadalajara",
+   "cita": "Los tandeos han sido irregulares. Nos dicen que tenemos dos fuentes de abastecimiento, pero el agua sale igual de sucia y no sabemos cuándo tendremos agua",
+   "dias": null,
+   "parcial": true,
+   "eco": null,
+   "vista": null,
+   "captura": "fuentes/1ff588fec937-t.jpg",
+   "titular": "Agua: Enfrentan acuíferos presión y déficit"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "La BCSA",
+   "url": "https://labcsa.org/2026/10/31/pasan-de-recibir-agua-color-cafe-a-azul-turquesa/",
+   "fecha": "2026-10-31",
+   "colonias": [
+    "EL RETIRO|Guadalajara|44280"
+   ],
+   "lugar": "El Retiro, Guadalajara",
+   "cita": "Vecinos de la Colonia El Retiro y de Fraccionamientos como Alto Sur reportaron que el agua, que llevaba semanas saliendo café, negra o amarillenta y con olor fétido, pasó a salir con un tono azul turquesa.",
+   "dias": null,
+   "calidad": true,
+   "eco": null,
+   "captura": "fuentes/4ac5acf031cd-t.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Milenio",
+   "url": "https://www.milenio.com/comunidad/bloquean-calles-por-falta-de-agua-en-jalisco",
+   "fecha": "2026-10-29",
+   "colonias": [
+    "VISTAS DEL PEDREGAL|Tonalá|45429",
+    "EL VADO|Tonalá|45429",
+    "EL PEDREGAL DE SANTA MARTHA|Tonalá|45429"
+   ],
+   "lugar": "Autopista Guadalajara-Zapotlanejo, Tonalá",
+   "cita": "Los manifestantes son habitantes de colonias y fraccionamientos como Vistas del Pedregal, El Vado y Santa Martha del Pedregal, quienes denunciaron que llevan entre 22 días y un mes sin agua en sus hogares.",
+   "dias": 22,
+   "bloqueo": true,
+   "eco": null,
+   "vista": "fuentes/95484c808037.jpg",
+   "captura": "fuentes/95484c808037-t.jpg",
+   "titular": "Bloqueos por falta de agua afectan vialidades y autopista en Jalisco"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Milenio",
+   "url": "https://www.milenio.com/comunidad/bloquean-calles-por-falta-de-agua-en-jalisco",
+   "fecha": "2026-10-29",
+   "colonias": [
+    "GUAYABITOS|San Pedro Tlaquepaque|45530"
+   ],
+   "lugar": "Guayabitos, Tlaquepaque",
+   "cita": "Vecinos de la colonia Guayabitos salieron de sus casas para obstruir la vialidad de forma parcial, pero por bastante tiempo en manifestación tras no recibir suministro de agua. […] Según indicaron, llevan hasta dos meses sin servicio.",
+   "dias": null,
+   "bloqueo": true,
+   "eco": null,
+   "vista": "fuentes/95484c808037.jpg",
+   "captura": "fuentes/95484c808037-t.jpg",
+   "titular": "Bloqueos por falta de agua afectan vialidades y autopista en Jalisco"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Imagen TV Guadalajara",
+   "url": "https://www.imagentv.com/noticias/sin-agua-recibos-vecinos-de-oblatos-llevan-mas-de-mes-sin-agua-y-exigen-solucion",
+   "fecha": "2026-10-28",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "Oblatos, Guadalajara",
+   "cita": "Vecinos de Oblatos, en Guadalajara, denunciaron más de un mes sin agua potable.",
+   "dias": 30,
+   "eco": null,
+   "vista": "fuentes/a51fa76d93c0.jpg",
+   "captura": "fuentes/a51fa76d93c0-t.jpg",
+   "titular": "Sin agua, pero con recibos: Vecinos de Oblatos llevan más de un mes sin agua y exigen solución"
   }
  ]
 }
