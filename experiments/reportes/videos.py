@@ -191,6 +191,7 @@ VARIANTS = {
 def main():
     src = Path(__file__).with_name("reportes-before-c3.html").read_text()
     base.VD.update(VARIANTS)
+    base.DNAMES.clear()
     base.DNAMES.update({k: v[0] for k, v in VARIANTS.items()})
     for name in VARIANTS:
         out = base.WEB / f"{name}.html"

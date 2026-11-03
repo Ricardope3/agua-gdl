@@ -676,7 +676,7 @@ if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.
   const hoyISO = new Date().toLocaleDateString("en-CA", { timeZone: "America/Mexico_City" });
   const dayName = (iso) => new Date(iso + "T12:00").toLocaleDateString("es-MX", { weekday: "long", day: "numeric", month: "long" });
   const info = (n) => {
-    const z = api.find((x) => x.zone === n) || { days: [], next: [] };
+    const z = (api.zones || []).find((x) => x.zone === n) || { days: [], next: [] };
     const cs = unique(mine(n)), total = new Set(g.colonias.filter((f) => inZone(f, n)).map(key)).size;
     const next = z.next.find((x) => x >= hoyISO);
     return { days: z.days, hoy: next === hoyISO, next: z.next.find((x) => x > hoyISO), total, cs,

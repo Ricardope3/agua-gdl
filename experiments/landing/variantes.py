@@ -9,8 +9,12 @@ Change a variant here and run it again; a block index.html no longer has stops i
 Usage, from the repo root: python3 -I experiments/landing/variantes.py
 """
 import re
+import sys
 from html.parser import HTMLParser
 from pathlib import Path
+
+if "--force" not in sys.argv:
+    sys.exit("/v11…/v15 were dropped and redirect to /. Pass --force to write them anyway.")
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 WEB = ROOT / "web"

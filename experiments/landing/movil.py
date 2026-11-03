@@ -314,16 +314,8 @@ def main():
     # The landing became m5 on phones; the variants build from the landing as it was before.
     src = (Path(__file__).parent / "index-before-m5.html").read_text()
     if "--force" not in sys.argv:
-        # The snapshot rots as the live landing evolves; regenerating from a stale one
-        # would clobber the live pages with old copy (index.html is m5-derived, so this
-        # also protects it). Refuse loudly instead, unless --force says clobber on purpose.
-        drifted = [k for k, v in V.items() if (WEB / f"{k}.html").exists()
-                   and (WEB / f"{k}.html").read_text() != build(k, v, src)]
-        if drifted:
-            sys.exit(f"{', '.join(drifted)} no longer match a rebuild from index-before-m5.html: "
-                     "the snapshot is stale. Refresh it from the current landing (and reconcile "
-                     "web/index.html, which is m5 without its noindex and variant bar) or pass "
-                     "--force to overwrite the pages with the snapshot's copy anyway.")
+        sys.exit("/m1…/m5 were retired on 2 Nov 2026 (they 301 to /) and index-before-m5.html is "
+                 "older than the landing. Pass --force to write them anyway.")
     for key, v in V.items():
         (WEB / f"{key}.html").write_text(build(key, v, src))
         print("wrote", key)
