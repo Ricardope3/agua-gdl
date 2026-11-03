@@ -2,6 +2,7 @@
 another), each a take on the carousel /reportes shows a colonia in on phones. Wider screens see /reportes as is.
 Run from the repo root: python3 experiments/reportes/colonia.py
 """
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -761,13 +762,15 @@ def hooks(h, js, americana=False):
 
 
 def main():
+    # web/reportes.html is the source of /reportes now; this writes only the variants, which were
+    # retired on 2 Nov 2026 (they 301 to /reportes). videos.py still uses build() for /c6…/c8.
     src = (Path(__file__).parent / "reportes-before-c3.html").read_text()
+    if "--force" not in sys.argv:
+        sys.exit("/c1…/c5 and /d1…/d5 were retired and reportes-before-c3.html is older than /reportes. "
+                 "Pass --force to write the variants anyway.")
     for v in [*NAMES, *DNAMES]:
         (WEB / f"{v}.html").write_text(build(src, v))
         print(f"web/{v}.html")
-    # /reportes itself takes this variant's carousel on phones.
-    (WEB / "reportes.html").write_text(build(src, DEFAULT, bar=False))
-    print("web/reportes.html")
 
 
 if __name__ == "__main__":

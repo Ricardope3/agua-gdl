@@ -3,11 +3,9 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 import vm from "node:vm";
 
-const source = readFileSync(new URL("reportes-before-c3.html", import.meta.url), "utf8");
-const generated = readFileSync(new URL("../../web/reportes.html", import.meta.url), "utf8");
+const source = readFileSync(new URL("../../web/reportes.html", import.meta.url), "utf8");
 const helpers = source.match(/  const totalOf = \(c\)[\s\S]*?  const answerLabel = \(answer\)[^\n]+;\n/);
-assert.ok(helpers, "the report-status helpers are present in the generator source");
-assert.ok(generated.includes(helpers[0]), "the generated page contains the same status helpers");
+assert.ok(helpers, "the report-status helpers are present in /reportes");
 
 const { statusOf, statusLabel, answerLabel } = vm.runInNewContext(
   `${helpers[0]}; ({ statusOf, statusLabel, answerLabel });`,
@@ -15,8 +13,7 @@ const { statusOf, statusLabel, answerLabel } = vm.runInNewContext(
 const counts = (sin_agua = 0, baja = 0, con_agua = 0) => ({ sin_agua, baja, con_agua });
 
 const sourceOfBlock = source.match(/  function sourceOf\(p, byUrl\) \{[\s\S]*?\n  \}\n/);
-assert.ok(sourceOfBlock, "sourceOf is present in the generator source");
-assert.ok(generated.includes(sourceOfBlock[0]), "the generated page contains the same sourceOf");
+assert.ok(sourceOfBlock, "sourceOf is present in /reportes");
 const { sourceOf } = vm.runInNewContext(`${sourceOfBlock[0]}; ({ sourceOf });`, { URL });
 const byUrl = new Map([
   ["https://www.facebook.com/traficozmg.periodismociudadano/posts/aaa", { fuente: "vecinos", red: "facebook", url: "https://www.facebook.com/traficozmg.periodismociudadano/posts/aaa" }],
