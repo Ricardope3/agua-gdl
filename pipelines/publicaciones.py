@@ -18,6 +18,13 @@
                                                   video, so a future run can download the evidence; then
                                                   validate and write. Facebook needs a browser session, so its
                                                   posts are tagged by hand when added.
+    python3 pipelines/publicaciones.py q colonia~ARCOS fuente=medio fecha>=2026-10-20 dias>7 [--fields url,fecha,dias] [--count] [--all]
+                                                  list matching entries as TSV with their index (50 rows unless
+                                                  --all); ops = != ~ (contains) > >= < <=, dotted fields (eco.reacciones)
+    python3 pipelines/publicaciones.py schema     (or --schema) each field: type, required, values, meaning
+    python3 pipelines/publicaciones.py add FILE.json      append one entry or a list; written only if validate() passes
+    python3 pipelines/publicaciones.py set INDEX field=value ...   value is JSON or a plain string; "field=" removes
+                                                  it; written only if validate() passes. --data PATH works on a copy.
 
 Each entry quotes a news outlet ("medio") or neighbours ("vecinos") saying a colonia has no water, with
 its link, date and SIAPA colonias. Neighbours' posts count only with at least regla.reacciones reactions
@@ -68,18 +75,40 @@ PAGINAS = {"Cuenta personal en X", "Gobierno de Guadalajara", "Gobierno de Jalis
 errors = []
 
 
-def fail(msg):
-    errors.append(msg)
+def show(v):
+    s = v if isinstance(v, str) and v else json.dumps(v, ensure_ascii=False)
+    return s if len(s) <= 60 else s[:59] + "…"
 
 
-def date(s, where):
+def fail(where, field, found, rule, fix):
+    errors.append((where, field, show(found), rule, fix))
+
+
+def report(name):
+    """One line per failure; a rule that fails more than 3 times is one line with the count."""
+    groups = {}
+    for e in errors:
+        groups.setdefault((e[1], e[3], e[4]), []).append(e)
+    lines = []
+    for (field, rule, fix), es in groups.items():
+        if len(es) > 3:
+            at = ", ".join(e[0].split(" ")[0] for e in es[:8]) + (", …" if len(es) > 8 else "")
+            found = list(dict.fromkeys(e[2] for e in es))
+            shown = " | ".join(found[:3]) + (f" (+{len(found) - 3} more distinct)" if len(found) > 3 else "")
+            lines.append(f"{name} {len(es)}× [{at}] {field}: found {shown}; rule: {rule}; fix: {fix}")
+        else:
+            lines += [f"{name} [{w}] {f}: found {v}; rule: {r}; fix: {x}" for w, f, v, r, x in es]
+    return "\n".join(lines)
+
+
+def date(s, where, field):
     try:
         d = datetime.date.fromisoformat(s)
     except (TypeError, ValueError):
-        fail(f"{where}: bad date {s!r}")
+        fail(where, field, s, "an ISO date YYYY-MM-DD", "write it as YYYY-MM-DD")
         return None
     if d > TODAY:
-        fail(f"{where}: date {s} is in the future")
+        fail(where, field, s, "not in the future", "use the date it happened")
     return d
 
 
@@ -89,154 +118,154 @@ def count(v):
 
 def validate(doc):
     keys = {"|".join(c[:3]) for c in json.loads(COLONIAS.read_text())}
-    updated = date(doc.get("actualizado"), "actualizado")
-    since = date(doc.get("desde"), "desde")
+    updated = date(doc.get("actualizado"), "top", "actualizado")
+    since = date(doc.get("desde"), "top", "desde")
     rule = doc.get("regla") or {}
     if not (count(rule.get("reacciones")) and count(rule.get("comentarios"))):
-        fail("regla: needs reacciones and comentarios")
+        fail("top", "regla", doc.get("regla"), "needs reacciones and comentarios counts", "set both as non-negative integers")
     # busquedas logs the days collection ran, newest last; the pages show the last one.
     busquedas = doc.get("busquedas")
     if busquedas is not None:
         if not (isinstance(busquedas, list) and busquedas and all(isinstance(b, str) for b in busquedas)):
-            fail("busquedas: a nonempty list of ISO dates, newest last")
+            fail("top", "busquedas", busquedas, "a nonempty list of ISO dates, newest last", "make it a list of date strings")
         else:
-            dias = [date(b, "busquedas") for b in busquedas]
+            dias = [date(b, "top", "busquedas") for b in busquedas]
             if any(not d for d in dias) or dias != sorted(dias) or len(set(dias)) != len(dias):
-                fail("busquedas: valid distinct dates, oldest first")
+                fail("top", "busquedas", busquedas[-3:], "valid distinct dates, oldest first", "sort and dedupe the dates")
             elif since and dias[0] < since or updated and dias[-1] > updated:
-                fail("busquedas: within desde..actualizado")
+                fail("top", "busquedas", [busquedas[0], busquedas[-1]], "within desde..actualizado", "drop out-of-range dates or move desde/actualizado")
     seen = set()
     said = set()
     pages = PAGINAS | {p["quien"] for p in doc.get("publicaciones") or [] if p.get("fuente") == "medio" and isinstance(p.get("quien"), str)}
     for i, p in enumerate(doc.get("publicaciones") or []):
-        where = f"publicaciones[{i}] {p.get('url', '')}"
+        where = f"{i} {show(p.get('url', ''))}"
         if p.get("fuente") not in FUENTES:
-            fail(f"{where}: fuente must be one of {sorted(FUENTES)}")
+            fail(where, "fuente", p.get("fuente"), f"one of {sorted(FUENTES)}", "set medio or vecinos")
         red = p.get("red")
         url = p.get("url", "")
         if red not in REDES:
-            fail(f"{where}: red must be one of {sorted(REDES)}")
+            fail(where, "red", red, f"one of {sorted(REDES)}", "set facebook, x or web")
         elif red == "x" and not X_URL.match(url):
-            fail(f"{where}: an X post links x.com/<account>/status/<id>")
+            fail(where, "url", url, "an X post links x.com/<account>/status/<id>", "use the https://x.com/<account>/status/<id> link")
         elif red == "facebook" and not url.startswith("https://www.facebook.com/"):
-            fail(f"{where}: a Facebook post links https://www.facebook.com/…")
+            fail(where, "url", url, "a Facebook post links https://www.facebook.com/…", "use the www.facebook.com link or fix red")
         elif red == "web" and (not url.startswith("https://") or re.match(r"https://(www\.)?(facebook|x|twitter)\.com/", url)):
-            fail(f"{where}: a web article links its https page")
+            fail(where, "url", url, "a web article links its https page", "use the article's https URL or fix red")
         # One article can name several colonias with different days: one entry per quote.
         if (url, p.get("cita")) in seen:
-            fail(f"{where}: listed twice")
+            fail(where, "url+cita", p.get("cita"), "each url+cita listed once", "remove the duplicate entry")
         seen.add((url, p.get("cita")))
         # A neighbour who pastes the same words under several posts is one report.
         if p.get("fuente") == "vecinos" and isinstance(p.get("cita"), str):
             words = "".join(c for c in unicodedata.normalize("NFD", p["cita"].lower()) if c.isalnum())
             for k in p.get("colonias") or []:
                 if (words, k) in said:
-                    fail(f"{where}: the same words for {k} are already in another entry")
+                    fail(where, "cita", k, "a neighbour's words count once per colonia", "drop this colonia or the repeated entry")
                 said.add((words, k))
         if "de" in p and not (p.get("fuente") == "medio" and str(p["de"]).startswith("https://")):
-            fail(f"{where}: de is the https post a news story retells")
+            fail(where, "de", p["de"], "de is the https post a news story retells (fuente medio)", "set an https URL on a medio entry or remove de")
         quien = p.get("quien")
         if not isinstance(quien, str):
-            fail(f"{where}: quien must be a string")
+            fail(where, "quien", quien, "a string", "set \"\" or the outlet/group name")
         elif p.get("fuente") == "medio" and not quien:
-            fail(f"{where}: a news outlet is named")
+            fail(where, "quien", quien, "a news outlet is named", "set the outlet's name")
         elif p.get("fuente") == "vecinos" and quien and not quien.startswith(VECINOS_QUIEN):
-            fail(f"{where}: neighbours are never named; quien is empty, «Grupo «…»» or «Cuenta de vecinos …»")
+            fail(where, "quien", quien, "neighbours are never named; empty, «Grupo «…»» or «Cuenta de vecinos …»", "replace the name with an allowed form")
         if isinstance(quien, str) and "@" in quien:
-            fail(f"{where}: quien never carries an @handle; the link keeps it")
-        d = date(p.get("fecha"), where)
+            fail(where, "quien", quien, "never an @handle; the link keeps it", "remove the @handle")
+        d = date(p.get("fecha"), where, "fecha")
         if d and since and d < since:
-            fail(f"{where}: fecha before desde")
+            fail(where, "fecha", p.get("fecha"), f"on or after desde ({doc.get('desde')})", "check the post date or drop the entry")
         if d and updated and d > updated:
-            fail(f"{where}: fecha after actualizado")
+            fail(where, "fecha", p.get("fecha"), f"on or before actualizado ({doc.get('actualizado')})", "move actualizado forward")
         cols = p.get("colonias")
         if not cols or not isinstance(cols, list):
-            fail(f"{where}: needs colonias")
+            fail(where, "colonias", cols, "a nonempty list of colonia keys", "add the colonias the post names")
         for k in cols or []:
             if k not in keys:
-                fail(f"{where}: colonia {k!r} isn't in api/data/colonias_mapa.json")
+                fail(where, "colonias", k, "a key of api/data/colonias_mapa.json", "use the exact name|municipio|cp key")
         if not p.get("lugar"):
-            fail(f"{where}: needs lugar, the place as the post names it")
+            fail(where, "lugar", p.get("lugar"), "the place as the post names it", "copy the place name from the post")
         cita = p.get("cita")
         if not isinstance(cita, str) or not cita.strip() or len(cita) > 400 or "http" in cita:
-            fail(f"{where}: cita is the post's own words, 1 to 400 characters, without links")
+            fail(where, "cita", cita, "the post's own words, 1 to 400 characters, without links", "trim to ≤400 chars and remove links")
         elif re.search(r"#\s*\d", cita):
-            fail(f"{where}: cita never carries a street number (#14); redact it visibly")
+            fail(where, "cita", cita, "never a street number (#14)", "redact it visibly, e.g. #[…]")
         dias = p.get("dias")
         if dias is not None and not (count(dias) and 1 <= dias <= 120):
-            fail(f"{where}: dias is null or 1 to 120")
+            fail(where, "dias", dias, "null or an integer 1 to 120", "set the days the post gives, or null")
         if "desde" in p:
-            s = date(p["desde"], where)
+            s = date(p["desde"], where, "desde")
             if s and d and s > d:
-                fail(f"{where}: desde after fecha")
+                fail(where, "desde", p["desde"], f"not after fecha ({p.get('fecha')})", "fix desde or fecha")
         if "bloqueo" in p and p["bloqueo"] is not True:
-            fail(f"{where}: bloqueo is true or absent")
+            fail(where, "bloqueo", p["bloqueo"], "true or absent", "set true or remove the field")
         # The other side, always as the source's own claim, never our conclusion:
         # regreso: the day the source says the water came back; parcial: the source describes
         # low or intermittent supply rather than a cut; causa: a non-SIAPA cause or system the
         # source names; calidad: water quality (smell, color, sediment), not absence.
         if "regreso" in p:
-            r = date(p.get("regreso"), where)
+            r = date(p.get("regreso"), where, "regreso")
             if not r or r < since or (d and r > d):
-                fail(f"{where}: regreso is an ISO date within desde..fecha")
+                fail(where, "regreso", p.get("regreso"), "an ISO date within desde..fecha", "use the date the source gives, or remove it")
         if p.get("parcial") not in (None, True):
-            fail(f"{where}: parcial is true or absent")
+            fail(where, "parcial", p.get("parcial"), "true or absent", "set true or remove the field")
         if p.get("calidad") not in (None, True):
-            fail(f"{where}: calidad is true or absent")
+            fail(where, "calidad", p.get("calidad"), "true or absent", "set true or remove the field")
         if "causa" in p and not (isinstance(p["causa"], str) and 0 < len(p["causa"]) <= 80):
-            fail(f"{where}: causa is the non-SIAPA cause the source names, 1 to 80 characters")
+            fail(where, "causa", p["causa"], "the non-SIAPA cause the source names, 1 to 80 characters", "shorten it or remove the field")
         if p.get("vista") is not None and not (isinstance(p["vista"], str) and IMAGEN.match(p["vista"]) and (WEB / p["vista"]).is_file()):
-            fail(f"{where}: vista is null (no useful image) or fuentes/<12 hex>.jpg, in web/")
+            fail(where, "vista", p["vista"], "null or fuentes/<12 hex>.jpg existing in web/", "run --imagenes or set null")
         if p.get("captura") is not None and not (isinstance(p["captura"], str) and CAPTURA.match(p["captura"]) and (WEB / p["captura"]).is_file()):
-            fail(f"{where}: captura is null or fuentes/<12 hex>-t.jpg, in web/")
+            fail(where, "captura", p["captura"], "null or fuentes/<12 hex>-t.jpg existing in web/", "run --capturas or set null")
         if "titular" in p and not (red == "web" and isinstance(p["titular"], str) and 0 < len(p["titular"]) <= 300):
-            fail(f"{where}: titular is a news article's headline, 1 to 300 characters")
+            fail(where, "titular", p["titular"], "a web article's headline, 1 to 300 characters", "fix it or remove it (not on red facebook/x)")
         eco = p.get("eco")
-        check_eco(eco, where)
+        check_eco(eco, where, "eco")
         # "video": true marks a post whose link carries a video (a reel, a YouTube video, an X post
         # whose embed serves one), so a future run can download the evidence. Absent means unknown.
         if p.get("video") not in (None, True):
-            fail(f"{where}: video is true or absent")
+            fail(where, "video", p.get("video"), "true or absent", "set true or remove the field")
         if re.search(r"facebook\.com/(reel|watch)/|youtube\.com|youtu\.be/|tiktok\.com/", url) and not p.get("video"):
-            fail(f"{where}: a reel, watch, YouTube or TikTok link carries a video: set \"video\": true")
+            fail(where, "video", p.get("video"), "a reel, watch, YouTube or TikTok link carries a video", "set \"video\": true")
         # A comment counts by the thread it is in: the post's reactions and comments meet the rule.
         tipo = p.get("tipo")
         if tipo not in (None, "comentario"):
-            fail(f"{where}: tipo is absent or comentario")
+            fail(where, "tipo", tipo, "absent or comentario", "set comentario or remove the field")
         if tipo == "comentario":
             en = p.get("en") or {}
             # On X a comment is a reply: its own post, answering the one in en.
             if red == "x":
                 if not en.get("quien") or not X_URL.match(str(en.get("url", ""))):
-                    fail(f"{where}: a reply names the post it answers (en.quien, en.url)")
+                    fail(where, "en", p.get("en"), "a reply names the post it answers (en.quien, en.url)", "set en.quien and en.url to the X post answered")
                 elif not X_URL.match(url) or url == en["url"]:
-                    fail(f"{where}: a reply links its own post")
+                    fail(where, "url", url, "a reply links its own post, not the one in en", "use the reply's own status URL")
             elif not en.get("quien") or not str(en.get("url", "")).startswith("https://www.facebook.com/"):
-                fail(f"{where}: a comment names the post it is in (en.quien, en.url)")
+                fail(where, "en", p.get("en"), "a comment names the post it is in (en.quien, en.url)", "set en.quien and en.url (www.facebook.com)")
             elif not url.startswith(en["url"] + "?comment_id="):
-                fail(f"{where}: a comment links its post with ?comment_id=")
+                fail(where, "url", url, "a comment links its post with ?comment_id=", "use en.url + ?comment_id=…")
             if en.get("quien") and not (str(en["quien"]) in pages or str(en["quien"]).startswith(VECINOS_QUIEN)):
-                fail(f"{where}: en.quien is never a person: an outlet with a medio entry, «Grupo «…»», «Cuenta de vecinos …» or one of PAGINAS")
+                fail(where, "en.quien", en["quien"], "never a person: a medio outlet, «Grupo «…»», «Cuenta de vecinos …» or PAGINAS", "use an allowed form, or add a checked page to PAGINAS")
             if en.get("quien") and "@" in str(en["quien"]):
-                fail(f"{where}: en.quien never carries an @handle; the link keeps it")
-            check_eco(en.get("eco"), where + " en")
+                fail(where, "en.quien", en["quien"], "never an @handle; the link keeps it", "remove the @handle")
+            check_eco(en.get("eco"), where, "en.eco")
             eco = en.get("eco")
         if p.get("fuente") == "vecinos":
             if eco is None:
-                fail(f"{where}: a neighbours' post needs eco")
+                fail(where, "eco", eco, "a neighbours' post needs eco", "add eco {reacciones, comentarios, al}")
             elif count(eco.get("reacciones")) and count(eco.get("comentarios")) and (
                     eco["reacciones"] < rule.get("reacciones", 0) or eco["comentarios"] < rule.get("comentarios", 0)):
-                fail(f"{where}: below the rule ({eco['reacciones']} reactions, {eco['comentarios']} comments)")
+                fail(where, "eco", f"{eco['reacciones']} reactions, {eco['comentarios']} comments", f"at least {rule.get('reacciones')} reactions and {rule.get('comentarios')} comments", "refresh eco or drop the entry")
 
 
-def check_eco(eco, where):
+def check_eco(eco, where, field):
     if eco is None:
         return
     if not (count(eco.get("reacciones")) and count(eco.get("comentarios"))):
-        fail(f"{where}: eco needs reacciones and comentarios")
+        fail(where, field, eco, "needs reacciones and comentarios counts", "set both as non-negative integers")
     if "compartidos" in eco and not count(eco["compartidos"]):
-        fail(f"{where}: eco.compartidos is a count")
-    date(eco.get("al"), where)
+        fail(where, f"{field}.compartidos", eco["compartidos"], "a non-negative integer", "fix the count or remove it")
+    date(eco.get("al"), where, f"{field}.al")
 
 
 def radix36(value):
@@ -470,15 +499,172 @@ def fetch_captures(doc):
     return got
 
 
+# field, type, required, allowed values, meaning (from .claude/rules/evidence.md)
+SCHEMA = [
+    ("fuente", "str", "yes", "medio|vecinos", "a news outlet (counts without threshold) or neighbours (need regla)"),
+    ("red", "str", "yes", "facebook|x|web", "where it was published; fixes the url shape"),
+    ("quien", "str", "yes", "outlet, «Grupo «…»», «Cuenta de vecinos …» or empty", "who published it; never a private person"),
+    ("url", "str", "yes", "https link", "the post or article"),
+    ("fecha", "date", "yes", "desde..actualizado", "publication date"),
+    ("colonias", "list[str]", "yes", "keys of api/data/colonias_mapa.json", "SIAPA colonias it names"),
+    ("lugar", "str", "yes", "", "the place as the post names it"),
+    ("cita", "str", "yes", "1-400 chars, no links, no #number", "its words as published, checked against the post"),
+    ("dias", "int|null", "no", "1-120 or null", "days without water it gives"),
+    ("desde", "date", "no", "<= fecha", "day the source says the cut began"),
+    ("bloqueo", "true", "no", "true or absent", "a street blockade"),
+    ("de", "str", "no", "https url; medio only", "the post a news story retells; counted as one source"),
+    ("regreso", "date", "no", "desde..fecha", "day the source says the water came back (its claim)"),
+    ("parcial", "true", "no", "true or absent", "low or intermittent supply, per the source"),
+    ("calidad", "true", "no", "true or absent", "quality-only complaint (smell, color, sediment)"),
+    ("causa", "str", "no", "1-80 chars", "the non-SIAPA cause the source names"),
+    ("eco", "obj|null", "vecinos", "{reacciones, comentarios, compartidos?, al}", "reactions, comments, shares and the date read"),
+    ("tipo", "str", "no", "comentario or absent", "a comment; counts by the post it is in"),
+    ("en", "obj", "if tipo", "{quien, url, eco}", "the post a comment is in (on X, the post a reply answers)"),
+    ("video", "true", "no", "true or absent", "the link carries a video; absent means unknown"),
+    ("vista", "str|null", "no", "fuentes/<12 hex>.jpg or null", "preview image saved by --imagenes; null = logo/stock"),
+    ("captura", "str|null", "no", "fuentes/<12 hex>-t.jpg or null", "headline screenshot saved by --capturas"),
+    ("titular", "str", "no", "1-300 chars; web only", "the article's og:title"),
+]
+
+
+def fold(s):
+    return "".join(c for c in unicodedata.normalize("NFD", str(s).lower()) if unicodedata.category(c) != "Mn")
+
+
+def field(p, path):
+    for k in path.split("."):
+        if not isinstance(p, dict) or k not in p:
+            return None
+        p = p[k]
+    return p
+
+
+def matches(p, cond):
+    m = re.match(r"^([\w.]+)(!=|>=|<=|~|=|>|<)(.*)$", cond)
+    if not m:
+        sys.exit(f"publicaciones: bad filter {cond!r}; use field OP value with OP one of = != ~ > >= < <=")
+    k, op, want = m.groups()
+    k = {"colonia": "colonias"}.get(k, k)
+    v = field(p, k)
+    vals = v if isinstance(v, list) else [v]
+    if op == "!=":
+        return not any(fold(x) == fold(want) for x in vals if x is not None) and not (v is None and want in ("", "null"))
+    if op == "=":
+        return (v is None and want in ("", "null")) or any(x is not None and fold(x) == fold(want) for x in vals)
+    if op == "~":
+        return any(x is not None and fold(want) in fold(x) for x in vals)
+    try:
+        a, b = float(v), float(want)
+    except (TypeError, ValueError):
+        if v is None:
+            return False
+        a, b = str(v), want
+    return {">": a > b, ">=": a >= b, "<": a < b, "<=": a <= b}[op]
+
+
+def cell(v):
+    if isinstance(v, (dict, list)):
+        v = json.dumps(v, ensure_ascii=False)
+    return "" if v is None else str(v).replace("\t", " ").replace("\n", " ")
+
+
+def query(doc, conds, fields, only_count, show_all):
+    hits = [(i, p) for i, p in enumerate(doc["publicaciones"]) if all(matches(p, c) for c in conds)]
+    if only_count:
+        print(len(hits))
+        return
+    cols = fields.split(",") if fields else ["fuente", "fecha", "quien", "colonias", "dias", "url"]
+    print("\t".join(["i", *cols]))
+    for i, p in hits if show_all else hits[:50]:
+        print("\t".join([str(i), *(cell(field(p, c)) for c in cols)]))
+    if not show_all and len(hits) > 50:
+        print(f"publicaciones: {len(hits)} match, 50 shown (--all for every row)", file=sys.stderr)
+
+
+def assign(p, path, raw):
+    keys = path.split(".")
+    for k in keys[:-1]:
+        if not isinstance(p.get(k), dict):
+            p[k] = {}
+        p = p[k]
+    if raw == "":
+        p.pop(keys[-1], None)
+        return
+    try:
+        p[keys[-1]] = json.loads(raw)
+    except ValueError:
+        p[keys[-1]] = raw
+
+
+def write(path, doc):
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
+    tmp.replace(path)
+
+
+def edit(doc, data, cmd, rest):
+    before = json.loads(json.dumps(doc["publicaciones"]))
+    if cmd == "add":
+        if len(rest) != 1:
+            sys.exit("publicaciones: add FILE.json")
+        new = json.loads(pathlib.Path(rest[0]).read_text())
+        new = new if isinstance(new, list) else [new]
+        start = len(doc["publicaciones"])
+        doc["publicaciones"].extend(new)
+        changes = [f"+ [{start + n}] {json.dumps(p, ensure_ascii=False)}" for n, p in enumerate(new)]
+    else:
+        if len(rest) < 2 or not rest[0].isdigit() or int(rest[0]) >= len(doc["publicaciones"]):
+            sys.exit(f"publicaciones: set INDEX field=value ...; INDEX is 0..{len(doc['publicaciones']) - 1}")
+        i = int(rest[0])
+        p = doc["publicaciones"][i]
+        changes = []
+        for a in rest[1:]:
+            if "=" not in a:
+                sys.exit(f"publicaciones: bad assignment {a!r}; use field=value")
+            k, raw = a.split("=", 1)
+            old = field(p, k)
+            assign(p, k, raw)
+            new = field(p, k)
+            if old != new or (old is None) != (new is None):
+                changes.append(f"  [{i}] {k}: {json.dumps(old, ensure_ascii=False)} -> {json.dumps(new, ensure_ascii=False)}")
+    validate(doc)
+    if errors:
+        sys.exit("publicaciones: not written; " + "invalid data:\n" + report(data.name))
+    if doc["publicaciones"] == before:
+        print("publicaciones: no change; not written")
+        return
+    write(data, doc)
+    print("\n".join(changes))
+    print(f"publicaciones: wrote {data}")
+
+
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("cmd", nargs="*", help="q COND... | schema | add FILE.json | set INDEX field=value ...")
+    ap.add_argument("--schema", action="store_true", help="print each entry field's type, rule and meaning")
+    ap.add_argument("--fields", help="q: comma-separated columns (dotted for nested)")
+    ap.add_argument("--count", action="store_true", help="q: print only the number of matches")
+    ap.add_argument("--all", action="store_true", help="q: every row, not the first 50")
+    ap.add_argument("--data", type=pathlib.Path, default=DATA, help="the publicaciones.json to read and write")
     ap.add_argument("--check", action="store_true", help="validate only; write nothing")
     ap.add_argument("--eco", action="store_true", help="refresh the X posts' likes and replies, then write")
     ap.add_argument("--imagenes", action="store_true", help="download the posts' preview images, then write")
     ap.add_argument("--capturas", action="store_true", help="screenshot the news articles' headlines, then write")
     ap.add_argument("--videos", action="store_true", help="tag the X posts whose embed serves a video, then write")
-    args = ap.parse_args()
-    doc = json.loads(DATA.read_text())
+    args = ap.parse_intermixed_args()
+    cmd, rest = (args.cmd[0], args.cmd[1:]) if args.cmd else (None, [])
+    if args.schema or cmd == "schema":
+        print("\t".join(["field", "type", "required", "values", "meaning"]))
+        for row in SCHEMA:
+            print("\t".join(row))
+        return
+    if cmd not in (None, "q", "add", "set"):
+        sys.exit(f"publicaciones: unknown command {cmd!r}")
+    doc = json.loads(args.data.read_text())
+    if cmd == "q":
+        return query(doc, rest, args.fields, args.count, args.all)
+    if cmd in ("add", "set"):
+        return edit(doc, args.data, cmd, rest)
     if args.eco and not args.check:
         print(f"publicaciones: {refresh_x(doc)} X posts changed")
     if args.videos and not args.check:
@@ -489,9 +675,9 @@ def main():
         print(f"publicaciones: {fetch_images(doc)} images downloaded")
     validate(doc)
     if errors:
-        sys.exit("publicaciones: " + "\n  ".join(["invalid data:", *errors]))
+        sys.exit("publicaciones: " + "invalid data:\n" + report(args.data.name))
     if (args.eco or args.imagenes or args.capturas or args.videos) and not args.check:
-        DATA.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
+        write(args.data, doc)
     pubs = doc["publicaciones"]
     cols = {k for p in pubs for k in p["colonias"]}
     medios = sum(p["fuente"] == "medio" for p in pubs)

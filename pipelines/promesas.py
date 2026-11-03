@@ -15,8 +15,9 @@ import json
 import pathlib
 import re
 import sys
-import unicodedata
 import zoneinfo
+
+from copy_rules import BANNED, plain
 
 root = pathlib.Path(__file__).resolve().parent.parent
 DATA = root / "web/promesas.json"
@@ -34,7 +35,6 @@ ORDER = list(VERDICTS)
 STEPS = {"cumplido": "Cumplido", "declarado": "Declarado, sin prueba independiente", "en_disputa": "En disputa", "incumplido": "No se cumplió", "pendiente": "Pendiente"}
 NEEDS_EVIDENCE = {"cumplido", "declarado", "en_disputa", "incumplido"}
 SECTIONS = {"app": "A. El acueducto (APP)", "gobierno": "B. Los demás compromisos"}
-BANNED = re.compile(r"\b(miente|mienten|mintio|mintieron|mintiendo|mentira|mentiras|engana|enganan|enganando|engano|enganaron|traiciono|traicionaron)\b")
 MONTHS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
 TODAY = datetime.datetime.now(zoneinfo.ZoneInfo("America/Mexico_City")).date()
 
@@ -42,34 +42,52 @@ errors = []
 DRAFTS = False
 
 
-def fail(msg):
-    errors.append(msg)
+def show(v):
+    s = v if isinstance(v, str) and v else json.dumps(v, ensure_ascii=False)
+    return s if len(s) <= 60 else s[:59] + "…"
 
 
-def plain(s):
-    return unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode().casefold()
+def fail(where, field, found, rule, fix):
+    errors.append((where, field, show(found), rule, fix))
 
 
-def date(s, where, future_ok=False):
+def report(name):
+    """One line per failure; a rule that fails more than 3 times is one line with the count."""
+    groups = {}
+    for e in errors:
+        groups.setdefault((e[1], e[3], e[4]), []).append(e)
+    lines = []
+    for (field, rule, fix), es in groups.items():
+        if len(es) > 3:
+            at = ", ".join(e[0].split(" ")[0] for e in es[:8]) + (", …" if len(es) > 8 else "")
+            found = list(dict.fromkeys(e[2] for e in es))
+            shown = " | ".join(found[:3]) + (f" (+{len(found) - 3} more distinct)" if len(found) > 3 else "")
+            lines.append(f"{name} {len(es)}× [{at}] {field}: found {shown}; rule: {rule}; fix: {fix}")
+        else:
+            lines += [f"{name} [{w}] {f}: found {v}; rule: {r}; fix: {x}" for w, f, v, r, x in es]
+    return "\n".join(lines)
+
+
+def date(s, where, field, future_ok=False):
     try:
         d = datetime.date.fromisoformat(s)
     except (TypeError, ValueError):
-        fail(f"{where}: bad date {s!r}")
+        fail(where, field, s, "an ISO date YYYY-MM-DD", "write it as YYYY-MM-DD")
         return None
     if d > TODAY and not future_ok:
-        fail(f"{where}: date {s} is in the future")
+        fail(where, field, s, "not in the future", "use the date it happened")
     return d
 
 
-def source(src, where):
+def source(src, where, field):
     if not str(src.get("url", "")).startswith("https://"):
-        fail(f"{where}: URL must start with https:// ({src.get('url')!r})")
+        fail(where, f"{field}.url", src.get("url"), "starts with https://", "use the https link")
     if not DRAFTS and not str(src.get("archive") or "").startswith("https://web.archive.org/") and src.get("captura") != "privada":
-        fail(f"{where}: {src.get('url')} has no archive.org snapshot (or \"captura\": \"privada\" with a copy in the notes repo)")
+        fail(where, f"{field}.archive", src.get("url"), "an archive.org snapshot, or \"captura\": \"privada\" with a copy in the notes repo", "save it on web.archive.org and set archive")
     if not src.get("medio"):
-        fail(f"{where}: source without medio")
+        fail(where, f"{field}.medio", src.get("medio"), "every source names its medio", "set the outlet or issuer")
     if src.get("fecha"):
-        date(src["fecha"], where)
+        date(src["fecha"], where, f"{field}.fecha")
 
 
 def strings(node, path=""):
@@ -91,81 +109,81 @@ def is_quote(path, entry, text):
 
 
 def validate(data):
-    date(data.get("actualizado"), "actualizado")
+    date(data.get("actualizado"), "top", "actualizado")
     ids, codes = set(), set()
-    for p in data.get("promesas", []):
-        where = p.get("codigo") or p.get("id") or "?"
+    for n, p in enumerate(data.get("promesas", [])):
+        where = f"{n} {p.get('codigo') or p.get('id') or '?'}"
         for key, seen in (("id", ids), ("codigo", codes)):
             if p.get(key) in seen or not p.get(key):
-                fail(f"{where}: missing or duplicate {key}")
+                fail(where, key, p.get(key), "present and unique", f"set a {key} no other promesa uses")
             seen.add(p.get(key))
         if not re.fullmatch(r"[a-z0-9-]+", p.get("id", "")):
-            fail(f"{where}: id must be lowercase letters, digits and hyphens")
+            fail(where, "id", p.get("id"), "lowercase letters, digits and hyphens", "rename it, e.g. agua-potable-2027")
         if p.get("seccion") not in SECTIONS:
-            fail(f"{where}: unknown seccion {p.get('seccion')!r}")
+            fail(where, "seccion", p.get("seccion"), f"one of {sorted(SECTIONS)}", "set app or gobierno")
         if p.get("veredicto") not in VERDICTS:
-            fail(f"{where}: unknown veredicto {p.get('veredicto')!r}")
+            fail(where, "veredicto", p.get("veredicto"), f"one of {ORDER}", "use one of those keys")
         for field in ("titulo", "cita", "quien", "cargo", "nota"):
             if not str(p.get(field) or "").strip():
-                fail(f"{where}: missing {field}")
-        date(p.get("fecha"), where)
-        date(p.get("veredicto_fecha"), f"{where} veredicto_fecha")
+                fail(where, field, p.get(field), "required, not blank", f"fill in {field}")
+        date(p.get("fecha"), where, "fecha")
+        date(p.get("veredicto_fecha"), where, "veredicto_fecha")
         sources = p.get("fuentes", [])
         if not sources:
-            fail(f"{where}: no sources for the quote")
+            fail(where, "fuentes", sources, "at least one source for the quote", "add the quote's source")
         if p.get("parafrasis") and len({s.get("medio") for s in sources}) < 2:
-            fail(f"{where}: a paraphrase needs two outlets that agree")
-        for s in sources:
-            source(s, where)
-        for t in p.get("tambien", []):
-            date(t.get("fecha"), f"{where} tambien")
-            for s in t.get("fuentes", []):
-                source(s, f"{where} tambien")
+            fail(where, "fuentes", sorted({str(s.get("medio")) for s in sources}), "a paraphrase needs two outlets that agree", "add a second outlet's source")
+        for j, s in enumerate(sources):
+            source(s, where, f"fuentes[{j}]")
+        for k, t in enumerate(p.get("tambien", [])):
+            date(t.get("fecha"), where, f"tambien[{k}].fecha")
+            for j, s in enumerate(t.get("fuentes", [])):
+                source(s, where, f"tambien[{k}].fuentes[{j}]")
         doc = p.get("documento") or {}
-        for s in doc.get("fuentes", []):
-            source(s, f"{where} documento")
+        for j, s in enumerate(doc.get("fuentes", [])):
+            source(s, where, f"documento.fuentes[{j}]")
         plazo = p.get("plazo") or {}
         if plazo.get("tipo") not in {"explicito", "lectura"}:
-            fail(f"{where}: plazo needs tipo explicito or lectura")
+            fail(where, "plazo.tipo", plazo.get("tipo"), "explicito or lectura", "set plazo.tipo")
         if plazo.get("fecha") is not None:
-            date(plazo["fecha"], f"{where} plazo", future_ok=True)
+            date(plazo["fecha"], where, "plazo.fecha", future_ok=True)
         if not plazo.get("texto"):
-            fail(f"{where}: plazo needs texto")
+            fail(where, "plazo.texto", plazo.get("texto"), "required", "describe the deadline in plazo.texto")
         steps = p.get("pasos", [])
         if sum(1 for s in steps if s.get("core")) != 1:
-            fail(f"{where}: exactly one paso must be core")
+            fail(where, "pasos", f"{sum(1 for s in steps if s.get('core'))} core", "exactly one paso is core", "set core: true on exactly one paso")
         for i, s in enumerate(steps, 1):
             if s.get("estado") not in STEPS:
-                fail(f"{where} paso {i}: unknown estado {s.get('estado')!r}")
+                fail(where, f"paso {i}.estado", s.get("estado"), f"one of {sorted(STEPS)}", "use one of those estados")
             if s.get("estado") in NEEDS_EVIDENCE and not s.get("evidencia"):
-                fail(f"{where} paso {i}: {s.get('estado')} needs evidencia")
-            for ev in s.get("evidencia", []):
-                source(ev, f"{where} paso {i}")
+                fail(where, f"paso {i}.evidencia", s.get("evidencia"), f"{s.get('estado')} needs evidencia", "add a source or set estado pendiente")
+            for j, ev in enumerate(s.get("evidencia", [])):
+                source(ev, where, f"paso {i}.evidencia[{j}]")
         verdict = p.get("veredicto")
         if verdict == "se_contradice" and not (any(str(c.get("texto", "")).strip() for c in doc.get("citas", [])) and doc.get("fuentes")):
-            fail(f"{where}: «Se contradice» needs the document's exact words and its link")
+            fail(where, "documento", doc, "«Se contradice» needs the document's exact words and its link", "add documento.citas[].texto and documento.fuentes")
         if verdict == "incumplida":
             core = next((s for s in steps if s.get("core")), {})
             outlets = {s.get("medio") for s in doc.get("fuentes", []) + core.get("evidencia", [])}
             if len(outlets) < 2:
-                fail(f"{where}: «Incumplida» needs two independent sources")
+                fail(where, "veredicto", sorted(map(str, outlets)), "«Incumplida» needs two independent sources (documento + core evidencia)", "add a second independent medio")
             if core.get("estado") != "incumplido":
-                fail(f"{where}: «Incumplida» but the core paso isn't incumplido")
+                fail(where, "veredicto", core.get("estado"), "«Incumplida» needs the core paso incumplido", "fix the core paso's estado or the verdict")
         core = next((s for s in steps if s.get("core")), {})
         if verdict == "se_cumple" and core.get("estado") != "cumplido":
-            fail(f"{where}: «Se cumple» needs the core paso to be cumplido")
+            fail(where, "veredicto", core.get("estado"), "«Se cumple» needs the core paso cumplido", "fix the core paso's estado or the verdict")
         for path, text in strings(p):
             if path in {"id", "veredicto", "seccion"} or path.endswith((".url", ".archive", ".tipo", ".estado")):
                 continue
             quoted = is_quote(path, p, text)
             if not quoted and BANNED.search(plain(text)):
-                fail(f"{where}.{path}: wording that claims intent («miente», «engañó»…) outside a quote")
+                fail(where, path, text, "no wording that claims intent («miente», «engañó»…) outside a quote", "reword, or quote the source")
             if "israel" in plain(text) and not quoted:
-                fail(f"{where}.{path}: the word israelí may appear only in the quote (AGENTS.md rule)")
-    for c in data.get("correcciones", []):
-        date(c.get("fecha"), "correcciones")
-    for r in data.get("solicitudes", []):
-        date(r.get("fecha"), "solicitudes")
+                fail(where, path, text, "israelí only inside the quote (AGENTS.md)", "remove it or move it into the quote")
+    for k, c in enumerate(data.get("correcciones", [])):
+        date(c.get("fecha"), "top", f"correcciones[{k}].fecha")
+    for k, r in enumerate(data.get("solicitudes", [])):
+        date(r.get("fecha"), "top", f"solicitudes[{k}].fecha")
 
 
 e = html.escape
@@ -335,7 +353,7 @@ def main():
     data = json.loads(DATA.read_text())
     validate(data)
     if errors:
-        sys.exit("promesas: " + "\n  ".join(["invalid data:", *errors]))
+        sys.exit("promesas: " + "invalid data:\n" + report(DATA.name))
     parts, counts = render(data)
     page = fill(PAGE.read_text(), parts)
     if args.check:

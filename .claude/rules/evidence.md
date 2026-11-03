@@ -20,6 +20,8 @@ paths:
 
 A wrong published claim is this project's most expensive failure. Also read `docs/EDITORIAL.md`. For checking sources, use the `verificador` subagent; for finding them, `buscador`.
 
+Field meanings, SIAPA's terms to quote as written, and word pairs agents got wrong: `docs/GLOSARIO.md`.
+
 ## `publicaciones.json` (checked by `pipelines/publicaciones.py`)
 
 News and neighbours' posts since 12 Oct 2026 about colonias without water, each with its link, date, colonias (keys of `colonias_mapa.json`), its words as published (`cita`, checked against the post when added), the days without water it gives (`dias`, or null), `bloqueo` for street blockades, and its reactions, comments and shares with the date they were read (`eco`). Top level also carries `busquedas`, the sorted distinct ISO dates of the searches for posts (shown on /reportes as the last search). `--check` validates shape and these rules; it does not fetch sources or confirm quotes, so a pass is not verification.
@@ -28,6 +30,7 @@ News and neighbours' posts since 12 Oct 2026 about colonias without water, each 
 - The other side of the story, only as the source's own claim: `regreso` (ISO date the source says the water came back, within `desde`..`fecha`), `parcial` (low or intermittent supply), `calidad` (quality-only complaint) and `causa` (the cause the source names, 1–80 chars). /reportes shows a colonia whose newest publication reports the return with a «regresó» headline, keeping the older days as history.
 - Never a private person's name: `quien` is the outlet, «Grupo «…»» (public groups only) or «Cuenta de vecinos …»; `en.quien` (the post a comment is in) is an outlet some `medio` entry names, one of those, or a public page listed in `PAGINAS` in the script (add one only after checking it's a page, not a person; a person's X account goes as «Cuenta personal en X», never by name). A link can still show an X handle; the privacy notice says anyone can ask soporte@aguagdl.com to remove theirs.
 - `--eco` refreshes the X numbers through X's public embed endpoint (`cdn.syndication.twimg.com`, no login); Facebook's need a login and keep the date they were read. `--videos` uses the same public X embed to set `video: true` where it serves a video; direct reel/watch/YouTube/TikTok links require that marker too, while an absent marker means unknown. `pipelines/videos.py` (run after `publicaciones.py --check` passes) writes `web/videos.json`, the download list of video-carrying posts, stale-checked by `python3 pipelines/videos.py --check`; no page loads it yet. `--imagenes` (macOS, `sips`) saves each post's preview as a 480 px JPEG in `web/fuentes/` (`vista`; null for a logo or stock picture, which keeps it out of later runs), so visitors never load Facebook, X or the outlets; `--capturas` (headless Chrome) saves the top of each news article as `web/fuentes/<hash>-t.jpg` (`captura`) and its `og:title` as `titular`. The private notes say how the posts were found.
+- Query and edit through the script, not ad-hoc Python: `q colonia~ARCOS fecha>=2026-10-20 --fields url,dias` (TSV with index, `--count`, `--all`), `schema`, `add FILE.json` and `set INDEX field=value` (`field=` removes) validate the whole file and write only if it passes; `--data PATH` works on a copy.
 
 ## Pages
 
