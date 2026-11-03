@@ -1411,7 +1411,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
       const cols = [...ev].filter(([k]) => (zonesByKey.get(k) || []).includes(z)).sort((a, b) => (b[1].dias ?? 0) - (a[1].dias ?? 0) || b[1].fuentes - a[1].fuentes);
       if (cols.length) {
         const max = cols.find(([, e]) => e.dias != null);
-        kids.push(el("p", { class: "mini" }, `Según el SIAPA, cada corte dura «por máximo un día». Medios y vecinos publicaron que no hay agua en ${plural(cols.length, "colonia", "colonias")} de esta zona${max ? `, hasta ${daysWord(max[1].dias)}` : ""}:`),
+        kids.push(el("p", { class: "mini" }, `Según el SIAPA, cada racionamiento dura «por máximo un día». Medios y vecinos publicaron que no hay agua en ${plural(cols.length, "colonia", "colonias")} de esta zona${max ? `, hasta ${daysWord(max[1].dias)}` : ""}:`),
           el("ol", { class: "ztop", style: `--zc:${zoneColor(z)};margin-top:6px` }, ...cols.slice(0, 3).map(([k, e]) => {
             const f = features.get(k)[0], p = f.properties, s = sevOf(e.dias);
             const b = el("button", { type: "button" }, el("span", { class: s ? "sevb" : "sevb nodays", style: sevVars(s) }, s ? daysWord(e.dias) : "sin días"),

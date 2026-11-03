@@ -438,7 +438,7 @@ UTIL = r"""
     g.fillText(line, 80, y);
     g.fillStyle = "#a6b1d6"; g.font = "40px Georgia, serif";
     if (e) g.fillText(`Según ${e.medios} medios y ${e.posts.filter((q) => q.fuente !== "medio").length} publicaciones de vecinos`, 80, y + 90);
-    g.fillText("El SIAPA prometió cortes «por máximo un día».", 80, y + 150);
+    g.fillText("El SIAPA prometió racionamientos «por máximo un día».", 80, y + 150);
     g.fillStyle = "#7f9cf5"; g.font = "700 46px Georgia, serif"; g.fillText("aguagdl.com/reportes", 80, 1000);
     return c;
   }

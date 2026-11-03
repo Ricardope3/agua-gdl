@@ -132,7 +132,7 @@ def build():
         where = f"{e(n)}, {e(m)}" + (f", C.P. {e(cp)}" if cp else "")
         body = (f'<p><a href="/">Agua GDL</a> · <a href="/colonia/">Colonias</a></p><h1>¿Cuándo cortan el agua en {e(n)}?</h1>'
                 f'<p>{where}</p>{items}'
-                f'<p><small>{e(NOTE)} Calendario del SIAPA verificado el {fecha(checked)}; la rotación termina el {fecha(end)}. '
+                f'<p><small>{e(NOTE)} Calendario del SIAPA verificado el {fecha(checked)}; la rotación sigue hasta {fecha(end).split(" de ", 1)[1]}. '
                 f'Fuente: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">SIAPA</a>.</small></p>'
                 f'<p><a href="/avisos?{e(q)}">Ver en el mapa y próximas fechas</a> · <a href="/reportes?{e(q)}">¿Hay agua? Reporta</a> · '
                 f'<a href="/colonia/{s}.json">Datos (JSON)</a></p>')
