@@ -1,0 +1,17 @@
+#!/bin/sh
+# Author identity and private folders (AGENTS.md, Rules).
+email=$(git config user.email)
+if [ "$email" != "soporte@aguagdl.com" ]; then
+  echo "pre-commit: commit as soporte@aguagdl.com, not $email (git config user.email soporte@aguagdl.com)." >&2
+  exit 1
+fi
+private=$(git diff --cached --name-only --diff-filter=AM | grep -E '^(research|\.agua-social)/')
+if [ -n "$private" ]; then
+  echo "pre-commit: research/ and .agua-social/ stay out of this public repo:" >&2
+  echo "$private" >&2
+  exit 1
+fi
+if git diff --cached --name-only | grep -qx AGENTS.md && [ "$(git show :AGENTS.md | wc -c)" -gt 10240 ]; then
+  echo "pre-commit: AGENTS.md is over 10 KB; move area detail to .claude/rules/ instead." >&2
+  exit 1
+fi

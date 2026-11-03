@@ -6,3 +6,8 @@ pipelines/.venv/
 /aguagdl_nowhite.png
 __pycache__/
 *.pyc
+/research/
+.agua-social/
+.claude/worktrees/
+.claude/scheduled_tasks.lock
+.claude/settings.local.json

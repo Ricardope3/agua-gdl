@@ -1,0 +1,12 @@
+#!/bin/sh
+# Commits here carry no AI attribution, and subjects stay within 72 characters (AGENTS.md).
+msg="$1"
+if grep -qiE '^co-authored-by:|anthropic|generated with \[?claude' "$msg"; then
+  echo "commit-msg: remove the Co-Authored-By/Anthropic attribution; this repo's commits carry none." >&2
+  exit 1
+fi
+subject=$(grep -v '^#' "$msg" | head -n 1)
+if [ "${#subject}" -gt 72 ]; then
+  echo "commit-msg: subject is ${#subject} characters; keep it within 72 and put details in the body." >&2
+  exit 1
+fi
