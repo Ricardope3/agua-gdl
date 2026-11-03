@@ -49,3 +49,14 @@ Run `scripts/check.sh` and read its result before you push. Search with a path (
 - Commits: author `soporte@aguagdl.com`, no AI attribution trailer, English messages with a subject of at most 72 characters and the details in the body. `.githooks/` checks the configured email, the trailer and the subject length (`git config core.hooksPath .githooks`); the rest is on you.
 - Don't force-push. The maintainer may be editing in parallel: check `git status` before you edit or commit.
 - For evidence work, use the `verificador` (checks) and `buscador` (finds) subagents in `.claude/agents/`; keep Bash output small by writing long results to a file and printing counts.
+
+## How to change this repo
+
+Lessons from mistakes agents made here; each one shipped once.
+
+- Verify before you state. A claim in docs, copy or a report needs its source in the code, the data or a cited page; say "not verified" otherwise. A source's claim stays its claim (SIAPA says the cuts aren't total; neighbours report early loss and late return).
+- When you move or restructure a file, run a lost-lines check: every line of the old file is in a new file or deliberately dropped. List what you dropped.
+- When you delete or rename anything, grep for every name and check every generator that writes there, so nothing links to it or writes it back.
+- After a multi-file change, run an adversarial review before committing: one read-only reviewer per area, briefed to assume mistakes exist. Fix what it finds, then commit.
+- Don't trust git config: check the author of every commit you make (`git log -1 --format=%ae`).
+- End each task by stating what's committed, what's pushed, what's live (the API needs a Fly deploy; the site deploys on push) and what isn't verified.
