@@ -12,6 +12,7 @@ in ALLOW or skipped by shape.
 """
 import pathlib
 import re
+import subprocess
 import sys
 
 root = pathlib.Path(__file__).resolve().parent.parent
@@ -24,20 +25,26 @@ ALLOW = {
     # Removed or only in git history / the notes repo, as the docs say.
     "reportes-before-c3.html", "resultados.html", "aguagdl.png",
     "web/semana/",  # cmd/informe creates it on the first published count
+    # Deliberately local only: gitignored or untracked, so absent in CI.
+    "research/", "aguagdl_logo.png",
 }
 TOP = ("api/", "web/", "pipelines/", "scripts/", "docs/", ".claude/", ".github/", ".githooks/",
        "experiments/", "research/", "infra/", "internal/", "cmd/", "aguagdl_favicon/", "vendor/", "img/")
 EXT = re.compile(r"\.(py|go|html|json|md|mjs|js|sh|toml|yml|csv|geojson|svg|png|jpg|txt|ics|xml|wal|ico)$")
 
+# Tracked files only, so a path that exists just on this machine fails here as it would in CI.
 files = set()
 names = set()
-for p in root.rglob("*"):
-    if SKIP_DIRS & set(p.relative_to(root).parts):
+tracked = subprocess.run(["git", "-C", str(root), "ls-files", "-z"], capture_output=True, check=True).stdout
+for rel in tracked.decode().split("\0"):
+    if not rel:
         continue
-    rel = p.relative_to(root).as_posix()
-    files.add(rel + ("/" if p.is_dir() else ""))
+    parts = rel.split("/")
     files.add(rel)
-    names.add(p.name)
+    names.add(parts[-1])
+    for i in range(1, len(parts)):
+        files.add("/".join(parts[:i]))
+        files.add("/".join(parts[:i]) + "/")
 
 errors = []
 
