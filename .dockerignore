@@ -6,3 +6,9 @@ pipelines
 **/.env
 *.png
 aguagdl_favicon
+research
+.agua-social
+.claude
+experiments
+docs
+scripts
