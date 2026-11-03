@@ -2,7 +2,7 @@
 
 Instructions for AI coding agents working in this repo. Humans: see README.md (Spanish).
 
-This file says how things are now and stays under 10 KB (the pre-commit hook enforces it). History lives in git. Area detail lives in `.claude/rules/`, which Claude Code loads when you read or edit a matching file; other agents should open the file named below. Put a new fact in the area file it belongs to, and leave out what the code already says.
+This file says how things are now and stays under 10 KB (the pre-commit hook enforces it). History lives in git. Area detail lives in `.claude/rules/`, which Claude Code loads when you read, write or edit a matching file (not on grep); other agents should open the file named below. Put a new fact in the area file it belongs to, and leave out what the code already says.
 
 ## What this is
 
@@ -26,9 +26,9 @@ Layout: `api/` Go module (Go 1.27, pgx v5) on Fly.io with Neon Postgres; `pipeli
 ## Commands
 
 ```sh
-scripts/check.sh          # everything CI checks except govulncheck and the Docker build (seconds)
+scripts/check.sh          # vet, unit tests and data/web checks; integration tests skip (seconds)
 scripts/check.sh --quick  # skip Go
-scripts/check.sh --full   # with a throwaway Postgres for the integration tests
+scripts/check.sh --full   # what CI runs (bar govulncheck and the Docker build): race + integration tests on a throwaway Postgres
 npm run dev               # preview web/ at http://localhost:7100 (applies _redirects and _headers)
 node scripts/shot.mjs /reportes   # screenshots at 390 and 1300 px; the preview must be running
 ```
@@ -43,9 +43,9 @@ Run `scripts/check.sh` and read its result before you push. Search with a path (
 - Public endpoints serve from memory, and what they read from Postgres refreshes at most every 15–30 minutes (Neon's free hours). Keep the rate limits and `no-store` rules when you add endpoints.
 - Evidence: every factual claim links its source; quotes appear as written; never a private person's name; a source's claim is presented as its claim; silence never means the water returned; pages never claim representativeness, causation or laboratory water quality. Never state that an Israeli company is part of the Jalisco aqueduct APP unless a source shows it. A passing `--check` validates shape, not truth.
 - Everything in `web/` is public and deploys on push to `main`: keep notes, drafts, unused data and agent docs out of it.
-- `web/reportes.html` and `web/index.html` are edited directly. Generated files: `web/promesas.html` (`pipelines/promesas.py`), `web/simple.html` (`simple_page.py`), `web/zones.json` (`zonas_json.py`), `web/videos.json` (`videos.py`), `web/colonias_siapa.topo.json` and its `api/data` copy (`siapa_mapa.py`), `web/calendario/*.ics` (`cmd/calendars`), `web/c6…c8.html` (`experiments/reportes/videos.py`). Edit the source, then regenerate.
+- `web/reportes.html` and `web/index.html` are edited directly. Generated files: `web/promesas.html` (`pipelines/promesas.py`), `web/simple.html` (`simple_page.py`), `web/zones.json` (`zonas_json.py`), `web/videos.json` (`videos.py`), `web/colonias_siapa.topo.json` and its `api/data` copy (`siapa_mapa.py`), `web/calendario/*.ics` (`cmd/calendars`), `web/c6…c8.html` (`experiments/reportes/videos.py`), `api/data/colonias_mapa.json` (`mapa_colonias.py`), the `SECCIONES` string in `web/exige.html` (`secciones_escribe.py`), `web/semana/` and `web/informes.html` (`cmd/informe`). Edit the source, then regenerate.
 - Migrations: add new numbered files; never edit applied ones. Tests use a fixed `Now`, never the wall clock.
 - Keep code comments sparse and match the surrounding style. User-facing copy in plain Mexican Spanish (the bot's in `api/internal/bot/messages.go`).
-- Commits: author `soporte@aguagdl.com`, no AI attribution trailer, English messages with a subject of at most 72 characters and the details in the body. `.githooks/` enforces this (`git config core.hooksPath .githooks`).
+- Commits: author `soporte@aguagdl.com`, no AI attribution trailer, English messages with a subject of at most 72 characters and the details in the body. `.githooks/` checks the configured email, the trailer and the subject length (`git config core.hooksPath .githooks`); the rest is on you.
 - Don't force-push. The maintainer may be editing in parallel: check `git status` before you edit or commit.
 - For evidence work, use the `verificador` (checks) and `buscador` (finds) subagents in `.claude/agents/`; keep Bash output small by writing long results to a file and printing counts.
