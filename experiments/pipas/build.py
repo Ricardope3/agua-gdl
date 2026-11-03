@@ -2,6 +2,7 @@
 
 Reuses web/pipas.html's <style>, header and footer so the variants keep the site's look.
 """
+import json
 import pathlib
 import re
 
@@ -71,6 +72,73 @@ def via(*sources):
 
 VERIFY = '<span class="tag warn">por confirmar</span>'
 
+AGUA = json.loads((pathlib.Path(__file__).resolve().parent / "cisternas_fuente.json").read_text())
+CON_MAPA = {x["municipio"] for x in AGUA["puntos"] + AGUA["colonias"]}
+
+MAP_HEAD = """<link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
+<style>
+.mapa-agua { height: 380px; border: 1px solid var(--line); border-radius: 12px; margin: 8px 0 8px; box-shadow: var(--shadow); z-index: 0 }
+@media (prefers-color-scheme: dark) { .mapa-agua .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) } .mapa-agua.leaflet-container { background: #0c1e2c } }
+.leyenda { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: .85rem; color: var(--muted); margin: 0 0 10px }
+.leyenda .pt { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: var(--brand); box-shadow: 0 0 0 2px var(--surface), 0 0 0 3px var(--brand); vertical-align: -1px; margin-right: 6px }
+.leyenda .ar { display: inline-block; width: 14px; height: 10px; background: color-mix(in srgb, var(--brand) 25%, transparent); border: 1.5px dashed var(--brand); vertical-align: -1px; margin-right: 6px }
+.mapa-pop { font: 14px/1.45 var(--font) } .mapa-pop b { display: block }
+.lista-agua { columns: 2 260px; font-size: .95rem } .lista-agua li { break-inside: avoid }
+</style>"""
+
+MAP_SCRIPT = """<script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script>
+(async () => {
+  const els = [...document.querySelectorAll('.mapa-agua')];
+  if (!els.length || !window.L) return;
+  let d;
+  try { d = await (await fetch('/cisternas.json')).json(); } catch { return; }
+  const c = getComputedStyle(document.documentElement).getPropertyValue('--brand').trim() || '#0284c7';
+  const esc = s => String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[ch]);
+  const titulo = s => s.toLowerCase().replace(/(^|\\s)\\S/g, t => t.toUpperCase());
+  const fuente = k => { const f = d.fuentes[k]; return '<a href="' + f.url + '" target="_blank" rel="noopener">' + esc(f.titulo) + '</a>' + (f.mapa ? ' · <a href="' + f.mapa + '" target="_blank" rel="noopener">mapa oficial</a>' : ''); };
+  const draw = el => {
+    if (el._map) { el._map.invalidateSize(); return; }
+    const m = el.dataset.m;
+    const map = L.map(el, { zoomSnap: 0.25, scrollWheelZoom: false });
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+    const b = L.latLngBounds([]);
+    d.colonias.filter(x => !m || x.municipio === m).forEach(x => {
+      const p = L.polygon(x.forma, { color: c, weight: 1.5, dashArray: '4 3', fillColor: c, fillOpacity: .18 }).addTo(map);
+      p.bindPopup('<div class="mapa-pop"><b>' + esc(x.lugar) + '</b>' + esc(titulo(x.colonia)) + ', ' + esc(x.municipio) + '<br>No se publicó la dirección exacta.<br>Fuente: ' + fuente(x.fuente) + '</div>');
+      b.extend(p.getBounds());
+    });
+    d.puntos.filter(x => !m || x.municipio === m).forEach(x => {
+      const k = L.circleMarker([x.lat, x.lon], { radius: 7, color: '#fff', weight: 2, fillColor: c, fillOpacity: 1 }).addTo(map);
+      k.bindPopup('<div class="mapa-pop"><b>' + esc(x.lugar || 'Cisterna') + '</b>' + esc(x.municipio) + (x.capa === 'SIAPA' ? ', del SIAPA' : '') + '<br>Según el mapa del Ayuntamiento.<br>Fuente: ' + fuente(x.fuente) + '</div>');
+      b.extend(k.getLatLng());
+    });
+    map.fitBounds(b, { padding: [24, 24], maxZoom: 15 });
+    el._map = map;
+  };
+  const visibles = () => els.forEach(el => { if (el.offsetParent) draw(el); });
+  els.forEach(el => { const det = el.closest('details'); if (det) det.addEventListener('toggle', () => { if (det.open) draw(el); }); });
+  window.__mapasAgua = visibles;
+  visibles();
+})();
+</script>"""
+
+APORTA = '<p>¿Conoces una cisterna comunitaria que no está aquí? Escríbenos a <span class="number">soporte@aguagdl.com</span> con la dirección y, si puedes, una foto. La revisamos antes de ponerla en el mapa.</p>'
+
+
+def mapa(m=""):
+    return f"""<div class="mapa-agua" data-m="{m}" role="region" aria-label="Mapa de cisternas comunitarias{' en ' + m if m else ''}"></div>
+<p class="leyenda"><span><span class="pt"></span>Cisterna en el mapa oficial</span><span><span class="ar"></span>Hay cisterna en la colonia; no se publicó la dirección</span></p>"""
+
+
+def lista_sin_mapa(m=None):
+    items = [x for x in AGUA["sin_coordenadas"] + AGUA["sin_ubicar"] if not m or x["municipio"] == m]
+    if not items:
+        return ""
+    lis = "".join(f"<li>{x['lugar']}{'' if m else ' (' + x['municipio'] + ')'}</li>" for x in items)
+    return f"<details><summary>{icon('map-pin')}Otras {len(items)} sin ubicación en el mapa</summary><ul class=\"lista-agua\">{lis}</ul></details>"
+
+
 # Sources (all opened and checked on 3 Nov 2026 unless marked).
 S_SIAPA = ("https://www.siapa.gob.mx/medios-para-solicitar-una-pipa", "SIAPA, medios para solicitar una pipa")
 S_ROT = ("https://rotaciondeserviciosiapa.jalisco.gob.mx/", "portal de la rotación")
@@ -84,6 +152,7 @@ S_TLQ = ("https://concienciapublica.com.mx/2026/10/14/tlaquepaque-desplegara-32-
 S_TLQ_MAP = ("https://www.cronica.com.mx/jalisco/guadalajara/2026/10/22/distribuye-tlaquepaque-56-millones-de-litros-de-agua-ante-desabasto-por-tandeos", "La Crónica, 22 de octubre")
 TLQ_MAP = "https://www.google.com/maps/d/viewer?mid=1RDUyGrhgZPHMVaRZDfdnN0RZvI8HL6U"
 S_TON = ("https://tonala.gob.mx/portal/2026/10/14/lanza-tonala-programa-emergente-para-el-abasto-de-agua/", "Gobierno de Tonalá, 14 de octubre")
+S_TON_MIL = ("https://www.milenio.com/comunidad/instalan-cisternas-tlaquepaque-tonala-apoyar-afectados", "Milenio, 15 de octubre")
 S_TLJ = ("https://www.cronica.com.mx/jalisco/guadalajara/2025/12/29/tlajo-ofrece-servicio-de-pipas-gratuitas-ante-cortes-de-agua-del-siapa/", "La Crónica, 29 de diciembre de 2025")
 S_BOTNOTA = ("https://www.siapa.gob.mx/prensa/siapa-bot-realiza-consultas-y-reportes-por-whatsapp-de-forma-facil-y-rapida", "SIAPA, 27 de octubre")
 S_CEDHJ = ("https://cedhj.org.mx/", "CEDHJ, cómo presentar una queja")
@@ -141,8 +210,8 @@ MUNIS = {
         pedir=f"WhatsApp: {tel('33 2821 1120', 'https://wa.me/523328211120')}, de lunes a viernes, para reportar la falta de agua.",
         pedir_src=[S_TON],
         canal="WhatsApp 33 2821 1120", horario="Lun–vie", gratis="No lo dice",
-        ir="Hasta 30 cisternas en las colonias afectadas «para que los vecinos puedan acercarse por el agua». No ha publicado dónde están.",
-        ir_src=[S_TON],
+        ir="Hasta 30 cisternas en las colonias afectadas «para que los vecinos puedan acercarse por el agua». Las primeras cinco, en Palmas, El Vado, El Moral, Pedregal de Santa Martha y Colinas de Tonalá; no publicó las direcciones.",
+        ir_src=[S_TON, S_TON_MIL],
     ),
     "tlajomulco": dict(
         name="Tlajomulco",
@@ -188,13 +257,16 @@ def muni_card(key, with_ir=False):
 
 CISTERNAS = f"""<section aria-labelledby="cisternas">
   {h2('cisternas', 'map-pin', 'Dónde ir por agua')}
-  <p>Mientras llega la pipa, algunos municipios pusieron cisternas comunitarias. Lleva tus propios recipientes. Ningún municipio ha publicado horarios ni límites.</p>
+  <p>Mientras llega la pipa, algunos municipios pusieron cisternas comunitarias. Lleva tus propios recipientes. Ningún municipio ha publicado horarios ni límites. Toca un punto para ver la dirección y la fuente.</p>
+  {mapa()}
+  {lista_sin_mapa()}
   <ul>
     <li><b>Guadalajara:</b> {MUNIS['guadalajara']['ir']} ({a(*S_GDL_CIS)})</li>
     <li><b>Tlaquepaque:</b> {MUNIS['tlaquepaque']['ir']} ({a(*S_TLQ_MAP)})</li>
     <li><b>Zapopan:</b> {MUNIS['zapopan']['ir']} ({a(*S_ZAP_17)})</li>
-    <li><b>Tonalá:</b> {MUNIS['tonala']['ir']} ({a(*S_TON)})</li>
+    <li><b>Tonalá:</b> {MUNIS['tonala']['ir']} ({a(*S_TON_MIL)})</li>
   </ul>
+  {APORTA}
 </section>"""
 
 NO_LLEGA_ITEMS = f"""<ol>
@@ -281,6 +353,7 @@ def page(key, title, body, script=""):
 <script src="/theme.js"></script>
 {STYLE}
 {EXTRA_CSS}
+{MAP_HEAD}
 </head>
 <body>
 <div class="wrap">
@@ -292,6 +365,7 @@ def page(key, title, body, script=""):
   {FOOTER}
 </div>
 {script}
+{MAP_SCRIPT}
 </body>
 </html>
 """
@@ -318,6 +392,8 @@ def v1():
       {via(*m['ir_src']) if m['ir_src'] else ''}
     </div>
   </div>
+  {('<div class="agua-mapa-bloque">' + mapa(m['name']) + lista_sin_mapa(m['name']) + '</div>') if m['name'] in CON_MAPA else ''}
+  {APORTA}
 </div>""")
     body = f"""<h1>¿Sin agua? Pide una pipa</h1>
 {LEDE}
@@ -340,6 +416,7 @@ document.querySelectorAll('.chips button').forEach(b => b.addEventListener('clic
   document.querySelectorAll('.chips button').forEach(x => x.setAttribute('aria-pressed', x === b));
   document.querySelectorAll('.panel').forEach(p => p.hidden = p.id !== 'p-' + b.dataset.m);
   document.getElementById('none').hidden = true;
+  window.__mapasAgua?.();
   history.replaceState(null, '', '#' + b.dataset.m);
 }));
 const h = location.hash.slice(1);
@@ -368,8 +445,12 @@ def v2():
     <ul>
       <li><b>Guadalajara:</b> {MUNIS['guadalajara']['ir']} ({a(*S_GDL_CIS)})</li>
       <li><b>Tlaquepaque:</b> {MUNIS['tlaquepaque']['ir']} ({a(*S_TLQ_MAP)})</li>
-      <li><b>Zapopan y Tonalá</b> anunciaron cisternas, pero no han publicado dónde están ({a(*S_ZAP_17)}, {a(*S_TON)}).</li>
+      <li><b>Tonalá:</b> {MUNIS['tonala']['ir']} ({a(*S_TON_MIL)})</li>
+      <li><b>Zapopan</b> anunció cisternas, pero no ha publicado dónde están ({a(*S_ZAP_17)}).</li>
     </ul>
+    {mapa()}
+    {lista_sin_mapa()}
+    {APORTA}
     {GUARDA_P}
   </li>
   <li>
@@ -415,6 +496,8 @@ def v3():
 </section>
 <section aria-labelledby="cisternas">
   {h2('cisternas', 'map-pin', 'Cisternas comunitarias')}
+  {mapa()}
+  {lista_sin_mapa()}
   <div class="tablewrap"><table>
     <thead><tr><th>Municipio</th><th>Dónde</th><th>Fuente</th></tr></thead>
     <tbody>{cis}</tbody>
@@ -477,8 +560,11 @@ def v4():
     <ul>
       <li><b>Guadalajara:</b> {MUNIS['guadalajara']['ir']} ({a(*S_GDL_CIS)})</li>
       <li><b>Tlaquepaque:</b> {MUNIS['tlaquepaque']['ir']} ({a(*S_TLQ_MAP)})</li>
-      <li><b>Zapopan y Tonalá</b> anunciaron cisternas, pero no han publicado dónde están.</li>
+      <li><b>Tonalá:</b> {MUNIS['tonala']['ir']} ({a(*S_TON_MIL)})</li>
+      <li><b>Zapopan</b> anunció cisternas, pero no ha publicado dónde están.</li>
     </ul>
+    {mapa()}
+    {APORTA}
   </details>
   <details><summary>{icon('megaphone')}La pipa no llegó</summary>{NO_LLEGA_ITEMS}</details>
   <details><summary>{icon('shield-check')}Es tu derecho</summary>{DERECHO_P}</details>

@@ -1,0 +1,455 @@
+{
+ "_nota": "Fuente curada a mano el 3 nov 2026. Tlaquepaque: capas MUNICIPAL 1 y SIAPA del mapa público del Ayuntamiento (Google My Maps mid=1RDUyGrhgZPHMVaRZDfdnN0RZvI8HL6U, exportado como KML); solo dirección y coordenadas, sin los campos de personas; sin la capa PROPUESTAS. Guadalajara y Tonalá: solo la colonia que nombra la fuente.",
+ "fuentes": {
+  "tlq": {
+   "url": "https://www.cronica.com.mx/jalisco/guadalajara/2026/10/22/distribuye-tlaquepaque-56-millones-de-litros-de-agua-ante-desabasto-por-tandeos",
+   "titulo": "La Crónica, 22 de octubre",
+   "mapa": "https://www.google.com/maps/d/viewer?mid=1RDUyGrhgZPHMVaRZDfdnN0RZvI8HL6U"
+  },
+  "gdl": {
+   "url": "https://www.cronica.com.mx/jalisco/guadalajara/2026/10/27/reparte-guadalajara-mas-de-46-millones-de-litros-de-agua-e-instala-nueve-cisternas-comunitarias/",
+   "titulo": "La Crónica, 27 de octubre"
+  },
+  "ton": {
+   "url": "https://www.milenio.com/comunidad/instalan-cisternas-tlaquepaque-tonala-apoyar-afectados",
+   "titulo": "Milenio, 15 de octubre"
+  }
+ },
+ "puntos": [
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Calle Santa Cecilia 660",
+   "lat": 20.598722,
+   "lon": -103.329417,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Rita Perez De Moreno 12",
+   "lat": 20.605917,
+   "lon": -103.322806,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Gabriel 1, Esquina Zazragoza",
+   "lat": 20.607583,
+   "lon": -103.324306,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Calle Joel & Calle Daniel",
+   "lat": 20.605083,
+   "lon": -103.327028,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Calle Bugambilias & Calle Ezequiel Barba",
+   "lat": 20.608194,
+   "lon": -103.317694,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Calle Palmas 87 A Cruce Alfredo Barba",
+   "lat": 20.609444,
+   "lon": -103.308083,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": null,
+   "lat": 20.598318,
+   "lon": -103.382151,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": null,
+   "lat": 20.634524,
+   "lon": -103.303442,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": null,
+   "lat": 20.605376,
+   "lon": -103.32234,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Mirasol 503",
+   "lat": 20.599075,
+   "lon": -103.313055,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Calle Sta Monica 178",
+   "lat": 20.607099,
+   "lon": -103.384803,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": null,
+   "lat": 20.636814,
+   "lon": -103.303333,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Priv. De Cabañas 73",
+   "lat": 20.634001,
+   "lon": -103.305289,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Emiliano Zapata 22",
+   "lat": 20.587785,
+   "lon": -103.260644,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "25 de Diciembre",
+   "lat": 20.582222,
+   "lon": -103.264408,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Cam. a la Cofradía 28",
+   "lat": 20.58167,
+   "lon": -103.262698,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "C. Tonalá 462",
+   "lat": 20.635855,
+   "lon": -103.299686,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": null,
+   "lat": 20.602049,
+   "lon": -103.367828,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": null,
+   "lat": 20.580508,
+   "lon": -103.265271,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": null,
+   "lat": 20.584579,
+   "lon": -103.257841,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": null,
+   "lat": 20.604466,
+   "lon": -103.329556,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Buenos Aires 75",
+   "lat": 20.580143,
+   "lon": -103.266582,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Prados de Tlaquepaque",
+   "lat": 20.629957,
+   "lon": -103.301434,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "comedor comunitario parques de la victoria",
+   "lat": 20.587779,
+   "lon": -103.267295,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": null,
+   "lat": 20.577972,
+   "lon": -103.383361,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Puerto Tampico 423",
+   "lat": 20.607309,
+   "lon": -103.288886,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": null,
+   "lat": 20.607891,
+   "lon": -103.308918,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "C. Ricardo Flores Magón 1249",
+   "lat": 20.605976,
+   "lon": -103.289761,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": null,
+   "lat": 20.609496,
+   "lon": -103.287828,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Mercado Nueva Santa Maria",
+   "lat": 20.60546,
+   "lon": -103.3779,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Mártires de Río Blanco 227",
+   "lat": 20.639876,
+   "lon": -103.304757,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Jimeno 623",
+   "lat": 20.61361,
+   "lon": -103.352956,
+   "capa": "Ayuntamiento"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Niño Artillero 64",
+   "lat": 20.607585,
+   "lon": -103.320284,
+   "capa": "SIAPA"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": null,
+   "lat": 20.603877,
+   "lon": -103.32453,
+   "capa": "SIAPA"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": null,
+   "lat": 20.606193,
+   "lon": -103.308594,
+   "capa": "SIAPA"
+  }
+ ],
+ "sin_coordenadas": [
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "C. Río Tepalcatepec 1345-1337, El Vergel"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Calle Vicente Guerrero 490, El Campesino"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Fovisste Miravalle"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Miroslava 3, Jardines del Tapatío"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "C. Herrera y Cairo 432, Hacienda de Tlaquepaque"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Calle Emilio Carranza 1253, Colonial Tlaquepaque"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "C. Rep. de Argentina 315"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "C. Francisco de Miranda & C. Alfareros, Hacienda de Tlaquepaque"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Calz. Córdoba 50, El Alamo"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "C. Glendale 253, Centro"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "C. Mariano Moreno 33, Buenos Aires"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Calle San José Pte. 123, Nueva Santa María"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Villa Fontana Nte. 235"
+  },
+  {
+   "municipio": "Tlaquepaque",
+   "fuente": "tlq",
+   "lugar": "Arboledas 11, El Zalate"
+  }
+ ],
+ "colonias": [
+  {
+   "municipio": "Guadalajara",
+   "fuente": "gdl",
+   "colonia": "SAN MIGUEL DE HUENTITAN",
+   "lugar": "Parroquia de Margarita Maza de Juárez"
+  },
+  {
+   "municipio": "Guadalajara",
+   "fuente": "gdl",
+   "colonia": "SAN MARCOS",
+   "lugar": "Esquina de Puerto Ángel y Pedernal"
+  },
+  {
+   "municipio": "Guadalajara",
+   "fuente": "gdl",
+   "colonia": "SANTA MARIA",
+   "lugar": "Mercado Municipal Francisco I. Madero"
+  },
+  {
+   "municipio": "Guadalajara",
+   "fuente": "gdl",
+   "colonia": "PRADOS DEL NILO",
+   "lugar": "Unidad Deportiva 59, «El Campito»"
+  },
+  {
+   "municipio": "Guadalajara",
+   "fuente": "gdl",
+   "colonia": "SAN VICENTE",
+   "lugar": "En la colonia"
+  },
+  {
+   "municipio": "Tonalá",
+   "fuente": "ton",
+   "colonia": "EL VADO",
+   "lugar": "En la colonia"
+  },
+  {
+   "municipio": "Tonalá",
+   "fuente": "ton",
+   "colonia": "EL MORAL",
+   "lugar": "En la colonia"
+  },
+  {
+   "municipio": "Tonalá",
+   "fuente": "ton",
+   "colonia": "EL PEDREGAL DE SANTA MARTHA",
+   "lugar": "En la colonia"
+  },
+  {
+   "municipio": "Tonalá",
+   "fuente": "ton",
+   "colonia": "COLINAS DE TONALA",
+   "lugar": "En la colonia"
+  }
+ ],
+ "sin_ubicar": [
+  {
+   "municipio": "Guadalajara",
+   "fuente": "gdl",
+   "lugar": "Plaza Talpita, en Talpita Oriente"
+  },
+  {
+   "municipio": "Guadalajara",
+   "fuente": "gdl",
+   "lugar": "Centro Barrial Polanquito"
+  },
+  {
+   "municipio": "Guadalajara",
+   "fuente": "gdl",
+   "lugar": "Parroquia de La Esperanza"
+  },
+  {
+   "municipio": "Guadalajara",
+   "fuente": "gdl",
+   "lugar": "Centro Comunitario 4 del DIF, en Ampliación Talpita"
+  },
+  {
+   "municipio": "Tonalá",
+   "fuente": "ton",
+   "lugar": "Palmas"
+  }
+ ]
+}

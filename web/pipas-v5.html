@@ -157,6 +157,16 @@ details > *:last-child { margin-bottom: 12px }
 .faq { display: block } .faq dd { margin: 4px 0 16px; color: var(--muted) }
 </style>
 
+<link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
+<style>
+.mapa-agua { height: 380px; border: 1px solid var(--line); border-radius: 12px; margin: 8px 0 8px; box-shadow: var(--shadow); z-index: 0 }
+@media (prefers-color-scheme: dark) { .mapa-agua .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) } .mapa-agua.leaflet-container { background: #0c1e2c } }
+.leyenda { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: .85rem; color: var(--muted); margin: 0 0 10px }
+.leyenda .pt { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: var(--brand); box-shadow: 0 0 0 2px var(--surface), 0 0 0 3px var(--brand); vertical-align: -1px; margin-right: 6px }
+.leyenda .ar { display: inline-block; width: 14px; height: 10px; background: color-mix(in srgb, var(--brand) 25%, transparent); border: 1.5px dashed var(--brand); vertical-align: -1px; margin-right: 6px }
+.mapa-pop { font: 14px/1.45 var(--font) } .mapa-pop b { display: block }
+.lista-agua { columns: 2 260px; font-size: .95rem } .lista-agua li { break-inside: avoid }
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -219,13 +229,17 @@ details > *:last-child { margin-bottom: 12px }
 </section>
 <section aria-labelledby="cisternas">
   <h2 id="cisternas" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg></span>Dónde ir por agua</h2>
-  <p>Mientras llega la pipa, algunos municipios pusieron cisternas comunitarias. Lleva tus propios recipientes. Ningún municipio ha publicado horarios ni límites.</p>
+  <p>Mientras llega la pipa, algunos municipios pusieron cisternas comunitarias. Lleva tus propios recipientes. Ningún municipio ha publicado horarios ni límites. Toca un punto para ver la dirección y la fuente.</p>
+  <div class="mapa-agua" data-m="" role="region" aria-label="Mapa de cisternas comunitarias"></div>
+<p class="leyenda"><span><span class="pt"></span>Cisterna en el mapa oficial</span><span><span class="ar"></span>Hay cisterna en la colonia; no se publicó la dirección</span></p>
+  <details><summary><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Otras 19 sin ubicación en el mapa</summary><ul class="lista-agua"><li>C. Río Tepalcatepec 1345-1337, El Vergel (Tlaquepaque)</li><li>Calle Vicente Guerrero 490, El Campesino (Tlaquepaque)</li><li>Fovisste Miravalle (Tlaquepaque)</li><li>Miroslava 3, Jardines del Tapatío (Tlaquepaque)</li><li>C. Herrera y Cairo 432, Hacienda de Tlaquepaque (Tlaquepaque)</li><li>Calle Emilio Carranza 1253, Colonial Tlaquepaque (Tlaquepaque)</li><li>C. Rep. de Argentina 315 (Tlaquepaque)</li><li>C. Francisco de Miranda & C. Alfareros, Hacienda de Tlaquepaque (Tlaquepaque)</li><li>Calz. Córdoba 50, El Alamo (Tlaquepaque)</li><li>C. Glendale 253, Centro (Tlaquepaque)</li><li>C. Mariano Moreno 33, Buenos Aires (Tlaquepaque)</li><li>Calle San José Pte. 123, Nueva Santa María (Tlaquepaque)</li><li>Villa Fontana Nte. 235 (Tlaquepaque)</li><li>Arboledas 11, El Zalate (Tlaquepaque)</li><li>Plaza Talpita, en Talpita Oriente (Guadalajara)</li><li>Centro Barrial Polanquito (Guadalajara)</li><li>Parroquia de La Esperanza (Guadalajara)</li><li>Centro Comunitario 4 del DIF, en Ampliación Talpita (Guadalajara)</li><li>Palmas (Tonalá)</li></ul></details>
   <ul>
     <li><b>Guadalajara:</b> Nueve cisternas comunitarias: Plaza Talpita (Talpita Oriente), Centro Barrial Polanquito, parroquia de La Esperanza, parroquia de Margarita Maza de Juárez (San Miguel de Huentitán), Puerto Ángel y Pedernal (San Marcos), Centro Comunitario 4 del DIF (Ampliación Talpita), Mercado Francisco I. Madero (Santa María), Unidad Deportiva 59 «El Campito» (Prados del Nilo) y la colonia San Vicente. (<a href="https://www.cronica.com.mx/jalisco/guadalajara/2026/10/27/reparte-guadalajara-mas-de-46-millones-de-litros-de-agua-e-instala-nueve-cisternas-comunitarias/" rel="noopener">La Crónica, 27 de octubre</a>)</li>
     <li><b>Tlaquepaque:</b> 60 cisternas en el <a href="https://www.google.com/maps/d/viewer?mid=1RDUyGrhgZPHMVaRZDfdnN0RZvI8HL6U" rel="noopener">mapa del Ayuntamiento</a>. (<a href="https://www.cronica.com.mx/jalisco/guadalajara/2026/10/22/distribuye-tlaquepaque-56-millones-de-litros-de-agua-ante-desabasto-por-tandeos" rel="noopener">La Crónica, 22 de octubre</a>)</li>
     <li><b>Zapopan:</b> Cisternas comunitarias de 10 mil litros, «administradas en coordinación con los consejos vecinales»: 17 instaladas al 21 de octubre, de una meta de 100. No ha publicado dónde están. (<a href="https://www.cronica.com.mx/jalisco/guadalajara/2026/10/21/distribuye-zapopan-hasta-375-mil-litros-de-agua-al-dia-con-11-pipas/" rel="noopener">La Crónica, 21 de octubre</a>)</li>
-    <li><b>Tonalá:</b> Hasta 30 cisternas en las colonias afectadas «para que los vecinos puedan acercarse por el agua». No ha publicado dónde están. (<a href="https://tonala.gob.mx/portal/2026/10/14/lanza-tonala-programa-emergente-para-el-abasto-de-agua/" rel="noopener">Gobierno de Tonalá, 14 de octubre</a>)</li>
+    <li><b>Tonalá:</b> Hasta 30 cisternas en las colonias afectadas «para que los vecinos puedan acercarse por el agua». Las primeras cinco, en Palmas, El Vado, El Moral, Pedregal de Santa Martha y Colinas de Tonalá; no publicó las direcciones. (<a href="https://www.milenio.com/comunidad/instalan-cisternas-tlaquepaque-tonala-apoyar-afectados" rel="noopener">Milenio, 15 de octubre</a>)</li>
   </ul>
+  <p>¿Conoces una cisterna comunitaria que no está aquí? Escríbenos a <span class="number">soporte@aguagdl.com</span> con la dirección y, si puedes, una foto. La revisamos antes de ponerla en el mapa.</p>
 </section>
 <section aria-labelledby="nollega">
   <h2 id="nollega" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg></span>Si la pipa no llega</h2>
@@ -289,5 +303,41 @@ details > *:last-child { margin-bottom: 12px }
   </footer>
 </div>
 
+<script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script>
+(async () => {
+  const els = [...document.querySelectorAll('.mapa-agua')];
+  if (!els.length || !window.L) return;
+  let d;
+  try { d = await (await fetch('/cisternas.json')).json(); } catch { return; }
+  const c = getComputedStyle(document.documentElement).getPropertyValue('--brand').trim() || '#0284c7';
+  const esc = s => String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[ch]);
+  const titulo = s => s.toLowerCase().replace(/(^|\s)\S/g, t => t.toUpperCase());
+  const fuente = k => { const f = d.fuentes[k]; return '<a href="' + f.url + '" target="_blank" rel="noopener">' + esc(f.titulo) + '</a>' + (f.mapa ? ' · <a href="' + f.mapa + '" target="_blank" rel="noopener">mapa oficial</a>' : ''); };
+  const draw = el => {
+    if (el._map) { el._map.invalidateSize(); return; }
+    const m = el.dataset.m;
+    const map = L.map(el, { zoomSnap: 0.25, scrollWheelZoom: false });
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+    const b = L.latLngBounds([]);
+    d.colonias.filter(x => !m || x.municipio === m).forEach(x => {
+      const p = L.polygon(x.forma, { color: c, weight: 1.5, dashArray: '4 3', fillColor: c, fillOpacity: .18 }).addTo(map);
+      p.bindPopup('<div class="mapa-pop"><b>' + esc(x.lugar) + '</b>' + esc(titulo(x.colonia)) + ', ' + esc(x.municipio) + '<br>No se publicó la dirección exacta.<br>Fuente: ' + fuente(x.fuente) + '</div>');
+      b.extend(p.getBounds());
+    });
+    d.puntos.filter(x => !m || x.municipio === m).forEach(x => {
+      const k = L.circleMarker([x.lat, x.lon], { radius: 7, color: '#fff', weight: 2, fillColor: c, fillOpacity: 1 }).addTo(map);
+      k.bindPopup('<div class="mapa-pop"><b>' + esc(x.lugar || 'Cisterna') + '</b>' + esc(x.municipio) + (x.capa === 'SIAPA' ? ', del SIAPA' : '') + '<br>Según el mapa del Ayuntamiento.<br>Fuente: ' + fuente(x.fuente) + '</div>');
+      b.extend(k.getLatLng());
+    });
+    map.fitBounds(b, { padding: [24, 24], maxZoom: 15 });
+    el._map = map;
+  };
+  const visibles = () => els.forEach(el => { if (el.offsetParent) draw(el); });
+  els.forEach(el => { const det = el.closest('details'); if (det) det.addEventListener('toggle', () => { if (det.open) draw(el); }); });
+  window.__mapasAgua = visibles;
+  visibles();
+})();
+</script>
 </body>
 </html>

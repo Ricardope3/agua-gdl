@@ -157,6 +157,16 @@ details > *:last-child { margin-bottom: 12px }
 .faq { display: block } .faq dd { margin: 4px 0 16px; color: var(--muted) }
 </style>
 
+<link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
+<style>
+.mapa-agua { height: 380px; border: 1px solid var(--line); border-radius: 12px; margin: 8px 0 8px; box-shadow: var(--shadow); z-index: 0 }
+@media (prefers-color-scheme: dark) { .mapa-agua .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) } .mapa-agua.leaflet-container { background: #0c1e2c } }
+.leyenda { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: .85rem; color: var(--muted); margin: 0 0 10px }
+.leyenda .pt { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: var(--brand); box-shadow: 0 0 0 2px var(--surface), 0 0 0 3px var(--brand); vertical-align: -1px; margin-right: 6px }
+.leyenda .ar { display: inline-block; width: 14px; height: 10px; background: color-mix(in srgb, var(--brand) 25%, transparent); border: 1.5px dashed var(--brand); vertical-align: -1px; margin-right: 6px }
+.mapa-pop { font: 14px/1.45 var(--font) } .mapa-pop b { display: block }
+.lista-agua { columns: 2 260px; font-size: .95rem } .lista-agua li { break-inside: avoid }
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -184,5 +194,41 @@ details > *:last-child { margin-bottom: 12px }
   </footer>
 </div>
 
+<script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script>
+(async () => {
+  const els = [...document.querySelectorAll('.mapa-agua')];
+  if (!els.length || !window.L) return;
+  let d;
+  try { d = await (await fetch('/cisternas.json')).json(); } catch { return; }
+  const c = getComputedStyle(document.documentElement).getPropertyValue('--brand').trim() || '#0284c7';
+  const esc = s => String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[ch]);
+  const titulo = s => s.toLowerCase().replace(/(^|\s)\S/g, t => t.toUpperCase());
+  const fuente = k => { const f = d.fuentes[k]; return '<a href="' + f.url + '" target="_blank" rel="noopener">' + esc(f.titulo) + '</a>' + (f.mapa ? ' · <a href="' + f.mapa + '" target="_blank" rel="noopener">mapa oficial</a>' : ''); };
+  const draw = el => {
+    if (el._map) { el._map.invalidateSize(); return; }
+    const m = el.dataset.m;
+    const map = L.map(el, { zoomSnap: 0.25, scrollWheelZoom: false });
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+    const b = L.latLngBounds([]);
+    d.colonias.filter(x => !m || x.municipio === m).forEach(x => {
+      const p = L.polygon(x.forma, { color: c, weight: 1.5, dashArray: '4 3', fillColor: c, fillOpacity: .18 }).addTo(map);
+      p.bindPopup('<div class="mapa-pop"><b>' + esc(x.lugar) + '</b>' + esc(titulo(x.colonia)) + ', ' + esc(x.municipio) + '<br>No se publicó la dirección exacta.<br>Fuente: ' + fuente(x.fuente) + '</div>');
+      b.extend(p.getBounds());
+    });
+    d.puntos.filter(x => !m || x.municipio === m).forEach(x => {
+      const k = L.circleMarker([x.lat, x.lon], { radius: 7, color: '#fff', weight: 2, fillColor: c, fillOpacity: 1 }).addTo(map);
+      k.bindPopup('<div class="mapa-pop"><b>' + esc(x.lugar || 'Cisterna') + '</b>' + esc(x.municipio) + (x.capa === 'SIAPA' ? ', del SIAPA' : '') + '<br>Según el mapa del Ayuntamiento.<br>Fuente: ' + fuente(x.fuente) + '</div>');
+      b.extend(k.getLatLng());
+    });
+    map.fitBounds(b, { padding: [24, 24], maxZoom: 15 });
+    el._map = map;
+  };
+  const visibles = () => els.forEach(el => { if (el.offsetParent) draw(el); });
+  els.forEach(el => { const det = el.closest('details'); if (det) det.addEventListener('toggle', () => { if (det.open) draw(el); }); });
+  window.__mapasAgua = visibles;
+  visibles();
+})();
+</script>
 </body>
 </html>
