@@ -1,13 +1,16 @@
-"""Writes web/cisternas.json, the community water points the /pipas variants map, from cisternas_fuente.json.
+"""Writes web/cisternas.json, the community water points on /avisos, /reportes and the /pipas variants, from cisternas_fuente.json.
+
+--check fails when web/cisternas.json is out of date.
 
 Exact points only where an official map gives coordinates; where a source names only a colonia,
 the colonia's outline from web/colonias_siapa.topo.json.
 """
 import json
 import pathlib
+import sys
 
 HERE = pathlib.Path(__file__).resolve().parent
-ROOT = HERE.parents[1]
+ROOT = HERE.parent
 
 
 def decode_arcs(topo):
@@ -38,9 +41,19 @@ def outline(arcs, geom):
     return [[ring(arcs, r) for r in poly] for poly in polys]
 
 
+def centre(ring):
+    a = cx = cy = 0.0
+    for (y1, x1), (y2, x2) in zip(ring, ring[1:] + ring[:1]):
+        k = x1 * y2 - x2 * y1
+        a += k
+        cx += (x1 + x2) * k
+        cy += (y1 + y2) * k
+    return [round(cy / (3 * a), 6), round(cx / (3 * a), 6)]
+
+
 def main():
-    src = json.loads((HERE / "cisternas_fuente.json").read_text())
-    topo = json.loads((ROOT / "web/colonias_siapa.topo.json").read_text())
+    src = json.loads((HERE / "cisternas_fuente.json").read_text(encoding="utf-8"))
+    topo = json.loads((ROOT / "web/colonias_siapa.topo.json").read_text(encoding="utf-8"))
     arcs = decode_arcs(topo)
     geoms = topo["objects"]["colonias"]["geometries"]
     colonias = []
@@ -48,7 +61,8 @@ def main():
         hits = [g for g in geoms if g["properties"]["m"] == c["municipio"] and g["properties"]["n"] == c["colonia"]]
         if len(hits) != 1:
             raise SystemExit(f"{c['municipio']} {c['colonia']}: {len(hits)} matches in the SIAPA layer")
-        colonias.append({**c, "forma": outline(arcs, hits[0])})
+        forma = outline(arcs, hits[0])
+        colonias.append({**c, "centro": centre(max((poly[0] for poly in forma), key=len)), "forma": forma})
     out = {
         "revisado": "2026-11-03",
         "fuentes": src["fuentes"],
@@ -58,7 +72,13 @@ def main():
         "sin_ubicar": src["sin_ubicar"],
     }
     dest = ROOT / "web/cisternas.json"
-    dest.write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")))
+    text = json.dumps(out, ensure_ascii=False, separators=(",", ":"))
+    if "--check" in sys.argv:
+        if not dest.exists() or dest.read_text(encoding="utf-8") != text:
+            raise SystemExit("web/cisternas.json is stale: run python3 pipelines/cisternas.py")
+        print(f"web/cisternas.json up to date: {len(out['puntos'])} points, {len(colonias)} colonias")
+        return
+    dest.write_text(text, encoding="utf-8")
     print(f"wrote {dest}: {len(out['puntos'])} points, {len(colonias)} colonias, {dest.stat().st_size // 1024} KB")
 
 

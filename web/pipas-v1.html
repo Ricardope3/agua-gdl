@@ -334,7 +334,6 @@ if (h) document.querySelector('.chips [data-m="' + h + '"]')?.click();
   try { d = await (await fetch('/cisternas.json')).json(); } catch { return; }
   const c = getComputedStyle(document.documentElement).getPropertyValue('--brand').trim() || '#0284c7';
   const esc = s => String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[ch]);
-  const titulo = s => s.toLowerCase().replace(/(^|\s)\S/g, t => t.toUpperCase());
   const fuente = k => { const f = d.fuentes[k]; return '<a href="' + f.url + '" target="_blank" rel="noopener">' + esc(f.titulo) + '</a>' + (f.mapa ? ' · <a href="' + f.mapa + '" target="_blank" rel="noopener">mapa oficial</a>' : ''); };
   const draw = el => {
     if (el._map) { el._map.invalidateSize(); return; }
@@ -344,12 +343,12 @@ if (h) document.querySelector('.chips [data-m="' + h + '"]')?.click();
     const b = L.latLngBounds([]);
     d.colonias.filter(x => !m || x.municipio === m).forEach(x => {
       const p = L.polygon(x.forma, { color: c, weight: 1.5, dashArray: '4 3', fillColor: c, fillOpacity: .18 }).addTo(map);
-      p.bindPopup('<div class="mapa-pop"><b>' + esc(x.lugar) + '</b>' + esc(titulo(x.colonia)) + ', ' + esc(x.municipio) + '<br>No se publicó la dirección exacta.<br>Fuente: ' + fuente(x.fuente) + '</div>');
+      p.bindPopup('<div class="mapa-pop"><b>Cisterna en ' + esc(x.nombre) + ', ' + esc(x.municipio) + '</b>' + (x.lugar ? esc(x.lugar) + '. ' : '') + 'Se publicó solo la colonia, no la dirección.<br>Fuente: ' + fuente(x.fuente) + '</div>');
       b.extend(p.getBounds());
     });
     d.puntos.filter(x => !m || x.municipio === m).forEach(x => {
       const k = L.circleMarker([x.lat, x.lon], { radius: 7, color: '#fff', weight: 2, fillColor: c, fillOpacity: 1 }).addTo(map);
-      k.bindPopup('<div class="mapa-pop"><b>' + esc(x.lugar || 'Cisterna') + '</b>' + esc(x.municipio) + (x.capa === 'SIAPA' ? ', del SIAPA' : '') + '<br>Según el mapa del Ayuntamiento.<br>Fuente: ' + fuente(x.fuente) + '</div>');
+      k.bindPopup('<div class="mapa-pop"><b>' + esc(x.lugar || 'Sin dirección publicada') + '</b>' + esc(x.municipio) + (x.capa === 'SIAPA' ? ', capa «SIAPA» del mapa' : '') + '<br>Según el mapa del Ayuntamiento.<br>Fuente: ' + fuente(x.fuente) + '</div>');
       b.extend(k.getLatLng());
     });
     map.fitBounds(b, { padding: [24, 24], maxZoom: 15 });

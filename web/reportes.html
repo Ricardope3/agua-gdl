@@ -99,6 +99,8 @@ h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.08; letter-spacing: -
 .bigmap { height: clamp(420px, 70vh, 740px); border-radius: 12px; border: 1px solid var(--line); background: var(--subtle) }
 .bigmap:focus-visible { outline: 3px solid var(--brand) }
 @media (prefers-color-scheme: dark) { .bigmap .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) } .bigmap.leaflet-container { background: #0c1e2c } }
+.leaflet-control-cisternas a[aria-pressed="false"] svg { opacity: .35 }
+.cisterna-ico { background: none; border: 0; filter: drop-shadow(0 1px 1px rgb(0 0 0 / .35)) }
 .map-label { background: var(--surface); color: var(--fg); border: 1px solid var(--line); font: 600 13px/1.3 var(--font); box-shadow: var(--shadow); padding: 6px 8px }
 .map-label::before { display: none }
 .map-label .sub { display: block; font-weight: 500; color: var(--muted) }
@@ -496,7 +498,7 @@ path.nueva { animation: nueva 1.4s ease-out both; pointer-events: none }
   .c-acc .rep:hover { background: #c4421c }
   .c-acc .alt2 { flex: 0 0 auto; background: var(--subtle); color: var(--fg) }
   .stage .card > .button { display: none }
-  .stage.has-card .leaflet-control-zoom, .stage.has-card .leaflet-control-centrar { display: none }
+  .stage.has-card .leaflet-control-zoom, .stage.has-card .leaflet-control-centrar, .stage.has-card .leaflet-control-cisternas { display: none }
 }
 .ql { position: fixed; inset: 0; z-index: 5000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 16px; background: rgb(3 8 20 / 0); -webkit-backdrop-filter: blur(0); backdrop-filter: blur(0); transition: background .25s, backdrop-filter .25s, -webkit-backdrop-filter .25s }
 .ql.on { background: rgb(3 8 20 / .45); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px) }
@@ -537,7 +539,7 @@ path.nueva { animation: nueva 1.4s ease-out both; pointer-events: none }
 /* == SECTION: desktop card, publications panel and video stories == */
 @media (min-width: 761px) {
   #reporta { display: none !important }
-  .stage.has-card .leaflet-control-zoom, .stage.has-card .leaflet-control-centrar { display: none }
+  .stage.has-card .leaflet-control-zoom, .stage.has-card .leaflet-control-centrar, .stage.has-card .leaflet-control-cisternas { display: none }
   .stage .card { width: 400px; top: 74px; max-height: calc(100% - 86px); padding: 0; overflow: auto }
   .stage .card > .close { top: 12px; right: 10px; z-index: 2 }
   .stage .card > .where, .stage .card > .ev, .stage .card > .sub-head, .stage .card > .conteo, .stage .card > .button { display: none }
@@ -1495,6 +1497,7 @@ if (window.top !== window.self) {
     const zoneLayer = L.geoJSON({ type: "FeatureCollection", features: zonas }, { interactive: false, style: zoneStyle }).addTo(map);
     const home = zoneLayer.getBounds().pad(0.04);
     M.recenter(L, map, () => map.flyToBounds(home, { duration: 0.6 }));
+    if (M.cisternas) M.cisternas(L, map, "bottomright");
     // Current reports colour the outline first. Stale reports make the outline neutral and dashed,
     // but a published colonia keeps its publication fill beneath: silence is not evidence the water
     // came back, and the publications are historical evidence that shouldn't flicker off between the
@@ -1771,7 +1774,7 @@ if (window.top !== window.self) {
           p.vista && p.tipo !== "comentario" ? null : el("q", {}, p.cita.length > 120 ? `${p.cita.slice(0, 118)}…` : p.cita),
           p.dias ? el("span", { class: "fdias" }, daysWord(p.dias)) : null);
       });
-      const blocked = () => [card, $("reporta"), document.querySelector(".float-search"), document.querySelector(".leaflet-control-zoom"), document.querySelector(".leaflet-control-centrar"), $("municipios"), $("linea")]
+      const blocked = () => [card, $("reporta"), document.querySelector(".float-search"), document.querySelector(".leaflet-control-zoom"), document.querySelector(".leaflet-control-centrar"), document.querySelector(".leaflet-control-cisternas"), $("municipios"), $("linea")]
         .filter((n) => n && n.offsetParent).map((n) => n.getBoundingClientRect());
       function draw() {
         frame.replaceChildren();

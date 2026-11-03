@@ -308,5 +308,58 @@ window.aguaMapa = (() => {
     return new Ctl({ position }).addTo(map);
   }
 
-  return { DATA, BORDER, COLORS, recenter, norm, fold, joinES, zonesOf, zones, label, describe, borderWord, zoneWord, theZones, decode, contains, load, find, tiles, draw, card, icon, cross };
+  // cisternas puts the community water points from /cisternas.json on map, in a pane above the colonias,
+  // with a «Cisternas» switch at position: a drop where an official map gives the spot, and at the
+  // colonia's centre where a source names only the colonia (a hollow drop).
+  function cisternas(L, map, position = "topright") {
+    map.createPane("cisternas").style.zIndex = 590;
+    const drop = (solid) => L.divIcon({
+      className: "cisterna-ico",
+      iconSize: [22, 28],
+      iconAnchor: [11, 26],
+      popupAnchor: [0, -22],
+      html: `<svg viewBox="0 0 22 28" width="22" height="28" aria-hidden="true"><path d="M11 2C11 2 3 11.5 3 17a8 8 0 0 0 16 0C19 11.5 11 2 11 2z" fill="${solid ? "#0284c7" : "#ffffff"}" stroke="${solid ? "#ffffff" : "#0284c7"}" stroke-width="2.2"${solid ? "" : ' stroke-dasharray="3 2"'}/></svg>`,
+    });
+    const layer = L.layerGroup();
+    const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+    fetch("/cisternas.json").then((r) => r.ok ? r.json() : Promise.reject(r.status)).then((d) => {
+      const src = (k) => { const f = d.fuentes[k]; return `<a href="${f.url}" target="_blank" rel="noopener">${esc(f.titulo)}</a>` + (f.mapa ? ` · <a href="${f.mapa}" target="_blank" rel="noopener">mapa oficial</a>` : ""); };
+      const foot = '<br><a href="/pipas" target="_top">Cómo pedir una pipa</a>';
+      for (const x of d.puntos) {
+        L.marker([x.lat, x.lon], { pane: "cisternas", icon: drop(true), keyboard: false, title: "Punto de agua" })
+          .bindPopup(`<b>${x.capa === "SIAPA" ? "Punto de agua (capa «SIAPA» del mapa)" : "Cisterna comunitaria"}</b><br>${esc(x.lugar || "Sin dirección publicada")}, ${esc(x.municipio)}<br>Fuente: ${src(x.fuente)}${foot}`)
+          .addTo(layer);
+      }
+      for (const x of d.colonias) {
+        L.marker(x.centro, { pane: "cisternas", icon: drop(false), keyboard: false, title: "Cisterna en la colonia" })
+          .bindPopup(`<b>Cisterna comunitaria en ${esc(x.nombre)}, ${esc(x.municipio)}</b><br>${x.lugar ? esc(x.lugar) + ". " : ""}Ubicación aproximada: centro de la colonia.<br>Fuente: ${src(x.fuente)}${foot}`)
+          .addTo(layer);
+      }
+      layer.addTo(map);
+      const Ctl = L.Control.extend({
+        onAdd() {
+          const bar = L.DomUtil.create("div", "leaflet-bar leaflet-control-cisternas");
+          const a = L.DomUtil.create("a", "", bar);
+          a.href = "#";
+          a.innerHTML = '<svg viewBox="0 0 22 28" width="14" height="18" aria-hidden="true" style="vertical-align:-4px"><path d="M11 2C11 2 3 11.5 3 17a8 8 0 0 0 16 0C19 11.5 11 2 11 2z" fill="#0284c7"/></svg>';
+          a.setAttribute("role", "button");
+          a.setAttribute("aria-pressed", "true");
+          a.title = "Cisternas comunitarias: mostrar u ocultar";
+          a.setAttribute("aria-label", a.title);
+          L.DomEvent.disableClickPropagation(bar);
+          L.DomEvent.on(a, "click", (e) => {
+            L.DomEvent.preventDefault(e);
+            const on = !map.hasLayer(layer);
+            on ? layer.addTo(map) : layer.remove();
+            a.setAttribute("aria-pressed", String(on));
+          });
+          return bar;
+        },
+      });
+      new Ctl({ position }).addTo(map);
+    }).catch(() => {});
+    return layer;
+  }
+
+  return { DATA, BORDER, COLORS, recenter, norm, fold, joinES, zonesOf, zones, label, describe, borderWord, zoneWord, theZones, decode, contains, load, find, tiles, draw, card, icon, cross, cisternas };
 })();

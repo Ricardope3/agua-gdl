@@ -374,55 +374,64 @@
    "municipio": "Guadalajara",
    "fuente": "gdl",
    "colonia": "SAN MIGUEL DE HUENTITAN",
-   "lugar": "Parroquia de Margarita Maza de Juárez"
+   "lugar": "Parroquia de Margarita Maza de Juárez",
+   "nombre": "San Miguel de Huentitán"
   },
   {
    "municipio": "Guadalajara",
    "fuente": "gdl",
    "colonia": "SAN MARCOS",
-   "lugar": "Esquina de Puerto Ángel y Pedernal"
+   "lugar": "Esquina de Puerto Ángel y Pedernal",
+   "nombre": "San Marcos"
   },
   {
    "municipio": "Guadalajara",
    "fuente": "gdl",
    "colonia": "SANTA MARIA",
-   "lugar": "Mercado Municipal Francisco I. Madero"
+   "lugar": "Mercado Municipal Francisco I. Madero",
+   "nombre": "Santa María"
   },
   {
    "municipio": "Guadalajara",
    "fuente": "gdl",
    "colonia": "PRADOS DEL NILO",
-   "lugar": "Unidad Deportiva 59, «El Campito»"
+   "lugar": "Unidad Deportiva 59, «El Campito»",
+   "nombre": "Prados del Nilo"
   },
   {
    "municipio": "Guadalajara",
    "fuente": "gdl",
    "colonia": "SAN VICENTE",
-   "lugar": "En la colonia"
+   "lugar": null,
+   "nombre": "San Vicente"
   },
   {
    "municipio": "Tonalá",
    "fuente": "ton",
    "colonia": "EL VADO",
-   "lugar": "En la colonia"
+   "lugar": null,
+   "nombre": "El Vado"
   },
   {
    "municipio": "Tonalá",
    "fuente": "ton",
    "colonia": "EL MORAL",
-   "lugar": "En la colonia"
+   "lugar": null,
+   "nombre": "El Moral"
   },
   {
    "municipio": "Tonalá",
    "fuente": "ton",
    "colonia": "EL PEDREGAL DE SANTA MARTHA",
-   "lugar": "En la colonia"
+   "lugar": null,
+   "nombre": "El Pedregal de Santa Martha"
   },
   {
    "municipio": "Tonalá",
    "fuente": "ton",
    "colonia": "COLINAS DE TONALA",
-   "lugar": "En la colonia"
+   "lugar": null,
+   "nombre": "Colinas de Tonalá"
   }
  ],
  "sin_ubicar": [
