@@ -21,6 +21,7 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
+<!-- == SECTION: styles == -->
 <style>
 :root {
   --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
@@ -561,6 +562,7 @@ if (window.top !== window.self) {
 <script src="/theme.js"></script>
 </head>
 <body>
+<!-- == SECTION: phone card, quick look and carousel == -->
 <script>
   const isPhone = () => matchMedia("(max-width: 760px)").matches;
   // The report button and, when wanted, a toggle for the rest of the card, right under its title.
@@ -744,6 +746,7 @@ if (window.top !== window.self) {
   </header>
 
   </div>
+<!-- == SECTION: markup: map stage, summary, timeline == -->
   <main>
     <div class="stage" id="escenario">
       <div id="mapa" class="bigmap" role="region" aria-label="Mapa de reportes de agua por colonia" tabindex="0"></div>
@@ -810,6 +813,7 @@ if (window.top !== window.self) {
     <p class="lede" style="margin-top:12px">El SIAPA prometió que cada corte duraría «por máximo un día». El mapa muestra cuántos días llegaron a estar sin agua las colonias, según lo que publican los medios y los vecinos en Facebook y X, cada publicación con su enlace e imagen, y los reportes que se hacen aquí. Toca tu colonia para verlos y reportar la tuya: sin cuenta y anónimo. No son datos oficiales.</p>
     <p class="lede">La línea de tiempo bajo el mapa repite la crisis día por día: cada colonia se enciende el día en que se publica por primera vez que no tiene agua y se oscurece conforme las publicaciones cuentan más días. Una colonia sin publicaciones no es una colonia con agua: puede ser que nadie lo haya publicado.</p>
 
+<!-- == SECTION: markup: list, week, bot answers, how it works == -->
     <section aria-labelledby="lista">
       <h2 class="sec" id="lista">Las colonias con más días sin agua</h2>
       <p class="note" style="margin-top:0" id="lista-nota">Según las publicaciones de medios y vecinos. Toca una para verla en el mapa con lo que publicaron.</p>
@@ -901,10 +905,12 @@ if (window.top !== window.self) {
 </div>
 <script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
 <script src="/mapa.js"></script>
+<!-- == SECTION: main script == -->
 <script>
 (() => {
   "use strict";
   const M = window.aguaMapa;
+  /* == SECTION: setup and text helpers == */
   const API = (() => {
     const o = new URLSearchParams(location.search).get("api");
     try {
@@ -977,6 +983,7 @@ if (window.top !== window.self) {
   const status = $("estado");
   const say = (...kids) => status.replaceChildren(...kids);
   const LOAD_FAILED = "No pudimos cargar los reportes. El mapa funciona; intenta de nuevo en unos minutos.";
+  /* == SECTION: API call == */
   async function call(path, opts) {
     const timeout = typeof AbortSignal.timeout === "function" ? { signal: AbortSignal.timeout(15000) } : {};
     const res = await fetch(API + path, { ...timeout, ...opts });
@@ -984,6 +991,7 @@ if (window.top !== window.self) {
     return res.json();
   }
 
+  /* == SECTION: map, frame and gestures == */
   // The zoom buttons go bottom right: the summary sits top right and the colonia card top left.
   // Trackpad pinches send small wheel steps: fewer pixels per level make each pinch zoom further.
   // Inside the landing's frame the landing scrolls past the map: on a touch screen one finger scrolls it
@@ -1065,6 +1073,7 @@ if (window.top !== window.self) {
     }
   }
   const ov = $("resumen-mapa"), hide = $("ocultar");
+  /* == SECTION: overview toggle and report history == */
   const setOverview = (open) => {
     ov.classList.toggle("closed", !open);
     hide.setAttribute("aria-expanded", String(open));
@@ -1107,6 +1116,7 @@ if (window.top !== window.self) {
     for (const k of old) localStorage.removeItem(k);
   } catch {}
 
+  /* == SECTION: publications and evidence == */
   // What news outlets and neighbours published (web/publicaciones.json, checked by pipelines/publicaciones.py),
   // or null when it doesn't load or isn't the list it should be.
   const pubsLoad = fetch("/publicaciones.json").then((r) => r.ok ? r.json() : null)
@@ -1172,6 +1182,7 @@ if (window.top !== window.self) {
     return out;
   }
 
+  /* == SECTION: build: map state and styling == */
   function build({ colonias, zonas }, pubs) {
     let ev;
     try { ev = evidence(pubs); } catch { pubs = null; ev = new Map(); } // a malformed entry counts as not loaded
@@ -1268,6 +1279,7 @@ if (window.top !== window.self) {
       },
     }).addTo(map);
 
+    /* == SECTION: markers: badges and donuts == */
     // Rings with the count, like a donut chart of the answers, over the colonias with reports.
     const markers = L.layerGroup().addTo(map);
     const centers = new Map();
@@ -1340,6 +1352,7 @@ if (window.top !== window.self) {
     map.on("zoomend", drawMarkers);
     drawMarkers();
 
+    /* == SECTION: apply API reports == */
     function apply(s) {
       if (!s) return;
       summary = s;
@@ -1369,6 +1382,7 @@ if (window.top !== window.self) {
       if (status.textContent === LOAD_FAILED) say("");
     }
 
+    /* == SECTION: selection and surrounding tiles == */
     // The colonia card: its reports in the last 24 h and the form to add one.
     const card = $("ficha");
     let selected = null;
@@ -1581,6 +1595,7 @@ if (window.top !== window.self) {
       }
     });
 
+    /* == SECTION: colonia card == */
     // A report from this browser stays marked for an hour, so the card thanks instead of asking again.
     // Only this device's own answer is kept; it never leaves the browser after the anonymous POST.
     const SEEN = 60 * 60 * 1000;
@@ -1762,6 +1777,7 @@ if (window.top !== window.self) {
         ...lines.map((t) => el("p", { class: "eco" }, t)));
     }
 
+    /* == SECTION: after report and share == */
     // After a report, the colonia's link to pass on: the map is only as good as its reports.
     function exige(p) {
       const href = `/exige?${new URLSearchParams({ q: p.n, m: p.m, cp: p.cp })}`;
@@ -1829,6 +1845,7 @@ if (window.top !== window.self) {
       return box;
     }
 
+    /* == SECTION: report form == */
     function form(f) {
       const p = f.properties;
       const opt = (value, cls, title, sub) => el("label", { class: `opt ${cls}` }, el("input", { type: "radio", name: "estado", value, required: "" }), el("span", { class: "dot" }), title, el("small", {}, sub));
@@ -1887,6 +1904,7 @@ if (window.top !== window.self) {
       return fm;
     }
 
+    /* == SECTION: summary == */
     function renderSummary(s) {
       const t = s.total;
       $("total").textContent = fmt(t);
@@ -1910,6 +1928,7 @@ if (window.top !== window.self) {
       if (s.semana) renderWeek(s.semana);
     }
 
+    /* == SECTION: week == */
     // The week: SIAPA's cut days (outlined) beside what the reports say, by zone and day.
     const DOW = ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"];
     const DOW_LONG = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
@@ -1938,6 +1957,7 @@ if (window.top !== window.self) {
         : ["Todavía hay pocos reportes para compararlos con el calendario del SIAPA. Reporta tu colonia y pásalo a tus vecinos."]));
     }
 
+    /* == SECTION: evidence summary, municipios, list == */
     // The publications' summary and the list of colonias: static, so they show even without the API.
     function renderEvidence() {
       if (!pubs) {
@@ -2089,6 +2109,7 @@ if (window.top !== window.self) {
     $("solo-semana").addEventListener("click", () => { weekOnly = !weekOnly; everything ||= weekOnly; renderRanking(); });
     $("descargar").addEventListener("click", download);
 
+    /* == SECTION: timeline == */
     // r1: the timeline. Each day the colonias with a first publication light up (a ring spreads from
     // them) and the colours follow the most days the publications had given by then.
     const tl = $("linea"), playBtn = $("tl-play"), chart = $("tl-grafica");
@@ -2270,6 +2291,7 @@ if (window.top !== window.self) {
     });
     setInterval(() => { if (!document.hidden) call("/v1/reportes").then(apply).catch(() => {}); }, 120000);
 
+    /* == SECTION: search == */
     // Search over name, municipio and postal code, in the browser.
     const input = $("q"), clear = $("limpiar"), list = $("sugerencias"), formSearch = $("buscar");
     const index = colonias.map((f) => ({ f, key: norm(`${f.properties.n} ${f.properties.m} ${f.properties.cp}`), name: M.fold(f.properties.n), cp: f.properties.cp }));
@@ -2355,6 +2377,7 @@ if (window.top !== window.self) {
     });
     clear.addEventListener("click", () => { input.value = ""; clear.hidden = true; closeList(); clearSelection(); input.focus(); });
 
+    /* == SECTION: location == */
     // Location: the colonia under the visitor, found in the browser; nothing is sent anywhere.
     const locBtn = $("ubicacion");
     let pin = null;
@@ -2396,6 +2419,7 @@ if (window.top !== window.self) {
       else { input.focus(); say("Busca tu colonia o tócala en el mapa para reportarla."); }
     });
 
+    /* == SECTION: URL params and startup == */
     // ?q=colonia&m=municipio&cp=postal code opens on that colonia (the card sets it, so links can
     // be shared); the postal code tells apart same-named colonias in one municipio. A bare ?q=
     // (the landing's search) opens a colonia only when one matches; otherwise it lists them.

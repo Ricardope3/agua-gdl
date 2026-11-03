@@ -22,6 +22,7 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
+<!-- == SECTION: styles == -->
 <style>
 :root {
   --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
@@ -309,6 +310,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   </header>
 </div>
 
+<!-- == SECTION: markup == -->
 <main>
   <div class="stage" id="escenario">
     <div id="mapa" class="bigmap" role="region" aria-label="Mapa de las colonias y las zonas de la rotación del SIAPA" tabindex="0"></div>
@@ -382,6 +384,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
 </div>
 <script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
 <script src="/mapa.js"></script>
+<!-- == SECTION: script: setup and helpers == -->
 <script>
 (() => {
   "use strict";
@@ -443,6 +446,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   // SIAPA's weekdays in the plural: "los miércoles, viernes y domingos".
   const weekdaysES = (days) => `los ${joinES(days.map((d) => /o$/.test(d) ? `${d}s` : d))}`;
 
+  /* == SECTION: API and zones == */
   async function get(path, opts) {
     const timeout = typeof AbortSignal.timeout === "function" ? { signal: AbortSignal.timeout(15000) } : {};
     const res = await fetch(API + path, { ...timeout, ...opts });
@@ -521,6 +525,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   let ev = new Map(), pubsState = null, summary = null, summaryState = null;
   const sevOf = (d) => d == null ? 0 : d <= 2 ? 1 : d <= 6 ? 2 : d <= 13 ? 3 : 4;
   const sevVars = (s) => `--c:var(--s${s});--k:var(${s ? `--s${s}-ink` : "--fg"})`;
+  /* == SECTION: publications and evidence == */
   function sourceOf(p, byUrl) {
     if (p.de) {
       const orig = byUrl && byUrl.get(p.de);
@@ -614,6 +619,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   let data = null, ready = null;
   let options = [], active = -1, typing = 0, pending = null;
   const apiCache = new Map();
+  /* == SECTION: search == */
   function apiSearch(q, signal) {
     const k = q.toLowerCase();
     if (apiCache.has(k)) return Promise.resolve(apiCache.get(k));
@@ -799,6 +805,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   ready = M.load().then(build);
   ready.catch(() => { say("No pudimos cargar el mapa de colonias. Intenta de nuevo en unos minutos o consulta tu zona en el ", mapLink(), "."); addStreets(); });
 
+  /* == SECTION: map build, markers, labels == */
   function build(d) {
     data = d;
     const { colonias, zonas } = d;
@@ -985,6 +992,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     }
   }
 
+  /* == SECTION: zone focus, mode and strip == */
   function setFocus(zs) {
     focus = zs && zs.length ? new Set(zs) : null;
     if (!layer) return;
@@ -1030,6 +1038,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     strip.scrollLeft = x;
   }
 
+  /* == SECTION: card sheet and framing == */
   // ——— The sheet: one card at a time over the map. ———
   function cardShell(kids, cls) {
     const c = el("aside", { class: `card${cls ? ` ${cls}` : ""}`, "aria-live": "polite" });
@@ -1142,6 +1151,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     return c;
   }
 
+  /* == SECTION: colonia card == */
   // ——— A colonia on SIAPA's map: the map's zones first, the list's when they differ (as on /mapa). ———
   function select(f, { animate = true } = {}) {
     const p = f.properties, k = keyOf(p);
@@ -1241,6 +1251,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
         el("a", { href: p.url, rel: "noopener nofollow", target: "_blank" }, p.tipo === "comentario" ? "Ver el comentario" : p.red === "web" ? "Leer la nota" : "Ver la publicación")));
   }
 
+  /* == SECTION: results and point lookup == */
   // ——— A colonia from SIAPA's list that its map doesn't draw under that name: the list's days. ———
   function showListed(c) {
     const render = () => {
@@ -1354,6 +1365,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     if (mine && sheet.bounds) fitTo(sheet.bounds, true, 15);
   }
 
+  /* == SECTION: location and zone lock == */
   function locate() {
     if (!("geolocation" in navigator)) { say("Tu navegador no permite compartir tu ubicación. Busca tu colonia por su nombre."); input.focus(); return; }
     locBtn.disabled = true;
@@ -1421,6 +1433,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     if (b) fitTo(b, true, 14);
   }
 
+  /* == SECTION: startup from link == */
   // ——— Links: ?q=colonia&m=municipio&cp=código postal opens that colonia; ?zona=3 opens a zone. ———
   function startFromLink() {
     const preset = (params.get("q") || "").trim().slice(0, 80);
