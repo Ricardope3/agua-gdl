@@ -38,7 +38,8 @@ group by channel, status;
 
 ## 4. Despliegue
 
-- [ ] Despliega el commit candidato con `fly deploy --ha=false`; confirma después con el inventario de máquinas que solo quedó una activa y que la anterior se detuvo.
+- [ ] Con el árbol limpio (`git status` sin cambios; `fly deploy` sube el directorio tal cual), despliega el commit candidato con `fly deploy --ha=false --build-arg GIT_SHA=$(git rev-parse HEAD)`; confirma después con el inventario de máquinas que solo quedó una activa y que la anterior se detuvo.
+- [ ] Confirma con `scripts/live.sh` que la API en vivo reporta el commit desplegado.
 - [ ] Revisa que todas las migraciones terminaron y que el arranque no reporta WAL, Neon ni permisos fallidos.
 - [ ] Cloudflare Pages completa el build con todos los `--check`; no uses un deploy parcial si falló.
 

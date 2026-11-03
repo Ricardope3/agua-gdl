@@ -61,7 +61,11 @@ type meta struct {
 	MapSource  string `json:"map_source,omitempty"`
 	MapFetched string `json:"map_fetched,omitempty"`
 	Docs       string `json:"docs"`
+	Version    string `json:"version"`
 }
+
+// Set at build time with -ldflags "-X main.version=… -X main.built=…".
+var version, built = "dev", ""
 
 const meaning = "Los días (days, weekdays, next, next_cuts) son días CON corte de agua según el calendario del SIAPA, no días con agua. El SIAPA dice que no son cortes totales; vecinos reportan que el agua se va antes y tarda en volver. Agua GDL es un proyecto cívico sin afiliación oficial: confirma en la fuente del SIAPA."
 
@@ -73,7 +77,7 @@ func (a *api) clock() time.Time {
 }
 
 func (a *api) meta() meta {
-	m := meta{Unofficial: true, Meaning: meaning, Docs: "https://aguagdl.com/llms.txt"}
+	m := meta{Unofficial: true, Meaning: meaning, Docs: "https://aguagdl.com/llms.txt", Version: version}
 	if a.sched != nil {
 		m.Checked, m.Source = a.sched.Provenance()
 		if _, end := a.sched.Span(); !end.IsZero() {
@@ -168,6 +172,13 @@ func (a *api) mapInfo(name, municipio string) mapInfo {
 func (a *api) routes() http.Handler {
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /healthz", func(w http.ResponseWriter, _ *http.Request) { io.WriteString(w, "ok") })
+	mux.HandleFunc("GET /version", func(w http.ResponseWriter, _ *http.Request) {
+		v := map[string]string{"sha": version}
+		if built != "" {
+			v["built"] = built
+		}
+		writeJSON(w, v, "no-store")
+	})
 	mux.HandleFunc("GET /v1/zones", a.zonesList)
 	mux.HandleFunc("GET /v1/zone", a.zoneAt)
 	mux.HandleFunc("POST /v1/zone", a.zoneAt)

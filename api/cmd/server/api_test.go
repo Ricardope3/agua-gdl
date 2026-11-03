@@ -589,3 +589,16 @@ func TestColoniasCarryTheMapShares(t *testing.T) {
 		t.Errorf("Oblatos's list and map disagree: %+v", out.Colonias)
 	}
 }
+
+func TestVersionEndpointAndMeta(t *testing.T) {
+	version, built = "abc123", "2026-11-02T00:00:00Z"
+	defer func() { version, built = "dev", "" }()
+	rec := httptest.NewRecorder()
+	(&api{}).routes().ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/version", nil))
+	if rec.Code != 200 || !strings.Contains(rec.Body.String(), `"sha":"abc123"`) || !strings.Contains(rec.Body.String(), `"built":"2026-11-02T00:00:00Z"`) {
+		t.Fatalf("got %d %s", rec.Code, rec.Body)
+	}
+	if m := (&api{}).meta(); m.Version != "abc123" {
+		t.Fatalf("meta version %q", m.Version)
+	}
+}
