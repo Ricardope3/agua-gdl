@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Runs the checks CI runs. Usage: scripts/check.sh [--quick | --full]
 #   --quick  skip Go
-#   --full   go test -race with integration tests, against TEST_DATABASE_URL or a throwaway Postgres
+#   --full   go test -race with integration tests, against TEST_DATABASE_URL or a throwaway Postgres,
+#            and scripts/smoke.sh (headless Chrome; SKIPs when Chrome is missing)
 set -euo pipefail
 
 mode=default
@@ -86,6 +87,15 @@ for p in mapa_colonias promesas publicaciones zonas_json simple_page videos; do
   step "$p.py --check" python3 "pipelines/$p.py" --check
 done
 step "check_web.mjs" node scripts/check_web.mjs
+step "lint_copy.py" python3 scripts/lint_copy.py
+step "check_docs.py" python3 scripts/check_docs.py
+if [[ $mode == full ]]; then
+  if bash scripts/smoke.sh >"$tmp/smoke" 2>&1 || grep -q "^SKIP" "$tmp/smoke"; then
+    grep "^SKIP" "$tmp/smoke" || step "smoke.sh (headless Chrome)" true
+  else
+    step "smoke.sh (headless Chrome)" bash -c 'grep -v "^[^[:space:]]*\.png$" "$1"; exit 1' _ "$tmp/smoke"
+  fi
+fi
 
 echo "----"
 if ((${#failed[@]})); then
