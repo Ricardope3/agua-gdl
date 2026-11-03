@@ -9,6 +9,7 @@ import (
 	"log/slog"
 	"net/http"
 	"net/http/httptest"
+	"slices"
 	"strconv"
 	"strings"
 	"testing"
@@ -450,5 +451,140 @@ func TestReportsFromTheMap(t *testing.T) {
 	var s webreports.Summary
 	if rec.Code != http.StatusOK || json.Unmarshal(rec.Body.Bytes(), &s) != nil || s.Total != 3 || s.Colonias != 1 || rec.Header().Get("Cache-Control") != "public, max-age=30" {
 		t.Errorf("summary: %d %s", rec.Code, rec.Body)
+	}
+}
+
+func agentAPI(t *testing.T) *api {
+	t.Helper()
+	zones, err := geo.Load(data.Zonas)
+	if err != nil {
+		t.Fatal(err)
+	}
+	cols, err := colonias.Load(data.Colonias)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := cols.LoadOthers(data.OtrasColonias); err != nil {
+		t.Fatal(err)
+	}
+	sched := testSchedule(t)
+	now := func() time.Time { return time.Date(2026, 10, 20, 10, 0, 0, 0, sched.Location()) }
+	return &api{zones: zones, sched: sched, cols: cols, now: now}
+}
+
+func getJSON(t *testing.T, h http.Handler, method, path, body string, v any) {
+	t.Helper()
+	req := httptest.NewRequest(method, path, strings.NewReader(body))
+	rec := httptest.NewRecorder()
+	h.ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("%s %s: status %d, body %s", method, path, rec.Code, rec.Body.String())
+	}
+	if err := json.Unmarshal(rec.Body.Bytes(), v); err != nil {
+		t.Fatal(err)
+	}
+}
+
+type metaOut struct {
+	Checked, Source, ValidUntil, Meaning string
+	Unofficial                           bool
+}
+
+func (m metaOut) check(t *testing.T, where string) {
+	t.Helper()
+	if m.Checked != "2026-10-23" || !strings.Contains(m.Source, "siapa") || m.ValidUntil != "2027-03-31" || !m.Unofficial || !strings.Contains(m.Meaning, "CON corte") {
+		t.Errorf("%s: meta %+v", where, m)
+	}
+}
+
+func TestZonesSayTheDaysAreCuts(t *testing.T) {
+	h := agentAPI(t).routes()
+	var out struct {
+		Meta struct {
+			metaOut
+			ValidUntil string `json:"valid_until"`
+		}
+		Zones []struct {
+			Zone     int
+			Next     []string
+			NextCuts []string `json:"next_cuts"`
+		}
+	}
+	getJSON(t, h, http.MethodGet, "/v1/zones", "", &out)
+	out.Meta.metaOut.ValidUntil = out.Meta.ValidUntil
+	out.Meta.check(t, "/v1/zones")
+	if len(out.Zones) != 7 || out.Zones[0].Zone != 1 || len(out.Zones[0].NextCuts) != 6 || out.Zones[0].NextCuts[0] != "2026-10-23" || !slices.Equal(out.Zones[0].Next, out.Zones[0].NextCuts) {
+		t.Errorf("zones %+v", out.Zones)
+	}
+}
+
+func TestEmptyLookupsSayWhy(t *testing.T) {
+	h := agentAPI(t).routes()
+	type res struct {
+		Zones      []json.RawMessage
+		Status     string
+		StatusNote string `json:"status_note"`
+		Meta       struct {
+			metaOut
+			ValidUntil string `json:"valid_until"`
+		}
+	}
+	for _, tc := range []struct {
+		where, body, status string
+		zones               int
+	}{
+		{"Catedral", `{"lat":20.6767,"lon":-103.3475}`, "con_zona", 1},
+		{"Chapala", `{"lat":20.2950,"lon":-103.2560}`, "fuera_de_area", 0},
+		{"Basílica de Zapopan", `{"lat":20.7206,"lon":-103.3916}`, "sin_zona_en_siapa", 0},
+	} {
+		var out res
+		getJSON(t, h, http.MethodPost, "/v1/zone", tc.body, &out)
+		out.Meta.metaOut.ValidUntil = out.Meta.ValidUntil
+		out.Meta.check(t, tc.where)
+		if out.Status != tc.status || len(out.Zones) != tc.zones || (tc.zones == 0) == (out.StatusNote == "") {
+			t.Errorf("%s: %+v", tc.where, out)
+		}
+	}
+	for _, tc := range []struct{ q, status string }{
+		{"Americana", "en_lista_siapa"},
+		{"Zapopan Centro", "sin_zona_en_siapa"},
+		{"Tesistan", "sin_zona_en_siapa"},
+		{"qqqqzzzz", "sin_resultados"},
+	} {
+		var out res
+		getJSON(t, h, http.MethodPost, "/v1/colonias", `{"q":"`+tc.q+`"}`, &out)
+		out.Meta.metaOut.ValidUntil = out.Meta.ValidUntil
+		out.Meta.check(t, tc.q)
+		if out.Status != tc.status || (tc.status == "en_lista_siapa") != (out.StatusNote == "") {
+			t.Errorf("%s: status %q, note %q", tc.q, out.Status, out.StatusNote)
+		}
+	}
+}
+
+func TestColoniasCarryTheMapShares(t *testing.T) {
+	h := agentAPI(t).routes()
+	var out struct {
+		Colonias []struct {
+			Name     string
+			Zones    []int
+			MapZones []int `json:"map_zones"`
+			Map      []struct {
+				CP          string
+				Shares      map[string]int
+				ListDiffers bool `json:"list_differs"`
+			}
+		}
+	}
+	getJSON(t, h, http.MethodGet, "/v1/colonias?q=americana", "", &out)
+	if len(out.Colonias) != 1 {
+		t.Fatalf("%+v", out)
+	}
+	c := out.Colonias[0]
+	if !slices.Equal(c.Zones, []int{1, 5, 6}) || !slices.Equal(c.MapZones, []int{1, 5, 6}) || len(c.Map) != 1 || c.Map[0].Shares["1"] != 48 || c.Map[0].Shares["6"] != 20 || c.Map[0].ListDiffers {
+		t.Errorf("%+v", c)
+	}
+	getJSON(t, h, http.MethodGet, "/v1/colonias?q=oblatos", "", &out)
+	if len(out.Colonias) == 0 || len(out.Colonias[0].Map) == 0 || !out.Colonias[0].Map[0].ListDiffers {
+		t.Errorf("Oblatos's list and map disagree: %+v", out.Colonias)
 	}
 }

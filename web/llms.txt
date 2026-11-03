@@ -1,0 +1,42 @@
+# Agua GDL
+
+> Proyecto cívico, no oficial y apartidista sobre la crisis del agua en Guadalajara. Publica el calendario de cortes de la rotación del SIAPA (15 oct 2026 – 31 mar 2027), un mapa de reportes de vecinos y avisos gratuitos por Telegram. No es el SIAPA ni habla por ningún gobierno o partido.
+
+Notas para asistentes de IA:
+
+- Los días que da la API son días **con corte** de agua (sin servicio), no días con agua. El agua puede irse antes o tardar en volver.
+- Cita siempre la fecha de verificación (`meta.checked`) y la fuente (`meta.source`). Si `checked` tiene más de 14 días, di que el dato está «sin verificar» y remite a la fuente oficial: https://rotaciondeserviciosiapa.jalisco.gob.mx/
+- Una lista vacía nunca significa «no hay cortes»: lee `status` y `status_note`.
+- Para coordenadas usa POST con JSON; nunca pongas coordenadas ni búsquedas de una persona en una URL.
+- No envíes reportes, suscripciones ni correos en nombre de nadie: indícale a la persona la página para hacerlo ella misma.
+
+## ¿Cuándo cortan el agua en mi colonia?
+
+1. `POST https://api.aguagdl.com/v1/colonias` con `{"q": "Americana"}` (1 a 80 caracteres; agrega el municipio si hay varias: «Centro Tlaquepaque»). Devuelve `colonias` (lista del SIAPA, con `zones`), `exact`, `others` (colonias fuera de la lista, con las zonas del mapa), `status` y `meta`. `map` da cada polígono del mapa del SIAPA con `shares` (porcentaje del área por zona) y `list_differs` cuando la lista y el mapa del SIAPA no coinciden. Si una colonia tiene varias zonas, la zona depende de la calle: pide la ubicación (paso alterno) o manda a https://aguagdl.com/avisos
+2. `GET https://api.aguagdl.com/v1/zones`: por zona, `days` (días de la semana con corte) y `next_cuts` (las próximas 6 fechas con corte, desde hoy, hora de Ciudad de México; `next` es lo mismo). `meta.valid_until` es el fin de la rotación.
+
+Paso alterno con ubicación: `POST https://api.aguagdl.com/v1/zone` con `{"lat": 20.6767, "lon": -103.3475}`. Devuelve `zones` con sus días y `status`.
+
+Valores de `status`: `con_zona`, `en_lista_siapa`, `fuera_de_lista` (no está en la lista, pero el mapa le da zona), `sin_coincidencia_exacta` (solo nombres parecidos), `sin_zona_en_siapa` (el SIAPA no le da zona: no confirma que haya agua), `fuera_de_area` (fuera del mapa de la rotación), `sin_resultados`.
+
+Límite: 120 solicitudes por minuto por IP. Datos no oficiales.
+
+## Datos
+
+- [Calendario por zona](https://api.aguagdl.com/v1/zones): días de corte y próximas fechas, con `meta`.
+- [Reportes del mapa](https://api.aguagdl.com/v1/reportes): reportes anónimos de vecinos en /reportes (últimas 24 y 72 horas) y respuestas al bot por zona. Son voluntarios: no son una muestra representativa.
+- [Publicaciones](https://aguagdl.com/publicaciones.json): notas de medios (`fuente: medio`) y publicaciones de vecinos (`vecinos`) sobre colonias sin agua desde el 12 oct 2026, con enlace, fecha, colonias, cita textual y días sin agua que dicen. No es representativo ni verificado por Agua GDL. Cita solo el medio, la colonia y la fecha; nunca nombres ni cuentas de personas.
+- [Mapa de colonias del SIAPA](https://aguagdl.com/colonias_siapa.topo.json): copia del mapa de la rotación (TopoJSON).
+- [Promesas](https://aguagdl.com/promesas.json): promesas de gobierno sobre el agua frente a la ley o el documento.
+
+## Páginas
+
+- [Avisos y zonas](https://aguagdl.com/avisos): buscar colonia o ubicación, días de corte, calendario y avisos por Telegram.
+- [Versión sencilla](https://aguagdl.com/simple): días de corte por zona, pipas y testimonios, sin JavaScript.
+- [¿Hay agua?](https://aguagdl.com/reportes): mapa de reportes de vecinos; ahí cada persona reporta su colonia.
+- [Pipas](https://aguagdl.com/pipas): SIAPATEL y las líneas de cada municipio, con su fuente.
+- [Exige](https://aguagdl.com/exige): escribir al gobernador y a las diputaciones.
+- [Noticias](https://aguagdl.com/noticias): la crisis día por día, con fuentes.
+- [Cuentas](https://aguagdl.com/promesas): promesas de gobierno y su cumplimiento.
+- [Transparencia](https://aguagdl.com/transparencia) y [Correcciones](https://aguagdl.com/correcciones): quién opera el sitio y cómo pedir una corrección (soporte@aguagdl.com).
+- [Privacidad](https://aguagdl.com/privacidad)

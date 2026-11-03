@@ -12,6 +12,7 @@ import (
 	"net/http"
 	"net/netip"
 	"net/url"
+	"slices"
 	"strconv"
 	"strings"
 	"sync"
@@ -36,6 +37,10 @@ type api struct {
 	tgSecret    string            // empty = Telegram off
 	reports     *webreports.Board // the map on /reportes; nil = off
 	log         *slog.Logger
+	now         func() time.Time // nil = time.Now
+
+	mapOnce sync.Once
+	mapCols map[string][]geo.Colonia // by mapKey
 }
 
 type zoneInfo struct {
@@ -43,6 +48,121 @@ type zoneInfo struct {
 	Days     []string `json:"days"`
 	Weekdays []int    `json:"weekdays"`
 	Next     []string `json:"next"`
+	NextCuts []string `json:"next_cuts"` // the same dates as next, named for what they are
+}
+
+// meta tells readers, people and programs alike, what the numbers mean and how old they are.
+type meta struct {
+	Checked    string `json:"checked"`
+	Source     string `json:"source"`
+	ValidUntil string `json:"valid_until"`
+	Unofficial bool   `json:"unofficial"`
+	Meaning    string `json:"meaning"`
+	MapSource  string `json:"map_source,omitempty"`
+	MapFetched string `json:"map_fetched,omitempty"`
+	Docs       string `json:"docs"`
+}
+
+const meaning = "Los días (days, weekdays, next, next_cuts) son días CON corte de agua según el calendario del SIAPA, no días con agua. El agua puede irse antes o tardar en volver. Agua GDL es un proyecto cívico sin afiliación oficial: confirma en la fuente del SIAPA."
+
+func (a *api) clock() time.Time {
+	if a.now != nil {
+		return a.now()
+	}
+	return time.Now()
+}
+
+func (a *api) meta() meta {
+	m := meta{Unofficial: true, Meaning: meaning, Docs: "https://aguagdl.com/llms.txt"}
+	if a.sched != nil {
+		m.Checked, m.Source = a.sched.Provenance()
+		if _, end := a.sched.Span(); !end.IsZero() {
+			m.ValidUntil = end.Format(rotation.DateLayout)
+		}
+	}
+	if a.zones != nil {
+		m.MapSource, m.MapFetched = a.zones.Source()
+	}
+	return m
+}
+
+// Statuses say why a result is empty, so an empty list never reads as "no cuts".
+const (
+	statusZone      = "con_zona"
+	statusOffMap    = "fuera_de_area"
+	statusNoZone    = "sin_zona_en_siapa"
+	statusListed    = "en_lista_siapa"
+	statusOffList   = "fuera_de_lista"
+	statusSuggested = "sin_coincidencia_exacta"
+	statusNone      = "sin_resultados"
+)
+
+var statusNotes = map[string]string{
+	statusOffMap:    "El punto queda fuera del mapa de la rotación del SIAPA. Eso no confirma que haya agua ni que no haya cortes: revisa la fuente oficial.",
+	statusNoZone:    "El mapa del SIAPA no le da zona a esta colonia. Eso no confirma que tenga agua ni que esté fuera de la rotación: revisa la fuente oficial.",
+	statusOffList:   "No está en la lista de colonias del SIAPA; las zonas de others son las de su mapa, y el mapa y la lista no siempre coinciden.",
+	statusSuggested: "Ningún nombre coincide exactamente: colonias son nombres parecidos, no necesariamente la colonia buscada.",
+	statusNone:      "No encontramos esa colonia. Eso no significa que no haya cortes: prueba otro nombre o busca por ubicación (POST /v1/zone).",
+}
+
+// mapOutline is one outline of a colonia on SIAPA's map (a name can have several, by postal code).
+type mapOutline struct {
+	CP          string      `json:"cp"`
+	Zones       []int       `json:"zones"`
+	Shares      map[int]int `json:"shares,omitempty"`     // percent of its area per zone
+	ListZones   []int       `json:"list_zones,omitempty"` // what SIAPA's PDF list says, when it differs
+	ListDiffers bool        `json:"list_differs,omitempty"`
+}
+
+type mapInfo struct {
+	MapZones    []int        `json:"map_zones,omitempty"`
+	ListDiffers bool         `json:"list_differs,omitempty"`
+	Map         []mapOutline `json:"map,omitempty"`
+}
+
+type listColonia struct {
+	colonias.Colonia
+	mapInfo
+}
+
+type otherColonia struct {
+	colonias.Other
+	mapInfo
+}
+
+func mapKey(name, municipio string) string {
+	m, _ := strings.CutPrefix(colonias.Normalize(municipio), "SAN PEDRO ")
+	return colonias.Normalize(name) + "|" + m
+}
+
+func (a *api) mapInfo(name, municipio string) mapInfo {
+	var info mapInfo
+	if a.zones == nil {
+		return info
+	}
+	a.mapOnce.Do(func() {
+		a.mapCols = map[string][]geo.Colonia{}
+		for _, c := range a.zones.Colonias() {
+			for _, m := range strings.Split(c.Municipio, " y ") {
+				k := mapKey(c.Name, m)
+				a.mapCols[k] = append(a.mapCols[k], c)
+			}
+		}
+	})
+	for _, c := range a.mapCols[mapKey(name, municipio)] {
+		o := mapOutline{CP: c.CP, Zones: c.Zones, Shares: c.Shares, ListZones: c.List, ListDiffers: c.List != nil}
+		if o.Zones == nil {
+			o.Zones = []int{}
+		}
+		info.Map = append(info.Map, o)
+		info.ListDiffers = info.ListDiffers || o.ListDiffers
+		for _, z := range c.Zones {
+			if !slices.Contains(info.MapZones, z) {
+				info.MapZones = append(info.MapZones, z)
+			}
+		}
+	}
+	return info
 }
 
 func (a *api) routes() http.Handler {
@@ -189,14 +309,15 @@ func clientIP(r *http.Request) string {
 }
 
 func (a *api) info(zone int) zoneInfo {
-	z := zoneInfo{Zone: zone, Days: []string{}, Weekdays: []int{}, Next: []string{}}
+	z := zoneInfo{Zone: zone, Days: []string{}, Weekdays: []int{}, Next: []string{}, NextCuts: []string{}}
 	for _, d := range a.sched.Weekdays(zone) {
 		z.Days = append(z.Days, rotation.WeekdayES(d))
 		z.Weekdays = append(z.Weekdays, int(d))
 	}
-	for _, d := range a.sched.NextCuts(zone, time.Now(), 6) {
+	for _, d := range a.sched.NextCuts(zone, a.clock(), 6) {
 		z.Next = append(z.Next, d.Format(rotation.DateLayout))
 	}
+	z.NextCuts = z.Next
 	return z
 }
 
@@ -211,7 +332,7 @@ func (a *api) zonesList(w http.ResponseWriter, _ *http.Request) {
 	if !end.IsZero() {
 		endAt = end.Format(rotation.DateLayout)
 	}
-	writeJSON(w, map[string]any{"zones": out, "checked": checked, "source": source, "end": endAt}, publicFiveMinutes)
+	writeJSON(w, map[string]any{"zones": out, "checked": checked, "source": source, "end": endAt, "meta": a.meta()}, publicFiveMinutes)
 }
 
 func (a *api) zoneAt(w http.ResponseWriter, r *http.Request) {
@@ -236,11 +357,24 @@ func (a *api) zoneAt(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	out := []zoneInfo{}
-	for _, z := range a.zones.Lookup(lat, lon) {
+	ids, inColonia := a.zones.Where(lat, lon)
+	for _, z := range ids {
 		out = append(out, a.info(z))
 	}
+	status := statusZone
+	switch {
+	case len(out) > 0:
+	case inColonia:
+		status = statusNoZone
+	default:
+		status = statusOffMap
+	}
+	res := map[string]any{"zones": out, "status": status, "meta": a.meta()}
+	if note, ok := statusNotes[status]; ok {
+		res["status_note"] = note
+	}
 	// Coordinates and searches stay out of URLs, browser history, proxies and caches.
-	writeJSON(w, map[string]any{"zones": out}, "no-store")
+	writeJSON(w, res, "no-store")
 }
 
 func (a *api) coloniaSearch(w http.ResponseWriter, r *http.Request) {
@@ -261,14 +395,32 @@ func (a *api) coloniaSearch(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	matches, exact := a.cols.Search(q, 0)
-	if matches == nil {
-		matches = []colonias.Colonia{}
+	out := []listColonia{}
+	for _, c := range matches {
+		out = append(out, listColonia{c, a.mapInfo(c.Name, c.Municipio)})
 	}
-	res := map[string]any{"exact": exact, "colonias": matches}
+	res := map[string]any{"exact": exact, "colonias": out}
+	status := statusListed
 	if !exact {
-		if others := a.cols.Others(q); len(others) > 0 {
-			res["others"] = others
+		status = statusSuggested
+		if len(out) == 0 {
+			status = statusNone
 		}
+		if others := a.cols.Others(q); len(others) > 0 {
+			var outOthers []otherColonia
+			status = statusNoZone
+			for _, o := range others {
+				outOthers = append(outOthers, otherColonia{o, a.mapInfo(o.Name, o.Municipio)})
+				if len(o.Zones) > 0 {
+					status = statusOffList
+				}
+			}
+			res["others"] = outOthers
+		}
+	}
+	res["status"], res["meta"] = status, a.meta()
+	if note, ok := statusNotes[status]; ok {
+		res["status_note"] = note
 	}
 	writeJSON(w, res, cache)
 }

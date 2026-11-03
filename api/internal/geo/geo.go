@@ -16,6 +16,21 @@ import (
 type Zones struct {
 	colonias []shape
 	zones    []shape // one per zone; zones[i].zones holds its number
+	info     []Colonia
+	source   string
+	fetched  string
+}
+
+// Colonia is one outline of SIAPA's map: its zones (main first), its share of area per
+// zone in percent when it spans several, and the zones SIAPA's PDF list gives it when they
+// differ from the map's (nil when they agree).
+type Colonia struct {
+	Name      string
+	Municipio string
+	CP        string
+	Zones     []int
+	Shares    map[int]int
+	List      []int
 }
 
 type shape struct {
@@ -30,7 +45,12 @@ type geometry struct {
 	Type       string          `json:"type"`
 	Arcs       json.RawMessage `json:"arcs"`
 	Properties struct {
-		Z json.RawMessage `json:"z"` // "5,6" on a colonia ("" = outside the rotation), 5 on a zone
+		Z  json.RawMessage `json:"z"` // "5,6" on a colonia ("" = outside the rotation), 5 on a zone
+		N  string          `json:"n"`
+		M  string          `json:"m"`
+		CP string          `json:"cp"`
+		P  string          `json:"p"` // "1:48,5:32,6:20"
+		L  string          `json:"l"` // the list's zones, when they differ from z
 	} `json:"properties"`
 }
 
@@ -51,6 +71,10 @@ func Load(raw []byte) (*Zones, error) {
 				Geometries []geometry `json:"geometries"`
 			} `json:"zonas"`
 		} `json:"objects"`
+		Meta struct {
+			Source  string `json:"source"`
+			Fetched string `json:"fetched"`
+		} `json:"meta"`
 	}
 	if err := json.Unmarshal(raw, &topo); err != nil {
 		return nil, fmt.Errorf("geo: %w", err)
@@ -69,13 +93,18 @@ func Load(raw []byte) (*Zones, error) {
 			arcs[i][j] = point{x*sx + tx, y*sy + ty}
 		}
 	}
-	zs := &Zones{}
+	zs := &Zones{source: topo.Meta.Source, fetched: topo.Meta.Fetched}
 	for i, g := range topo.Objects.Colonias.Geometries {
 		s, err := newShape(g, arcs)
 		if err != nil {
 			return nil, fmt.Errorf("geo: colonia %d: %w", i, err)
 		}
 		zs.colonias = append(zs.colonias, s)
+		c, err := coloniaOf(g, s.zones)
+		if err != nil {
+			return nil, fmt.Errorf("geo: colonia %d: %w", i, err)
+		}
+		zs.info = append(zs.info, c)
 	}
 	for i, g := range topo.Objects.Zonas.Geometries {
 		s, err := newShape(g, arcs)
@@ -173,14 +202,51 @@ func zonesOf(raw json.RawMessage) ([]int, error) {
 	return zones, nil
 }
 
+func coloniaOf(g geometry, zones []int) (Colonia, error) {
+	p := g.Properties
+	c := Colonia{Name: p.N, Municipio: p.M, CP: p.CP, Zones: zones}
+	if p.P != "" {
+		c.Shares = map[int]int{}
+		for _, part := range strings.Split(p.P, ",") {
+			z, pct, ok := strings.Cut(part, ":")
+			zn, err1 := strconv.Atoi(strings.TrimSpace(z))
+			n, err2 := strconv.Atoi(strings.TrimSpace(pct))
+			if !ok || err1 != nil || err2 != nil {
+				return c, fmt.Errorf("shares %q", p.P)
+			}
+			c.Shares[zn] = n
+		}
+	}
+	if p.L != "" {
+		raw, _ := json.Marshal(p.L)
+		list, err := zonesOf(raw)
+		if err != nil {
+			return c, err
+		}
+		c.List = list
+	}
+	return c, nil
+}
+
+// Colonias lists the map's colonia outlines.
+func (zs *Zones) Colonias() []Colonia { return zs.info }
+
+// Source is where the map came from and the date it was fetched.
+func (zs *Zones) Source() (source, fetched string) { return zs.source, zs.fetched }
+
 // Lookup returns the zones at a point. Inside a colonia outline they are the zones SIAPA's
 // map gives that colonia, none when it leaves the colonia out of the rotation, and when it
 // gives several, only those whose zone polygon contains the point, if any does: SIAPA sets
 // each colonia's zones by hand, so they don't always follow its zone polygons. Outside every
 // outline they are the zones whose polygon contains the point.
 func (zs *Zones) Lookup(lat, lon float64) []int {
-	var ids []int
-	inColonia := false
+	ids, _ := zs.Where(lat, lon)
+	return ids
+}
+
+// Where is Lookup that also tells whether the point is inside a colonia outline, so an
+// empty answer can say whether SIAPA's map leaves the colonia out or the point is off the map.
+func (zs *Zones) Where(lat, lon float64) (ids []int, inColonia bool) {
 	for _, c := range zs.colonias {
 		if !c.contains(lon, lat) {
 			continue
@@ -208,7 +274,7 @@ func (zs *Zones) Lookup(lat, lon float64) []int {
 		}
 	}
 	slices.Sort(ids)
-	return slices.Compact(ids)
+	return slices.Compact(ids), inColonia
 }
 
 func (zs *Zones) inZone(zone int, x, y float64) bool {
