@@ -22,6 +22,8 @@ A wrong published claim is this project's most expensive failure. Also read `doc
 
 Field meanings, SIAPA's terms to quote as written, and word pairs agents got wrong: `docs/GLOSARIO.md`.
 
+Errors a fact-check found are listed in `KNOWN_ERRORS` (`pipelines/copy_rules.py`); `scripts/check_known_errors.py` (in `check.sh`) fails when one comes back in `web/`, `docs/`, `pipelines/` or the local `research/`, quotes included. When you find an error that could recur, add it there in the same commit as the fix.
+
 ## `publicaciones.json` (checked by `pipelines/publicaciones.py`)
 
 News and neighbours' posts since 12 Oct 2026 about colonias without water, each with its link, date, colonias (keys of `colonias_mapa.json`), its words as published (`cita`, checked against the post when added), the days without water it gives (`dias`, or null), `bloqueo` for street blockades, and its reactions, comments and shares with the date they were read (`eco`). Top level also carries `busquedas`, the sorted distinct ISO dates of the searches for posts (shown on /reportes as the last search). `--check` validates shape and these rules; it does not fetch sources or confirm quotes, so a pass is not verification.

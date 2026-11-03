@@ -88,6 +88,7 @@ for p in mapa_colonias promesas publicaciones zonas_json simple_page videos colo
 done
 step "check_web.mjs" node scripts/check_web.mjs
 step "lint_copy.py" python3 scripts/lint_copy.py
+step "check_known_errors.py" python3 scripts/check_known_errors.py
 step "check_docs.py" python3 scripts/check_docs.py
 if [[ $mode == full ]]; then
   if bash scripts/smoke.sh >"$tmp/smoke" 2>&1 || grep -q "^SKIP" "$tmp/smoke"; then

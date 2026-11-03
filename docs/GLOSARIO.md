@@ -35,3 +35,6 @@ What words mean here. Rules for each field are in `.claude/rules/evidence.md`; t
 | «20 o 25 años» (the APP term) | «25 años» | 69d703d |
 | «territorios palestinos ocupados» (Amnistía's scope) | «Cisjordania» | 69d703d |
 | figures credited to who gave them («según la oposición») | figures as fact | 69d703d |
+| CEA (UT-329): «fueron adaptadas medidas» | «adoptó», «adopted» | 3 Nov fact-check |
+| the rotation runs «hasta marzo de 2027» (31 Mar is our assumption) | «termina el 31 de marzo de 2027» | 3 Nov fact-check |
+| «racionamiento» beside «por máximo un día» | «corte» beside it | 3 Nov fact-check |
