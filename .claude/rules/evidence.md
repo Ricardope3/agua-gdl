@@ -20,6 +20,8 @@ paths:
 
 A wrong published claim is this project's most expensive failure. Also read `docs/EDITORIAL.md`. For checking sources, use the `verificador` subagent; for finding them, `buscador`.
 
+`scripts/stale_dates.py` lists the dated «al 19 de octubre», «revisado el…» and `veredicto_fecha`/`checked` claims over 10 days old (`check.sh` shows the count, never fails): recheck the fact, then move its date.
+
 Field meanings, SIAPA's terms to quote as written, and word pairs agents got wrong: `docs/GLOSARIO.md`.
 
 ## `publicaciones.json` (checked by `pipelines/publicaciones.py`)

@@ -88,6 +88,8 @@ for p in mapa_colonias promesas publicaciones zonas_json simple_page videos colo
 done
 step "check_web.mjs" node scripts/check_web.mjs
 step "lint_copy.py" python3 scripts/lint_copy.py
+note="$(python3 scripts/stale_dates.py --count) dated claims over 10 days old; list them with scripts/stale_dates.py"
+step "stale_dates.py" python3 scripts/stale_dates.py
 step "check_docs.py" python3 scripts/check_docs.py
 if [[ $mode == full ]]; then
   if bash scripts/smoke.sh >"$tmp/smoke" 2>&1 || grep -q "^SKIP" "$tmp/smoke"; then
