@@ -1,0 +1,9 @@
+# Vetoes: things Ricardo has rejected
+
+Read before proposing designs, copy or features. Add a line (dated, with what was rejected and why if he said) whenever he rejects something; keep this file under 30 lines and drop a line only when he reverses it.
+
+- 2026-10: «cortes del siapa» as a label — drop it.
+- 2026-10: auto-selecting a colonia (Ciudad Granja, Santa Cecilia) when the landing or /reportes opens.
+- 2026-10-28: auto-scrolling to the map on desktop. The landing still scrolls to the frame after 3 s (`.claude/rules/web.md`): unresolved whether he later changed his mind — ask before touching it.
+- Relying on bot answers or «regresó el agua» posts as proof that water is back.
+- Styles that drift from the shared look: keep pages standardized.

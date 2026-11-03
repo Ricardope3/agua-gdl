@@ -11,3 +11,4 @@ Update `~/agua-gdl-notes/STATE.md` so the next session can resume.
 3. What happened this session goes in `log/<yyyy>-<mm>.md` (append, dated), never in STATE.md.
 4. STATE.md stays under 6 KB; the notes repo's pre-commit hook rejects more. Over that, move detail to `topics/` or the log.
 5. Commit in the notes repo as soporte@aguagdl.com, without any AI attribution trailer. Render or republish the handoff artifact only if Ricardo asks.
+6. Run `scripts/live.sh` and tell Ricardo what is committed, pushed and live. Then suggest `/clear`: every turn re-reads the whole context, so a long session (past ~150 turns) costs more than resuming from STATE.md.
