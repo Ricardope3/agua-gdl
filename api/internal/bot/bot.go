@@ -229,7 +229,8 @@ func (b *Bot) onText(ctx context.Context, r User, body string) error {
 		return b.text(ctx, r, msgHelp(b.BaseURL, r.Channel))
 	}
 	matches, exact := b.Colonias.Search(body, 10)
-	if others := b.Colonias.Others(body); !exact && len(others) > 0 {
+	// Even an exact match asks: a colonia of the same name elsewhere can be in another zone.
+	if others := b.Colonias.Others(body); len(others) > 0 {
 		return b.otherColonias(ctx, r, others, matches)
 	}
 	switch {

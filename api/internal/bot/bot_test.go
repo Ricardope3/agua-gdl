@@ -442,6 +442,23 @@ func TestColoniaOffTheList(t *testing.T) {
 	}
 }
 
+func TestColoniaWithATwinOffTheListAsks(t *testing.T) {
+	h := newHarness(t, "2026-10-14 10:00")
+	got := h.send(t, text("Lázaro Cárdenas"))
+	if !strings.Contains(got, "*LAZARO CARDENAS* (Tlaquepaque) no está en la lista") || !strings.Contains(got, msgOrThisOne) {
+		t.Errorf("Guadalajara's zone 6 colonia has a namesake in Tlaquepaque's zone 3, so it must ask, got:\n%s", got)
+	}
+	if len(h.store.Subs) != 0 {
+		t.Fatalf("must not subscribe before the person picks: %+v", h.store.Subs)
+	}
+	if got := h.send(t, text("Lázaro Cárdenas Guadalajara")); !strings.Contains(got, "¡Listo!") {
+		t.Errorf("naming the municipio subscribes directly, got:\n%s", got)
+	}
+	if s, ok := h.store.Subs["MX.42"]; !ok || s.Zone != 6 {
+		t.Errorf("want zone 6: %+v", h.store.Subs)
+	}
+}
+
 func TestNeverSubscribesToAZoneWithoutDays(t *testing.T) {
 	h := newHarness(t, "2026-10-14 10:00")
 	loc, _ := time.LoadLocation("America/Mexico_City")
