@@ -6,7 +6,7 @@ What words mean here. Rules for each field are in `.claude/rules/evidence.md`; t
 
 - `fuente`: `medio` (news outlet, counts without a threshold) or `vecinos` (neighbours' post, needs `regla`).
 - `quien`: who published it: the outlet, «Grupo «…»» or «Cuenta de vecinos …». Never a private person's name.
-- `dias`: days without water the source itself gives; `null` when it gives none. Not our estimate.
+- `dias`: days without water the source itself gives; `null` when it gives none. Not our estimate. «Un mes» and «más de un mes» are 30; a range («entre 22 días y un mes») takes its low end; «meses», «dos meses» and «un año» stay `null` (the field stops at 120).
 - `regreso`: ISO date the source says the water came back. The source's claim, not a confirmation.
 - `parcial`: the source reports low or intermittent supply, not none.
 - `calidad`: the complaint is about water quality only, not about missing water.

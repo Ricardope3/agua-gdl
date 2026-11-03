@@ -20,6 +20,8 @@ paths:
 
 A wrong published claim is this project's most expensive failure. Also read `docs/EDITORIAL.md`. For checking sources, use the `verificador` subagent; for finding them, `buscador`.
 
+`scripts/stale_dates.py` lists the dated «al 19 de octubre», «revisado el…» and `veredicto_fecha`/`checked` claims over 10 days old (`check.sh` shows the count, never fails): recheck the fact, then move its date.
+
 Field meanings, SIAPA's terms to quote as written, and word pairs agents got wrong: `docs/GLOSARIO.md`.
 
 Errors a fact-check found are listed in `KNOWN_ERRORS` (`pipelines/copy_rules.py`); `scripts/check_known_errors.py` (in `check.sh`) fails when one comes back in `web/`, `docs/`, `pipelines/` or the local `research/`, quotes included. When you find an error that could recur, add it there in the same commit as the fix.
