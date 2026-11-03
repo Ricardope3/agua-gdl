@@ -492,7 +492,8 @@ type metaOut struct {
 
 func (m metaOut) check(t *testing.T, where string) {
 	t.Helper()
-	if m.Checked != "2026-10-23" || !strings.Contains(m.Source, "siapa") || m.ValidUntil != "2027-03-31" || !m.Unofficial || !strings.Contains(m.Meaning, "CON corte") {
+	checked, source := testSchedule(t).Provenance()
+	if m.Checked == "" || m.Checked != checked || m.Source != source || m.ValidUntil != "2027-03-31" || !m.Unofficial || !strings.Contains(m.Meaning, "CON corte") {
 		t.Errorf("%s: meta %+v", where, m)
 	}
 }

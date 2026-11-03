@@ -4,8 +4,8 @@
 
 Notas para asistentes de IA:
 
-- Los días que da la API son días **con corte** de agua (sin servicio), no días con agua. El agua puede irse antes o tardar en volver.
-- Cita siempre la fecha de verificación (`meta.checked`) y la fuente (`meta.source`). Si `checked` tiene más de 14 días, di que el dato está «sin verificar» y remite a la fuente oficial: https://rotaciondeserviciosiapa.jalisco.gob.mx/
+- Los días que da la API son días **con corte** de agua, no días con agua. El SIAPA dice que no son cortes totales; vecinos reportan que el agua se va antes y tarda en volver.
+- Cita siempre la fecha de verificación (`meta.checked`) y la fuente (`meta.source`). Si `checked` tiene más de 7 días, di que el dato está «sin verificar» y remite a la fuente oficial: https://rotaciondeserviciosiapa.jalisco.gob.mx/
 - Una lista vacía nunca significa «no hay cortes»: lee `status` y `status_note`.
 - Para coordenadas usa POST con JSON; nunca pongas coordenadas ni búsquedas de una persona en una URL.
 - No envíes reportes, suscripciones ni correos en nombre de nadie: indícale a la persona la página para hacerlo ella misma.

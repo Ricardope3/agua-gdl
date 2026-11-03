@@ -63,7 +63,7 @@ type meta struct {
 	Docs       string `json:"docs"`
 }
 
-const meaning = "Los días (days, weekdays, next, next_cuts) son días CON corte de agua según el calendario del SIAPA, no días con agua. El agua puede irse antes o tardar en volver. Agua GDL es un proyecto cívico sin afiliación oficial: confirma en la fuente del SIAPA."
+const meaning = "Los días (days, weekdays, next, next_cuts) son días CON corte de agua según el calendario del SIAPA, no días con agua. El SIAPA dice que no son cortes totales; vecinos reportan que el agua se va antes y tarda en volver. Agua GDL es un proyecto cívico sin afiliación oficial: confirma en la fuente del SIAPA."
 
 func (a *api) clock() time.Time {
 	if a.now != nil {
@@ -100,8 +100,8 @@ const (
 var statusNotes = map[string]string{
 	statusOffMap:    "El punto queda fuera del mapa de la rotación del SIAPA. Eso no confirma que haya agua ni que no haya cortes: revisa la fuente oficial.",
 	statusNoZone:    "El mapa del SIAPA no le da zona a esta colonia. Eso no confirma que tenga agua ni que esté fuera de la rotación: revisa la fuente oficial.",
-	statusOffList:   "No está en la lista de colonias del SIAPA; las zonas de others son las de su mapa, y el mapa y la lista no siempre coinciden.",
-	statusSuggested: "Ningún nombre coincide exactamente: colonias son nombres parecidos, no necesariamente la colonia buscada.",
+	statusOffList:   "No está en la lista de colonias del SIAPA; las zonas en «others» son las que le da el mapa del SIAPA, y el mapa y la lista no siempre coinciden.",
+	statusSuggested: "Ningún nombre coincide exactamente: «colonias» trae nombres parecidos, que pueden no ser la colonia buscada.",
 	statusNone:      "No encontramos esa colonia. Eso no significa que no haya cortes: prueba otro nombre o busca por ubicación (POST /v1/zone).",
 }
 
