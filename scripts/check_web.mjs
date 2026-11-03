@@ -15,8 +15,10 @@ const fail = (file, msg) => problems.push(`${file}: ${msg}`);
 
 let files;
 try {
-  files = execFileSync("git", ["ls-files", "web"], { cwd: repo, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] })
-    .split("\n").filter(Boolean).map((f) => f.slice(4));
+  // -z keeps non-ASCII names unquoted; --others adds new files not yet staged.
+  files = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", "web"], { cwd: repo, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] })
+    .split("\0").filter(Boolean).map((f) => f.slice(4));
+  files = [...new Set(files)];
 } catch {
   const walk = (d) => readdirSync(d).flatMap((n) => (statSync(join(d, n)).isDirectory() ? walk(join(d, n)) : [join(d, n)]));
   files = walk(web).map((f) => relative(web, f));

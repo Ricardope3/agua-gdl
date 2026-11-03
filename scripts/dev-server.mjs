@@ -26,14 +26,14 @@ for (const line of lines("_headers")) {
 const local = (v) => v.replace(/connect-src ([^;]*)/, "connect-src $1 http://localhost:* http://127.0.0.1:*");
 
 http.createServer((req, res) => {
-  let pathname;
-  try { pathname = decodeURIComponent(new URL(req.url, "http://localhost").pathname); }
+  let pathname, search;
+  try { ({ pathname, search } = new URL(req.url, "http://localhost")); pathname = decodeURIComponent(pathname); }
   catch { res.writeHead(400).end("Bad request"); return; }
   const extra = {};
   for (const h of headers) if (h.path.test(pathname)) for (const [k, v] of h.set) extra[k] = /^content-security-policy$/i.test(k) ? local(v) : v;
   delete extra["Strict-Transport-Security"];
   const r = redirects.find((r) => r.from.test(pathname));
-  if (r && r.status !== 200) { res.writeHead(r.status, { Location: r.to }).end(); return; }
+  if (r && r.status !== 200) { res.writeHead(r.status, { Location: r.to.includes("?") ? r.to : r.to + search }).end(); return; }
   if (r) pathname = r.to;
   let file = resolve(root, `.${pathname}`);
   if (file !== root && !file.startsWith(root + sep)) { res.writeHead(403).end("Forbidden"); return; }

@@ -34,7 +34,7 @@ step() {
   else
     failed+=("$name")
     printf 'FAIL  %-34s %3ss%s\n' "$name" $((SECONDS - t)) "${note:+  ($note)}"
-    tail -n 40 "$tmp/out" | sed 's/^/      /'
+    tail -n 300 "$tmp/out" | sed 's/^/      /'
   fi
   note=
 }
@@ -45,7 +45,10 @@ gotest() {
   local skips; skips=$(grep -c -- '--- SKIP' "$tmp/go" || true)
   note="$skips skipped"
   [[ -z "${TEST_DATABASE_URL:-}" ]] && note="$skips skipped: TEST_DATABASE_URL unset, integration tests did not run; use --full"
-  grep -E -- '^(--- FAIL|FAIL|panic|.*_test\.go:[0-9]+:)' "$tmp/go" | head -n 60 || true
+  if ((rc)); then
+    # Everything but the passing-test chatter, so race reports and panics reach the CI log.
+    grep -vE -- '^(=== (RUN|PAUSE|CONT|NAME)|[[:space:]]*--- (PASS|SKIP)|PASS$|ok[[:space:]])' "$tmp/go" | head -n 300 || true
+  fi
   return $rc
 }
 

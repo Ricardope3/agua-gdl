@@ -1,12 +1,15 @@
 #!/bin/sh
 # Commits here carry no AI attribution, and subjects stay within 72 characters (AGENTS.md).
-msg="$1"
-if grep -qiE '^co-authored-by:|anthropic|generated with \[?claude' "$msg"; then
-  echo "commit-msg: remove the Co-Authored-By/Anthropic attribution; this repo's commits carry none." >&2
+# Only the message counts: comments and the diff `git commit -v` appends are dropped.
+msg=$(sed -e '/^# -* >8 -*$/,$d' -e '/^#/d' "$1")
+if printf '%s\n' "$msg" | grep -qiE '^co-authored-by:.*(claude|anthropic|openai|copilot|gpt)|noreply@anthropic\.com|generated with \[?claude'; then
+  echo "commit-msg: remove the AI attribution trailer; this repo's commits carry none." >&2
   exit 1
 fi
-subject=$(grep -v '^#' "$msg" | head -n 1)
-if [ "${#subject}" -gt 72 ]; then
-  echo "commit-msg: subject is ${#subject} characters; keep it within 72 and put details in the body." >&2
+subject=$(printf '%s\n' "$msg" | sed -n '/[^[:space:]]/{p;q;}')
+# Characters, not bytes: UTF-8 continuation bytes are dropped before counting.
+len=$(printf '%s' "$subject" | LC_ALL=C tr -d '\200-\277' | wc -c | tr -d ' ')
+if [ "$len" -gt 72 ]; then
+  echo "commit-msg: subject is $len characters; keep it within 72 and put details in the body." >&2
   exit 1
 fi

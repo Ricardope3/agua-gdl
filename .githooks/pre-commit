@@ -1,11 +1,14 @@
 #!/bin/sh
 # Author identity and private folders (AGENTS.md, Rules).
-email=$(git config user.email)
-if [ "$email" != "soporte@aguagdl.com" ]; then
-  echo "pre-commit: commit as soporte@aguagdl.com, not $email (git config user.email soporte@aguagdl.com)." >&2
-  exit 1
-fi
-private=$(git diff --cached --name-only --diff-filter=AM | grep -E '^(research|\.agua-social)/')
+# git var honours --author and GIT_AUTHOR_EMAIL/GIT_COMMITTER_EMAIL, not just user.email.
+for who in AUTHOR COMMITTER; do
+  email=$(git var "GIT_${who}_IDENT" | sed 's/.*<\(.*\)>.*/\1/')
+  if [ "$email" != "soporte@aguagdl.com" ]; then
+    echo "pre-commit: commit as soporte@aguagdl.com, not $email (git config user.email soporte@aguagdl.com)." >&2
+    exit 1
+  fi
+done
+private=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '^(research|\.agua-social)/')
 if [ -n "$private" ]; then
   echo "pre-commit: research/ and .agua-social/ stay out of this public repo:" >&2
   echo "$private" >&2
