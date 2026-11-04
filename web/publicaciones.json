@@ -32889,6 +32889,106 @@
    "lugar": "Real Vallarta",
    "cita": "Mentira, no ha caído agua en Real Vallarta desde hace 7 días, incluyendo hoy. Su calendario es pura simulación y engaño, por lo menos en la zona 6. Las autoridades se burlan de los ciudadanos.",
    "dias": 7
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid0vNSeEi9tfNf5PVXJjAyGQiEzfpu6oYVyAk9UwsYEeRGUoSsidjpGk6HV84LidNSUl",
+    "eco": {
+     "reacciones": 20,
+     "comentarios": 14,
+     "al": "2026-11-04"
+    }
+   },
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid0vNSeEi9tfNf5PVXJjAyGQiEzfpu6oYVyAk9UwsYEeRGUoSsidjpGk6HV84LidNSUl?comment_id=2249085612322203",
+   "eco": null,
+   "fecha": "2026-11-04",
+   "colonias": [
+    "FRANCISCO VILLA|Guadalajara|44970"
+   ],
+   "lugar": "Colonia Francisco Villa, zona 5 (texto de una imagen en el comentario)",
+   "cita": "¡AYUDA! La Zona Cinco, Colonia Francisco Villa, no tenemos agua desde el sábado 10 de octubre.",
+   "desde": "2026-10-10",
+   "dias": 25
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid0i28jreVDKorygVCL7EuqsonFWUupRk5PcYRuyFjeTNpM7tQonk85bK6dX3XGA7dql",
+    "eco": {
+     "reacciones": 112,
+     "comentarios": 98,
+     "compartidos": 12,
+     "al": "2026-11-04"
+    }
+   },
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid0i28jreVDKorygVCL7EuqsonFWUupRk5PcYRuyFjeTNpM7tQonk85bK6dX3XGA7dql?comment_id=1153545657022162",
+   "eco": null,
+   "fecha": "2026-11-04",
+   "colonias": [
+    "RANCHO DE LA CRUZ|Tonalá|45410"
+   ],
+   "lugar": "Col. Rancho la Cruz, Tonalá (texto de una imagen en el comentario)",
+   "cita": "Tonalá Col. Rancho la Cruz NO estamos en el tandeo y ya tenemos al menos 13 días sin agua",
+   "dias": 13
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid0i28jreVDKorygVCL7EuqsonFWUupRk5PcYRuyFjeTNpM7tQonk85bK6dX3XGA7dql",
+    "eco": {
+     "reacciones": 112,
+     "comentarios": 98,
+     "compartidos": 12,
+     "al": "2026-11-04"
+    }
+   },
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid0i28jreVDKorygVCL7EuqsonFWUupRk5PcYRuyFjeTNpM7tQonk85bK6dX3XGA7dql?comment_id=1130616459552773",
+   "eco": null,
+   "fecha": "2026-11-04",
+   "colonias": [
+    "ARTESANOS|San Pedro Tlaquepaque|45598"
+   ],
+   "lugar": "Artesanos, Tlaquepaque (colonia en la captura del buscador de SIAPA adjunta)",
+   "cita": "En mi colonia dice sin afectación, y tenemos dos semanas sin agua",
+   "dias": 14
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid0FeKS6SX8tHQv6ovoyoVqFSeNsaimNxyaVmtjKetZD4KQAX8UQezgJXFecXyt35Vbl",
+    "eco": {
+     "reacciones": 94,
+     "comentarios": 92,
+     "compartidos": 7,
+     "al": "2026-11-04"
+    }
+   },
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid0FeKS6SX8tHQv6ovoyoVqFSeNsaimNxyaVmtjKetZD4KQAX8UQezgJXFecXyt35Vbl?comment_id=28730302226665356",
+   "eco": null,
+   "fecha": "2026-11-04",
+   "colonias": [
+    "LOMAS DEL PARADERO|Guadalajara|44840"
+   ],
+   "lugar": "Colonia Lomas del Paradero, zona 3 (nombrada en la imagen del comentario)",
+   "cita": "Desde ayer no tenemos agua! Aumentaron días sin agua sin previo aviso. Es una situación desesperante! Imagen: «COLONIA LOMAS DEL PARADERO SIN AGUA - ZONA 3, GUADALAJARA»",
+   "dias": 1
   }
  ]
 }
