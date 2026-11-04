@@ -310,8 +310,8 @@ window.aguaMapa = (() => {
 
   // pinch makes a trackpad pinch (ctrl + wheel in Chrome, Edge and Firefox) follow the fingers, as Leaflet's
   // own touch pinch does: Leaflet's wheel handler drops each step that arrives while a zoom animates, so a
-  // pinch crawled. Mid-gesture the map only moves (cheap CSS transforms); at the end it snaps with one
-  // animation and redraws. Uses Leaflet 1.9.4 internals, pinned in vendor/.
+  // pinch crawled. Mid-gesture the map only moves (cheap CSS transforms); 200 ms after the last step it
+  // settles where it is, unsnapped, and redraws. Uses Leaflet 1.9.4 internals, pinned in vendor/.
   function pinch(map) {
     const box = map.getContainer();
     let start = null, zoom = 0, center = null, end = 0, frame = 0;
@@ -319,13 +319,15 @@ window.aguaMapa = (() => {
       if (!start) return;
       cancelAnimationFrame(frame);
       start = null;
-      map._animateZoom(center, map._limitZoom(zoom), true, map.options.zoomSnap);
+      // No snapping to zoomSnap: the map stays at the zoom the fingers left it at, instead of jumping.
+      map._animateZoom(center, zoom, true, true);
     };
     box.addEventListener("wheel", (e) => {
       if (!e.ctrlKey) return;
       e.preventDefault();
       e.stopImmediatePropagation();
-      if (map._animatingZoom) return;
+      // A pinch that resumes while the last one settles ends that animation instead of being dropped.
+      if (map._animatingZoom) map._onZoomTransitionEnd();
       const at = map.mouseEventToContainerPoint(e);
       if (!start) {
         map._stop();
@@ -339,7 +341,7 @@ window.aguaMapa = (() => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => map._move(center, zoom, { pinch: true, round: false }));
       clearTimeout(end);
-      end = setTimeout(finish, 120);
+      end = setTimeout(finish, 200);
     }, { capture: true, passive: false });
   }
 
