@@ -357,6 +357,7 @@ window.aguaMapa = (() => {
       iconSize: small ? [12, 15] : [22, 28],
       iconAnchor: small ? [6, 14] : [11, 26],
       popupAnchor: small ? [0, -12] : [0, -22],
+      tooltipAnchor: small ? [0, -14] : [0, -26],
       html: `<svg viewBox="0 0 22 28" width="${small ? 12 : 22}" height="${small ? 15 : 28}" aria-hidden="true"><path d="M11 2C11 2 3 11.5 3 17a8 8 0 0 0 16 0C19 11.5 11 2 11 2z" fill="${solid ? "#0284c7" : "#ffffff"}" stroke="${solid ? "#ffffff" : "#0284c7"}" stroke-width="2.2"${solid ? "" : ' stroke-dasharray="3 2"'}/></svg>`,
     });
     const layer = L.layerGroup();
@@ -371,14 +372,29 @@ window.aguaMapa = (() => {
     fetch("/cisternas.json").then((r) => r.ok ? r.json() : Promise.reject(r.status)).then((d) => {
       const src = (k) => { const f = d.fuentes[k]; return `<a href="${f.url}" target="_blank" rel="noopener">${esc(f.titulo)}</a>` + (f.mapa ? ` · <a href="${f.mapa}" target="_blank" rel="noopener">mapa oficial</a>` : ""); };
       const foot = '<br><a href="/pipas" target="_top">Cómo pedir una pipa</a>';
+      // On hover (pointer devices only) the same information, without links, in the pages' map-label card;
+      // the native title is gone, since it showed late and in the system's style.
+      const hover = matchMedia("(hover: hover)").matches;
+      const tip = (m, head, lines) => {
+        if (!hover) return m;
+        m.bindTooltip(`${head}${lines.map((x) => `<span class="sub">${x}</span>`).join("")}`, { direction: "top", className: "map-label gota" });
+        m.on("popupopen", () => m.closeTooltip());
+        m.on("tooltipopen", () => { if (m.isPopupOpen()) m.closeTooltip(); });
+        return m;
+      };
+      const srcText = (k) => esc(d.fuentes[k].titulo);
       wasSmall = small();
       for (const x of d.puntos) {
-        L.marker([x.lat, x.lon], { pane: "cisternas", icon: drop(true, small()), solid: true, keyboard: false, title: "Punto de agua" })
+        tip(L.marker([x.lat, x.lon], { pane: "cisternas", icon: drop(true, small()), solid: true, keyboard: false }),
+          x.capa === "SIAPA" ? "Punto de agua (capa «SIAPA» del mapa)" : "Cisterna comunitaria",
+          [`${esc(x.lugar || "Sin dirección publicada")}, ${esc(x.municipio)}`, `Fuente: ${srcText(x.fuente)}`])
           .bindPopup(`<b>${x.capa === "SIAPA" ? "Punto de agua (capa «SIAPA» del mapa)" : "Cisterna comunitaria"}</b><br>${esc(x.lugar || "Sin dirección publicada")}, ${esc(x.municipio)}<br>Fuente: ${src(x.fuente)}${foot}`)
           .addTo(layer);
       }
       for (const x of d.colonias) {
-        L.marker(x.centro, { pane: "cisternas", icon: drop(false, small()), solid: false, keyboard: false, title: "Cisterna en la colonia" })
+        tip(L.marker(x.centro, { pane: "cisternas", icon: drop(false, small()), solid: false, keyboard: false }),
+          `Cisterna comunitaria en ${esc(x.nombre)}, ${esc(x.municipio)}`,
+          [`${x.lugar ? esc(x.lugar) + ". " : ""}Ubicación aproximada: centro de la colonia.`, `Fuente: ${srcText(x.fuente)}`])
           .bindPopup(`<b>Cisterna comunitaria en ${esc(x.nombre)}, ${esc(x.municipio)}</b><br>${x.lugar ? esc(x.lugar) + ". " : ""}Ubicación aproximada: centro de la colonia.<br>Fuente: ${src(x.fuente)}${foot}`)
           .addTo(layer);
       }
