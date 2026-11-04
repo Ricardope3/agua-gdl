@@ -497,6 +497,7 @@ html.en-portada { overflow: hidden }
 .overview .munis li b { order: 3; font-size: .82rem }
 .overview .munis .bar { order: 4; height: 3px }
 .overview .munis p { display: none }
+.munis-nota { display: block; margin-top: 4px; font-size: .7rem; color: var(--muted) }
 .overview:has(#ov-dia:not([hidden])) { max-height: calc(100% - 110px) }
 @media (max-width: 1100px) { .overview .munis { display: block } .overview .munis[hidden] { display: none } }
 @media (max-width: 760px) { .overview .munis { display: none } }
@@ -1096,6 +1097,7 @@ if (window.top !== window.self) {
           <details class="munis" id="municipios" open hidden>
             <summary>Por municipio · % de colonias</summary>
             <ol id="munis-lista"></ol>
+            <small class="munis-nota">Un municipio sin publicaciones no aparece; eso no quiere decir que tenga agua.</small>
             <p>De las colonias que la rotación del SIAPA cubre (las con zona asignada), las que tienen publicaciones de medios o vecinos que dicen que no tenían agua, <span id="munis-al">hasta hoy</span>. Las colonias fuera de la rotación no se cuentan aquí.</p>
           </details>
           <div id="top-box" hidden><p class="lv-h" id="top-h">Las que tienen más reportes</p><ol class="lv-top" id="top-reportes"></ol></div>
@@ -1405,12 +1407,15 @@ if (window.top !== window.self) {
   // smooth(box, change): change the box's content, then animate its size from before to after.
   const smooth = (box, change) => {
     const a = box.getBoundingClientRect();
+    box._anim?.cancel();
     change();
     const b = box.getBoundingClientRect();
+    box.style.overflow = "";
     if (reduced || !box.animate || (a.width === b.width && a.height === b.height)) return;
     box.style.overflow = "hidden";
-    box.animate([{ width: `${a.width}px`, height: `${a.height}px` }, { width: `${b.width}px`, height: `${b.height}px` }],
-      { duration: 380, easing: "cubic-bezier(.3, .7, .3, 1)" }).finished.finally(() => { box.style.overflow = ""; });
+    const anim = box._anim = box.animate([{ width: `${a.width}px`, height: `${a.height}px` }, { width: `${b.width}px`, height: `${b.height}px` }],
+      { duration: 380, easing: "cubic-bezier(.3, .7, .3, 1)" });
+    anim.finished.then(() => { if (box._anim === anim) { box.style.overflow = ""; box._anim = null; } }, () => {});
   };
   keyBtn.addEventListener("click", () => smooth(key, () => keyBtn.setAttribute("aria-expanded", String(key.classList.toggle("abierto")))));
   // Desktop: 4 s of moving or zooming the map by hand (pauses under 1.5 s count as one gesture) fold the
@@ -1418,18 +1423,20 @@ if (window.top !== window.self) {
   const tlBox = $("linea");
   let handSince = 0, handLast = 0;
   const byHand = (e) => {
-    if (phone() || !map.getContainer().contains(e.target)) return;
+    if (framed || phone() || !map.getContainer().contains(e.target)) return;
     if (stage.classList.contains("key-mini") && tlBox.classList.contains("mini")) return;
     const now = Date.now();
     if (now - handLast > 1500) handSince = now;
     handLast = now;
     if (now - handSince < 4000) return;
     smooth(key, () => { stage.classList.add("key-mini"); key.classList.remove("abierto"); keyBtn.setAttribute("aria-expanded", "false"); });
-    smooth(tlBox, () => { tlBox.classList.add("mini"); tlBox.title = "Ver la gráfica"; });
+    smooth(tlBox, () => { tlBox.classList.add("mini"); tlBox.title = "Ver la gráfica"; tlBox.tabIndex = 0; });
   };
   stage.addEventListener("wheel", byHand, { capture: true, passive: true });
   stage.addEventListener("pointermove", (e) => { if (e.buttons) byHand(e); }, { capture: true, passive: true });
-  tlBox.addEventListener("click", () => { if (tlBox.classList.contains("mini")) smooth(tlBox, () => { tlBox.classList.remove("mini"); tlBox.removeAttribute("title"); }); });
+  const unfold = () => smooth(tlBox, () => { tlBox.classList.remove("mini"); tlBox.removeAttribute("title"); tlBox.removeAttribute("tabindex"); });
+  tlBox.addEventListener("click", (e) => { if (tlBox.classList.contains("mini") && !e.target.closest("#tl-play")) unfold(); });
+  tlBox.addEventListener("keydown", (e) => { if (e.target === tlBox && tlBox.classList.contains("mini") && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); unfold(); } });
   /* == SECTION: overview toggle and report history == */
   const setOverview = (open) => {
     ov.classList.toggle("closed", !open);
@@ -1697,7 +1704,7 @@ if (window.top !== window.self) {
           icon: L.divIcon({ ...(drop ? { iconAnchor: [size + dbox.half + 4, size / 2 + dbox.mid] } : {}), className: `sev${far ? " far" : ""}${s ? "" : " nodays"} ${stateMap(e)}${pop}`, html: `<span style="${sevVars(s)};font-size:${Math.max(far ? 9 : 10, Math.round(size * (n.length > 2 ? 0.3 : 0.42)))}px">${n}</span>`, iconSize: [size, size] }),
           keyboard: false, zIndexOffset: 2000 - Math.min(total, 999),
         });
-        if (!phone()) m.bindTooltip(() => tipOf(fs[0]), { className: "map-label", direction: "top", offset: drop ? [-(size / 2 + dbox.half + 4), -(size + dbox.mid)] : [0, -size / 2] });
+        if (!phone()) m.bindTooltip(() => tipOf(fs[0]), { className: "map-label", direction: "top", offset: drop ? [-(size / 2 + dbox.half + 4), -(size / 2 + dbox.mid)] : [0, -size / 2] });
         m.on("click", () => select(fs[0]));
         markers.addLayer(m);
       }
@@ -1982,8 +1989,7 @@ if (window.top !== window.self) {
     mcard.hidden = true;
     stage.append(mcard);
     function unpin() {
-      if (!pinned) return;
-      pinned.node.setAttribute("aria-pressed", "false");
+      if (pinned) pinned.node.setAttribute("aria-pressed", "false");
       pinned = null;
       mcard.hidden = true;
       outline([]);
@@ -2009,14 +2015,14 @@ if (window.top !== window.self) {
           days.get(z) ? el("span", {}, `Corte: ${days.get(z).map((d) => DIA[d] || d).join(" · ")}`) : null,
           el("span", {}, `${plural(total, "colonia", "colonias")} de ${muniES(m)} · ${fmt(pub)} con publicaciones`),
           el("a", { href: `/avisos?zona=${z}`, ...(framed ? { target: "_top" } : {}) }, "Ver la zona en Avisos")))),
-        doc?.checked ? el("p", {}, `Días según el calendario del SIAPA, revisado el ${dateES(doc.checked, true)}.`) : null);
+        doc?.checked ? el("p", {}, "Días según el ", el("a", { href: "https://rotaciondeserviciosiapa.jalisco.gob.mx/", target: "_blank", rel: "noopener" }, "calendario del SIAPA"), `, revisado el ${dateES(doc.checked, true)}.`) : null);
       mcard.hidden = false;
     }
     // Moving the map by hand closes the card; listened to in capture, since M.pinch stops its wheel events.
     const offMap = (e) => { if (pinned && map.getContainer().contains(e.target)) unpin(); };
     stage.addEventListener("wheel", offMap, { capture: true, passive: true });
     stage.addEventListener("pointermove", (e) => { if (e.buttons) offMap(e); }, { capture: true, passive: true });
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && pinned) unpin(); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && pinned && !e.target.closest("input, textarea")) unpin(); });
     // Zooming far out from a selected colonia means the visitor has moved on: it closes, frame and all.
     let selZoom = null;
     map.on("zoomend", () => {
@@ -2486,6 +2492,7 @@ if (window.top !== window.self) {
         if (pinned?.m === r.m) pinned.node = li;
         return li;
       }));
+      if (pinned && !rows.some((r) => r.m === pinned.m)) unpin();
       $("municipios").hidden = !rows.length;
     }
     // r1: the timeline's day in four slices: the colonias new that day, whether an outlet or only

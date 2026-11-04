@@ -437,7 +437,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   const SMALL = new Set(["de", "del", "la", "las", "los", "el", "y", "e"]);
   const nice = (name) => name.toLowerCase().split(" ").map((w, i) =>
     /^(i{1,3}|iv|vi{0,3}|ix|x)$/.test(w) ? w.toUpperCase() : i && SMALL.has(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
-  const municipio = (m) => MUNICIPIOS[norm(m)] || (m === m.toUpperCase() ? nice(m) : m);
+  const municipio = (m) => MUNICIPIOS[norm(m)] || (m === m.toUpperCase() ? nice(m) : m).replace(/San Pedro Tlaquepaque/g, "Tlaquepaque");
   const fmt = (n) => n.toLocaleString("es-MX");
   const plural = (n, one, many) => `${fmt(n)} ${n === 1 ? one : many}`;
   const daysWord = (d) => `${d} ${d === 1 ? "día" : "días"}`;

@@ -314,20 +314,30 @@ window.aguaMapa = (() => {
   // settles where it is, unsnapped, and redraws. Uses Leaflet 1.9.4 internals, pinned in vendor/.
   function pinch(map) {
     const box = map.getContainer();
-    let start = null, zoom = 0, center = null, end = 0, frame = 0;
+    // ours: the settling animation is this handler's; cut: when it last ended one early. Leaflet's own
+    // 250 ms timer for a cut animation still fires, so the next settle waits it out instead of being ended by it.
+    let start = null, zoom = 0, center = null, end = 0, frame = 0, ours = false, cut = 0;
+    map.on("zoomend", () => { ours = false; });
     const finish = () => {
       if (!start) return;
+      const wait = cut + 260 - Date.now();
+      if (wait > 0) { end = setTimeout(finish, wait); return; }
       cancelAnimationFrame(frame);
       start = null;
       // No snapping to zoomSnap: the map stays at the zoom the fingers left it at, instead of jumping.
       map._animateZoom(center, zoom, true, true);
+      ours = true;
     };
     box.addEventListener("wheel", (e) => {
       if (!e.ctrlKey) return;
       e.preventDefault();
       e.stopImmediatePropagation();
       // A pinch that resumes while the last one settles ends that animation instead of being dropped.
-      if (map._animatingZoom) map._onZoomTransitionEnd();
+      if (map._animatingZoom) {
+        if (!ours) return;
+        cut = Date.now();
+        map._onZoomTransitionEnd();
+      }
       const at = map.mouseEventToContainerPoint(e);
       if (!start) {
         map._stop();
@@ -362,11 +372,13 @@ window.aguaMapa = (() => {
     });
     const layer = L.layerGroup();
     const small = () => map.getZoom() < CERCA;
+    // The drop's name for screen readers (the svg is aria-hidden), set again whenever its icon is swapped.
+    const named = (m) => { const n = m.getElement(); if (n && m.options.label) { n.setAttribute("role", "img"); n.setAttribute("aria-label", m.options.label); } };
     let wasSmall = small();
     map.on("zoomend", () => {
       if (small() === wasSmall) return;
       wasSmall = small();
-      layer.eachLayer((m) => m.setIcon(drop(m.options.solid, wasSmall)));
+      layer.eachLayer((m) => { m.setIcon(drop(m.options.solid, wasSmall)); named(m); });
     });
     const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
     fetch("/cisternas.json").then((r) => r.ok ? r.json() : Promise.reject(r.status)).then((d) => {
@@ -376,6 +388,8 @@ window.aguaMapa = (() => {
       // the native title is gone, since it showed late and in the system's style.
       const hover = matchMedia("(hover: hover)").matches;
       const tip = (m, head, lines) => {
+        m.options.label = head.replace(/<[^>]*>/g, "");
+        m.on("add", () => named(m));
         if (!hover) return m;
         m.bindTooltip(`${head}${lines.map((x) => `<span class="sub">${x}</span>`).join("")}`, { direction: "top", className: "map-label gota" });
         m.on("popupopen", () => m.closeTooltip());
