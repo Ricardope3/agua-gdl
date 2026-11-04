@@ -628,7 +628,7 @@ path.nueva { animation: nueva 1.4s ease-out both; pointer-events: none }
   .p-empty { padding: 20px; color: var(--muted) }
   .p-item:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px }
   .v-stories { display: flex; gap: 12px; padding: 14px 20px 18px; overflow-x: auto }
-  .v-story { position: relative; flex: 1; min-width: 0; max-width: 120px; height: 150px; padding: 0; overflow: hidden; border: 3px double #e4572e; border-radius: 4px; background: #101828; cursor: pointer }
+  .v-story { position: relative; flex: 0 0 104px; height: 150px; padding: 0; overflow: hidden; border: 3px double #e4572e; border-radius: 4px; background: #101828; cursor: pointer }
   .v-story span { padding: 28px 8px 8px; font-size: .76rem; text-align: left }
   .v-mode { background: rgb(3 8 18 / .94) }
   .v-mode .v-slide { width: min(720px, 80vw); min-height: 100%; padding-bottom: 40px }
@@ -966,7 +966,8 @@ if (window.top !== window.self) {
     if (!e) return [];
     const seen = new Set();
     return e.posts.filter((p) => p.tipo !== "comentario" && /(?:youtube\.com\/watch|youtu\.be\/|tiktok\.com\/|facebook\.com\/(?:[^/]+\/)?(?:videos|watch|reel)|fb\.watch)/i.test(p.url || ""))
-      .filter((p) => { const id = (p.url || "").split("?")[0].replace(/\/$/, ""); return !seen.has(id) && seen.add(id); })
+      // YouTube links differ only in ?v=, so they dedupe by video id; the rest by the link without its query.
+      .filter((p) => { const id = vYouTube(p.url || "") || (p.url || "").split("?")[0].replace(/\/$/, ""); return !seen.has(id) && seen.add(id); })
       .sort((a, b) => impactOf(b) - impactOf(a) || b.fecha.localeCompare(a.fecha));
   };
   const vYouTube = (url) => { const m = url.match(/[?&]v=([\w-]+)/) || url.match(/youtu\.be\/([\w-]+)/); return m && m[1]; };
