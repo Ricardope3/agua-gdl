@@ -8,6 +8,13 @@ paths:
   - "web/contamina.html"
   - "web/antisionismo.html"
   - "web/exige.html"
+  - "web/index.html"
+  - "web/reportes.html"
+  - "web/pipas-v*.html"
+  - "web/pipas-variantes.html"
+  - "web/cisternas.json"
+  - "pipelines/cisternas*"
+  - "experiments/pipas/**"
   - "web/informes.html"
   - "web/semana/**"
   - "web/fuentes/**"
@@ -18,7 +25,7 @@ paths:
 
 # Evidence and published claims
 
-A wrong published claim is this project's most expensive failure. Also read `docs/EDITORIAL.md`. For checking sources, use the `verificador` subagent; for finding them, `buscador`.
+A wrong published claim is this project's most expensive failure. Official statements, press releases and an authority's account of its own acts are its claims, not facts: write «según el SIAPA…» or «el SIAPA dijo», link it, and don't adopt its words as ours («clandestinas», «saneamiento», «control»; research/transparency AGENT-CONTEXT rule 7). A cause («por eso», «porque») needs a source that states it. Also read `docs/EDITORIAL.md`. For checking sources, use the `verificador` subagent; for finding them, `buscador`.
 
 `scripts/stale_dates.py` lists the dated «al 19 de octubre», «revisado el…» and `veredicto_fecha`/`checked` claims over 10 days old (`check.sh` shows the count, never fails): recheck the fact, then move its date.
 
