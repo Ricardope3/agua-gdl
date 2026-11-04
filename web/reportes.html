@@ -468,7 +468,6 @@ html.en-portada { overflow: hidden }
 .overview .munis li small { grid-column: auto; order: 2 }
 .overview .munis li b { order: 3; font-size: .82rem }
 .overview .munis .bar { order: 4; height: 3px }
-.overview .munis li small.fuera { grid-column: 1 / -1; order: 5 }
 .overview .munis p { display: none }
 .overview:has(#ov-dia:not([hidden])) { max-height: calc(100% - 110px) }
 @media (max-width: 1100px) { .overview .munis { display: block } .overview .munis[hidden] { display: none } }
@@ -1067,7 +1066,7 @@ if (window.top !== window.self) {
           <details class="munis" id="municipios" open hidden>
             <summary>Por municipio · % de colonias</summary>
             <ol id="munis-lista"></ol>
-            <p>De las colonias que la rotación del SIAPA cubre (las con zona asignada), las que tienen publicaciones de medios o vecinos que dicen que no tenían agua, <span id="munis-al">hasta hoy</span>. Tlajomulco y El Salto tienen pocas colonias en la rotación; sus publicaciones en las demás se cuentan aparte, fuera de ella.</p>
+            <p>De las colonias que la rotación del SIAPA cubre (las con zona asignada), las que tienen publicaciones de medios o vecinos que dicen que no tenían agua, <span id="munis-al">hasta hoy</span>. Las colonias fuera de la rotación no se cuentan aquí.</p>
           </details>
           <div id="top-box" hidden><p class="lv-h" id="top-h">Las que tienen más reportes</p><ol class="lv-top" id="top-reportes"></ol></div>
           <p class="note" id="estado" aria-live="polite">Cargando el mapa de colonias…</p>
@@ -1528,7 +1527,9 @@ if (window.top !== window.self) {
     const stateMap = (e) => live() ? stateOf(e) : "activa";
     const zoneStyle = (f) => ({ color: M.COLORS[aguaDark() ? "dark" : "light"][f.properties.z], weight: 1.5, dashArray: "5 4", fill: false, opacity: 0.7 });
     const zoneLayer = L.geoJSON({ type: "FeatureCollection", features: zonas }, { interactive: false, style: zoneStyle }).addTo(map);
-    const home = zoneLayer.getBounds().pad(0.04);
+    // The opening view, chosen by hand on 4 Nov 2026: from Ciudad Granja to San Martín de las Flores, where the
+    // publications are; the zones' full extent left most of the screen empty.
+    const home = L.latLngBounds([20.541, -103.545], [20.738, -103.172]);
     M.recenter(L, map, () => map.flyToBounds(home, { duration: 0.6 }));
     if (M.cisternas) M.cisternas(L, map, "bottomright");
     // Current reports colour the outline first. Stale reports make the outline neutral and dashed,
@@ -2328,31 +2329,24 @@ if (window.top !== window.self) {
       unhover();
       const munis = (k) => k.split("|")[1].split(" y ").filter(Boolean);
       // El porcentaje usa como denominador las colonias con zona asignada: las que la rotación
-      // cubre (Guadalajara, San Pedro Tlaquepaque, Tonalá y Zapopan); las demás van aparte.
+      // cubre; las publicaciones de colonias fuera de ella no cuentan aquí.
       const inRot = (k) => features.get(k).some((f) => f.properties.z !== "");
       const per = new Map();
       for (const k of features.keys()) if (inRot(k)) for (const m of munis(k)) {
-        if (!per.has(m)) per.set(m, { m, total: 0, sin: 0, fuera: 0 });
+        if (!per.has(m)) per.set(m, { m, total: 0, sin: 0 });
         per.get(m).total++;
       }
-      for (const k of evNow.keys()) if (features.has(k)) for (const m of munis(k)) {
-        const r = per.get(m) || per.set(m, { m, total: 0, sin: 0, fuera: 0 }).get(m);
-        if (inRot(k)) r.sin++; else r.fuera++;
-      }
+      for (const k of evNow.keys()) if (features.has(k) && inRot(k)) for (const m of munis(k)) per.get(m).sin++;
       $("munis-al").textContent = live() ? `hasta el ${dateES(DAYS[at] || pubs.actualizado, true)}` : `al ${dateES(DAYS[at], true)}`;
-      const rows = [...per.values()].filter((r) => r.sin || r.fuera)
-        .sort((a, b) => (b.sin / Math.max(1, b.total)) - (a.sin / Math.max(1, a.total)));
-      const fuera = (r) => plural(r.fuera, "colonia con publicaciones", "colonias con publicaciones") + " fuera de la rotación";
+      // Only municipios with published colonias in the rotation: Tlajomulco and El Salto have a handful of
+      // colonias in it and none published, and their «0 %» read as unaffected rotation municipios.
+      const rows = [...per.values()].filter((r) => r.sin).sort((a, b) => b.sin / b.total - a.sin / a.total);
       $("munis-lista").replaceChildren(...rows.map((r) => {
-        const li = !r.total ? el("li", {}, el("span", {}, r.m), el("b", {}, "—"), el("small", {}, `${fuera(r)} (sin colonias en el tandeo)`))
-          : (() => {
-            const pct = 100 * r.sin / r.total;
-            return el("li", {}, el("span", {}, r.m), el("b", {}, `${r.sin && pct < 1 ? "<1" : Math.round(pct)} %`),
-              el("span", { class: "bar" }, el("span", { style: `width:${pct}%` })),
-              el("small", {}, `${fmt(r.sin)} de ${plural(r.total, "colonia", "colonias")} en la rotación`),
-              r.fuera > r.sin ? el("small", { class: "fuera" }, `y ${fuera(r)}`) : null);
-          })();
-        hoverable(li, () => [...features].filter(([k]) => munis(k).includes(r.m) && (inRot(k) || evNow.has(k))).flatMap(([, fs]) => fs));
+        const pct = 100 * r.sin / r.total;
+        const li = el("li", {}, el("span", {}, r.m), el("b", {}, `${pct < 1 ? "<1" : Math.round(pct)} %`),
+          el("span", { class: "bar" }, el("span", { style: `width:${pct}%` })),
+          el("small", {}, `${fmt(r.sin)} de ${plural(r.total, "colonia", "colonias")} en la rotación`));
+        hoverable(li, () => [...features].filter(([k]) => inRot(k) && munis(k).includes(r.m)).flatMap(([, fs]) => fs));
         return li;
       }));
       $("municipios").hidden = !rows.length;
