@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-10-31",
+  "actualizado": "2026-11-03",
   "replica": {"enviada": "2026-10-17", "cierra": "2026-10-26T23:59"},
   "promesas": [
     {
@@ -653,6 +653,7 @@
   ],
   "correcciones": [
     {"fecha": "2026-10-20", "codigo": "Cómo calificamos", "texto": "«En riesgo» también cuenta cuando un hecho o un documento oficial pone en duda que se cumpla; así calificamos A6 y B2 desde el 16 de octubre. Y la fecha que tomamos para un plazo que no es exacto se fija la primera vez que publicamos la promesa, como en B6, cuyo plazo ya había pasado cuando la publicamos."},
-    {"fecha": "2026-10-20", "codigo": "B6", "texto": "Pasa de «Incumplida» a «En riesgo». La calificamos el 16 de octubre, un día antes de pedirle su versión al gobierno, y nuestras reglas piden pedírsela antes de calificar «Incumplida». Puede responder hasta el 26 de octubre."}
+    {"fecha": "2026-10-20", "codigo": "B6", "texto": "Pasa de «Incumplida» a «En riesgo». La calificamos el 16 de octubre, un día antes de pedirle su versión al gobierno, y nuestras reglas piden pedírsela antes de calificar «Incumplida». Puede responder hasta el 26 de octubre."},
+    {"fecha": "2026-11-03", "codigo": "B6", "texto": "El paso «Mejor calidad del agua hacia el 15 de septiembre» pasa de «Incumplido» a «En disputa»: las respuestas de transparencia no traen reportes de laboratorio, así que con ellas no se puede medir si hubo mejora. La promesa sigue «En riesgo»."}
   ]
 }

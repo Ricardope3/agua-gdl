@@ -51,8 +51,27 @@ def centre(ring):
     return [round(cy / (3 * a), 6), round(cx / (3 * a), 6)]
 
 
+FIELDS = {
+    "fuentes": {"mapa", "titulo", "url"},
+    "puntos": {"capa", "fuente", "lat", "lon", "lugar", "municipio"},
+    "colonias": {"colonia", "fuente", "lugar", "municipio", "nombre"},
+    "sin_coordenadas": {"fuente", "lugar", "municipio"},
+    "sin_ubicar": {"fuente", "lugar", "municipio"},
+}
+
+
+def allowed(src):
+    """Publish only listed fields: a source field such as a responsible person's name must never reach the site."""
+    for key, fields in FIELDS.items():
+        rows = src[key].values() if isinstance(src[key], dict) else src[key]
+        for row in rows:
+            if extra := set(row) - fields:
+                raise SystemExit(f"cisternas_fuente.json {key}: field(s) not allowed on the site: {sorted(extra)}")
+
+
 def main():
     src = json.loads((HERE / "cisternas_fuente.json").read_text(encoding="utf-8"))
+    allowed(src)
     topo = json.loads((ROOT / "web/colonias_siapa.topo.json").read_text(encoding="utf-8"))
     arcs = decode_arcs(topo)
     geoms = topo["objects"]["colonias"]["geometries"]

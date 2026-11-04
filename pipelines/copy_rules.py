@@ -41,6 +41,11 @@ KNOWN_ERRORS = [
          wrong=r"53 colonias", near=r"granja", ok=r"de guadalajara",
          msg="La Silla Rota's 22 pipas serve 53 colonias de Guadalajara; Ciudad Granja (Zapopan) is only named as reporting shortages",
          found="3 Nov 2026"),
+    dict(id="congreso-turno-app",
+         bad='El 23 de octubre, el Congreso ya no turnó a comisiones la iniciativa de la APP.', good='El 21 de octubre, la presidenta anunció que la Federación pondrá entre 12 mil y 13 mil millones para el acueducto.',
+         wrong=r"(ya no|dejo de) (turn|procesar)\w*[^.;]{0,30} comisiones|stopped processing the app",
+         msg="no source says Congress stopped turning the APP to committee on 23 Oct; the cited Crónica story is about something else",
+         found="3 Nov 2026 (fact-check #7)"),
 ]
 
 

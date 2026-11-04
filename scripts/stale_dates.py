@@ -3,7 +3,7 @@
 
     python3 scripts/stale_dates.py [--days N] [--count]
 
-Copy: «al 19 de octubre», «revisado el…», «Actualizado el…» in web/*.html (date ranges like
+Copy: «al 19 de octubre», «revisado el…», «Revisamos… el», «consultada el…», «Actualizado el…» in web/*.html (date ranges like
 «del 15 al 26» and /noticias' dated cards don't count). Data: `checked` in rotation.json and
 zones.json, `actualizado` and each `veredicto_fecha` in promesas.json. Warn-only: always exits 0,
 since a date ages without any change and CI must not go red for it. Recheck the fact, then update
@@ -24,7 +24,7 @@ MONTHS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agost
           "octubre", "noviembre", "diciembre"]
 M = "|".join(MONTHS)
 AS_OF = re.compile(
-    rf"(?:\b[Aa]l|\b(?:[Aa]ctualizad|[Rr]evisad)[oa]s? el) (\d{{1,2}}) de ({M})(?: de (\d{{4}}))?")
+    rf"(?:\b[Aa]l|\b(?:[Aa]ctualizad|[Rr]evisad|[Cc]onsultad|[Vv]erificad)[oa]s?(?: de nuevo)? el|\b(?:[Ss]e )?[Rr]evis(?:amos|aron|ó)\b[^.;«»<]{{0,40}}? el) (\d{{1,2}}) de ({M})(?: de (\d{{4}}))?")
 RANGE = re.compile(rf"\d(?: de (?:{M}))?\s*$")
 ARTICLE = re.compile(r"<article\b.*?</article\s*>", re.S | re.I)
 DATA = [("api/data/rotation.json", "checked"), ("web/zones.json", "checked"),
