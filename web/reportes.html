@@ -1623,23 +1623,25 @@ if (window.top !== window.self) {
     let closedAt = 0;
     // One canvas for the colonias and the dots over them: a second canvas on top would take their clicks.
     const colRenderer = L.canvas({ padding: 0.5 });
+    // A colonia's hover card: the colonias, its badges and its report rings all show it, at once.
+    const tipOf = (f) => {
+      const k = keyOf(f.properties);
+      const c = reportsNow().get(k), stale = live() ? staleByKey.get(k) : carriedByDay.get(DAYS[at])?.get(k) || null, e = evNow.get(k);
+      const later = !e && firstSeen.get(k) <= (DAYS[DAYS.length - 1] || "") && firstSeen.get(k);
+      return el("span", {}, `${f.properties.n} · ${muniES(f.properties.m)}`,
+        e ? el("span", { class: "sub" }, `${live() ? "" : `Al ${dateES(DAYS[at])}: `}${evLine(e)}`) : null,
+        later ? el("span", { class: "sub" }, `Su primera publicación llega el ${dateES(later, true)}`) : null,
+        c ? el("span", { class: "sub" }, `${statusLabel(c)} · ${plural(totalOf(c), "reporte", "reportes")}${live() ? " en 24 h" : " ese día"}`) : null,
+        stale ? el("span", { class: "sub" }, live()
+          ? `Sin reportes nuevos en 24 h · último: ${answerLabel(stale.ultimo_estado)} ${ago(stale.ultimo)}`
+          : `Sin reportes nuevos ese día · último: hace ${stale.age} ${stale.age === 1 ? "día" : "días"} · ${statusLabel(stale.c).toLowerCase()} (${plural(totalOf(stale.c), "reporte", "reportes")})`) : null,
+        summary && !c && !stale && !e && !later && live() ? el("span", { class: "sub" }, "Sin reportes en 72 h: no sabemos si hay agua") : null);
+    };
     const layer = L.geoJSON({ type: "FeatureCollection", features: colonias }, {
       renderer: colRenderer,
       style: styleOf,
       onEachFeature: (f, l) => {
-        l.bindTooltip(() => {
-          const k = keyOf(f.properties);
-          const c = reportsNow().get(k), stale = live() ? staleByKey.get(k) : carriedByDay.get(DAYS[at])?.get(k) || null, e = evNow.get(k);
-          const later = !e && firstSeen.get(k) <= (DAYS[DAYS.length - 1] || "") && firstSeen.get(k);
-          return el("span", {}, `${f.properties.n} · ${muniES(f.properties.m)}`,
-            e ? el("span", { class: "sub" }, `${live() ? "" : `Al ${dateES(DAYS[at])}: `}${evLine(e)}`) : null,
-            later ? el("span", { class: "sub" }, `Su primera publicación llega el ${dateES(later, true)}`) : null,
-            c ? el("span", { class: "sub" }, `${statusLabel(c)} · ${plural(totalOf(c), "reporte", "reportes")}${live() ? " en 24 h" : " ese día"}`) : null,
-            stale ? el("span", { class: "sub" }, live()
-              ? `Sin reportes nuevos en 24 h · último: ${answerLabel(stale.ultimo_estado)} ${ago(stale.ultimo)}`
-              : `Sin reportes nuevos ese día · último: hace ${stale.age} ${stale.age === 1 ? "día" : "días"} · ${statusLabel(stale.c).toLowerCase()} (${plural(totalOf(stale.c), "reporte", "reportes")})`) : null,
-            summary && !c && !stale && !e && !later && live() ? el("span", { class: "sub" }, "Sin reportes en 72 h: no sabemos si hay agua") : null);
-        }, { sticky: true, className: "map-label" });
+        l.bindTooltip(() => tipOf(f), { sticky: true, className: "map-label" });
         l.on("click", () => { if (Date.now() - closedAt > 500) select(f); });
       },
     }).addTo(map);
@@ -1679,8 +1681,9 @@ if (window.top !== window.self) {
         if (!centers.has(k)) centers.set(k, L.geoJSON(fs[0]).getBounds().getCenter());
         const m = L.marker(centers.get(k), {
           icon: L.divIcon({ className: `sev${far ? " far" : ""}${s ? "" : " nodays"} ${stateMap(e)}${pop}`, html: `<span style="${sevVars(s)};font-size:${Math.max(far ? 9 : 10, Math.round(size * (n.length > 2 ? 0.3 : 0.42)))}px">${n}</span>`, iconSize: [size, size] }),
-          keyboard: false, zIndexOffset: 2000 - Math.min(total, 999), title: `${fs[0].properties.n}: ${plural(total, "publicación", "publicaciones")} · ${evLine(e)}`,
+          keyboard: false, zIndexOffset: 2000 - Math.min(total, 999),
         });
+        if (!phone()) m.bindTooltip(() => tipOf(fs[0]), { className: "map-label", direction: "top", offset: [0, -size / 2] });
         m.on("click", () => select(fs[0]));
         markers.addLayer(m);
       }
@@ -1700,13 +1703,11 @@ if (window.top !== window.self) {
           // Beside a publication badge, not on top of it: the donut's left edge starts a small
           // gap past the badge's right edge, vertically centred on the same point.
           const r = withPublication ? (badgeSizes.get(k) || 30) / 2 : 0;
-          const title = age ? `${fs[0].properties.n}: sin reportes nuevos ese día · último: hace ${age} ${age === 1 ? "día" : "días"} · ${statusLabel(c).toLowerCase()}`
-            : isStale ? `${fs[0].properties.n}: sin reportes nuevos en 24 h · último: ${answerLabel(c.ultimo_estado)} ${ago(c.ultimo)}`
-            : `${fs[0].properties.n}: ${statusLabel(c)} · ${plural(totalOf(c), "reporte", "reportes")}${live() ? " en 24 h" : " ese día"}`;
           const m = L.marker(centers.get(k), {
             icon: L.divIcon({ className: `donut${isStale || age ? " stale" : ""}`, html: donut(c), iconSize: [40, 40], iconAnchor: withPublication ? [-(r + 8), 20] : [20, 20] }),
-            keyboard: false, zIndexOffset: isStale ? 1200 : 3000, title,
+            keyboard: false, zIndexOffset: isStale ? 1200 : 3000,
           });
+          m.bindTooltip(() => tipOf(fs[0]), { className: "map-label", direction: "top", offset: [withPublication ? r + 28 : 0, -20] });
           m.on("click", () => select(fs[0]));
           markers.addLayer(m);
         }
