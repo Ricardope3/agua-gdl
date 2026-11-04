@@ -763,7 +763,7 @@ def hooks(h, js, americana=False):
 
 def main():
     # web/reportes.html is the source of /reportes now; this writes only the variants, which were
-    # retired on 2 Nov 2026 (they 301 to /reportes). videos.py still uses build() for /c6…/c8.
+    # retired on 2 Nov 2026 (they 301 to /reportes); /c6…/c8 followed on 3 Nov.
     src = (Path(__file__).parent / "reportes-before-c3.html").read_text()
     if "--force" not in sys.argv:
         sys.exit("/c1…/c5 and /d1…/d5 were retired and reportes-before-c3.html is older than /reportes. "

@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>INDEX Índice · Pipas · Agua GDL</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<script src="/theme.js"></script>
+<style>
+:root {
+  --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
+  --brand: #0284c7; --brand-deep: #0369a1; --link: #0369a1; --on-brand: #ffffff;
+  --primary: #0284c7; --on-primary: #ffffff; --ring: #0284c766;
+  --shadow: 0 1px 2px rgb(3 105 161 / .08);
+  --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #06141d; --surface: #0a1c28; --subtle: #0c3149; --fg: #f0f9ff; --muted: #9bb8ca; --line: #18384d;
+    --link: #7dd3fc; --primary: #0ea5e9; --on-primary: #ffffff; --ring: #38bdf866; --brand: #0ea5e9; --brand-deep: #0284c7;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 var(--font) }
+a { color: var(--link) }
+a:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; border-radius: 4px }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 20px }
+header.top { padding: 20px 0 }
+.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; font-weight: 800; font-size: 1.25rem; letter-spacing: -.01em }
+.brand img { width: 30px; height: auto }
+h1 { font-size: clamp(2rem, 6vw, 3rem); line-height: 1.08; letter-spacing: -.02em; margin: 20px 0 16px; text-wrap: balance }
+.signup { background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--brand); border-radius: 10px; padding: 20px }
+.button { display: inline-block; background: var(--brand-deep); color: var(--on-brand); font-weight: 700; font-size: 1.1rem; text-decoration: none; padding: 13px 22px; border-radius: 8px }
+.button:hover { background: var(--brand) }
+.consent { margin: 16px 0 0; font-size: .95rem }
+.options { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; align-items: start }
+.signup h2 { font-size: 1.25rem; margin: 0 0 8px }
+.signup > p:not(.consent):not(.alt) { margin: 0 0 16px; color: var(--muted) }
+.buttons { display: flex; flex-wrap: wrap; gap: 10px }
+.number { font-weight: 700; color: var(--fg); white-space: nowrap }
+.tel { font-size: 1.35rem; font-weight: 700; letter-spacing: -.01em; white-space: nowrap; text-decoration: none }
+.tel:hover { text-decoration: underline }
+.via { font-size: .9rem; color: var(--muted); margin: 10px 0 0 }
+.signup p { margin: 0 0 8px }
+.alt { margin: 12px 0 0; font-size: .95rem; color: var(--muted) }
+.lede { font-size: 1.15rem; color: var(--muted); margin: 0 0 28px; max-width: 60ch }
+section { padding: 36px 0 8px }
+h2 { font-size: 1.5rem; line-height: 1.2; margin: 0 0 14px; letter-spacing: -.01em }
+ol, ul { padding-left: 1.3em; margin: 0 0 14px }
+li { margin: 0 0 8px }
+section p { margin: 0 0 14px; max-width: 65ch }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0 }
+dt { font-weight: 800; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .95rem; padding-top: 2px }
+dd { margin: 0 }
+footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .9rem }
+footer p { margin: 0 0 8px; max-width: 70ch }
+body { font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased }
+a { text-underline-offset: 3px }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); border-radius: 6px }
+.wrap { padding: 0 16px }
+header.top { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); margin: 0 -16px 20px; padding: 12px 16px }
+.brand { gap: 8px; font-weight: 600; font-size: 1rem }
+.brand img { width: 20px }
+h1 { letter-spacing: -.03em; font-weight: 700 }
+h2 { font-weight: 600; letter-spacing: -.02em }
+.lede { font-size: 1.05rem }
+.button { display: inline-flex; align-items: center; gap: 6px; background: var(--primary); color: var(--on-primary); font-weight: 500; font-size: .95rem; padding: 10px 18px; border: 1px solid transparent; border-radius: 8px; box-shadow: var(--shadow); transition: background .15s }
+.button:hover { background: var(--brand-deep) }
+.signup, .finder, .notice, .summary { border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; box-shadow: var(--shadow) }
+.card, .zone, .msg, .empty, .choice, .values li { box-shadow: var(--shadow) }
+.search input, .filter select { border: 1px solid var(--line); box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s }
+.search input:focus-visible, .filter select:focus-visible { border-color: var(--brand) }
+footer { font-size: .85rem }
+.i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
+h2.ih, h3.ih { display: flex; align-items: center; gap: 10px }
+.ih .i-badge { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--subtle); color: var(--brand); flex-shrink: 0 }
+h3.ih .i-badge { width: 28px; height: 28px }
+.steps li .i { color: var(--ic); margin-right: 4px }
+header.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px }
+.site-nav { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; margin: 0 -6px }
+.site-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 8px; color: var(--muted); font-size: .9rem; font-weight: 500; text-decoration: none; white-space: nowrap }
+.site-nav a:hover { color: var(--fg); background: var(--subtle) }
+.site-nav a[aria-current="page"] { color: var(--link); background: var(--subtle) }
+@media (max-width: 980px) { .site-nav .i { display: none } }
+@media (max-width: 760px) { .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center } .site-nav a { flex: 1 1 22%; justify-content: center } }
+@media (max-width: 560px) { header.top { position: static; padding: 8px 16px } .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center; gap: 2px } .site-nav a { flex: 1 1 22%; justify-content: center; padding: 4px; font-size: .82rem; line-height: 1.35 } .site-nav .i { display: none } }
+.ih .i-badge { background: var(--brand); color: var(--on-primary) }
+.site-nav .i { color: var(--brand) }
+.site-nav a[aria-current="page"] .i { color: inherit }
+li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
+.i { --ic: var(--brand) }
+.i:has(use[href$="#bell"]), .i:has(use[href$="#megaphone"]) { --ic: #d97706 }
+.i:has(use[href$="#map-pin"]) { --ic: #e11d48 }
+.i:has(use[href$="#landmark"]) { --ic: #7c3aed }
+.i:has(use[href$="#heart"]) { --ic: #dc2626 }
+.i:has(use[href$="#check"]) { --ic: #16a34a }
+.i:has(use[href$="#shield-check"]) { --ic: #16a34a }
+.i:has(use[href$="#mail"]) { --ic: #0d9488 }
+.i:has(use[href$="#pen-line"]) { --ic: #ea580c }
+.i:has(use[href$="#calendar"]) { --ic: #4f46e5 }
+.i:has(use[href$="#send"]) { --ic: #229ed9 }
+@media (prefers-color-scheme: dark) { .i:has(use[href$="#bell"]), .i:has(use[href$="#megaphone"]) { --ic: #fbbf24 } .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#landmark"]) { --ic: #a78bfa } .i:has(use[href$="#heart"]) { --ic: #f87171 } .i:has(use[href$="#check"]) { --ic: #4ade80 } .i:has(use[href$="#shield-check"]) { --ic: #4ade80 } .i:has(use[href$="#mail"]) { --ic: #2dd4bf } .i:has(use[href$="#pen-line"]) { --ic: #fb923c } .i:has(use[href$="#calendar"]) { --ic: #818cf8 } .i:has(use[href$="#send"]) { --ic: #2aabee } }
+.site-nav .i, li > .i, p > .i, summary > .i, h3 > .i { color: var(--ic) }
+.ih .i-badge:has(use[href$="#bell"]), .ih .i-badge:has(use[href$="#megaphone"]) { background: #d97706 }
+.ih .i-badge:has(use[href$="#map-pin"]) { background: #e11d48 }
+.ih .i-badge:has(use[href$="#landmark"]) { background: #7c3aed }
+.ih .i-badge:has(use[href$="#heart"]) { background: #dc2626 }
+.ih .i-badge:has(use[href$="#check"]) { background: #16a34a }
+.ih .i-badge:has(use[href$="#shield-check"]) { background: #16a34a }
+.ih .i-badge:has(use[href$="#mail"]) { background: #0d9488 }
+.ih .i-badge:has(use[href$="#pen-line"]) { background: #ea580c }
+.ih .i-badge:has(use[href$="#calendar"]) { background: #4f46e5 }
+/* The top menu as on the landing: its frame is 960 px wide, and 1320 px from 1100 px, so it sits on one row. */
+.wrap:has(> header.top) { max-width: 960px }
+@media (min-width: 1100px) { .wrap:has(> header.top) { max-width: 1320px } }
+.wrap:has(> header.top) > :not(header.top) { max-width: 928px; margin-left: auto; margin-right: auto }
+</style>
+
+<style>
+.vbar { font-size: .85rem; background: var(--subtle); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; margin: 0 0 16px; display: flex; flex-wrap: wrap; gap: 4px 12px }
+.vbar a[aria-current] { font-weight: 700; color: var(--fg) }
+.tag { display: inline-block; font-size: .75rem; font-weight: 600; padding: 1px 8px; border-radius: 999px; background: var(--subtle); color: var(--link); vertical-align: .1em; margin-left: 6px }
+.tag.warn { background: #fef3c7; color: #92400e }
+@media (prefers-color-scheme: dark) { .tag.warn { background: #422006; color: #fcd34d } }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 20px }
+.chips button { font: inherit; font-size: .95rem; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; box-shadow: var(--shadow) }
+.chips button[aria-pressed="true"] { background: var(--primary); color: var(--on-primary); border-color: transparent }
+.panel[hidden] { display: none }
+.steps { list-style: none; padding: 0; counter-reset: s; margin: 0 }
+.steps > li { counter-increment: s; position: relative; padding: 0 0 24px 52px; margin: 0 }
+.steps > li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: var(--on-primary); display: grid; place-items: center; font-weight: 700 }
+.steps > li::after { content: ""; position: absolute; left: 17px; top: 40px; bottom: 4px; width: 2px; background: var(--line) }
+.steps > li:last-child::after { display: none }
+.steps h2 { font-size: 1.25rem; margin: 4px 0 8px }
+.tablewrap { overflow-x: auto; margin: 0 0 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); box-shadow: var(--shadow) }
+table { border-collapse: collapse; width: 100%; font-size: .95rem }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top }
+th { font-size: .8rem; color: var(--muted); font-weight: 600; background: var(--subtle) }
+tr:last-child td { border-bottom: 0 }
+td .tel { font-size: 1.05rem }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 12px }
+.actions .button { font-size: 1rem }
+.button.ghost { background: var(--surface); color: var(--link); border-color: var(--line) }
+details { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 4px 16px; margin: 0 0 10px; box-shadow: var(--shadow) }
+details summary { cursor: pointer; font-weight: 600; padding: 10px 0; display: flex; align-items: center; gap: 10px }
+details[open] summary { border-bottom: 1px solid var(--line); margin-bottom: 12px }
+details > *:last-child { margin-bottom: 12px }
+.stat { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 0 0 12px }
+.stat div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px }
+.stat b { display: block; font-size: 1.6rem; letter-spacing: -.02em }
+.stat span { color: var(--muted); font-size: .9rem }
+.faq dt { font-family: var(--font); font-size: 1rem; font-weight: 600; padding: 0 }
+.faq { display: block } .faq dd { margin: 4px 0 16px; color: var(--muted) }
+</style>
+
+<link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
+<style>
+.mapa-agua { height: 380px; border: 1px solid var(--line); border-radius: 12px; margin: 8px 0 8px; box-shadow: var(--shadow); z-index: 0 }
+@media (prefers-color-scheme: dark) { .mapa-agua .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) } .mapa-agua.leaflet-container { background: #0c1e2c } }
+.leyenda { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: .85rem; color: var(--muted); margin: 0 0 10px }
+.leyenda .pt { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: var(--brand); box-shadow: 0 0 0 2px var(--surface), 0 0 0 3px var(--brand); vertical-align: -1px; margin-right: 6px }
+.leyenda .ar { display: inline-block; width: 14px; height: 10px; background: color-mix(in srgb, var(--brand) 25%, transparent); border: 1.5px dashed var(--brand); vertical-align: -1px; margin-right: 6px }
+.mapa-pop { font: 14px/1.45 var(--font) } .mapa-pop b { display: block }
+.lista-agua { columns: 2 260px; font-size: .95rem } .lista-agua li { break-inside: avoid }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
+    <nav class="site-nav" aria-label="Secciones">
+      <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg>¿Hay agua?</a>
+      <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exige</a>
+      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Avisos</a>
+      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg>Noticias</a>
+      <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg>Cuentas</a>
+      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Contaminación</a>
+      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#heart"/></svg>Antisionismo</a>
+    </nav>
+  </header>
+  <main>
+    <div class="vbar"><a href="/pipas-variantes">Índice</a> <a href="/pipas-v1">V1 · Por municipio</a> <a href="/pipas-v2">V2 · Paso a paso</a> <a href="/pipas-v3">V3 · Directorio</a> <a href="/pipas-v4">V4 · Botones grandes</a> <a href="/pipas-v5">V5 · Guía completa</a></div>
+    <h1>Variantes de /pipas</h1>
+<p class="lede">Cinco formas de organizar lo mismo. Los datos nuevos se revisaron el 3 de noviembre de 2026; lo marcado «por confirmar» no está listo para publicarse. <a href="/pipas">Página actual</a>.</p>
+<ul><li><a href="/pipas-v1"><b>V1 · Por municipio</b></a>: Eliges tu municipio y ves solo lo tuyo: a quién pedir, dónde ir por agua y qué hacer si no llega.</li><li><a href="/pipas-v2"><b>V2 · Paso a paso</b></a>: Cinco pasos en orden: pide, anota, ve por agua, insiste, exige.</li><li><a href="/pipas-v3"><b>V3 · Directorio</b></a>: Una tabla con todos los canales, su horario y si es gratis; lo demás abajo, corto.</li><li><a href="/pipas-v4"><b>V4 · Botones grandes</b></a>: Para el celular: botones de llamar y WhatsApp arriba, todo lo demás en secciones que se abren.</li><li><a href="/pipas-v5"><b>V5 · Guía completa</b></a>: La página actual con todo lo nuevo: cisternas, si no llega, pipas privadas, cifras y preguntas.</li></ul>
+  </main>
+  <footer>
+    <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con el Gobierno de Jalisco.</p>
+    <p><a href="/">Inicio</a> · <a href="/reportes">¿Hay agua en tu colonia?</a> · <a href="/avisos">¿Qué zona me toca?</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
+  </footer>
+</div>
+
+<script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script>
+(async () => {
+  const els = [...document.querySelectorAll('.mapa-agua')];
+  if (!els.length || !window.L) return;
+  let d;
+  try { d = await (await fetch('/cisternas.json')).json(); } catch { return; }
+  const c = getComputedStyle(document.documentElement).getPropertyValue('--brand').trim() || '#0284c7';
+  const esc = s => String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[ch]);
+  const fuente = k => { const f = d.fuentes[k]; return '<a href="' + f.url + '" target="_blank" rel="noopener">' + esc(f.titulo) + '</a>' + (f.mapa ? ' · <a href="' + f.mapa + '" target="_blank" rel="noopener">mapa oficial</a>' : ''); };
+  const draw = el => {
+    if (el._map) { el._map.invalidateSize(); return; }
+    const m = el.dataset.m;
+    const map = L.map(el, { zoomSnap: 0.25, scrollWheelZoom: false });
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+    const b = L.latLngBounds([]);
+    d.colonias.filter(x => !m || x.municipio === m).forEach(x => {
+      const p = L.polygon(x.forma, { color: c, weight: 1.5, dashArray: '4 3', fillColor: c, fillOpacity: .18 }).addTo(map);
+      p.bindPopup('<div class="mapa-pop"><b>Cisterna en ' + esc(x.nombre) + ', ' + esc(x.municipio) + '</b>' + (x.lugar ? esc(x.lugar) + '. ' : '') + 'Se publicó solo la colonia, no la dirección.<br>Fuente: ' + fuente(x.fuente) + '</div>');
+      b.extend(p.getBounds());
+    });
+    d.puntos.filter(x => !m || x.municipio === m).forEach(x => {
+      const k = L.circleMarker([x.lat, x.lon], { radius: 7, color: '#fff', weight: 2, fillColor: c, fillOpacity: 1 }).addTo(map);
+      k.bindPopup('<div class="mapa-pop"><b>' + esc(x.lugar || 'Sin dirección publicada') + '</b>' + esc(x.municipio) + (x.capa === 'SIAPA' ? ', capa «SIAPA» del mapa' : '') + '<br>Según el mapa del Ayuntamiento.<br>Fuente: ' + fuente(x.fuente) + '</div>');
+      b.extend(k.getLatLng());
+    });
+    map.fitBounds(b, { padding: [24, 24], maxZoom: 15 });
+    el._map = map;
+  };
+  const visibles = () => els.forEach(el => { if (el.offsetParent) draw(el); });
+  els.forEach(el => { const det = el.closest('details'); if (det) det.addEventListener('toggle', () => { if (det.open) draw(el); }); });
+  window.__mapasAgua = visibles;
+  visibles();
+})();
+</script>
+</body>
+</html>

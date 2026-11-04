@@ -16,7 +16,7 @@ Agua GDL sends free Telegram reminders before each block of cuts of SIAPA's wate
 | `web/` pages, `_headers`, `_redirects`, `mapa.js`, `scripts/` | `.claude/rules/web.md` |
 | `publicaciones.json`, `promesas.json`, /noticias, /pipas, /exige, advocacy copy | `.claude/rules/evidence.md`, `docs/EDITORIAL.md` |
 | `pipelines/`, `api/data/`, a SIAPA or rotation change | `.claude/rules/pipelines.md` |
-| `experiments/`, /c6…/c8 | `.claude/rules/experiments.md` |
+| `experiments/` | `.claude/rules/experiments.md` |
 | Deploy, production, incidents | `docs/OPERATIONS.md`, `docs/RELEASE.md`, `docs/INCIDENT_RESPONSE.md` |
 | Sources and private research | `docs/SOURCES.md`; `research/` (gitignored, local only) |
 | Project state, open items, decisions | `~/agua-gdl-notes/STATE.md` (private; update it with `/handoff`) |
@@ -43,7 +43,7 @@ Run `scripts/check.sh` and read its result before you push. Search with a path (
 - Public endpoints serve from memory, and what they read from Postgres refreshes at most every 15–30 minutes (Neon's free hours). Keep the rate limits and `no-store` rules when you add endpoints.
 - Evidence: every factual claim links its source; quotes appear as written; never a private person's name; a source's claim is presented as its claim; silence never means the water returned; pages never claim representativeness, causation or laboratory water quality. Never state that an Israeli company is part of the Jalisco aqueduct APP unless a source shows it. A passing `--check` validates shape, not truth.
 - Everything in `web/` is public and deploys on push to `main`: keep notes, drafts, unused data and agent docs out of it.
-- `web/reportes.html` and `web/index.html` are edited directly. Generated files: `web/promesas.html` (`pipelines/promesas.py`), `web/simple.html` (`simple_page.py`), `web/zones.json` (`zonas_json.py`), `web/videos.json` (`videos.py`), `web/colonias_siapa.topo.json` and its `api/data` copy (`siapa_mapa.py`), `web/calendario/*.ics` (`cmd/calendars`), `web/c6…c8.html` (`experiments/reportes/videos.py`), `api/data/colonias_mapa.json` (`mapa_colonias.py`), the `SECCIONES` string in `web/exige.html` (`secciones_escribe.py`), `web/semana/` and `web/informes.html` (`cmd/informe`). Edit the source, then regenerate.
+- `web/reportes.html` and `web/index.html` are edited directly. Generated files: `web/promesas.html` (`pipelines/promesas.py`), `web/simple.html` (`simple_page.py`), `web/zones.json` (`zonas_json.py`), `web/videos.json` (`videos.py`), `web/colonias_siapa.topo.json` and its `api/data` copy (`siapa_mapa.py`), `web/calendario/*.ics` (`cmd/calendars`), `api/data/colonias_mapa.json` (`mapa_colonias.py`), the `SECCIONES` string in `web/exige.html` (`secciones_escribe.py`), `web/semana/` and `web/informes.html` (`cmd/informe`), `web/cisternas.json` (`cisternas.py`). Edit the source, then regenerate.
 - Migrations: add new numbered files; never edit applied ones. Tests use a fixed `Now`, never the wall clock.
 - Keep code comments sparse and match the surrounding style. User-facing copy in plain Mexican Spanish (the bot's in `api/internal/bot/messages.go`).
 - Commits: author `soporte@aguagdl.com`, no AI attribution trailer, English messages with a subject of at most 72 characters and the details in the body. `.githooks/` checks the configured email, the trailer and the subject length (`git config core.hooksPath .githooks`); the rest is on you.
