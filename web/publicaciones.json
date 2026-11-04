@@ -16964,7 +16964,8 @@
    "eco": null,
    "captura": null,
    "titular": "Vecinos de dos colonias llevan 18 días sin agua y se manifestaron durante partido Atlas vs. América",
-   "video": true
+   "video": true,
+   "vista": "fuentes/d895da2d01f0.jpg"
   },
   {
    "fuente": "medio",
@@ -16981,7 +16982,8 @@
    "eco": null,
    "captura": null,
    "titular": "Vecinos de Miravalle llevan días sin agua y temen por los tandeos",
-   "video": true
+   "video": true,
+   "vista": "fuentes/93a86730ae29.jpg"
   },
   {
    "fuente": "medio",
@@ -17365,7 +17367,8 @@
    "captura": null,
    "titular": "¡Gobierno federal rescata a Jalisco! Claudia Sheinbaum dará 13 mmdp para atender agua contaminada",
    "video": true,
-   "causa": "una reparación fallida de una fuga"
+   "causa": "una reparación fallida de una fuga",
+   "vista": "fuentes/abdf0f081d13.jpg"
   },
   {
    "fuente": "medio",
@@ -17504,7 +17507,8 @@
    "eco": null,
    "captura": null,
    "titular": "Falta de agua afecta a negocios de Tonalá",
-   "video": true
+   "video": true,
+   "vista": "fuentes/2ffa00e8847d.jpg"
   },
   {
    "fuente": "medio",
@@ -19761,7 +19765,8 @@
    "eco": null,
    "titular": "Sin agua y sin aviso oportuno, vecinos enfrentan cortes en Cruz del Sur",
    "captura": null,
-   "video": true
+   "video": true,
+   "vista": "fuentes/2e14772a9d99.jpg"
   },
   {
    "fuente": "medio",
@@ -20271,7 +20276,8 @@
    "eco": null,
    "captura": null,
    "titular": "Siguen con agua sucia y algunas colonias no tienen agua antes del tandeo",
-   "video": true
+   "video": true,
+   "vista": "fuentes/4e840318d355.jpg"
   },
   {
    "fuente": "medio",
@@ -31218,7 +31224,8 @@
     "MIRAVALLE|Guadalajara|44990"
    ],
    "lugar": "Miravalle",
-   "cita": "Y Miravalle sin agua desde el sábado"
+   "cita": "Y Miravalle sin agua desde el sábado",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31242,7 +31249,8 @@
     "MIRAVALLE|Guadalajara|44990"
    ],
    "lugar": "Miravalle",
-   "cita": "Ya pongan el agua en Miravalle"
+   "cita": "Ya pongan el agua en Miravalle",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31267,7 +31275,8 @@
    ],
    "lugar": "colonia Camichines 2, Tonalá (zona 4)",
    "cita": "No tienen vergüenza, más de una semana sin agua en la colonia camichines 2 en Tonalá, y ahora resulta que a la zona 4, nos tocaran 4 días en vez de dos, sin el servicio. No respetan su calendario de rotación, pero eso sí el recibo puntual, verdad",
-   "dias": 7
+   "dias": 7,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31292,7 +31301,8 @@
    ],
    "lugar": "La Expenal",
    "cita": "EN LA EXPENAL NO HAY AGUA DESDE HACE 34 DIAS",
-   "dias": 34
+   "dias": 34,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31316,7 +31326,8 @@
     "PASEOS DEL VALLE|Tonalá|45403"
    ],
    "lugar": "Paseos del Valle, Tonalá (zona 4)",
-   "cita": "No mmn! Desde la sábado no hay agua en Paseos del Valle, Tonalá (Zona 4)! No respetan los Tandeos!!!"
+   "cita": "No mmn! Desde la sábado no hay agua en Paseos del Valle, Tonalá (Zona 4)! No respetan los Tandeos!!!",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31341,7 +31352,8 @@
    ],
    "lugar": "Miramar",
    "cita": "MIRAMAR MÁS DE UN MES SIN AGUA!!",
-   "dias": 30
+   "dias": 30,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31366,7 +31378,8 @@
    ],
    "lugar": "Lomas de la Soledad, Tonalá",
    "cita": "Mms nosotros no estamos en el corte y no tenemos agua desde hace 3 semanas lomas de. La Soledad tonala",
-   "dias": 21
+   "dias": 21,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31391,7 +31404,8 @@
    ],
    "lugar": "Residencial Moctezuma",
    "cita": "Duda, a esto llaman agua limpia??? Esta calidad de agua estaba saliendo en Residencial Moctezuma el día domingo y ni reporte se puede hacer ya que no contestan",
-   "calidad": true
+   "calidad": true,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31416,7 +31430,8 @@
    ],
    "lugar": "arroyo de las flores en Tlaquepaque",
    "cita": "En arroyo de las flores en Tlaquepaque ya tenemos más una semana sin agua bueno primero estuvimos 18 días sin agua y luego solo 2 días si y después ya 10 Diaz sin agua",
-   "dias": 10
+   "dias": 10,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31440,7 +31455,8 @@
     "20 DE NOVIEMBRE|Tonalá|45404"
    ],
    "lugar": "col 20 de noviembre de Tonalá",
-   "cita": "En la col 20 de noviembre de Tonalá no tenemos agua desde hace varias semanas y no estamos en ningún esquema de tandeos, ninguna zona, como ahí que??"
+   "cita": "En la col 20 de noviembre de Tonalá no tenemos agua desde hace varias semanas y no estamos en ningún esquema de tandeos, ninguna zona, como ahí que??",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31465,7 +31481,8 @@
    ],
    "lugar": "la Floresta, Tlaquepaque",
    "cita": "En la colonia la Floresta en Tlaquepaque una semana sin agua. Cuando van a restablecer el servicio?. Duramos 25 días sin agua. La pusieron 1 un día y medio y nuevamente sin agua",
-   "dias": 7
+   "dias": 7,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31490,7 +31507,8 @@
    ],
    "lugar": "colonia Alfredo Barba",
    "cita": "Siapa Gdl la colonia Alfredo Barba tenemos mes y medio sin agua",
-   "dias": 45
+   "dias": 45,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31515,7 +31533,8 @@
    ],
    "lugar": "CD aztlan, Tonalá",
    "cita": "Y en CD aztlan tonala casi una semana sin agua",
-   "dias": 6
+   "dias": 6,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31539,7 +31558,8 @@
     "LOMAS DE LA PRIMAVERA|Zapopan|45066"
    ],
    "lugar": "Lomas de la Primavera (zona 6)",
-   "cita": "Zona 6 lomas de la primavera se supone que debe caer estos dias, y nada"
+   "cita": "Zona 6 lomas de la primavera se supone que debe caer estos dias, y nada",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31563,7 +31583,8 @@
     "LOMAS DEL CUATRO|San Pedro Tlaquepaque|45996"
    ],
    "lugar": "zona 5 lomas del 4",
-   "cita": "No digan mmds si no tenemos agua desde hace semanas en zona 5 lomas del 4"
+   "cita": "No digan mmds si no tenemos agua desde hace semanas en zona 5 lomas del 4",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31588,7 +31609,8 @@
    ],
    "lugar": "san Vicente",
    "cita": "1 mes sin agua en san Vicente",
-   "dias": 30
+   "dias": 30,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31613,7 +31635,8 @@
     "NUEVA SANTA MARIA|Guadalajara|45530"
    ],
    "lugar": "la nueva santamaria",
-   "cita": "Que pinchi cinismo de esto pues no hay agua hoy se supone que debe aver aquí en la nueva santamaria y nada se pasa"
+   "cita": "Que pinchi cinismo de esto pues no hay agua hoy se supone que debe aver aquí en la nueva santamaria y nada se pasa",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31637,7 +31660,8 @@
     "EL ZALATE|Guadalajara|44760"
    ],
    "lugar": "colonia el zalate",
-   "cita": "En la colonia el zalate no hay servicio de agua ni siquiera respetan el calendario es una porqueria su servicio"
+   "cita": "En la colonia el zalate no hay servicio de agua ni siquiera respetan el calendario es una porqueria su servicio",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31663,7 +31687,8 @@
    ],
    "lugar": "Portales, Tlaquepaque (zona 3)",
    "cita": "Zona 3, Portales Tlaquepaque, no tenemos agua desde el domingo a medio día.",
-   "dias": 3
+   "dias": 3,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31688,7 +31713,8 @@
    ],
    "lugar": "El Vergel, Tlaquepaque",
    "cita": "Muy bien SIAPA El sábado debemos tener agua Están seguros Porque tenemos 15 días sin nada El vergel Tlaquepaque",
-   "dias": 15
+   "dias": 15,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31713,7 +31739,8 @@
    ],
    "lugar": "Mesa de los Ocotes",
    "cita": "En mesa de los ocotes un mes sin llegar el agua aquí para cuando",
-   "dias": 30
+   "dias": 30,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31737,7 +31764,8 @@
     "LADRON DE GUEVARA|Guadalajara|44600"
    ],
    "lugar": "Colonia Ladron de Guevara (zona 6)",
-   "cita": "Zona 6 sin agua Colonia Ladron de Guevara"
+   "cita": "Zona 6 sin agua Colonia Ladron de Guevara",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31762,7 +31790,8 @@
    ],
    "lugar": "Colonia Villaseñor (zona 6)",
    "cita": "5 días seguidos sin agua en la colonia Villaseñor!!! Zona 6!!!",
-   "dias": 5
+   "dias": 5,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31787,7 +31816,8 @@
    ],
    "lugar": "El Campesino",
    "cita": "Llevamos casi dos semanas sin agua en el campesino no respetan el esquema de rotación,",
-   "dias": 13
+   "dias": 13,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31813,7 +31843,8 @@
    ],
    "lugar": "Colonia Horizontes de Tlaquepaque, Santibáñez",
    "cita": "Así en la colonia horizontes de Tlaquepaque, Santibáñez",
-   "calidad": true
+   "calidad": true,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31838,7 +31869,8 @@
    ],
    "lugar": "Miravalle",
    "cita": "Y por qué Miravalle 4 días sin agua desde el sábado no ahí agua no chinguen",
-   "dias": 4
+   "dias": 4,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31862,7 +31894,8 @@
     "JARDINES DEL SUR|Guadalajara|44950"
    ],
    "lugar": "Jardines del Sur (zona 5)",
-   "cita": "Siapa Gdl ojalá si cumplan los días programados. Hemos estado sin agua zona 5 (jardines del sur). Es un calvario"
+   "cita": "Siapa Gdl ojalá si cumplan los días programados. Hemos estado sin agua zona 5 (jardines del sur). Es un calvario",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31887,7 +31920,8 @@
    ],
    "lugar": "Col. Gustavo Díaz Ordaz",
    "cita": "ESO ES MENTIRA EN LA COL. GUSTAVO DIAZ ORDAZ YA TENEMOS 4 DIAS SIN AGUA CUANDO LA VAN A CONECTAR",
-   "dias": 4
+   "dias": 4,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31912,7 +31946,8 @@
    ],
    "lugar": "Unidad Clemente Orozco (zona 5)",
    "cita": "En la unidad Clemente Orozco que pertenece a la zona 5 nos dejaron sin servivio desde el lunes",
-   "dias": 2
+   "dias": 2,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31936,7 +31971,8 @@
     "LOMAS DE LA PRIMAVERA|Zapopan|45066"
    ],
    "lugar": "Lomas de la Primavera",
-   "cita": "En lomas de la primavera no ha caído agua en meses"
+   "cita": "En lomas de la primavera no ha caído agua en meses",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31960,7 +31996,8 @@
     "LOMAS DEL PARADERO|Guadalajara|44840"
    ],
    "lugar": "Lomas del Paradero",
-   "cita": "Lomas del paradero sin agua Siapa Gdl"
+   "cita": "Lomas del paradero sin agua Siapa Gdl",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -31985,7 +32022,8 @@
    ],
    "lugar": "la gloria de colli",
    "cita": "Es chiste? En la gloria de colli no sabemos que es eso de los tandeos, ya mes y medio sin agua",
-   "dias": 45
+   "dias": 45,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32010,7 +32048,8 @@
    ],
    "lugar": "el campesino",
    "cita": "Yo nose ya para que ponen eso si tenemos 22 días sin agua en el campesino se pasan la mera verdad aaaa pero para cobrar bien buenos",
-   "dias": 22
+   "dias": 22,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32034,7 +32073,8 @@
     "EUCALIPTO VALLARTA|Zapopan|45020"
    ],
    "lugar": "Eucalipto Vallarta (zona 6)",
-   "cita": "Que descaro y cinismo no hay agua en zona 6 y llega el recibo cobrando como si hubiera agua Eucalipto Vallarta"
+   "cita": "Que descaro y cinismo no hay agua en zona 6 y llega el recibo cobrando como si hubiera agua Eucalipto Vallarta",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32058,7 +32098,8 @@
     "INDEPENDENCIA ORIENTE|Guadalajara|44340"
    ],
    "lugar": "Col. Independencia Oriente",
-   "cita": "Col. Independencia Oriente igual. No respetan los tandeos. Y nos pusieron en tres zonas !!!!"
+   "cita": "Col. Independencia Oriente igual. No respetan los tandeos. Y nos pusieron en tres zonas !!!!",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32082,7 +32123,8 @@
     "CIRCUNVALACION BELISARIO|Guadalajara|44330"
    ],
    "lugar": "Circunvalación Belisario (según la publicación)",
-   "cita": "Supuestamente miércoles & sábado nos toca. Pero desde ayer & hoy en todo el día no hubo"
+   "cita": "Supuestamente miércoles & sábado nos toca. Pero desde ayer & hoy en todo el día no hubo",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32107,7 +32149,8 @@
    ],
    "lugar": "San Vicente",
    "cita": "En san Vicente ya vamos para 3 semanas sin agua",
-   "dias": 21
+   "dias": 21,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32132,7 +32175,8 @@
    ],
    "lugar": "circunvalación Belisario",
    "cita": "nosotross tenemos 3 semanas sin agua en circunvalación Belisario",
-   "dias": 21
+   "dias": 21,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32157,7 +32201,8 @@
    ],
    "lugar": "San Vicente",
    "cita": "Yo estoy en San Vicente y solo me dejan el agua martes y viernes, está semana también tuve el lunes pero solo por la mañana, en la tarde nada y en la noche otra vez",
-   "parcial": true
+   "parcial": true,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32183,7 +32228,8 @@
    ],
    "lugar": "calle Mesa del Norte, col Belisario Domínguez",
    "cita": "En la calle mesa del Norte col Belisario Domínguez tenemos más de 20 días sin agua, los tandeos es una burla",
-   "dias": 20
+   "dias": 20,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32208,7 +32254,8 @@
     "BELISARIO DOMINGUEZ|Guadalajara|44340"
    ],
    "lugar": "Belisario Domínguez",
-   "cita": "Desde el lunes sin agua en Belisario Domínguez"
+   "cita": "Desde el lunes sin agua en Belisario Domínguez",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32233,7 +32280,8 @@
    ],
    "lugar": "La Esperanza",
    "cita": "La esperanza ya un mes sin agua",
-   "dias": 30
+   "dias": 30,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32257,7 +32305,8 @@
     "JARDINES DEL ROSARIO|Guadalajara|44890"
    ],
    "lugar": "Jardines del Rosario",
-   "cita": "Jardines del Rosario nada desde el miércoles"
+   "cita": "Jardines del Rosario nada desde el miércoles",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32282,7 +32331,8 @@
    ],
    "lugar": "Las Águilas, Zapopan (zona 6)",
    "cita": "zona 6 sin agua desde hace más de 15 días",
-   "dias": 15
+   "dias": 15,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32307,7 +32357,8 @@
    ],
    "lugar": "Las Águilas, Zapopan (grupo de la colonia)",
    "cita": "Desde hace tres días",
-   "dias": 3
+   "dias": 3,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32331,7 +32382,8 @@
     "LAS AGUILAS|Zapopan|45080"
    ],
    "lugar": "Las Águilas",
-   "cita": "Las águilas estamos sin agua"
+   "cita": "Las águilas estamos sin agua",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32355,7 +32407,8 @@
     "LAS AGUILAS|Zapopan|45080"
    ],
    "lugar": "Las Águilas, Zapopan (zona 6)",
-   "cita": "Los q somos 6 hoy no tenemos"
+   "cita": "Los q somos 6 hoy no tenemos",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32379,7 +32432,8 @@
     "LAS AGUILAS|Zapopan|45080"
    ],
    "lugar": "Las Águilas, Zapopan (grupo de la colonia)",
-   "cita": "No tenemos ni una agua desde el jueves"
+   "cita": "No tenemos ni una agua desde el jueves",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32403,7 +32457,8 @@
     "20 DE NOVIEMBRE|Tonalá|45404"
    ],
    "lugar": "20 de noviembre, Tonalá",
-   "cita": "Ojalá resuelvan algo acá en la 20 de noviembre Tonalá Jalisco"
+   "cita": "Ojalá resuelvan algo acá en la 20 de noviembre Tonalá Jalisco",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32427,7 +32482,8 @@
     "20 DE NOVIEMBRE|Tonalá|45404"
    ],
    "lugar": "col 20 noviembre",
-   "cita": "Otra vez sin agua, col 20 noviembre ya hagan algo"
+   "cita": "Otra vez sin agua, col 20 noviembre ya hagan algo",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32452,7 +32508,8 @@
    ],
    "lugar": "20 de Noviembre, Tonalá (según la publicación)",
    "cita": "Llevamos 3 semanas sin agua ya es demasiado tiempo",
-   "dias": 21
+   "dias": 21,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32477,7 +32534,8 @@
    ],
    "lugar": "colonia 20 de noviembre",
    "cita": "Tenemos 2 semanas sin agua aquí en la colonia 20 de noviembre la verdad que si nos están perjudicando mucho y ni si quieran manda pipas",
-   "dias": 14
+   "dias": 14,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32502,7 +32560,8 @@
    ],
    "lugar": "col veinte de noviembre (Bandera Nacional), Tonalá",
    "cita": "Bandera Nacional col veinte de noviembre Tonalá no hay agua ya dos semanas sin agua",
-   "dias": 14
+   "dias": 14,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32526,7 +32585,8 @@
     "EL ZAPOTE|Tonalá|45400"
    ],
    "lugar": "colonia El Zapote, Tonalá",
-   "cita": "En la colonia el zapote tampoco hay agua desde el pasado sábado"
+   "cita": "En la colonia el zapote tampoco hay agua desde el pasado sábado",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32550,7 +32610,8 @@
     "HACIENDA REAL|Tonalá|45428"
    ],
    "lugar": "colonia hacienda real, Tonalá",
-   "cita": "Hoy sábado igual no tenemos agua aca en la colonia hacienda real"
+   "cita": "Hoy sábado igual no tenemos agua aca en la colonia hacienda real",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32574,7 +32635,8 @@
     "LOMAS DEL CAMICHIN|Tonalá|45403"
    ],
    "lugar": "Lomas del Camichín, Tonalá",
-   "cita": "LOMAS DEL CAMICHIN SIN AGUA"
+   "cita": "LOMAS DEL CAMICHIN SIN AGUA",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32598,7 +32660,8 @@
     "LOMAS DE LA SOLEDAD|Tonalá|45403"
    ],
    "lugar": "Lomas de la Soledad, Tonalá",
-   "cita": "Lomas de la soledad no tenemos agua desde el sábado pasado"
+   "cita": "Lomas de la soledad no tenemos agua desde el sábado pasado",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32622,7 +32685,8 @@
     "PASEOS DEL VALLE|Tonalá|45403"
    ],
    "lugar": "Paseos del Valle, Tonalá",
-   "cita": "Paseos del valle sin agua"
+   "cita": "Paseos del valle sin agua",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32646,7 +32710,8 @@
     "INFONAVIT TONALA (RIO NILO)|Tonalá|45403"
    ],
    "lugar": "Infonavit Río Nilo, Tonalá",
-   "cita": "INFONAVIT RÍO NILO NO ESTAMOS CONTEMPLADO PARA LOS FAMOSOS CORTÉS O TANDEOS, NO TENEMOS DESDE EL MIÉRCOLES."
+   "cita": "INFONAVIT RÍO NILO NO ESTAMOS CONTEMPLADO PARA LOS FAMOSOS CORTÉS O TANDEOS, NO TENEMOS DESDE EL MIÉRCOLES.",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32670,7 +32735,8 @@
     "JARDINES DE LA REINA|Tonalá|45410"
    ],
    "lugar": "Jardines de la Reina, Tonalá",
-   "cita": "Jardínes de la Reina no hay"
+   "cita": "Jardínes de la Reina no hay",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32695,7 +32761,8 @@
    ],
    "lugar": "colonia Santa Paula, Tonalá",
    "cita": "En la colonia Santa Paula no tenemos agua meses primero con agua Sucia y ya sin agua no es gusto y los recibos altísimos y puntuales esos no faltan",
-   "calidad": true
+   "calidad": true,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32714,7 +32781,8 @@
    ],
    "lugar": "Las Juntas, Tlaquepaque",
    "cita": "Vecinos de las juntas, YA BASTA!!!! Vecinos míos, la verdad ya estuvo bueno. Nos vieron la cara y no se vale. Más de 15 días sin agua y no es justo que estemos gastando de NUESTRO DINERO por cosas de ellos.",
-   "dias": 15
+   "dias": 15,
+   "vista": "fuentes/0a38203d5909.jpg"
   },
   {
    "fuente": "vecinos",
@@ -32739,7 +32807,8 @@
    ],
    "lugar": "Las Juntas, Tlaquepaque (hilo)",
    "cita": "Ya 15 días sin agua y compré y compré agua por fuera",
-   "dias": 15
+   "dias": 15,
+   "vista": "fuentes/0a38203d5909.jpg"
   },
   {
    "fuente": "vecinos",
@@ -32764,7 +32833,8 @@
    ],
    "lugar": "zona 6 chapalita",
    "cita": "De qué sirve eso? Si no cumplen las rotaciones. Ya tiene más de tres semanas sin agua de la zona 6 chapalita.",
-   "dias": 21
+   "dias": 21,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32788,7 +32858,8 @@
     "EUCALIPTO VALLARTA|Zapopan|45020"
    ],
    "lugar": "Eucalipto Vallarta",
-   "cita": "Ojalá cumplan y chequen lo de los recibos no puedes ni debes pagar como si tuvieras agua porque hasta el dia de hoy no la hay Eucalipto Vallarta zona 6"
+   "cita": "Ojalá cumplan y chequen lo de los recibos no puedes ni debes pagar como si tuvieras agua porque hasta el dia de hoy no la hay Eucalipto Vallarta zona 6",
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32813,7 +32884,8 @@
    ],
    "lugar": "Quintana Velarde, Guadalajara",
    "cita": "Mentira ese esquema . Pertenezco a ls zona 2. Hoy miércoles no hay agua. . Desde el 28 de octubre prácticamente no entra agua. Y cuando llega un ratito,ni fuerza tiene para subir al tinaco. Soy de Quintana Velarde, Guadalajara.",
-   "dias": 7
+   "dias": 7,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32838,7 +32910,8 @@
    ],
    "lugar": "ChapalitaInn",
    "cita": "En ChapalitaInn más de UN MES sin agua, cero tandeos!!!",
-   "dias": 30
+   "dias": 30,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32863,7 +32936,8 @@
    ],
    "lugar": "Chapalita inn",
    "cita": "Puras mentiras los tandeos están solo en papel , pero la realidad no los hacen según su calendario en Chapalita inn casi un mes sin nada de agua puras mentiras",
-   "dias": 28
+   "dias": 28,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32888,7 +32962,8 @@
    ],
    "lugar": "Real Vallarta",
    "cita": "Mentira, no ha caído agua en Real Vallarta desde hace 7 días, incluyendo hoy. Su calendario es pura simulación y engaño, por lo menos en la zona 6. Las autoridades se burlan de los ciudadanos.",
-   "dias": 7
+   "dias": 7,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32913,7 +32988,8 @@
    "lugar": "Colonia Francisco Villa, zona 5 (texto de una imagen en el comentario)",
    "cita": "¡AYUDA! La Zona Cinco, Colonia Francisco Villa, no tenemos agua desde el sábado 10 de octubre.",
    "desde": "2026-10-10",
-   "dias": 25
+   "dias": 25,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32938,7 +33014,8 @@
    ],
    "lugar": "Col. Rancho la Cruz, Tonalá (texto de una imagen en el comentario)",
    "cita": "Tonalá Col. Rancho la Cruz NO estamos en el tandeo y ya tenemos al menos 13 días sin agua",
-   "dias": 13
+   "dias": 13,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32963,7 +33040,8 @@
    ],
    "lugar": "Artesanos, Tlaquepaque (colonia en la captura del buscador de SIAPA adjunta)",
    "cita": "En mi colonia dice sin afectación, y tenemos dos semanas sin agua",
-   "dias": 14
+   "dias": 14,
+   "vista": null
   },
   {
    "fuente": "vecinos",
@@ -32988,7 +33066,241 @@
    ],
    "lugar": "Colonia Lomas del Paradero, zona 3 (nombrada en la imagen del comentario)",
    "cita": "Desde ayer no tenemos agua! Aumentaron días sin agua sin previo aviso. Es una situación desesperante! Imagen: «COLONIA LOMAS DEL PARADERO SIN AGUA - ZONA 3, GUADALAJARA»",
-   "dias": 1
+   "dias": 1,
+   "vista": null
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Imagen TV Guadalajara",
+   "url": "https://www.youtube.com/watch?v=Js5S_08Tkic",
+   "fecha": "2026-10-27",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "Oblatos, Guadalajara",
+   "cita": "Vecinos de Oblatos, en Guadalajara, denunciaron más de un mes sin agua potable.",
+   "dias": 30,
+   "video": true,
+   "titular": "Sin agua, pero con recibos: Vecinos de Oblatos llevan más de un mes sin agua y exigen solución",
+   "vista": "fuentes/4b1d0a3e3a14.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Imagen TV Guadalajara",
+   "url": "https://www.youtube.com/watch?v=P1GZMgVinqo",
+   "fecha": "2026-10-21",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Ciudad Granja, Zapopan",
+   "cita": "Habitantes de la Col. Ciudad Granja, en #Zapopan, bloquearon la Av. Vallarta a la altura de Calzada de los Pirules para exigir el restablecimiento del servicio tras cumplir 13 días sin suministro.",
+   "dias": 13,
+   "video": true,
+   "titular": "Vecinos de Ciudad Granja bloquean Av. Vallarta tras 13 días sin agua | Noticias GDL",
+   "bloqueo": true,
+   "vista": "fuentes/9410dc44a754.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Imagen TV Guadalajara",
+   "url": "https://www.youtube.com/watch?v=wV2ZH6lp2NU",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Ciudad Granja, Zapopan",
+   "cita": "Habitantes de Ciudad Granja, en Zapopan, bloquearon avenida Vallarta tras 13 días sin agua.",
+   "dias": 13,
+   "video": true,
+   "titular": "¡13 días sin agua! Vecinos de Ciudad Granja bloquean avenida Vallarta por falta de agua",
+   "bloqueo": true,
+   "vista": "fuentes/a914b23b792a.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Imagen TV Guadalajara",
+   "url": "https://www.youtube.com/watch?v=jC4UfsLLVQ4",
+   "fecha": "2026-10-19",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Ciudad Granja, Zapopan",
+   "cita": "Habitantes de la Col. Ciudad Granja en #Zapopan cerraron la circulación en ambos sentidos de la Av. Vallarta, a la altura de la Glorieta de los Pirules. La manifestación responde a las constantes denuncias por la pésima calidad del agua recibida en sus hogares.",
+   "video": true,
+   "titular": "Vecinos de Ciudad Granja bloquean Av. Vallarta en protesta por agua de mala calidad | GDL",
+   "bloqueo": true,
+   "calidad": true,
+   "vista": "fuentes/6a61282f204e.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Meganoticias",
+   "url": "https://www.youtube.com/watch?v=eYmEWy5bZME",
+   "fecha": "2026-10-23",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Ciudad Granja, Zapopan",
+   "cita": "Durante 2026, vecinos de Ciudad Granja, en Zapopan, han realizado diversas manifestaciones para exigir al SIAPA una solución al desabasto y la mala calidad del agua.",
+   "video": true,
+   "titular": "CIUDAD GRANJA SUMA PROTESTAS EN 2026 POR FALTA DE AGUA Y MALA CALIDAD DEL SUMINISTRO.",
+   "vista": "fuentes/78a8c89994ab.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Telediario Guadalajara",
+   "url": "https://www.youtube.com/watch?v=4jTBAajom7o",
+   "fecha": "2026-10-23",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Ciudad Granja, avenida Vallarta, Zapopan",
+   "cita": "Dos semanas sin agua y el hartazgo llegó al límite. Por cuarto día consecutivo, vecinos de Ciudad Granja cerraron avenida Vallarta",
+   "dias": 14,
+   "video": true,
+   "titular": "Nueva protesta por falta de agua provoca caos, confrontaciones y un atropello en Zapopan",
+   "bloqueo": true,
+   "vista": "fuentes/c7ddb3f03ff8.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "UDG TV",
+   "url": "https://www.youtube.com/watch?v=tPCXM_b8bLs",
+   "fecha": "2026-11-02",
+   "colonias": [
+    "SAN JUAN BOSCO|Guadalajara|44730"
+   ],
+   "lugar": "San Felipe y San Juan Bosco, avenida Javier Mina, Guadalajara",
+   "cita": "Vecinos de los barrios de San Felipe y San Juan Bosco, en Guadalajara, realizaron una manifestación en la avenida Javier Mina, al cruce con la calle 40 o Pedro Celestino Negrete.",
+   "dias": 32,
+   "video": true,
+   "titular": "Vecinos cierran avenida Javier Mina, tras 32 días sin agua",
+   "bloqueo": true,
+   "vista": "fuentes/80bbda7f7054.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Meganoticias",
+   "url": "https://www.youtube.com/watch?v=rF0dw1uGWkU",
+   "fecha": "2026-10-21",
+   "colonias": [
+    "GUADALUPE JARDIN|Zapopan|45030",
+    "JARDINES DE GUADALUPE|Zapopan|45030"
+   ],
+   "lugar": "Guadalupe Jardín y Jardines de Guadalupe, Zapopan",
+   "cita": "Habitantes de las colonias Guadalupe Jardín y Jardines de Guadalupe, en Zapopan, denuncian que llevan más de 15 días sin suministro de agua potable",
+   "dias": 15,
+   "video": true,
+   "titular": "LLEVAN MÁS DE 15 DÍAS SIN AGUA, SEÑALAN FALLAS EN LA ATENCIÓN DEL SIAPA.",
+   "vista": "fuentes/a5913cdd076f.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "UDG TV",
+   "url": "https://www.youtube.com/watch?v=3krOP67_G0o",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "ARCOS DE GUADALUPE|Zapopan|45030"
+   ],
+   "lugar": "Arcos de Guadalupe, Zapopan",
+   "cita": "Vecinos de la colonia Arcos de Guadalupe se quejaron de tener una semana sin agua y donde sí hay está contaminada",
+   "dias": 7,
+   "video": true,
+   "titular": "En Arcos de Guadalupe llevan una semana sin agua, pero habrá dos torres de departamentos en la zona",
+   "vista": "fuentes/88a66ccd6194.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Telediario Guadalajara",
+   "url": "https://www.youtube.com/watch?v=bO72nVjihw8",
+   "fecha": "2026-10-20",
+   "colonias": [
+    "POLANQUITO PONIENTE|Guadalajara|44969"
+   ],
+   "lugar": "Polanquito, avenida 8 de Julio y Reyes Heroles, Guadalajara",
+   "cita": "Decenas de vecinos de la colonia Polanquito y alrededores bloquearon la noche de este lunes la avenida 8 de Julio, al cruce con Reyes Heroles, en Guadalajara para exigir el restablecimiento del suministro de agua potable.",
+   "dias": 11,
+   "video": true,
+   "titular": "Vecinos bloquearon la avenida 8 de Julio por falta de agua en Guadalajara",
+   "bloqueo": true,
+   "vista": "fuentes/ed20b6ca0f40.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Imagen TV Guadalajara",
+   "url": "https://www.youtube.com/watch?v=xxIZM6fkwmg",
+   "fecha": "2026-10-28",
+   "colonias": [
+    "FRANCISCO I MADERO|San Pedro Tlaquepaque|45530",
+    "GUAYABITOS|San Pedro Tlaquepaque|45530"
+   ],
+   "lugar": "Francisco I. Madero y Guayabitos, avenida 8 de Julio, Tlaquepaque",
+   "cita": "Por segunda ocasión, vecinos de Francisco I. Madero, Guayabitos y colonias aledañas bloquearon avenida 8 de Julio en Tlaquepaque. Aseguran que llevan dos meses sin agua y las pipas no bastan.",
+   "video": true,
+   "titular": "¡Dos meses sin agua! Vecinos de Tlaquepaque bloquean avenida 8 de Julio para exigir al SIAPA",
+   "bloqueo": true,
+   "vista": "fuentes/bc72f3272a56.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "UDG TV",
+   "url": "https://www.youtube.com/watch?v=nBAAlm01hgg",
+   "fecha": "2026-10-26",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "Oblatos, Guadalajara",
+   "cita": "En casa lleva dos semanas sin agua y su hijo tiene ocho días sin asistir a la escuela porque tampoco hay servicio. Ellos viven en la Colonia oblatos una de las más afectadas.",
+   "dias": 14,
+   "video": true,
+   "titular": "Su hijo lleva una semana sin clases por falta de agua en la escuela"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Meganoticias",
+   "url": "https://www.youtube.com/watch?v=-CRMyt3nMiw",
+   "fecha": "2026-10-27",
+   "colonias": [
+    "LAS JUNTAS|San Pedro Tlaquepaque|45590",
+    "EL TAPATIO|San Pedro Tlaquepaque|45580",
+    "LA DURAZNERA|San Pedro Tlaquepaque|45623"
+   ],
+   "lugar": "Las Juntas, Las Juntitas, El Tapatío y La Duraznera, carretera a Chapala, Tlaquepaque",
+   "cita": "Habitantes de Las Juntas, Las Juntitas, El Tapatío y La Duraznera denuncian semanas sin agua; en algunas zonas, el desabasto alcanza casi dos meses.",
+   "video": true,
+   "titular": "Bloqueo por falta de agua colapsa la Carretera a Chapala por horas",
+   "bloqueo": true,
+   "vista": "fuentes/9fd6f0db37c0.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "UDG TV",
+   "url": "https://www.youtube.com/watch?v=g2LhWNkl4R8",
+   "fecha": "2026-10-26",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "Oblatos y San Felipe, avenida Javier Mina y Pedro Celestino Negrete, Guadalajara",
+   "cita": "Un grupo de unos 25 vecinos de colonias como Oblatos y el barrio de San Felipe cerraron la avenida Javier Mina y Pedro Celestino Negrete al oriente de la ciudad, justo a la altura de la estación Oblatos del Tren Ligero porque no respetan los tandeos, y al grito de fuera Lemus y queremos agua ya, denuncian que tienen 15 días sin agua",
+   "dias": 15,
+   "bloqueo": true,
+   "video": true,
+   "titular": "Protestan con bloqueos en Javier Mina y la autopista a Zapotlanejo por crisis de agua del SIAPA",
+   "vista": "fuentes/1a09dba6b77c.jpg"
   }
  ]
 }
