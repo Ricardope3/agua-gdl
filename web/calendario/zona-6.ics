@@ -181,21 +181,21 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: vie
- rnes 6 de noviembre
+ rnes 6\, sábado 7 y domingo 8 de noviembre
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: viernes 
- 6 de noviembre
+ 6\, sábado 7 y domingo 8 de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-6-20261109@aguagdl.com
+UID:zona-6-20261107@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20261109
-DTEND;VALUE=DATE:20261110
+DTSTART;VALUE=DATE:20261107
+DTEND;VALUE=DATE:20261108
 SUMMARY:💧 Racionamiento de agua · Zona 6
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -204,18 +204,20 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: lun
- es 9 de noviembre
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: lunes 9 
- de noviembre
-TRIGGER:-PT4H
-END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-6-20261108@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261108
+DTEND;VALUE=DATE:20261109
+SUMMARY:💧 Racionamiento de agua · Zona 6
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-6-20261113@aguagdl.com
@@ -233,21 +235,21 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: vie
- rnes 13 de noviembre
+ rnes 13\, sábado 14 y domingo 15 de noviembre
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: viernes 
- 13 de noviembre
+ 13\, sábado 14 y domingo 15 de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-6-20261116@aguagdl.com
+UID:zona-6-20261114@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20261116
-DTEND;VALUE=DATE:20261117
+DTSTART;VALUE=DATE:20261114
+DTEND;VALUE=DATE:20261115
 SUMMARY:💧 Racionamiento de agua · Zona 6
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -256,18 +258,20 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: lun
- es 16 de noviembre
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: lunes 16
-  de noviembre
-TRIGGER:-PT4H
-END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-6-20261115@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261115
+DTEND;VALUE=DATE:20261116
+SUMMARY:💧 Racionamiento de agua · Zona 6
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-6-20261120@aguagdl.com
@@ -285,21 +289,21 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: vie
- rnes 20 de noviembre
+ rnes 20\, sábado 21 y domingo 22 de noviembre
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: viernes 
- 20 de noviembre
+ 20\, sábado 21 y domingo 22 de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-6-20261123@aguagdl.com
+UID:zona-6-20261121@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20261123
-DTEND;VALUE=DATE:20261124
+DTSTART;VALUE=DATE:20261121
+DTEND;VALUE=DATE:20261122
 SUMMARY:💧 Racionamiento de agua · Zona 6
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -308,18 +312,20 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: lun
- es 23 de noviembre
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: lunes 23
-  de noviembre
-TRIGGER:-PT4H
-END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-6-20261122@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261122
+DTEND;VALUE=DATE:20261123
+SUMMARY:💧 Racionamiento de agua · Zona 6
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-6-20261127@aguagdl.com
@@ -337,21 +343,21 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: vie
- rnes 27 de noviembre
+ rnes 27\, sábado 28 y domingo 29 de noviembre
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: viernes 
- 27 de noviembre
+ 27\, sábado 28 y domingo 29 de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-6-20261130@aguagdl.com
+UID:zona-6-20261128@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20261130
-DTEND;VALUE=DATE:20261201
+DTSTART;VALUE=DATE:20261128
+DTEND;VALUE=DATE:20261129
 SUMMARY:💧 Racionamiento de agua · Zona 6
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -360,18 +366,20 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: lun
- es 30 de noviembre
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: lunes 30
-  de noviembre
-TRIGGER:-PT4H
-END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-6-20261129@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261129
+DTEND;VALUE=DATE:20261130
+SUMMARY:💧 Racionamiento de agua · Zona 6
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-6-20261204@aguagdl.com
@@ -389,21 +397,21 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: vie
- rnes 4 de diciembre
+ rnes 4\, sábado 5 y domingo 6 de diciembre
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: viernes 
- 4 de diciembre
+ 4\, sábado 5 y domingo 6 de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-6-20261207@aguagdl.com
+UID:zona-6-20261205@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20261207
-DTEND;VALUE=DATE:20261208
+DTSTART;VALUE=DATE:20261205
+DTEND;VALUE=DATE:20261206
 SUMMARY:💧 Racionamiento de agua · Zona 6
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -412,18 +420,20 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: lun
- es 7 de diciembre
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: lunes 7 
- de diciembre
-TRIGGER:-PT4H
-END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-6-20261206@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261206
+DTEND;VALUE=DATE:20261207
+SUMMARY:💧 Racionamiento de agua · Zona 6
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-6-20261211@aguagdl.com
@@ -441,21 +451,21 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: vie
- rnes 11 de diciembre
+ rnes 11\, sábado 12 y domingo 13 de diciembre
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: viernes 
- 11 de diciembre
+ 11\, sábado 12 y domingo 13 de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-6-20261214@aguagdl.com
+UID:zona-6-20261212@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20261214
-DTEND;VALUE=DATE:20261215
+DTSTART;VALUE=DATE:20261212
+DTEND;VALUE=DATE:20261213
 SUMMARY:💧 Racionamiento de agua · Zona 6
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -464,18 +474,20 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: lun
- es 14 de diciembre
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: lunes 14
-  de diciembre
-TRIGGER:-PT4H
-END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-6-20261213@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261213
+DTEND;VALUE=DATE:20261214
+SUMMARY:💧 Racionamiento de agua · Zona 6
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-6-20261218@aguagdl.com
@@ -493,21 +505,21 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: vie
- rnes 18 de diciembre
+ rnes 18\, sábado 19 y domingo 20 de diciembre
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: viernes 
- 18 de diciembre
+ 18\, sábado 19 y domingo 20 de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-6-20261221@aguagdl.com
+UID:zona-6-20261219@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20261221
-DTEND;VALUE=DATE:20261222
+DTSTART;VALUE=DATE:20261219
+DTEND;VALUE=DATE:20261220
 SUMMARY:💧 Racionamiento de agua · Zona 6
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -516,18 +528,20 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: lun
- es 21 de diciembre
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: lunes 21
-  de diciembre
-TRIGGER:-PT4H
-END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-6-20261220@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261220
+DTEND;VALUE=DATE:20261221
+SUMMARY:💧 Racionamiento de agua · Zona 6
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-6-20261225@aguagdl.com
@@ -545,21 +559,21 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: vie
- rnes 25 de diciembre
+ rnes 25\, sábado 26 y domingo 27 de diciembre
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: viernes 
- 25 de diciembre
+ 25\, sábado 26 y domingo 27 de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-6-20261228@aguagdl.com
+UID:zona-6-20261226@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20261228
-DTEND;VALUE=DATE:20261229
+DTSTART;VALUE=DATE:20261226
+DTEND;VALUE=DATE:20261227
 SUMMARY:💧 Racionamiento de agua · Zona 6
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -568,18 +582,20 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: lun
- es 28 de diciembre
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: lunes 28
-  de diciembre
-TRIGGER:-PT4H
-END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-6-20261227@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261227
+DTEND;VALUE=DATE:20261228
+SUMMARY:💧 Racionamiento de agua · Zona 6
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-6-20270101@aguagdl.com
@@ -597,21 +613,21 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: vie
- rnes 1 de enero
+ rnes 1\, sábado 2 y domingo 3 de enero
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: viernes 
- 1 de enero
+ 1\, sábado 2 y domingo 3 de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-6-20270104@aguagdl.com
+UID:zona-6-20270102@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270104
-DTEND;VALUE=DATE:20270105
+DTSTART;VALUE=DATE:20270102
+DTEND;VALUE=DATE:20270103
 SUMMARY:💧 Racionamiento de agua · Zona 6
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -620,18 +636,20 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: lun
- es 4 de enero
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: lunes 4 
- de enero
-TRIGGER:-PT4H
-END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-6-20270103@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270103
+DTEND;VALUE=DATE:20270104
+SUMMARY:💧 Racionamiento de agua · Zona 6
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-6-20270108@aguagdl.com
@@ -649,21 +667,21 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: vie
- rnes 8 de enero
+ rnes 8\, sábado 9 y domingo 10 de enero
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: viernes 
- 8 de enero
+ 8\, sábado 9 y domingo 10 de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-6-20270111@aguagdl.com
+UID:zona-6-20270109@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270111
-DTEND;VALUE=DATE:20270112
+DTSTART;VALUE=DATE:20270109
+DTEND;VALUE=DATE:20270110
 SUMMARY:💧 Racionamiento de agua · Zona 6
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -672,18 +690,20 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: lun
- es 11 de enero
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: lunes 11
-  de enero
-TRIGGER:-PT4H
-END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-6-20270110@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270110
+DTEND;VALUE=DATE:20270111
+SUMMARY:💧 Racionamiento de agua · Zona 6
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-6-20270115@aguagdl.com
@@ -701,21 +721,21 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: vie
- rnes 15 de enero
+ rnes 15\, sábado 16 y domingo 17 de enero
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: viernes 
- 15 de enero
+ 15\, sábado 16 y domingo 17 de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-6-20270118@aguagdl.com
+UID:zona-6-20270116@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270118
-DTEND;VALUE=DATE:20270119
+DTSTART;VALUE=DATE:20270116
+DTEND;VALUE=DATE:20270117
 SUMMARY:💧 Racionamiento de agua · Zona 6
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -724,18 +744,20 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: lun
- es 18 de enero
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: lunes 18
-  de enero
-TRIGGER:-PT4H
-END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-6-20270117@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270117
+DTEND;VALUE=DATE:20270118
+SUMMARY:💧 Racionamiento de agua · Zona 6
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-6-20270122@aguagdl.com
@@ -753,21 +775,21 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: vie
- rnes 22 de enero
+ rnes 22\, sábado 23 y domingo 24 de enero
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: viernes 
- 22 de enero
+ 22\, sábado 23 y domingo 24 de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-6-20270125@aguagdl.com
+UID:zona-6-20270123@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270125
-DTEND;VALUE=DATE:20270126
+DTSTART;VALUE=DATE:20270123
+DTEND;VALUE=DATE:20270124
 SUMMARY:💧 Racionamiento de agua · Zona 6
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -776,18 +798,20 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: lun
- es 25 de enero
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: lunes 25
-  de enero
-TRIGGER:-PT4H
-END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-6-20270124@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270124
+DTEND;VALUE=DATE:20270125
+SUMMARY:💧 Racionamiento de agua · Zona 6
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-6-20270129@aguagdl.com
@@ -805,21 +829,21 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: vie
- rnes 29 de enero
+ rnes 29\, sábado 30 y domingo 31 de enero
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: viernes 
- 29 de enero
+ 29\, sábado 30 y domingo 31 de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-6-20270201@aguagdl.com
+UID:zona-6-20270130@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270201
-DTEND;VALUE=DATE:20270202
+DTSTART;VALUE=DATE:20270130
+DTEND;VALUE=DATE:20270131
 SUMMARY:💧 Racionamiento de agua · Zona 6
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -828,18 +852,20 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: lun
- es 1 de febrero
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: lunes 1 
- de febrero
-TRIGGER:-PT4H
-END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-6-20270131@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270131
+DTEND;VALUE=DATE:20270201
+SUMMARY:💧 Racionamiento de agua · Zona 6
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-6-20270205@aguagdl.com
@@ -857,21 +883,21 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: vie
- rnes 5 de febrero
+ rnes 5\, sábado 6 y domingo 7 de febrero
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: viernes 
- 5 de febrero
+ 5\, sábado 6 y domingo 7 de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-6-20270208@aguagdl.com
+UID:zona-6-20270206@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270208
-DTEND;VALUE=DATE:20270209
+DTSTART;VALUE=DATE:20270206
+DTEND;VALUE=DATE:20270207
 SUMMARY:💧 Racionamiento de agua · Zona 6
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -880,18 +906,20 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: lun
- es 8 de febrero
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: lunes 8 
- de febrero
-TRIGGER:-PT4H
-END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-6-20270207@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270207
+DTEND;VALUE=DATE:20270208
+SUMMARY:💧 Racionamiento de agua · Zona 6
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-6-20270212@aguagdl.com
@@ -909,21 +937,21 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: vie
- rnes 12 de febrero
+ rnes 12\, sábado 13 y domingo 14 de febrero
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: viernes 
- 12 de febrero
+ 12\, sábado 13 y domingo 14 de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-6-20270215@aguagdl.com
+UID:zona-6-20270213@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270215
-DTEND;VALUE=DATE:20270216
+DTSTART;VALUE=DATE:20270213
+DTEND;VALUE=DATE:20270214
 SUMMARY:💧 Racionamiento de agua · Zona 6
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -932,18 +960,20 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: lun
- es 15 de febrero
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: lunes 15
-  de febrero
-TRIGGER:-PT4H
-END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-6-20270214@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270214
+DTEND;VALUE=DATE:20270215
+SUMMARY:💧 Racionamiento de agua · Zona 6
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-6-20270219@aguagdl.com
@@ -961,21 +991,21 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: vie
- rnes 19 de febrero
+ rnes 19\, sábado 20 y domingo 21 de febrero
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: viernes 
- 19 de febrero
+ 19\, sábado 20 y domingo 21 de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-6-20270222@aguagdl.com
+UID:zona-6-20270220@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270222
-DTEND;VALUE=DATE:20270223
+DTSTART;VALUE=DATE:20270220
+DTEND;VALUE=DATE:20270221
 SUMMARY:💧 Racionamiento de agua · Zona 6
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -984,18 +1014,20 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: lun
- es 22 de febrero
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: lunes 22
-  de febrero
-TRIGGER:-PT4H
-END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-6-20270221@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270221
+DTEND;VALUE=DATE:20270222
+SUMMARY:💧 Racionamiento de agua · Zona 6
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-6-20270226@aguagdl.com
@@ -1013,21 +1045,21 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: vie
- rnes 26 de febrero
+ rnes 26\, sábado 27 y domingo 28 de febrero
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: viernes 
- 26 de febrero
+ 26\, sábado 27 y domingo 28 de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-6-20270301@aguagdl.com
+UID:zona-6-20270227@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270301
-DTEND;VALUE=DATE:20270302
+DTSTART;VALUE=DATE:20270227
+DTEND;VALUE=DATE:20270228
 SUMMARY:💧 Racionamiento de agua · Zona 6
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -1036,18 +1068,20 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: lun
- es 1 de marzo
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: lunes 1 
- de marzo
-TRIGGER:-PT4H
-END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-6-20270228@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270228
+DTEND;VALUE=DATE:20270301
+SUMMARY:💧 Racionamiento de agua · Zona 6
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-6-20270305@aguagdl.com
@@ -1065,21 +1099,21 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: vie
- rnes 5 de marzo
+ rnes 5\, sábado 6 y domingo 7 de marzo
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: viernes 
- 5 de marzo
+ 5\, sábado 6 y domingo 7 de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-6-20270308@aguagdl.com
+UID:zona-6-20270306@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270308
-DTEND;VALUE=DATE:20270309
+DTSTART;VALUE=DATE:20270306
+DTEND;VALUE=DATE:20270307
 SUMMARY:💧 Racionamiento de agua · Zona 6
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -1088,18 +1122,20 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: lun
- es 8 de marzo
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: lunes 8 
- de marzo
-TRIGGER:-PT4H
-END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-6-20270307@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270307
+DTEND;VALUE=DATE:20270308
+SUMMARY:💧 Racionamiento de agua · Zona 6
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-6-20270312@aguagdl.com
@@ -1117,21 +1153,21 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: vie
- rnes 12 de marzo
+ rnes 12\, sábado 13 y domingo 14 de marzo
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: viernes 
- 12 de marzo
+ 12\, sábado 13 y domingo 14 de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-6-20270315@aguagdl.com
+UID:zona-6-20270313@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270315
-DTEND;VALUE=DATE:20270316
+DTSTART;VALUE=DATE:20270313
+DTEND;VALUE=DATE:20270314
 SUMMARY:💧 Racionamiento de agua · Zona 6
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -1140,18 +1176,20 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: lun
- es 15 de marzo
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: lunes 15
-  de marzo
-TRIGGER:-PT4H
-END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-6-20270314@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270314
+DTEND;VALUE=DATE:20270315
+SUMMARY:💧 Racionamiento de agua · Zona 6
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-6-20270319@aguagdl.com
@@ -1169,21 +1207,21 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: vie
- rnes 19 de marzo
+ rnes 19\, sábado 20 y domingo 21 de marzo
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: viernes 
- 19 de marzo
+ 19\, sábado 20 y domingo 21 de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-6-20270322@aguagdl.com
+UID:zona-6-20270320@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270322
-DTEND;VALUE=DATE:20270323
+DTSTART;VALUE=DATE:20270320
+DTEND;VALUE=DATE:20270321
 SUMMARY:💧 Racionamiento de agua · Zona 6
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -1192,18 +1230,20 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: lun
- es 22 de marzo
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: lunes 22
-  de marzo
-TRIGGER:-PT4H
-END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-6-20270321@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270321
+DTEND;VALUE=DATE:20270322
+SUMMARY:💧 Racionamiento de agua · Zona 6
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-6-20270326@aguagdl.com
@@ -1221,21 +1261,21 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: vie
- rnes 26 de marzo
+ rnes 26\, sábado 27 y domingo 28 de marzo
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: viernes 
- 26 de marzo
+ 26\, sábado 27 y domingo 28 de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-6-20270329@aguagdl.com
+UID:zona-6-20270327@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270329
-DTEND;VALUE=DATE:20270330
+DTSTART;VALUE=DATE:20270327
+DTEND;VALUE=DATE:20270328
 SUMMARY:💧 Racionamiento de agua · Zona 6
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -1244,17 +1284,19 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 6: lun
- es 29 de marzo
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 6: lunes 29
-  de marzo
-TRIGGER:-PT4H
-END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-6-20270328@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270328
+DTEND;VALUE=DATE:20270329
+SUMMARY:💧 Racionamiento de agua · Zona 6
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
 END:VEVENT
 END:VCALENDAR

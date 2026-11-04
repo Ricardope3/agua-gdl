@@ -74,12 +74,31 @@ func TestOverrides(t *testing.T) {
 	}
 }
 
+func TestPreviousPatternUntilItsLastDay(t *testing.T) {
+	s := load(t, []byte(`{"start":"2026-10-15","zones":{"4":["mon","tue"]},
+		"previous":[{"until":"2026-11-03","zones":{"4":["mon","thu"]}}]}`))
+	for date, want := range map[string]bool{"2026-10-29": true, "2026-11-03": false, "2026-11-05": false, "2026-11-09": true, "2026-11-10": true} {
+		if got := s.IsCut(4, day(s, date)); got != want {
+			t.Errorf("zone 4 on %s: cut %v, want %v", date, got, want)
+		}
+	}
+	if got := DaysES(s.WeekdaysOn(4, day(s, "2026-11-04"))); got != "lunes y martes" {
+		t.Error(got)
+	}
+	if _, err := Load([]byte(`{"start":"2026-10-15","zones":{"1":["sun"]},"previous":[{"until":"2026-11-03","zones":{"1":["mon"]}},{"until":"2026-11-01","zones":{"1":["mon"]}}]}`), s.Location()); err == nil {
+		t.Error("previous patterns out of order were accepted")
+	}
+	if _, err := Load([]byte(`{"start":"2026-10-15","zones":{"1":["sun"]},"previous":[{"until":"2026-11-03","zones":{"2":["mon"]}}]}`), s.Location()); err == nil {
+		t.Error("a previous pattern with other zones was accepted")
+	}
+}
+
 func TestSpanish(t *testing.T) {
 	s := load(t, data.Rotation)
 	if got := DateES(day(s, "2026-10-15")); got != "jueves 15 de octubre" {
 		t.Error(got)
 	}
-	if got := DaysES(s.Weekdays(2)); got != "martes, jueves y domingo" {
+	if got := DaysES(s.WeekdaysOn(2, day(s, "2026-10-15"))); got != "martes, jueves y domingo" {
 		t.Error(got)
 	}
 	if got := HourES(20); got != "8 p. m." {
