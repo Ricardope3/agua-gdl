@@ -403,7 +403,7 @@ html.en-portada { overflow: hidden }
 .tl-play svg { width: 15px; height: 15px; fill: currentColor; stroke: none }
 .tl-date { margin: 0; font-size: .66rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 700 }
 .tl-date b { color: var(--fg); font-size: .92rem; letter-spacing: -.01em; text-transform: none; margin-right: 6px }
-.tl-count { margin: 1px 0 0; font-size: .86rem; line-height: 1.3; font-weight: 600; text-wrap: balance }
+.tl-count { margin: 1px 0 0; font-size: .86rem; line-height: 1.3; font-weight: 600; text-wrap: pretty }
 .tl-count .n { font-size: 1.2rem; font-weight: 800; color: var(--s3); font-variant-numeric: tabular-nums; vertical-align: -2px; margin-right: 2px }
 .tl-count .w { font-variant-numeric: tabular-nums; color: var(--s4); font-weight: 800 }
 @media (prefers-color-scheme: dark) { .tl-count .w { color: var(--s4) } }
@@ -468,6 +468,7 @@ html.en-portada { overflow: hidden }
 .overview .munis li small { grid-column: auto; order: 2 }
 .overview .munis li b { order: 3; font-size: .82rem }
 .overview .munis .bar { order: 4; height: 3px }
+.overview .munis li small.fuera { grid-column: 1 / -1; order: 5 }
 .overview .munis p { display: none }
 .overview:has(#ov-dia:not([hidden])) { max-height: calc(100% - 110px) }
 @media (max-width: 1100px) { .overview .munis { display: block } .overview .munis[hidden] { display: none } }
@@ -1066,7 +1067,7 @@ if (window.top !== window.self) {
           <details class="munis" id="municipios" open hidden>
             <summary>Por municipio · % de colonias</summary>
             <ol id="munis-lista"></ol>
-            <p>De las colonias que la rotación del SIAPA cubre (las con zona asignada), las que tienen publicaciones de medios o vecinos que dicen que no tenían agua, <span id="munis-al">hasta hoy</span>. Tlajomulco y El Salto no tienen colonias en la rotación; sus publicaciones se listan como fuera de ella.</p>
+            <p>De las colonias que la rotación del SIAPA cubre (las con zona asignada), las que tienen publicaciones de medios o vecinos que dicen que no tenían agua, <span id="munis-al">hasta hoy</span>. Tlajomulco y El Salto tienen pocas colonias en la rotación; sus publicaciones en las demás se cuentan aparte, fuera de ella.</p>
           </details>
           <div id="top-box" hidden><p class="lv-h" id="top-h">Las que tienen más reportes</p><ol class="lv-top" id="top-reportes"></ol></div>
           <p class="note" id="estado" aria-live="polite">Cargando el mapa de colonias…</p>
@@ -1493,9 +1494,15 @@ if (window.top !== window.self) {
     }
     // r1: the evidence as it stood at the end of each day since the first publication. evNow is the
     // timeline's day; ev stays the whole collection, for the card, the list and the search.
+    // LIVE: the latest day shows this map's own 24-hour reports. Off until there are enough of them (4 Nov
+    // 2026): the timeline ends yesterday and every day, the last too, shows that day's history.
+    const LIVE = false;
+    const today = new Date().toLocaleDateString("en-CA", { timeZone: "America/Mexico_City" });
+    const yesterday = new Date(Date.parse(`${today}T12:00:00Z`) - 864e5).toISOString().slice(0, 10);
     const DAYS = [];
     if (pubs) {
-      const lastIso = [pubs.actualizado, ...pubs.publicaciones.map((x) => x.fecha)].reduce((m, x) => x > m ? x : m, pubs.desde);
+      let lastIso = [pubs.actualizado, ...pubs.publicaciones.map((x) => x.fecha)].reduce((m, x) => x > m ? x : m, pubs.desde);
+      if (!LIVE && lastIso > yesterday) lastIso = yesterday;
       for (let d = new Date(`${pubs.desde}T12:00:00Z`); d.toISOString().slice(0, 10) <= lastIso; d.setUTCDate(d.getUTCDate() + 1)) DAYS.push(d.toISOString().slice(0, 10));
     }
     const evByDay = DAYS.map((iso) => evidence({ publicaciones: pubs.publicaciones.filter((x) => x.fecha <= iso) }));
@@ -1503,14 +1510,14 @@ if (window.top !== window.self) {
     let at = DAYS.length - 1;
     let evNow = DAYS.length ? evByDay[at] : ev;
     const atEnd = () => at >= DAYS.length - 1;
+    const live = () => LIVE && atEnd();
     window.__datos = { features, ev };
     const emptyReports = new Map();
-    const reportsNow = () => atEnd() ? byKey : historyByDay.get(DAYS[at]) || emptyReports;
+    const reportsNow = () => live() ? byKey : historyByDay.get(DAYS[at]) || emptyReports;
     // Silence is not evidence that the water came back: people post when it's missing, not when it returns.
     // A colonia stays «activa» up to 3 days after its latest publication, «reciente» up to 7, and then
     // has no new publications: greyed out, kept for the record. Days count to the timeline's day, or today.
-    const today = new Date().toLocaleDateString("en-CA", { timeZone: "America/Mexico_City" });
-    const refDay = () => atEnd() ? (today > (DAYS[at] || "") ? today : DAYS[at]) : DAYS[at];
+    const refDay = () => live() ? (today > (DAYS[at] || "") ? today : DAYS[at]) : DAYS[at] || today;
     const ageOf = (e) => Math.round((Date.parse(refDay()) - Date.parse(e.ultima)) / 864e5);
     const ACTIVE = 3, RECENT = 7;
     const stateOf = (e) => { const a = ageOf(e); return a <= ACTIVE ? "activa" : a <= RECENT ? "reciente" : "vieja"; };
@@ -1518,7 +1525,7 @@ if (window.top !== window.self) {
     // colonias had publications by that day, and fading them by news age would wash the whole map out
     // as the days near the present. The ageing applies only to the live latest-day view, where grey
     // means a week without new publications.
-    const stateMap = (e) => atEnd() ? stateOf(e) : "activa";
+    const stateMap = (e) => live() ? stateOf(e) : "activa";
     const zoneStyle = (f) => ({ color: M.COLORS[aguaDark() ? "dark" : "light"][f.properties.z], weight: 1.5, dashArray: "5 4", fill: false, opacity: 0.7 });
     const zoneLayer = L.geoJSON({ type: "FeatureCollection", features: zonas }, { interactive: false, style: zoneStyle }).addTo(map);
     const home = zoneLayer.getBounds().pad(0.04);
@@ -1530,7 +1537,7 @@ if (window.top !== window.self) {
     // 24 h and 72 h windows. Publication history colours the fill only when there are no reports at all.
     const styleOf = (f) => {
       const k = keyOf(f.properties);
-      const e = evNow.get(k), c = reportsNow().get(k), stale = atEnd() ? staleByKey.get(k) : carriedByDay.get(DAYS[at])?.get(k) || null;
+      const e = evNow.get(k), c = reportsNow().get(k), stale = live() ? staleByKey.get(k) : carriedByDay.get(DAYS[at])?.get(k) || null;
       if (c) {
         const s = statusOf(c);
         return { color: COLORS[s], weight: 1.4, opacity: 0.95, dashArray: null, fillColor: COLORS[s], fillOpacity: Math.min(0.65, 0.3 + 0.07 * totalOf(c)) };
@@ -1564,16 +1571,16 @@ if (window.top !== window.self) {
       onEachFeature: (f, l) => {
         l.bindTooltip(() => {
           const k = keyOf(f.properties);
-          const c = reportsNow().get(k), stale = atEnd() ? staleByKey.get(k) : carriedByDay.get(DAYS[at])?.get(k) || null, e = evNow.get(k);
-          const later = !e && firstSeen.get(k);
+          const c = reportsNow().get(k), stale = live() ? staleByKey.get(k) : carriedByDay.get(DAYS[at])?.get(k) || null, e = evNow.get(k);
+          const later = !e && firstSeen.get(k) <= (DAYS[DAYS.length - 1] || "") && firstSeen.get(k);
           return el("span", {}, `${f.properties.n} · ${f.properties.m}`,
-            e ? el("span", { class: "sub" }, `${atEnd() ? "" : `Al ${dateES(DAYS[at])}: `}${evLine(e)}`) : null,
+            e ? el("span", { class: "sub" }, `${live() ? "" : `Al ${dateES(DAYS[at])}: `}${evLine(e)}`) : null,
             later ? el("span", { class: "sub" }, `Su primera publicación llega el ${dateES(later, true)}`) : null,
-            c ? el("span", { class: "sub" }, `${statusLabel(c)} · ${plural(totalOf(c), "reporte", "reportes")}${atEnd() ? " en 24 h" : " ese día"}`) : null,
-            stale ? el("span", { class: "sub" }, atEnd()
+            c ? el("span", { class: "sub" }, `${statusLabel(c)} · ${plural(totalOf(c), "reporte", "reportes")}${live() ? " en 24 h" : " ese día"}`) : null,
+            stale ? el("span", { class: "sub" }, live()
               ? `Sin reportes nuevos en 24 h · último: ${answerLabel(stale.ultimo_estado)} ${ago(stale.ultimo)}`
               : `Sin reportes nuevos ese día · último: hace ${stale.age} ${stale.age === 1 ? "día" : "días"} · ${statusLabel(stale.c).toLowerCase()} (${plural(totalOf(stale.c), "reporte", "reportes")})`) : null,
-            summary && !c && !stale && !e && !later && atEnd() ? el("span", { class: "sub" }, "Sin reportes en 72 h: no sabemos si hay agua") : null);
+            summary && !c && !stale && !e && !later && live() ? el("span", { class: "sub" }, "Sin reportes en 72 h: no sabemos si hay agua") : null);
         }, { sticky: true, className: "map-label" });
         l.on("click", () => { if (Date.now() - closedAt > 500) select(f); });
       },
@@ -1620,7 +1627,7 @@ if (window.top !== window.self) {
         markers.addLayer(m);
       }
       shown = counts;
-      const current = reportsNow(), stale = atEnd() ? staleByKey : carriedByDay.get(DAYS[at]) || emptyReports;
+      const current = reportsNow(), stale = live() ? staleByKey : carriedByDay.get(DAYS[at]) || emptyReports;
       if (map.getZoom() < 13 && current.size + stale.size > 60) return;
       // On phones one circle per colonia is enough: the filled publication badge stays, the
       // donut of reports made here hides (the card still leads with those reports).
@@ -1637,7 +1644,7 @@ if (window.top !== window.self) {
           const r = withPublication ? (badgeSizes.get(k) || 30) / 2 : 0;
           const title = age ? `${fs[0].properties.n}: sin reportes nuevos ese día · último: hace ${age} ${age === 1 ? "día" : "días"} · ${statusLabel(c).toLowerCase()}`
             : isStale ? `${fs[0].properties.n}: sin reportes nuevos en 24 h · último: ${answerLabel(c.ultimo_estado)} ${ago(c.ultimo)}`
-            : `${fs[0].properties.n}: ${statusLabel(c)} · ${plural(totalOf(c), "reporte", "reportes")}${atEnd() ? " en 24 h" : " ese día"}`;
+            : `${fs[0].properties.n}: ${statusLabel(c)} · ${plural(totalOf(c), "reporte", "reportes")}${live() ? " en 24 h" : " ese día"}`;
           const m = L.marker(centers.get(k), {
             icon: L.divIcon({ className: `donut${isStale || age ? " stale" : ""}`, html: donut(c), iconSize: [40, 40], iconAnchor: withPublication ? [-(r + 8), 20] : [20, 20] }),
             keyboard: false, zIndexOffset: isStale ? 1200 : 3000, title,
@@ -1700,6 +1707,7 @@ if (window.top !== window.self) {
       if (modal && moveFocus) card.querySelector(".close")?.focus({ preventScroll: true });
     }
     function clearSelection() {
+      unhover();
       const restore = card.getAttribute("aria-modal") === "true" && cardReturnFocus;
       selected = null;
       cardDay = null;
@@ -1720,6 +1728,7 @@ if (window.top !== window.self) {
     let cardDay = null; // the timeline day a selection was made from, so its report shows in the card
     function select(f, { fit = true, form = false, animate = true } = {}) {
       stop();
+      unhover();
       if (!selected) cardReturnFocus = document.activeElement;
       // The timeline hides while a colonia is open, so the map shows today's state behind its card.
       cardDay = atEnd() ? null : DAYS[at];
@@ -1870,6 +1879,21 @@ if (window.top !== window.self) {
     }
 
     const liveRenderer = L.svg({ padding: 0.5 });
+    // Hovering (or focusing) a row of the summary outlines its colonias on the map.
+    let hovered = null;
+    const unhover = () => { hovered?.remove(); hovered = null; };
+    function hoverable(node, feats) {
+      const on = () => {
+        unhover();
+        const fs = feats() || [];
+        if (fs.length) hovered = L.geoJSON({ type: "FeatureCollection", features: fs.map((x) => ({ type: "Feature", geometry: x.geometry, properties: {} })) },
+          { interactive: false, renderer: liveRenderer, style: { color: css("--primary"), weight: 3, fill: true, fillColor: css("--primary"), fillOpacity: 0.18 } }).addTo(map);
+      };
+      node.addEventListener("pointerenter", on);
+      node.addEventListener("pointerleave", unhover);
+      node.addEventListener("focusin", on);
+      node.addEventListener("focusout", unhover);
+    }
     // Zooming far out from a selected colonia means the visitor has moved on: it closes, frame and all.
     let selZoom = null;
     map.on("zoomend", () => {
@@ -2273,12 +2297,7 @@ if (window.top !== window.self) {
       if (!framed) toList.addEventListener("click", () => { weekOnly = everything = true; renderRanking(); });
       const conMedio = weekEvs.filter((e) => e.posts.some((p) => p.fuente === "medio" && p.dias >= 7)).length;
       const unaPub = weekEvs.filter((e) => e.posts.length === 1).length;
-      // When did the longest count start: with the rotation or before it.
-      const startOf = (e) => { const g = e.posts.find((p) => p.dias != null && p.dias === e.dias); if (!g) return null; const d = new Date(g.fecha.slice(0, 10) + "T00:00:00Z"); d.setUTCDate(d.getUTCDate() - g.dias); return d.getTime(); };
-      const PRE6 = Date.UTC(2026, 9, 6), ROT = Date.UTC(2026, 9, 15);
-      const nRot = weekEvs.filter((e) => { const s = startOf(e); return s != null && s >= ROT; }).length;
-      const nPre6 = weekEvs.filter((e) => { const s = startOf(e); return s != null && s < PRE6; }).length;
-      $("pruebas").replaceChildren(toList, `, según medios y vecinos: ${fmt(conMedio)} con los días dichos por un medio y ${fmt(unaPub)} con una sola publicación; ${fmt(active)} con quejas de los últimos ${ACTIVE} días. De las de una semana, ${fmt(nRot)} cuentan desde el inicio de la rotación (15 oct.) y ${fmt(nPre6)} desde antes del 6 de oct., cuando cerró Las Pintas`);
+      $("pruebas").replaceChildren(toList, `, según medios y vecinos: ${fmt(conMedio)} con los días dichos por un medio y ${fmt(unaPub)} con una sola publicación; ${fmt(active)} con quejas de los últimos ${ACTIVE} días.`);
       $("solo-semana").textContent = `Solo una semana o más (${fmt(weekEvs.length)})`;
       renderMunicipios();
       renderSlices();
@@ -2306,6 +2325,7 @@ if (window.top !== window.self) {
     // Each municipio's share of the map's colonias that publications say have no water. A colonia
     // on a border ("Zapopan y Guadalajara") counts in both.
     function renderMunicipios() {
+      unhover();
       const munis = (k) => k.split("|")[1].split(" y ").filter(Boolean);
       // El porcentaje usa como denominador las colonias con zona asignada: las que la rotación
       // cubre (Guadalajara, San Pedro Tlaquepaque, Tonalá y Zapopan); las demás van aparte.
@@ -2319,16 +2339,21 @@ if (window.top !== window.self) {
         const r = per.get(m) || per.set(m, { m, total: 0, sin: 0, fuera: 0 }).get(m);
         if (inRot(k)) r.sin++; else r.fuera++;
       }
-      $("munis-al").textContent = atEnd() ? `hasta el ${dateES(DAYS[at] || pubs.actualizado, true)}` : `al ${dateES(DAYS[at], true)}`;
+      $("munis-al").textContent = live() ? `hasta el ${dateES(DAYS[at] || pubs.actualizado, true)}` : `al ${dateES(DAYS[at], true)}`;
       const rows = [...per.values()].filter((r) => r.sin || r.fuera)
         .sort((a, b) => (b.sin / Math.max(1, b.total)) - (a.sin / Math.max(1, a.total)));
+      const fuera = (r) => plural(r.fuera, "colonia con publicaciones", "colonias con publicaciones") + " fuera de la rotación";
       $("munis-lista").replaceChildren(...rows.map((r) => {
-        if (!r.total) return el("li", {}, el("span", {}, r.m), el("b", {}, "—"),
-          el("small", {}, `${plural(r.fuera, "colonia con publicaciones", "colonias con publicaciones")}, fuera de la rotación (sin colonias en el tandeo)`));
-        const pct = 100 * r.sin / r.total;
-        return el("li", {}, el("span", {}, r.m), el("b", {}, `${pct < 1 ? "<1" : Math.round(pct)} %`),
-          el("span", { class: "bar" }, el("span", { style: `width:${pct}%` })),
-          el("small", {}, `${fmt(r.sin)} de ${plural(r.total, "colonia", "colonias")} en la rotación`));
+        const li = !r.total ? el("li", {}, el("span", {}, r.m), el("b", {}, "—"), el("small", {}, `${fuera(r)} (sin colonias en el tandeo)`))
+          : (() => {
+            const pct = 100 * r.sin / r.total;
+            return el("li", {}, el("span", {}, r.m), el("b", {}, `${r.sin && pct < 1 ? "<1" : Math.round(pct)} %`),
+              el("span", { class: "bar" }, el("span", { style: `width:${pct}%` })),
+              el("small", {}, `${fmt(r.sin)} de ${plural(r.total, "colonia", "colonias")} en la rotación`),
+              r.fuera > r.sin ? el("small", { class: "fuera" }, `y ${fuera(r)}`) : null);
+          })();
+        hoverable(li, () => [...features].filter(([k]) => munis(k).includes(r.m) && (inRot(k) || evNow.has(k))).flatMap(([, fs]) => fs));
+        return li;
       }));
       $("municipios").hidden = !rows.length;
     }
@@ -2339,17 +2364,19 @@ if (window.top !== window.self) {
     // r1: below the municipios, the four colonias with the most reports up to the timeline's day
     // (publications, plus this map's 24 hours on the latest day), as their badges count them.
     function renderSlices() {
+      unhover();
       $("ov-dia").hidden = true;
       const rows = onMap(evNow).map((k) => {
-        const e = evNow.get(k), c = atEnd() ? byKey.get(k) : null;
+        const e = evNow.get(k), c = live() ? byKey.get(k) : null;
         return { k, e, f: features.get(k)[0], total: e.posts.length + (c ? totalOf(c) : 0) };
       }).sort((a, b) => b.total - a.total || daysOr0(b.e) - daysOr0(a.e) || b.e.fuentes - a.e.fuentes).slice(0, 4);
-      $("top-h").textContent = `${rows.length > 1 ? "Las que tienen más reportes" : "La colonia con reportes"}${atEnd() ? "" : `, al ${dateES(DAYS[at], true)}`}`;
+      $("top-h").textContent = `${rows.length > 1 ? "Las que tienen más reportes" : "La colonia con reportes"}${live() ? "" : `, al ${dateES(DAYS[at], true)}`}`;
       $("top-reportes").replaceChildren(...rows.map(({ e, f, total }) => {
         const s = sevOf(e.dias);
         const b = el("button", { type: "button" }, el("span", { class: s ? "sevb" : "sevb nodays", style: sevVars(s) }, plural(total, "reporte", "reportes")),
           el("span", {}, el("strong", {}, nice(f.properties.n)), el("small", {}, [f.properties.m, s ? `hasta ${daysWord(e.dias)}` : null, e.medios ? plural(e.medios, "medio", "medios") : null].filter(Boolean).join(" · "))));
         b.addEventListener("click", () => select(f));
+        hoverable(b, () => features.get(keyOf(f.properties)));
         return el("li", {}, b);
       }));
       $("top-box").hidden = !rows.length;
