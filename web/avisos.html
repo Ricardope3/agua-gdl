@@ -108,6 +108,11 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 /* The finder: big search on top of the map. */
 .finder { position: absolute; z-index: 1300; top: 12px; left: 12px; width: min(440px, calc(100% - 24px)); background: color-mix(in srgb, var(--surface) 96%, transparent); backdrop-filter: blur(6px); border: 1px solid var(--line); border-top: 4px solid var(--brand); border-radius: 14px; padding: 12px 14px 12px; box-shadow: 0 8px 24px rgb(3 14 22 / .2) }
 .finder h1 { margin: 0 0 8px; font-size: 1.35rem; line-height: 1.15; letter-spacing: -.02em; font-weight: 700 }
+.tgcta { display: flex; gap: 12px; width: 100%; margin-top: 12px; padding: 10px 14px; text-align: left; line-height: 1.3 }
+.tgcta .tgi { flex: none; width: 34px; height: 34px }
+.tgcta strong { display: block; font-size: 1.05rem; font-weight: 700 }
+.tgcta small { display: block; margin-top: 2px; font-size: .82rem; font-weight: 400; opacity: .92 }
+.finder .tgnote { margin-top: 6px; font-size: .82rem }
 .search { display: flex; gap: 8px }
 .field { position: relative; flex: 1; min-width: 0 }
 .field > .i { position: absolute; left: 13px; top: 15px; color: var(--muted); pointer-events: none }
@@ -256,7 +261,13 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
   .stage .card.zcard { bottom: calc(var(--sh, 110px) + 14px); max-height: min(46%, calc(100% - var(--fh, 140px) - var(--sh, 110px) - 40px)) }
   .stage .card .grab { display: block; width: 40px; height: 4px; border-radius: 2px; background: var(--line); margin: -4px auto 8px }
   .stage.sheet-colonia .zstrip, .stage.has-sheet .modo { display: none }
-  .stage.has-sheet .finder h1, .stage.has-sheet .locrow { display: none }
+  .stage.has-sheet .finder h1, .stage.has-sheet .locrow, .stage.has-sheet .tgcta, .stage.has-sheet .tgnote { display: none }
+  .tgcta { margin-top: 8px; padding: 8px 12px; gap: 10px }
+  .tgcta .tgi { width: 28px; height: 28px }
+  .tgcta strong { font-size: .95rem }
+  .tgcta { align-items: center }
+  .tgcta small { display: none }
+  .finder .tgnote { display: none }
 }
 
 /* Below the map. */
@@ -339,7 +350,8 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
         <p><strong>Recomendado:</strong> usa el mapa de zonas del SIAPA, no los nombres. No guardamos tu ubicación. <a href="#lista">Por qué</a></p>
       </div>
       <p class="note" id="calendario-fuente"></p>
-      <p class="note">Recibe el aviso antes de cada corte: <a href="https://t.me/AvisoAguaGDLbot?start=hola" rel="noopener">suscríbete por Telegram</a> y manda tu ubicación, tu colonia o tu zona desde el chat, o agrega el calendario de tu zona desde su tarjeta.</p>
+      <a class="button tgcta" href="https://t.me/AvisoAguaGDLbot?start=hola" rel="noopener"><svg class="tgi" aria-hidden="true"><use href="/icons.svg?v=5#telegram"/></svg><span><strong>Avisos gratis por Telegram</strong><small>Te avisa dos días antes de cada corte y la noche anterior. Abre el bot y manda tu ubicación, tu colonia o tu zona.</small></span></a>
+      <p class="note tgnote">¿Sin Telegram? Agrega el calendario de tu zona desde su tarjeta.</p>
       <p class="status" id="estado" aria-live="polite">Cargando el mapa de colonias…</p>
       <noscript><p class="status">Consulta la <a href="/simple">versión sencilla</a> o el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa oficial del SIAPA</a>.</p></noscript>
     </div>
