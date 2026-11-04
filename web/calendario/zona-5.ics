@@ -183,13 +183,13 @@ TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
- tes 3 y miércoles 4 de noviembre
+ tes 3\, miércoles 4 y jueves 5 de noviembre
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: martes 3
-  y miércoles 4 de noviembre
+ \, miércoles 4 y jueves 5 de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -208,10 +208,24 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-5-20261107@aguagdl.com
+UID:zona-5-20261105@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20261107
-DTEND;VALUE=DATE:20261108
+DTSTART;VALUE=DATE:20261105
+DTEND;VALUE=DATE:20261106
+SUMMARY:💧 Racionamiento de agua · Zona 5
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-5-20261109@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261109
+DTEND;VALUE=DATE:20261110
 SUMMARY:💧 Racionamiento de agua · Zona 5
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -222,14 +236,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
- bado 7 de noviembre
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: lun
+ es 9\, martes 10\, miércoles 11 y jueves 12 de noviembre
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: sábado 
- 7 de noviembre
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: lunes 9\
+ , martes 10\, miércoles 11 y jueves 12 de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -246,18 +260,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
- tes 10 y miércoles 11 de noviembre
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: martes 1
- 0 y miércoles 11 de noviembre
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-5-20261111@aguagdl.com
@@ -274,10 +276,24 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-5-20261114@aguagdl.com
+UID:zona-5-20261112@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20261114
-DTEND;VALUE=DATE:20261115
+DTSTART;VALUE=DATE:20261112
+DTEND;VALUE=DATE:20261113
+SUMMARY:💧 Racionamiento de agua · Zona 5
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-5-20261116@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261116
+DTEND;VALUE=DATE:20261117
 SUMMARY:💧 Racionamiento de agua · Zona 5
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -288,14 +304,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
- bado 14 de noviembre
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: lun
+ es 16\, martes 17\, miércoles 18 y jueves 19 de noviembre
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: sábado 
- 14 de noviembre
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: lunes 16
+ \, martes 17\, miércoles 18 y jueves 19 de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -312,18 +328,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
- tes 17 y miércoles 18 de noviembre
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: martes 1
- 7 y miércoles 18 de noviembre
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-5-20261118@aguagdl.com
@@ -340,10 +344,24 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-5-20261121@aguagdl.com
+UID:zona-5-20261119@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20261121
-DTEND;VALUE=DATE:20261122
+DTSTART;VALUE=DATE:20261119
+DTEND;VALUE=DATE:20261120
+SUMMARY:💧 Racionamiento de agua · Zona 5
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-5-20261123@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261123
+DTEND;VALUE=DATE:20261124
 SUMMARY:💧 Racionamiento de agua · Zona 5
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -354,14 +372,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
- bado 21 de noviembre
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: lun
+ es 23\, martes 24\, miércoles 25 y jueves 26 de noviembre
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: sábado 
- 21 de noviembre
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: lunes 23
+ \, martes 24\, miércoles 25 y jueves 26 de noviembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -378,18 +396,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
- tes 24 y miércoles 25 de noviembre
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: martes 2
- 4 y miércoles 25 de noviembre
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-5-20261125@aguagdl.com
@@ -406,10 +412,24 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-5-20261128@aguagdl.com
+UID:zona-5-20261126@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20261128
-DTEND;VALUE=DATE:20261129
+DTSTART;VALUE=DATE:20261126
+DTEND;VALUE=DATE:20261127
+SUMMARY:💧 Racionamiento de agua · Zona 5
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-5-20261130@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261130
+DTEND;VALUE=DATE:20261201
 SUMMARY:💧 Racionamiento de agua · Zona 5
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -420,14 +440,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
- bado 28 de noviembre
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: lun
+ es 30 de noviembre\, martes 1\, miércoles 2 y jueves 3 de diciembre
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: sábado 
- 28 de noviembre
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: lunes 30
+  de noviembre\, martes 1\, miércoles 2 y jueves 3 de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -444,18 +464,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
- tes 1 y miércoles 2 de diciembre
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: martes 1
-  y miércoles 2 de diciembre
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-5-20261202@aguagdl.com
@@ -472,10 +480,24 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-5-20261205@aguagdl.com
+UID:zona-5-20261203@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20261205
-DTEND;VALUE=DATE:20261206
+DTSTART;VALUE=DATE:20261203
+DTEND;VALUE=DATE:20261204
+SUMMARY:💧 Racionamiento de agua · Zona 5
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-5-20261207@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261207
+DTEND;VALUE=DATE:20261208
 SUMMARY:💧 Racionamiento de agua · Zona 5
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -486,14 +508,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
- bado 5 de diciembre
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: lun
+ es 7\, martes 8\, miércoles 9 y jueves 10 de diciembre
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: sábado 
- 5 de diciembre
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: lunes 7\
+ , martes 8\, miércoles 9 y jueves 10 de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -510,18 +532,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
- tes 8 y miércoles 9 de diciembre
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: martes 8
-  y miércoles 9 de diciembre
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-5-20261209@aguagdl.com
@@ -538,10 +548,24 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-5-20261212@aguagdl.com
+UID:zona-5-20261210@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20261212
-DTEND;VALUE=DATE:20261213
+DTSTART;VALUE=DATE:20261210
+DTEND;VALUE=DATE:20261211
+SUMMARY:💧 Racionamiento de agua · Zona 5
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-5-20261214@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261214
+DTEND;VALUE=DATE:20261215
 SUMMARY:💧 Racionamiento de agua · Zona 5
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -552,14 +576,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
- bado 12 de diciembre
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: lun
+ es 14\, martes 15\, miércoles 16 y jueves 17 de diciembre
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: sábado 
- 12 de diciembre
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: lunes 14
+ \, martes 15\, miércoles 16 y jueves 17 de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -576,18 +600,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
- tes 15 y miércoles 16 de diciembre
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: martes 1
- 5 y miércoles 16 de diciembre
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-5-20261216@aguagdl.com
@@ -604,10 +616,24 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-5-20261219@aguagdl.com
+UID:zona-5-20261217@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20261219
-DTEND;VALUE=DATE:20261220
+DTSTART;VALUE=DATE:20261217
+DTEND;VALUE=DATE:20261218
+SUMMARY:💧 Racionamiento de agua · Zona 5
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-5-20261221@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261221
+DTEND;VALUE=DATE:20261222
 SUMMARY:💧 Racionamiento de agua · Zona 5
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -618,14 +644,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
- bado 19 de diciembre
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: lun
+ es 21\, martes 22\, miércoles 23 y jueves 24 de diciembre
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: sábado 
- 19 de diciembre
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: lunes 21
+ \, martes 22\, miércoles 23 y jueves 24 de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -642,18 +668,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
- tes 22 y miércoles 23 de diciembre
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: martes 2
- 2 y miércoles 23 de diciembre
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-5-20261223@aguagdl.com
@@ -670,10 +684,24 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-5-20261226@aguagdl.com
+UID:zona-5-20261224@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20261226
-DTEND;VALUE=DATE:20261227
+DTSTART;VALUE=DATE:20261224
+DTEND;VALUE=DATE:20261225
+SUMMARY:💧 Racionamiento de agua · Zona 5
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-5-20261228@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20261228
+DTEND;VALUE=DATE:20261229
 SUMMARY:💧 Racionamiento de agua · Zona 5
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -684,14 +712,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
- bado 26 de diciembre
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: lun
+ es 28\, martes 29\, miércoles 30 y jueves 31 de diciembre
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: sábado 
- 26 de diciembre
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: lunes 28
+ \, martes 29\, miércoles 30 y jueves 31 de diciembre
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -708,18 +736,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
- tes 29 y miércoles 30 de diciembre
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: martes 2
- 9 y miércoles 30 de diciembre
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-5-20261230@aguagdl.com
@@ -736,10 +752,24 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-5-20270102@aguagdl.com
+UID:zona-5-20261231@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270102
-DTEND;VALUE=DATE:20270103
+DTSTART;VALUE=DATE:20261231
+DTEND;VALUE=DATE:20270101
+SUMMARY:💧 Racionamiento de agua · Zona 5
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-5-20270104@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270104
+DTEND;VALUE=DATE:20270105
 SUMMARY:💧 Racionamiento de agua · Zona 5
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -750,14 +780,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
- bado 2 de enero
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: lun
+ es 4\, martes 5\, miércoles 6 y jueves 7 de enero
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: sábado 
- 2 de enero
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: lunes 4\
+ , martes 5\, miércoles 6 y jueves 7 de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -774,18 +804,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
- tes 5 y miércoles 6 de enero
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: martes 5
-  y miércoles 6 de enero
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-5-20270106@aguagdl.com
@@ -802,10 +820,24 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-5-20270109@aguagdl.com
+UID:zona-5-20270107@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270109
-DTEND;VALUE=DATE:20270110
+DTSTART;VALUE=DATE:20270107
+DTEND;VALUE=DATE:20270108
+SUMMARY:💧 Racionamiento de agua · Zona 5
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-5-20270111@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270111
+DTEND;VALUE=DATE:20270112
 SUMMARY:💧 Racionamiento de agua · Zona 5
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -816,14 +848,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
- bado 9 de enero
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: lun
+ es 11\, martes 12\, miércoles 13 y jueves 14 de enero
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: sábado 
- 9 de enero
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: lunes 11
+ \, martes 12\, miércoles 13 y jueves 14 de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -840,18 +872,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
- tes 12 y miércoles 13 de enero
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: martes 1
- 2 y miércoles 13 de enero
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-5-20270113@aguagdl.com
@@ -868,10 +888,24 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-5-20270116@aguagdl.com
+UID:zona-5-20270114@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270116
-DTEND;VALUE=DATE:20270117
+DTSTART;VALUE=DATE:20270114
+DTEND;VALUE=DATE:20270115
+SUMMARY:💧 Racionamiento de agua · Zona 5
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-5-20270118@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270118
+DTEND;VALUE=DATE:20270119
 SUMMARY:💧 Racionamiento de agua · Zona 5
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -882,14 +916,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
- bado 16 de enero
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: lun
+ es 18\, martes 19\, miércoles 20 y jueves 21 de enero
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: sábado 
- 16 de enero
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: lunes 18
+ \, martes 19\, miércoles 20 y jueves 21 de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -906,18 +940,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
- tes 19 y miércoles 20 de enero
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: martes 1
- 9 y miércoles 20 de enero
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-5-20270120@aguagdl.com
@@ -934,10 +956,24 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-5-20270123@aguagdl.com
+UID:zona-5-20270121@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270123
-DTEND;VALUE=DATE:20270124
+DTSTART;VALUE=DATE:20270121
+DTEND;VALUE=DATE:20270122
+SUMMARY:💧 Racionamiento de agua · Zona 5
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-5-20270125@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270125
+DTEND;VALUE=DATE:20270126
 SUMMARY:💧 Racionamiento de agua · Zona 5
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -948,14 +984,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
- bado 23 de enero
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: lun
+ es 25\, martes 26\, miércoles 27 y jueves 28 de enero
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: sábado 
- 23 de enero
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: lunes 25
+ \, martes 26\, miércoles 27 y jueves 28 de enero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -972,18 +1008,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
- tes 26 y miércoles 27 de enero
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: martes 2
- 6 y miércoles 27 de enero
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-5-20270127@aguagdl.com
@@ -1000,10 +1024,24 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-5-20270130@aguagdl.com
+UID:zona-5-20270128@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270130
-DTEND;VALUE=DATE:20270131
+DTSTART;VALUE=DATE:20270128
+DTEND;VALUE=DATE:20270129
+SUMMARY:💧 Racionamiento de agua · Zona 5
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-5-20270201@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270201
+DTEND;VALUE=DATE:20270202
 SUMMARY:💧 Racionamiento de agua · Zona 5
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -1014,14 +1052,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
- bado 30 de enero
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: lun
+ es 1\, martes 2\, miércoles 3 y jueves 4 de febrero
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: sábado 
- 30 de enero
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: lunes 1\
+ , martes 2\, miércoles 3 y jueves 4 de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -1038,18 +1076,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
- tes 2 y miércoles 3 de febrero
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: martes 2
-  y miércoles 3 de febrero
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-5-20270203@aguagdl.com
@@ -1066,10 +1092,24 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-5-20270206@aguagdl.com
+UID:zona-5-20270204@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270206
-DTEND;VALUE=DATE:20270207
+DTSTART;VALUE=DATE:20270204
+DTEND;VALUE=DATE:20270205
+SUMMARY:💧 Racionamiento de agua · Zona 5
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-5-20270208@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270208
+DTEND;VALUE=DATE:20270209
 SUMMARY:💧 Racionamiento de agua · Zona 5
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -1080,14 +1120,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
- bado 6 de febrero
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: lun
+ es 8\, martes 9\, miércoles 10 y jueves 11 de febrero
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: sábado 
- 6 de febrero
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: lunes 8\
+ , martes 9\, miércoles 10 y jueves 11 de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -1104,18 +1144,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
- tes 9 y miércoles 10 de febrero
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: martes 9
-  y miércoles 10 de febrero
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-5-20270210@aguagdl.com
@@ -1132,10 +1160,24 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-5-20270213@aguagdl.com
+UID:zona-5-20270211@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270213
-DTEND;VALUE=DATE:20270214
+DTSTART;VALUE=DATE:20270211
+DTEND;VALUE=DATE:20270212
+SUMMARY:💧 Racionamiento de agua · Zona 5
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-5-20270215@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270215
+DTEND;VALUE=DATE:20270216
 SUMMARY:💧 Racionamiento de agua · Zona 5
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -1146,14 +1188,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
- bado 13 de febrero
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: lun
+ es 15\, martes 16\, miércoles 17 y jueves 18 de febrero
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: sábado 
- 13 de febrero
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: lunes 15
+ \, martes 16\, miércoles 17 y jueves 18 de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -1170,18 +1212,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
- tes 16 y miércoles 17 de febrero
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: martes 1
- 6 y miércoles 17 de febrero
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-5-20270217@aguagdl.com
@@ -1198,10 +1228,24 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-5-20270220@aguagdl.com
+UID:zona-5-20270218@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270220
-DTEND;VALUE=DATE:20270221
+DTSTART;VALUE=DATE:20270218
+DTEND;VALUE=DATE:20270219
+SUMMARY:💧 Racionamiento de agua · Zona 5
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-5-20270222@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270222
+DTEND;VALUE=DATE:20270223
 SUMMARY:💧 Racionamiento de agua · Zona 5
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -1212,14 +1256,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
- bado 20 de febrero
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: lun
+ es 22\, martes 23\, miércoles 24 y jueves 25 de febrero
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: sábado 
- 20 de febrero
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: lunes 22
+ \, martes 23\, miércoles 24 y jueves 25 de febrero
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -1236,18 +1280,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
- tes 23 y miércoles 24 de febrero
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: martes 2
- 3 y miércoles 24 de febrero
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-5-20270224@aguagdl.com
@@ -1264,10 +1296,24 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-5-20270227@aguagdl.com
+UID:zona-5-20270225@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270227
-DTEND;VALUE=DATE:20270228
+DTSTART;VALUE=DATE:20270225
+DTEND;VALUE=DATE:20270226
+SUMMARY:💧 Racionamiento de agua · Zona 5
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-5-20270301@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270301
+DTEND;VALUE=DATE:20270302
 SUMMARY:💧 Racionamiento de agua · Zona 5
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -1278,14 +1324,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
- bado 27 de febrero
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: lun
+ es 1\, martes 2\, miércoles 3 y jueves 4 de marzo
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: sábado 
- 27 de febrero
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: lunes 1\
+ , martes 2\, miércoles 3 y jueves 4 de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -1302,18 +1348,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
- tes 2 y miércoles 3 de marzo
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: martes 2
-  y miércoles 3 de marzo
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-5-20270303@aguagdl.com
@@ -1330,10 +1364,24 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-5-20270306@aguagdl.com
+UID:zona-5-20270304@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270306
-DTEND;VALUE=DATE:20270307
+DTSTART;VALUE=DATE:20270304
+DTEND;VALUE=DATE:20270305
+SUMMARY:💧 Racionamiento de agua · Zona 5
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-5-20270308@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270308
+DTEND;VALUE=DATE:20270309
 SUMMARY:💧 Racionamiento de agua · Zona 5
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -1344,14 +1392,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
- bado 6 de marzo
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: lun
+ es 8\, martes 9\, miércoles 10 y jueves 11 de marzo
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: sábado 
- 6 de marzo
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: lunes 8\
+ , martes 9\, miércoles 10 y jueves 11 de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -1368,18 +1416,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
- tes 9 y miércoles 10 de marzo
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: martes 9
-  y miércoles 10 de marzo
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-5-20270310@aguagdl.com
@@ -1396,10 +1432,24 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-5-20270313@aguagdl.com
+UID:zona-5-20270311@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270313
-DTEND;VALUE=DATE:20270314
+DTSTART;VALUE=DATE:20270311
+DTEND;VALUE=DATE:20270312
+SUMMARY:💧 Racionamiento de agua · Zona 5
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-5-20270315@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270315
+DTEND;VALUE=DATE:20270316
 SUMMARY:💧 Racionamiento de agua · Zona 5
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -1410,14 +1460,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
- bado 13 de marzo
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: lun
+ es 15\, martes 16\, miércoles 17 y jueves 18 de marzo
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: sábado 
- 13 de marzo
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: lunes 15
+ \, martes 16\, miércoles 17 y jueves 18 de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -1434,18 +1484,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
- tes 16 y miércoles 17 de marzo
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: martes 1
- 6 y miércoles 17 de marzo
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-5-20270317@aguagdl.com
@@ -1462,10 +1500,24 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-5-20270320@aguagdl.com
+UID:zona-5-20270318@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270320
-DTEND;VALUE=DATE:20270321
+DTSTART;VALUE=DATE:20270318
+DTEND;VALUE=DATE:20270319
+SUMMARY:💧 Racionamiento de agua · Zona 5
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-5-20270322@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270322
+DTEND;VALUE=DATE:20270323
 SUMMARY:💧 Racionamiento de agua · Zona 5
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -1476,14 +1528,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
- bado 20 de marzo
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: lun
+ es 22\, martes 23\, miércoles 24 y jueves 25 de marzo
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: sábado 
- 20 de marzo
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: lunes 22
+ \, martes 23\, miércoles 24 y jueves 25 de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -1500,18 +1552,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
- tes 23 y miércoles 24 de marzo
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: martes 2
- 3 y miércoles 24 de marzo
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-5-20270324@aguagdl.com
@@ -1528,10 +1568,24 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:zona-5-20270327@aguagdl.com
+UID:zona-5-20270325@aguagdl.com
 DTSTAMP:20261015T060000Z
-DTSTART;VALUE=DATE:20270327
-DTEND;VALUE=DATE:20270328
+DTSTART;VALUE=DATE:20270325
+DTEND;VALUE=DATE:20270326
+SUMMARY:💧 Racionamiento de agua · Zona 5
+DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
+ ionamientos son «por máximo un día» y que «no serán cortes totales»
+ \; vecinos nos cuentan que el agua se va desde antes y tarda más en volve
+ r. Llena tu tinaco con tiempo. Mapa oficial: https://rotaciondeserviciosia
+ pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
+URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:zona-5-20270329@aguagdl.com
+DTSTAMP:20261015T060000Z
+DTSTART;VALUE=DATE:20270329
+DTEND;VALUE=DATE:20270330
 SUMMARY:💧 Racionamiento de agua · Zona 5
 DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  ionamientos son «por máximo un día» y que «no serán cortes totales»
@@ -1542,14 +1596,14 @@ URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: sá
- bado 27 de marzo
+DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: lun
+ es 29\, martes 30 y miércoles 31 de marzo
 TRIGGER:-P2DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: sábado 
- 27 de marzo
+DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: lunes 29
+ \, martes 30 y miércoles 31 de marzo
 TRIGGER:-PT4H
 END:VALARM
 END:VEVENT
@@ -1566,18 +1620,6 @@ DESCRIPTION:Corte según el calendario del SIAPA. El SIAPA dice que los rac
  pa.jalisco.gob.mx/ · Agua GDL (no oficial): https://aguagdl.com
 URL:https://rotaciondeserviciosiapa.jalisco.gob.mx/
 TRANSP:TRANSPARENT
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 5: mar
- tes 30 y miércoles 31 de marzo
-TRIGGER:-P2DT4H
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Mañana empieza el racionamiento de agua en la zona 5: martes 3
- 0 y miércoles 31 de marzo
-TRIGGER:-PT4H
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:zona-5-20270331@aguagdl.com

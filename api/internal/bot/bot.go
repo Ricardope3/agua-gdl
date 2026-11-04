@@ -367,6 +367,11 @@ func (b *Bot) onColonia(ctx context.Context, r User, c colonias.Colonia) error {
 	return b.subscribe(ctx, r, zones[0])
 }
 
+// upcomingDays returns zone's weekly cut days from tomorrow on, so a schedule change shows the day before it starts.
+func (b *Bot) upcomingDays(zone int) []time.Weekday {
+	return b.Schedule.WeekdaysOn(zone, b.Schedule.Day(b.Now()).AddDate(0, 0, 1))
+}
+
 // scheduled keeps the zones the rotation has days for: the map's and the list's data
 // could name another one, and its subscribers would never get a reminder.
 func (b *Bot) scheduled(zones []int) []int {
@@ -376,7 +381,7 @@ func (b *Bot) scheduled(zones []int) []int {
 func (b *Bot) pickZone(ctx context.Context, r User, body string, zones []int) error {
 	choices := make([]Choice, len(zones))
 	for i, z := range zones {
-		choices[i] = Choice{ID: fmt.Sprintf("Z:%d", z), Title: zoneTitle(z), Description: zoneDays(rotation.DaysES(b.Schedule.Weekdays(z)))}
+		choices[i] = Choice{ID: fmt.Sprintf("Z:%d", z), Title: zoneTitle(z), Description: zoneDays(rotation.DaysES(b.upcomingDays(z)))}
 	}
 	return b.reply(ctx, r, Reply{Text: body, Button: labelPickZone, Choices: choices})
 }
@@ -501,7 +506,7 @@ func (b *Bot) subscribedText(ctx context.Context, s store.Subscriber, fresh bool
 	tomorrow := today.AddDate(0, 0, 1)
 	info := subscribedInfo{
 		zone: zone, fresh: fresh, base: b.BaseURL, off: !b.remindersOn(channel), over: b.Schedule.Over(now), channel: channel,
-		days: rotation.DaysES(b.Schedule.Weekdays(zone)),
+		days: rotation.DaysES(b.upcomingDays(zone)),
 		hour: rotation.HourES(b.ReminderHour),
 	}
 	tonight := b.remindersOn(channel) && now.In(b.Schedule.Location()).Hour() < b.ReminderHour
@@ -557,7 +562,7 @@ func (b *Bot) subscribedText(ctx context.Context, s store.Subscriber, fresh bool
 			continue
 		}
 		next := b.Schedule.NextCuts(other, today, 3)
-		text += "\n" + msgOtherZone(other, rotation.DaysES(b.Schedule.Weekdays(other)), next)
+		text += "\n" + msgOtherZone(other, rotation.DaysES(b.upcomingDays(other)), next)
 	}
 	return text, nil
 }

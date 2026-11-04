@@ -321,7 +321,7 @@ func clientIP(r *http.Request) string {
 
 func (a *api) info(zone int) zoneInfo {
 	z := zoneInfo{Zone: zone, Days: []string{}, Weekdays: []int{}, Next: []string{}, NextCuts: []string{}}
-	for _, d := range a.sched.Weekdays(zone) {
+	for _, d := range a.sched.WeekdaysOn(zone, a.sched.Day(a.clock()).AddDate(0, 0, 1)) {
 		z.Days = append(z.Days, rotation.WeekdayES(d))
 		z.Weekdays = append(z.Weekdays, int(d))
 	}

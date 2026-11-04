@@ -21,10 +21,17 @@ type Schedule struct {
 	start   time.Time
 	end     time.Time
 	days    map[int][]time.Weekday
+	prev    []period
 	skip    map[string]bool
 	extra   map[string]bool
 	checked string
 	source  string
+}
+
+// period is a weekly pattern SIAPA used until a day, before the current one.
+type period struct {
+	until time.Time
+	days  map[int][]time.Weekday
 }
 
 type override struct {
@@ -34,13 +41,17 @@ type override struct {
 
 func Load(raw []byte, loc *time.Location) (*Schedule, error) {
 	var f struct {
-		Start   string              `json:"start"`
-		End     string              `json:"end"`
-		Zones   map[string][]string `json:"zones"`
-		Skip    []override          `json:"skip"`
-		Extra   []override          `json:"extra"`
-		Checked string              `json:"checked"`
-		Source  string              `json:"source"`
+		Start string              `json:"start"`
+		End   string              `json:"end"`
+		Zones map[string][]string `json:"zones"`
+		Prev  []struct {
+			Until string              `json:"until"`
+			Zones map[string][]string `json:"zones"`
+		} `json:"previous"`
+		Skip    []override `json:"skip"`
+		Extra   []override `json:"extra"`
+		Checked string     `json:"checked"`
+		Source  string     `json:"source"`
 	}
 	if err := json.Unmarshal(raw, &f); err != nil {
 		return nil, fmt.Errorf("rotation: %w", err)
@@ -60,19 +71,30 @@ func Load(raw []byte, loc *time.Location) (*Schedule, error) {
 			return nil, fmt.Errorf("rotation end: %w", err)
 		}
 	}
-	for k, names := range f.Zones {
-		zone, err := strconv.Atoi(k)
+	if s.days, err = weekdays(f.Zones); err != nil {
+		return nil, err
+	}
+	for _, p := range f.Prev {
+		until, err := time.ParseInLocation(DateLayout, p.Until, loc)
 		if err != nil {
-			return nil, fmt.Errorf("rotation zone %q: %w", k, err)
+			return nil, fmt.Errorf("rotation previous: %w", err)
 		}
-		for _, n := range names {
-			wd, ok := weekdayKeys[n]
-			if !ok {
-				return nil, fmt.Errorf("rotation zone %d: unknown day %q", zone, n)
+		days, err := weekdays(p.Zones)
+		if err != nil {
+			return nil, err
+		}
+		if len(days) != len(s.days) {
+			return nil, fmt.Errorf("rotation previous %s: %d zones, current has %d", p.Until, len(days), len(s.days))
+		}
+		for z := range days {
+			if _, ok := s.days[z]; !ok {
+				return nil, fmt.Errorf("rotation previous %s: zone %d not in the current pattern", p.Until, z)
 			}
-			s.days[zone] = append(s.days[zone], wd)
 		}
-		slices.SortFunc(s.days[zone], func(a, b time.Weekday) int { return isoDay(a) - isoDay(b) })
+		if n := len(s.prev); n > 0 && !until.After(s.prev[n-1].until) {
+			return nil, fmt.Errorf("rotation previous: %s is not after %s", p.Until, s.prev[n-1].until.Format(DateLayout))
+		}
+		s.prev = append(s.prev, period{until, days})
 	}
 	for _, list := range []struct {
 		items []override
@@ -86,6 +108,25 @@ func Load(raw []byte, loc *time.Location) (*Schedule, error) {
 		}
 	}
 	return s, nil
+}
+
+func weekdays(zones map[string][]string) (map[int][]time.Weekday, error) {
+	out := map[int][]time.Weekday{}
+	for k, names := range zones {
+		zone, err := strconv.Atoi(k)
+		if err != nil {
+			return nil, fmt.Errorf("rotation zone %q: %w", k, err)
+		}
+		for _, n := range names {
+			wd, ok := weekdayKeys[n]
+			if !ok {
+				return nil, fmt.Errorf("rotation zone %d: unknown day %q", zone, n)
+			}
+			out[zone] = append(out[zone], wd)
+		}
+		slices.SortFunc(out[zone], func(a, b time.Weekday) int { return isoDay(a) - isoDay(b) })
+	}
+	return out, nil
 }
 
 func key(date string, zone int) string { return date + "/" + strconv.Itoa(zone) }
@@ -124,7 +165,20 @@ func (s *Schedule) HasZone(zone int) bool {
 	return ok
 }
 
+// Weekdays returns zone's current weekly cut days.
 func (s *Schedule) Weekdays(zone int) []time.Weekday { return s.days[zone] }
+
+// WeekdaysOn returns zone's weekly cut days in effect on t's day: a previous pattern
+// until its last day, the current one after.
+func (s *Schedule) WeekdaysOn(zone int, t time.Time) []time.Weekday {
+	d := s.Day(t)
+	for _, p := range s.prev {
+		if !d.After(p.until) {
+			return p.days[zone]
+		}
+	}
+	return s.days[zone]
+}
 
 // RetentionDays is how long after the rotation's end subscribers are kept, as the
 // privacy notice promises.
@@ -151,7 +205,7 @@ func (s *Schedule) IsCut(zone int, t time.Time) bool {
 	if s.skip[k] || d.Before(s.start) || (!s.end.IsZero() && d.After(s.end)) {
 		return false
 	}
-	return slices.Contains(s.days[zone], d.Weekday())
+	return slices.Contains(s.WeekdaysOn(zone, d), d.Weekday())
 }
 
 func (s *Schedule) ZonesOn(t time.Time) []int {

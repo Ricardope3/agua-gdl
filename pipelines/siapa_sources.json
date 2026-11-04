@@ -14,8 +14,8 @@
  },
  "ajustes.php": {
   "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/api/ajustes.php",
-  "sha256": "dbe7a21863cf9d1fa486a634280d203bf61f4f24c30c2f7ae6f538b333987c52",
-  "bytes": 1122,
+  "sha256": "ce51a0aec81b1e5e592070650894a57e8ca858c21f3429dfb500cf9b16d0fec9",
+  "bytes": 1331,
   "last_modified": null
  },
  "rotacion-siapa.topo.json": {
