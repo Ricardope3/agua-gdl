@@ -1664,6 +1664,18 @@ if (window.top !== window.self) {
       const n = t > 99 ? "99+" : String(t);
       return `<svg viewBox="0 0 40 40" width="40" height="40" aria-hidden="true"><circle r="12" cx="20" cy="20" fill="${COLORS.surface}"/>${segs}<text x="20" y="24" text-anchor="middle" font-family="system-ui, sans-serif" font-size="${n.length > 2 ? 10 : 12}" font-weight="700" fill="${COLORS.ink}">${n}</text></svg>`;
     }
+    // A colonia whose cisterna has no exact spot gets a hollow drop at its centre (mapa.js); its badge and
+    // ring step aside from it: the badge just left of the drop, the ring just right, at the drop's middle.
+    const hollow = new Map(); // colonia key → the drop's [lat, lon]
+    fetch("/cisternas.json").then((r) => r.ok ? r.json() : null).then((d) => {
+      for (const c of d?.colonias || []) for (const k of features.keys()) {
+        const [n, m] = k.split("|");
+        if (n === c.colonia && m.split(" y ").includes(c.municipio)) hollow.set(k, c.centro);
+      }
+      if (hollow.size) drawMarkers();
+    }).catch(() => {});
+    // The drop as mapa.js draws it: 22×28 from zoom 13, 12×15 below, anchored at its bottom centre.
+    const dropBox = () => map.getZoom() < 13 ? { half: 6, mid: 7 } : { half: 11, mid: 13 };
     function drawMarkers() {
       markers.clearLayers();
       // Publication badges count only publications and keep their historical severity. Anonymous
@@ -1679,11 +1691,12 @@ if (window.top !== window.self) {
         badgeSizes.set(k, size);
         const was = shown.get(k), pop = reduced ? "" : was != null ? (total > was ? " pop" : "") : shown.size ? " nace" : "";
         if (!centers.has(k)) centers.set(k, L.geoJSON(fs[0]).getBounds().getCenter());
-        const m = L.marker(centers.get(k), {
-          icon: L.divIcon({ className: `sev${far ? " far" : ""}${s ? "" : " nodays"} ${stateMap(e)}${pop}`, html: `<span style="${sevVars(s)};font-size:${Math.max(far ? 9 : 10, Math.round(size * (n.length > 2 ? 0.3 : 0.42)))}px">${n}</span>`, iconSize: [size, size] }),
+        const drop = hollow.get(k), dbox = dropBox();
+        const m = L.marker(drop || centers.get(k), {
+          icon: L.divIcon({ ...(drop ? { iconAnchor: [size + dbox.half + 4, size / 2 + dbox.mid] } : {}), className: `sev${far ? " far" : ""}${s ? "" : " nodays"} ${stateMap(e)}${pop}`, html: `<span style="${sevVars(s)};font-size:${Math.max(far ? 9 : 10, Math.round(size * (n.length > 2 ? 0.3 : 0.42)))}px">${n}</span>`, iconSize: [size, size] }),
           keyboard: false, zIndexOffset: 2000 - Math.min(total, 999),
         });
-        if (!phone()) m.bindTooltip(() => tipOf(fs[0]), { className: "map-label", direction: "top", offset: [0, -size / 2] });
+        if (!phone()) m.bindTooltip(() => tipOf(fs[0]), { className: "map-label", direction: "top", offset: drop ? [-(size / 2 + dbox.half + 4), -(size + dbox.mid)] : [0, -size / 2] });
         m.on("click", () => select(fs[0]));
         markers.addLayer(m);
       }
@@ -1703,11 +1716,12 @@ if (window.top !== window.self) {
           // Beside a publication badge, not on top of it: the donut's left edge starts a small
           // gap past the badge's right edge, vertically centred on the same point.
           const r = withPublication ? (badgeSizes.get(k) || 30) / 2 : 0;
-          const m = L.marker(centers.get(k), {
-            icon: L.divIcon({ className: `donut${isStale || age ? " stale" : ""}`, html: donut(c), iconSize: [40, 40], iconAnchor: withPublication ? [-(r + 8), 20] : [20, 20] }),
+          const drop = hollow.get(k), dbox = dropBox();
+          const m = L.marker(drop || centers.get(k), {
+            icon: L.divIcon({ className: `donut${isStale || age ? " stale" : ""}`, html: donut(c), iconSize: [40, 40], iconAnchor: drop ? [-(dbox.half + 4), 20 + dbox.mid] : withPublication ? [-(r + 8), 20] : [20, 20] }),
             keyboard: false, zIndexOffset: isStale ? 1200 : 3000,
           });
-          m.bindTooltip(() => tipOf(fs[0]), { className: "map-label", direction: "top", offset: [withPublication ? r + 28 : 0, -20] });
+          m.bindTooltip(() => tipOf(fs[0]), { className: "map-label", direction: "top", offset: drop ? [dbox.half + 24, -(20 + dbox.mid)] : [withPublication ? r + 28 : 0, -20] });
           m.on("click", () => select(fs[0]));
           markers.addLayer(m);
         }
