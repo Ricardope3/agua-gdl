@@ -2460,6 +2460,7 @@ if (window.top !== window.self) {
     }
     function stop() { if (!playing) return; playing = false; clearTimeout(timer); setPlay(); }
     const STEP_MS = 650;
+    const DOS_EN_DOS = "2026-10-20";
     function play() {
       if (!DAYS.length) return;
       if (atEnd()) showDay(0);
@@ -2470,7 +2471,8 @@ if (window.top !== window.self) {
     let onPlayed = null;   // what to do once the timeline has played to the end, once
     function tick() {
       if (!playing) return;
-      showDay(at + 1, { pulse: true });
+      // Two days a step through the first, slower days (to 20 Oct, which it always lands on), then one.
+      showDay(at + ((DAYS[at + 2] || "9999") <= DOS_EN_DOS ? 2 : 1), { pulse: true });
       if (!atEnd()) { timer = setTimeout(tick, STEP_MS); return; }
       playing = false;
       setPlay();
