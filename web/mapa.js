@@ -308,30 +308,75 @@ window.aguaMapa = (() => {
     return new Ctl({ position }).addTo(map);
   }
 
+  // pinch makes a trackpad pinch (ctrl + wheel in Chrome, Edge and Firefox) follow the fingers, as Leaflet's
+  // own touch pinch does: Leaflet's wheel handler drops each step that arrives while a zoom animates, so a
+  // pinch crawled. Mid-gesture the map only moves (cheap CSS transforms); at the end it snaps with one
+  // animation and redraws. Uses Leaflet 1.9.4 internals, pinned in vendor/.
+  function pinch(map) {
+    const box = map.getContainer();
+    let start = null, zoom = 0, center = null, end = 0, frame = 0;
+    const finish = () => {
+      if (!start) return;
+      cancelAnimationFrame(frame);
+      start = null;
+      map._animateZoom(center, map._limitZoom(zoom), true, map.options.zoomSnap);
+    };
+    box.addEventListener("wheel", (e) => {
+      if (!e.ctrlKey) return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      if (map._animatingZoom) return;
+      const at = map.mouseEventToContainerPoint(e);
+      if (!start) {
+        map._stop();
+        start = { zoom: map.getZoom(), anchor: map.containerPointToLatLng(at), half: map.getSize().divideBy(2) };
+        zoom = start.zoom;
+        map._moveStart(true, false);
+      }
+      const dy = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? 400 : 1);
+      zoom = Math.min(Math.max(zoom - dy / (100 * Math.LN2), map.getMinZoom()), map.getMaxZoom());
+      center = map.unproject(map.project(start.anchor, zoom).subtract(at.subtract(start.half)), zoom);
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => map._move(center, zoom, { pinch: true, round: false }));
+      clearTimeout(end);
+      end = setTimeout(finish, 120);
+    }, { capture: true, passive: false });
+  }
+
   // cisternas puts the community water points from /cisternas.json on map, in a pane above the colonias,
   // with a «Cisternas» switch at position: a drop where an official map gives the spot, and at the
   // colonia's centre where a source names only the colonia (a hollow drop).
   function cisternas(L, map, position = "topright") {
     map.createPane("cisternas").style.zIndex = 590;
-    const drop = (solid) => L.divIcon({
+    // Below CERCA the drops shrink, so a cluster of them doesn't hide the colonias and badges beneath.
+    const CERCA = 13;
+    const drop = (solid, small) => L.divIcon({
       className: "cisterna-ico",
-      iconSize: [22, 28],
-      iconAnchor: [11, 26],
-      popupAnchor: [0, -22],
-      html: `<svg viewBox="0 0 22 28" width="22" height="28" aria-hidden="true"><path d="M11 2C11 2 3 11.5 3 17a8 8 0 0 0 16 0C19 11.5 11 2 11 2z" fill="${solid ? "#0284c7" : "#ffffff"}" stroke="${solid ? "#ffffff" : "#0284c7"}" stroke-width="2.2"${solid ? "" : ' stroke-dasharray="3 2"'}/></svg>`,
+      iconSize: small ? [12, 15] : [22, 28],
+      iconAnchor: small ? [6, 14] : [11, 26],
+      popupAnchor: small ? [0, -12] : [0, -22],
+      html: `<svg viewBox="0 0 22 28" width="${small ? 12 : 22}" height="${small ? 15 : 28}" aria-hidden="true"><path d="M11 2C11 2 3 11.5 3 17a8 8 0 0 0 16 0C19 11.5 11 2 11 2z" fill="${solid ? "#0284c7" : "#ffffff"}" stroke="${solid ? "#ffffff" : "#0284c7"}" stroke-width="2.2"${solid ? "" : ' stroke-dasharray="3 2"'}/></svg>`,
     });
     const layer = L.layerGroup();
+    const small = () => map.getZoom() < CERCA;
+    let wasSmall = small();
+    map.on("zoomend", () => {
+      if (small() === wasSmall) return;
+      wasSmall = small();
+      layer.eachLayer((m) => m.setIcon(drop(m.options.solid, wasSmall)));
+    });
     const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
     fetch("/cisternas.json").then((r) => r.ok ? r.json() : Promise.reject(r.status)).then((d) => {
       const src = (k) => { const f = d.fuentes[k]; return `<a href="${f.url}" target="_blank" rel="noopener">${esc(f.titulo)}</a>` + (f.mapa ? ` · <a href="${f.mapa}" target="_blank" rel="noopener">mapa oficial</a>` : ""); };
       const foot = '<br><a href="/pipas" target="_top">Cómo pedir una pipa</a>';
+      wasSmall = small();
       for (const x of d.puntos) {
-        L.marker([x.lat, x.lon], { pane: "cisternas", icon: drop(true), keyboard: false, title: "Punto de agua" })
+        L.marker([x.lat, x.lon], { pane: "cisternas", icon: drop(true, small()), solid: true, keyboard: false, title: "Punto de agua" })
           .bindPopup(`<b>${x.capa === "SIAPA" ? "Punto de agua (capa «SIAPA» del mapa)" : "Cisterna comunitaria"}</b><br>${esc(x.lugar || "Sin dirección publicada")}, ${esc(x.municipio)}<br>Fuente: ${src(x.fuente)}${foot}`)
           .addTo(layer);
       }
       for (const x of d.colonias) {
-        L.marker(x.centro, { pane: "cisternas", icon: drop(false), keyboard: false, title: "Cisterna en la colonia" })
+        L.marker(x.centro, { pane: "cisternas", icon: drop(false, small()), solid: false, keyboard: false, title: "Cisterna en la colonia" })
           .bindPopup(`<b>Cisterna comunitaria en ${esc(x.nombre)}, ${esc(x.municipio)}</b><br>${x.lugar ? esc(x.lugar) + ". " : ""}Ubicación aproximada: centro de la colonia.<br>Fuente: ${src(x.fuente)}${foot}`)
           .addTo(layer);
       }
@@ -361,5 +406,5 @@ window.aguaMapa = (() => {
     return layer;
   }
 
-  return { DATA, BORDER, COLORS, recenter, norm, fold, joinES, zonesOf, zones, label, describe, borderWord, zoneWord, theZones, decode, contains, load, find, tiles, draw, card, icon, cross, cisternas };
+  return { DATA, BORDER, COLORS, recenter, norm, fold, joinES, zonesOf, zones, label, describe, borderWord, zoneWord, theZones, decode, contains, load, find, tiles, draw, card, icon, cross, cisternas, pinch };
 })();

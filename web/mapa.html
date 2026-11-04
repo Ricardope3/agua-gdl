@@ -269,6 +269,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   // The zoom buttons go top right: the colonia card opens top left.
   const map = L.map("mapa", { preferCanvas: true, zoomSnap: 0.25, zoomControl: false });
   L.control.zoom({ position: "topright" }).addTo(map);
+  if (M.pinch) M.pinch(map);
   M.tiles(L, map);
   map.setView([20.66, -103.37], 11);
 
