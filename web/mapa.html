@@ -209,6 +209,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
 (() => {
   "use strict";
   const M = window.aguaMapa;
+  const muniES = (m) => String(m ?? "").replace(/San Pedro Tlaquepaque/g, "Tlaquepaque");
   const API = (() => {
     const o = new URLSearchParams(location.search).get("api");
     try {
@@ -368,7 +369,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
       const differs = ls.length && ls.join() !== [...z.all].sort().join();
       const built = M.card({
         title: p.n,
-        subtitle: p.m + (p.cp ? ` · C.P. ${p.cp}` : ""),
+        subtitle: muniES(p.m) + (p.cp ? ` · C.P. ${p.cp}` : ""),
         sentence: M.describe(p),
         main: z.main,
         side: z.border,
@@ -485,7 +486,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
           el("strong", {}, p.n),
           el("span", { class: "sub" },
             z.all.length ? el("span", { class: "dot", style: `--zc:${color(z.main[0])}` }) : null,
-            `${p.m}${p.cp ? ` · C.P. ${p.cp}` : ""} · ${M.label(p)}`));
+            `${muniES(p.m)}${p.cp ? ` · C.P. ${p.cp}` : ""} · ${M.label(p)}`));
         li.addEventListener("mousedown", (e) => e.preventDefault());
         li.addEventListener("click", () => pick(f));
         return li;
@@ -547,7 +548,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
           // is theirs. SIAPA's zone polygons can overlap a colonia assigned to other zones.
           const own = M.zones(f.properties).all, hereZones = zs.filter((z) => own.includes(z));
           const part = own.length > 1 && hereZones.length ? [", en la parte de ", el("strong", {}, M.theZones(hereZones))] : [];
-          say("Tu ubicación está en ", el("strong", {}, f.properties.n), `, ${f.properties.m}`, ...part, ".");
+          say("Tu ubicación está en ", el("strong", {}, f.properties.n), `, ${muniES(f.properties.m)}`, ...part, ".");
           return;
         }
         clearSelection();

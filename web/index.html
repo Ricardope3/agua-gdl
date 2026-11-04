@@ -708,7 +708,7 @@ if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.
 aguaM.datos.then((d) => {
   document.getElementById("m4-num").textContent = aguaM.fmt(d.semana);
   document.getElementById("m4-max").textContent = d.max;
-  document.getElementById("m4-munis").innerHTML = d.munis.slice(0, 5).map(([m, n]) => `<li><a href="/reportes"><b>${m}</b><span class="d">${n}</span><small>colonias con publicaciones</small></a></li>`).join("");
+  document.getElementById("m4-munis").innerHTML = d.munis.slice(0, 5).map(([m, n]) => `<li><a href="/reportes"><b>${m.replace(/San Pedro Tlaquepaque/g, "Tlaquepaque")}</b><span class="d">${n}</span><small>colonias con publicaciones</small></a></li>`).join("");
 });
 const track = document.getElementById("m4-track"), dots = document.getElementById("m4-dots");
 dots.innerHTML = [...track.children].map(() => "<i></i>").join("");

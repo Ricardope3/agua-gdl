@@ -670,6 +670,8 @@ if (window.top !== window.self) {
 <body>
 <!-- == SECTION: phone card, quick look and carousel == -->
 <script>
+  // Display only: the data and keys keep SIAPA's «San Pedro Tlaquepaque»; everyone calls it Tlaquepaque.
+  const muniES = (m) => String(m ?? "").replace(/San Pedro Tlaquepaque/g, "Tlaquepaque");
   const isPhone = () => matchMedia("(max-width: 760px)").matches;
   // The report button and, when wanted, a toggle for the rest of the card, right under its title.
   function acciones(card, e, more) {
@@ -770,7 +772,7 @@ if (window.top !== window.self) {
     const M = window.aguaMapa, h = card.querySelector("h2"), w = card.querySelector(".where");
     if (!p || !h || !w || h.querySelector("small")) return;
     const ls = M.zonesOf(p.l || ""), zs = ls.length ? ls : M.zones(p).main;
-    h.append(" ", Object.assign(document.createElement("small"), { textContent: `· ${p.m}` }));
+    h.append(" ", Object.assign(document.createElement("small"), { textContent: `· ${muniES(p.m)}` }));
     w.textContent = zs.length ? `${zs.length > 1 ? "Zonas" : "Zona"} ${M.joinES(zs.map(String))}` : "Sin zona en el mapa del SIAPA";
     // With publications, the zone opens their line: «Zona 5 · 3 fuentes distintas · …».
     const src = card.querySelector(".ev-src");
@@ -863,7 +865,7 @@ if (window.top !== window.self) {
   window.__tileD = [0, 0];
   window.__fichaD = (card, e, form, p) => {
     const failed = card.querySelector(":scope > .none"), [k, t] = !e && failed ? ["calma", ""] : ahora(e), zs = zonaDe(p), z = zs[0], q = new URLSearchParams({ q: p.n, m: p.m, cp: p.cp });
-    const h2 = card.querySelector("h2"), mun = mk("p", "q-mun", `${p.m}${p.cp ? ` · C.P. ${p.cp}` : ""}`), lista = card.querySelectorAll(":scope > .where")[1];
+    const h2 = card.querySelector("h2"), mun = mk("p", "q-mun", `${muniES(p.m)}${p.cp ? ` · C.P. ${p.cp}` : ""}`), lista = card.querySelectorAll(":scope > .where")[1];
     if (lista) lista.className = "q-mun";
     if (zs.length) mun.append(" · ", link(`/avisos?${q}`, `Zona ${window.aguaMapa.joinES(zs.map(String))}`));
     // The evidence badge already knows when the water came back or no days are given.
@@ -1574,7 +1576,7 @@ if (window.top !== window.self) {
           const k = keyOf(f.properties);
           const c = reportsNow().get(k), stale = live() ? staleByKey.get(k) : carriedByDay.get(DAYS[at])?.get(k) || null, e = evNow.get(k);
           const later = !e && firstSeen.get(k) <= (DAYS[DAYS.length - 1] || "") && firstSeen.get(k);
-          return el("span", {}, `${f.properties.n} · ${f.properties.m}`,
+          return el("span", {}, `${f.properties.n} · ${muniES(f.properties.m)}`,
             e ? el("span", { class: "sub" }, `${live() ? "" : `Al ${dateES(DAYS[at])}: `}${evLine(e)}`) : null,
             later ? el("span", { class: "sub" }, `Su primera publicación llega el ${dateES(later, true)}`) : null,
             c ? el("span", { class: "sub" }, `${statusLabel(c)} · ${plural(totalOf(c), "reporte", "reportes")}${live() ? " en 24 h" : " ese día"}`) : null,
@@ -1887,8 +1889,10 @@ if (window.top !== window.self) {
       const on = () => {
         unhover();
         const fs = feats() || [];
-        if (fs.length) hovered = L.geoJSON({ type: "FeatureCollection", features: fs.map((x) => ({ type: "Feature", geometry: x.geometry, properties: {} })) },
-          { interactive: false, renderer: liveRenderer, style: { color: css("--primary"), weight: 3, fill: true, fillColor: css("--primary"), fillOpacity: 0.18 } }).addTo(map);
+        // Each colonia in its SIAPA zone's colour (main zone), as on /avisos; outside the rotation, the accent.
+        const tint = (p) => M.COLORS[aguaDark() ? "dark" : "light"][M.zones(p).main[0]] || css("--primary");
+        if (fs.length) hovered = L.geoJSON({ type: "FeatureCollection", features: fs.map((x) => ({ type: "Feature", geometry: x.geometry, properties: x.properties })) },
+          { interactive: false, renderer: liveRenderer, style: (x) => { const c = tint(x.properties); return { color: c, weight: 3, fill: true, fillColor: c, fillOpacity: 0.3 }; } }).addTo(map);
       };
       node.addEventListener("pointerenter", on);
       node.addEventListener("pointerleave", unhover);
@@ -1972,7 +1976,7 @@ if (window.top !== window.self) {
       // SIAPA's list sometimes gives other zones than its map, as /mapa says.
       const zs = M.zones(p).all, ls = M.zonesOf(p.l || "");
       const where = !zs.length && ls.length ? "Sin zona en el mapa del SIAPA" : M.label(p);
-      const kids = [close, el("h2", {}, p.n), el("p", { class: "where" }, `${p.m}${p.cp ? ` · C.P. ${p.cp}` : ""} · ${where}`)];
+      const kids = [close, el("h2", {}, p.n), el("p", { class: "where" }, `${muniES(p.m)}${p.cp ? ` · C.P. ${p.cp}` : ""} · ${where}`)];
       if (ls.length && ls.join() !== [...zs].sort().join()) kids.push(el("p", { class: "where" }, `La lista de colonias del SIAPA la pone en ${M.theZones(ls)}.`));
       const e = ev.get(k);
       if (!pubs) kids.push(el("p", { class: "none" }, "No pudimos cargar lo que publican medios y vecinos. Intenta de nuevo en unos minutos."));
@@ -2125,7 +2129,7 @@ if (window.top !== window.self) {
       copy.addEventListener("click", async () => {
         const c = byKey.get(keyOf(p));
         const counts = c ? `${c.sin_agua || 0} sin agua, ${c.baja || 0} con baja presión y ${c.con_agua || 0} con agua` : "sin conteo disponible";
-        const text = `${nice(p.n)}, ${p.m}: ${counts} en reportes vecinos de las últimas 24 horas. Resumen copiado el ${new Date().toLocaleString("es-MX", { dateStyle: "medium", timeStyle: "short" })}. Son testimonios voluntarios, no una medición oficial ni una muestra representativa; quien no reporta no aparece. https://aguagdl.com/reportes?${new URLSearchParams({ q: p.n, m: p.m, cp: p.cp })}`;
+        const text = `${nice(p.n)}, ${muniES(p.m)}: ${counts} en reportes vecinos de las últimas 24 horas. Resumen copiado el ${new Date().toLocaleString("es-MX", { dateStyle: "medium", timeStyle: "short" })}. Son testimonios voluntarios, no una medición oficial ni una muestra representativa; quien no reporta no aparece. https://aguagdl.com/reportes?${new URLSearchParams({ q: p.n, m: p.m, cp: p.cp })}`;
         try { await navigator.clipboard.writeText(text); copy.replaceChildren(icon("check"), "Resumen copiado"); }
         catch {
           const field = el("textarea", { "aria-label": "Resumen para copiar" }, text);
@@ -2343,7 +2347,7 @@ if (window.top !== window.self) {
       const rows = [...per.values()].filter((r) => r.sin).sort((a, b) => b.sin / b.total - a.sin / a.total);
       $("munis-lista").replaceChildren(...rows.map((r) => {
         const pct = 100 * r.sin / r.total;
-        const li = el("li", {}, el("span", {}, r.m), el("b", {}, `${pct < 1 ? "<1" : Math.round(pct)} %`),
+        const li = el("li", {}, el("span", {}, muniES(r.m)), el("b", {}, `${pct < 1 ? "<1" : Math.round(pct)} %`),
           el("span", { class: "bar" }, el("span", { style: `width:${pct}%` })),
           el("small", {}, `${fmt(r.sin)} de ${plural(r.total, "colonia", "colonias")} en la rotación`));
         hoverable(li, () => [...features].filter(([k]) => inRot(k) && munis(k).includes(r.m)).flatMap(([, fs]) => fs));
@@ -2368,7 +2372,7 @@ if (window.top !== window.self) {
       $("top-reportes").replaceChildren(...rows.map(({ e, f, total }) => {
         const s = sevOf(e.dias);
         const b = el("button", { type: "button" }, el("span", { class: s ? "sevb" : "sevb nodays", style: sevVars(s) }, plural(total, "reporte", "reportes")),
-          el("span", {}, el("strong", {}, nice(f.properties.n)), el("small", {}, [f.properties.m, s ? `hasta ${daysWord(e.dias)}` : null, e.medios ? plural(e.medios, "medio", "medios") : null].filter(Boolean).join(" · "))));
+          el("span", {}, el("strong", {}, nice(f.properties.n)), el("small", {}, [muniES(f.properties.m), s ? `hasta ${daysWord(e.dias)}` : null, e.medios ? plural(e.medios, "medio", "medios") : null].filter(Boolean).join(" · "))));
         b.addEventListener("click", () => select(f));
         hoverable(b, () => features.get(keyOf(f.properties)));
         return el("li", {}, b);
@@ -2413,7 +2417,7 @@ if (window.top !== window.self) {
       const p = f.properties, s = sevOf(e.dias);
       const b = el("button", { type: "button", class: "row" },
         el("span", { class: s ? "sevb" : "sevb nodays", style: sevVars(s) }, s ? daysWord(e.dias) : "sin días"),
-        el("span", { class: "what" }, el("strong", {}, nice(p.n)), el("small", {}, `${p.m} · ${M.label(p)}`)),
+        el("span", { class: "what" }, el("strong", {}, nice(p.n)), el("small", {}, `${muniES(p.m)} · ${M.label(p)}`)),
         el("span", { class: "meta" }, [plural(e.fuentes, "fuente", "fuentes"), e.medios ? plural(e.medios, "medio", "medios") : null].filter(Boolean).join(" · "),
           el("small", {}, `${dateES(e.ultima)}${e.eco ? ` · ${plural(e.eco, "interacción", "interacciones")}` : ""}`)));
       b.addEventListener("click", () => { stage.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }); select(f); });
@@ -2660,7 +2664,7 @@ if (window.top !== window.self) {
         const said = e ? ` · publicaciones: ${e.dias != null ? `hasta ${daysWord(e.dias)} sin agua` : "sin agua"}` : "";
         const current = c ? ` · ${statusLabel(c).toLowerCase()} en 24 h` : stale ? " · sin reportes nuevos en 24 h" : summary && !e ? " · sin reportes en 72 h (no sabemos)" : "";
         const li = el("li", { role: "option", id: `op-${i}`, "aria-selected": "false" }, el("strong", {}, p.n),
-          el("span", { class: "sub" }, `${p.m}${p.cp ? ` · C.P. ${p.cp}` : ""}${said}${current}`));
+          el("span", { class: "sub" }, `${muniES(p.m)}${p.cp ? ` · C.P. ${p.cp}` : ""}${said}${current}`));
         li.addEventListener("mousedown", (e) => e.preventDefault());
         li.addEventListener("click", () => pick(f));
         return li;
@@ -2719,7 +2723,7 @@ if (window.top !== window.self) {
         if (pin) pin.setLatLng(here); else pin = L.marker(here, { icon: L.divIcon({ className: "pin", iconSize: [16, 16] }), keyboard: false, interactive: false }).addTo(map);
         const inside = colonias.filter((f) => M.contains(f, [lon, lat]));
         const f = inside.find((c) => c.properties.z) || inside[0];
-        if (f) { select(f, { form: thenForm }); say("Tu ubicación está en ", el("strong", {}, f.properties.n), `, ${f.properties.m}.`); return; }
+        if (f) { select(f, { form: thenForm }); say("Tu ubicación está en ", el("strong", {}, f.properties.n), `, ${muniES(f.properties.m)}.`); return; }
         clearSelection();
         map.flyTo(here, 15, { animate: !reduced });
         say("Tu ubicación no está en ninguna colonia del mapa del SIAPA. Busca tu colonia por nombre o tócala en el mapa.");

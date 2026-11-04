@@ -159,7 +159,7 @@ window.aguaMapa = (() => {
     const tip = (f) => {
       const p = f.properties;
       const z = zones(p);
-      const el = node("span", "", `${p.n} · ${p.m}`);
+      const el = node("span", "", `${p.n} · ${String(p.m).replace(/San Pedro Tlaquepaque/g, "Tlaquepaque")}`);
       if (!z.all.length) {
         el.append(node("span", "sub", "Fuera de la rotación"));
         return el;
