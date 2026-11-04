@@ -624,7 +624,6 @@ path.nueva { animation: nueva 1.4s ease-out both; pointer-events: none }
   .p-go { position: absolute; top: 8px; right: 8px; padding: 6px; opacity: 0 }
   .p-item:hover .p-go, .p-go:focus-visible { opacity: 1 }
   .p-empty { padding: 20px; color: var(--muted) }
-  .q-fuentes .ev-src { margin: 0 0 4px; font-size: .85rem }
   .p-item:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px }
   .v-stories { display: flex; gap: 12px; padding: 14px 20px 18px; overflow-x: auto }
   .v-story { position: relative; flex: 1; min-width: 0; max-width: 120px; height: 150px; padding: 0; overflow: hidden; border: 3px double #e4572e; border-radius: 4px; background: #101828; cursor: pointer }
@@ -912,8 +911,9 @@ if (window.top !== window.self) {
     if (!card.querySelector("form.report, .thanks")) sec2.append(cta);
     sec2.append(acts);
     const kids = [card.querySelector(".close"), h2, mun, lista, failed, t ? sec0 : null, conteo ? sec1 : null, sec2];
-    const srcs = card.querySelectorAll(".ev-src");
-    if (srcs.length) { const sec3 = mk("div", "q-sec q-fuentes"); sec3.append(...srcs); kids.push(sec3); }
+    // The sources line («Lo dice…», «N fuentes distintas…») stays off the desktop card: «Lo que se
+    // publica», beside it, lists and links every source.
+    card.querySelectorAll(".ev-src").forEach((n) => n.remove());
     card.replaceChildren(...kids.filter(Boolean), ...card.querySelectorAll(":scope > form.report, :scope > .thanks, :scope > .after-report, :scope > .share, :scope > .exige"));
     panel(e);
     videoLauncher(card, e, p);
