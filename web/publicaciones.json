@@ -67,7 +67,7 @@
    ],
    "lugar": "Ciudad Granja, Zapopan",
    "cita": "El hartazgo por la falta de agua llevó a alrededor de un centenar de vecinos de Ciudad Granja a cerrar la circulación de la avenida Vallarta, en ambos sentidos, a las 18:20 horas de este martes, para exigir una solución al desabasto que, aseguran, padecen desde el pasado 8 de octubre.",
-   "dias": 12,
+   "dias": null,
    "desde": "2026-10-08",
    "bloqueo": true,
    "eco": null,
@@ -158,7 +158,7 @@
    ],
    "lugar": "Prados Vallarta, Zapopan",
    "cita": "En la Unidad Habitacional Oblatos carecen del servicio desde el sábado, lo mismo que en Prados Vallarta.",
-   "dias": 3,
+   "dias": null,
    "desde": "2026-10-17",
    "eco": null,
    "vista": "fuentes/0edeb6ec584b.jpg",
@@ -464,7 +464,7 @@
    ],
    "lugar": "La Estancia, Zapopan",
    "cita": "En la colonia la Estancia llevamos desde el lunes 12 de octubre sin agua la mayoría de la colonias aledañas están igual.",
-   "dias": 8,
+   "dias": null,
    "desde": "2026-10-12",
    "eco": {
     "reacciones": 0,
@@ -615,7 +615,7 @@
    ],
    "lugar": "Eucalipto Vallarta, Zapopan",
    "cita": "Es un desorden Eucalipto Vallarta desde el lunes 12 de octubre sin agua",
-   "dias": 8,
+   "dias": null,
    "desde": "2026-10-12",
    "eco": {
     "reacciones": 0,
@@ -707,7 +707,7 @@
    ],
    "lugar": "Ciudad Granja, Zapopan",
    "cita": "en Cd. Granja ya vamos para 15 días sin Agua. Volveremos a taparles la Av.",
-   "dias": 14,
+   "dias": null,
    "eco": {
     "reacciones": 0,
     "comentarios": 0,
@@ -737,7 +737,7 @@
    ],
    "lugar": "Lomas de Guadalupe, Zapopan",
    "cita": "Lomas de Guadalupe llevamos desde el Lunes de la semana pasada sin agua.",
-   "dias": 8,
+   "dias": null,
    "desde": "2026-10-12",
    "eco": {
     "reacciones": 0,
@@ -1207,7 +1207,7 @@
    ],
    "lugar": "Santa Cecilia, Guadalajara",
    "cita": "Casi la semana en sta cecilia 3ra sección",
-   "dias": 6,
+   "dias": null,
    "eco": {
     "reacciones": 0,
     "comentarios": 0,
@@ -1286,7 +1286,7 @@
    ],
    "lugar": "Ciudad Granja, Zapopan",
    "cita": "Ciudad Granja Zona 6 sin agua desde el lunes 12 de octubre.",
-   "dias": 6,
+   "dias": null,
    "desde": "2026-10-12",
    "eco": {
     "reacciones": 27,
@@ -1305,7 +1305,7 @@
    ],
    "lugar": "Ciudad Granja, Zapopan",
    "cita": "En ciudad granja ya van para una semana sin agua",
-   "dias": 6,
+   "dias": null,
    "eco": {
     "reacciones": 20,
     "comentarios": 1,
@@ -1342,7 +1342,7 @@
    ],
    "lugar": "Jardines de Guadalupe, Zapopan",
    "cita": "Zapopan, colonia Jardines de Guadalupe sin agua desde el jueves",
-   "dias": 3,
+   "dias": null,
    "desde": "2026-10-15",
    "eco": {
     "reacciones": 22,
@@ -1380,7 +1380,7 @@
    ],
    "lugar": "San Vicente, Vicente Guerrero, San Marcos, Santa Rosa, La Esperanza, Santa Cecilia, San Onofre, Guadalajara Oriente, Talpita y Oblatos",
    "cita": "Desde el martes 6 de octubre 2026, colonia San Vicente, Vicente Guerrero, San Marcos, Sta.Rosa, La Esperanza, Sta. Cecilia, San Onofre, GDL Oriente, Talpita, Oblatos, etc. Sin una gota de agua",
-   "dias": 12,
+   "dias": null,
    "desde": "2026-10-06",
    "eco": {
     "reacciones": 11,
@@ -1909,7 +1909,7 @@
    ],
    "lugar": "Talpita, Guadalajara",
    "cita": "Casi 22 días en Talpita",
-   "dias": 21,
+   "dias": null,
    "eco": {
     "reacciones": 0,
     "comentarios": 0,
@@ -1958,7 +1958,7 @@
    ],
    "lugar": "San Andrés, Guadalajara",
    "cita": "En colonias como Blanco y Cuéllar, Belisario Domínguez, San Andrés y Dionisio Rodríguez, los vecinos reportaron cortes anticipados. En estas dos últimas, señalaron que la falta de agua se prolonga desde el 4 de octubre.",
-   "dias": 12,
+   "dias": null,
    "desde": "2026-10-04",
    "eco": null,
    "captura": null,
@@ -2148,7 +2148,7 @@
    ],
    "lugar": "Jardines del Country, Guadalajara",
    "cita": "En Jardines del country mañana cumplimos 15 días sin agua",
-   "dias": 14,
+   "dias": null,
    "eco": {
     "reacciones": 3,
     "comentarios": 0,
@@ -2179,7 +2179,7 @@
    ],
    "lugar": "Jardines del Rosario y Atlas, Guadalajara",
    "cita": "Por igual en Jardínes del rosario desde el lunes no hay agua junto a la colonia atlas",
-   "dias": 4,
+   "dias": null,
    "desde": "2026-10-12",
    "eco": {
     "reacciones": 2,
@@ -2392,7 +2392,7 @@
    ],
    "lugar": "Plaza Guadalupe, Zapopan",
    "cita": "En la colonia Plaza Guadalupe casi una semana sin agua, aún sin empezar los tandeos.",
-   "dias": 6,
+   "dias": null,
    "eco": {
     "reacciones": 9,
     "comentarios": 2,
@@ -2703,7 +2703,7 @@
    ],
    "lugar": "Chapalita Inn, Zapopan",
    "cita": "En Chapalita Inn / Exitmex vamos para 10 días sin una gta de agua",
-   "dias": 10,
+   "dias": null,
    "eco": {
     "al": "2026-10-22",
     "reacciones": 9,
@@ -2740,7 +2740,7 @@
    ],
    "lugar": "Colinas de las Águilas, Zapopan",
    "cita": "Desde el martes no tenemos agua en colinas de las Águilas, se adelantó la rotación?, porque hoy es jueves y sigue sin caer agua",
-   "dias": 2,
+   "dias": null,
    "eco": {
     "al": "2026-10-22",
     "reacciones": 5,
@@ -6250,7 +6250,7 @@
    ],
    "lugar": "La Esperanza o Federacha",
    "cita": "Colonia la.ESPERANZA...O FEDERACHA...SIN AGUA YA VAMOS PARA 21 DÍAS",
-   "dias": 21,
+   "dias": null,
    "eco": {
     "reacciones": 1,
     "comentarios": 0,
@@ -11919,7 +11919,7 @@
    ],
    "lugar": "La Nogalera, Guadalajara",
    "cita": "Ya casi dos semanas sin agua en La Nogalera",
-   "dias": 14,
+   "dias": null,
    "eco": {
     "reacciones": 0,
     "comentarios": 0,
@@ -13359,7 +13359,7 @@
    ],
    "lugar": "Santa Cecilia, Guadalajara",
    "cita": "En la colonia Santa Cecilia ni si quiera tenemos agua, ya vamos para 3 semana así, solo unas cuantas cuadras alcanzan a tener!",
-   "dias": 21,
+   "dias": null,
    "eco": {
     "reacciones": 0,
     "comentarios": 0,
@@ -15318,7 +15318,7 @@
    ],
    "lugar": "Alfredo Barba, Tlaquepaque",
    "cita": "En la colonia Alfredo Barba Tlaquepaque nos han dejado un mes completo sin agua ahorita vamos para 2 semanas",
-   "dias": 14,
+   "dias": null,
    "eco": {
     "reacciones": 0,
     "comentarios": 0,
@@ -18972,7 +18972,7 @@
    ],
    "lugar": "18 de Marzo, Guadalajara",
    "cita": "En la colonia 18 de marzo Guadalajara, no tenemos agua desde el viernes y ya es martes, NO ESTAN RESPETANDO LO QUE DIJERON QUE SE IBA A HACER, SÓLO NOS QUITARON ÉL AGUA Y LOS RECIBOS MÁS CAROS.",
-   "dias": 4,
+   "dias": null,
    "eco": {
     "reacciones": 0,
     "comentarios": 0,
@@ -20404,7 +20404,7 @@
    ],
    "lugar": "Tlaquepaque Centro",
    "cita": "Según su lista. Solo 2 días no se tendría agua y ya tenemos desde el lunes pasado sin agua. En tlaqueoaque centro",
-   "dias": 7,
+   "dias": null,
    "desde": "2026-10-12",
    "eco": {
     "reacciones": 2,
@@ -20765,7 +20765,7 @@
    ],
    "lugar": "La Penal, Guadalajara",
    "cita": "En la penal desde el 4 de octubre no hay",
-   "dias": 15,
+   "dias": null,
    "desde": "2026-10-04",
    "eco": {
     "reacciones": 0,
@@ -20886,7 +20886,7 @@
    ],
    "lugar": "Ciudad Granja, Zapopan",
    "cita": "En ciudad granja zona 6 desde el lunes 12 de octubre no tenemos agua",
-   "dias": 8,
+   "dias": null,
    "desde": "2026-10-12",
    "eco": {
     "reacciones": 4,
@@ -21067,7 +21067,7 @@
    ],
    "lugar": "Ciudad Granja, Zapopan",
    "cita": "El calendario es falso, no sirve de nada. En ciudad granja no ha caído agua desde el lunes 12 de octubre.",
-   "dias": 7,
+   "dias": null,
    "desde": "2026-10-12",
    "eco": {
     "reacciones": 0,
@@ -21158,7 +21158,7 @@
    ],
    "lugar": "Olímpica, Guadalajara",
    "cita": "Zona 3 revolución y olímpica, desde el martes no hay agua",
-   "dias": 6,
+   "dias": null,
    "desde": "2026-10-13",
    "eco": {
     "reacciones": 4,
@@ -21339,7 +21339,7 @@
    ],
    "lugar": "Santa Cecilia, Guadalajara",
    "cita": "Santa cecilia calle apolonio moreno ya vamos para 15 dias",
-   "dias": 14,
+   "dias": null,
    "eco": {
     "reacciones": 0,
     "comentarios": 0,
@@ -21369,7 +21369,7 @@
    ],
    "lugar": "San Miguel de Huentitán, Guadalajara",
    "cita": "En san Miguel de Huentitan (zona 3) sin agua desde el Martes.",
-   "dias": 6,
+   "dias": null,
    "desde": "2026-10-13",
    "eco": {
     "reacciones": 1,
@@ -21491,7 +21491,7 @@
    ],
    "lugar": "Blanco y Cuéllar, Guadalajara",
    "cita": "Blanco y Cuellar desde el sábado sin agua",
-   "dias": 2,
+   "dias": null,
    "desde": "2026-10-17",
    "eco": {
     "reacciones": 1,
@@ -21522,7 +21522,7 @@
    ],
    "lugar": "Jardines del Auditorio, Zapopan",
    "cita": "Jardines del auditorio de Zapopan no está en el listado y desde ayer no tenemos agua",
-   "dias": 1,
+   "dias": null,
    "desde": "2026-10-18",
    "eco": {
     "reacciones": 0,
@@ -21553,7 +21553,7 @@
    ],
    "lugar": "San Marcos, Guadalajara",
    "cita": "Colonia San Marcos sin agua desde el viernes y cuando cayó que fue el jueves sin presión de agua no sube al tinaco",
-   "dias": 3,
+   "dias": null,
    "desde": "2026-10-16",
    "eco": {
     "reacciones": 0,
@@ -21734,7 +21734,7 @@
    ],
    "lugar": "San Andrés, Guadalajara",
    "cita": "Desde ayer no cae agua en la colonia San Andrés debería de haber agua ya que nos toca agua y no vino el domingo ni hoy",
-   "dias": 1,
+   "dias": null,
    "desde": "2026-10-18",
    "eco": {
     "reacciones": 0,
@@ -21855,7 +21855,7 @@
    ],
    "lugar": "Echeverría, Guadalajara",
    "cita": "Echeverría sin agua desde el lunes.",
-   "dias": 2,
+   "dias": null,
    "desde": "2026-10-19",
    "eco": {
     "reacciones": 0,
@@ -23739,7 +23739,7 @@
    ],
    "lugar": "Talpita, Guadalajara",
    "cita": "En Talpita hoy cumplimos 26 días SIN GOTA DE AGUA!!!!!",
-   "dias": 26,
+   "dias": null,
    "eco": {
     "reacciones": 0,
     "comentarios": 0,
@@ -25159,7 +25159,7 @@
    ],
    "lugar": "El Vergel, San Pedro Tlaquepaque",
    "cita": "Buen día ,tenemos desde el viernes sin agua en el vergel , cuando la pondrán",
-   "dias": 3,
+   "dias": null,
    "desde": "2026-10-23",
    "eco": {
     "reacciones": 0,
@@ -25669,7 +25669,7 @@
    ],
    "lugar": "Jardines del Sur, Jardines de la Cruz y Jardines de San José, Guadalajara",
    "cita": "JARDINES DEL SUR, JARDINES DE LA CRUZ, JARDINES DE SAN JOSÉ SIN AGUA DESDE EL 8 DE OCTUBRE",
-   "dias": 14,
+   "dias": null,
    "eco": {
     "al": "2026-10-26",
     "reacciones": 23,
@@ -25989,7 +25989,7 @@
    ],
    "lugar": "La Estancia, Zapopan",
    "cita": "Sin agua en la Estanciis ya casi 10 días.",
-   "dias": 10,
+   "dias": null,
    "eco": {
     "al": "2026-10-26",
     "reacciones": 0,
@@ -26686,7 +26686,7 @@
    ],
    "lugar": "Prados Tepeyac, Zapopan",
    "cita": "Col. Prados Tepeyac Zona 6 desde el domingo sin agua",
-   "dias": 4,
+   "dias": null,
    "eco": {
     "al": "2026-10-26",
     "reacciones": 0,
@@ -26774,7 +26774,7 @@
    ],
    "lugar": "Atlas, Guadalajara",
    "cita": "Zona 3 colonia atlas sin agua desde el 10 de octubre, cual tandeo?",
-   "dias": 12,
+   "dias": null,
    "eco": {
     "al": "2026-10-26",
     "reacciones": 0,
@@ -26804,7 +26804,7 @@
    ],
    "lugar": "Francisco Villa, Guadalajara",
    "cita": "Francisco Villa sin agua \n ya va para 15 días",
-   "dias": 15,
+   "dias": null,
    "eco": {
     "al": "2026-10-26",
     "reacciones": 0,
@@ -26891,7 +26891,7 @@
    ],
    "lugar": "Francisco Villa, Guadalajara",
    "cita": "Pues no creo ablas mucho y ni se mira nada Francisco villa casi 3 semanas si gota de agua",
-   "dias": 21,
+   "dias": null,
    "eco": {
     "al": "2026-10-26",
     "reacciones": 0,
@@ -26920,7 +26920,7 @@
    ],
    "lugar": "Fovissste Miravalle",
    "cita": "Porque seguimos sin agua en foviste Miravalle desde el lunes??",
-   "dias": 3,
+   "dias": null,
    "eco": {
     "al": "2026-10-26",
     "reacciones": 1,
@@ -27066,7 +27066,7 @@
    ],
    "lugar": "Santa Cecilia, Guadalajara",
    "cita": "Estamos sin agua en algunas partes de Santa Cecilia, vamos para 3 semanas",
-   "dias": 21,
+   "dias": null,
    "eco": {
     "al": "2026-10-26",
     "reacciones": 1,
@@ -27443,7 +27443,7 @@
    ],
    "lugar": "Echeverría, Guadalajara",
    "cita": "La colonia Echeverría tampoco tenemos agua desde el martes",
-   "dias": 2,
+   "dias": null,
    "eco": {
     "al": "2026-10-26",
     "reacciones": 0,
@@ -27734,7 +27734,7 @@
    ],
    "lugar": "Del Fresno, Guadalajara",
    "cita": "Sin agua col.Fresno desde el martes",
-   "dias": 2,
+   "dias": null,
    "eco": {
     "al": "2026-10-26",
     "reacciones": 0,
@@ -27971,7 +27971,7 @@
    ],
    "lugar": "Alfredo Barba, Tlaquepaque",
    "cita": "La Colonia Alfredo Barba en Tlaquepaque no esta en el sistema de Rotación y desde el viernes no hay agua y cuando llega no hay presión no sube a los tinacos...",
-   "dias": 4,
+   "dias": null,
    "eco": {
     "al": "2026-10-27",
     "reacciones": 1,
@@ -28123,7 +28123,7 @@
    ],
    "lugar": "Lomas del Camichin, Tonalá",
    "cita": "Y cuando vamos a tener agua?Si ya vamos para un mes de no tener agua  en lomas del camichin",
-   "dias": 30,
+   "dias": null,
    "eco": {
     "al": "2026-10-27",
     "reacciones": 0,
@@ -28294,7 +28294,7 @@
    ],
    "lugar": "Real Vallarta, Zapopan",
    "cita": "Real Vallarta, si tuvimos agua desde el sábado 10am hasta ayer 11am presion baja, gracias a Dios se lleno el aljibe, pero ya no llega el agua desde la calle , espero que no lo corten tanto tiempo como esta que duro casi 2 semana sin agua",
-   "dias": 14,
+   "dias": null,
    "eco": {
     "reacciones": 0,
     "comentarios": 0,
@@ -28602,7 +28602,7 @@
    ],
    "lugar": "Camichines 2, Tonalá",
    "cita": "Aquí en la colonia camichines 2 en Tonalá, desde el viernes. No tenemos agua 💧😔.",
-   "dias": 3,
+   "dias": null,
    "desde": "2026-10-23",
    "eco": {
     "reacciones": 4,
@@ -28777,7 +28777,7 @@
    ],
    "lugar": "Oblatos, Guadalajara",
    "cita": "Tenemos casi 15 dias sin agua en todo oblatos Siapa Gdl",
-   "dias": 15,
+   "dias": null,
    "eco": {
     "reacciones": 2,
     "comentarios": 0,
@@ -28806,7 +28806,7 @@
    ],
    "lugar": "Rancho de la Cruz, Tonalá",
    "cita": "En rancho de la cruz tonala tenemos desde el sabado sin agua",
-   "dias": 3,
+   "dias": null,
    "desde": "2026-10-24",
    "eco": {
     "reacciones": 0,
@@ -28983,7 +28983,7 @@
    ],
    "lugar": "Vistas del Pedregal, Tonalá",
    "cita": "En vistas del pedregal desde el jueves no tenemos",
-   "dias": 4,
+   "dias": null,
    "desde": "2026-10-22",
    "eco": {
     "reacciones": 9,
@@ -29141,7 +29141,7 @@
    ],
    "lugar": "Haciendas de la Reyna, Tonalá",
    "cita": "Haciendas de la Reyna desde el viernes",
-   "dias": 3,
+   "dias": null,
    "desde": "2026-10-23",
    "eco": {
     "reacciones": 14,
@@ -29172,7 +29172,7 @@
    ],
    "lugar": "Jardines de la Cruz Oriente, Tonalá",
    "cita": "Jardines de la cruz oriente tonala\nSin aviso desde el viernes",
-   "dias": 3,
+   "dias": null,
    "desde": "2026-10-23",
    "eco": {
     "reacciones": 8,
@@ -30260,7 +30260,7 @@
    ],
    "lugar": "Real Vallarta, Zapopan",
    "cita": "Real Vallarta no tiene agua desde el 13 de octubre, no llega nada de agua. Por favor, suban la presión del agua para que se puedan llenar los aljibes en esta colonia.",
-   "dias": 19,
+   "dias": null,
    "eco": {
     "reacciones": 0,
     "comentarios": 0,
@@ -31457,7 +31457,7 @@
    ],
    "lugar": "CD aztlan, Tonalá",
    "cita": "Y en CD aztlan tonala casi una semana sin agua",
-   "dias": 6,
+   "dias": null,
    "vista": null
   },
   {
@@ -31611,7 +31611,7 @@
    ],
    "lugar": "Portales, Tlaquepaque (zona 3)",
    "cita": "Zona 3, Portales Tlaquepaque, no tenemos agua desde el domingo a medio día.",
-   "dias": 3,
+   "dias": null,
    "vista": null
   },
   {
@@ -31740,7 +31740,7 @@
    ],
    "lugar": "El Campesino",
    "cita": "Llevamos casi dos semanas sin agua en el campesino no respetan el esquema de rotación,",
-   "dias": 13,
+   "dias": null,
    "vista": null
   },
   {
@@ -31870,7 +31870,7 @@
    ],
    "lugar": "Unidad Clemente Orozco (zona 5)",
    "cita": "En la unidad Clemente Orozco que pertenece a la zona 5 nos dejaron sin servivio desde el lunes",
-   "dias": 2,
+   "dias": null,
    "vista": null
   },
   {
@@ -32073,7 +32073,7 @@
    ],
    "lugar": "San Vicente",
    "cita": "En san Vicente ya vamos para 3 semanas sin agua",
-   "dias": 21,
+   "dias": null,
    "vista": null
   },
   {
@@ -32808,7 +32808,7 @@
    ],
    "lugar": "Quintana Velarde, Guadalajara",
    "cita": "Mentira ese esquema . Pertenezco a ls zona 2. Hoy miércoles no hay agua. . Desde el 28 de octubre prácticamente no entra agua. Y cuando llega un ratito,ni fuerza tiene para subir al tinaco. Soy de Quintana Velarde, Guadalajara.",
-   "dias": 7,
+   "dias": null,
    "vista": null
   },
   {
@@ -32860,7 +32860,7 @@
    ],
    "lugar": "Chapalita inn",
    "cita": "Puras mentiras los tandeos están solo en papel , pero la realidad no los hacen según su calendario en Chapalita inn casi un mes sin nada de agua puras mentiras",
-   "dias": 28,
+   "dias": null,
    "vista": null
   },
   {
@@ -32912,7 +32912,7 @@
    "lugar": "Colonia Francisco Villa, zona 5 (texto de una imagen en el comentario)",
    "cita": "¡AYUDA! La Zona Cinco, Colonia Francisco Villa, no tenemos agua desde el sábado 10 de octubre.",
    "desde": "2026-10-10",
-   "dias": 25,
+   "dias": null,
    "vista": null
   },
   {
@@ -32990,7 +32990,7 @@
    ],
    "lugar": "Colonia Lomas del Paradero, zona 3 (nombrada en la imagen del comentario)",
    "cita": "Desde ayer no tenemos agua! Aumentaron días sin agua sin previo aviso. Es una situación desesperante! Imagen: «COLONIA LOMAS DEL PARADERO SIN AGUA - ZONA 3, GUADALAJARA»",
-   "dias": 1,
+   "dias": null,
    "vista": null
   },
   {
@@ -33728,7 +33728,7 @@
    ],
    "lugar": "el campesino de San Pedro Tlaquepaque",
    "cita": "Cuál agua? En el campesino de San Pedro Tlaquepaque ya casi un mes sin agua.",
-   "dias": 30
+   "dias": null
   },
   {
    "fuente": "vecinos",
@@ -33875,7 +33875,7 @@
    ],
    "lugar": "CIUDAD GRANJA zona 6",
    "cita": "CIUDAD GRANJA zona 6, 24 SIN AGUA. No tenemos NADA DE AGUA desde el domingo 11 de octubre",
-   "dias": 24
+   "dias": null
   },
   {
    "fuente": "vecinos",
@@ -35233,7 +35233,7 @@
    ],
    "lugar": "Colonial Tlaquepaque",
    "cita": "En Colonial Tlaquepaque ya vamos para una semana sin el servicio !!!",
-   "dias": 7
+   "dias": null
   },
   {
    "fuente": "vecinos",
@@ -35653,7 +35653,7 @@
    ],
    "lugar": "colonia el campesino",
    "cita": "En la colonia el campesino manden una, ya tenemos casi un mes sin agua.",
-   "dias": 30
+   "dias": null
   },
   {
    "fuente": "vecinos",

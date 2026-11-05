@@ -75,6 +75,33 @@ PAGINAS = {"Cuenta personal en X", "Gobierno de Guadalajara", "Gobierno de Jalis
 errors = []
 
 
+
+# docs/GLOSARIO.md: `dias` is the days the source gives, never our conversion.
+_NUM = {'un':1,'una':1,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,'diez':10,'once':11,'doce':12,'trece':13,'catorce':14,'quince':15,'veinte':20}
+_UNIT = {'dia':1,'dias':1,'semana':7,'semanas':7,'mes':30,'meses':30}
+def _fold(s): return ''.join(c for c in unicodedata.normalize('NFKD', s) if not unicodedata.combining(c)).lower()
+_AMOUNT = r'(\d{1,3}|' + '|'.join(_NUM) + r')\s+(dias?|semanas?|mes(es)?)'
+_HEDGE = re.compile(r'\b(casi|vamos para|van para|va para|vamos a cumplir|cumplimos|cumplir[aeé]?mos)\s+(la |el |los |las )?' + _AMOUNT)
+_HEDGE_UNIT = re.compile(r'\bcasi (la|una|un) (semana|mes)\b')
+_SINCE = re.compile(r'\bdesde (el |este |la |hace )?(pasado )?(lunes|martes|miercoles|jueves|viernes|sabado|domingo|ayer|antier|anoche|\d{1,2} de [a-z]+|el \d{1,2})')
+def _amounts(c):
+    out = []
+    for m in re.finditer(r'(?<![\w.])' + _AMOUNT, c):
+        n = int(m.group(1)) if m.group(1).isdigit() else _NUM[m.group(1)]
+        out.append((m.start(), n * _UNIT[m.group(2)]))
+    if re.search(r'mes y medio', c): out.append((c.find('mes y medio'), 45))
+    return out
+def own_arithmetic(cita, dias):
+    """True when dias is our conversion: the quote hedges («casi», «vamos para», «mañana cumplimos») or counts from a date, and states no plain amount equal to dias."""
+    if dias is None: return False
+    c = _fold(cita)
+    hedged = [m.start() for r in (_HEDGE, _HEDGE_UNIT) for m in r.finditer(c)]
+    since = _SINCE.search(c) and 'desde hace' not in c[max(0, _SINCE.search(c).start()-1):_SINCE.search(c).end()]
+    if not hedged and not since: return False
+    plain = [n for pos, n in _amounts(c) if not any(h <= pos <= h + 30 for h in hedged)]
+    return dias not in plain
+
+
 def show(v):
     s = v if isinstance(v, str) and v else json.dumps(v, ensure_ascii=False)
     return s if len(s) <= 60 else s[:59] + "…"
@@ -194,6 +221,8 @@ def validate(doc):
         dias = p.get("dias")
         if dias is not None and not (count(dias) and 1 <= dias <= 120):
             fail(where, "dias", dias, "null or an integer 1 to 120", "set the days the post gives, or null")
+        elif own_arithmetic(cita or "", dias):
+            fail(where, "dias", dias, "a number the quote states, not one we derived from «casi», «vamos para» or «desde <fecha>»", "set dias to null (docs/GLOSARIO.md)")
         if "desde" in p:
             s = date(p["desde"], where, "desde")
             if s and d and s > d:
