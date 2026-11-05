@@ -22,7 +22,7 @@ KNOWN_ERRORS = [
          msg="SIAPA says «hasta marzo de 2027»; 31 March is our assumption, not a stated date",
          found="3 Nov 2026"),
     dict(id="corte-promise",
-         bad='El SIAPA prometió que cada corte duraría «por máximo un día».', good='El SIAPA prometió que cada racionamiento duraría «por máximo un día».',
+         bad='El SIAPA prometió que cada corte duraría «por máximo un día».', good='El Gobierno de Jalisco prometió que cada racionamiento duraría «por máximo un día».',
          wrong=r"\bcortes?\b[^«»]{0,30}«?(por )?maximo",
          msg="the promise is about «racionamientos» and says «No serán cortes totales»; don't put «corte» beside «por máximo un día»",
          found="3 Nov 2026"),
@@ -46,6 +46,16 @@ KNOWN_ERRORS = [
          wrong=r"(ya no|dejo de) (turn|procesar)\w*[^.;]{0,30} comisiones|stopped processing the app",
          msg="no source says Congress stopped turning the APP to committee on 23 Oct; the cited Crónica story is about something else",
          found="3 Nov 2026 (fact-check #7)"),
+    dict(id="rotation-promise-siapa",
+         bad='El SIAPA prometió racionamientos «por máximo un día».', good='El Gobierno de Jalisco prometió racionamientos «por máximo un día».',
+         wrong=r"siapa (prometio (un dia|que cada|racionamientos|«por maximo)|dice que (no son|los racionamientos)|dijo «no seran|dice un dia)|prometio el siapa|segun el siapa, cada|segun el <a[^>]*rotaciondeservicio[^>]*>siapa</a>",
+         msg="the rotation page that promises «por máximo un día» and «no serán cortes totales» speaks as the Gobierno de Jalisco, not SIAPA",
+         found="3 Nov 2026 (fact-check #5); still on 2,238 pages, the bot and the calendars on 4 Nov"),
+    dict(id="dos-a-tres-presente",
+         bad='Según el SIAPA, cada zona tiene de 2 a 3 racionamientos por semana.', good='El Gobierno de Jalisco prometió de 2 a 3 racionamientos por semana; desde el 4 de noviembre su calendario marca cuatro días a las zonas 1, 2, 4 y 5.',
+         wrong=r"cada zona tiene de 2 a 3|each zone has 2 to 3",
+         msg="«de 2 a 3 racionamientos» is the promise; since 4 Nov zones 1, 2, 4 and 5 have four cut days",
+         found="4 Nov 2026 (error hunt)"),
 ]
 
 

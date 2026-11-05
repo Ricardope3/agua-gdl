@@ -67,7 +67,7 @@ type meta struct {
 // Set at build time with -ldflags "-X main.version=… -X main.built=…".
 var version, built = "dev", ""
 
-const meaning = "Los días (days, weekdays, next, next_cuts) son días CON corte de agua según el calendario del SIAPA, no días con agua. El SIAPA dice que no son cortes totales; vecinos reportan que el agua se va antes y tarda en volver. Agua GDL es un proyecto cívico sin afiliación oficial: confirma en la fuente del SIAPA."
+const meaning = "Los días (days, weekdays, next, next_cuts) son días CON corte de agua según el calendario del SIAPA, no días con agua. El Gobierno de Jalisco dice que no son cortes totales; vecinos reportan que el agua se va antes y tarda en volver. Agua GDL es un proyecto cívico sin afiliación oficial: confirma en la fuente del SIAPA."
 
 func (a *api) clock() time.Time {
 	if a.now != nil {

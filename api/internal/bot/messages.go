@@ -383,7 +383,7 @@ Vecinos nos contaron que el agua se va desde antes del corte y tarda más en vol
 func msgTelegramReminder(days []time.Time, zone int) string {
 	return fmt.Sprintf(`💧 La *Zona %d* tiene corte *mañana %s*%s, según el calendario del SIAPA.
 
-El SIAPA dice que los racionamientos son «por máximo un día» y que «no serán cortes totales», pero vecinos nos cuentan que el agua se va desde antes y tarda más en volver.
+El Gobierno de Jalisco dice que los racionamientos son «por máximo un día» y que «no serán cortes totales», pero vecinos nos cuentan que el agua se va desde antes y tarda más en volver.
 
 🪣 Si todavía tienes agua, llena tu tinaco, cubetas y garrafones, y tápalos bien.
 

@@ -9,7 +9,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aguagdl.com/reportes">
 <meta property="og:title" content="¿Hay agua en tu colonia? Reportes de vecinos en Guadalajara">
-<meta property="og:description" content="El SIAPA prometió racionamientos de máximo un día. Las publicaciones de medios y vecinos cuentan semanas sin agua: míralo por colonia, cada publicación con su enlace, y reporta la tuya sin cuenta. El agua es un derecho. Exígelo.">
+<meta property="og:description" content="El Gobierno de Jalisco prometió racionamientos de máximo un día. Las publicaciones de medios y vecinos cuentan semanas sin agua: míralo por colonia, cada publicación con su enlace, y reporta la tuya sin cuenta. El agua es un derecho. Exígelo.">
 <meta property="og:image" content="https://aguagdl.com/img/og-reportes.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -1137,7 +1137,7 @@ if (window.top !== window.self) {
 
     <div class="wrap">
     <p class="note" id="pruebas-nota" style="margin-top:24px;font-size:1rem"></p>
-    <p class="lede" style="margin-top:12px">El SIAPA prometió que cada racionamiento duraría «por máximo un día». El mapa muestra cuántos días llegaron a estar sin agua las colonias, según lo que publican los medios y los vecinos en Facebook y X, cada publicación con su enlace e imagen, y los reportes que se hacen aquí. Toca tu colonia para verlos y reportar la tuya: sin cuenta y anónimo. No son datos oficiales.</p>
+    <p class="lede" style="margin-top:12px">El Gobierno de Jalisco prometió que cada racionamiento duraría «por máximo un día». El mapa muestra cuántos días llegaron a estar sin agua las colonias, según lo que publican los medios y los vecinos en Facebook y X, cada publicación con su enlace e imagen, y los reportes que se hacen aquí. Toca tu colonia para verlos y reportar la tuya: sin cuenta y anónimo. No son datos oficiales.</p>
     <p class="lede">La línea de tiempo bajo el mapa repite la crisis día por día: cada colonia se enciende el día en que se publica por primera vez que no tiene agua y se oscurece conforme las publicaciones cuentan más días. Una colonia sin publicaciones no es una colonia con agua: puede ser que nadie lo haya publicado.</p>
 
 <!-- == SECTION: markup: list, week, bot answers, how it works == -->
@@ -1180,8 +1180,8 @@ if (window.top !== window.self) {
     </section>
 
     <section aria-labelledby="semana" id="semana-sec" hidden>
-      <h2 class="sec" id="semana">El SIAPA dice un día. Esto reportan los vecinos</h2>
-      <p class="note" style="margin-top:0">Según el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">SIAPA</a>, cada zona tiene de 2 a 3 racionamientos por semana «por máximo un día» y «no serán cortes totales». Esta es la última semana por zona: el marco señala los días de corte de su calendario y el color, lo que dicen los reportes del mapa y las respuestas del bot de Telegram. Cada reporte del mapa cuenta para la zona donde está la mayor parte de su colonia. Sin reportes nuevos, una casilla muestra en gris el último recuento, de hace hasta 3 días. El porcentaje cuenta solo los reportes del mapa, porque el bot pregunta en noches sin corte.</p>
+      <h2 class="sec" id="semana">El Gobierno de Jalisco dice un día. Esto reportan los vecinos</h2>
+      <p class="note" style="margin-top:0">La <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">página de la rotación</a>, a nombre del Gobierno de Jalisco, promete de 2 a 3 racionamientos por semana «por máximo un día» y que «no serán cortes totales»; desde el 4 de noviembre, su calendario marca cuatro días a las zonas 1, 2, 4 y 5. Esta es la última semana por zona: el marco señala los días de corte de su calendario y el color, lo que dicen los reportes del mapa y las respuestas del bot de Telegram. Cada reporte del mapa cuenta para la zona donde está la mayor parte de su colonia. Sin reportes nuevos, una casilla muestra en gris el último recuento, de hace hasta 3 días. El porcentaje cuenta solo los reportes del mapa, porque el bot pregunta en noches sin corte.</p>
       <p class="headline" id="fuera" style="font-size:1.1rem;margin:14px 0">Cargando…</p>
       <div class="tablewrap"><table class="week" id="semana-tabla"><caption class="sr">Reportes por zona y día de la última semana</caption></table></div>
       <ul class="legend" aria-label="Cómo leer la tabla">
@@ -2432,7 +2432,7 @@ if (window.top !== window.self) {
       renderMunicipios();
       renderSlices();
       const n = pubs.publicaciones.length, medios = pubs.publicaciones.filter((x) => x.fuente === "medio").length;
-      $("pruebas-nota").textContent = `El SIAPA prometió racionamientos «por máximo un día». Son ${plural(n, "publicación", "publicaciones")} del ${dateES(pubs.desde, true)} al ${dateES(pubs.actualizado, true)}: ${fmt(medios)} de medios, en sus notas, Facebook y X, y ${fmt(n - medios)} de vecinos con eco en redes. Toca una colonia para ver sus publicaciones. La promesa del «por máximo un día» aplica desde el inicio de la rotación, el 15 de octubre.`;
+      $("pruebas-nota").textContent = `El Gobierno de Jalisco prometió racionamientos «por máximo un día». Son ${plural(n, "publicación", "publicaciones")} del ${dateES(pubs.desde, true)} al ${dateES(pubs.actualizado, true)}: ${fmt(medios)} de medios, en sus notas, Facebook y X, y ${fmt(n - medios)} de vecinos con eco en redes. Toca una colonia para ver sus publicaciones. La promesa del «por máximo un día» aplica desde el inicio de la rotación, el 15 de octubre.`;
       const ultimaBusqueda = pubs.busquedas && pubs.busquedas.length ? pubs.busquedas[pubs.busquedas.length - 1] : null;
       if (ultimaBusqueda) $("ultima-busqueda").textContent = dateES(ultimaBusqueda, true);
       // The bar splits the colonias by the most days their posts give, and doubles as the map's key.

@@ -38,8 +38,8 @@ ORIGIN = "https://aguagdl.com"
 DAYS = {"sun": "domingo", "mon": "lunes", "tue": "martes", "wed": "miércoles", "thu": "jueves", "fri": "viernes", "sat": "sábado"}
 MONTHS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
 BORDER = 15  # as web/mapa.js: below this share a zone is only «al límite»
-NOTE = ("No oficial. Los días son días CON corte según el calendario del SIAPA. El SIAPA dice que no son "
-        "cortes totales; vecinos reportan que el agua se va antes y tarda en volver.")
+NOTE = ("No oficial. Los días son días CON corte según el calendario del SIAPA. El Gobierno de Jalisco dice "
+        "que no son cortes totales; vecinos reportan que el agua se va antes y tarda en volver.")
 
 
 def slug(s):

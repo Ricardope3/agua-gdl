@@ -125,7 +125,7 @@ V["m2"] = dict(
   .m2 .button.full { width: 100%; justify-content: center; margin-top: 12px }
 }""",
     before_map="""<section class="m-only m2" aria-label="Resumen">
-  <div class="m2-card"><p class="m-k">¿Hay agua en tu colonia?</p><div class="m-num" id="m2-num">—</div><p>colonias llevan <strong>una semana o más sin agua</strong>, según medios y vecinos. El SIAPA prometió «por máximo un día».</p><p class="note" id="m2-sub"></p></div>
+  <div class="m2-card"><p class="m-k">¿Hay agua en tu colonia?</p><div class="m-num" id="m2-num">—</div><p>colonias llevan <strong>una semana o más sin agua</strong>, según medios y vecinos. El Gobierno de Jalisco prometió «por máximo un día».</p><p class="note" id="m2-sub"></p></div>
   <form action="/reportes" method="get" role="search"><input name="q" type="search" placeholder="Busca tu colonia" aria-label="Tu colonia" required maxlength="80"><button class="button" type="submit">Buscar</button></form>
   <div class="m2-card"><p class="m-k">Las que llevan más días sin agua</p><ol class="m-rank" id="m2-rank"></ol><a class="button full" href="/reportes">Abrir el mapa completo</a></div>
   <div class="m2-card"><p class="m-k">Colonias con publicaciones, por municipio</p><ul class="m2-munis" id="m2-munis"></ul></div>
@@ -181,7 +181,7 @@ V["m4"] = dict(
     before_map="""<section class="m-only m4" aria-label="La crisis en cuatro tarjetas" data-ancla>
   <div class="m4-track" id="m4-track">
     <article class="m4-card"><p class="m-k">¿Hay agua en tu colonia?</p><div class="m-num" id="m4-num">—</div><p>colonias llevan <strong>una semana o más sin agua</strong>, según medios y vecinos.</p><p class="who">Desliza para ver más →</p></article>
-    <article class="m4-card"><div class="m4-vs"><div><p class="m-k">Lo que prometió el SIAPA</p><div class="m-num">1</div>día de racionamiento «por máximo»</div><div><p class="m-k">La realidad</p><div class="m-num" id="m4-max">—</div>días sin agua, lo más largo que publica un medio</div></div><p class="who">Fuente: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">página de la rotación del SIAPA</a></p></article>
+    <article class="m4-card"><div class="m4-vs"><div><p class="m-k">Lo que prometió el Gobierno de Jalisco</p><div class="m-num">1</div>día de racionamiento «por máximo»</div><div><p class="m-k">La realidad</p><div class="m-num" id="m4-max">—</div>días sin agua, lo más largo que publica un medio</div></div><p class="who">Fuente: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">página de la rotación del SIAPA</a></p></article>
     <article class="m4-card"><h3>Por municipio</h3><ol class="m-rank" id="m4-munis"></ol></article>
     <article class="m4-card"><h3>¿Y en tu colonia?</h3><p>Cada reporte es una prueba de dónde falla el gobierno. Sin cuenta y anónimo.</p><a class="button" href="/reportes?reportar=1">Reportar mi colonia</a><p><a href="/exige">Exígele a quien le toca →</a></p></article>
   </div>
