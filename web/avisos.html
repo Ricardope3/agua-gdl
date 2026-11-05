@@ -617,6 +617,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   const map = L.map("mapa", { preferCanvas: true, zoomSnap: 0.25, zoomControl: false, wheelPxPerZoomLevel: 40, wheelDebounceTime: 20 });
   L.control.zoom({ position: "topright" }).addTo(map);
   if (M.pinch) M.pinch(map);
+  if (M.oneTip) M.oneTip(map);
   // The opening view, chosen by hand on 22 Oct 2026: from the edge of La Primavera to Tonalá. The map starts
   // on it, so it doesn't jump (and reload its streets) once the colonias arrive.
   const HOME = L.latLngBounds([20.73112, -103.57774], [20.55529, -103.21068]).pad(-0.01);

@@ -1330,6 +1330,7 @@ if (window.top !== window.self) {
   L.control.zoom({ position: "bottomright" }).addTo(map);
   map.setView([20.66, -103.37], 11);
   if (M.pinch) M.pinch(map);
+  if (M.oneTip) M.oneTip(map);
   // With a colonia in the link, the streets load once, at its view, instead of first for the whole city.
   let streets = false;
   const addStreets = () => { if (!streets) { streets = true; M.tiles(L, map); } };

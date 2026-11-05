@@ -355,6 +355,27 @@ window.aguaMapa = (() => {
     }, { capture: true, passive: false });
   }
 
+  // oneTip keeps one hover label open on map. Leaflet 1.9.4 opens the tooltip of a marker the pointer
+  // crossed mid-drag once the map stops, wherever the pointer is by then, and it stayed beside the next one.
+  function oneTip(map) {
+    const open = new Set(), hover = matchMedia("(hover: hover)").matches, box = map.getContainer();
+    // Where the pointer is, hit-tested afresh (:hover lags while the map glides); pointerover since mouseover comes first.
+    let at = null;
+    for (const type of ["pointerover", "pointermove"]) box.addEventListener(type, (e) => { at = [e.clientX, e.clientY]; }, { capture: true, passive: true });
+    box.addEventListener("pointerleave", () => { at = null; });
+    map.on("tooltipclose", ({ tooltip: t }) => open.delete(t));
+    map.on("tooltipopen", ({ tooltip: t }) => {
+      if (t.options.permanent) return;
+      open.add(t);
+      queueMicrotask(() => {
+        if (!t.isOpen()) return;
+        const el = t._source && t._source.getElement && t._source.getElement();
+        if (hover && el && !el.matches(":focus") && !(at && el.contains(document.elementFromPoint(at[0], at[1])))) { t.close(); return; }
+        for (const o of open) if (o !== t) o.close();
+      });
+    });
+  }
+
   // cisternas puts the community water points from /cisternas.json on map, in a pane above the colonias,
   // with a «Cisternas» switch at position: a drop where an official map gives the spot, and at the
   // colonia's centre where a source names only the colonia (a hollow drop).
@@ -438,5 +459,5 @@ window.aguaMapa = (() => {
     return layer;
   }
 
-  return { DATA, BORDER, COLORS, recenter, norm, fold, joinES, zonesOf, zones, label, describe, borderWord, zoneWord, theZones, decode, contains, load, find, tiles, draw, card, icon, cross, cisternas, pinch };
+  return { DATA, BORDER, COLORS, recenter, norm, fold, joinES, zonesOf, zones, label, describe, borderWord, zoneWord, theZones, decode, contains, load, find, tiles, draw, card, icon, cross, cisternas, pinch, oneTip };
 })();
