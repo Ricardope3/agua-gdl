@@ -62,6 +62,12 @@ KNOWN_ERRORS = [
          wrong=r"exhorto[^.;]{0,40}indemniz\w*[^.;]{0,20}\b(seis|6)\b",
          msg="per Nación321 the approved exhorto covers the people «detenidas y golpeadas»; the six are the separate request to the Fiscalía",
          found="3 Nov 2026 (fact-check #8)"),
+    dict(id="rotation-site-siapa",
+         bad='los archivos que su sitio de rotación publica', good='los archivos con su nombre que publica el sitio de rotación al que remite',
+         wrong=r"su (sitio|portal|pagina) (oficial )?de rotacion|(sitio|portal|pagina)( web| oficial)? de rotacion (de|del) siapa|siapa publica y actualiza|siapa (publica|habilito)[^.;]{0,30}(sitio|lista|mapa)",
+         ok=r"refuted|gobierno de jalisco[^.;]{0,40}habilito|credits the site to the state",
+         msg="SIAPA's 15 Oct bulletin says the Gobierno de Jalisco «habilitó un sitio de consulta»; SIAPA only links to it",
+         found="4 Nov 2026 (transparency dodge review: R4 plan row and note)"),
 ]
 
 

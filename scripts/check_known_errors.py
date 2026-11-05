@@ -6,6 +6,8 @@
 
 The errors live in KNOWN_ERRORS (pipelines/copy_rules.py). Unlike lint_copy.py this reads inside
 quotes too: several errors were misquotes. research/ is gitignored, so CI scans only tracked files.
+Review records quote the errors on purpose and are skipped: fact-check-* files, error-hunt-* folders,
+findings.json in verification-* folders and experiment «-before-» snapshots.
 """
 import pathlib
 import sys
@@ -25,7 +27,7 @@ def files(paths):
             yield p
         elif p.is_dir():
             for f in sorted(p.rglob("*")):
-                if (f.is_file() and f.suffix in SUFFIXES and not f.name.startswith("fact-check-") and not ("-before-" in f.name and "experiments" in f.parts)
+                if (f.is_file() and f.suffix in SUFFIXES and not f.name.startswith("fact-check-") and not (f.name == "findings.json" and any(d.startswith(("verification-", "error-hunt-")) for d in f.parts)) and not ("-before-" in f.name and "experiments" in f.parts)
                         and not any(d.startswith("error-hunt-") for d in f.relative_to(p).parts[:-1])
                         and not SKIP_DIRS & set(f.relative_to(p).parts[:-1])):
                     yield f
