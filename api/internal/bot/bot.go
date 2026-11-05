@@ -364,7 +364,28 @@ func (b *Bot) onColonia(ctx context.Context, r User, c colonias.Colonia) error {
 	case split:
 		return b.pickZone(ctx, r, msgPickZone(c.Name, zones), zones)
 	}
+	// The list's zone appears nowhere on the map for that name: ask instead of guessing.
+	if onMap := b.scheduled(b.mapZones(c)); len(onMap) > 0 && !slices.Contains(onMap, zones[0]) {
+		both := slices.Compact(slices.Sorted(slices.Values(append(slices.Clone(zones), onMap...))))
+		return b.pickZone(ctx, r, msgListMapDiffer(c.Name, zones, onMap), both)
+	}
 	return b.subscribe(ctx, r, zones[0])
+}
+
+// mapZones are the zones SIAPA's map gives every outline with the list entry's name and
+// municipio. The list has no postal code, so a homonym's pieces all count.
+func (b *Bot) mapZones(c colonias.Colonia) []int {
+	if b.Zones == nil {
+		return nil
+	}
+	name, mun := colonias.Normalize(c.Name), colonias.Normalize(c.Municipio)
+	var zones []int
+	for _, m := range b.Zones.Colonias() {
+		if colonias.Normalize(m.Name) == name && colonias.Normalize(m.Municipio) == mun {
+			zones = append(zones, m.Zones...)
+		}
+	}
+	return slices.Compact(slices.Sorted(slices.Values(zones)))
 }
 
 // upcomingDays returns zone's weekly cut days from tomorrow on, so a schedule change shows the day before it starts.

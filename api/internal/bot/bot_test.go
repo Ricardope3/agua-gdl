@@ -575,3 +575,14 @@ func TestTelegramPromisesTheNoticeTwoDaysBefore(t *testing.T) {
 		}
 	}
 }
+
+func TestColoniaWhoseListZoneTheMapContradictsAsks(t *testing.T) {
+	h := newHarness(t, "2026-10-14 10:00")
+	got := h.send(t, text("San Antonio Guadalajara"))
+	if !strings.Contains(got, "La lista del SIAPA pone a *SAN ANTONIO* en la zona 1, pero su mapa la marca en la zona 3") {
+		t.Errorf("SAN ANTONIO is zone 1 on the 12 Oct list and zone 3 on the map, so it must ask, got:\n%s", got)
+	}
+	if len(h.store.Subs) != 0 {
+		t.Fatalf("must not subscribe before the person picks: %+v", h.store.Subs)
+	}
+}

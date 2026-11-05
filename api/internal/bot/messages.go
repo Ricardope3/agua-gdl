@@ -144,6 +144,19 @@ func msgPickZone(colonia string, zones []int) string {
 Mándame tu 📍 *ubicación* para saber cuál te toca, o elige tu zona si ya la sabes 👇`, colonia, where)
 }
 
+// msgListMapDiffer: SIAPA's 12 Oct list and its current map give the colonia different zones.
+func msgListMapDiffer(colonia string, list, mapZones []int) string {
+	the := func(z []int) string {
+		if len(z) > 1 {
+			return "las " + zoneLabel(z)
+		}
+		return "la " + zoneLabel(z)
+	}
+	return fmt.Sprintf(`La lista del SIAPA pone a *%s* en %s, pero su mapa la marca en %s 🤔
+
+Mándame tu 📍 *ubicación* para saber cuál te toca, o elige tu zona si ya la sabes 👇`, colonia, the(list), the(mapZones))
+}
+
 const msgPickZoneAtPoint = "Tu ubicación queda en el límite entre zonas 🤔 Elige la tuya o revisa el mapa del SIAPA 👇"
 
 // Contacts as published on rotaciondeserviciosiapa.jalisco.gob.mx (checked 14 Oct 2026).
