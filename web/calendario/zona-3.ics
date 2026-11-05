@@ -26,7 +26,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: sá
  bado 17 de octubre
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -52,7 +52,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 21 de octubre
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -78,7 +78,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: sá
  bado 24 de octubre
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -104,7 +104,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 28 de octubre
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -130,7 +130,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: sá
  bado 31 de octubre
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -156,7 +156,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 4\, jueves 5 y viernes 6 de noviembre
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -210,7 +210,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 11\, jueves 12 y viernes 13 de noviembre
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -264,7 +264,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 18\, jueves 19 y viernes 20 de noviembre
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -318,7 +318,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 25\, jueves 26 y viernes 27 de noviembre
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -372,7 +372,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 2\, jueves 3 y viernes 4 de diciembre
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -426,7 +426,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 9\, jueves 10 y viernes 11 de diciembre
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -480,7 +480,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 16\, jueves 17 y viernes 18 de diciembre
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -534,7 +534,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 23\, jueves 24 y viernes 25 de diciembre
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -588,7 +588,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 30\, jueves 31 de diciembre y viernes 1 de enero
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -642,7 +642,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 6\, jueves 7 y viernes 8 de enero
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -696,7 +696,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 13\, jueves 14 y viernes 15 de enero
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -750,7 +750,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 20\, jueves 21 y viernes 22 de enero
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -804,7 +804,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 27\, jueves 28 y viernes 29 de enero
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -858,7 +858,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 3\, jueves 4 y viernes 5 de febrero
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -912,7 +912,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 10\, jueves 11 y viernes 12 de febrero
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -966,7 +966,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 17\, jueves 18 y viernes 19 de febrero
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1020,7 +1020,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 24\, jueves 25 y viernes 26 de febrero
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1074,7 +1074,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 3\, jueves 4 y viernes 5 de marzo
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1128,7 +1128,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 10\, jueves 11 y viernes 12 de marzo
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1182,7 +1182,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 17\, jueves 18 y viernes 19 de marzo
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1236,7 +1236,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 24\, jueves 25 y viernes 26 de marzo
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -1290,7 +1290,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:En dos días empieza el racionamiento de agua en la zona 3: mi
  ércoles 31 de marzo
-TRIGGER:-P2DT4H
+TRIGGER:-P1DT4H
 END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
