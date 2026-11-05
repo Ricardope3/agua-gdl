@@ -77,11 +77,11 @@ errors = []
 
 
 # docs/GLOSARIO.md: `dias` is the days the source gives, never our conversion.
-_NUM = {'un':1,'una':1,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,'diez':10,'once':11,'doce':12,'trece':13,'catorce':14,'quince':15,'veinte':20}
+_NUM = {'un':1,'una':1,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,'diez':10,'once':11,'doce':12,'trece':13,'catorce':14,'quince':15,'dieciseis':16,'diecisiete':17,'dieciocho':18,'diecinueve':19,'veinte':20,'veintiuno':21,'veintiun':21,'veintidos':22,'veintitres':23,'veinticuatro':24,'veinticinco':25,'veintiseis':26,'veintisiete':27,'veintiocho':28,'veintinueve':29,'treinta':30}
 _UNIT = {'dia':1,'dias':1,'semana':7,'semanas':7,'mes':30,'meses':30}
 def _fold(s): return ''.join(c for c in unicodedata.normalize('NFKD', s) if not unicodedata.combining(c)).lower()
 _AMOUNT = r'(\d{1,3}|' + '|'.join(_NUM) + r')\s+(dias?|semanas?|mes(es)?)'
-_HEDGE = re.compile(r'\b(casi|vamos para|van para|va para|vamos a cumplir|cumplimos|cumplir[aeé]?mos)\s+(la |el |los |las )?' + _AMOUNT)
+_HEDGE = re.compile(r'\b(casi|vamos para|van para|va para|vamos a cumplir|manana cumplimos|manana se cumplen|cumpliremos)\s+(la |el |los |las )?' + _AMOUNT)
 _HEDGE_UNIT = re.compile(r'\bcasi (la|una|un) (semana|mes)\b')
 _SINCE = re.compile(r'\bdesde (el |este |la |hace )?(pasado )?(lunes|martes|miercoles|jueves|viernes|sabado|domingo|ayer|antier|anoche|\d{1,2} de [a-z]+|el \d{1,2})')
 def _amounts(c):

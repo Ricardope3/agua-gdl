@@ -25,7 +25,7 @@ def files(paths):
             yield p
         elif p.is_dir():
             for f in sorted(p.rglob("*")):
-                if (f.is_file() and f.suffix in SUFFIXES and not f.name.startswith("fact-check-") and "-before-" not in f.name
+                if (f.is_file() and f.suffix in SUFFIXES and not f.name.startswith("fact-check-") and not ("-before-" in f.name and "experiments" in f.parts)
                         and not any(d.startswith("error-hunt-") for d in f.relative_to(p).parts[:-1])
                         and not SKIP_DIRS & set(f.relative_to(p).parts[:-1])):
                     yield f

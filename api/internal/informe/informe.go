@@ -250,7 +250,7 @@ var page = template.Must(template.New("week").Funcs(template.FuncMap{
     <p class="crumbs"><a href="/informes">El conteo de cada semana</a></p>
     <h1>{{.Title}}</h1>
 {{- if .Total}}
-    <p class="lede">Llegaron <strong>{{.Total}} {{plural .Total "reporte" "reportes"}}</strong> de vecinos de {{len .Colonias}} {{plural (len .Colonias) "colonia" "colonias"}}: {{pct .SinAgua .Total}} % sin agua, {{pct .Baja .Total}} % con poca presión y {{pct .ConAgua .Total}} % con agua.{{if .LongDry}} En <strong>{{.LongDry}} {{plural .LongDry "colonia" "colonias"}}</strong> hubo reportes «sin agua» en más de un día.{{end}} El <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">SIAPA</a> anunció racionamientos «por máximo un día» y dijo: «No serán cortes totales».</p>
+    <p class="lede">Llegaron <strong>{{.Total}} {{plural .Total "reporte" "reportes"}}</strong> de vecinos de {{len .Colonias}} {{plural (len .Colonias) "colonia" "colonias"}}: {{pct .SinAgua .Total}} % sin agua, {{pct .Baja .Total}} % con poca presión y {{pct .ConAgua .Total}} % con agua.{{if .LongDry}} En <strong>{{.LongDry}} {{plural .LongDry "colonia" "colonias"}}</strong> hubo reportes «sin agua» en más de un día.{{end}} El <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">Gobierno de Jalisco</a> anunció racionamientos «por máximo un día» y dijo: «No serán cortes totales».</p>
     <div class="table-wrap">
       <table>
         <thead><tr><th scope="col">Colonia</th><th scope="col">Zona</th><th scope="col">Sin agua</th><th scope="col">Poca presión</th><th scope="col">Con agua</th><th scope="col">Días con reportes «sin agua»</th><th scope="col">Días de corte según el SIAPA</th></tr></thead>
@@ -263,7 +263,7 @@ var page = template.Must(template.New("week").Funcs(template.FuncMap{
     </div>
     <p class="via">{{if or .Turbia .Olor .Sedimento}}También {{.Turbia}} {{plural .Turbia "reporte dijo" "reportes dijeron"}} que el agua llegó turbia, {{.Olor}} con olor y {{.Sedimento}} con sedimento. {{end}}<a href="/semana/{{.ID}}.csv">Descarga los datos (CSV)</a>.</p>
 {{- else}}
-    <p class="lede">Esta semana no llegaron reportes al <a href="/reportes">mapa</a>. El <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">SIAPA</a> anunció racionamientos «por máximo un día» y dijo: «No serán cortes totales».</p>
+    <p class="lede">Esta semana no llegaron reportes al <a href="/reportes">mapa</a>. El <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">Gobierno de Jalisco</a> anunció racionamientos «por máximo un día» y dijo: «No serán cortes totales».</p>
 {{- end}}
 {{- if .Zones}}
 

@@ -76,7 +76,8 @@ func TestAlarmsOnlyBeforeEachBlock(t *testing.T) {
 	}
 }
 
-// The alarms must ring when the bot sends: 20:00 two days before a block and
+// The alarms must ring when the bot sends (REMINDER_HOUR, 20 by default; the triggers
+// assume 20): 20:00 two days before a block and
 // 20:00 the evening before. An all-day event starts at 00:00, so count back from there.
 func TestAlarmsRingWhenTheBotSends(t *testing.T) {
 	s := schedule(t)

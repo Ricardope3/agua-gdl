@@ -109,6 +109,17 @@ var municipios = []struct{ alias, norm string }{
 	{"TONALA", "TONALA"},
 }
 
+// Municipio normalizes a municipio name and maps its aliases (SAN PEDRO TLAQUEPAQUE → TLAQUEPAQUE).
+func Municipio(s string) string {
+	n := Normalize(s)
+	for _, m := range municipios {
+		if n == m.alias {
+			return m.norm
+		}
+	}
+	return n
+}
+
 // Normalize uppercases, strips accents and punctuation, and drops "Col."/"Fracc." prefixes.
 func Normalize(s string) string {
 	s = fold(s)

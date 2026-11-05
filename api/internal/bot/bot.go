@@ -378,10 +378,10 @@ func (b *Bot) mapZones(c colonias.Colonia) []int {
 	if b.Zones == nil {
 		return nil
 	}
-	name, mun := colonias.Normalize(c.Name), colonias.Normalize(c.Municipio)
+	name, mun := colonias.Normalize(c.Name), colonias.Municipio(c.Municipio)
 	var zones []int
 	for _, m := range b.Zones.Colonias() {
-		if colonias.Normalize(m.Name) == name && colonias.Normalize(m.Municipio) == mun {
+		if colonias.Normalize(m.Name) == name && colonias.Municipio(m.Municipio) == mun {
 			zones = append(zones, m.Zones...)
 		}
 	}
