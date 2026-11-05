@@ -17556,24 +17556,6 @@
    "fuente": "vecinos",
    "red": "x",
    "quien": "",
-   "url": "https://x.com/neopractik/status/2113002680666735005",
-   "fecha": "2026-10-21",
-   "colonias": [
-    "JARDINES DE GUADALUPE|Zapopan|45030"
-   ],
-   "lugar": "Jardines de Guadalupe, Zapopan",
-   "cita": "En Jardines de Guadalupe Zapopan llevamos 12 días sin agua",
-   "dias": 12,
-   "eco": {
-    "reacciones": 10,
-    "comentarios": 4,
-    "al": "2026-10-22"
-   }
-  },
-  {
-   "fuente": "vecinos",
-   "red": "x",
-   "quien": "",
    "url": "https://x.com/edg_baltazar/status/2113010294998155452",
    "fecha": "2026-10-21",
    "colonias": [
@@ -22006,35 +21988,6 @@
    "dias": 4,
    "eco": {
     "reacciones": 0,
-    "comentarios": 0,
-    "al": "2026-10-23"
-   },
-   "vista": null
-  },
-  {
-   "fuente": "vecinos",
-   "red": "x",
-   "tipo": "comentario",
-   "quien": "",
-   "en": {
-    "quien": "SIAPA Guadalajara",
-    "url": "https://x.com/siapagdl/status/2113269051757600959",
-    "eco": {
-     "reacciones": 22,
-     "comentarios": 98,
-     "al": "2026-10-23"
-    }
-   },
-   "url": "https://x.com/Minirex666/status/2113368858463506857",
-   "fecha": "2026-10-22",
-   "colonias": [
-    "MAGAÑA|Guadalajara|44800"
-   ],
-   "lugar": "Magaña, Guadalajara",
-   "cita": "La colonia Magaña no aparece en las listas y no tenemos servicio de agua desde hace 15 días",
-   "dias": 15,
-   "eco": {
-    "reacciones": 1,
     "comentarios": 0,
     "al": "2026-10-23"
    },
@@ -29886,35 +29839,6 @@
    "dias": 3,
    "eco": {
     "reacciones": 1,
-    "comentarios": 0,
-    "al": "2026-11-01"
-   },
-   "vista": null
-  },
-  {
-   "fuente": "vecinos",
-   "red": "x",
-   "tipo": "comentario",
-   "quien": "",
-   "en": {
-    "quien": "Gobierno de Jalisco",
-    "url": "https://x.com/GobiernoJalisco/status/2113299321772757394",
-    "eco": {
-     "reacciones": 8,
-     "comentarios": 47,
-     "al": "2026-11-01"
-    }
-   },
-   "url": "https://x.com/neopractik/status/2113339322577338733",
-   "fecha": "2026-10-22",
-   "colonias": [
-    "JARDINES DE GUADALUPE|Zapopan|45030"
-   ],
-   "lugar": "Jardines de Guadalupe, Zapopan",
-   "cita": "@GobiernoJalisco Llevamos 14 días sin agua en Jardines de Guadalupe las pipas que hemos comprado los vecinos y yo han subido de $800.00 pesos la semana pasada a $2000.00 pesos solo en las últimas 4 hrs subieron $500.00. Está empezando la crisis y los buitres de los piperos haciendo su agosto. A qué precio estará dentro de un mes?",
-   "dias": 14,
-   "eco": {
-    "reacciones": 8,
     "comentarios": 0,
     "al": "2026-11-01"
    },
