@@ -304,7 +304,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     </div>
     <div class="march" id="marcha">
       <span class="when">Jueves 29 de octubre</span>
-      <span class="what">Toda la bancada de MC en el Congreso de Jalisco —10 diputados— votó en contra del exhorto para indemnizar a las seis personas detenidas en la marcha del 11 de octubre, pese a que el propio gobernador reconoció «uso excesivo de la fuerza y detenciones injustas» (<a href="https://www.nacion321.com/estados/2026/10/30/diputados-de-mc-votan-en-contra-de-retirar-cargos-a-los-6-detenidos-en-marchas-por-el-agua-en-jalisco/" rel="noopener" target="_blank">Nación321</a>; la votación, difundida en <a href="https://x.com/UlaVaz/status/2115981524180902218" rel="noopener" target="_blank">X</a>). <a href="#d29">Qué pasó</a></span>
+      <span class="what">El Congreso de Jalisco aprobó un exhorto para que el gobierno estatal indemnice a las personas detenidas y golpeadas en la marcha del 11 de octubre; los 10 diputados de MC votaron en contra. Con algunos del PRI y del PVEM, también descartaron pedir a la Fiscalía que se desista de la acción penal contra las seis personas vinculadas a proceso (<a href="https://www.nacion321.com/estados/2026/10/30/diputados-de-mc-votan-en-contra-de-retirar-cargos-a-los-6-detenidos-en-marchas-por-el-agua-en-jalisco/" rel="noopener" target="_blank">Nación321</a>; la votación, difundida en <a href="https://x.com/UlaVaz/status/2115981524180902218" rel="noopener" target="_blank">X</a>). El gobernador había reconocido el 13 de octubre «uso excesivo de la fuerza». <a href="#d29">Qué pasó</a></span>
     </div>
   </section>
 
@@ -869,7 +869,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   const day = daysFrom("2026-10-15") + 1;
   if (day >= 1 && day <= 168) document.getElementById("dia").textContent = `Día ${day} de 168 de la rotación`;
 
-  if (daysFrom("2026-10-18") > 7) document.getElementById("marcha").hidden = true;
+  if (daysFrom("2026-10-29") > 7) document.getElementById("marcha").hidden = true;
 
   const latest = document.getElementById("latest");
   const arts = [...document.querySelectorAll(".day .feed article")];

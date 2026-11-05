@@ -56,6 +56,11 @@ KNOWN_ERRORS = [
          wrong=r"cada zona tiene de 2 a 3|each zone has 2 to 3",
          msg="«de 2 a 3 racionamientos» is the promise; since 4 Nov zones 1, 2, 4 and 5 have four cut days",
          found="4 Nov 2026 (error hunt)"),
+    dict(id="exhorto-seis",
+         bad='MC votó en contra del exhorto para indemnizar a las seis personas detenidas.', good='MC votó en contra del exhorto para indemnizar a las personas detenidas y golpeadas el 11 de octubre.',
+         wrong=r"exhorto[^.;]{0,40}indemniz\w*[^.;]{0,20}\b(seis|6)\b",
+         msg="per Nación321 the approved exhorto covers the people «detenidas y golpeadas»; the six are the separate request to the Fiscalía",
+         found="3 Nov 2026 (fact-check #8)"),
 ]
 
 
