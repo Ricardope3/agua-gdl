@@ -201,7 +201,8 @@ main > section + section { margin-top: 8px }
 .day:last-child::before { bottom: 0 }
 .day > h3 { position: relative; margin: 0 0 10px; font-size: .95rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--muted) }
 .day > h3::before { content: ""; position: absolute; left: -22px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 3px solid var(--rep) }
-.feed { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(290px, 100%), 1fr)); gap: 12px }
+.feed { display: flex; flex-wrap: wrap; gap: 12px }
+.feed > * { flex: 1 1 290px; min-width: 0 }
 .feed article { --c: var(--agua); background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--c); border-radius: 12px; padding: 14px 16px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 6px }
 .feed article[data-tags~="acueducto"] { --c: var(--acu) }
 .feed article[data-tags~="protesta"] { --c: var(--pro) }

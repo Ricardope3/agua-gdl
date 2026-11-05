@@ -134,17 +134,6 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 .status { margin: 8px 0 0; font-size: .88rem; line-height: 1.4 }
 .status:empty { display: none }
 
-/* The colour switch, top right, with the zoom buttons under it. */
-.modo { position: absolute; z-index: 1250; top: 12px; right: 12px; max-width: 390px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 5px 5px 5px 12px; border: 1px solid var(--line); border-radius: 16px; background: color-mix(in srgb, var(--surface) 95%, transparent); backdrop-filter: blur(6px); box-shadow: 0 4px 16px rgb(3 14 22 / .18); font-size: .8rem }
-.modo > span { color: var(--muted); font-weight: 600; margin-right: 2px }
-.modo button { white-space: nowrap; padding: 3px 10px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--fg); font: inherit; font-weight: 600; cursor: pointer }
-.modo button[aria-pressed="true"] { border-color: var(--fg); background: var(--fg); color: var(--surface) }
-.dkey { flex-basis: 100%; margin: 4px 0 2px; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 2px 10px; color: var(--muted); font-size: .74rem }
-.dkey li { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap }
-.dkey .sw { width: 10px; height: 10px; border-radius: 3px; background: var(--c) }
-.dkey .sw.nodays { background: color-mix(in srgb, var(--s0) 20%, transparent); border: 1.5px dashed var(--s0) }
-.dkey .full { flex-basis: 100%; white-space: normal; line-height: 1.3 }
-.stage .leaflet-top.leaflet-right { top: var(--mh, 52px) }
 
 /* The sheet: a colonia's card or a zone's, under the finder on wide screens and from the bottom on phones. */
 .stage .card { position: absolute; z-index: 1200; top: calc(var(--fh, 150px) + 22px); left: 12px; width: min(440px, calc(100% - 24px)); max-height: calc(100% - var(--fh, 150px) - var(--sh, 120px) - 56px); overflow: auto; overscroll-behavior: contain; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; box-shadow: 0 10px 30px rgb(3 14 22 / .24) }
@@ -254,14 +243,13 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
   .locrow { margin-top: 8px; gap: 8px }
   .locrow .button { padding: 7px 12px; font-size: .9rem }
   .locrow p { font-size: .74rem }
-  .modo { top: calc(var(--fh, 140px) + 14px); right: auto; left: 8px; max-width: calc(100% - 64px); font-size: .74rem; padding-left: 10px }
   .stage .leaflet-top.leaflet-right { top: calc(var(--fh, 140px) + 4px) }
   .zstrip { left: 8px; right: 8px; bottom: 8px; scroll-snap-type: x proximity }
   .ztile { flex: 0 0 136px; scroll-snap-align: start }
   .stage .card { top: auto; bottom: 8px; left: 8px; width: calc(100% - 16px); max-height: min(58%, calc(100% - var(--fh, 140px) - 40px)); padding: 12px 14px 14px; border-radius: 16px }
   .stage .card.zcard { bottom: calc(var(--sh, 110px) + 14px); max-height: min(46%, calc(100% - var(--fh, 140px) - var(--sh, 110px) - 40px)) }
   .stage .card .grab { display: block; width: 40px; height: 4px; border-radius: 2px; background: var(--line); margin: -4px auto 8px }
-  .stage.sheet-colonia .zstrip, .stage.has-sheet .modo { display: none }
+  .stage.sheet-colonia .zstrip { display: none }
   .stage.has-sheet .finder h1, .stage.has-sheet .locrow, .stage.has-sheet .tgcta, .stage.has-sheet .tgnote { display: none }
   .tgcta { margin-top: 8px; padding: 8px 12px; gap: 10px }
   .tgcta .tgi { width: 28px; height: 28px }
@@ -355,16 +343,6 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
       <p class="note tgnote">¿Sin Telegram? Agrega el calendario de tu zona desde su tarjeta.</p>
       <p class="status" id="estado" aria-live="polite">Cargando el mapa de colonias…</p>
       <noscript><p class="status">Consulta la <a href="/simple">versión sencilla</a> o el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa oficial del SIAPA</a>.</p></noscript>
-    </div>
-    <div class="modo" id="modo" role="group" aria-label="Colorear el mapa por"><span>Colorear por:</span><button type="button" data-modo="dias" aria-pressed="false">Días sin agua</button><button type="button" data-modo="zona" aria-pressed="true">Zona del SIAPA</button>
-      <ul class="dkey" id="clave-dias" aria-label="Colores de los círculos: días sin agua según medios y vecinos">
-        <li><span class="sw" style="--c:var(--s1)"></span>1–2 días</li>
-        <li><span class="sw" style="--c:var(--s2)"></span>3–6</li>
-        <li><span class="sw" style="--c:var(--s3)"></span>7–13</li>
-        <li><span class="sw" style="--c:var(--s4)"></span>14 o más</li>
-        <li><span class="sw nodays"></span>sin días contados</li>
-        <li class="full">Cada círculo: las publicaciones de la colonia más los reportes de las últimas 24 horas en <a href="/reportes">¿Hay agua?</a>; su color, los días sin agua que dicen.</li>
-      </ul>
     </div>
     <div class="zstrip" id="zonas" role="group" aria-label="Las zonas de la rotación del SIAPA"></div>
   </div>
@@ -607,13 +585,12 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     return summaryReq;
   }
   const totalOf = (c) => c.sin_agua + c.baja + c.con_agua;
-  const statusOf = (c) => !c ? null : 2 * c.sin_agua > totalOf(c) ? "dry" : 2 * c.con_agua > totalOf(c) ? "ok" : "low";
   // changed: publications or reports arrived; the map, the strip and the open card follow.
   let onChanged = () => {};
   const changed = () => onChanged();
 
   // ——— The map, on screen from the first paint. ———
-  const stage = $("escenario"), finder = $("buscador"), strip = $("zonas"), modo = $("modo"), header = document.querySelector("header.top");
+  const stage = $("escenario"), finder = $("buscador"), strip = $("zonas"), header = document.querySelector("header.top");
   const map = L.map("mapa", { preferCanvas: true, zoomSnap: 0.25, zoomControl: false, wheelPxPerZoomLevel: 40, wheelDebounceTime: 20 });
   L.control.zoom({ position: "topright" }).addTo(map);
   if (M.pinch) M.pinch(map);
@@ -626,15 +603,14 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   let streets = false;
   const addStreets = () => { if (!streets) { streets = true; M.tiles(L, map); } };
   if (!(params.get("q") || "").trim()) addStreets();
-  // The stage takes the screen below the header; the finder, the switch and the strip leave room for each other.
+  // The stage takes the screen below the header; the finder and the strip leave room for each other.
   const measure = () => {
     document.documentElement.style.setProperty("--hh", `${header.offsetHeight}px`);
     stage.style.setProperty("--fh", `${finder.offsetHeight}px`);
     stage.style.setProperty("--sh", `${strip.offsetHeight}px`);
-    stage.style.setProperty("--mh", `${modo.offsetTop + modo.offsetHeight + 8}px`);
     map.invalidateSize();
   };
-  if (window.ResizeObserver) { const ro = new ResizeObserver(measure); for (const n of [header, finder, strip, modo]) ro.observe(n); }
+  if (window.ResizeObserver) { const ro = new ResizeObserver(measure); for (const n of [header, finder, strip]) ro.observe(n); }
   measure();
 
   // ——— Search: the map's own colonias (instant, by name, municipio or postal code) and SIAPA's list through the API. ———
@@ -817,7 +793,6 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   palette();
   const zoneColor = (z) => z ? M.COLORS[aguaDark() ? "dark" : "light"][z] || COLORS.muted : COLORS.muted;
   const edge = () => aguaDark() ? "#0b1a24" : "#1f2d3a";
-  let mode = params.get("color") === "dias" ? "dias" : "zona";
   let focus = null;        // a Set of zones the map singles out, or null
   let locked = null;       // the zone whose tile is pressed
   let sheet = null;        // the open card: { node, render, marks, kind, bounds }
@@ -868,24 +843,12 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     zoneLayer.restyle = () => { zoneLayer.setStyle(zoneStyle); zoneHalo.setStyle(zoneHaloStyle); };
     home = HOME;
 
-    // Coloured by zone, each colonia takes its main zone's colour (dashed when split between zones).
-    // Coloured by days, as on /reportes: the most days its publications give, else this site's last 24 hours.
+    // Each colonia takes its main zone's colour (dashed when split between zones).
     const styleOf = (f) => {
       const p = f.properties, z = M.zones(p), k = keyOf(p);
       const d = !focus ? 1 : z.main.some((x) => focus.has(x)) ? 1 : z.border.some((x) => focus.has(x)) ? 0.5 : 0.12;
-      if (mode === "zona") {
-        if (!z.all.length) return { color: COLORS.muted, weight: 0.4, opacity: 0.35 * d, dashArray: null, fillColor: COLORS.none, fillOpacity: 0.05 * d };
-        return { color: edge(), weight: z.split ? 1 : 0.5, opacity: (z.split ? 0.8 : 0.45) * d, dashArray: z.split ? "4 3" : null, fillColor: zoneColor(z.main[0]), fillOpacity: 0.42 * d };
-      }
-      const e = ev.get(k);
-      if (e) {
-        const s = sevOf(e.dias);
-        return s ? { color: COLORS.sev[s], weight: 1.2, opacity: 0.95 * d, dashArray: null, fillColor: COLORS.sev[s], fillOpacity: 0.62 * d }
-          : { color: COLORS.sev[0], weight: 1.8, opacity: 0.95 * d, dashArray: "4 3", fillColor: COLORS.sev[0], fillOpacity: 0.2 * d };
-      }
-      const s = statusOf(byKey.get(k));
-      if (!s) return { color: COLORS.muted, weight: 0.4, opacity: 0.5 * d, dashArray: null, fillColor: COLORS.none, fillOpacity: 0.06 * d };
-      return { color: COLORS[s], weight: 1, opacity: 0.9 * d, dashArray: null, fillColor: COLORS[s], fillOpacity: Math.min(0.65, 0.3 + 0.07 * totalOf(byKey.get(k))) * d };
+      if (!z.all.length) return { color: COLORS.muted, weight: 0.4, opacity: 0.35 * d, dashArray: null, fillColor: COLORS.none, fillOpacity: 0.05 * d };
+      return { color: edge(), weight: z.split ? 1 : 0.5, opacity: (z.split ? 0.8 : 0.45) * d, dashArray: z.split ? "4 3" : null, fillColor: zoneColor(z.main[0]), fillOpacity: 0.42 * d };
     };
     const tip = (f) => {
       const p = f.properties, z = M.zones(p), k = keyOf(p);
@@ -913,7 +876,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     layer.restyle = () => layer.setStyle(styleOf);
     for (const [k, fs] of features) centers.set(k, L.geoJSON(fs[0]).getBounds().getCenter());
 
-    // Coloured by days: a badge per colonia with publications, with every report it has (its publications plus
+    // A badge per colonia with publications, with every report it has (its publications plus
     // the last 24 hours on /reportes), like /reportes. They shrink when the whole city is in view.
     markers = L.layerGroup().addTo(map);
     labels = L.layerGroup().addTo(map);
@@ -928,7 +891,8 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     });
     M.recenter(L, map, () => { if (sheet && sheet.bounds) fitTo(sheet.bounds, true); else fitHome(true); }, "topright");
     if (M.cisternas) M.cisternas(L, map, "topright");
-    setMode(mode);
+    // The report badges sit on top of the zone colouring, so their data always loads.
+    needPubs(); needSummary();
     renderStrip();
     drawLabels();
     say("");
@@ -1016,7 +980,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     }
   }
 
-  /* == SECTION: zone focus, mode and strip == */
+  /* == SECTION: zone focus and strip == */
   function setFocus(zs) {
     focus = zs && zs.length ? new Set(zs) : null;
     if (!layer) return;
@@ -1028,15 +992,6 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     for (const t of strip.children) t.classList.toggle("on", !!focus && focus.has(Number(t.dataset.z)));
   }
 
-  function setMode(m) {
-    mode = m;
-    for (const b of modo.querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset.modo === m));
-    // The report badges sit on top of either colouring, so their data always loads.
-    needPubs(); needSummary();
-    if (layer) { layer.restyle(); drawMarkers(); }
-    measure();
-  }
-  for (const b of modo.querySelectorAll("button")) b.addEventListener("click", () => setMode(b.dataset.modo));
 
   // ——— The zone strip: one tile per zone with its cut days and its next cut, per SIAPA's calendar. ———
   function tile(z) {
