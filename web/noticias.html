@@ -173,6 +173,9 @@ main > section + section { margin-top: 8px }
 .face img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover }
 .face figcaption { padding: 10px 14px 12px; font-size: .85rem; line-height: 1.45; color: var(--muted) }
 .face figcaption b { color: var(--fg); font-weight: 600 }
+.fotos { margin: 10px 0 8px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px }
+.fotos img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 10px; border: 1px solid var(--line) }
+.fotos figcaption { grid-column: 1 / -1; font-size: .8rem; color: var(--muted) }
 .testimonies { display: grid; gap: 16px }
 .testimony { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 20px; align-items: start; background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--rep); border-radius: 14px; padding: 18px; box-shadow: var(--shadow) }
 .testimony > .video { grid-column: 1; grid-row: 1 }
@@ -454,7 +457,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     <section aria-labelledby="cronologia">
       <div class="sec-head">
         <h2 id="cronologia" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg></span>Día por día</h2>
-        <p>Última actualización: 4 de noviembre de 2026</p>
+        <p>Última actualización: 5 de noviembre de 2026</p>
       </div>
       <div class="filters" role="group" aria-label="Filtrar noticias">
         <button type="button" data-filter="todo" aria-pressed="true">Todo</button>
@@ -466,6 +469,12 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
         <p id="filtro-estado" role="status" aria-live="polite" class="sr"></p>
       </div>
       <p class="note" id="filtro-vacio" hidden>No hay noticias en esta categoría todavía.</p>
+      <div class="day" id="d05">
+        <h3>5 de noviembre</h3>
+        <div class="feed">
+          <article data-tags="represion justicia protesta"><span class="tag">Represión</span><h4>Concentración frente al Congreso durante la comparecencia por la represión del 11 de octubre</h4><p>«Ciudadanos de las organizaciones civiles del #ElSiapaQueQueremos se congregan al frente del Congreso del Estado de Jalisco para escuchar mediante una transmisión, la comparecencia de las autoridades responsables de los hechos sucitados durante la "Represión de la marcha por el agua" del domingo 11», según la publicación en el grupo Movimiento por Agua Potable ZMG. El IMDEC transmitió en vivo la concentración: «Concentración en apoyo a las víctimas de la represión del 11 de octubre por defender el derecho al agua» (video de 40:54); su convocatoria decía que integrantes del gabinete de seguridad comparecerían ante el Congreso de Jalisco «para explicar su actuación durante la represión de la manifestación del 11 de octubre».</p><figure class="fotos"><img src="/img/noticias/2026-11-05-congreso-1.webp" width="672" height="448" alt="Una manifestante sostiene un cartel: «Exigir agua no es delito. Secuestrar y torturar sí lo son»" loading="lazy" decoding="async"><img src="/img/noticias/2026-11-05-congreso-2.webp" width="672" height="448" alt="Un manifestante sostiene un cartel: «Goberladrones, lecheros, cerveceros, refresqueros del agua hacen $us dineros…»" loading="lazy" decoding="async"><img src="/img/noticias/2026-11-05-congreso-3.webp" width="672" height="448" alt="Personas reunidas en la concentración frente al Congreso" loading="lazy" decoding="async"><figcaption>Fotos publicadas en el grupo público Movimiento por Agua Potable ZMG.</figcaption></figure><span class="via"><a href="https://www.facebook.com/groups/1495980871732985/permalink/1600651321265939/" rel="noopener" target="_blank">Movimiento por Agua Potable ZMG (grupo)</a> · <a href="https://www.facebook.com/watch/live/?v=1429383325469115" rel="noopener" target="_blank">IMDEC (Facebook Live)</a></span></article>
+        </div>
+      </div>
       <div class="day" id="d02">
         <h3>2 de noviembre</h3>
         <div class="feed">
