@@ -68,6 +68,16 @@ KNOWN_ERRORS = [
          ok=r"refuted|gobierno de jalisco[^.;]{0,40}habilito|credits the site to the state",
          msg="SIAPA's 15 Oct bulletin says the Gobierno de Jalisco «habilitó un sitio de consulta»; SIAPA only links to it",
          found="4 Nov 2026 (transparency dodge review: R4 plan row and note)"),
+    dict(id="vi-l-sin-caudal",
+         bad='remite a la fracción VI inciso L, cuyo rubro es «Los informes trimestrales y anuales de actividades del sujeto obligado», sin registros diarios de caudal', good='remite a la fracción VI inciso L, cuyo rubro empieza «Los informes trimestrales y anuales de actividades del sujeto obligado», sin precisar en qué informe ni en qué parte constan',
+         wrong=r"sin registros diarios de caudal", near=r"inciso l|informes trimestrales",
+         msg="nobody opened the PDFs that SIAPA's fracción VI-L page links; say only that SIAPA didn't say which document holds the flows (art. 87.2)",
+         found="5 Nov 2026 (legal review of appeal R3)"),
+    dict(id="728-sin-medio",
+         bad='la cifra de 728 registros de colonias, atribuida públicamente al director general de la Comisión Estatal del Agua', good='los 728 «registros de colonias con baja presión o suspensión» que Siker y Quadratín atribuyeron el 19 de octubre de 2026 a la CEA',
+         wrong=r"atribuid\w* publicamente", near=r"728|director general", ok=r"uncredited\(",
+         msg="name the outlet: Siker and Quadratín (19 Oct) carry «baja presión o suspensión»; Jalisco TV says only «baja presión»",
+         found="5 Nov 2026 (legal review of P2)"),
 ]
 
 

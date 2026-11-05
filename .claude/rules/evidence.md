@@ -29,6 +29,8 @@ A wrong published claim is this project's most expensive failure. Official state
 
 `scripts/stale_dates.py` lists the dated «al 19 de octubre», «revisado el…» and `veredicto_fecha`/`checked` claims over 10 days old (`check.sh` shows the count, never fails): recheck the fact, then move its date.
 
+Three checks the scripts can't make (5 Nov legal review): a quote from a scanned oficio is compared with the page image, accents and capitals included, never only with its OCR; a page or file «has no X» only if all of it, links included, was read, otherwise say what the page shows; a file's date is the server's saved `Last-Modified` header, not the date inside the file.
+
 Field meanings, SIAPA's terms to quote as written, and word pairs agents got wrong: `docs/GLOSARIO.md`.
 
 Errors a fact-check found are listed in `KNOWN_ERRORS` (`pipelines/copy_rules.py`); `scripts/check_known_errors.py` (in `check.sh`) fails when one comes back in `web/`, `docs/`, `pipelines/` or the local `research/`, quotes included. When you find an error that could recur, add it there in the same commit as the fix.
