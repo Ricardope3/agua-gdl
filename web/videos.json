@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-04",
+ "actualizado": "2026-11-05",
  "videos": [
   {
    "url": "https://www.facebook.com/reel/1600459298762122/",
@@ -898,6 +898,360 @@
    "lugar": "Vergel, Las Juntas, El Campesino y Miravalle; acceso a Las Juntas, San Pedro Tlaquepaque",
    "cita": "Habitantes de las colonias Vergel, Las Juntas, El Campesino y Miravalle se concentraron en el acceso a la colonia Las Juntas, en San Pedro Tlaquepaque, a la altura de la estación Las Juntas de la Línea 4 del Tren Ligero, para expresar su inconformidad por la falta de agua potable.",
    "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1824977198546309",
+   "red": "facebook",
+   "quien": "Tonalá de Hoy",
+   "fecha": "2026-11-04",
+   "colonias": [
+    "BOSQUES DE TONALA|Tonalá|45416"
+   ],
+   "lugar": "Bosques de Tonalá, Tonalá",
+   "cita": "Habitantes de la colonia Bosques de Tonalá solicitan la intervención del SIAPA y del Gobierno Municipal, debido a que llevan más de ocho días sin recibir agua potable.",
+   "dias": 8,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1771751880549011",
+   "red": "facebook",
+   "quien": "Meganoticias",
+   "fecha": "2026-11-04",
+   "colonias": [
+    "EL VERGEL|San Pedro Tlaquepaque|45595",
+    "LAS JUNTAS|San Pedro Tlaquepaque|45590",
+    "EL CAMPESINO|San Pedro Tlaquepaque|45590"
+   ],
+   "lugar": "Vergel, Las Juntas, El Campesino y Miravalle, Tlaquepaque",
+   "cita": "La inconformidad por la falta de agua potable llevó a vecinos de las colonias Vergel, Las Juntas, El Campesino y Miravalle a realizar una manifestación en el ingreso a Las Juntas, en San Pedro Tlaquepaque, en las inmediaciones de la estación de la Línea 4 del mismo nombre.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1457439089831895",
+   "red": "facebook",
+   "quien": "Telediario Guadalajara",
+   "fecha": "2026-11-05",
+   "colonias": [
+    "LAS JUNTAS|San Pedro Tlaquepaque|45590",
+    "EL VERGEL|San Pedro Tlaquepaque|45595"
+   ],
+   "lugar": "Las Juntas, El Vergel y Miravalle, Tlaquepaque",
+   "cita": "Habitantes de las colonias Las Juntas, El Vergel y Miravalle se manifestaron en las inmediaciones de la estación Las Juntas de la Línea 4 del Tren Ligero en Tlaquepaque para exigir suministro de agua",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/2237080576836828?comment_id=2301658107295803",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-05",
+   "colonias": [
+    "EL VERGEL|San Pedro Tlaquepaque|45595"
+   ],
+   "lugar": "El Vergel, vía a Manzanillo",
+   "cita": "En el vergel secca de la vía a manzanillo, no tenemos agua, ya 15 dias..",
+   "dias": 15,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1657924969253403?comment_id=1132205922861444",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-05",
+   "colonias": [
+    "CHAPALITA|Guadalajara|45510"
+   ],
+   "lugar": "Chapalita",
+   "cita": "En la colonia Chapalita tenemos un mes sin agua",
+   "dias": 30,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1657924969253403?comment_id=1118229847850367",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-05",
+   "colonias": [
+    "MEDRANO|Guadalajara|44410"
+   ],
+   "lugar": "Medrano, Guadalajara",
+   "cita": "También en medrano zona del vestir ya tenemos un 1 mes sin agua",
+   "dias": 30,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1657924969253403?comment_id=1134343682681069",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-05",
+   "colonias": [
+    "EL VERGEL|San Pedro Tlaquepaque|45595"
+   ],
+   "lugar": "El Vergel 1, Tlaquepaque",
+   "cita": "En el vergel uno por la de margaritas ni gota",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1824977198546309?comment_id=1116781231347521",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-05",
+   "colonias": [
+    "BOSQUES DE TONALA|Tonalá|45416"
+   ],
+   "lugar": "Bosques de Tonalá",
+   "cita": "Yo tengo 15 días sin agua y también soy de bosques de Tonalá",
+   "dias": 15,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1824977198546309?comment_id=1155275956955260",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-05",
+   "colonias": [
+    "CIUDAD AZTLAN|Tonalá|45402"
+   ],
+   "lugar": "Ciudad Aztlán, Tonalá",
+   "cita": "En ciudad aztlan 8 días continuos sin gua",
+   "dias": 8,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1824977198546309?comment_id=4602573036628645",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-05",
+   "colonias": [
+    "BOSQUES DE TONALA|Tonalá|45416"
+   ],
+   "lugar": "Bosques de Tonalá",
+   "cita": "Yo tengo un mes sin agua aquí mismo en bosques de tonala ya basta de estar gastando en garrafónes",
+   "dias": 30,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1824977198546309?comment_id=1496792972294737",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-05",
+   "colonias": [
+    "CAMICHINES II|Tonalá|45407"
+   ],
+   "lugar": "Camichines II y Haciendas de San Francisco, Tonalá",
+   "cita": "También en Camichines II y Haciendas de San Francisco más de 8 días sin agua",
+   "dias": 8,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1824977198546309?comment_id=1764430874636409",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-05",
+   "colonias": [
+    "LOMAS DEL CAMICHIN|Tonalá|45403"
+   ],
+   "lugar": "Lomas de Camichín, Tonalá",
+   "cita": "Lomas de camichin 2 meses sin gota de agua",
+   "dias": 60,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1824977198546309?comment_id=1096536356540538",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-05",
+   "colonias": [
+    "PASEO PUENTE VIEJO|Tonalá|45424"
+   ],
+   "lugar": "Paseo Puente Viejo, Tonalá",
+   "cita": "Paseo puente viejo 10 dias",
+   "dias": 10,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1824977198546309?comment_id=1442858571308887",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-05",
+   "colonias": [
+    "PACHAGUILLO|Tonalá|45400"
+   ],
+   "lugar": "Pachaguillo, Tonalá",
+   "cita": "Colonia Pachaguillo igual más de una semana sin agua",
+   "dias": 7,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1824977198546309?comment_id=1614792262984557",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-05",
+   "colonias": [
+    "COLINAS DE TONALA|Tonalá|45418"
+   ],
+   "lugar": "Colinas de Tonalá",
+   "cita": "Colinas de tonala no la pusieron unas horas después de una semana sin agua y la volvieron a quitar",
+   "dias": 7,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1824977198546309?comment_id=1924447955193596",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-04",
+   "colonias": [
+    "RANCHO DE LA CRUZ|Tonalá|45410"
+   ],
+   "lugar": "Rancho de la Cruz, Tonalá",
+   "cita": "Rancho de la Cruz, desde el 23 de Octubre sin agua!",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1824977198546309?comment_id=914447391636269",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-04",
+   "colonias": [
+    "TONALA CENTRO|Tonalá|45400"
+   ],
+   "lugar": "Tonalá Centro",
+   "cita": "Tonalá centro nada de agua",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1824977198546309?comment_id=453159940042803",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-04",
+   "colonias": [
+    "PASEOS DEL VALLE|Tonalá|45403"
+   ],
+   "lugar": "Paseos del Valle, Tonalá",
+   "cita": "Tampoco hay agua en Paseos del Valle Tonalá desde el sábado, pegaron el tandeo anterior con el actual!",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1824977198546309?comment_id=1691741752737408",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-04",
+   "colonias": [
+    "LOS POCITOS|Tonalá|45403"
+   ],
+   "lugar": "Los Pocitos, Camichines 2, Tonalá",
+   "cita": "En el fraccionamiento los pocitos en camichines 2 no tenemos agua desde el viernes pasado...",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1824977198546309?comment_id=2192404114986350",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-04",
+   "colonias": [
+    "CAMICHINES II|Tonalá|45407"
+   ],
+   "lugar": "Camichines II, Tonalá",
+   "cita": "Camichines II ya 2 semanas",
+   "dias": 14,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1824977198546309?comment_id=1001439495619404",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-04",
+   "colonias": [
+    "RANCHO DE LA CRUZ|Tonalá|45410"
+   ],
+   "lugar": "Rancho de la Cruz, Tonalá",
+   "cita": "Rancho de la cruz igual ya 3 semana ni una gota.",
+   "dias": 21,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1824977198546309?comment_id=1459704566287371",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-04",
+   "colonias": [
+    "PRADOS DE LA CRUZ II|Tonalá|45410"
+   ],
+   "lugar": "Prados de la Cruz II, Tonalá",
+   "cita": "En la colonia prados de la cruz II tenemos casi un mes sin una hora de agua",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1824977198546309?comment_id=1466119372395233",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-04",
+   "colonias": [
+    "PASEO PUENTE VIEJO|Tonalá|45424"
+   ],
+   "lugar": "Puente Viejo, Tonalá",
+   "cita": "En puente viejo tonala llevamos 30 dias",
+   "dias": 30,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1824977198546309?comment_id=1412647087301350",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-04",
+   "colonias": [
+    "PACHAGUILLO|Tonalá|45400"
+   ],
+   "lugar": "Pachaguillo, Tonalá",
+   "cita": "Pachaguillo como unos 15 días sin agua",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1824977198546309?comment_id=1057812027280256",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-04",
+   "colonias": [
+    "BOSQUES DE TONALA|Tonalá|45416"
+   ],
+   "lugar": "Bosques de Tonalá",
+   "cita": "Calle tabachin en la colonia bosques de tonala en 2 semanas solo viernes y ayer martes en el transcurso del dia hubo agua y ya en la noche nadaa",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1824977198546309?comment_id=1741160364335812",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-04",
+   "colonias": [
+    "VALLE VERDE|Tonalá|45410"
+   ],
+   "lugar": "Valle Verde, Tonalá",
+   "cita": "En valle verde tenemos 3 semanas sin agua",
+   "dias": 21,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1824977198546309?comment_id=2121144158772627",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-04",
+   "colonias": [
+    "CAMICHINES II|Tonalá|45407"
+   ],
+   "lugar": "Camichines II, Tonalá",
+   "cita": "Camichines ll 6 dias sin agua.",
+   "dias": 6,
    "video": null
   }
  ]
