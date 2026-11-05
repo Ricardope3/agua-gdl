@@ -129,10 +129,13 @@ def from_noticias(temas):
 def tiles():
     doc = json.loads(TEMAS.read_text())
     temas = doc["temas"]
+    carteles = set(doc.get("carteles", []))
+    missing = [k for k in carteles if k not in temas]
     ts = from_publicaciones(temas) + from_noticias(temas)
     found = {t["img"] for t in ts}
-    missing = [k for k in temas if k not in found or not (WEB / k).is_file()]
+    missing += [k for k in temas if k not in found or not (WEB / k).is_file()]
     for t in ts:
+        t["cartel"] = t["img"] in carteles
         t["w"], t["h"] = dims(WEB / t["img"])
         names = [nombre(c) for c in t["colonias"]]
         t["cols"] = [n for n, _ in names]
@@ -149,7 +152,7 @@ E = html.escape
 def tile(t, prefix="/", extra=""):
     cap = f'{E(fecha_corta(t["fecha"]))} · {E(t["cols"][0] if t["cols"] else t["quien"])}'
     small = f'<small>{E(t["quien"])}</small>' if t["cols"] else ""
-    return (f'<a class="t {t["tema"]}{" v" if t["video"] else ""}" href="{E(t["url"])}" target="_blank" rel="noopener"'
+    return (f'<a class="t {t["tema"]}{" v" if t["video"] else ""}{" c" if t["cartel"] else ""}" href="{E(t["url"])}" target="_blank" rel="noopener"'
             f' data-tema="{t["tema"]}" data-fecha="{t["fecha"]}" data-col="{E("|".join(t["cols"]))}"'
             f' style="--r:{t["w"] / t["h"]:.3f}"{extra}>'
             f'<img src="{prefix}{t["img"]}" width="{t["w"]}" height="{t["h"]}" alt="{E(t["alt"])}" loading="lazy" decoding="async">'
@@ -196,6 +199,7 @@ SCRIPT = """<script>
       if (ok) n++;
     }
     for (const g of document.querySelectorAll('[data-grupo]')) g.hidden = !g.querySelector('.t:not([hidden])');
+    document.dispatchEvent(new Event('fotos-filtro'));
     $('cuenta').textContent = n === 1 ? '1 foto' : n + ' fotos';
   };
   for (const c of chips) c.addEventListener('click', () => {
@@ -232,72 +236,95 @@ section.dia, section.colonia, section.frente { padding: 0 }
 @media (prefers-reduced-motion: reduce) { .t img { transition: none } }
 """
 
-VARIANTES = {
-    "v1": ("Mosaico", "Columnas con cada foto en su proporción, la más reciente primero.", """
+MASONRY_CSS = """
 .collage { columns: 4 220px; column-gap: 6px }
 .collage .t { break-inside: avoid; margin: 0 0 6px; border-radius: 4px; aspect-ratio: var(--r) }
+.collage.js { columns: auto; position: relative }
+.collage.js .t { position: absolute; margin: 0 }
 @media (max-width: 560px) { .collage { columns: 2; column-gap: 4px } .collage .t { margin-bottom: 4px } }
+.t.c .cap { font-size: .82rem }
+"""
+
+MASONRY_JS = """<script>
+(() => {
+  const box = document.querySelector('.collage[data-cfg]');
+  if (!box) return;
+  const cfg = JSON.parse(box.dataset.cfg);
+  const lay = () => {
+    const W = box.clientWidth, phone = W < 560, g = phone ? 4 : cfg.gap;
+    const n = Math.max(phone ? cfg.phoneCols : 2, Math.floor((W + g) / (cfg.col + g)));
+    const cw = (W - g * (n - 1)) / n, h = new Array(n).fill(0);
+    box.classList.add('js');
+    const span = (t) => Math.min(n, t.classList.contains('c') ? (n >= 5 ? cfg.bigWide : cfg.big) : t.classList.contains('v') ? cfg.video : 1);
+    const queue = [...box.children].filter((t) => !t.hidden);
+    const put = (t, col, s) => {
+      const top = Math.max(...h.slice(col, col + s));
+      const w = cw * s + g * (s - 1), ht = w / parseFloat(t.style.getPropertyValue('--r'));
+      Object.assign(t.style, { left: col * (cw + g) + 'px', top: top + 'px', width: w + 'px', height: ht + 'px' });
+      for (let i = col; i < col + s; i++) h[i] = top + ht + g;
+    };
+    while (queue.length) {
+      const m = Math.min(...h), low = h.indexOf(m);
+      let done = false;
+      // Fill the lowest column with the first of the next few tiles that fits there without leaving a hole.
+      for (let k = 0; k < Math.min(6, queue.length) && !done; k++) {
+        const s = span(queue[k]);
+        for (let c = Math.max(0, low - s + 1); c <= Math.min(low, n - s); c++) {
+          if (h.slice(c, c + s).every((x) => x <= m + 24)) { put(queue[k], c, s); queue.splice(k, 1); done = true; break; }
+        }
+      }
+      if (!done) {
+        const t = queue.shift(), s = span(t);
+        let col = 0, top = Infinity;
+        for (let i = 0; i <= n - s; i++) { const x = Math.max(...h.slice(i, i + s)); if (x < top - 1) { top = x; col = i; } }
+        put(t, col, s);
+      }
+    }
+    box.style.height = Math.max(0, ...h) - g + 'px';
+  };
+  let w = 0;
+  new ResizeObserver(() => { if (box.clientWidth !== w) { w = box.clientWidth; lay(); } }).observe(box);
+  document.addEventListener('fotos-filtro', lay);
+})();
+</script>"""
+
+VARIANTES = {
+    "v1": ("Mosaico", "Columnas con cada foto en su proporción, la más reciente primero.", MASONRY_CSS),
+    "v7": ("Carteles al doble", "El mosaico de la variante 1; las fotos donde se lee un cartel ocupan dos columnas.", MASONRY_CSS),
+    "v8": ("Carteles primero", "Abre con el muro de carteles, a doble columna; después, todo lo demás por fecha.", MASONRY_CSS),
+    "v9": ("Mosaico fino", "Seis columnas angostas; los carteles ocupan tres (dos en el teléfono).", MASONRY_CSS),
+    "v10": ("Bandas de carteles", "El mosaico de la variante 1, cortado cada tanto por una franja con dos carteles grandes.", MASONRY_CSS + """
+.banda { display: flex; gap: 6px; margin: 0 0 6px }
+.banda .t { flex: var(--r) 1 0; aspect-ratio: var(--r); border-radius: 4px }
+@media (max-width: 560px) { .banda { gap: 4px; margin-bottom: 4px } }
 """),
-    "v2": ("Muro", "Cuadrícula pareja de borde a borde: un muro de cuadros iguales.", """
-.collage { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 2px; margin: 0 calc(50% - 50vw); padding: 0 2px }
-.collage .t { aspect-ratio: 1 }
-.collage .cap { opacity: 0; transition: opacity .2s } .collage .t:hover .cap, .collage .t:focus-visible .cap { opacity: 1 }
-@media (max-width: 560px) { .collage { grid-template-columns: repeat(3, 1fr) } .collage .cap { display: none } }
-"""),
-    "v3": ("Día por día", "Una fila por día, con las fotos a la misma altura.", """
-.dia h3 { font-size: 1rem; margin: 18px 0 6px; font-style: italic; font-weight: 400; color: var(--muted) }
-.fila { display: flex; flex-wrap: wrap; gap: 4px }
-.fila .t { height: 150px; flex: calc(var(--r) * 150) 1 calc(var(--r) * 150px); max-width: 100%; border-radius: 3px }
-.fila::after { content: ""; flex: 999 1 0 }
-@media (max-width: 560px) { .fila .t { height: 110px; flex-basis: calc(var(--r) * 110px) } }
-"""),
-    "v4": ("Por colonia", "Una tira por colonia, de la que tiene más fotos a la que menos; se desliza de lado.", """
-.colonia h3 { font-size: 1rem; margin: 18px 0 6px; display: flex; gap: 8px; align-items: baseline } .colonia h3 span { font-size: .8rem; color: var(--muted); font-weight: 400 }
-.tira { display: flex; gap: 4px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px }
-.tira .t { flex: 0 0 auto; height: 180px; aspect-ratio: var(--r); scroll-snap-align: start; border-radius: 4px; max-width: 80vw }
-@media (max-width: 560px) { .tira .t { height: 140px } }
-"""),
-    "v5": ("Portada", "Collage de periódico: protestas y videos ocupan cuadros grandes, el resto llena los huecos.", """
-.collage { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); grid-auto-rows: 140px; grid-auto-flow: dense; gap: 4px }
-.collage .t.g { grid-column: span 2; grid-row: span 2 }
-.collage .t.a { grid-column: span 2 }
-.collage .t.l { grid-row: span 2 }
-@media (max-width: 560px) { .collage { grid-template-columns: repeat(3, 1fr); grid-auto-rows: 31vw; gap: 3px } .collage .cap small { display: none } }
-"""),
-    "v6": ("Tres frentes", "Tres bloques: protestas, gente sin agua y agua sucia, cada uno con su color.", """
-.frente { margin: 0 0 22px; border-top: 4px solid var(--c); padding-top: 8px }
-.frente h3 { font-size: 1.15rem; margin: 0 0 8px; color: var(--c); display: flex; gap: 8px; align-items: baseline } .frente h3 span { font-size: .8rem; color: var(--muted); font-style: normal }
-.frente.protesta { --c: var(--rep, #dc2626) } .frente.sin-agua { --c: var(--agua, #0284c7) } .frente.calidad { --c: #a16207 }
-.frente .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 3px }
-.frente .t { aspect-ratio: 4/5 } .frente .t::before { display: none }
-@media (max-width: 560px) { .frente .grid { grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: 42vw; grid-template-rows: repeat(2, auto); overflow-x: auto; scroll-snap-type: x mandatory } .frente .t { scroll-snap-align: start } }
-"""),
+}
+
+CFG = {
+    "v7": {"col": 220, "gap": 6, "phoneCols": 2, "big": 2, "bigWide": 2, "video": 1},
+    "v8": {"col": 220, "gap": 6, "phoneCols": 2, "big": 2, "bigWide": 2, "video": 1},
+    "v9": {"col": 140, "gap": 4, "phoneCols": 3, "big": 2, "bigWide": 3, "video": 1},
 }
 
 
 def cuerpo(v, ts, prefix):
-    if v in ("v1", "v2"):
-        return f'<div class="collage">{"".join(tile(t, prefix) for t in ts)}</div>'
-    if v == "v3":
-        dias = {}
+    if v == "v8":
+        ts = [t for t in ts if t["cartel"]] + [t for t in ts if not t["cartel"]]
+    if v in CFG:
+        return f'<div class="collage" data-cfg=\'{json.dumps(CFG[v])}\'>{"".join(tile(t, prefix) for t in ts)}</div>{MASONRY_JS}'
+    if v == "v10":
+        out, block, pend = [], [], []
+        flush = lambda xs, cls: out.append(f'<div class="{cls}" data-grupo>{"".join(tile(t, prefix) for t in xs)}</div>') if xs else None
         for t in ts:
-            dias.setdefault(t["fecha"], []).append(t)
-        return "".join(f'<section class="dia" data-grupo><h3>{E(fecha_larga(d))}</h3><div class="fila">{"".join(tile(t, prefix) for t in g)}</div></section>' for d, g in dias.items())
-    if v == "v4":
-        grupos = {}
-        for t in ts:
-            for c in t["cols"] or ["Sin colonia en la publicación"]:
-                grupos.setdefault(c, []).append(t)
-        orden = sorted(grupos.items(), key=lambda kv: (kv[0].startswith("Sin colonia"), -len(kv[1]), kv[0]))
-        return "".join(f'<section class="colonia" data-grupo><h3>{E(c)} <span>{len(g)}</span></h3><div class="tira">{"".join(tile(t, prefix) for t in g)}</div></section>' for c, g in orden)
-    if v == "v5":
-        out = []
-        for i, t in enumerate(ts):
-            r = t["w"] / t["h"]
-            k = "g" if (t["video"] or (t["tema"] == "protesta" and i % 3 == 0)) and r > .8 else "a" if r > 1.6 else "l" if r < .7 else ""
-            out.append(tile(t, prefix).replace('class="t ', f'class="t {k} ', 1) if k else tile(t, prefix))
-        return f'<div class="collage">{"".join(out)}</div>'
-    return "".join(f'<section class="frente {k}" data-grupo><h3>{E(n)} <span>{sum(1 for t in ts if t["tema"] == k)}</span></h3><div class="grid">{"".join(tile(t, prefix) for t in ts if t["tema"] == k)}</div></section>' for k, n in [("protesta", "Protestas"), ("sin-agua", "Sin agua"), ("calidad", "Agua sucia")])
+            (pend if t["cartel"] else block).append(t)
+            if len(block) >= 8 and len(pend) >= 2:
+                flush(block, "collage")
+                flush(pend[:2], "banda")
+                block, pend = [], pend[2:]
+        pair = pend
+        flush(block + pair, "collage")
+        return "".join(out)
+    return f'<div class="collage">{"".join(tile(t, prefix) for t in ts)}</div>'
 
 
 def page(v, ts, prefix="/", variante=False):
@@ -313,7 +340,7 @@ def page(v, ts, prefix="/", variante=False):
     titulo, desc, css = VARIANTES[v]
     desde = min(t["fecha"] for t in ts)
     n_med = len({t["quien"] for t in ts})
-    tag = f'<p class="aviso"><b>Variante {v[1]}: {E(titulo)}.</b> {E(desc)}</p>' if variante else ""
+    tag = f'<p class="aviso"><b>Variante {v[1:]}: {E(titulo)}.</b> {E(desc)}</p>' if variante else ""
     return f"""<!doctype html>
 <html lang="es-MX">
 <head>
@@ -338,7 +365,7 @@ def page(v, ts, prefix="/", variante=False):
   {tag}
   <h1>La crisis del agua, en fotos</h1>
   <p class="lede">{len(ts)} fotos y videos que publicaron {n_med} medios, grupos y cuentas de vecinos desde el {E(fecha_larga(desde))}: protestas, filas en las pipas, cubetas vacías y agua sucia. Toca una para abrir la publicación original.</p>
-  {filtros(ts, fecha=v != "v3")}
+  {filtros(ts, fecha=True)}
   {cuerpo(v, ts, prefix)}
   <p class="aviso">Guardamos una copia pequeña de cada imagen, así tu navegador no se conecta a Facebook, a X ni a los medios para verlas. No incluimos publicaciones de solo texto, avisos oficiales ni imágenes con el nombre de una persona. Si apareces en una foto y quieres que la quitemos, escríbenos a <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>.</p>
   </main>
