@@ -247,13 +247,13 @@ MASONRY_CSS = """
 
 MASONRY_JS = """<script>
 (() => {
-  const box = document.querySelector('.collage[data-cfg]');
-  if (!box) return;
+  for (const box of document.querySelectorAll('.collage[data-cfg]')) {
   const cfg = JSON.parse(box.dataset.cfg);
   const lay = () => {
+    if (box.hidden || !box.clientWidth) return;
     const W = box.clientWidth, phone = W < 560, g = phone ? 4 : cfg.gap;
     const n = Math.max(phone ? cfg.phoneCols : 2, Math.floor((W + g) / (cfg.col + g)));
-    const cw = (W - g * (n - 1)) / n, h = new Array(n).fill(0);
+    const cw = (W - g * (n - 1)) / n, h = new Array(n).fill(0), cols = h.map(() => []);
     box.classList.add('js');
     const span = (t) => Math.min(n, t.classList.contains('c') ? (n >= 5 ? cfg.bigWide : cfg.big) : t.classList.contains('v') ? cfg.video : 1);
     const queue = [...box.children].filter((t) => !t.hidden);
@@ -262,6 +262,7 @@ MASONRY_JS = """<script>
       const w = cw * s + g * (s - 1), ht = w / parseFloat(t.style.getPropertyValue('--r'));
       Object.assign(t.style, { left: col * (cw + g) + 'px', top: top + 'px', width: w + 'px', height: ht + 'px' });
       for (let i = col; i < col + s; i++) h[i] = top + ht + g;
+      if (s === 1) cols[col].push([t, ht]);
     };
     while (queue.length) {
       const m = Math.min(...h), low = h.indexOf(m);
@@ -280,11 +281,22 @@ MASONRY_JS = """<script>
         put(t, col, s);
       }
     }
+    // A block that a band follows ends flush: a short column's photos grow a little (cropped by cover).
+    if (cfg.flush && cols.every((c) => c.length)) {
+      const end = Math.max(...h);
+      cols.forEach((c, i) => {
+        const sum = c.reduce((a, [, x]) => a + x, 0), f = (sum + end - h[i]) / sum;
+        let top = 0;
+        for (const [t, x] of c) { t.style.top = top + 'px'; t.style.height = x * f + 'px'; top += x * f + g; }
+        h[i] = end;
+      });
+    }
     box.style.height = Math.max(0, ...h) - g + 'px';
   };
   let w = 0;
   new ResizeObserver(() => { if (box.clientWidth !== w) { w = box.clientWidth; lay(); } }).observe(box);
   document.addEventListener('fotos-filtro', lay);
+  }
 })();
 </script>"""
 
@@ -303,6 +315,7 @@ VARIANTES = {
 CFG = {
     "v7": {"col": 220, "gap": 6, "phoneCols": 2, "big": 2, "bigWide": 2, "video": 1},
     "v8": {"col": 220, "gap": 6, "phoneCols": 2, "big": 2, "bigWide": 2, "video": 1},
+    "v10": {"col": 220, "gap": 6, "phoneCols": 2, "big": 1, "bigWide": 1, "video": 1, "flush": True},
     "v9": {"col": 140, "gap": 4, "phoneCols": 3, "big": 2, "bigWide": 3, "video": 1},
 }
 
@@ -310,20 +323,30 @@ CFG = {
 def cuerpo(v, ts, prefix):
     if v == "v8":
         ts = [t for t in ts if t["cartel"]] + [t for t in ts if not t["cartel"]]
-    if v in CFG:
-        return f'<div class="collage" data-cfg=\'{json.dumps(CFG[v])}\'>{"".join(tile(t, prefix) for t in ts)}</div>{MASONRY_JS}'
     if v == "v10":
+        attr = f" data-cfg='{json.dumps(CFG[v])}'"
         out, block, pend = [], [], []
-        flush = lambda xs, cls: out.append(f'<div class="{cls}" data-grupo>{"".join(tile(t, prefix) for t in xs)}</div>') if xs else None
+
+        def flush(xs, cls):
+            if xs:
+                out.append(f'<div class="{cls}" data-grupo{attr if cls == "collage" else ""}>{"".join(tile(t, prefix) for t in xs)}</div>')
+
+        rest = sum(1 for t in ts if not t["cartel"])
         for t in ts:
-            (pend if t["cartel"] else block).append(t)
-            if len(block) >= 8 and len(pend) >= 2:
+            if t["cartel"]:
+                pend.append(t)
+            else:
+                block.append(t)
+                rest -= 1
+            if len(block) >= 8 and len(pend) >= 2 and rest >= 8:
                 flush(block, "collage")
                 flush(pend[:2], "banda")
                 block, pend = [], pend[2:]
-        pair = pend
-        flush(block + pair, "collage")
-        return "".join(out)
+        flush(block, "collage")
+        flush(pend, "banda")
+        return "".join(out) + MASONRY_JS
+    if v in CFG:
+        return f'<div class="collage" data-cfg=\'{json.dumps(CFG[v])}\'>{"".join(tile(t, prefix) for t in ts)}</div>{MASONRY_JS}'
     return f'<div class="collage">{"".join(tile(t, prefix) for t in ts)}</div>'
 
 
@@ -340,7 +363,17 @@ def page(v, ts, prefix="/", variante=False):
     titulo, desc, css = VARIANTES[v]
     desde = min(t["fecha"] for t in ts)
     n_med = len({t["quien"] for t in ts})
-    tag = f'<p class="aviso"><b>Variante {v[1:]}: {E(titulo)}.</b> {E(desc)}</p>' if variante else ""
+    tag = ""
+    if variante:
+        cur = ' aria-current="page"'
+        links = "".join(f'<a href="/fotos-{k}"{cur if k == v else ""} title="{E(VARIANTES[k][1])}">{k[1:]} · {E(VARIANTES[k][0])}</a>' for k in VARIANTES)
+        tag = (f'<p class="aviso"><b>Variante {v[1:]}: {E(titulo)}.</b> {E(desc)}</p>'
+               f'<nav class="vbar" aria-label="Variantes">{links}</nav>'
+               '<style>.vbar { position: fixed; left: 50%; bottom: 12px; transform: translateX(-50%); z-index: 20; display: flex; gap: 4px; max-width: calc(100vw - 16px); overflow-x: auto; scrollbar-width: none; padding: 5px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 4px 18px rgb(0 0 0 / .18) }'
+               ' .vbar a { white-space: nowrap; padding: 6px 12px; border-radius: 999px; font-size: .85rem; color: var(--fg); text-decoration: none }'
+               ' .vbar a:hover { background: var(--subtle) } .vbar a[aria-current] { background: var(--primary); color: var(--on-primary) }'
+               ' body { padding-bottom: 64px }</style>'
+               "<script>addEventListener('load', () => { const b = document.querySelector('.vbar'), a = b.querySelector('[aria-current]'); b.scrollLeft = a.offsetLeft - (b.clientWidth - a.offsetWidth) / 2; });</script>")
     return f"""<!doctype html>
 <html lang="es-MX">
 <head>
