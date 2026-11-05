@@ -135,7 +135,7 @@ h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.08; letter-spacing: -
   .map-key.abierto .mk-toggle { margin-bottom: 6px }
   .stage.has-card .map-key, .stage.libre .map-key { display: none }
 }
-/* On desktop, after 4 s of moving the map by hand (script: key-mini, tl.mini), the key folds to its link
+/* On desktop, after 2.5 s of moving the map by hand (script: key-mini, tl.mini), the key folds to its link
    and the timeline to its top row; a click opens either again. */
 @media (min-width: 761px) {
   .stage.key-mini .mk-toggle { display: block; padding: 0; border: 0; background: none; color: var(--link); font: 600 .82rem/1.3 var(--font); cursor: pointer }
@@ -1419,7 +1419,7 @@ if (window.top !== window.self) {
     anim.finished.then(() => { if (box._anim === anim) { box.style.overflow = ""; box._anim = null; } }, () => {});
   };
   keyBtn.addEventListener("click", () => smooth(key, () => keyBtn.setAttribute("aria-expanded", String(key.classList.toggle("abierto")))));
-  // Desktop: 4 s of moving or zooming the map by hand (pauses under 1.5 s count as one gesture) fold the
+  // Desktop: 2.5 s of moving or zooming the map by hand (pauses under 1.5 s count as one gesture) fold the
   // key and the timeline. Listened to on the stage, in capture, because M.pinch stops its wheel events.
   const tlBox = $("linea");
   let handSince = 0, handLast = 0;
@@ -1429,7 +1429,7 @@ if (window.top !== window.self) {
     const now = Date.now();
     if (now - handLast > 1500) handSince = now;
     handLast = now;
-    if (now - handSince < 4000) return;
+    if (now - handSince < 2500) return;
     smooth(key, () => { stage.classList.add("key-mini"); key.classList.remove("abierto"); keyBtn.setAttribute("aria-expanded", "false"); });
     smooth(tlBox, () => { tlBox.classList.add("mini"); tlBox.title = "Ver la gráfica"; tlBox.tabIndex = 0; });
   };
