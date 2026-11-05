@@ -83,7 +83,7 @@ if [[ $mode != quick ]]; then
 fi
 step "status_test.mjs" node --test experiments/reportes/status_test.mjs
 step "python unittest" python3 -m unittest discover -s pipelines -p 'test_*.py'
-for p in mapa_colonias promesas publicaciones zonas_json simple_page videos colonia_pages cisternas; do
+for p in mapa_colonias promesas publicaciones zonas_json simple_page videos colonia_pages cisternas fotos; do
   step "$p.py --check" python3 "pipelines/$p.py" --check
 done
 step "check_web.mjs" node scripts/check_web.mjs
