@@ -1,7 +1,7 @@
 {
  "id": "21-ciudad-granja",
  "titulo": "Ciudad Granja: la colonia con más publicaciones",
- "caption": "Ciudad Granja, Zapopan, es la colonia con más publicaciones sobre falta de agua que hemos reunido: 77, de vecinos y de 17 medios distintos. Y no empezó con la rotación: según Meganoticias, ya bloqueaban Vallarta en marzo y mayo.\n\n¿Por qué ahí? Una explicación posible es la altura: el propio Gobierno de Jalisco dice que la rotación afecta «principalmente a las zonas más altas y más lejanas», y Ciudad Granja está más arriba que 9 de cada 10 colonias de la rotación. Pero la altura no lo explica todo: las otras colonias con más publicaciones están más abajo. El SIAPA habló de mantenimiento en el macrotanque de El Colli; los vecinos, de crecimiento sin infraestructura y pipas que no alcanzan.\n\nAltura: modelo Copernicus de 90 m, centro de cada colonia; cálculo nuestro. Fuentes en cada imagen.\n\n¿Vives en Ciudad Granja? Cuéntanos cómo llega el agua: aguagdl.com/reportes (link en la bio).",
+ "caption": "Ciudad Granja, Zapopan, es la colonia con más publicaciones sobre falta de agua que hemos reunido: 77, de vecinos y de 17 medios distintos.\n\n¿Por qué ahí? Una explicación posible es la altura: el propio Gobierno de Jalisco dice que la rotación afecta «principalmente a las zonas más altas y más lejanas», y Ciudad Granja está más arriba que 9 de cada 10 colonias de la rotación. Pero la altura no lo explica todo: las otras colonias con más publicaciones están más abajo. El SIAPA habló de mantenimiento en el macrotanque de El Colli; los vecinos, de crecimiento sin infraestructura y pipas que no alcanzan.\n\nAltura: modelo Copernicus de 90 m, centro de cada colonia; cálculo nuestro. Fuentes en cada imagen.\n\n¿Vives en Ciudad Granja? Cuéntanos cómo llega el agua: aguagdl.com/reportes (link en la bio).",
  "fuentes": {
   "pub": {
    "url": "https://aguagdl.com/publicaciones.json",
@@ -76,32 +76,6 @@
     "pub"
    ],
    "calculo": "#1: primera en el conteo por colonia."
-  },
-  {
-   "tipo": "linea",
-   "foto": "fuentes/18cfe1b2ea54.jpg",
-   "kicker": "Según Meganoticias",
-   "titular": "No empezó con la rotación",
-   "hitos": [
-    {
-     "fecha": "5 de marzo",
-     "texto": "Bloquean Vallarta; algunas casas llevaban «hasta 10 días sin recibir agua»",
-     "color": "gris"
-    },
-    {
-     "fecha": "28 de mayo",
-     "texto": "«Más de 50 habitantes» vuelven a cerrar Vallarta y Pirules",
-     "color": "gris"
-    },
-    {
-     "fecha": "19–21 de octubre",
-     "texto": "Protestas en Vallarta y Periférico; denuncian «más de 15 días sin agua»",
-     "color": "alarm"
-    }
-   ],
-   "fuentes": [
-    "megameses"
-   ]
   },
   {
    "tipo": "altura",
