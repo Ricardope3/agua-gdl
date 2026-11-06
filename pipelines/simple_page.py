@@ -39,7 +39,7 @@ def build():
     posts = []
     for post in recent[:8]:
         who = post.get("quien") or "Vecinas y vecinos"
-        posts.append(f'<li><a href="{esc(post["url"])}" rel="noopener nofollow">{esc(post["cita"])}</a><br><small>{esc(who)} · {esc(date_es(post["fecha"]))}</small></li>')
+        posts.append(f'<li><a href="{esc(post["url"])}" rel="noopener nofollow"><q>{esc(post["cita"])}</q></a><br><small>{esc(who)} · {esc(date_es(post["fecha"]))}</small></li>')
     post_html = "\n".join(posts) or "<li>No hay publicaciones recientes registradas.</li>"
     return f'''<!doctype html>
 <html lang="es-MX"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">

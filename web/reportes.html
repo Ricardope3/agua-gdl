@@ -741,7 +741,7 @@ if (window.top !== window.self) {
   const reduce = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
   function abre(li, p) {
     const mk = (tag, cls, txt) => { const n = document.createElement(tag); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
-    const link = p.tipo === "comentario" ? (p.red === "x" ? "Ver la respuesta" : "Ver el comentario") : p.red === "web" ? "Leer la nota" : "Ver la publicación";
+    const link = p.tipo === "comentario" ? (p.red === "x" ? "Ver la respuesta" : "Ver el comentario") : p.red === "web" && !p.video ? "Leer la nota" : "Ver la publicación";
     const img = p.captura || p.vista || (p.en && p.en.vista);
     const back = mk("div", "ql");
     const box = mk("div", "ql-card");
@@ -879,7 +879,7 @@ if (window.top !== window.self) {
   const edad = (iso) => Math.round((Date.parse(hoy()) - Date.parse(iso)) / 864e5);
   const hace = (iso) => { const d = edad(iso); return d <= 0 ? "hoy" : d === 1 ? "ayer" : `hace ${d} días`; };
   const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
-  const quien = (q) => q.tipo === "comentario" ? (q.red === "x" ? "Respuesta en X" : "Comentario en Facebook") : q.fuente === "medio" || q.quien ? q.quien : "Vecina o vecino";
+  const quien = (q) => q.tipo === "comentario" ? (q.red === "x" ? "Respuesta en X" : /tiktok\.com\//.test(q.url) ? "Comentario en TikTok" : "Comentario en Facebook") : q.fuente === "medio" || q.quien ? q.quien : "Vecina o vecino";
   const impactOf = (p) => !!(p.bloqueo && (p.vista || p.captura || (p.en && p.en.vista)));
   const zonaDe = (p) => { const M = window.aguaMapa, ls = M.zonesOf(p.l || ""); return ls.length ? ls : M.zones(p).main; };
   // What the publications say about now; silence never means the water came back.
@@ -941,7 +941,7 @@ if (window.top !== window.self) {
       const li = mk("li", `p-item ${x.fuente === "medio" ? "medio" : "vecinos"}`), src = x.captura || x.vista || (x.en && x.en.vista);
       if (src && x.fuente === "medio") { const im = mk("img"); im.src = `/${src}`; im.alt = ""; im.loading = "lazy"; li.append(im); }
       const body = mk("div", "p-body"), meta = mk("div", "p-meta who");
-      meta.append(mk("span", x.fuente === "medio" ? "tag" : "tag alt", x.fuente === "medio" ? "Medio" : x.red === "x" ? "X" : "Facebook"), `${quien(x)} · ${hace(x.fecha)}`);
+      meta.append(mk("span", x.fuente === "medio" ? "tag" : "tag alt", x.fuente === "medio" ? "Medio" : x.red === "x" ? "X" : /tiktok\.com\//.test(x.url) ? "TikTok" : "Facebook"), `${quien(x)} · ${hace(x.fecha)}`);
       if (x.dias) meta.append(sevb(x.dias));
       body.append(meta);
       if (x.titular && x.fuente === "medio") body.append(mk("p", "p-tit", x.titular)); else body.append(mk("p", "p-q", x.cita));
@@ -1920,15 +1920,16 @@ if (window.top !== window.self) {
         if (p.headline) return el("a", { class: p.captura ? "ftile news" : "ftile news noimg", href: p.url, target: "_blank", rel: "noopener nofollow", tabindex: "-1", title: `${p.quien} · ${dateES(p.fecha)}: ${p.titular}` },
           p.captura ? el("img", { loading: "lazy", src: `/${p.captura}`, alt: "", decoding: "async" }) : null,
           el("span", { class: "nw" }, el("small", {}, `${p.quien} · ${dateES(p.fecha)}`), el("b", {}, p.titular)));
-        const who = p.tipo === "comentario" ? (p.red === "x" ? "Vecino en X" : "Vecino en Facebook") : p.fuente === "medio" || p.quien ? p.quien : "Vecino";
+        const tt = /tiktok\.com\//.test(p.url);
+        const who = p.tipo === "comentario" ? (p.red === "x" ? "Vecino en X" : tt ? "Vecino en TikTok" : "Vecino en Facebook") : p.fuente === "medio" || p.quien ? p.quien : "Vecino";
         // Words without a picture look like what they are, a comment or a post, with the neighbour unnamed.
         // A comment always shows as the comment itself, under a strip of the post it answers.
         if (p.tipo === "comentario" || (!p.vista && p.fuente === "vecinos")) {
-          const fb = p.red === "facebook";
+          const fb = p.red === "facebook" || tt;
           return el("a", { class: `ftile cmt ${fb ? "fb" : "xp"}${p.vista ? " ctx" : ""}`, href: p.url, target: "_blank", rel: "noopener nofollow", tabindex: "-1", title: `${who} · ${dateES(p.fecha)}: «${p.cita}»` },
             p.vista ? el("span", { class: "c-post" }, el("img", { loading: "lazy", src: `/${p.vista}`, alt: "", decoding: "async" }), el("small", {}, p.en ? p.en.quien : "")) : null,
             el("span", { class: "c-head" }, el("span", { class: "c-av", "aria-hidden": "true" }),
-              el("span", {}, el("b", {}, p.quien && !p.tipo ? p.quien : "Vecina o vecino"), el("small", {}, `${fb ? (p.tipo === "comentario" ? "Comentario en Facebook" : "Facebook") : p.tipo === "comentario" ? "Respuesta en X" : "Publicación en X"} · ${dateES(p.fecha)}`))),
+              el("span", {}, el("b", {}, p.quien && !p.tipo ? p.quien : "Vecina o vecino"), el("small", {}, `${tt ? (p.tipo === "comentario" ? "Comentario en TikTok" : "TikTok") : fb ? (p.tipo === "comentario" ? "Comentario en Facebook" : "Facebook") : p.tipo === "comentario" ? "Respuesta en X" : "Publicación en X"} · ${dateES(p.fecha)}`))),
             el("span", { class: "c-body" }, p.cita.length > 150 ? `${p.cita.slice(0, 148)}…` : p.cita),
             p.tipo === "comentario" && !p.vista ? el("span", { class: "c-en" }, `En la publicación de ${p.en.quien}`) : null,
             p.dias ? el("span", { class: "fdias" }, daysWord(p.dias)) : null);
@@ -2223,7 +2224,7 @@ if (window.top !== window.self) {
       // The post that gives the counted days goes first, and the card names it up front.
       const giver = back ? e.regreso : e.posts.find((p) => p.dias != null && p.dias === e.dias);
       const ordered = giver ? [giver, ...e.posts.filter((p) => p !== giver)] : e.posts;
-      const gives = (p) => p.tipo === "comentario" ? `un comentario de ${p.red === "x" ? "X" : "Facebook"}` : p.fuente === "medio" ? (p.red === "web" ? `una nota de ${p.quien}` : p.quien) : `una publicación de vecinos en ${p.red === "x" ? "X" : "Facebook"}`;
+      const gives = (p) => p.tipo === "comentario" ? `un comentario de ${p.red === "x" ? "X" : /tiktok\.com\//.test(p.url) ? "TikTok" : "Facebook"}` : p.fuente === "medio" ? (p.red === "web" ? `una nota de ${p.quien}` : p.quien) : `una publicación de vecinos en ${p.red === "x" ? "X" : /tiktok\.com\//.test(p.url) ? "TikTok" : "Facebook"}`;
       const src = [plural(e.fuentes, "fuente", "fuentes distintas"), e.comentarios ? plural(e.comentarios, "comentario", "comentarios") : null, e.medios ? (e.medios === 1 ? "lo reporta un medio" : `lo reportan ${e.medios} medios`) : null, back && s ? `antes: hasta ${daysWord(e.dias)} sin agua` : null, old ? `sin publicaciones nuevas desde el ${dateES(e.ultima, true)}` : `la más reciente del ${dateES(e.ultima, true)}`].filter(Boolean).join(" · ");
       const list = el("ol", { class: "posts" }, ...ordered.map(post));
       const box = el("div", { class: "ev" }, head,
@@ -2257,7 +2258,7 @@ if (window.top !== window.self) {
       return grid;
     }
     function post(p) {
-      const net = p.red === "x" ? "X" : p.red === "facebook" ? "Facebook" : "Nota";
+      const net = p.red === "x" ? "X" : p.red === "facebook" ? "Facebook" : /tiktok\.com\//.test(p.url) ? "TikTok" : "Nota";
       const eco = (x) => [plural(x.reacciones, "reacción", "reacciones"), plural(x.comentarios, "comentario", "comentarios"), x.compartidos ? `compartida ${plural(x.compartidos, "vez", "veces")}` : null].filter(Boolean).join(" · ");
       const who = p.tipo === "comentario" ? `${p.red === "x" ? "Respuesta" : "Comentario"} de una vecina o vecino en una publicación de ${p.en.quien}` : p.fuente === "medio" || p.quien ? p.quien : "Vecina o vecino";
       const lines = [];
@@ -2275,7 +2276,7 @@ if (window.top !== window.self) {
           p.calidad ? el("span", { class: "tag alt" }, "Calidad del agua") : null,
           p.regreso ? el("span", { class: "tag alt" }, "Regresó") : null,
           `${who} · ${net} · ${dateES(p.fecha)} · `,
-          el("a", { href: p.url, rel: "noopener nofollow", target: "_blank" }, p.tipo === "comentario" ? (p.red === "x" ? "Ver la respuesta" : "Ver el comentario") : p.red === "web" ? "Leer la nota" : "Ver la publicación")),
+          el("a", { href: p.url, rel: "noopener nofollow", target: "_blank" }, p.tipo === "comentario" ? (p.red === "x" ? "Ver la respuesta" : "Ver el comentario") : p.red === "web" && !p.video ? "Leer la nota" : "Ver la publicación")),
         ...lines.map((t) => el("p", { class: "eco" }, t)));
     }
 

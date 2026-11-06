@@ -70,7 +70,7 @@ X_URL = re.compile(r"^https://x\.com/(\w{1,15})/status/(\d{8,20})$")
 VECINOS_QUIEN = ("Grupo «", "Cuenta de vecinos ")
 # Public pages, not outlets with a "medio" entry, whose posts neighbours comment on (en.quien).
 # «Cuenta personal en X» describes a person's account without naming them.
-PAGINAS = {"Cuenta personal en X", "Gobierno de Guadalajara", "Gobierno de Jalisco", "Gobierno de Zapopan", "Jalisco ZMG", "Revista Jalisco", "SIAPA Guadalajara"}
+PAGINAS = {"Cuenta personal en X", "Gobierno de Guadalajara", "Gobierno de Jalisco", "Gobierno de Zapopan", "Jalisco ZMG", "Revista Jalisco", "SIAPA Guadalajara", "Tlaquepaque San Pedro"}
 
 errors = []
 
@@ -269,8 +269,8 @@ def validate(doc):
                     fail(where, "en", p.get("en"), "a reply names the post it answers (en.quien, en.url)", "set en.quien and en.url to the X post answered")
                 elif not X_URL.match(url) or url == en["url"]:
                     fail(where, "url", url, "a reply links its own post, not the one in en", "use the reply's own status URL")
-            elif not en.get("quien") or not str(en.get("url", "")).startswith("https://www.facebook.com/"):
-                fail(where, "en", p.get("en"), "a comment names the post it is in (en.quien, en.url)", "set en.quien and en.url (www.facebook.com)")
+            elif not en.get("quien") or not re.match(r"https://www\.(facebook\.com/|tiktok\.com/@[^/]+/video/\d+$)", str(en.get("url", ""))):
+                fail(where, "en", p.get("en"), "a comment names the post it is in (en.quien, en.url)", "set en.quien and en.url (www.facebook.com or a www.tiktok.com video)")
             elif not url.startswith(en["url"] + "?comment_id="):
                 fail(where, "url", url, "a comment links its post with ?comment_id=", "use en.url + ?comment_id=…")
             if en.get("quien") and not (str(en["quien"]) in pages or str(en["quien"]).startswith(VECINOS_QUIEN)):
@@ -444,7 +444,8 @@ def fetch_images(doc, again=False):
         try:
             if red == "x":
                 src = x_image(url)
-            elif red == "facebook":
+            elif red == "facebook" or "tiktok.com/" in url:
+                # TikTok serves its share card only to link-preview crawlers.
                 src = og_image(url, "facebookexternalhit/1.1")
             else:
                 try:
