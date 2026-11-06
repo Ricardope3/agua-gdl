@@ -1643,6 +1643,14 @@ body { padding-bottom: 64px }
     // Reviewed photos by colonia (web/fotos.json, pipelines/fotos.py), oldest first as [date, path].
     let fotosBy = new Map();
     let openKey = null; // the open colonia, kept here because drawMarkers runs before `selected` exists
+    // The zoom the open colonia settled at (after its fit), so zooming out shrinks its big badge again.
+    let openZoom = null, openSettle = null;
+    map.on("movestart", () => clearTimeout(openSettle));
+    map.on("moveend", () => {
+      if (!openKey || openZoom != null) return;
+      clearTimeout(openSettle);
+      openSettle = setTimeout(() => { if (openKey && openZoom == null) { openZoom = map.getZoom(); drawMarkers(); } }, 300);
+    });
     fetch("/fotos.json").then((r) => r.ok ? r.json() : null).then((d) => {
       if (!d) return;
       fotosBy = new Map(Object.entries(d.colonias || {}));
@@ -1761,7 +1769,9 @@ body { padding-bottom: 64px }
         // The open colonia's photo badge is large and the same for every colonia, so its photo reads.
         const big = foto && openKey === k;
         const small = foto ? base + (far ? 3 : 4) : base;
-        const size = big ? Math.max(small, Math.min(phone() ? 76 : 104, Math.round(0.6 * spanPx(fs)))) : small;
+        // Full size at the zoom the colonia opened at, halving with each level out, never past the colonia's own size.
+        const full = (phone() ? 76 : 104) * (openZoom != null && map.getZoom() < openZoom ? 2 ** (map.getZoom() - openZoom) : 1);
+        const size = big ? Math.max(small, Math.min(full, Math.round(0.6 * spanPx(fs)))) : small;
         counts.set(k, total);
         badgeSizes.set(k, size);
         const was = shown.get(k), pop = reduced ? "" : was != null ? (total > was ? " pop" : "") : shown.size ? " nace" : "";
@@ -1863,6 +1873,7 @@ body { padding-bottom: 64px }
       const restore = card.getAttribute("aria-modal") === "true" && cardReturnFocus;
       selected = null;
       openKey = null;
+      openZoom = null;
       drawMarkers();
       cardDay = null;
       closedAt = Date.now();
@@ -1889,6 +1900,7 @@ body { padding-bottom: 64px }
       if (!atEnd()) showDay(DAYS.length - 1);
       selected = f;
       window.__key = openKey = keyOf(f.properties);
+      openZoom = fit ? null : map.getZoom();
       drawMarkers();
       selZoom = fit ? null : map.getZoom();
       for (const g of marks) g.remove();
