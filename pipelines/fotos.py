@@ -28,7 +28,6 @@ TEMAS = root / "pipelines/fotos_temas.json"
 OUT = WEB / "fotos.html"
 INDEX = WEB / "index.html"
 FONDO = WEB / "img/fondo"
-MURO_N = 20
 MURO = re.compile(r"(<!-- fotos\.py: muro -->).*?(<!-- /fotos\.py: muro -->)", re.S)
 
 TEMA = {"protesta": "Protesta", "sin-agua": "Sin agua", "calidad": "Agua sucia"}
@@ -351,20 +350,33 @@ def page(ts):
 """
 
 
-def muro(ts):
-    """The landing's photo wall: the newest MURO_N sign photos, as 240 px copies in web/img/fondo/."""
-    picks = [t for t in ts if t["cartel"]][:MURO_N]
-    thumbs = {f"img/fondo/{pathlib.Path(t['img']).stem}.webp": t for t in picks}
-    imgs = "".join(f'<img src="/{k}" alt="" decoding="async">' for k in thumbs)
-    html_ = (f'<div class="fondo" aria-hidden="true">{imgs}</div>'
+def muro(ts, doc):
+    """The landing's photo wall, like /fotos: 8 sign photos in big 2x2 tiles, 16 more in small ones.
+
+    Two bands of 4 small, 4 big, 4 small: on 12 columns the big ones take columns 5-12 and the small ones fill
+    1-4 over two rows. Big copies are 400 px, small 240 px, in web/img/fondo/.
+    """
+    by = {t["img"]: t for t in ts}
+    grandes = [by[k] for k in doc["muro"]["grandes"]]
+    resto = [t for t in ts if t["cartel"] and t not in grandes] + [t for t in ts if t["tema"] == "protesta" and not t["cartel"]]
+    chicas = resto[:16]
+    orden = []
+    for band in range(2):
+        orden += [(t, False) for t in chicas[band * 8:band * 8 + 4]] + [(t, True) for t in grandes[band * 4:band * 4 + 4]] + [(t, False) for t in chicas[band * 8 + 4:band * 8 + 8]]
+    thumbs, imgs = {}, []
+    for t, big in orden:
+        k = f"img/fondo/{pathlib.Path(t['img']).stem}{'-g' if big else ''}.webp"
+        thumbs[k] = (t, 400 if big else 240)
+        imgs.append(f'<img src="/{k}"{" class=g" if big else ""} alt="" decoding="async">')
+    html_ = (f'<div class="fondo" aria-hidden="true">{"".join(imgs)}</div>'
              f'<p class="pie">Fotos de medios y vecinos · <a href="/fotos">ver las {len(ts)}</a></p>')
     return html_, thumbs
 
 
-def thumb(src, dest):
+def thumb(src, dest, width):
     dest.parent.mkdir(parents=True, exist_ok=True)
     if shutil.which("cwebp"):
-        r = subprocess.run(["cwebp", "-quiet", "-q", "62", "-resize", "240", "0", str(src), "-o", str(dest)], capture_output=True)
+        r = subprocess.run(["cwebp", "-quiet", "-q", "60", "-resize", str(width), "0", str(src), "-o", str(dest)], capture_output=True)
     else:
         sys.exit("fotos: writing the landing's wall needs cwebp (brew install webp)")
     if r.returncode:
@@ -384,7 +396,10 @@ def main():
         print("\n".join(pend) or "fotos: nothing to review")
         return
     want = page(ts)
-    wall, thumbs = muro(ts)
+    for k in doc["muro"]["grandes"]:
+        if k not in {t["img"] for t in ts}:
+            sys.exit(f"fotos: muro.grandes lists {k}, which isn't on /fotos")
+    wall, thumbs = muro(ts, doc)
     index = INDEX.read_text()
     if not MURO.search(index):
         sys.exit("fotos: web/index.html lost its <!-- fotos.py: muro --> markers")
@@ -400,9 +415,9 @@ def main():
         print(f"fotos: ok, {len(ts)} photos")
         return
     OUT.write_text(want)
-    for k, t in thumbs.items():
+    for k, (t, width) in thumbs.items():
         if not (WEB / k).is_file():
-            thumb(WEB / t["img"], WEB / k)
+            thumb(WEB / t["img"], WEB / k, width)
     for f in FONDO.glob("*.webp"):
         if f"img/fondo/{f.name}" not in thumbs:
             f.unlink()
