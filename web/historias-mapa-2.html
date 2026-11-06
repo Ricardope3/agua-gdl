@@ -249,16 +249,35 @@ table.week td.cut { box-shadow: inset 0 0 0 2.5px var(--fg) }
 .sev.foto.nodays span { background: var(--surface); border: 3px dashed var(--s0) }
 .sev.foto.vieja span { border-color: var(--muted); background: var(--muted) } .sev.foto.vieja span img { filter: grayscale(.6) }
 .sev.foto b { position: absolute; top: -5px; right: -6px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: #dc2626; color: #fff; font: 700 10.5px/18px var(--font); text-align: center; font-variant-numeric: tabular-nums; box-shadow: 0 0 0 1.5px var(--surface) }
-.hist { position: fixed; inset: 0; z-index: 3000; background: rgb(6 10 20 / .96); color: #fff; display: grid; grid-template-rows: auto auto 1fr auto; font-family: var(--font); user-select: none }
+.hist { position: fixed; inset: 0; z-index: 3000; background: #05080f; color: #fff; display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; font-family: var(--font); user-select: none; overflow: hidden; isolation: isolate }
 .hist[hidden] { display: none }
-.hist .bars { display: flex; gap: 3px; padding: 10px 12px 0 } .hist .bars i { flex: 1; height: 3px; background: rgb(255 255 255 / .28); border-radius: 2px; overflow: hidden } .hist .bars b { display: block; height: 100%; width: 0; background: #fff }
-.hist .top { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 12px } .hist .top b { font-size: 1rem } .hist .top small { opacity: .75; margin-left: 6px }
-.hist .x { background: none; border: 0; color: #fff; font-size: 1.9rem; line-height: 1; cursor: pointer; padding: 0 6px }
-.hist .stage { position: relative; display: grid; place-items: center; min-height: 0; padding: 0 8px }
-.hist .stage img { max-width: min(100%, 760px); max-height: 100%; object-fit: contain; border-radius: 8px }
-.hist .play { position: absolute; width: 56px; height: 56px; border-radius: 50%; background: rgb(0 0 0 / .55); pointer-events: none } .hist .play::after { content: ""; position: absolute; left: 21px; top: 16px; border: 12px solid transparent; border-left: 18px solid #fff; border-right: 0 }
-.hist .prev, .hist .next { position: absolute; top: 0; bottom: 0; width: 38%; background: none; border: 0; cursor: pointer } .hist .prev { left: 0 } .hist .next { right: 0 }
-.hist .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 14px; padding: 10px 14px 18px; font-size: .9rem } .hist .foot a { color: #fff; font-weight: 600 }
+.hist .fondo { position: absolute; inset: -40px; z-index: -1; background: center/cover no-repeat; filter: blur(34px) brightness(.38) saturate(1.2); transform: scale(1.1) }
+.hist .bars { display: flex; gap: 3px; padding: 12px 14px 0 } .hist .bars i { flex: 1; height: 3px; background: rgb(255 255 255 / .25); border-radius: 2px; overflow: hidden } .hist .bars b { display: block; height: 100%; width: 0; background: #fff }
+.hist .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 12px 16px 8px }
+.hist .col { display: block; font-family: var(--serif, Georgia, serif); font-style: italic; font-size: clamp(1.6rem, 4vw, 2.4rem); line-height: 1.05; letter-spacing: -.01em }
+.hist .mu { display: block; margin-top: 4px; font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; color: rgb(255 255 255 / .72) }
+.hist .x { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgb(255 255 255 / .12); color: #fff; font-size: 1.7rem; line-height: 1; cursor: pointer }
+.hist .x:hover { background: rgb(255 255 255 / .22) }
+.hist .lienzo { position: relative; display: grid; place-items: center; min-height: 0; padding: 4px 16px; overflow: hidden }
+.hist .lienzo img { position: absolute; inset: 4px 16px; width: calc(100% - 32px); height: calc(100% - 8px); object-fit: contain; filter: drop-shadow(0 18px 40px rgb(0 0 0 / .55)) }
+@media (max-width: 760px) { .hist .lienzo img { inset: 2px 6px; width: calc(100% - 12px); height: calc(100% - 4px) } }
+.hist .play { position: absolute; z-index: 2; width: 84px; height: 84px; border-radius: 50%; border: 3px solid rgb(255 255 255 / .9); background: rgb(220 38 38 / .9); cursor: pointer; padding: 0; box-shadow: 0 8px 30px rgb(0 0 0 / .5); transition: transform .15s }
+.hist .play::after { content: ""; position: absolute; left: 31px; top: 23px; border: 16px solid transparent; border-left: 24px solid #fff; border-right: 0 }
+.hist .play:hover { transform: scale(1.06) }
+.hist .lienzo.con-video img { cursor: pointer }
+.hist .prev, .hist .next { position: absolute; top: 0; bottom: 0; width: 34%; background: none; border: 0; cursor: pointer } .hist .prev { left: 0 } .hist .next { right: 0 }
+.hist .lienzo iframe { position: relative; z-index: 3; border: 0; border-radius: 10px; background: #000; width: min(100%, 1000px); aspect-ratio: 16 / 9; max-height: 100% }
+.hist .lienzo iframe.vertical { width: auto; height: min(100%, 760px); aspect-ratio: 9 / 16 }
+.hist .lienzo iframe.x { width: min(100%, 550px); height: 100%; aspect-ratio: auto; background: transparent }
+.hist .pie { margin: 6px auto 16px; width: min(calc(100% - 28px), 860px); padding: 16px 20px 18px; border-radius: 14px; background: rgb(10 16 32 / .72); backdrop-filter: blur(10px); border: 1px solid rgb(255 255 255 / .1); display: grid; gap: 6px }
+.hist .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: .82rem; color: rgb(255 255 255 / .75) }
+.hist .meta .src { font-weight: 700; color: #fff } .hist .meta .tag { padding: 2px 8px; border-radius: 999px; background: #dc2626; color: #fff; font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase }
+.hist .tit { margin: 0; font-family: var(--serif, Georgia, serif); font-size: clamp(1.1rem, 2.4vw, 1.45rem); line-height: 1.25; font-weight: 600 }
+.hist .cita { margin: 0; color: rgb(255 255 255 / .82); font-size: .95rem; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden }
+.hist .cita:not(:empty)::before { content: "«" } .hist .cita:not(:empty)::after { content: "»" }
+.hist .ir { justify-self: start; margin-top: 4px; display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 999px; background: #fff; color: #0b1020; font-weight: 700; font-size: .88rem; text-decoration: none }
+.hist .ir:hover { background: #fde68a }
+@media (max-width: 760px) { .hist .pie { padding: 12px 14px 14px; margin-bottom: 10px } .hist .lienzo { padding: 2px 6px } .hist .cita { -webkit-line-clamp: 3 } }
 .sev.foto.abierta span { cursor: zoom-in }
 .sev.foto.far span { border-width: 2px }
 .sev.foto.far b { min-width: 13px; height: 13px; font-size: 8px; line-height: 13px; padding: 0 3px; top: -4px; right: -5px }
@@ -971,7 +990,6 @@ body { padding-bottom: 64px }
     card.querySelectorAll(".ev-src").forEach((n) => n.remove());
     card.replaceChildren(...kids.filter(Boolean), ...card.querySelectorAll(":scope > form.report, :scope > .thanks, :scope > .after-report, :scope > .share, :scope > .exige"));
     panel(e);
-    videoLauncher(card, e, p);
   };
   function panel(e) {
     document.querySelector(".u-panel")?.remove();
@@ -1102,7 +1120,7 @@ body { padding-bottom: 64px }
   }
 
   const phoneFicha = window.__ficha;
-  window.__ficha = (card, e, form, p) => { phoneFicha(card, e, form, p); videoLauncher(card, e, p); };
+  window.__ficha = (card, e, form, p) => { phoneFicha(card, e, form, p); };
 }
 </script>
 <div class="wrap">
@@ -1475,12 +1493,14 @@ body { padding-bottom: 64px }
     anim.finished.then(() => { if (box._anim === anim) { box.style.overflow = ""; box._anim = null; } }, () => {});
   };
   keyBtn.addEventListener("click", () => smooth(key, () => keyBtn.setAttribute("aria-expanded", String(key.classList.toggle("abierto")))));
-  // Desktop: 2.5 s of moving or zooming the map by hand (pauses under 1.5 s count as one gesture) fold the
+  // Desktop, also inside the landing's frame: 2.5 s of moving or zooming the map by hand (pauses under 1.5 s count as one gesture) fold the
   // key and the timeline. Listened to on the stage, in capture, because M.pinch stops its wheel events.
   const tlBox = $("linea");
   let handSince = 0, handLast = 0;
   const byHand = (e) => {
-    if (framed || phone() || !map.getContainer().contains(e.target)) return;
+    if (phone() || !map.getContainer().contains(e.target)) return;
+    // In the landing's frame a plain wheel scrolls the landing, so only drags and Ctrl/⌘ + wheel (a pinch) count.
+    if (framed && e.type === "wheel" && !e.ctrlKey && !e.metaKey) return;
     if (stage.classList.contains("key-mini") && tlBox.classList.contains("mini")) return;
     const now = Date.now();
     if (now - handLast > 1500) handSince = now;
@@ -1758,18 +1778,26 @@ body { padding-bottom: 64px }
       return hit;
     };
     // The open colonia's photo badge plays its photos as a story: 5 s each, hold to pause, tap the sides or swipe.
-    const MES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+    const MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
     let hist = null;
     function historia(k, nombre) {
+      const muni = muniES(k.split("|")[1]);
       const xs = [...(fotosBy.get(k) || [])].reverse();
       if (!xs.length) return;
       if (!hist) {
         hist = document.createElement("div");
         hist.className = "hist"; hist.hidden = true; hist.setAttribute("role", "dialog"); hist.setAttribute("aria-modal", "true");
-        hist.innerHTML = '<div class="bars"></div><div class="top"><span><b></b><small></small></span><button class="x" type="button" aria-label="Cerrar">×</button></div><div class="stage"><img alt=""><span class="play" hidden></span><button class="prev" type="button" aria-label="Anterior"></button><button class="next" type="button" aria-label="Siguiente"></button></div><div class="foot"><span class="c"></span><a target="_blank" rel="noopener">Ver la publicación</a></div>';
+        hist.innerHTML = '<div class="fondo" aria-hidden="true"></div><div class="bars"></div><div class="top"><div><span class="col"></span><span class="mu"></span></div><button class="x" type="button" aria-label="Cerrar">×</button></div><div class="lienzo"><img alt=""><button class="play" type="button" hidden></button><button class="prev" type="button" aria-label="Anterior"></button><button class="next" type="button" aria-label="Siguiente"></button></div><div class="pie"><div class="meta"><span class="src"></span><span class="fe"></span><span class="tag" hidden>Video</span></div><p class="tit"></p><p class="cita"></p><a class="ir" target="_blank" rel="noopener">Ver la publicación ↗</a></div>';
         document.body.append(hist);
       }
       const DUR = 5000, still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const player = (u) => {
+        let m;
+        if ((m = u.match(/[?&]v=([\w-]{11})/) || u.match(/youtu\.be\/([\w-]{11})/) || u.match(/youtube\.com\/shorts\/([\w-]{11})/))) return { src: `https://www.youtube-nocookie.com/embed/${m[1]}?autoplay=1&rel=0&playsinline=1&hl=es-419`, cls: /shorts/.test(u) ? "vertical" : "" };
+        if ((m = u.match(/tiktok\.com\/@[^/]+\/video\/(\d+)/))) return { src: `https://www.tiktok.com/player/v1/${m[1]}?autoplay=1&rel=0`, cls: "vertical" };
+        if ((m = u.match(/^https:\/\/(?:x|twitter)\.com\/\w+\/status\/(\d+)/))) return { src: `https://platform.twitter.com/embed/Tweet.html?id=${m[1]}&dnt=true&lang=es&theme=${window.aguaDark?.() ? "dark" : "light"}`, cls: "x" };
+        return null;
+      };
       let i = 0, t0 = 0, raf = 0, left = DUR, held = false;
       // A timer, not animation frames: those pause in a background window and the story would stall.
       const last = document.activeElement;
@@ -1782,26 +1810,46 @@ body { padding-bottom: 64px }
       };
       const run = (rest = DUR) => { clearTimeout(raf); t0 = performance.now() - (DUR - rest); if (!still) raf = setTimeout(tick, 50); };
       const show = () => {
-        const [f, src, url, quien, alt, video] = xs[i], [, mm, dd] = f.split("-");
+        const [f, src, url, quien, alt, video, titular, cita] = xs[i], [, mm, dd] = f.split("-");
         hist.querySelector(".bars").innerHTML = xs.map((_, j) => `<i><b style="width:${j < i ? 100 : 0}%"></b></i>`).join("");
-        hist.querySelector(".top b").textContent = nombre;
-        hist.querySelector(".top small").textContent = `${i + 1} de ${xs.length}`;
-        const img = hist.querySelector(".stage img"); img.src = src; img.alt = alt;
-        hist.querySelector(".play").hidden = !video;
-        hist.querySelector(".c").textContent = `${+dd} ${MES[+mm - 1]} · ${quien}${video ? " · video" : ""}`;
-        hist.querySelector(".foot a").href = url;
+        hist.querySelector(".col").textContent = nombre;
+        hist.querySelector(".mu").textContent = `${muni} · ${video ? "video" : "foto"} ${i + 1} de ${xs.length}`;
+        hist.querySelector(".fondo").style.backgroundImage = `url("${src}")`;
+        hist.querySelector(".src").textContent = quien;
+        hist.querySelector(".fe").textContent = `${+dd} de ${MESES[+mm - 1]}`;
+        hist.querySelector(".tag").hidden = !video;
+        hist.querySelector(".tit").textContent = titular || (cita ? "" : alt);
+        hist.querySelector(".tit").hidden = !hist.querySelector(".tit").textContent;
+        hist.querySelector(".cita").textContent = cita || "";
+        const st = hist.querySelector(".lienzo"), img = st.querySelector("img");
+        st.querySelector("iframe")?.remove(); img.hidden = false;
+        img.src = src; img.alt = alt;
+        const pl = st.querySelector(".play"), embed = video ? player(url) : null;
+        pl.hidden = !video; st.classList.toggle("con-video", !!video);
+        pl.setAttribute("aria-label", embed ? "Reproducir el video" : "Ver el video en su publicación");
+        // Tapping a video plays it here (YouTube, TikTok, X: the players /noticias loads on tap); Facebook can't be
+        // embedded under our CSP, so its post opens in a new tab. The story waits while the video plays.
+        pl.onclick = img.onclick = video ? (ev) => {
+          ev.stopPropagation(); clearTimeout(raf);
+          if (!embed) { window.open(url, "_blank", "noopener"); return; }
+          const fr = document.createElement("iframe");
+          fr.src = embed.src; fr.className = embed.cls; fr.title = `Video de ${quien}`;
+          fr.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen"; fr.allowFullscreen = true;
+          img.hidden = true; pl.hidden = true; st.append(fr); fr.focus?.();
+        } : null;
+        hist.querySelector(".ir").href = url;
         run();
       };
       const go = (d) => { i += d; if (i >= xs.length) return close(); if (i < 0) i = 0; show(); };
-      const close = () => { clearTimeout(raf); hist.hidden = true; document.removeEventListener("keydown", key, true); last?.focus?.(); };
+      const close = () => { clearTimeout(raf); hist.querySelector(".lienzo iframe")?.remove(); hist.hidden = true; document.removeEventListener("keydown", key, true); last?.focus?.(); };
       // Captured first, so Esc closes the story and not the colonia card behind it.
       const key = (e) => { if (e.key === "Escape") { e.stopImmediatePropagation(); close(); } else if (e.key === "ArrowRight") go(1); else if (e.key === "ArrowLeft") go(-1); };
       hist.querySelector(".prev").onclick = () => go(-1);
       hist.querySelector(".next").onclick = () => go(1);
       hist.querySelector(".x").onclick = close;
-      const st = hist.querySelector(".stage");
+      const st = hist.querySelector(".lienzo");
       st.onpointerdown = () => { held = true; left = DUR - (performance.now() - t0); clearTimeout(raf); };
-      st.onpointerup = st.onpointerleave = () => { if (held) { held = false; run(left); } };
+      st.onpointerup = st.onpointerleave = () => { if (held) { held = false; if (!st.querySelector("iframe")) run(left); } };
       let x0 = null;
       hist.ontouchstart = (e) => { x0 = e.touches[0].clientX; };
       hist.ontouchend = (e) => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1); x0 = null; };

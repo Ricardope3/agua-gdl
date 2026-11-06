@@ -97,7 +97,8 @@ def from_publicaciones(temas):
         cols = sorted({c for p in ps for c in p["colonias"]})
         video = any(p.get("video") for p in ps) or bool(VIDEO_URL.search(url))
         out.append({"img": v, "tema": temas[v], "fecha": rep["fecha"], "url": url, "quien": quien or "Vecinos",
-                    "lugar": rep["lugar"], "colonias": cols, "video": video, "alt": ""})
+                    "lugar": rep["lugar"], "colonias": cols, "video": video, "alt": "",
+                    "titular": rep.get("titular", ""), "cita": rep["cita"]})
     return out
 
 
@@ -119,17 +120,21 @@ def from_noticias(temas):
             vt = re.search(r'<span class="vt">([^<]+)</span>', fig)
             iso = f"2026-{MESES.index(src.group(3)) + 1:02d}-{int(src.group(2)):02d}"
             out.append({"img": img, "tema": temas[img], "fecha": iso, "url": html.unescape(href), "quien": html.unescape(src.group(1)),
-                        "lugar": "", "colonias": [], "video": True, "alt": html.unescape(vt.group(1)) if vt else ""})
+                        "lugar": "", "colonias": [], "video": True, "alt": html.unescape(vt.group(1)) if vt else "",
+                        "titular": html.unescape(vt.group(1)) if vt else "", "cita": ""})
         if block.startswith("<figure"):
             continue
         via = re.search(r'<span class="via"><a href="([^"]+)"[^>]*>([^<]+)</a>', block)
+        h4m = re.search(r"<h4>(.*?)</h4>", block, re.S)
+        h4 = html.unescape(re.sub(r"<[^>]+>", "", h4m.group(1))).strip() if h4m else ""
         for im in re.finditer(r'<img src="/(img/noticias/[^"]+)"[^>]*alt="([^"]*)"', block):
             img = im.group(1)
             if img not in temas or not via or not day:
                 continue
             quien = re.sub(r"\s*\((grupo|Facebook[^)]*)\)$", "", html.unescape(via.group(2)))
             out.append({"img": img, "tema": temas[img], "fecha": day, "url": html.unescape(via.group(1)), "quien": quien,
-                        "lugar": "", "colonias": [], "video": False, "alt": html.unescape(im.group(2))})
+                        "lugar": "", "colonias": [], "video": False, "alt": html.unescape(im.group(2)),
+                        "titular": h4, "cita": ""})
     return out
 
 
@@ -139,7 +144,8 @@ def tiles():
     carteles = set(doc.get("carteles", []))
     missing = [k for k in carteles if k not in temas]
     ts = from_publicaciones(temas) + from_noticias(temas) + [
-        {k: e[k] for k in ("img", "url", "fecha", "quien", "colonias", "video", "alt")} | {"tema": temas[e["img"]], "lugar": ""}
+        {k: e[k] for k in ("img", "url", "fecha", "quien", "colonias", "video", "alt")}
+        | {"tema": temas[e["img"]], "lugar": "", "titular": e.get("titular", ""), "cita": e.get("cita", "")}
         for e in doc.get("extra", [])]
     found = {t["img"] for t in ts}
     missing += [k for k in temas if k not in found or not (WEB / k).is_file()]
@@ -398,12 +404,15 @@ def thumb(src, dest, width, crop=None):
 
 
 def por_colonia(ts):
-    """web/fotos.json: each colonia's reviewed photos, oldest first, as [date, path, post url, who, alt, video];
+    """web/fotos.json: each colonia's reviewed photos, oldest first, as [date, path, post url, who, alt, video, headline,
+    quote (cut at 280 characters)];
     /reportes draws the newest in its bubble and plays them all as a story."""
     by = {}
     for t in sorted(ts, key=lambda t: (t["fecha"], t["img"])):
         for k in t["colonias"]:
-            by.setdefault(k, []).append([t["fecha"], "/" + t["img"], t["url"], t["quien"], t["alt"], 1 if t["video"] else 0])
+            cita = " ".join(t["cita"].split())
+            cita = cita if len(cita) <= 280 else cita[:279].rsplit(" ", 1)[0] + "…"
+            by.setdefault(k, []).append([t["fecha"], "/" + t["img"], t["url"], t["quien"], t["alt"], 1 if t["video"] else 0, t["titular"], cita])
     return json.dumps({"nota": "Generado por pipelines/fotos.py; solo fotos revisadas.", "colonias": dict(sorted(by.items()))},
                       ensure_ascii=False, separators=(",", ":")) + "\n"
 
