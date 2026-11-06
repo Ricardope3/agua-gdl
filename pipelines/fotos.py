@@ -360,29 +360,35 @@ def muro(ts, doc):
     grandes = [by[k] for k in doc["muro"]["grandes"]]
     resto = [t for t in ts if t["cartel"] and t not in grandes] + [t for t in ts if t["tema"] == "protesta" and not t["cartel"]]
     izq = doc["muro"].get("izquierda")
-    chicas = resto[:12 if izq else 16]
+    chicas = resto[:14 if izq else 16]
     if izq:
-        # Big tile on the left edge: it takes columns 1-2 of the first band, so that band has 4 small, not 8.
-        orden = [({"img": izq}, True)] + [(t, False) for t in chicas[:2]] + [(t, True) for t in grandes[:4]] + [(t, False) for t in chicas[2:4]]
-        orden += [(t, False) for t in chicas[4:8]] + [(t, True) for t in grandes[4:8]] + [(t, False) for t in chicas[8:12]]
+        # A tall tile (1 column, 2 rows) on the left edge of the first band, so that band has 6 small, not 8.
+        orden = [({"img": izq}, "alta")] + [(t, False) for t in chicas[:3]] + [(t, True) for t in grandes[:4]] + [(t, False) for t in chicas[3:6]]
+        orden += [(t, False) for t in chicas[6:10]] + [(t, True) for t in grandes[4:8]] + [(t, False) for t in chicas[10:14]]
     else:
         orden = []
         for band in range(2):
             orden += [(t, False) for t in chicas[band * 8:band * 8 + 4]] + [(t, True) for t in grandes[band * 4:band * 4 + 4]] + [(t, False) for t in chicas[band * 8 + 4:band * 8 + 8]]
     thumbs, imgs = {}, []
     for t, big in orden:
+        if big == "alta":
+            k = f"img/fondo/{pathlib.Path(t['img']).stem}-v.webp"
+            thumbs[k] = (t, 240, doc["muro"].get("izquierda_recorte"))
+            imgs.append(f'<img src="/{k}" class=v alt="" decoding="async">')
+            continue
         k = f"img/fondo/{pathlib.Path(t['img']).stem}{'-g' if big else ''}.webp"
-        thumbs[k] = (t, 400 if big else 240)
+        thumbs[k] = (t, 400 if big else 240, None)
         imgs.append(f'<img src="/{k}"{" class=g" if big else ""} alt="" decoding="async">')
     html_ = (f'<div class="fondo" aria-hidden="true">{"".join(imgs)}</div>'
              f'<p class="pie">Fotos de medios y vecinos · <a href="/fotos">ver las {len(ts)}</a></p>')
     return html_, thumbs
 
 
-def thumb(src, dest, width):
+def thumb(src, dest, width, crop=None):
     dest.parent.mkdir(parents=True, exist_ok=True)
     if shutil.which("cwebp"):
-        r = subprocess.run(["cwebp", "-quiet", "-q", "60", "-resize", str(width), "0", str(src), "-o", str(dest)], capture_output=True)
+        cut = ["-crop", *map(str, crop)] if crop else []
+        r = subprocess.run(["cwebp", "-quiet", "-q", "60", *cut, "-resize", str(width), "0", str(src), "-o", str(dest)], capture_output=True)
     else:
         sys.exit("fotos: writing the landing's wall needs cwebp (brew install webp)")
     if r.returncode:
@@ -424,9 +430,9 @@ def main():
         print(f"fotos: ok, {len(ts)} photos")
         return
     OUT.write_text(want)
-    for k, (t, width) in thumbs.items():
+    for k, (t, width, crop) in thumbs.items():
         if not (WEB / k).is_file():
-            thumb(WEB / t["img"], WEB / k, width)
+            thumb(WEB / t["img"], WEB / k, width, crop)
     for f in FONDO.glob("*.webp"):
         if f"img/fondo/{f.name}" not in thumbs:
             f.unlink()

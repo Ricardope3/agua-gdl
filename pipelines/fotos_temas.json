@@ -439,7 +439,7 @@
   }
  ],
  "muro": {
-  "nota": "La pared de la portada: estas fotos van en grande (2×2) en este orden; las demás de carteles llenan los huecos. En escritorio la última queda abajo a la derecha, una columna antes del borde. izquierda: una foto grande en el borde izquierdo (arriba), aunque no esté en /fotos; debe estar revisada (temas o fuera). Iván Becerra García en su video con Somos el Medio, 13 oct (lo pidió Ricardo, 5 nov).",
+  "nota": "La pared de la portada: estas fotos van en grande (2×2) en este orden; las demás de carteles llenan los huecos. En escritorio la última queda abajo a la derecha, una columna antes del borde. izquierda: una foto grande en el borde izquierdo (arriba), aunque no esté en /fotos; debe estar revisada (temas o fuera). Iván Becerra García en su video con Somos el Medio, 13 oct (lo pidió Ricardo, 5 nov). izquierda_recorte: x, y, ancho, alto del cuadro real del video vertical dentro de la miniatura de YouTube (sin las franjas borrosas); va en una casilla alta (1×2).",
   "grandes": [
    "img/noticias/2026-11-05-congreso-2.webp",
    "img/noticias/2026-11-05-congreso-1.webp",
@@ -450,6 +450,12 @@
    "fuentes/7f33367dbe70.jpg",
    "fuentes/c1a35e45be99.jpg"
   ],
-  "izquierda": "img/videos/youtube-szoxagvQoUE.webp"
+  "izquierda": "img/videos/youtube-szoxagvQoUE.webp",
+  "izquierda_recorte": [
+   219,
+   0,
+   202,
+   360
+  ]
  }
 }
