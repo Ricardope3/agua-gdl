@@ -8,3 +8,4 @@ Read before proposing designs, copy or features. Add a line (dated, with what wa
 - Relying on bot answers or «regresó el agua» posts as proof that water is back.
 - Styles that drift from the shared look: keep pages standardized.
 - 2026-11-03: a correction message to subscribers when SIAPA changed the cut days. «The least amount of messages the better»: fix the schedule silently and let the next reminder carry the new days.
+- 2026-11-05: the landing photo wall packed in each photo's own proportions (like /fotos); he asked to revert to the even grid with big 2×2 sign tiles.
