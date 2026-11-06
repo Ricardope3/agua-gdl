@@ -391,6 +391,7 @@ def fuentes_md(c):
 
 
 PAGINAS = ["reportes", "promesas", "pipas", "exige", "avisos"]
+DESDE = {"promesas": 520}  # CSS px to skip at the top: /promesas starts at its meter, not its opening stance
 
 
 def capturas():
@@ -398,10 +399,11 @@ def capturas():
     (HERE / "capturas").mkdir(exist_ok=True)
     for p in PAGINAS:
         png = HERE / "capturas" / f"{p}.png"
+        top = DESDE.get(p, 0)
         subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--force-device-scale-factor=2",
-                        "--virtual-time-budget=10000", f"--window-size=500,{1080 + CHROME_BAR}", f"--screenshot={png}",
+                        "--virtual-time-budget=10000", f"--window-size=500,{1080 + top + CHROME_BAR}", f"--screenshot={png}",
                         f"https://aguagdl.com/{p}"], check=True, capture_output=True)
-        crop(png, 1000, 2160)
+        subprocess.run(["sips", "-c", "2160", "1000", "--cropOffset", str(2 * top + 1), "1", str(png)], check=True, capture_output=True)
         jpg = png.with_suffix(".jpg")
         subprocess.run(["sips", "-s", "format", "jpeg", "-s", "formatOptions", "80", "-Z", "1512", str(png), "--out", str(jpg)],
                        check=True, capture_output=True)
