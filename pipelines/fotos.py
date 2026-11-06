@@ -1,6 +1,7 @@
 """/fotos: the crisis in photos and videos, a collage built from reviewed previews.
 
-    python3 pipelines/fotos.py                  write web/fotos.html and the landing's photo wall (web/index.html, web/img/fondo/)
+    python3 pipelines/fotos.py                  write web/fotos.html, web/fotos.json (photos by colonia for /reportes' bubbles)
+                                                and the landing's photo wall (web/index.html, web/img/fondo/)
     python3 pipelines/fotos.py --check          fail if either is stale or a reviewed photo is missing; for CI
     python3 pipelines/fotos.py --pendientes     list previews nobody has reviewed yet
 
@@ -26,6 +27,7 @@ PUB = WEB / "publicaciones.json"
 NOTICIAS = WEB / "noticias.html"
 TEMAS = root / "pipelines/fotos_temas.json"
 OUT = WEB / "fotos.html"
+MAPA = WEB / "fotos.json"
 INDEX = WEB / "index.html"
 FONDO = WEB / "img/fondo"
 MURO = re.compile(r"(<!-- fotos\.py: muro -->).*?(<!-- /fotos\.py: muro -->)", re.S)
@@ -395,6 +397,16 @@ def thumb(src, dest, width, crop=None):
         sys.exit(f"fotos: cwebp failed on {src}")
 
 
+def por_colonia(ts):
+    """web/fotos.json: each colonia's reviewed photos, oldest first, as [date, path]; /reportes draws them in its bubbles."""
+    by = {}
+    for t in sorted(ts, key=lambda t: (t["fecha"], t["img"])):
+        for k in t["colonias"]:
+            by.setdefault(k, []).append([t["fecha"], "/" + t["img"]])
+    return json.dumps({"nota": "Generado por pipelines/fotos.py; solo fotos revisadas.", "colonias": dict(sorted(by.items()))},
+                      ensure_ascii=False, separators=(",", ":")) + "\n"
+
+
 def main():
     args = sys.argv[1:]
     ts, missing, doc = tiles()
@@ -408,6 +420,7 @@ def main():
         print("\n".join(pend) or "fotos: nothing to review")
         return
     want = page(ts)
+    mapa_want = por_colonia(ts)
     for k in doc["muro"]["grandes"]:
         if k not in {t["img"] for t in ts}:
             sys.exit(f"fotos: muro.grandes lists {k}, which isn't on /fotos")
@@ -420,6 +433,8 @@ def main():
         sys.exit("fotos: web/index.html lost its <!-- fotos.py: muro --> markers")
     index_want = MURO.sub(lambda m: m.group(1) + wall + m.group(2), index)
     if "--check" in args:
+        if not MAPA.is_file() or MAPA.read_text() != mapa_want:
+            sys.exit("fotos: web/fotos.json is stale; run python3 pipelines/fotos.py")
         if index != index_want:
             sys.exit("fotos: the landing's photo wall in web/index.html is stale; run python3 pipelines/fotos.py")
         have = {f"img/fondo/{f.name}" for f in FONDO.glob("*.webp")} if FONDO.is_dir() else set()
@@ -437,6 +452,7 @@ def main():
         if f"img/fondo/{f.name}" not in thumbs:
             f.unlink()
     INDEX.write_text(index_want)
+    MAPA.write_text(mapa_want)
     print(f"fotos: wrote web/fotos.html with {len(ts)} photos and the landing's wall of {len(thumbs)}")
 
 

@@ -240,6 +240,15 @@ table.week td.cut { box-shadow: inset 0 0 0 2.5px var(--fg) }
 .sev.reciente span { opacity: .75 }
 .sev.vieja span { background: var(--subtle); color: var(--muted); border: 0; opacity: .8 }
 .sev.nodays span { background: color-mix(in srgb, var(--s0) 20%, var(--surface)); border: 1.5px dashed var(--s0); color: var(--fg) }
+/* A colonia with a reviewed photo (web/fotos.json) shows its newest one up to the timeline's day: the ring keeps the
+   days-without-water shade and the publication count moves to a red dot at the top right. */
+.sev.foto { overflow: visible }
+.sev.foto span { position: relative; overflow: visible; padding: 0; background: var(--c); border: 3px solid var(--c); box-shadow: 0 1px 3px rgb(3 14 22 / .45) }
+.sev.foto span img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block }
+.sev.foto.nodays span { background: var(--surface); border: 3px dashed var(--s0) }
+.sev.foto.vieja span { border-color: var(--muted); background: var(--muted) } .sev.foto.vieja span img { filter: grayscale(.6) }
+.sev.foto b { position: absolute; top: -5px; right: -6px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: #dc2626; color: #fff; font: 700 10.5px/18px var(--font); text-align: center; font-variant-numeric: tabular-nums; box-shadow: 0 0 0 1.5px var(--surface) }
+.sev.foto.far b { min-width: 15px; height: 15px; font-size: 9px; line-height: 15px; padding: 0 4px; top: -4px; right: -5px }
 .sevb { display: inline-grid; place-items: center; min-width: 2.6em; padding: 3px 7px; border-radius: 999px; background: var(--c); color: var(--k); font-weight: 700; font-size: .85rem; line-height: 1.2; white-space: nowrap; font-variant-numeric: tabular-nums }
 .sevb.nodays { background: color-mix(in srgb, var(--c) 18%, var(--surface)); color: var(--fg); border: 1.5px dashed var(--c); font-weight: 600 }
 .ev { margin: 4px 0 0 }
@@ -1687,6 +1696,20 @@ if (window.top !== window.self) {
     }).catch(() => {});
     // The drop as mapa.js draws it: 22×28 from zoom 13, 12×15 below, anchored at its bottom centre.
     const dropBox = () => map.getZoom() < 13 ? { half: 6, mid: 7 } : { half: 11, mid: 13 };
+    // Reviewed photos by colonia (web/fotos.json, pipelines/fotos.py), oldest first as [date, path].
+    let fotosBy = new Map();
+    fetch("/fotos.json").then((r) => r.ok ? r.json() : null).then((d) => {
+      if (!d) return;
+      fotosBy = new Map(Object.entries(d.colonias || {}));
+      drawMarkers();
+    }).catch(() => {});
+    const fotoAt = (k, day) => {
+      const xs = fotosBy.get(k);
+      if (!xs) return null;
+      let hit = null;
+      for (const [f, src] of xs) if (!day || f <= day) hit = src;
+      return hit;
+    };
     function drawMarkers() {
       markers.clearLayers();
       // Publication badges count only publications and keep their historical severity. Anonymous
@@ -1697,14 +1720,19 @@ if (window.top !== window.self) {
         if (!fs) continue;
         const total = e.posts.length, n = total > 99 ? "99+" : String(total);
         // Logarithmic, so it levels off: 1 publication is a small dot, 10 about twice as wide.
-        const s = sevOf(e.dias), size = Math.round((far ? 13 : 16) + (far ? 4.6 : 6.2) * Math.log(Math.min(total, 100)) + (n.length > 2 ? 2 : 0));
+        const s = sevOf(e.dias), foto = fotoAt(k, DAYS.length ? DAYS[at] : null);
+        const base = Math.round((far ? 13 : 16) + (far ? 4.6 : 6.2) * Math.log(Math.min(total, 100)) + (n.length > 2 ? 2 : 0));
+        // A photo needs room to read: a little larger than the plain badge, and still growing with the count.
+        const size = foto ? Math.max(far ? 22 : 30, base + (far ? 6 : 10)) : base;
         counts.set(k, total);
         badgeSizes.set(k, size);
         const was = shown.get(k), pop = reduced ? "" : was != null ? (total > was ? " pop" : "") : shown.size ? " nace" : "";
         if (!centers.has(k)) centers.set(k, L.geoJSON(fs[0]).getBounds().getCenter());
         const drop = hollow.get(k), dbox = dropBox();
         const m = L.marker(drop || centers.get(k), {
-          icon: L.divIcon({ ...(drop ? { iconAnchor: [size + dbox.half + 4, size / 2 + dbox.mid] } : {}), className: `sev${far ? " far" : ""}${s ? "" : " nodays"} ${stateMap(e)}${pop}`, html: `<span style="${sevVars(s)};font-size:${Math.max(far ? 9 : 10, Math.round(size * (n.length > 2 ? 0.3 : 0.42)))}px">${n}</span>`, iconSize: [size, size] }),
+          icon: L.divIcon({ ...(drop ? { iconAnchor: [size + dbox.half + 4, size / 2 + dbox.mid] } : {}), className: `sev${far ? " far" : ""}${s ? "" : " nodays"}${foto ? " foto" : ""} ${stateMap(e)}${pop}`, html: foto
+            ? `<span style="${sevVars(s)}"><img src="${foto}" alt="" decoding="async"><b>${n}</b></span>`
+            : `<span style="${sevVars(s)};font-size:${Math.max(far ? 9 : 10, Math.round(size * (n.length > 2 ? 0.3 : 0.42)))}px">${n}</span>`, iconSize: [size, size] }),
           keyboard: false, zIndexOffset: 2000 - Math.min(total, 999),
         });
         if (!phone()) m.bindTooltip(() => tipOf(fs[0]), { className: "map-label", direction: "top", offset: drop ? [-(size / 2 + dbox.half + 4), -(size / 2 + dbox.mid)] : [0, -size / 2] });
