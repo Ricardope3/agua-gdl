@@ -360,11 +360,11 @@ def muro(ts, doc):
     grandes = [by[k] for k in doc["muro"]["grandes"]]
     resto = [t for t in ts if t["cartel"] and t not in grandes] + [t for t in ts if t["tema"] == "protesta" and not t["cartel"]]
     izq = doc["muro"].get("izquierda")
-    chicas = resto[:14 if izq else 16]
+    chicas = resto[:13 if izq else 16]
     if izq:
-        # A tall tile (1 column, 2 rows) on the left edge of the first band, so that band has 6 small, not 8.
-        orden = [({"img": izq}, "alta")] + [(t, False) for t in chicas[:3]] + [(t, True) for t in grandes[:4]] + [(t, False) for t in chicas[3:6]]
-        orden += [(t, False) for t in chicas[6:10]] + [(t, True) for t in grandes[4:8]] + [(t, False) for t in chicas[10:14]]
+        # A tall tile pinned to column 2, rows 1-3 (index.html's img.v); the small ones flow around it.
+        orden = [({"img": izq}, "alta")] + [(t, False) for t in chicas[:3]] + [(t, True) for t in grandes[:4]] + [(t, False) for t in chicas[3:9]]
+        orden += [(t, True) for t in grandes[4:8]] + [(t, False) for t in chicas[9:13]]
     else:
         orden = []
         for band in range(2):
