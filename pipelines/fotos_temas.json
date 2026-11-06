@@ -1,6 +1,6 @@
 {
  "revisado": "2026-11-05",
- "nota": "Fotos revisadas a mano para /fotos. temas: las que entran (protesta, sin-agua, calidad). fuera: revisadas y excluidas (tarjetas de solo texto, avisos y fotos oficiales, mapas, entrevistas, nombres de personas, duplicados: se queda la foto más clara de cada escena). carteles: fotos donde se lee el cartel o la manta de una protesta; se muestran más grandes. Una vista que no está en ninguna de las dos listas queda fuera hasta revisarla.",
+ "nota": "Fotos revisadas a mano para /fotos. temas: las que entran (protesta, sin-agua, calidad). fuera: revisadas y excluidas (tarjetas de solo texto, avisos y fotos oficiales, mapas, entrevistas, nombres de personas, duplicados: se queda la foto más clara de cada escena). carteles: fotos donde se lee el cartel o la manta de una protesta; se muestran más grandes. Una vista que no está en ninguna de las dos listas queda fuera hasta revisarla. extra: publicaciones revisadas que no están en publicaciones.json ni en /noticias (su foto o cuadro guardado en img/fotos/).",
  "temas": {
   "fuentes/008fb99889ac.jpg": "protesta",
   "fuentes/00fd155d5d8f.jpg": "protesta",
@@ -140,6 +140,8 @@
   "fuentes/f8e3538bdb0e.jpg": "protesta",
   "fuentes/fb29dc00b79f.jpg": "calidad",
   "fuentes/fc629efe88dd.jpg": "sin-agua",
+  "img/fotos/zonac4-reel-1136664628834945.webp": "calidad",
+  "img/fotos/zonadocs-2026-11-01-queremos-agua.webp": "protesta",
   "img/noticias/2026-11-04-fila-pipa.webp": "sin-agua",
   "img/noticias/2026-11-05-congreso-1.webp": "protesta",
   "img/noticias/2026-11-05-congreso-2.webp": "protesta",
@@ -393,8 +395,47 @@
   "fuentes/dff6c21b9a74.jpg",
   "fuentes/e8129b3f5deb.jpg",
   "fuentes/f137047d1c16.jpg",
+  "img/fotos/zonadocs-2026-11-01-queremos-agua.webp",
   "img/noticias/2026-11-05-congreso-1.webp",
   "img/noticias/2026-11-05-congreso-2.webp",
   "img/videos/x-2109389377801486675.webp"
+ ],
+ "extra": [
+  {
+   "img": "img/fotos/zonac4-reel-1136664628834945.webp",
+   "url": "https://www.facebook.com/reel/1136664628834945/",
+   "fecha": "2026-11-05",
+   "quien": "Zona C4",
+   "colonias": [],
+   "video": true,
+   "alt": "Agua turbia y café cae de una llave a una cubeta",
+   "tema": "calidad",
+   "cita": "🚨 ¿ASÍ ESTÁ SALIENDO EL AGUA EN TU COLONIA?\n\nVecinos reportan que el agua que llega a sus hogares presenta turbiedad, malos olores y una apariencia poco habitual.\n\nLa situación ha generado preocupación entre habitantes de distintas colonias.\n\n¿En tu casa cómo está saliendo el agua? ¿Sale limpia, turbia o con mal olor?\n\nTe leemos en los comentarios. Comparte también el nombre de tu colonia para conocer dónde se presenta esta situación.",
+   "eco": {
+    "reacciones": 69,
+    "comentarios": 59,
+    "compartidos": 6,
+    "al": "2026-11-05"
+   },
+   "nota": "Página verificada facebook.com/ZonaCerrodel4; creation_time 1793920483 (5 nov 2026, 17:14 en Guadalajara). Cuadro elegido del reel, sin rostros ni nombres; sin el pie de la publicación."
+  },
+  {
+   "img": "img/fotos/zonadocs-2026-11-01-queremos-agua.webp",
+   "url": "https://www.facebook.com/zonadocs/posts/pfbid0fdSNZjFdyZZwsuTZBBoC3tFFXFG7epUJHkLYWTmVikLCRVzMC6cmhRBwzNZ33Ffvl",
+   "fecha": "2026-11-01",
+   "quien": "ZonaDocs",
+   "colonias": [],
+   "video": false,
+   "alt": "Un cartel en una marcha: «Queremos agua, no veneno», con una llave de la que cae una gota con una calavera",
+   "tema": "protesta",
+   "cita": "#ZonaDeOpinión ⚖️ Más de 10 protestas vecinales por agua han continuado en la ZMG. Francisco Macías recuerda que la CIDH exige facilitar la protesta y proteger a quienes participan, no intimidarlos.\n\nPor Francisco Macías Medina\n\nhttps://www.zonadocs.mx/2026/10/25/el-derecho-a-la-protesta-social-como-mecanismo-de-comunicacion-y-exigencia/",
+   "eco": {
+    "reacciones": 29,
+    "comentarios": 2,
+    "compartidos": 7,
+    "al": "2026-11-05"
+   },
+   "nota": "creation_time 1793563230 (1 nov 2026, 14:00 en Guadalajara). Foto de la columna, recortada sin el sello «Manos Libres»."
+  }
  ]
 }

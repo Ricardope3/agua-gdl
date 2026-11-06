@@ -4,8 +4,8 @@
     python3 pipelines/fotos.py --check          fail if web/fotos.html is stale or a reviewed photo is missing; for CI
     python3 pipelines/fotos.py --pendientes     list previews nobody has reviewed yet
 
-Photos come from web/publicaciones.json's vistas (web/fuentes/), /noticias' photos (web/img/noticias/)
-and its video thumbnails (web/img/videos/). Only the ones in pipelines/fotos_temas.json's "temas" make
+Photos come from web/publicaciones.json's vistas (web/fuentes/), /noticias' photos (web/img/noticias/),
+its video thumbnails (web/img/videos/) and the reviewed "extra" posts in fotos_temas.json (web/img/fotos/). Only the ones in pipelines/fotos_temas.json's "temas" make
 the page: that list was reviewed by eye, so text-only cards, official notices, maps, interviews and
 anything showing a private person's name stay out, and a new preview stays out until someone tags it.
 Photos in "carteles" (a protest sign or banner you can read) take two columns; every photo keeps its
@@ -131,7 +131,9 @@ def tiles():
     temas = doc["temas"]
     carteles = set(doc.get("carteles", []))
     missing = [k for k in carteles if k not in temas]
-    ts = from_publicaciones(temas) + from_noticias(temas)
+    ts = from_publicaciones(temas) + from_noticias(temas) + [
+        {k: e[k] for k in ("img", "url", "fecha", "quien", "colonias", "video", "alt")} | {"tema": temas[e["img"]], "lugar": ""}
+        for e in doc.get("extra", [])]
     found = {t["img"] for t in ts}
     missing += [k for k in temas if k not in found or not (WEB / k).is_file()]
     for t in ts:

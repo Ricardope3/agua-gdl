@@ -90,6 +90,8 @@ def sources():
             f"img/{d}/{f.name}": "" for d in ("noticias", "videos") for f in (WEB / "img" / d).iterdir()}):
         by[t["img"]] = {"vista": t["img"], "url": t["url"], "red": "x" if "x.com/" in t["url"] else "web",
                         "fuentes": [{"url": t["url"], "fecha": t["fecha"], "quien": t["quien"], "colonias": []}]}
+    for e in json.loads(fotos.TEMAS.read_text()).get("extra", []):
+        by[e["img"]] = {"vista": e["img"], "url": e["url"], "red": "facebook", "fuentes": [{"url": e["url"], "fecha": e["fecha"], "quien": e["quien"], "colonias": e["colonias"]}]}
     return by, temas
 
 
