@@ -391,16 +391,17 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
 main > .headline.cartel { position: relative; isolation: isolate; padding: 30px 0 36px; margin-top: -10px; margin-bottom: 0; color: #fff }
 main > .headline.cartel + .m-only + .m-only + .maphero { margin-top: 0 }
 .maphero .mapframe-box { border-top: 0 }
-.headline .fondo { position: absolute; z-index: -1; top: 0; bottom: 0; left: calc(50% - 50vw); right: calc(50% - 50vw); display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: minmax(0, 1fr); grid-auto-flow: dense; gap: 2px; background: #0a1022; overflow: hidden }
-.headline .fondo img.g { grid-column: span 2; grid-row: span 2 }
-.headline .fondo img { width: 100%; height: 100%; min-width: 0; min-height: 0; object-fit: cover; filter: grayscale(.35); display: block }
-.headline .fondo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgb(10 16 34 / .9), rgb(10 16 34 / .76) 60%, rgb(10 16 34 / .5)) }
+.headline .fondo { position: absolute; z-index: -1; top: 0; bottom: 0; left: calc(50% - 50vw); right: calc(50% - 50vw); columns: 8 160px; column-gap: 2px; background: #0a1022; overflow: hidden }
+.headline .fondo.js { columns: auto }
+.headline .fondo img { display: block; width: 100%; aspect-ratio: var(--r); margin: 0 0 2px; break-inside: avoid; object-fit: cover; filter: grayscale(.35) }
+.headline .fondo.js img { position: absolute; margin: 0 }
+.headline .fondo::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgb(10 16 34 / .9), rgb(10 16 34 / .76) 60%, rgb(10 16 34 / .5)) }
 @media (min-width: 1100px) { .headline .fondo::after { background: linear-gradient(90deg, rgb(10 16 34 / .45), rgb(10 16 34 / .9) calc(50vw - 464px), rgb(10 16 34 / .76) 60%, rgb(10 16 34 / .5)) } }
 .headline.cartel h1, .headline.cartel > div > p:not(.buttons):not(.kicker) { color: #fff }
 .headline.cartel .kicker { color: #fca5a5 }
 .headline .pie { position: absolute; left: 0; bottom: 8px; margin: 0; font-size: .74rem; color: rgb(255 255 255 / .82) }
 .headline .pie a { color: #fff }
-@media (max-width: 760px) { .headline .fondo { grid-template-columns: repeat(4, 1fr) } main > .headline.cartel { padding: 18px 0 32px } }
+@media (max-width: 760px) { .headline .fondo { columns: 3 110px } main > .headline.cartel { padding: 18px 0 32px } }
 </style>
 <script src="/theme.js"></script>
 <link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
@@ -457,7 +458,43 @@ body { padding-bottom: 64px }
   <main>
     <p class="hvar"><b>Variante 9: Día por día.</b> Historias por fecha, de la más reciente a la primera, como un diario.</p>
     <div class="headline cartel">
-      <!-- fotos.py: muro --><div class="fondo" aria-hidden="true"><img src="/img/fondo/youtube-szoxagvQoUE-g.webp" class=g alt="" decoding="async"><img src="/img/fondo/aeda5492fdf8.webp" alt="" decoding="async"><img src="/img/fondo/b88970a6ad28.webp" alt="" decoding="async"><img src="/img/fondo/2026-11-05-congreso-2-g.webp" class=g alt="" decoding="async"><img src="/img/fondo/2026-11-05-congreso-1-g.webp" class=g alt="" decoding="async"><img src="/img/fondo/zonadocs-2026-11-01-queremos-agua-g.webp" class=g alt="" decoding="async"><img src="/img/fondo/f137047d1c16-g.webp" class=g alt="" decoding="async"><img src="/img/fondo/95484c808037.webp" alt="" decoding="async"><img src="/img/fondo/4b1d0a3e3a14.webp" alt="" decoding="async"><img src="/img/fondo/d0dcbfb2e23a.webp" alt="" decoding="async"><img src="/img/fondo/00fd155d5d8f.webp" alt="" decoding="async"><img src="/img/fondo/dff6c21b9a74.webp" alt="" decoding="async"><img src="/img/fondo/ccf170208ac1.webp" alt="" decoding="async"><img src="/img/fondo/737dd23baec1-g.webp" class=g alt="" decoding="async"><img src="/img/fondo/bd520b623f71-g.webp" class=g alt="" decoding="async"><img src="/img/fondo/7f33367dbe70-g.webp" class=g alt="" decoding="async"><img src="/img/fondo/c1a35e45be99-g.webp" class=g alt="" decoding="async"><img src="/img/fondo/6c863aaf7348.webp" alt="" decoding="async"><img src="/img/fondo/b18475e2e463.webp" alt="" decoding="async"><img src="/img/fondo/78c969863f32.webp" alt="" decoding="async"><img src="/img/fondo/da070374f537.webp" alt="" decoding="async"></div><p class="pie">Fotos de medios y vecinos · <a href="/fotos">ver las 158</a></p><!-- /fotos.py: muro -->
+      <!-- fotos.py: muro --><div class="fondo" aria-hidden="true"><img src="/img/fondo/youtube-szoxagvQoUE-g.webp" class=g style="--r:1.778" alt="" loading="lazy" decoding="async"><img src="/img/fondo/aeda5492fdf8.webp" style="--r:1.135" alt="" loading="lazy" decoding="async"><img src="/img/fondo/b88970a6ad28.webp" style="--r:1.778" alt="" loading="lazy" decoding="async"><img src="/img/fondo/95484c808037.webp" style="--r:1.771" alt="" loading="lazy" decoding="async"><img src="/img/fondo/2026-11-05-congreso-2-g.webp" class=g style="--r:1.500" alt="" loading="lazy" decoding="async"><img src="/img/fondo/4b1d0a3e3a14.webp" style="--r:1.333" alt="" loading="lazy" decoding="async"><img src="/img/fondo/d0dcbfb2e23a.webp" style="--r:1.333" alt="" loading="lazy" decoding="async"><img src="/img/fondo/00fd155d5d8f.webp" style="--r:1.778" alt="" loading="lazy" decoding="async"><img src="/img/fondo/2026-11-05-congreso-1-g.webp" class=g style="--r:1.500" alt="" loading="lazy" decoding="async"><img src="/img/fondo/dff6c21b9a74.webp" style="--r:1.333" alt="" loading="lazy" decoding="async"><img src="/img/fondo/ccf170208ac1.webp" style="--r:0.800" alt="" loading="lazy" decoding="async"><img src="/img/fondo/6c863aaf7348.webp" style="--r:1.778" alt="" loading="lazy" decoding="async"><img src="/img/fondo/zonadocs-2026-11-01-queremos-agua-g.webp" class=g style="--r:1.693" alt="" loading="lazy" decoding="async"><img src="/img/fondo/b18475e2e463.webp" style="--r:1.778" alt="" loading="lazy" decoding="async"><img src="/img/fondo/78c969863f32.webp" style="--r:1.778" alt="" loading="lazy" decoding="async"><img src="/img/fondo/da070374f537.webp" style="--r:2.000" alt="" loading="lazy" decoding="async"><img src="/img/fondo/f137047d1c16-g.webp" class=g style="--r:2.000" alt="" loading="lazy" decoding="async"><img src="/img/fondo/e8129b3f5deb.webp" style="--r:1.905" alt="" loading="lazy" decoding="async"><img src="/img/fondo/c16681f4ed43.webp" style="--r:1.333" alt="" loading="lazy" decoding="async"><img src="/img/fondo/a914b23b792a.webp" style="--r:1.333" alt="" loading="lazy" decoding="async"><img src="/img/fondo/737dd23baec1-g.webp" class=g style="--r:1.333" alt="" loading="lazy" decoding="async"><img src="/img/fondo/x-2109389377801486675.webp" style="--r:0.562" alt="" loading="lazy" decoding="async"><img src="/img/fondo/2026-11-05-congreso-3.webp" style="--r:1.500" alt="" loading="lazy" decoding="async"><img src="/img/fondo/0b8052f21072.webp" style="--r:1.778" alt="" loading="lazy" decoding="async"><img src="/img/fondo/bd520b623f71-g.webp" class=g style="--r:1.333" alt="" loading="lazy" decoding="async"><img src="/img/fondo/bfd60e81a856.webp" style="--r:0.562" alt="" loading="lazy" decoding="async"><img src="/img/fondo/4b26316a26d7.webp" style="--r:1.778" alt="" loading="lazy" decoding="async"><img src="/img/fondo/d4297034e0f9.webp" style="--r:1.778" alt="" loading="lazy" decoding="async"><img src="/img/fondo/7f33367dbe70-g.webp" class=g style="--r:1.500" alt="" loading="lazy" decoding="async"><img src="/img/fondo/cc932b2ee590.webp" style="--r:1.778" alt="" loading="lazy" decoding="async"><img src="/img/fondo/f16c30096b83.webp" style="--r:1.784" alt="" loading="lazy" decoding="async"><img src="/img/fondo/d40916f8d118.webp" style="--r:1.500" alt="" loading="lazy" decoding="async"><img src="/img/fondo/c1a35e45be99-g.webp" class=g style="--r:1.778" alt="" loading="lazy" decoding="async"><img src="/img/fondo/c031ae2ba411.webp" style="--r:1.784" alt="" loading="lazy" decoding="async"><img src="/img/fondo/aa3d51e00677.webp" style="--r:1.784" alt="" loading="lazy" decoding="async"><img src="/img/fondo/24d275e55a25.webp" style="--r:1.778" alt="" loading="lazy" decoding="async"><img src="/img/fondo/5404a1822dad.webp" style="--r:0.994" alt="" loading="lazy" decoding="async"><img src="/img/fondo/0d6139f5c8af.webp" style="--r:0.754" alt="" loading="lazy" decoding="async"><img src="/img/fondo/17e2048aa3f0.webp" style="--r:1.778" alt="" loading="lazy" decoding="async"><img src="/img/fondo/bfde7f9e9d29.webp" style="--r:0.556" alt="" loading="lazy" decoding="async"><img src="/img/fondo/2dee1722b8e6.webp" style="--r:1.778" alt="" loading="lazy" decoding="async"><img src="/img/fondo/ba0af6776d68.webp" style="--r:1.771" alt="" loading="lazy" decoding="async"><img src="/img/fondo/216fe0eb2e6f.webp" style="--r:1.778" alt="" loading="lazy" decoding="async"></div><p class="pie">Fotos de medios y vecinos · <a href="/fotos">ver las 158</a></p><script>
+(() => {
+  // The wall packs like /fotos: columns ~200 px wide (~120 on phones), each photo in its own proportions,
+  // big ones (signs, .g) two columns wide; the lowest column takes the next photo that fits without a hole.
+  const box = document.querySelector('.headline .fondo');
+  if (!box) return;
+  const lay = () => {
+    const W = box.clientWidth, H = box.clientHeight;
+    if (!W) return;
+    const g = 2, n = Math.max(3, Math.round(W / (W < 760 ? 125 : 200)));
+    const cw = (W - g * (n - 1)) / n, h = new Array(n).fill(0);
+    box.classList.add('js');
+    const queue = [...box.querySelectorAll('img')];
+    const span = (t) => (t.classList.contains('g') ? 2 : 1);
+    const put = (t, col, s) => {
+      const top = Math.max(...h.slice(col, col + s)), w = cw * s + g * (s - 1), ht = w / parseFloat(t.style.getPropertyValue('--r'));
+      Object.assign(t.style, { left: col * (cw + g) + 'px', top: top + 'px', width: w + 'px', height: ht + 'px', display: '' });
+      for (let i = col; i < col + s; i++) h[i] = top + ht + g;
+    };
+    while (queue.length) {
+      const m = Math.min(...h);
+      if (m >= H) { queue.forEach((t) => { t.style.display = 'none'; }); break; }
+      const low = h.indexOf(m);
+      let done = false;
+      for (let k = 0; k < Math.min(6, queue.length) && !done; k++) {
+        const s = Math.min(n, span(queue[k]));
+        for (let c = Math.max(0, low - s + 1); c <= Math.min(low, n - s); c++) {
+          if (h.slice(c, c + s).every((x) => x <= m + 30)) { put(queue[k], c, s); queue.splice(k, 1); done = true; break; }
+        }
+      }
+      if (!done) { const t = queue.shift(), s = Math.min(n, span(t)); let col = 0, top = Infinity; for (let i = 0; i <= n - s; i++) { const x = Math.max(...h.slice(i, i + s)); if (x < top - 1) { top = x; col = i; } } put(t, col, s); }
+    }
+  };
+  let w = 0, hh = 0;
+  new ResizeObserver(() => { if (box.clientWidth !== w || box.clientHeight !== hh) { w = box.clientWidth; hh = box.clientHeight; lay(); } }).observe(box);
+})();
+</script><!-- /fotos.py: muro -->
       <div>
         <p class="kicker">El agua es un derecho. Exígelo.</p>
         <h1>El Gobierno de Jalisco prometió un día. Hay vecinos con semanas sin agua.</h1>
