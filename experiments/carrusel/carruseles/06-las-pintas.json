@@ -1,0 +1,106 @@
+{
+ "id": "06-las-pintas",
+ "titulo": "Las Pintas: el 30%",
+ "caption": "El gobernador dijo que cerrar Las Pintas «nos quitó alrededor del 30 por ciento del volumen disponible» (Notisistema). Según NTR, en el primer cuatrimestre ya se habían gastado 23 millones en acciones de saneamiento en Las Pintas que no duraron. El 21 de octubre se anunciaron 500 millones para colectores; según El Informador, esas obras y el desazolve de Las Pintas y La Calera concluirían el 15 de diciembre. Lo revisamos ese día. aguagdl.com/promesas",
+ "fuentes": {
+  "noti30": {
+   "url": "https://www.notisistema.com/noticias/las-pintas-volvera-a-operar-antes-del-15-de-diciembre-lemus/",
+   "medio": "Notisistema",
+   "fecha": "2026-10-21",
+   "revisado": "2026-11-05",
+   "cita": "El gobernador Pablo Lemus informó que la presa Las Pintas, cerrada tras contaminarse por las lluvias, volverá a funcionar antes del 15 de diciembre. Explicó que el cierre restó cerca de 30 por ciento del volumen de agua disponible para la zona metropolitana de Guadalajara. “Y esta fue una decisión muy complicada porque nos quitó alrededor del 30 por ciento del volumen disponible para distribuir"
+  },
+  "ntr": {
+   "url": "https://www.ntrguadalajara.com/post.php?id_nota=251438",
+   "medio": "NTR Guadalajara",
+   "fecha": "2026-10-21",
+   "revisado": "2026-11-05",
+   "cita": "YA SE GASTÓ. Este año, en el primer cuatrimestre, se gastaron 23 millones de pesos en acciones de saneamiento en Las Pintas, pero no duraron al no bloquearse las fuentes de contaminación. … Estas acciones se realizan a pesar de que apenas en el primer cuatrimestre del año se gastaron 23 millones de pesos (mdp) en acciones similares; sin embargo, no duraron debido a que no se bloquearon las fuentes de contaminación. El director general de la Comisión Estatal del Agua (CEA), Luis Enrique Barboza Niño, precisó … “Nosotros primero tenemos que garantizar que estamos atacando las fuentes de contaminación, que son las descargas irregulares. De nada nos va a servir sanear o desazolvar la presa de Las Pintas porque posteriormente le seguiría llegando agua residual”."
+  },
+  "inf500": {
+   "url": "https://www.informador.mx/jalisco/gobierno-de-jalisco-anuncia-inversion-para-sanear-el-canal-de-las-pintas-20261021-0023.html",
+   "medio": "El Informador",
+   "fecha": "2026-10-21",
+   "revisado": "2026-11-05",
+   "cita": "El secretario de Infraestructura y Obra Pública, David Zamora, anunció una inversión de 500 millones de pesos para intervenir colectores del Sistema Antiguo de Abasto Chapala-Guadalajara, cuyo flujo hacia la Zona Metropolitana fue suspendido por contaminación. … Se destinarán 500 millones de pesos para evitar que las aguas residuales se mezclen con la que transita hacia la presa … Zamora indicó que las intervenciones, junto con el desazolve de las presas de Las Pintas y La Calera, concluirían el 15 de diciembre para reactivar el tránsito de agua por el Sistema Antiguo y contribuir a eliminar los tandeos aplicados por el SIAPA en 627 colonias."
+  }
+ },
+ "slides": [
+  {
+   "tipo": "iconos",
+   "foto": "fuentes/fb29dc00b79f.jpg",
+   "kicker": "Cerrar Las Pintas, según el gobernador",
+   "cifra": "~30%",
+   "titular": "menos agua disponible",
+   "icono": "gota",
+   "n": 7,
+   "total": 10,
+   "texto": "«Nos quitó alrededor del 30 por ciento del volumen disponible», dijo, según Notisistema.",
+   "fuentes": [
+    "noti30"
+   ],
+   "calculo": "30 por ciento = 3 de 10 gotas apagadas; quedan 7."
+  },
+  {
+   "tipo": "texto",
+   "foto": "fuentes/fb29dc00b79f.jpg",
+   "kicker": "Según NTR, ya se había intentado",
+   "cifra": "$23 mdp",
+   "titular": "en acciones de saneamiento en Las Pintas en el primer cuatrimestre de 2026",
+   "texto": "«No duraron al no bloquearse las fuentes de contaminación», publicó NTR.",
+   "fuentes": [
+    "ntr"
+   ]
+  },
+  {
+   "tipo": "cita",
+   "foto": "fuentes/fb29dc00b79f.jpg",
+   "kicker": "El director de la CEA",
+   "cita": "De nada nos va a servir sanear o desazolvar la presa de Las Pintas porque posteriormente le seguiría llegando agua residual",
+   "quien": "Luis Enrique Barboza Niño, director de la Comisión Estatal del Agua, en NTR",
+   "fuentes": [
+    "ntr"
+   ]
+  },
+  {
+   "tipo": "linea",
+   "foto": "fuentes/fb29dc00b79f.jpg",
+   "kicker": "Lo que se anunció después",
+   "titular": "La meta: 15 de diciembre",
+   "hitos": [
+    {
+     "fecha": "Enero–abril 2026",
+     "texto": "23 millones en acciones de saneamiento que no duraron (NTR)",
+     "color": "gris"
+    },
+    {
+     "fecha": "21 de octubre",
+     "texto": "500 millones para intervenir colectores del Sistema Antiguo, anunció el secretario de Infraestructura (El Informador)"
+    },
+    {
+     "fecha": "15 de diciembre",
+     "texto": "Esas obras y el desazolve de Las Pintas y La Calera «concluirían», según El Informador; el gobernador dice que Las Pintas volverá a funcionar antes",
+     "color": "alarm"
+    }
+   ],
+   "fuentes": [
+    "ntr",
+    "inf500",
+    "noti30"
+   ],
+   "calculo": "Primer cuatrimestre = enero a abril de 2026."
+  },
+  {
+   "tipo": "cierre",
+   "titular": "El 15 de diciembre lo revisamos",
+   "acciones": [
+    "Promesas y plazos en aguagdl.com/promesas",
+    "Recibe un aviso antes de cada racionamiento: @AvisoAguaGDLbot en Telegram"
+   ],
+   "url": "aguagdl.com/promesas",
+   "fuentes": [
+    "inf500"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,88 @@
+{
+ "id": "02-24-mil-700",
+ "titulo": "24 mil 700 millones: ¿en qué?",
+ "caption": "El 28 de octubre, los gobiernos federal y de Jalisco anunciaron 24 mil 700 millones de pesos para el agua de Guadalajara. Así se reparten, según Milenio. Guarda este post: vamos a seguir cada obra hasta que se termine. aguagdl.com/promesas",
+ "fuentes": {
+  "mil": {
+   "url": "https://www.milenio.com/politica/sheinbaum-y-lemus-anuncian-proyecto-garantizar-abasto-agua-guadalajara",
+   "medio": "Milenio",
+   "fecha": "2026-10-28",
+   "revisado": "2026-11-05",
+   "cita": "Los gobiernos de México y Jalisco invertirán 24 mil 700 millones de pesos en conjunto en el proyecto hídrico para garantizar suficiente agua potable y de calidad a la zona metropolitana de Guadalajara, sin endeudamientos ni privatizaciones de las obras. La Federación destinará 14 mil 500 millones de pesos para la construcción del nuevo acueducto Chapala-Guadalajara (nueve mil 300 mdp), y para el acueducto Calderón-San Gaspar, así como la ampliación de la planta potabilizadora de San Gaspar (cinco mil 200 mdp). En tanto, la administración estatal invertirá 10 mil 200 millones de pesos para la renovación de la planta potabilizadora número uno en Miravalle, el saneamiento del canal y la presa Las Pintas, así como la reparación y la construcción de una nueva red de colectores. … la presidenta Claudia Sheinbaum destacó que se trata de un proyecto que brinda la mejor solución a la región, aprovechando al 100 por ciento la presa El Zapotillo"
+  }
+ },
+ "slides": [
+  {
+   "tipo": "portada",
+   "foto": "fuentes/0e61b3ddde0a.jpg",
+   "kicker": "28 de octubre",
+   "cifra": "$24,700",
+   "titular": "millones de pesos para el agua de Guadalajara",
+   "texto": "Lo anunciaron los gobiernos federal y de Jalisco. ¿En qué se van?",
+   "fuentes": [
+    "mil"
+   ],
+   "calculo": "24 mil 700 = 24,700."
+  },
+  {
+   "tipo": "barras",
+   "foto": "fuentes/0e61b3ddde0a.jpg",
+   "kicker": "Cómo se reparten, según Milenio",
+   "titular": "Tres bolsas",
+   "barras": [
+    {
+     "etiqueta": "Jalisco: planta 1 de Miravalle, Las Pintas y colectores",
+     "valor": 10200,
+     "texto": "10,200 mdp"
+    },
+    {
+     "etiqueta": "Federación: nuevo acueducto Chapala–Guadalajara",
+     "valor": 9300,
+     "texto": "9,300 mdp"
+    },
+    {
+     "etiqueta": "Federación: acueducto Calderón–San Gaspar y planta de San Gaspar",
+     "valor": 5200,
+     "texto": "5,200 mdp",
+     "color": "gris"
+    }
+   ],
+   "fuentes": [
+    "mil"
+   ],
+   "calculo": "10 mil 200 = 10,200; nueve mil 300 = 9,300; cinco mil 200 = 5,200. Planta potabilizadora número uno = planta 1."
+  },
+  {
+   "tipo": "texto",
+   "foto": "fuentes/0e61b3ddde0a.jpg",
+   "kicker": "Según Milenio, los dos gobiernos invertirán",
+   "titular": "«sin endeudamientos ni privatizaciones de las obras»",
+   "texto": "Son palabras de la nota. Un anuncio no es una obra: falta ver contratos, calendarios y avances.",
+   "fuentes": [
+    "mil"
+   ]
+  },
+  {
+   "tipo": "lista",
+   "foto": "fuentes/0e61b3ddde0a.jpg",
+   "kicker": "Lo que vamos a revisar",
+   "titular": "Preguntas para cada peso",
+   "propio": "preguntas nuestras",
+   "marca": "check",
+   "items": [
+    "¿Quién construye y con qué contrato?",
+    "¿Cuándo empieza y cuándo termina cada obra?",
+    "¿Dónde se publica el avance?"
+   ]
+  },
+  {
+   "tipo": "cierre",
+   "titular": "Síguelo con nosotros",
+   "acciones": [
+    "Promesas y plazos en aguagdl.com/promesas",
+    "Escríbele a tu diputación en aguagdl.com/exige"
+   ],
+   "url": "aguagdl.com/promesas"
+  }
+ ]
+}

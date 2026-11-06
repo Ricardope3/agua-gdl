@@ -1,0 +1,74 @@
+{
+ "id": "12-4-de-cada-10",
+ "titulo": "4 de cada 10 hogares",
+ "caption": "Según el Gobierno de Jalisco, la rotación solo afecta a los hogares que abastece la planta potabilizadora número 1: «el 40% de los hogares de la ciudad». CNN reportó que los tandeos alcanzan a 2.3 millones de habitantes, de los 5.5 millones de usuarios del agua. ¿Tu casa está en la rotación? aguagdl.com",
+ "fuentes": {
+  "rot": {
+   "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/",
+   "medio": "Página de la rotación, Gobierno de Jalisco",
+   "fecha": "2026-11-05",
+   "consultada": true,
+   "revisado": "2026-11-05",
+   "cita": "Desde el Gobierno de Jalisco estamos trabajando para solucionar la calidad del agua que afecta al 40% de los hogares del Área Metropolitana de Guadalajara. … No afectará a toda el Área Metropolitana de Guadalajara, únicamente a los hogares suministrados por la Planta Potabilizadora No. 1, que representan el 40% de los hogares de la ciudad. … Cada zona tendrá de 2 a 3 racionamientos por semana por máximo un día, lo que buscará disminuir las afectaciones al mínimo. No serán cortes totales. Los racionamientos consistirán en una disminución de la presión con la que se abastece el agua hacia los hogares."
+  },
+  "cnn": {
+   "url": "https://cnnespanol.cnn.com/2026/10/22/mexico/crisis-agua-guadalajara-olor-que-pasa-orix",
+   "medio": "CNN en Español",
+   "fecha": "2026-10-22",
+   "revisado": "2026-11-05",
+   "cita": "Agua con olores fétidos y apariencia turbia sale de los grifos de miles de habitantes de la zona metropolitana de Guadalajara desde hace por lo menos dos años, dicen habitantes de la ciudad consultados por CNN. … profesora de la Universidad de Guadalajara y especialista en gestión de recursos hídricos, salud ambiental y toxicología del agua, dijo a CNN que el Gobierno del estado carece de un sistema de medición oficial que de certeza a los ciudadanos sobre la calidad de agua que recibe. “No tenemos un monitoreo digital, continúo, como un semáforo, como la calidad del aire, que hay semáforos todo el tiempo que nos están indicando que la calidad del aire se comparte de una forma de otra para tomar medidas de contingencia atmosférica” …  un programa de tandeos en los que se suspenderá el servicio de dos a tres días por semana a 2.3 millones de habitantes, de los 5.5 millones usuarios del agua."
+  }
+ },
+ "slides": [
+  {
+   "tipo": "iconos",
+   "foto": "fuentes/28d8f5f93db4.jpg",
+   "kicker": "Según el Gobierno de Jalisco",
+   "cifra": "4 de 10",
+   "titular": "hogares de la ciudad están en la rotación",
+   "icono": "casa",
+   "n": 4,
+   "total": 10,
+   "columnas": 5,
+   "texto": "Los que abastece la planta potabilizadora número 1: «el 40% de los hogares de la ciudad».",
+   "fuentes": [
+    "rot"
+   ],
+   "calculo": "40% = 4 de 10. Planta Potabilizadora No. 1 = número 1."
+  },
+  {
+   "tipo": "iconos",
+   "foto": "fuentes/28d8f5f93db4.jpg",
+   "kicker": "Según CNN",
+   "cifra": "2.3 millones",
+   "titular": "de habitantes con tandeos, de 5.5 millones de usuarios",
+   "icono": "persona",
+   "n": 23,
+   "total": 55,
+   "columnas": 11,
+   "texto": "Cada figura: 100 mil.",
+   "fuentes": [
+    "cnn"
+   ],
+   "calculo": "2.3 millones = 23 figuras de 100 mil; 5.5 millones = 55."
+  },
+  {
+   "tipo": "texto",
+   "foto": "fuentes/28d8f5f93db4.jpg",
+   "kicker": "Lo que cuentan habitantes a CNN",
+   "titular": "Agua turbia y con olor «desde hace por lo menos dos años»",
+   "fuentes": [
+    "cnn"
+   ]
+  },
+  {
+   "tipo": "cierre",
+   "titular": "¿Tu casa está en la rotación?",
+   "acciones": [
+    "Búscala en aguagdl.com",
+    "Recibe un aviso antes de cada racionamiento: @AvisoAguaGDLbot en Telegram"
+   ],
+   "url": "aguagdl.com"
+  }
+ ]
+}

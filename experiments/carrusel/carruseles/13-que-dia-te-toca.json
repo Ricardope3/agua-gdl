@@ -1,0 +1,140 @@
+{
+ "id": "13-que-dia-te-toca",
+ "titulo": "¿Qué día te toca?",
+ "caption": "El calendario de la rotación cambió el 3 de noviembre. Guarda esta imagen, busca tu zona y recibe un aviso antes de cada racionamiento en Telegram: @AvisoAguaGDLbot. aguagdl.com",
+ "fuentes": {
+  "cal": {
+   "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/api/ajustes.php",
+   "medio": "Calendario de la rotación, SIAPA",
+   "fecha": "2026-11-03",
+   "revisado": "2026-11-05",
+   "cita": "actualizado 2026-11-03. Días por zona: 1 lunes, jueves, viernes, domingo; 2 lunes, martes, jueves, domingo; 3 miercoles, jueves, viernes; 4 lunes, martes, sabado, domingo; 5 lunes, martes, miercoles, jueves; 6 viernes, sabado, domingo; 7 sabado, domingo."
+  },
+  "avisos": {
+   "url": "https://aguagdl.com/avisos",
+   "medio": "Agua GDL, aguagdl.com/avisos",
+   "fecha": "2026-11-05",
+   "consultada": true,
+   "revisado": "2026-11-05",
+   "cita": "Busca tu colonia, municipio o código postal Buscar Usar mi ubicación … Avisos gratis por Telegram Te avisa dos días antes de cada corte y la noche anterior. Abre el bot y manda tu ubicación, tu colonia o tu zona."
+  }
+ },
+ "slides": [
+  {
+   "tipo": "portada",
+   "foto": "fuentes/91f71286c29a.jpg",
+   "kicker": "Guarda esta publicación",
+   "titular": "¿Qué día te toca racionamiento?",
+   "texto": "El calendario cambió el 3 de noviembre.",
+   "fuentes": [
+    "cal"
+   ],
+   "calculo": "Calendario actualizado 2026-11-03 (3 de noviembre); el anterior regía hasta esa fecha (api/data/rotation.json, previous until 2026-11-03). Zonas 1, 2, 4 y 5: 4 días cada una; 3 y 6: tres; 7: dos."
+  },
+  {
+   "tipo": "calendario",
+   "foto": "fuentes/91f71286c29a.jpg",
+   "kicker": "Calendario actualizado el 3 de noviembre",
+   "titular": "Días de racionamiento por zona",
+   "zonas": [
+    {
+     "zona": "Zona 1",
+     "dias": [
+      "lunes",
+      "jueves",
+      "viernes",
+      "domingo"
+     ]
+    },
+    {
+     "zona": "Zona 2",
+     "dias": [
+      "lunes",
+      "martes",
+      "jueves",
+      "domingo"
+     ]
+    },
+    {
+     "zona": "Zona 3",
+     "dias": [
+      "miercoles",
+      "jueves",
+      "viernes"
+     ]
+    },
+    {
+     "zona": "Zona 4",
+     "dias": [
+      "lunes",
+      "martes",
+      "sabado",
+      "domingo"
+     ]
+    },
+    {
+     "zona": "Zona 5",
+     "dias": [
+      "lunes",
+      "martes",
+      "miercoles",
+      "jueves"
+     ]
+    },
+    {
+     "zona": "Zona 6",
+     "dias": [
+      "viernes",
+      "sabado",
+      "domingo"
+     ]
+    },
+    {
+     "zona": "Zona 7",
+     "dias": [
+      "sabado",
+      "domingo"
+     ]
+    }
+   ],
+   "fuentes": [
+    "cal"
+   ],
+   "calculo": "Calendario actualizado 2026-11-03 (3 de noviembre); el anterior regía hasta esa fecha (api/data/rotation.json, previous until 2026-11-03). Zonas 1, 2, 4 y 5: 4 días cada una; 3 y 6: tres; 7: dos."
+  },
+  {
+   "tipo": "lista",
+   "foto": "fuentes/91f71286c29a.jpg",
+   "kicker": "¿No sabes tu zona?",
+   "titular": "Así la encuentras",
+   "marca": "num",
+   "items": [
+    "Entra a *aguagdl.com/avisos*",
+    "Escribe tu colonia o usa tu ubicación",
+    "Mira tus días y activa el aviso"
+   ],
+   "fuentes": [
+    "avisos"
+   ]
+  },
+  {
+   "tipo": "texto",
+   "foto": "fuentes/91f71286c29a.jpg",
+   "kicker": "Que no te agarre sin agua",
+   "titular": "Te avisamos antes de cada racionamiento",
+   "texto": "Un aviso dos días antes y otro la noche anterior, gratis, en Telegram: *@AvisoAguaGDLbot*.",
+   "fuentes": [
+    "avisos"
+   ]
+  },
+  {
+   "tipo": "cierre",
+   "titular": "Comparte con tu familia y tus vecinos",
+   "acciones": [
+    "aguagdl.com",
+    "@AvisoAguaGDLbot en Telegram"
+   ],
+   "url": "aguagdl.com"
+  }
+ ]
+}

@@ -1,0 +1,111 @@
+{
+ "id": "04-rio-santiago",
+ "titulo": "Un tubo y un río",
+ "caption": "Lo anunciado para el nuevo acueducto Chapala–Guadalajara: 9,300 millones (Milenio, 28 de octubre). Lo que el Gobierno de Jalisco reporta haber invertido en seis años de su estrategia para el Río Santiago, 2019–2024: 7,333 millones, con obra de hospitales incluida. aguagdl.com/contamina",
+ "fuentes": {
+  "mil": {
+   "url": "https://www.milenio.com/politica/sheinbaum-y-lemus-anuncian-proyecto-garantizar-abasto-agua-guadalajara",
+   "medio": "Milenio",
+   "fecha": "2026-10-28",
+   "revisado": "2026-11-05",
+   "cita": "Los gobiernos de México y Jalisco invertirán 24 mil 700 millones de pesos en conjunto en el proyecto hídrico para garantizar suficiente agua potable y de calidad a la zona metropolitana de Guadalajara, sin endeudamientos ni privatizaciones de las obras. La Federación destinará 14 mil 500 millones de pesos para la construcción del nuevo acueducto Chapala-Guadalajara (nueve mil 300 mdp), y para el acueducto Calderón-San Gaspar, así como la ampliación de la planta potabilizadora de San Gaspar (cinco mil 200 mdp). En tanto, la administración estatal invertirá 10 mil 200 millones de pesos para la renovación de la planta potabilizadora número uno en Miravalle, el saneamiento del canal y la presa Las Pintas, así como la reparación y la construcción de una nueva red de colectores. … la presidenta Claudia Sheinbaum destacó que se trata de un proyecto que brinda la mejor solución a la región, aprovechando al 100 por ciento la presa El Zapotillo"
+  },
+  "rio": {
+   "url": "https://riosantiago.jalisco.gob.mx/wp-content/uploads/2024/07/Presupuesto-Integral-de-la-Estrategia-Revivamos-el-Rio-Santiago-2024pdf.pdf",
+   "medio": "Revivamos el Río Santiago, Gobierno de Jalisco",
+   "fecha": "2024-10-17",
+   "revisado": "2026-11-05",
+   "cita": "Componente 2019 2020 2021 2022 2023 2024 … Totales anuales: $1,861,115,676 $805,648,208 $299,812,277 $1,713,350,246 $1,738,300,169 $915,181,021 Total general: $7,333,407,597 * Incluye la inversión acumulada en infraestructura del Hospital Civil de Oriente y hospitales comunitarios de Ocotlán y Salto."
+  }
+ },
+ "slides": [
+  {
+   "tipo": "portada",
+   "foto": "fuentes/80b5ffac1020.jpg",
+   "kicker": "Comparemos",
+   "titular": "Lo anunciado para un acueducto supera lo que Jalisco reporta en *seis años* para el Río Santiago",
+   "texto": "Y eso que el total del río incluye obra de hospitales.",
+   "fuentes": [
+    "mil",
+    "rio"
+   ],
+   "calculo": "2019 a 2024 son seis años."
+  },
+  {
+   "tipo": "barras",
+   "foto": "fuentes/80b5ffac1020.jpg",
+   "kicker": "Millones de pesos",
+   "titular": "El tubo y el río",
+   "barras": [
+    {
+     "etiqueta": "Nuevo acueducto Chapala–Guadalajara: lo anunciado por la Federación",
+     "valor": 9300,
+     "texto": "9,300"
+    },
+    {
+     "etiqueta": "Río Santiago, 2019–2024: lo que reporta el Gobierno de Jalisco",
+     "valor": 7333,
+     "texto": "7,333",
+     "color": "alarm"
+    }
+   ],
+   "texto": "El total del río incluye la obra del Hospital Civil de Oriente y de hospitales comunitarios en Ocotlán y El Salto.",
+   "fuentes": [
+    "mil",
+    "rio"
+   ],
+   "calculo": "nueve mil 300 = 9,300; $7,333,407,597 ≈ 7,333 millones."
+  },
+  {
+   "tipo": "barras",
+   "foto": "fuentes/80b5ffac1020.jpg",
+   "kicker": "Río Santiago, millones de pesos por año",
+   "titular": "Año con año",
+   "barras": [
+    {
+     "etiqueta": "2019",
+     "valor": 1861,
+     "texto": "1,861"
+    },
+    {
+     "etiqueta": "2020",
+     "valor": 806,
+     "texto": "806"
+    },
+    {
+     "etiqueta": "2021",
+     "valor": 300,
+     "texto": "300"
+    },
+    {
+     "etiqueta": "2022",
+     "valor": 1713,
+     "texto": "1,713"
+    },
+    {
+     "etiqueta": "2023",
+     "valor": 1738,
+     "texto": "1,738"
+    },
+    {
+     "etiqueta": "2024",
+     "valor": 915,
+     "texto": "915"
+    }
+   ],
+   "fuentes": [
+    "rio"
+   ],
+   "calculo": "Totales anuales redondeados a millones: 1,861,115,676 → 1,861; 805,648,208 → 806; 299,812,277 → 300; 1,713,350,246 → 1,713; 1,738,300,169 → 1,738; 915,181,021 → 915. Años 2019 2020 2021 2022 2023 2024."
+  },
+  {
+   "tipo": "cierre",
+   "titular": "¿Y el Río Santiago?",
+   "acciones": [
+    "Lo seguimos en aguagdl.com/contamina",
+    "Escribe a tu diputación: aguagdl.com/exige"
+   ],
+   "url": "aguagdl.com/contamina"
+  }
+ ]
+}

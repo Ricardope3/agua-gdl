@@ -1,0 +1,72 @@
+{
+ "id": "18-zapotillo",
+ "titulo": "El Zapotillo: 45% y 100%",
+ "caption": "En el mensaje del gobernador que reproduce Expansión (8 de octubre): El Zapotillo «actualmente opera al 45 por ciento». El 28 de octubre, según Milenio, la presidenta destacó que el nuevo proyecto aprovecha «al 100 por ciento» la presa. Dos cifras, dos gobiernos. Las seguimos. aguagdl.com/promesas",
+ "fuentes": {
+  "mil": {
+   "url": "https://www.milenio.com/politica/sheinbaum-y-lemus-anuncian-proyecto-garantizar-abasto-agua-guadalajara",
+   "medio": "Milenio",
+   "fecha": "2026-10-28",
+   "revisado": "2026-11-05",
+   "cita": "Los gobiernos de México y Jalisco invertirán 24 mil 700 millones de pesos en conjunto en el proyecto hídrico para garantizar suficiente agua potable y de calidad a la zona metropolitana de Guadalajara, sin endeudamientos ni privatizaciones de las obras. La Federación destinará 14 mil 500 millones de pesos para la construcción del nuevo acueducto Chapala-Guadalajara (nueve mil 300 mdp), y para el acueducto Calderón-San Gaspar, así como la ampliación de la planta potabilizadora de San Gaspar (cinco mil 200 mdp). En tanto, la administración estatal invertirá 10 mil 200 millones de pesos para la renovación de la planta potabilizadora número uno en Miravalle, el saneamiento del canal y la presa Las Pintas, así como la reparación y la construcción de una nueva red de colectores. … la presidenta Claudia Sheinbaum destacó que se trata de un proyecto que brinda la mejor solución a la región, aprovechando al 100 por ciento la presa El Zapotillo"
+  },
+  "exp": {
+   "url": "https://politica.expansion.mx/mexico/2026/10/08/crisis-agua-jalisco-lemus-acueducto-chapala-guadalajara",
+   "medio": "Expansión",
+   "fecha": "2026-10-08",
+   "revisado": "2026-11-05",
+   "cita": "El plan anunciado por el gobernador Pablo Lemus contempla como medida inmediata dejar de utilizar el agua de la presa Las Pintas … [mensaje del gobernador que reproduce Expansión:] … Este proyecto ya cuenta con el aval de la Conagua (@conagua_mx). También hace falta concluir las obras para garantizar que funcione totalmente el sistema de El Zapotillo, en la cuenca del Río Verde, que actualmente opera al 45 por ciento. He acordado con la Presidenta Claudia Sheinbaum (@Claudiashein) que esas obras serán ejecutadas y pagadas por la Federación. Todas estas acciones no representarán un incremento en las tarifas del SIAPA, no se privatizará el servicio, no será una deuda pública y sí servirá para mejorar la calidad del agua durante muchos años. … Si hacemos esto, podremos ver una mejora sustancial en la calidad del agua que recibe la ciudad en las próximas semanas. … ¿Cuánto tiempo puede durar este esquema de rotación en el servicio? Estimamos que serán seis meses en una primera etapa, en lo que concluyen las obras del acueducto de desvío de La Calera y la ampliación de la Planta Potabilizadora número 1 de Miravalle … reducirá el suministro metropolitano hasta en 2.5 metros cúbicos por segundo durante al menos seis meses."
+  }
+ },
+ "slides": [
+  {
+   "tipo": "iconos",
+   "foto": "fuentes/0e61b3ddde0a.jpg",
+   "kicker": "El gobernador, en el mensaje que reproduce Expansión",
+   "cifra": "45%",
+   "titular": "«actualmente opera» El Zapotillo",
+   "icono": "gota",
+   "n": 9,
+   "total": 20,
+   "columnas": 10,
+   "texto": "«Que actualmente opera al 45 por ciento».",
+   "fuentes": [
+    "exp"
+   ],
+   "calculo": "45% de 20 gotas = 9."
+  },
+  {
+   "tipo": "iconos",
+   "foto": "fuentes/0e61b3ddde0a.jpg",
+   "kicker": "28 de octubre, según Milenio",
+   "cifra": "100%",
+   "titular": "de la presa aprovechada con el nuevo proyecto",
+   "icono": "gota",
+   "n": 20,
+   "total": 20,
+   "columnas": 10,
+   "texto": "La presidenta «destacó que se trata de un proyecto que brinda la mejor solución a la región, aprovechando al 100 por ciento la presa El Zapotillo».",
+   "fuentes": [
+    "mil"
+   ],
+   "calculo": "100% = 20 de 20."
+  },
+  {
+   "tipo": "texto",
+   "foto": "fuentes/0e61b3ddde0a.jpg",
+   "kicker": "Lo que falta saber",
+   "titular": "¿Cuándo y con qué obras se pasa de una cifra a la otra?",
+   "propio": "pregunta nuestra",
+   "texto": "Son dos gobiernos con dos cifras. Las seguimos."
+  },
+  {
+   "tipo": "cierre",
+   "titular": "Dos gobiernos, dos cifras. Seguimos ambas",
+   "acciones": [
+    "aguagdl.com/promesas",
+    "Recibe un aviso antes de cada racionamiento: @AvisoAguaGDLbot en Telegram"
+   ],
+   "url": "aguagdl.com/promesas"
+  }
+ ]
+}

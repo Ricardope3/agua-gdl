@@ -1,0 +1,98 @@
+{
+ "id": "10-linea-promesas",
+ "titulo": "Promesas con fecha",
+ "caption": "Frases con fecha sobre el agua de Guadalajara, y cuándo las revisamos. La de julio ya pasó su plazo. El 15 de septiembre es nuestra lectura de «finales de agosto y principios de septiembre»; la explicamos en aguagdl.com/promesas.",
+ "fuentes": {
+  "exp": {
+   "url": "https://politica.expansion.mx/mexico/2026/10/08/crisis-agua-jalisco-lemus-acueducto-chapala-guadalajara",
+   "medio": "Expansión",
+   "fecha": "2026-10-08",
+   "revisado": "2026-11-05",
+   "cita": "El plan anunciado por el gobernador Pablo Lemus contempla como medida inmediata dejar de utilizar el agua de la presa Las Pintas … [mensaje del gobernador que reproduce Expansión:] … Este proyecto ya cuenta con el aval de la Conagua (@conagua_mx). También hace falta concluir las obras para garantizar que funcione totalmente el sistema de El Zapotillo, en la cuenca del Río Verde, que actualmente opera al 45 por ciento. He acordado con la Presidenta Claudia Sheinbaum (@Claudiashein) que esas obras serán ejecutadas y pagadas por la Federación. Todas estas acciones no representarán un incremento en las tarifas del SIAPA, no se privatizará el servicio, no será una deuda pública y sí servirá para mejorar la calidad del agua durante muchos años. … Si hacemos esto, podremos ver una mejora sustancial en la calidad del agua que recibe la ciudad en las próximas semanas. … ¿Cuánto tiempo puede durar este esquema de rotación en el servicio? Estimamos que serán seis meses en una primera etapa, en lo que concluyen las obras del acueducto de desvío de La Calera y la ampliación de la Planta Potabilizadora número 1 de Miravalle … reducirá el suministro metropolitano hasta en 2.5 metros cúbicos por segundo durante al menos seis meses."
+  },
+  "notijul": {
+   "url": "https://www.notisistema.com/noticias/en-dos-meses-habra-agua-limpia-en-zmg-lemus/",
+   "medio": "Notisistema",
+   "fecha": "2026-07-13",
+   "revisado": "2026-11-05",
+   "cita": "En dos meses habrá agua limpia en la ZMG: Lemus … El mandatario se comprometió a que en poco más de dos meses los ciudadanos recibirán por fin agua limpia. “¿Cuándo?, que es la pregunta. Vamos a empezar a ver mejor calidad del agua hacia finales de agosto y principios de septiembre, y vamos a ver una mejora muy, muy importante hacia febrero, marzo y abril del próximo año con estas inversiones”."
+  },
+  "siapa15": {
+   "url": "https://www.siapa.gob.mx/prensa/presenta-gobierno-de-jalisco-programa-de-rotacion-del-servicio-de-agua-limpia-y-sitio-para",
+   "medio": "SIAPA",
+   "fecha": "2026-10-15",
+   "revisado": "2026-11-05",
+   "cita": "El Programa de Rotación del Servicio de Agua Limpia iniciará el jueves 15 de octubre y se mantendrá hasta marzo de 2027"
+  }
+ },
+ "slides": [
+  {
+   "tipo": "portada",
+   "foto": "fuentes/40c3eeb4c054.jpg",
+   "kicker": "Promesas y plazos",
+   "titular": "Lo dijeron. Lo anotamos. Lo vamos a revisar.",
+   "propio": "portada",
+   "texto": "Frases sobre el agua y su fecha."
+  },
+  {
+   "tipo": "cita",
+   "foto": "fuentes/40c3eeb4c054.jpg",
+   "kicker": "13 de julio",
+   "cita": "Vamos a empezar a ver mejor calidad del agua hacia finales de agosto y principios de septiembre",
+   "quien": "Pablo Lemus, gobernador, según Notisistema",
+   "texto": "Tomamos el 15 de septiembre como plazo. Ya pasó.",
+   "fuentes": [
+    "notijul"
+   ],
+   "calculo": "Nuestra lectura de «finales de agosto y principios de septiembre»: 15 de septiembre de 2026."
+  },
+  {
+   "tipo": "linea",
+   "foto": "fuentes/40c3eeb4c054.jpg",
+   "kicker": "Frases y fechas",
+   "titular": "Lo que hay que revisar",
+   "hitos": [
+    {
+     "fecha": "15 sep 2026 · plazo pasado",
+     "texto": "«Mejor calidad del agua hacia finales de agosto y principios de septiembre» (Notisistema, 13 de julio)",
+     "color": "gris"
+    },
+    {
+     "fecha": "Octubre",
+     "texto": "«Una mejora sustancial en la calidad del agua […] en las próximas semanas», en el mensaje del gobernador que reproduce Expansión el 8 de octubre"
+    },
+    {
+     "fecha": "«Seis meses»",
+     "texto": "Lo que duraría la rotación «en una primera etapa», según ese mensaje"
+    },
+    {
+     "fecha": "Marzo 2027",
+     "texto": "La rotación «se mantendrá hasta marzo de 2027», dice el SIAPA"
+    }
+   ],
+   "fuentes": [
+    "notijul",
+    "exp",
+    "siapa15"
+   ],
+   "calculo": "15 sep 2026: nuestra lectura (aguagdl.com/promesas)."
+  },
+  {
+   "tipo": "texto",
+   "foto": "fuentes/40c3eeb4c054.jpg",
+   "kicker": "Cómo leemos los plazos",
+   "titular": "Si no hay fecha exacta, la decimos y explicamos cómo la leemos",
+   "propio": "nuestro método (aguagdl.com/promesas)",
+   "texto": "Y si cambian los planes, lo anotamos con su fuente."
+  },
+  {
+   "tipo": "cierre",
+   "titular": "Guárdalo y revisa con nosotros",
+   "acciones": [
+    "Todas las promesas en aguagdl.com/promesas",
+    "Recibe un aviso antes de cada racionamiento: @AvisoAguaGDLbot en Telegram"
+   ],
+   "url": "aguagdl.com/promesas"
+  }
+ ]
+}

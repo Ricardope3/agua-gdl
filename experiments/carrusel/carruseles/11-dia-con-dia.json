@@ -1,0 +1,56 @@
+{
+ "id": "11-dia-con-dia",
+ "titulo": "«Día con día»",
+ "caption": "El 15 de octubre, el director del SIAPA dijo: «Vamos a seguir informando día con día lo que va presentando este proceso» (El Informador). ¿Has visto el informe de hoy? Si sabes dónde se publica, mándanoslo a soporte@aguagdl.com y lo enlazamos.",
+ "fuentes": {
+  "jaur": {
+   "url": "https://www.informador.mx/jalisco/siapa-comienzan-tandeos-en-la-zmg-con-113-colonias-piden-paciencia-y-verificar-calendario-de-rotacion-de-servicio-20261015-0177.html",
+   "medio": "El Informador",
+   "fecha": "2026-10-15",
+   "revisado": "2026-11-05",
+   "cita": "informó el director del Sistema Intermunicipal de Agua Potable y Alcantarillado (SIAPA), Ismael Jáuregui Castañeda. … “Les pedimos un poco de paciencia. Estamos trabajando para que ustedes, en base al calendario del esquema rotativo, tengan el flujo el día correcto de un agua de calidad. Vamos a seguir informando día con día lo que va presentando este proceso”, expresó."
+  }
+ },
+ "slides": [
+  {
+   "tipo": "cita",
+   "foto": "fuentes/7f33367dbe70.jpg",
+   "kicker": "15 de octubre",
+   "cita": "Vamos a seguir informando día con día lo que va presentando este proceso",
+   "quien": "Ismael Jáuregui Castañeda, director del SIAPA, según El Informador",
+   "fuentes": [
+    "jaur"
+   ]
+  },
+  {
+   "tipo": "texto",
+   "foto": "fuentes/7f33367dbe70.jpg",
+   "kicker": "Una pregunta sencilla",
+   "titular": "¿Dónde se publica el informe de cada día?",
+   "propio": "pregunta nuestra",
+   "texto": "Si lo encuentras, mándanoslo y lo enlazamos."
+  },
+  {
+   "tipo": "lista",
+   "foto": "fuentes/7f33367dbe70.jpg",
+   "kicker": "Lo que nos gustaría ver en un informe diario",
+   "titular": "Nuestra propuesta",
+   "propio": "propuesta nuestra",
+   "marca": "check",
+   "items": [
+    "Colonias sin presión, día por día",
+    "Pipas enviadas y a dónde",
+    "Cuándo regresó el agua a cada zona"
+   ]
+  },
+  {
+   "tipo": "cierre",
+   "titular": "¿Lo encontraste? Mándanoslo",
+   "acciones": [
+    "soporte@aguagdl.com",
+    "Mientras, los reportes de vecinos: aguagdl.com/reportes"
+   ],
+   "url": "aguagdl.com/reportes"
+  }
+ ]
+}

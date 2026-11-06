@@ -1,0 +1,86 @@
+{
+ "id": "14-cortes-totales",
+ "titulo": "«No serán cortes totales»",
+ "caption": "La página oficial de la rotación dice: «No serán cortes totales». Quadratín publicó el 19 de octubre que al menos 270 colonias registraron suspensión total del suministro en los primeros cuatro días. El director de la CEA habló de 728 registros de baja presión o suspensión. ¿Y en tu colonia? aguagdl.com/reportes",
+ "fuentes": {
+  "rot": {
+   "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/",
+   "medio": "Página de la rotación, Gobierno de Jalisco",
+   "fecha": "2026-11-05",
+   "consultada": true,
+   "revisado": "2026-11-05",
+   "cita": "Desde el Gobierno de Jalisco estamos trabajando para solucionar la calidad del agua que afecta al 40% de los hogares del Área Metropolitana de Guadalajara. … No afectará a toda el Área Metropolitana de Guadalajara, únicamente a los hogares suministrados por la Planta Potabilizadora No. 1, que representan el 40% de los hogares de la ciudad. … Cada zona tendrá de 2 a 3 racionamientos por semana por máximo un día, lo que buscará disminuir las afectaciones al mínimo. No serán cortes totales. Los racionamientos consistirán en una disminución de la presión con la que se abastece el agua hacia los hogares."
+  },
+  "q728": {
+   "url": "https://jalisco.quadratin.com.mx/sucesos/tandeo-deja-sin-agua-a-270-colonias-de-la-zona-metropolitana-de-guadalajara/",
+   "medio": "Quadratín Jalisco",
+   "fecha": "2026-10-19",
+   "revisado": "2026-11-05",
+   "cita": "GUADALAJARA, Jal., 19 de octubre de 2026.- Al menos 270 colonias de la Zona Metropolitana de Guadalajara han registrado la suspensión total del suministro de agua durante los primeros cuatro días del sistema de rotación del Siapa, principalmente en zonas altas o alejadas de la red. El director de la Comisión Estatal del Agua, Luis Barboza Niño, informó que en este periodo se han realizado 272 servicios de pipas en Guadalajara, Tlaquepaque, Tonalá y Zapopan. Detalló que se acumulan 728 registros de colonias con baja presión o suspensión del servicio, aunque la cifra no corresponde a colonias distintas"
+  }
+ },
+ "slides": [
+  {
+   "tipo": "cita",
+   "foto": "fuentes/e219eef56feb.jpg",
+   "kicker": "Lo que dice la página oficial",
+   "cita": "No serán cortes totales",
+   "quien": "Página de la rotación, Gobierno de Jalisco",
+   "texto": "«Los racionamientos consistirán en una disminución de la presión».",
+   "fuentes": [
+    "rot"
+   ]
+  },
+  {
+   "tipo": "texto",
+   "foto": "fuentes/e219eef56feb.jpg",
+   "kicker": "Los primeros cuatro días, según Quadratín",
+   "cifra": "270",
+   "titular": "colonias con suspensión total del suministro",
+   "texto": "«Al menos», dice la nota del 19 de octubre.",
+   "fuentes": [
+    "q728"
+   ]
+  },
+  {
+   "tipo": "texto",
+   "foto": "fuentes/e219eef56feb.jpg",
+   "kicker": "Lo que informó el director de la CEA",
+   "cifra": "728",
+   "titular": "registros de colonias con baja presión o suspensión del servicio",
+   "texto": "La cifra «no corresponde a colonias distintas», detalló, según Quadratín.",
+   "fuentes": [
+    "q728"
+   ]
+  },
+  {
+   "tipo": "versus",
+   "foto": "fuentes/e219eef56feb.jpg",
+   "titular": "Dos versiones",
+   "izq": {
+    "kicker": "La página oficial",
+    "cifra": "0",
+    "texto": "cortes totales: «disminución de la presión»"
+   },
+   "der": {
+    "kicker": "Quadratín, 19 de octubre",
+    "cifra": "270+",
+    "texto": "colonias con suspensión total en cuatro días"
+   },
+   "fuentes": [
+    "rot",
+    "q728"
+   ],
+   "calculo": "«No serán cortes totales» = 0 cortes totales prometidos."
+  },
+  {
+   "tipo": "cierre",
+   "titular": "¿Fue baja presión o cero agua en tu casa?",
+   "acciones": [
+    "Cuéntanos en aguagdl.com/reportes",
+    "Recibe un aviso antes de cada racionamiento: @AvisoAguaGDLbot en Telegram"
+   ],
+   "url": "aguagdl.com/reportes"
+  }
+ ]
+}

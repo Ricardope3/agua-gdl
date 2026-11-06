@@ -1,0 +1,151 @@
+{
+ "id": "01-maximo-un-dia",
+ "titulo": "«Por máximo un día»",
+ "caption": "La página oficial de la rotación dice que cada zona tendría «de 2 a 3 racionamientos por semana por máximo un día». Desde el 3 de noviembre, el calendario marca 4 días por semana a las zonas 1, 2, 4 y 5. ¿Cómo te ha ido en tu colonia? Cuéntanos en aguagdl.com/reportes. Fuentes en cada imagen.",
+ "fuentes": {
+  "rot": {
+   "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/",
+   "medio": "Página de la rotación, Gobierno de Jalisco",
+   "fecha": "2026-11-05",
+   "consultada": true,
+   "revisado": "2026-11-05",
+   "cita": "Desde el Gobierno de Jalisco estamos trabajando para solucionar la calidad del agua que afecta al 40% de los hogares del Área Metropolitana de Guadalajara. … No afectará a toda el Área Metropolitana de Guadalajara, únicamente a los hogares suministrados por la Planta Potabilizadora No. 1, que representan el 40% de los hogares de la ciudad. … Cada zona tendrá de 2 a 3 racionamientos por semana por máximo un día, lo que buscará disminuir las afectaciones al mínimo. No serán cortes totales. Los racionamientos consistirán en una disminución de la presión con la que se abastece el agua hacia los hogares."
+  },
+  "cal": {
+   "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/api/ajustes.php",
+   "medio": "Calendario de la rotación, SIAPA",
+   "fecha": "2026-11-03",
+   "revisado": "2026-11-05",
+   "cita": "actualizado 2026-11-03. Días por zona: 1 lunes, jueves, viernes, domingo; 2 lunes, martes, jueves, domingo; 3 miercoles, jueves, viernes; 4 lunes, martes, sabado, domingo; 5 lunes, martes, miercoles, jueves; 6 viernes, sabado, domingo; 7 sabado, domingo."
+  },
+  "udg": {
+   "url": "https://udgtv.com/noticias/hasta-dos-meses-sin-agua-en-polanquito/336885",
+   "medio": "UDG TV",
+   "fecha": "2026-11-04",
+   "revisado": "2026-11-05",
+   "cita": "Hasta dos meses sin agua en Polanquito"
+  }
+ },
+ "slides": [
+  {
+   "tipo": "cita",
+   "foto": "fuentes/38ae0724be32.jpg",
+   "kicker": "Lo que dice la página oficial",
+   "cita": "Cada zona tendrá de 2 a 3 racionamientos por semana por máximo un día",
+   "quien": "Página de la rotación, Gobierno de Jalisco",
+   "fuentes": [
+    "rot"
+   ]
+  },
+  {
+   "tipo": "calendario",
+   "foto": "fuentes/2dee1722b8e6.jpg",
+   "kicker": "El calendario, actualizado el 3 de noviembre",
+   "titular": "Cuatro zonas tienen *4 días* de racionamiento por semana",
+   "zonas": [
+    {
+     "zona": "Zona 1",
+     "dias": [
+      "lunes",
+      "jueves",
+      "viernes",
+      "domingo"
+     ]
+    },
+    {
+     "zona": "Zona 2",
+     "dias": [
+      "lunes",
+      "martes",
+      "jueves",
+      "domingo"
+     ]
+    },
+    {
+     "zona": "Zona 3",
+     "dias": [
+      "miercoles",
+      "jueves",
+      "viernes"
+     ]
+    },
+    {
+     "zona": "Zona 4",
+     "dias": [
+      "lunes",
+      "martes",
+      "sabado",
+      "domingo"
+     ]
+    },
+    {
+     "zona": "Zona 5",
+     "dias": [
+      "lunes",
+      "martes",
+      "miercoles",
+      "jueves"
+     ]
+    },
+    {
+     "zona": "Zona 6",
+     "dias": [
+      "viernes",
+      "sabado",
+      "domingo"
+     ]
+    },
+    {
+     "zona": "Zona 7",
+     "dias": [
+      "sabado",
+      "domingo"
+     ]
+    }
+   ],
+   "fuentes": [
+    "cal"
+   ],
+   "calculo": "Calendario actualizado 2026-11-03 (3 de noviembre); el anterior regía hasta esa fecha (api/data/rotation.json, previous until 2026-11-03). Zonas 1, 2, 4 y 5: 4 días cada una; 3 y 6: tres; 7: dos."
+  },
+  {
+   "tipo": "versus",
+   "foto": "fuentes/2dee1722b8e6.jpg",
+   "titular": "Lo prometido y lo que marca el calendario",
+   "izq": {
+    "kicker": "Prometido",
+    "cifra": "2 a 3",
+    "texto": "racionamientos por semana, «por máximo un día»"
+   },
+   "der": {
+    "kicker": "Zonas 1, 2, 4 y 5",
+    "cifra": "4",
+    "texto": "días de racionamiento por semana en el calendario"
+   },
+   "fuentes": [
+    "rot",
+    "cal"
+   ],
+   "calculo": "Calendario actualizado 2026-11-03 (3 de noviembre); el anterior regía hasta esa fecha (api/data/rotation.json, previous until 2026-11-03). Zonas 1, 2, 4 y 5: 4 días cada una; 3 y 6: tres; 7: dos."
+  },
+  {
+   "tipo": "texto",
+   "foto": "fuentes/c8b852c62f69.jpg",
+   "kicker": "Lo que publican los medios",
+   "titular": "«Hasta dos meses sin agua en Polanquito»",
+   "texto": "Titular de UDG TV, 4 de noviembre.",
+   "fuentes": [
+    "udg"
+   ]
+  },
+  {
+   "tipo": "cierre",
+   "titular": "¿Cuántos días se fue el agua en tu colonia?",
+   "acciones": [
+    "Cuéntanos en aguagdl.com/reportes",
+    "Recibe un aviso antes de cada racionamiento: @AvisoAguaGDLbot en Telegram"
+   ],
+   "url": "aguagdl.com/reportes"
+  }
+ ]
+}

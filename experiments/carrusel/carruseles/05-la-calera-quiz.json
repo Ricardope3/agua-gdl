@@ -1,0 +1,129 @@
+{
+ "id": "05-la-calera-quiz",
+ "titulo": "Quiz: ¿cuánto cuesta La Calera?",
+ "caption": "Pregunta rápida: ¿cuánto cuesta todo el sistema La Calera, la obra que llevaría agua de la presa La Calera a la planta Los Agaves y se conectaría con el acueducto Chapala–Guadalajara que ya existe? Respuesta en la tercera imagen, con la cifra del propio Plan Integral del Agua. aguagdl.com/exige",
+ "fuentes": {
+  "mil": {
+   "url": "https://www.milenio.com/politica/sheinbaum-y-lemus-anuncian-proyecto-garantizar-abasto-agua-guadalajara",
+   "medio": "Milenio",
+   "fecha": "2026-10-28",
+   "revisado": "2026-11-05",
+   "cita": "Los gobiernos de México y Jalisco invertirán 24 mil 700 millones de pesos en conjunto en el proyecto hídrico para garantizar suficiente agua potable y de calidad a la zona metropolitana de Guadalajara, sin endeudamientos ni privatizaciones de las obras. La Federación destinará 14 mil 500 millones de pesos para la construcción del nuevo acueducto Chapala-Guadalajara (nueve mil 300 mdp), y para el acueducto Calderón-San Gaspar, así como la ampliación de la planta potabilizadora de San Gaspar (cinco mil 200 mdp). En tanto, la administración estatal invertirá 10 mil 200 millones de pesos para la renovación de la planta potabilizadora número uno en Miravalle, el saneamiento del canal y la presa Las Pintas, así como la reparación y la construcción de una nueva red de colectores. … la presidenta Claudia Sheinbaum destacó que se trata de un proyecto que brinda la mejor solución a la región, aprovechando al 100 por ciento la presa El Zapotillo"
+  },
+  "calera": {
+   "url": "https://planintegraldelagua.jalisco.gob.mx/pdf/an-0014.pdf",
+   "medio": "Plan Integral del Agua, Gobierno de Jalisco",
+   "fecha": "2026-11-05",
+   "consultada": true,
+   "revisado": "2026-11-05",
+   "cita": "El proyecto consiste en la construcción del Sistema de Abastecimiento La Calera – Planta Potabilizadora No. 5, mediante el desarrollo de una nueva estación de bombeo, infraestructura de captación, acueducto de conducción, interconexiones hidráulicas, sistemas eléctricos y equipamiento electromecánico que permitirán conducir el agua almacenada en la Presa La Calera hacia la Planta Potabilizadora No. 5 \"Los Agaves\" … establecer una interconexión estratégica con el tanque de cambio de régimen del Acueducto Chapala–Guadalajara. Esta configuración permitirá incorporar volúmenes al sistema metropolitano, reduciendo progresivamente la dependencia del último tramo del Sistema Antiguo Chapala–Guadalajara, el cual actualmente opera mediante conducción a cielo abierto. … Primera etapa: Construcción de acueducto de conducción de 6,732.55 metros de 56 pulgadas de diámetro. … El proyecto está diseñado para bombear un volumen de 2,500 litros por segundo provenientes de la presa La Calera. … Ejecución de su primera etapa en 2025: $441.22 millones … Etapa 2026, estación de bombeo y conexión con el tanque de cambio de régimen del Acueducto existente Chapala – Guadalajara: $756.00 millones. … Población beneficiada 3.15 millones de habitantes. … Monto del proyecto: 1,197.22 millones. El monto del proyecto corresponde a estimaciones obtenidas a partir de estudios y proyectos ejecutivos, por lo que no constituye presupuesto definitivo."
+  }
+ },
+ "slides": [
+  {
+   "tipo": "pregunta",
+   "foto": "fuentes/eb93db736083.jpg",
+   "kicker": "Quiz",
+   "titular": "¿Cuánto cuesta todo el sistema La Calera, según el gobierno?",
+   "opciones": [
+    "1,197 millones",
+    "9,300 millones",
+    "24,700 millones"
+   ],
+   "texto": "Pista: está diseñada para bombear 2,500 litros por segundo. Desliza.",
+   "fuentes": [
+    "calera",
+    "mil"
+   ],
+   "calculo": "Opciones: 1,197.22 (La Calera); nueve mil 300 = 9,300 (acueducto); 24 mil 700 = 24,700 (plan total). El proyecto está diseñado para bombear un volumen de 2,500 litros por segundo (Plan Integral del Agua, p. 2)."
+  },
+  {
+   "tipo": "texto",
+   "foto": "fuentes/eb93db736083.jpg",
+   "kicker": "Qué es",
+   "titular": "Llevar agua de la presa La Calera a la planta Los Agaves",
+   "texto": "Según el Plan Integral del Agua, también se conectaría con el acueducto Chapala–Guadalajara que ya existe y reduciría la dependencia del último tramo del Sistema Antiguo, que va a cielo abierto.",
+   "fuentes": [
+    "calera"
+   ]
+  },
+  {
+   "tipo": "pregunta",
+   "foto": "fuentes/eb93db736083.jpg",
+   "kicker": "Respuesta",
+   "titular": "Todo el sistema: *1,197 millones*",
+   "opciones": [
+    "1,197 millones",
+    "9,300 millones",
+    "24,700 millones"
+   ],
+   "respuesta": 0,
+   "texto": "Es una estimación, no un presupuesto definitivo, dice el propio documento.",
+   "fuentes": [
+    "calera",
+    "mil"
+   ],
+   "calculo": "Opciones: 1,197.22 (La Calera); nueve mil 300 = 9,300; 24 mil 700 = 24,700."
+  },
+  {
+   "tipo": "barras",
+   "foto": "fuentes/eb93db736083.jpg",
+   "kicker": "Millones de pesos",
+   "titular": "La Calera, por etapas",
+   "barras": [
+    {
+     "etiqueta": "Primera etapa, 2025 (acueducto de conducción)",
+     "valor": 441,
+     "texto": "441"
+    },
+    {
+     "etiqueta": "Etapa 2026 (bombeo y conexión)",
+     "valor": 756,
+     "texto": "756"
+    },
+    {
+     "etiqueta": "Todo el sistema",
+     "valor": 1197,
+     "texto": "1,197",
+     "color": "gris"
+    }
+   ],
+   "fuentes": [
+    "calera"
+   ],
+   "calculo": "$441.22 → 441; $756.00 → 756; 1,197.22 → 1,197."
+  },
+  {
+   "tipo": "barras",
+   "foto": "fuentes/eb93db736083.jpg",
+   "kicker": "Para dimensionar",
+   "titular": "Caben casi *8* Caleras en el nuevo acueducto",
+   "barras": [
+    {
+     "etiqueta": "Nuevo acueducto Chapala–Guadalajara",
+     "valor": 9300,
+     "texto": "9,300"
+    },
+    {
+     "etiqueta": "Sistema La Calera completo",
+     "valor": 1197,
+     "texto": "1,197"
+    }
+   ],
+   "fuentes": [
+    "calera",
+    "mil"
+   ],
+   "calculo": "9,300 entre 1,197.22 = 7.8, casi 8."
+  },
+  {
+   "tipo": "cierre",
+   "titular": "¿Sabías la respuesta? Compártelo",
+   "acciones": [
+    "Más obras y sus costos en aguagdl.com/exige",
+    "Recibe un aviso antes de cada racionamiento: @AvisoAguaGDLbot en Telegram"
+   ],
+   "url": "aguagdl.com/exige"
+  }
+ ]
+}

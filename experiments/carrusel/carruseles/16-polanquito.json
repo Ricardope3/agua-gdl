@@ -1,0 +1,77 @@
+{
+ "id": "16-polanquito",
+ "titulo": "Polanquito: casi dos meses",
+ "caption": "Polanquito, Guadalajara. UDG TV: «Hasta dos meses sin agua». Meganoticias: las familias acarrean agua de un manantial y lo que llega en pipas «apenas les alcanza para uno o dos días». El Gobierno de Guadalajara dice que hay una cisterna comunitaria en el Centro Barrial Polanquito. ¿Y en tu colonia? aguagdl.com/reportes",
+ "fuentes": {
+  "udg": {
+   "url": "https://udgtv.com/noticias/hasta-dos-meses-sin-agua-en-polanquito/336885",
+   "medio": "UDG TV",
+   "fecha": "2026-11-04",
+   "revisado": "2026-11-05",
+   "cita": "Hasta dos meses sin agua en Polanquito"
+  },
+  "mega": {
+   "url": "https://www.meganoticias.mx/guadalajara/noticia/vecinos-de-polanquito-acumulan-casi-dos-meses-sin-agua-sobreviven-con-acarreo/785759",
+   "medio": "Meganoticias",
+   "fecha": "2026-11-05",
+   "revisado": "2026-11-05",
+   "cita": "Vecinos de Polanquito acumulan casi dos meses sin agua; sobreviven con acarreo … las familias deben acarrear agua desde un manantial cercano para cubrir sus necesidades básicas, mientras que el líquido que reciben mediante pipas y plantas potabilizadoras apenas les alcanza para uno o dos días."
+  },
+  "conc": {
+   "url": "https://concienciapublica.com.mx/2026/11/01/habra-nuevo-esquema-de-tandeos-el-siapa-admite-fracaso-de-tandeos-crece-el-malestar-social/",
+   "medio": "Conciencia Pública",
+   "fecha": "2026-11-01",
+   "revisado": "2026-11-05",
+   "cita": "EL GOBIERNO DE GUADALAJARA AMPLÍA EL PROGRAMA DE MEJORA DE LA CALIDAD DE AGUA En este contexto, el gobierno de Guadalajara decidió ampliar el programa … se mantiene activo un operativo de distribución de agua mediante 77 pipas totalmente gratuitas, que abastecen a más de 160 colonias de Guadalajara. De esta manera se han distribuido más de 6.4 millones de litros de agua en colonias tapatías. A esto se suma la instalación de cisternas comunitarias en más de 40 espacios públicos … Entre los puntos donde ya se cuenta con estos contenedores se encuentran Plaza Talpita, Talpita Oriente, el Centro Barrial Polanquito"
+  }
+ },
+ "slides": [
+  {
+   "tipo": "portada",
+   "foto": "fuentes/fb29dc00b79f.jpg",
+   "kicker": "Polanquito, Guadalajara",
+   "titular": "«Hasta dos meses sin agua en Polanquito»",
+   "texto": "Titular de UDG TV, 4 de noviembre.",
+   "fuentes": [
+    "udg"
+   ]
+  },
+  {
+   "tipo": "texto",
+   "foto": "fuentes/fb29dc00b79f.jpg",
+   "kicker": "Según Meganoticias",
+   "titular": "Acarrean agua de un manantial",
+   "texto": "Lo que llega en pipas y plantas potabilizadoras «apenas les alcanza para uno o dos días».",
+   "fuentes": [
+    "mega"
+   ]
+  },
+  {
+   "tipo": "texto",
+   "foto": "fuentes/fb29dc00b79f.jpg",
+   "kicker": "Lo que dice el gobierno municipal",
+   "titular": "Una cisterna comunitaria en el Centro Barrial Polanquito",
+   "texto": "Es uno de los «más de 40 espacios públicos» con cisterna del programa del gobierno de Guadalajara, según Conciencia Pública.",
+   "fuentes": [
+    "conc"
+   ]
+  },
+  {
+   "tipo": "texto",
+   "foto": "fuentes/fb29dc00b79f.jpg",
+   "kicker": "Por qué lo contamos",
+   "titular": "Cada colonia tiene su historia",
+   "texto": "Las de cada colonia, con su fuente, en aguagdl.com/reportes.",
+   "propio": "servicio de Agua GDL"
+  },
+  {
+   "tipo": "cierre",
+   "titular": "¿Tu colonia lleva días sin agua?",
+   "acciones": [
+    "Cuéntanos en aguagdl.com/reportes",
+    "Pide una pipa: aguagdl.com/pipas"
+   ],
+   "url": "aguagdl.com/reportes"
+  }
+ ]
+}

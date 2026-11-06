@@ -1,0 +1,62 @@
+{
+ "id": "15-tres-promesas",
+ "titulo": "Tres promesas en una frase",
+ "caption": "En el mensaje del gobernador que reproduce Expansión (8 de octubre): las acciones del agua «no representarán un incremento en las tarifas del SIAPA, no se privatizará el servicio, no será una deuda pública». Son tres promesas. Así las vamos a revisar: aguagdl.com/promesas",
+ "fuentes": {
+  "exp": {
+   "url": "https://politica.expansion.mx/mexico/2026/10/08/crisis-agua-jalisco-lemus-acueducto-chapala-guadalajara",
+   "medio": "Expansión",
+   "fecha": "2026-10-08",
+   "revisado": "2026-11-05",
+   "cita": "El plan anunciado por el gobernador Pablo Lemus contempla como medida inmediata dejar de utilizar el agua de la presa Las Pintas … [mensaje del gobernador que reproduce Expansión:] … Este proyecto ya cuenta con el aval de la Conagua (@conagua_mx). También hace falta concluir las obras para garantizar que funcione totalmente el sistema de El Zapotillo, en la cuenca del Río Verde, que actualmente opera al 45 por ciento. He acordado con la Presidenta Claudia Sheinbaum (@Claudiashein) que esas obras serán ejecutadas y pagadas por la Federación. Todas estas acciones no representarán un incremento en las tarifas del SIAPA, no se privatizará el servicio, no será una deuda pública y sí servirá para mejorar la calidad del agua durante muchos años. … Si hacemos esto, podremos ver una mejora sustancial en la calidad del agua que recibe la ciudad en las próximas semanas. … ¿Cuánto tiempo puede durar este esquema de rotación en el servicio? Estimamos que serán seis meses en una primera etapa, en lo que concluyen las obras del acueducto de desvío de La Calera y la ampliación de la Planta Potabilizadora número 1 de Miravalle … reducirá el suministro metropolitano hasta en 2.5 metros cúbicos por segundo durante al menos seis meses."
+  }
+ },
+ "slides": [
+  {
+   "tipo": "cita",
+   "foto": "fuentes/0e1cdcf06f5a.jpg",
+   "kicker": "El mensaje del gobernador",
+   "cita": "no representarán un incremento en las tarifas del SIAPA, no se privatizará el servicio, no será una deuda pública",
+   "quien": "Pablo Lemus, gobernador, en el mensaje que reproduce Expansión",
+   "fuentes": [
+    "exp"
+   ]
+  },
+  {
+   "tipo": "lista",
+   "foto": "fuentes/0e1cdcf06f5a.jpg",
+   "kicker": "Son tres promesas",
+   "titular": "Las anotamos",
+   "propio": "nuestra lista de las tres promesas citadas en la diapositiva 1",
+   "marca": "check",
+   "items": [
+    "Sin aumento de tarifas del SIAPA",
+    "Sin privatizar el servicio",
+    "Sin deuda pública"
+   ],
+   "texto": "Se marcan cuando haya documentos que lo muestren."
+  },
+  {
+   "tipo": "lista",
+   "foto": "fuentes/0e1cdcf06f5a.jpg",
+   "kicker": "Cómo las vamos a revisar",
+   "titular": "Con documentos, no con discursos",
+   "propio": "nuestro método (aguagdl.com/promesas)",
+   "marca": "num",
+   "items": [
+    "*Tarifas:* la resolución de tarifas del SIAPA para el próximo año",
+    "*Privatización:* las bases de licitación, el fallo y quién opera",
+    "*Deuda:* el decreto, el contrato y su registro"
+   ]
+  },
+  {
+   "tipo": "cierre",
+   "titular": "Una promesa se cumple en papel",
+   "acciones": [
+    "Síguelas en aguagdl.com/promesas",
+    "Pide los documentos: aguagdl.com/exige"
+   ],
+   "url": "aguagdl.com/promesas"
+  }
+ ]
+}

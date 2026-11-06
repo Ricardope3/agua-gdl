@@ -1,0 +1,424 @@
+#!/usr/bin/env python3
+"""Instagram carousels for Agua GDL: one JSON per carousel in carruseles/, rendered to 1080x1350 PNGs.
+
+    python3 experiments/carrusel/build.py               check every carousel, render all, write FUENTES.md and contact sheets
+    python3 experiments/carrusel/build.py 01-maximo     only carousels whose id starts with this
+    python3 experiments/carrusel/build.py --check       validate only (no Chrome)
+
+Checks before rendering: every number written on a slide appears in the "cita" of a source the slide cites
+(or in the slide's "calculo", which says how it was computed); every source has url, medio, fecha, cita and
+"revisado"; every background is in fotos.json (reviewed: no close face, no name, no watermark) and in
+pipelines/fotos_temas.json's "temas". A pass checks shape, not truth: the citas were copied from the sources
+on the "revisado" date. Output goes to experiments/carrusel/out/ (gitignored). Drafts only: Ricardo posts.
+"""
+import html
+import json
+import pathlib
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+
+HERE = pathlib.Path(__file__).resolve().parent
+ROOT = HERE.parents[1]
+OUT = HERE / "out"
+CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+W, H = 1080, 1350
+CHROME_BAR = 87  # headless Chrome's viewport is the window minus this; screenshots are cropped back
+TYPES = {"portada", "texto", "cita", "barras", "iconos", "calendario", "versus", "lista", "linea", "pregunta", "cierre"}
+DIAS = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"]
+DIAS_CORTO = ["L", "M", "M", "J", "V", "S", "D"]
+
+
+def fail(msg):
+    sys.exit(f"carrusel: {msg}")
+
+
+def foto_path(rel):
+    """The private 800 px original when the main checkout has it, else the public 480 px copy."""
+    name = pathlib.Path(rel).name
+    for base in (ROOT / "research/fotos", pathlib.Path.home() / "agua-gdl/research/fotos"):
+        p = base / name
+        if p.is_file():
+            return p
+    p = ROOT / "web" / rel
+    if not p.is_file():
+        fail(f"no photo {rel}")
+    return p
+
+
+def slide_texts(s):
+    out = []
+    for k, v in s.items():
+        if k in ("tipo", "foto", "fuentes", "calculo", "nota", "posicion", "propio"):
+            continue
+        if isinstance(v, str):
+            out.append(v)
+        elif isinstance(v, list):
+            for x in v:
+                if isinstance(x, str):
+                    out.append(x)
+                elif isinstance(x, dict):
+                    out += [str(y) for kk, y in x.items() if kk not in ("color", "icono")]
+        elif isinstance(v, dict):
+            out += [str(y) for kk, y in v.items() if kk not in ("color", "icono")]
+        elif isinstance(v, (int, float)) and k not in ("total", "n", "columnas", "respuesta"):
+            out.append(str(v))
+    return out
+
+
+def numbers(text):
+    return [n.replace(",", "") for n in re.findall(r"\d[\d,]*(?:\.\d+)?", text)]
+
+
+def check(c, fotos_ok, temas):
+    cid = c.get("id", "?")
+    for k in ("id", "titulo", "caption", "fuentes", "slides"):
+        if k not in c:
+            fail(f"{cid}: missing {k}")
+    for key, f in c["fuentes"].items():
+        for k in ("url", "medio", "fecha", "cita", "revisado"):
+            if not f.get(k):
+                fail(f"{cid}: fuente {key} missing {k}")
+        if not f["url"].startswith("https://"):
+            fail(f"{cid}: fuente {key} url must be https")
+    if not 3 <= len(c["slides"]) <= 10:
+        fail(f"{cid}: 3 to 10 slides")
+    if c["slides"][-1]["tipo"] != "cierre":
+        fail(f"{cid}: the last slide is a cierre")
+    for i, s in enumerate(c["slides"], 1):
+        where = f"{cid} slide {i}"
+        if s.get("tipo") not in TYPES:
+            fail(f"{where}: tipo {s.get('tipo')!r}")
+        if s.get("foto") and s["foto"] not in fotos_ok:
+            fail(f"{where}: {s['foto']} is not in fotos.json (review it for faces, names and watermarks first)")
+        if s.get("foto") and s["foto"] not in temas:
+            fail(f"{where}: {s['foto']} is not in pipelines/fotos_temas.json temas")
+        for key in s.get("fuentes", []):
+            if key not in c["fuentes"]:
+                fail(f"{where}: unknown fuente {key}")
+        pool = " ".join(c["fuentes"][k]["cita"] for k in s.get("fuentes", [])) + " " + s.get("calculo", "")
+        for k in s.get("fuentes", []):
+            y, m, d = c["fuentes"][k]["fecha"].split("-")
+            pool += f" {int(d)} {y} "  # the source's own date may be written on the slide
+        pool = pool.replace(",", "")
+        texts = slide_texts(s)
+        nums = [n for t in texts for n in numbers(t)]
+        if nums and not s.get("fuentes") and not s.get("calculo"):
+            fail(f"{where}: numbers {nums} without fuentes")
+        for n in nums:
+            if not re.search(r"(?<![\d.])" + re.escape(n) + r"(?![\d])", pool):
+                fail(f"{where}: {n} is not in the cited citas or the calculo")
+        if s["tipo"] != "cierre" and not s.get("fuentes") and not s.get("propio"):
+            fail(f"{where}: no fuentes; a slide without a source says why in \"propio\" (our question, proposal, method or service)")
+        if s["tipo"] == "cita" and not s.get("fuentes"):
+            fail(f"{where}: a quote needs its fuente")
+        if s["tipo"] == "cita":
+            q = s["cita"].strip("«»\"“” ")
+            q = q.replace("…", "")
+            if not all(part.strip() in " ".join(c["fuentes"][k]["cita"] for k in s["fuentes"]) for part in q.split("[...]")):
+                fail(f"{where}: the quote is not word for word in its fuente's cita")
+
+
+def md(text):
+    t = html.escape(text)
+    t = re.sub(r"\*\*(.+?)\*\*", r'<span class="alarm">\1</span>', t)
+    t = re.sub(r"\*(.+?)\*", r'<span class="acc">\1</span>', t)
+    return t.replace("\n", "<br>")
+
+
+ICONS = {
+    "gota": '<path d="M50 6C50 6 18 46 18 66a32 32 0 0 0 64 0C82 46 50 6 50 6z"/>',
+    "persona": '<circle cx="50" cy="26" r="16"/><path d="M20 94c0-22 13-38 30-38s30 16 30 38z"/>',
+    "casa": '<path d="M50 10 8 46h12v44h24V66h12v24h24V46h12z"/>',
+    "pipa": '<path d="M6 36h52a14 14 0 0 1 14 14v24H6z"/><path d="M74 46h10l10 14v14H74z"/><circle cx="24" cy="80" r="9"/><circle cx="78" cy="80" r="9"/>',
+    "cubeta": '<path d="M16 26h68l-8 66H24z"/><path d="M12 18h76v10H12z"/>',
+    "peso": '<circle cx="50" cy="50" r="42"/>',
+}
+
+
+def icon(name, cls=""):
+    return f'<svg class="ic {cls}" viewBox="0 0 100 100">{ICONS[name]}</svg>'
+
+
+LOGO = None
+
+
+def logo():
+    global LOGO
+    if LOGO is None:
+        LOGO = (ROOT / "web/logo.svg").read_text().replace("<svg ", '<svg class="logo" ', 1)
+    return LOGO
+
+
+def render_body(s):
+    t = s["tipo"]
+    if t in ("portada", "texto"):
+        parts = []
+        if s.get("kicker"):
+            parts.append(f'<div class="kicker">{md(s["kicker"])}</div>')
+        if s.get("cifra"):
+            parts.append(f'<div class="cifra">{md(s["cifra"])}</div>')
+        if s.get("titular"):
+            parts.append(f'<div class="titular">{md(s["titular"])}</div>')
+        if s.get("texto"):
+            parts.append(f'<div class="texto">{md(s["texto"])}</div>')
+        if s.get("pie"):
+            parts.append(f'<div class="pie">{md(s["pie"])}</div>')
+        return f'<div class="stack {s.get("posicion", "")}">{"".join(parts)}</div>'
+    if t == "cita":
+        return (f'<div class="stack"><div class="kicker">{md(s.get("kicker", ""))}</div><div class="comillas">“</div>'
+                f'<blockquote>{md(s["cita"])}</blockquote><div class="quien">{md(s["quien"])}</div>'
+                + (f'<div class="texto small">{md(s["texto"])}</div>' if s.get("texto") else "") + "</div>")
+    if t == "barras":
+        mx = max(b["valor"] for b in s["barras"])
+        rows = "".join(
+            f'<div class="barra"><div class="bl"><span>{md(b["etiqueta"])}</span><b class="{b.get("color", "")}">{md(b["texto"])}</b></div>'
+            f'<div class="track"><div class="fill {b.get("color", "")}" style="width:{max(2, 100 * b["valor"] / mx):.1f}%"></div></div></div>'
+            for b in s["barras"])
+        return (f'<div class="stack"><div class="kicker">{md(s.get("kicker", ""))}</div><div class="titular">{md(s["titular"])}</div>'
+                f'<div class="barras{" compact" if len(s["barras"]) > 4 else ""}">{rows}</div>' + (f'<div class="texto small">{md(s["texto"])}</div>' if s.get("texto") else "") + "</div>")
+    if t == "iconos":
+        n, total = s["n"], s["total"]
+        cols = s.get("columnas", 10 if total > 12 else total)
+        cells = "".join(icon(s["icono"], "on" if i < n else "off") for i in range(total))
+        return (f'<div class="stack"><div class="kicker">{md(s.get("kicker", ""))}</div>'
+                f'<div class="cifra{" long" if len(s["cifra"]) > 6 else ""}">{md(s["cifra"])}</div><div class="titular">{md(s["titular"])}</div>'
+                f'<div class="iconos{" many" if total > 30 else ""}" style="grid-template-columns:repeat({cols},1fr)">{cells}</div>'
+                + (f'<div class="texto small">{md(s["texto"])}</div>' if s.get("texto") else "") + "</div>")
+    if t == "calendario":
+        head = '<div></div>' + "".join(f'<div class="dh">{d}</div>' for d in DIAS_CORTO)
+        rows = ""
+        for z in s["zonas"]:
+            rows += f'<div class="zl">{md(z["zona"])}</div>' + "".join(
+                f'<div class="dc {"cut" if d in z["dias"] else ""}"></div>' for d in DIAS)
+        return (f'<div class="stack"><div class="kicker">{md(s.get("kicker", ""))}</div><div class="titular">{md(s["titular"])}</div>'
+                f'<div class="cal">{head}{rows}</div><div class="leyenda"><i class="dc cut"></i> {md(s.get("leyenda", "día de racionamiento"))}</div>'
+                + (f'<div class="texto small">{md(s["texto"])}</div>' if s.get("texto") else "") + "</div>")
+    if t == "versus":
+        a, b = s["izq"], s["der"]
+        col = lambda x, cls: (f'<div class="vs {cls}"><div class="vk">{md(x["kicker"])}</div><div class="vc">{md(x["cifra"])}</div>'
+                              f'<div class="vt">{md(x["texto"])}</div></div>')
+        return (f'<div class="stack"><div class="kicker">{md(s.get("kicker", ""))}</div><div class="titular">{md(s["titular"])}</div>'
+                f'<div class="versus">{col(a, "a")}<div class="vsx">vs</div>{col(b, "b")}</div>'
+                + (f'<div class="texto small">{md(s["texto"])}</div>' if s.get("texto") else "") + "</div>")
+    if t == "lista":
+        mark = s.get("marca", "num")
+        items = "".join(
+            f'<li><span class="m {mark}">{i if mark == "num" else ""}</span><div>{md(it)}</div></li>'
+            for i, it in enumerate(s["items"], 1))
+        return (f'<div class="stack"><div class="kicker">{md(s.get("kicker", ""))}</div><div class="titular">{md(s["titular"])}</div>'
+                f'<ul class="lista">{items}</ul>' + (f'<div class="texto small">{md(s["texto"])}</div>' if s.get("texto") else "") + "</div>")
+    if t == "linea":
+        items = "".join(
+            f'<div class="hito {h.get("color", "")}"><div class="hf">{md(h["fecha"])}</div><div class="ht">{md(h["texto"])}</div></div>'
+            for h in s["hitos"])
+        return (f'<div class="stack"><div class="kicker">{md(s.get("kicker", ""))}</div><div class="titular">{md(s["titular"])}</div>'
+                f'<div class="linea">{items}</div>' + (f'<div class="texto small">{md(s["texto"])}</div>' if s.get("texto") else "") + "</div>")
+    if t == "pregunta":
+        ops = "".join(
+            f'<div class="op {"ok" if s.get("respuesta") == i else ""}"><b>{"ABCD"[i]}</b>{md(o)}</div>'
+            for i, o in enumerate(s["opciones"]))
+        return (f'<div class="stack"><div class="kicker">{md(s.get("kicker", ""))}</div><div class="titular">{md(s["titular"])}</div>'
+                f'<div class="ops">{ops}</div>' + (f'<div class="texto small">{md(s["texto"])}</div>' if s.get("texto") else "") + "</div>")
+    if t == "cierre":
+        acts = "".join(f'<li>{md(a)}</li>' for a in s.get("acciones", []))
+        return (f'<div class="stack cierre">{logo()}<div class="titular">{md(s["titular"])}</div>'
+                f'<ul class="acts">{acts}</ul><div class="url">{md(s.get("url", "aguagdl.com"))}</div>'
+                f'<div class="pie">Agua GDL es un proyecto ciudadano, sin partido ni afiliación oficial. Cada dato lleva su fuente; si ves un error, escríbenos a soporte@aguagdl.com.</div></div>')
+    fail(f"tipo {t}")
+
+
+CSS = """
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1350px;overflow:hidden;background:#06141d}
+body{font-family:"Avenir Next",Avenir,"Helvetica Neue",sans-serif;color:#fff;position:relative}
+.bg{position:absolute;inset:-30px;background-size:cover;background-position:center;filter:grayscale(.3) brightness(.62) contrast(1.08) blur(1px)}
+.tint{position:absolute;inset:0;background:linear-gradient(180deg,rgba(2,18,36,.62) 0%,rgba(2,18,36,.28) 30%,rgba(2,18,36,.5) 55%,rgba(1,10,22,.9) 100%)}
+.plain .bg{display:none}.plain .tint{background:radial-gradient(120% 90% at 20% 0%,#0b3a66 0%,#06141d 60%)}
+.frame{position:absolute;inset:0;padding:72px 76px 64px;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;gap:16px;font-weight:700;font-size:30px;letter-spacing:.01em}
+.top .logo{width:40px;height:58px}
+.top .n{margin-left:auto;font-size:26px;font-weight:600;opacity:.7}
+.main{flex:1;display:flex;align-items:center}
+.stack{width:100%;display:flex;flex-direction:column;gap:26px}
+.stack.abajo{align-self:flex-end;padding-bottom:20px}
+.kicker{font-family:"Avenir Next Condensed";font-weight:700;font-size:34px;color:#7cc4ff;text-transform:none;letter-spacing:.01em}
+.kicker:empty{display:none}
+.cifra{font-family:"Avenir Next Condensed";font-weight:800;font-size:200px;line-height:.9;color:#3ea6ff;letter-spacing:-.02em}
+.titular{font-family:"Avenir Next Condensed";font-weight:800;font-size:80px;line-height:1.02;letter-spacing:-.005em;text-wrap:balance;text-shadow:0 2px 16px rgba(0,0,0,.45)}
+.texto{font-size:38px;line-height:1.3;font-weight:600;text-wrap:pretty;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+.texto.small{font-size:31px;font-weight:500;opacity:.92}
+.pie{font-size:24px;opacity:.75;line-height:1.35}
+.acc{color:#3ea6ff}.alarm{color:#ff7a66}
+.comillas{font-family:Georgia,serif;font-size:260px;line-height:1;height:110px;color:#3ea6ff;margin-bottom:-10px}
+blockquote{font-family:"Avenir Next Condensed";font-weight:800;font-size:82px;line-height:1.08;text-wrap:balance}
+.quien{font-size:30px;font-weight:600;opacity:.85}
+.barras{display:flex;flex-direction:column;gap:34px;margin-top:10px}
+.bl{display:flex;justify-content:space-between;align-items:baseline;gap:20px;font-size:32px;font-weight:600;margin-bottom:12px}
+.bl b{font-family:"Avenir Next Condensed";font-weight:800;font-size:54px;white-space:nowrap;color:#3ea6ff}
+.barras.compact{gap:14px}.barras.compact .bl{font-size:28px;margin-bottom:6px}.barras.compact .bl b{font-size:42px}.barras.compact .track{height:30px}
+.track{height:44px;background:rgba(255,255,255,.12);border-radius:8px;overflow:hidden}
+.fill{height:100%;background:#3ea6ff;border-radius:8px}
+.fill.alarm{background:#ff7a66}.bl b.alarm{color:#ff7a66}
+.fill.gris{background:#c9d4de}.bl b.gris{color:#c9d4de}
+.iconos{display:grid;gap:14px;margin-top:6px}.iconos.many{gap:6px;width:72%}
+.cifra.long{font-size:140px}
+.ic{width:100%;aspect-ratio:1}
+.ic.on{fill:#3ea6ff}.ic.off{fill:rgba(255,255,255,.18)}
+.cal{display:grid;grid-template-columns:150px repeat(7,1fr);gap:10px;margin-top:6px}
+.dh{text-align:center;font-weight:700;font-size:30px;opacity:.8}
+.zl{font-family:"Avenir Next Condensed";font-weight:700;font-size:34px;display:flex;align-items:center}
+.dc{height:62px;border-radius:10px;background:rgba(255,255,255,.12)}
+.dc.cut{background:#ff7a66}
+.leyenda{display:flex;align-items:center;gap:14px;font-size:26px;opacity:.85}
+.leyenda .dc{display:inline-block;width:34px;height:34px}
+.versus{display:flex;align-items:stretch;gap:22px}
+.vs{flex:1;border-radius:22px;padding:34px 30px;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.18);display:flex;flex-direction:column;gap:14px}
+.vs.a{border-color:#3ea6ff}.vs.b{border-color:#ff7a66}
+.vk{font-size:28px;font-weight:700;opacity:.85}
+.vc{font-family:"Avenir Next Condensed";font-weight:800;font-size:120px;line-height:.95}
+.vs.a .vc{color:#3ea6ff}.vs.b .vc{color:#ff7a66}
+.vt{font-size:29px;line-height:1.3;font-weight:500}
+.vsx{align-self:center;font-family:"Avenir Next Condensed";font-weight:800;font-size:44px;opacity:.6}
+.lista{list-style:none;display:flex;flex-direction:column;gap:24px}
+.lista li{display:flex;gap:24px;align-items:flex-start;font-size:34px;line-height:1.28;font-weight:600}
+.m{flex:none;width:58px;height:58px;border-radius:50%;background:#3ea6ff;color:#06141d;font-weight:800;font-size:32px;display:flex;align-items:center;justify-content:center}
+.m.check{background:transparent;border:4px solid #3ea6ff;border-radius:10px;width:50px;height:50px;margin-top:4px}
+.linea{display:flex;flex-direction:column;gap:0;border-left:5px solid rgba(255,255,255,.3);margin-left:14px}
+.hito{position:relative;padding:0 0 30px 44px}
+.hito:before{content:"";position:absolute;left:-17px;top:6px;width:28px;height:28px;border-radius:50%;background:#3ea6ff}
+.hito.alarm:before{background:#ff7a66}.hito.gris:before{background:#c9d4de}
+.hf{font-family:"Avenir Next Condensed";font-weight:800;font-size:44px;color:#7cc4ff}
+.hito.alarm .hf{color:#ff7a66}
+.ht{font-size:30px;line-height:1.3;font-weight:500}
+.ops{display:flex;flex-direction:column;gap:20px}
+.op{display:flex;gap:24px;align-items:center;font-size:40px;font-weight:700;padding:26px 30px;border-radius:18px;background:rgba(255,255,255,.1);border:3px solid rgba(255,255,255,.2)}
+.op b{font-family:"Avenir Next Condensed";font-size:46px;color:#7cc4ff}
+.op.ok{border-color:#3ea6ff;background:rgba(62,166,255,.22)}
+.cierre{align-items:flex-start}
+.cierre .logo{width:110px;height:160px}
+.acts{list-style:none;display:flex;flex-direction:column;gap:16px;font-size:36px;font-weight:600}
+.acts li:before{content:"→ ";color:#3ea6ff}
+.url{font-family:"Avenir Next Condensed";font-weight:800;font-size:84px;color:#3ea6ff}
+.foot{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;font-size:21px;line-height:1.35;opacity:.78;border-top:1px solid rgba(255,255,255,.25);padding-top:18px}
+.foot .src{max-width:760px}
+.foot .site{font-weight:700;font-size:26px;white-space:nowrap;opacity:1}
+"""
+
+
+def footer(c, s):
+    keys = s.get("fuentes", [])
+    if not keys:
+        return "" if s["tipo"] == "cierre" else "Agua GDL"
+    seen, names = set(), []
+    for k in keys:
+        f = c["fuentes"][k]
+        label = f'{f["medio"]}, {"consultada el " if f.get("consultada") else ""}{fecha_corta(f["fecha"])}'
+        if label not in seen:
+            seen.add(label)
+            names.append(label)
+    return "Fuente: " + "; ".join(names) + (f'. {s["nota"]}' if s.get("nota") else "")
+
+
+MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
+
+
+def fecha_corta(iso):
+    y, m, d = iso.split("-")
+    return f"{int(d)} {MESES[int(m) - 1]} {y}"
+
+
+def slide_html(c, i, s):
+    total = len(c["slides"])
+    bg = ""
+    plain = " plain"
+    if s.get("foto"):
+        bg = f'<div class="bg" style="background-image:url(\'{foto_path(s["foto"]).as_uri()}\')"></div>'
+        plain = ""
+    return f"""<!doctype html><html lang="es"><head><meta charset="utf-8"><style>{CSS}</style></head>
+<body class="{plain}">{bg}<div class="tint"></div><div class="frame">
+<div class="top">{logo()}<span>Agua GDL</span><span class="n">{i}/{total}</span></div>
+<div class="main">{render_body(s)}</div>
+<div class="foot"><div class="src">{html.escape(footer(c, s))}</div><div class="site">aguagdl.com</div></div>
+</div></body></html>"""
+
+
+def crop(png, w, h):
+    # sips treats offset 0 0 as "centre"; 1 1 starts one pixel in, which the extra window pixel covers
+    subprocess.run(["sips", "-c", str(h), str(w), "--cropOffset", "1", "1", str(png)], check=True, capture_output=True)
+
+
+def shoot(src, png):
+    subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--allow-file-access-from-files",
+                    "--force-device-scale-factor=1", f"--window-size={W},{H + CHROME_BAR + 1}", "--virtual-time-budget=1500",
+                    f"--screenshot={png}", src.as_uri()], check=True, capture_output=True)
+    crop(png, W, H)
+
+
+def fuentes_md(c):
+    lines = [f"# {c['titulo']}", "", "Borrador para Instagram. No publicado. Ricardo publica.", "", "## Texto del post", "", c["caption"], "",
+             "## Fuentes (citas copiadas de cada fuente el día de «revisado»)", ""]
+    for k, f in c["fuentes"].items():
+        lines += [f"- **{k}** · {f['medio']}, {f['fecha']} · revisado {f['revisado']}", f"  {f['url']}", f"  > {f['cita']}", ""]
+    lines += ["## Diapositivas", ""]
+    for i, s in enumerate(c["slides"], 1):
+        nums = sorted({n for t in slide_texts(s) for n in numbers(t)})
+        lines.append(f"{i}. {s['tipo']} · fuentes: {', '.join(s.get('fuentes', [])) or '—'}"
+                     + (f" · cifras: {', '.join(nums)}" if nums else "")
+                     + (f" · cálculo: {s['calculo']}" if s.get("calculo") else "")
+                     + (f" · sin fuente: {s['propio']}" if s.get("propio") else "")
+                     + (f" · foto: {s['foto']}" if s.get("foto") else ""))
+    return "\n".join(lines) + "\n"
+
+
+def main():
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    only_check = "--check" in sys.argv
+    fotos_ok = set(json.loads((HERE / "fotos.json").read_text())["fotos"])
+    temas = set(json.loads((ROOT / "pipelines/fotos_temas.json").read_text())["temas"])
+    files = sorted((HERE / "carruseles").glob("*.json"))
+    carr = [json.loads(f.read_text()) for f in files]
+    ids = [c["id"] for c in carr]
+    if len(ids) != len(set(ids)):
+        fail("duplicate ids")
+    for f, c in zip(files, carr):
+        if f.stem != c["id"]:
+            fail(f"{f.name}: id must match the file name")
+        check(c, fotos_ok, temas)
+    carr = [c for c in carr if not args or any(c["id"].startswith(a) for a in args)]
+    print(f"carrusel: {len(carr)} carousels, {sum(len(c['slides']) for c in carr)} slides pass the checks")
+    if only_check:
+        return
+    OUT.mkdir(exist_ok=True)
+    tmp = pathlib.Path(tempfile.mkdtemp())
+    try:
+        for c in carr:
+            d = OUT / c["id"]
+            if d.exists():
+                shutil.rmtree(d)
+            d.mkdir()
+            pngs = []
+            for i, s in enumerate(c["slides"], 1):
+                src = tmp / f"{c['id']}-{i}.html"
+                src.write_text(slide_html(c, i, s))
+                png = d / f"{i:02d}.png"
+                shoot(src, png)
+                pngs.append(png)
+            (d / "FUENTES.md").write_text(fuentes_md(c))
+            (d / "caption.txt").write_text(c["caption"] + "\n")
+            cells = "".join(f'<img src="{p.as_uri()}">' for p in pngs)
+            sheet = tmp / f"{c['id']}-sheet.html"
+            sheet.write_text(f'<!doctype html><style>body{{margin:0;background:#111;display:flex;gap:12px;padding:12px}}img{{width:360px;height:450px}}</style>{cells}')
+            subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--allow-file-access-from-files",
+                            f"--window-size={12 + 372 * len(pngs)},{474 + CHROME_BAR + 1}", f"--screenshot={d / 'hoja.png'}", sheet.as_uri()],
+                           check=True, capture_output=True)
+            crop(d / "hoja.png", 12 + 372 * len(pngs), 474)
+            print(f"  {c['id']}: {len(pngs)} slides")
+    finally:
+        shutil.rmtree(tmp)
+
+
+if __name__ == "__main__":
+    main()

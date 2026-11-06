@@ -1,0 +1,89 @@
+{
+ "id": "03-10-mil-80-mil",
+ "titulo": "10 mil que pueden costar 80 mil",
+ "caption": "El 20 de octubre, según El Informador, la presidenta dijo que se revisan los esquemas de financiamiento porque puede haber algunos con tasas tan altas «que una obra de 10 mil MDP te acabe costando 80 mil MDP al largo de los años». El 8 de octubre, Jalisco había pedido al Congreso avalar un contrato de 11 mil 922 mdp con pagos anuales durante 20 o 25 años (UDG TV). ¿Qué esquema se firma al final? Hay que leer el contrato. aguagdl.com/promesas",
+ "fuentes": {
+  "mil": {
+   "url": "https://www.milenio.com/politica/sheinbaum-y-lemus-anuncian-proyecto-garantizar-abasto-agua-guadalajara",
+   "medio": "Milenio",
+   "fecha": "2026-10-28",
+   "revisado": "2026-11-05",
+   "cita": "Los gobiernos de México y Jalisco invertirán 24 mil 700 millones de pesos en conjunto en el proyecto hídrico para garantizar suficiente agua potable y de calidad a la zona metropolitana de Guadalajara, sin endeudamientos ni privatizaciones de las obras. La Federación destinará 14 mil 500 millones de pesos para la construcción del nuevo acueducto Chapala-Guadalajara (nueve mil 300 mdp), y para el acueducto Calderón-San Gaspar, así como la ampliación de la planta potabilizadora de San Gaspar (cinco mil 200 mdp). En tanto, la administración estatal invertirá 10 mil 200 millones de pesos para la renovación de la planta potabilizadora número uno en Miravalle, el saneamiento del canal y la presa Las Pintas, así como la reparación y la construcción de una nueva red de colectores. … la presidenta Claudia Sheinbaum destacó que se trata de un proyecto que brinda la mejor solución a la región, aprovechando al 100 por ciento la presa El Zapotillo"
+  },
+  "inf80": {
+   "url": "https://www.informador.mx/jalisco/sheinbaum-condiciona-reunion-con-lemus-a-tener-listo-el-plan-de-agua-para-guadalajara-20261020-0069.html",
+   "medio": "El Informador",
+   "fecha": "2026-10-20",
+   "revisado": "2026-11-05",
+   "cita": "la Jefa del Ejecutivo expuso que también se están revisando los esquemas de financiamiento de las obras para evitar sobrecostos desmedidos o privatizaciones: \"porque puede haber esquemas de financiamiento que signifiquen nada más la operación privada y el manteniendo privado y de la infraestructura y también esquemas de financiamiento que tengan tasas de interés muy altas y que una obra de 10 mil MDP te acabe costando 80 mil MDP al largo de los años. Todo eso se está revisando\""
+  },
+  "udg12": {
+   "url": "https://udgtv.com/noticias/jalisco-pide-aval-para-acueducto-de-casi-12-mil-mdp/334017",
+   "medio": "UDG TV",
+   "fecha": "2026-10-08",
+   "revisado": "2026-11-05",
+   "cita": "El Gobierno de Jalisco pidió al Congreso avalar un contrato por 11 mil 922 mdp para construir el acueducto sustituto Chapala-Guadalajara. El esquema contempla pagos anuales durante 20 o 25 años y requerirá al menos 26 votos para su aprobación."
+  }
+ },
+ "slides": [
+  {
+   "tipo": "versus",
+   "foto": "fuentes/7147fa92d9a6.jpg",
+   "kicker": "El riesgo que describió la presidenta",
+   "titular": "Cómo una obra de 10 mil podría costar 80 mil",
+   "izq": {
+    "kicker": "La obra",
+    "cifra": "10 mil",
+    "texto": "millones de pesos"
+   },
+   "der": {
+    "kicker": "Con tasas «muy altas»",
+    "cifra": "80 mil",
+    "texto": "millones de pesos «al largo de los años»"
+   },
+   "fuentes": [
+    "inf80"
+   ]
+  },
+  {
+   "tipo": "cita",
+   "foto": "fuentes/7147fa92d9a6.jpg",
+   "kicker": "20 de octubre",
+   "cita": "esquemas de financiamiento que tengan tasas de interés muy altas y que una obra de 10 mil MDP te acabe costando 80 mil MDP al largo de los años",
+   "quien": "Claudia Sheinbaum, presidenta, según El Informador",
+   "fuentes": [
+    "inf80"
+   ]
+  },
+  {
+   "tipo": "texto",
+   "foto": "fuentes/7147fa92d9a6.jpg",
+   "kicker": "8 de octubre, según UDG TV",
+   "cifra": "20–25",
+   "titular": "años de pagos anuales",
+   "texto": "Es lo que contemplaba el contrato de 11 mil 922 mdp que Jalisco pidió al Congreso avalar para el acueducto.",
+   "fuentes": [
+    "udg12"
+   ]
+  },
+  {
+   "tipo": "texto",
+   "foto": "fuentes/7147fa92d9a6.jpg",
+   "kicker": "28 de octubre, según Milenio",
+   "titular": "Los dos gobiernos invertirán «sin endeudamientos ni privatizaciones de las obras»",
+   "texto": "La prueba estará en los contratos: quién paga, cuánto y por cuántos años.",
+   "fuentes": [
+    "mil"
+   ]
+  },
+  {
+   "tipo": "cierre",
+   "titular": "Un contrato se lee, no se cree",
+   "acciones": [
+    "Lo seguimos en aguagdl.com/promesas",
+    "Pide el contrato a tu diputación: aguagdl.com/exige"
+   ],
+   "url": "aguagdl.com/promesas"
+  }
+ ]
+}

@@ -1,0 +1,80 @@
+{
+ "id": "19-que-hacer",
+ "titulo": "Si no llega el agua",
+ "caption": "Qué hacer si no llega el agua, en 6 pasos. Guárdalo y compártelo con tus vecinos. aguagdl.com",
+ "fuentes": {
+  "dec": {
+   "url": "https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25482/1785200563-2026-07-27-.pdf",
+   "medio": "Decreto 30216/LXIV/26, Periódico Oficial",
+   "fecha": "2026-07-27",
+   "revisado": "2026-11-05",
+   "cita": "NÚMERO 30216/LXIV/26 EL CONGRESO DEL ESTADO DECRETA: … Artículo Primero. Se autoriza al Sistema Intermunicipal de los Servicios de Agua Potable y Alcantarillado (SIAPA) para aplicar descuentos del 80% (ochenta por ciento) sobre los montos facturados por los servicios de agua potable, con base en el consumo registrado a partir de la publicación del presente decreto y durante el ejercicio fiscal 2026, a las personas usuarias de los servicios habitacional y comercial afectadas por la calidad del agua, cuyo promedio mensual de consumo sea de hasta 25m3 (veinticinco metros cúbicos); tratándose del servicio comercial, el beneficio será aplicable exclusivamente a pequeños comercios. Observando el mismo descuento para el régimen de usuarios en condominio. … Asimismo, serán acreedoras al beneficio previsto en el presente artículo las personas usuarias que no hubiesen sido consideradas en el acuerdo a que se refiere el artículo segundo del presente Decreto y que, durante la vigencia del mismo, presenten afectaciones relacionadas con la calidad del agua, siempre que, a petición de parte, soliciten la aplicación del descuento y la Dirección de Abastecimiento y Operación o la unidad administrativa competente del Sistema Intermunicipal de los Servicios de Agua Potable y Alcantarillado (SIAPA) emita el dictamen técnico correspondiente que acredite dichas afectaciones. … Artículo Cuarto. … Artículo Cuarto. El Sistema Intermunicipal de los Servicios de Agua Potable y Alcantarillado (SIAPA) deberá implementar de manera inmediata las acciones necesarias para garantizar el acceso al agua de calidad en las zonas determinadas conforme al artículo tercero del presente Decreto. Para tal efecto, deberá, cuando menos: I. Instalar y operar plantas potabilizadoras portátiles en los puntos que determine conforme a criterios técnicos y de cobertura de la población afectada; II. Garantizar el suministro gratuito de agua potable mediante pipas a las colonias afectadas, priorizando escuelas, hospitales, centros de salud, estancias para personas adultas mayores y demás instalaciones de atención prioritaria, así como a las personas usuarias que no cuenten con acceso suficiente y de calidad al servicio; III. Implementar programas de distribución gratuita de agua embotellada para consumo humano en las zonas donde las condiciones de calidad del agua así lo requieran, conforme a los dictámenes técnicos correspondientes; y IV. Difundir de manera permanente los puntos de abastecimiento, horarios, rutas de distribución y demás información necesaria para garantizar que la población conozca las medidas implementadas. Artículo Quinto. - El Sistema Intermunicipal de los Servicios de Agua Potable y Alcantarillado (SIAPA) remitirá al Congreso del Estado de Jalisco un informe mensual sobre el cumplimiento del presente Decreto mientras subsistan las medidas previstas en el mismo. … Primero. El presente Decreto entrará en vigor al día siguiente de su publicación en el Periódico Oficial “El Estado de Jalisco” y finalizará el 15 de diciembre de 2026."
+  },
+  "avisos": {
+   "url": "https://aguagdl.com/avisos",
+   "medio": "Agua GDL, aguagdl.com/avisos",
+   "fecha": "2026-11-05",
+   "consultada": true,
+   "revisado": "2026-11-05",
+   "cita": "Busca tu colonia, municipio o código postal Buscar Usar mi ubicación … Avisos gratis por Telegram Te avisa dos días antes de cada corte y la noche anterior. Abre el bot y manda tu ubicación, tu colonia o tu zona."
+  }
+ },
+ "slides": [
+  {
+   "tipo": "portada",
+   "foto": "fuentes/bd8ae7d3b0aa.jpg",
+   "kicker": "Guárdalo",
+   "titular": "Si no llega el agua: *6 pasos*",
+   "propio": "portada",
+   "texto": "Desde tu celular.",
+   "calculo": "6 pasos: 3 + 2 + 1 en esta publicación."
+  },
+  {
+   "tipo": "lista",
+   "foto": "fuentes/bd8ae7d3b0aa.jpg",
+   "kicker": "Antes",
+   "titular": "Que no te agarre sin agua",
+   "marca": "num",
+   "items": [
+    "Busca tu zona y tus días en *aguagdl.com/avisos*",
+    "Activa el aviso en Telegram: *@AvisoAguaGDLbot*",
+    "Llena cubetas y tinaco la noche anterior"
+   ],
+   "fuentes": [
+    "avisos"
+   ],
+   "propio": "consejo (llenar cubetas)"
+  },
+  {
+   "tipo": "lista",
+   "foto": "fuentes/bd8ae7d3b0aa.jpg",
+   "kicker": "Cuando no llega",
+   "titular": "Pide y avisa",
+   "propio": "servicio de Agua GDL (aguagdl.com/pipas, /reportes)",
+   "marca": "num",
+   "items": [
+    "Pide una pipa: los teléfonos de cada municipio en *aguagdl.com/pipas*",
+    "Cuéntanos qué pasa en tu colonia: *aguagdl.com/reportes*"
+   ]
+  },
+  {
+   "tipo": "texto",
+   "foto": "fuentes/bd8ae7d3b0aa.jpg",
+   "kicker": "Y si el agua llega sucia",
+   "titular": "Revisa si te toca el *80%* de descuento",
+   "texto": "Casas y pequeños comercios afectados, con consumo de hasta 25 m³ al mes. Detalles en aguagdl.com/avisos.",
+   "fuentes": [
+    "dec"
+   ]
+  },
+  {
+   "tipo": "cierre",
+   "titular": "Compártelo en el grupo de tus vecinos",
+   "acciones": [
+    "aguagdl.com",
+    "@AvisoAguaGDLbot"
+   ],
+   "url": "aguagdl.com"
+  }
+ ]
+}
