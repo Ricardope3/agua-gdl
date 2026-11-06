@@ -394,7 +394,7 @@ main > .headline.cartel { position: relative; isolation: isolate; padding: 30px 
 .headline .fondo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgb(10 16 34 / .9), rgb(10 16 34 / .76) 60%, rgb(10 16 34 / .5)) }
 .headline.cartel h1, .headline.cartel > div > p:not(.buttons):not(.kicker) { color: #fff }
 .headline.cartel .kicker { color: #fca5a5 }
-.headline.cartel .ilus { background: rgb(255 255 255 / .92); border-radius: 6px; box-shadow: 0 6px 20px rgb(0 0 0 / .45) }
+.headline.cartel .ilus { filter: drop-shadow(0 0 1px rgb(255 255 255 / .85)) drop-shadow(0 0 14px rgb(255 255 255 / .3)) }
 .headline .pie { position: absolute; left: 0; bottom: 8px; margin: 0; font-size: .74rem; color: rgb(255 255 255 / .82) }
 .headline .pie a { color: #fff }
 @media (max-width: 760px) { .headline .fondo { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(5, 1fr) } main > .headline.cartel { padding: 18px 0 32px } }
