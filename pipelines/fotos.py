@@ -1,7 +1,7 @@
 """/fotos: the crisis in photos and videos, a collage built from reviewed previews.
 
-    python3 pipelines/fotos.py                  write web/fotos.html
-    python3 pipelines/fotos.py --check          fail if web/fotos.html is stale or a reviewed photo is missing; for CI
+    python3 pipelines/fotos.py                  write web/fotos.html and the landing's photo wall (web/index.html, web/img/fondo/)
+    python3 pipelines/fotos.py --check          fail if either is stale or a reviewed photo is missing; for CI
     python3 pipelines/fotos.py --pendientes     list previews nobody has reviewed yet
 
 Photos come from web/publicaciones.json's vistas (web/fuentes/), /noticias' photos (web/img/noticias/),
@@ -15,7 +15,9 @@ import html
 import json
 import pathlib
 import re
+import shutil
 import struct
+import subprocess
 import sys
 
 root = pathlib.Path(__file__).resolve().parent.parent
@@ -24,6 +26,10 @@ PUB = WEB / "publicaciones.json"
 NOTICIAS = WEB / "noticias.html"
 TEMAS = root / "pipelines/fotos_temas.json"
 OUT = WEB / "fotos.html"
+INDEX = WEB / "index.html"
+FONDO = WEB / "img/fondo"
+MURO_N = 20
+MURO = re.compile(r"(<!-- fotos\.py: muro -->).*?(<!-- /fotos\.py: muro -->)", re.S)
 
 TEMA = {"protesta": "Protesta", "sin-agua": "Sin agua", "calidad": "Agua sucia"}
 MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
@@ -345,6 +351,26 @@ def page(ts):
 """
 
 
+def muro(ts):
+    """The landing's photo wall: the newest MURO_N sign photos, as 240 px copies in web/img/fondo/."""
+    picks = [t for t in ts if t["cartel"]][:MURO_N]
+    thumbs = {f"img/fondo/{pathlib.Path(t['img']).stem}.webp": t for t in picks}
+    imgs = "".join(f'<img src="/{k}" alt="" decoding="async">' for k in thumbs)
+    html_ = (f'<div class="fondo" aria-hidden="true">{imgs}</div>'
+             f'<p class="pie">Fotos de medios y vecinos · <a href="/fotos">ver las {len(ts)}</a></p>')
+    return html_, thumbs
+
+
+def thumb(src, dest):
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    if shutil.which("cwebp"):
+        r = subprocess.run(["cwebp", "-quiet", "-q", "62", "-resize", "240", "0", str(src), "-o", str(dest)], capture_output=True)
+    else:
+        sys.exit("fotos: writing the landing's wall needs cwebp (brew install webp)")
+    if r.returncode:
+        sys.exit(f"fotos: cwebp failed on {src}")
+
+
 def main():
     args = sys.argv[1:]
     ts, missing, doc = tiles()
@@ -358,13 +384,30 @@ def main():
         print("\n".join(pend) or "fotos: nothing to review")
         return
     want = page(ts)
+    wall, thumbs = muro(ts)
+    index = INDEX.read_text()
+    if not MURO.search(index):
+        sys.exit("fotos: web/index.html lost its <!-- fotos.py: muro --> markers")
+    index_want = MURO.sub(lambda m: m.group(1) + wall + m.group(2), index)
     if "--check" in args:
+        if index != index_want:
+            sys.exit("fotos: the landing's photo wall in web/index.html is stale; run python3 pipelines/fotos.py")
+        have = {f"img/fondo/{f.name}" for f in FONDO.glob("*.webp")} if FONDO.is_dir() else set()
+        if have != set(thumbs):
+            sys.exit(f"fotos: web/img/fondo/ doesn't match the wall (missing {sorted(set(thumbs) - have)}, extra {sorted(have - set(thumbs))}); run python3 pipelines/fotos.py")
         if not OUT.is_file() or OUT.read_text() != want:
             sys.exit("fotos: web/fotos.html is stale; run python3 pipelines/fotos.py")
         print(f"fotos: ok, {len(ts)} photos")
         return
     OUT.write_text(want)
-    print(f"fotos: wrote web/fotos.html with {len(ts)} photos")
+    for k, t in thumbs.items():
+        if not (WEB / k).is_file():
+            thumb(WEB / t["img"], WEB / k)
+    for f in FONDO.glob("*.webp"):
+        if f"img/fondo/{f.name}" not in thumbs:
+            f.unlink()
+    INDEX.write_text(index_want)
+    print(f"fotos: wrote web/fotos.html with {len(ts)} photos and the landing's wall of {len(thumbs)}")
 
 
 if __name__ == "__main__":
