@@ -27,7 +27,7 @@ OUT = HERE / "out"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 W, H = 1080, 1350
 CHROME_BAR = 87  # headless Chrome's viewport is the window minus this; screenshots are cropped back
-TYPES = {"sitio", "portada", "texto", "cita", "barras", "iconos", "calendario", "versus", "lista", "linea", "pregunta", "cierre"}
+TYPES = {"altura", "desnivel", "sitio", "portada", "texto", "cita", "barras", "iconos", "calendario", "versus", "lista", "linea", "pregunta", "cierre"}
 DIAS = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"]
 DIAS_CORTO = ["L", "M", "M", "J", "V", "S", "D"]
 
@@ -52,7 +52,7 @@ def foto_path(rel):
 def slide_texts(s):
     out = []
     for k, v in s.items():
-        if k in ("tipo", "foto", "fuentes", "calculo", "nota", "posicion", "propio", "captura"):
+        if k in ("tipo", "foto", "fuentes", "calculo", "nota", "posicion", "propio", "captura", "bins"):
             continue
         if isinstance(v, str):
             out.append(v)
@@ -223,6 +223,39 @@ def render_body(s):
             for i, o in enumerate(s["opciones"]))
         return (f'<div class="stack"><div class="kicker">{md(s.get("kicker", ""))}</div><div class="titular">{md(s["titular"])}</div>'
                 f'<div class="ops">{ops}</div>' + (f'<div class="texto small">{md(s["texto"])}</div>' if s.get("texto") else "") + "</div>")
+    if t == "altura":
+        bins = s["bins"]
+        w, h, top = 928, 430, 60
+        bw = w / len(bins)
+        mx = max(b["n"] for b in bins)
+        lo, step = bins[0]["desde"], bins[1]["desde"] - bins[0]["desde"]
+        x = lambda m: (m - lo) / step * bw
+        bars = "".join(
+            f'<rect x="{i * bw + 2:.1f}" y="{top + h - h * b["n"] / mx:.1f}" width="{bw - 4:.1f}" height="{h * b["n"] / mx:.1f}" rx="4" '
+            f'fill="{"#ff7a66" if b["desde"] <= s["marca"]["m"] < b["desde"] + step else "#3ea6ff"}" opacity="{1 if b["desde"] <= s["marca"]["m"] < b["desde"] + step else 0.85}"/>'
+            for i, b in enumerate(bins))
+        mm, mk = x(s["mediana"]["m"]), x(s["marca"]["m"])
+        eje = "".join(f'<text x="{x(int(v.replace(",", ""))):.1f}" y="{top + h + 44}" text-anchor="middle">{html.escape(v)} m</text>' for v in s["eje"])
+        svg = (f'<svg class="alt" viewBox="0 -10 {w} {top + h + 60}">{bars}'
+               f'<line x1="{mm:.1f}" x2="{mm:.1f}" y1="{top - 10}" y2="{top + h}" stroke="#fff" stroke-width="3" stroke-dasharray="10 8"/>'
+                              f'<line x1="{mk:.1f}" x2="{mk:.1f}" y1="{top - 50}" y2="{top + h}" stroke="#ff7a66" stroke-width="5"/>'
+               f'<circle cx="{mk:.1f}" cy="{top - 50}" r="12" fill="#ff7a66"/>'
+               f'<text x="{mk - 22:.1f}" y="{top - 40}" text-anchor="end" class="pin">{html.escape(s["marca"]["etiqueta"])}</text>'
+               f'<text x="{mm + 14:.1f}" y="{top + 150}" text-anchor="start" class="lab"><tspan class="bgl">{html.escape(s["mediana"]["etiqueta"])}</tspan></text>'
+               f'<line x1="0" x2="{w}" y1="{top + h}" y2="{top + h}" stroke="rgba(255,255,255,.4)" stroke-width="2"/>{eje}</svg>')
+        return (f'<div class="stack"><div class="kicker">{md(s.get("kicker", ""))}</div><div class="titular">{md(s["titular"])}</div>{svg}'
+                + (f'<div class="texto small">{md(s["texto"])}</div>' if s.get("texto") else "") + "</div>")
+    if t == "desnivel":
+        mx = max(abs(f["valor"]) for f in s["filas"])
+        rows = "".join(
+            f'<div class="dn"><div class="dl">{md(f["etiqueta"])}</div><div class="dt">'
+            + (f'<div class="db pos {f.get("color", "")}" style="width:{50 * f["valor"] / mx:.1f}%"></div>' if f["valor"] > 0
+               else f'<div class="db neg" style="width:{50 * -f["valor"] / mx:.1f}%"></div>')
+            + f'</div><div class="dv {"pos" if f["valor"] > 0 else "neg"} {f.get("color", "")}">{md(f["texto"])}</div></div>'
+            for f in s["filas"])
+        return (f'<div class="stack"><div class="kicker">{md(s.get("kicker", ""))}</div><div class="titular">{md(s["titular"])}</div>'
+                f'<div class="eje0"><span>{md(s["izq"])}</span><span>{md(s["centro"])}</span><span>{md(s["der"])}</span></div>'
+                f'<div class="desnivel">{rows}</div>' + (f'<div class="texto small">{md(s["texto"])}</div>' if s.get("texto") else "") + "</div>")
     if t == "sitio":
         items = "".join(f'<li>{md(it)}</li>' for it in s.get("items", []))
         shot = (HERE / "capturas" / f'{s["captura"]}.jpg').as_uri()
@@ -319,6 +352,18 @@ blockquote{font-family:"Avenir Next Condensed";font-weight:800;font-size:82px;li
 .bio b{font-family:"Avenir Next Condensed";font-size:44px;text-transform:none;letter-spacing:0}
 .phone{position:absolute;right:-30px;top:50%;transform:translateY(-50%) rotate(4deg);width:400px;height:860px;border-radius:56px;background:#0b0f14;padding:14px;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 2px rgba(255,255,255,.12)}
 .screen{width:100%;height:100%;border-radius:44px;background-size:100% auto;background-position:top center;background-repeat:no-repeat;background-color:#fbfaf6}
+.alt{width:100%;margin-top:4px;overflow:visible}
+.alt text{fill:#fff;font-family:"Avenir Next";font-size:24px;font-weight:600;opacity:.85}
+.alt text.lab{font-size:26px;opacity:1;paint-order:stroke;stroke:#06141d;stroke-width:8px}.alt text.pin{font-family:"Avenir Next Condensed";font-weight:800;font-size:40px;fill:#ff7a66;opacity:1}
+.eje0{display:flex;justify-content:space-between;font-size:24px;font-weight:600;opacity:.8;margin-bottom:-8px}
+.desnivel{display:flex;flex-direction:column;gap:16px;position:relative}
+.dn{display:grid;grid-template-columns:250px 1fr 150px;align-items:center;gap:18px}
+.dl{font-family:"Avenir Next Condensed";font-weight:700;font-size:32px;line-height:1.05}
+.dt{position:relative;height:46px;background:rgba(255,255,255,.08);border-radius:8px}
+.dt:after{content:"";position:absolute;left:50%;top:-12px;bottom:-12px;width:3px;background:#fff;opacity:.7}
+.db{position:absolute;top:0;height:100%;border-radius:8px}
+.db.pos{left:50%;background:#3ea6ff}.db.pos.alarm{background:#ff7a66}.db.neg{right:50%;background:#c9d4de}
+.dv{font-family:"Avenir Next Condensed";font-weight:800;font-size:40px;text-align:right;white-space:nowrap}.dv.pos{color:#3ea6ff}.dv.pos.alarm{color:#ff7a66}.dv.neg{color:#c9d4de}
 .foot{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;font-size:21px;line-height:1.35;opacity:.78;border-top:1px solid rgba(255,255,255,.25);padding-top:18px}
 .foot .src{max-width:760px}
 .foot .site{font-weight:700;font-size:26px;white-space:nowrap;opacity:1}
@@ -390,19 +435,20 @@ def fuentes_md(c):
     return "\n".join(lines) + "\n"
 
 
-PAGINAS = ["reportes", "promesas", "pipas", "exige", "avisos"]
-DESDE = {"promesas": 520}  # CSS px to skip at the top: /promesas starts at its meter, not its opening stance
+PAGINAS = {"reportes": "reportes", "promesas": "promesas", "pipas": "pipas", "exige": "exige", "avisos": "avisos",
+           "ciudad-granja": "reportes?q=CIUDAD%20GRANJA&m=Zapopan&cp=45010"}
+DESDE = {"promesas": 520, "ciudad-granja": 75}  # CSS px to skip at the top (/promesas starts at its meter, not its opening stance)
 
 
 def capturas():
     """Retake the phone screenshots of aguagdl.com used by the sitio slides (500 CSS px wide, 2x)."""
     (HERE / "capturas").mkdir(exist_ok=True)
-    for p in PAGINAS:
+    for p, path in PAGINAS.items():
         png = HERE / "capturas" / f"{p}.png"
         top = DESDE.get(p, 0)
         subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--force-device-scale-factor=2",
                         "--virtual-time-budget=10000", f"--window-size=500,{1080 + top + CHROME_BAR}", f"--screenshot={png}",
-                        f"https://aguagdl.com/{p}"], check=True, capture_output=True)
+                        f"https://aguagdl.com/{path}"], check=True, capture_output=True)
         subprocess.run(["sips", "-c", "2160", "1000", "--cropOffset", str(2 * top + 1), "1", str(png)], check=True, capture_output=True)
         jpg = png.with_suffix(".jpg")
         subprocess.run(["sips", "-s", "format", "jpeg", "-s", "formatOptions", "80", "-Z", "1512", str(png), "--out", str(jpg)],

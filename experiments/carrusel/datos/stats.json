@@ -1,0 +1,152 @@
+{
+ "publicaciones_actualizado": "2026-11-06",
+ "colonias_en_rotacion": 702,
+ "foco": "CIUDAD GRANJA|Zapopan|45010",
+ "foco_m": 1671.0,
+ "mediana_m": 1587.0,
+ "min_m": 1374.0,
+ "max_m": 1794.0,
+ "pct_rotacion_mas_bajas_que_foco": 90.3,
+ "bins_20m": [
+  {
+   "desde": 1360,
+   "n": 1
+  },
+  {
+   "desde": 1380,
+   "n": 0
+  },
+  {
+   "desde": 1400,
+   "n": 0
+  },
+  {
+   "desde": 1420,
+   "n": 0
+  },
+  {
+   "desde": 1440,
+   "n": 0
+  },
+  {
+   "desde": 1460,
+   "n": 0
+  },
+  {
+   "desde": 1480,
+   "n": 2
+  },
+  {
+   "desde": 1500,
+   "n": 4
+  },
+  {
+   "desde": 1520,
+   "n": 47
+  },
+  {
+   "desde": 1540,
+   "n": 119
+  },
+  {
+   "desde": 1560,
+   "n": 140
+  },
+  {
+   "desde": 1580,
+   "n": 91
+  },
+  {
+   "desde": 1600,
+   "n": 75
+  },
+  {
+   "desde": 1620,
+   "n": 72
+  },
+  {
+   "desde": 1640,
+   "n": 58
+  },
+  {
+   "desde": 1660,
+   "n": 38
+  },
+  {
+   "desde": 1680,
+   "n": 25
+  },
+  {
+   "desde": 1700,
+   "n": 22
+  },
+  {
+   "desde": 1720,
+   "n": 5
+  },
+  {
+   "desde": 1740,
+   "n": 2
+  },
+  {
+   "desde": 1760,
+   "n": 0
+  },
+  {
+   "desde": 1780,
+   "n": 1
+  },
+  {
+   "desde": 1800,
+   "n": 0
+  }
+ ],
+ "top5_publicaciones": [
+  {
+   "colonia": "CIUDAD GRANJA|Zapopan|45010",
+   "publicaciones": 77,
+   "m": 1671.0,
+   "vs_mediana_m": 84
+  },
+  {
+   "colonia": "OBLATOS|Guadalajara|44700",
+   "publicaciones": 59,
+   "m": 1573.0,
+   "vs_mediana_m": -14
+  },
+  {
+   "colonia": "SANTA CECILIA|Guadalajara|44700",
+   "publicaciones": 54,
+   "m": 1524.0,
+   "vs_mediana_m": -63
+  },
+  {
+   "colonia": "TALPITA|Guadalajara|44710",
+   "publicaciones": 41,
+   "m": 1566.0,
+   "vs_mediana_m": -21
+  },
+  {
+   "colonia": "LOMAS DEL PARADERO|Guadalajara|44840",
+   "publicaciones": 36,
+   "m": 1575.0,
+   "vs_mediana_m": -12
+  }
+ ],
+ "mitad_alta_con_publicaciones": [
+  122,
+  349
+ ],
+ "mitad_baja_con_publicaciones": [
+  144,
+  353
+ ],
+ "spearman_altura_publicaciones": {
+  "rho": -0.03,
+  "n": 266
+ },
+ "spearman_altura_dias": {
+  "rho": -0.01,
+  "n": 185
+ }
+}

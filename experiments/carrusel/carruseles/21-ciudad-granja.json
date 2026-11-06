@@ -1,0 +1,362 @@
+{
+ "id": "21-ciudad-granja",
+ "titulo": "Ciudad Granja: la colonia con más publicaciones",
+ "caption": "Ciudad Granja, Zapopan, es la colonia con más publicaciones sobre falta de agua que hemos reunido: 77, de vecinos y de 17 medios distintos. Y no empezó con la rotación: según Meganoticias, ya bloqueaban Vallarta en marzo y mayo.\n\n¿Por qué ahí? Una explicación posible es la altura: el propio Gobierno de Jalisco dice que la rotación afecta «principalmente a las zonas más altas y más lejanas», y Ciudad Granja está más arriba que 9 de cada 10 colonias de la rotación. Pero la altura no lo explica todo: las otras colonias con más publicaciones están más abajo. El SIAPA habló de mantenimiento en el macrotanque de El Colli; los vecinos, de crecimiento sin infraestructura y pipas que no alcanzan.\n\nAltura: modelo Copernicus de 90 m, centro de cada colonia; cálculo nuestro. Fuentes en cada imagen.\n\n¿Vives en Ciudad Granja? Cuéntanos cómo llega el agua: aguagdl.com/reportes (link en la bio).",
+ "fuentes": {
+  "pub": {
+   "url": "https://aguagdl.com/publicaciones.json",
+   "medio": "Agua GDL, publicaciones de vecinos y medios (publicaciones.json)",
+   "fecha": "2026-11-06",
+   "consultada": true,
+   "revisado": "2026-11-06",
+   "cita": "Conteo de publicaciones por colonia en el archivo público, actualizado 2026-11-06: CIUDAD GRANJA (Zapopan) 77, OBLATOS 59, SANTA CECILIA 54, TALPITA 41, LOMAS DEL PARADERO 36. Ciudad Granja: 45 de vecinos y 32 de medios, de 17 medios distintos, del 15 de octubre al 5 de noviembre. Es lo que reunimos, no un conteo oficial ni de todas las quejas."
+  },
+  "web_cg": {
+   "url": "https://aguagdl.com/reportes?q=CIUDAD%20GRANJA&m=Zapopan&cp=45010",
+   "medio": "Agua GDL, aguagdl.com/reportes",
+   "fecha": "2026-11-06",
+   "consultada": true,
+   "revisado": "2026-11-06",
+   "cita": "Publicaciones de medios y vecinos 15 días Hasta 15 días sin agua Lo reporta un medio Zona 6 · Lo dice una nota de El Informador, 24 de octubre . Reportar esta colonia 25 fuentes distintas · 37 comentarios · lo reportan 17 medios · la más reciente del 5 de noviembre · … Repórtalo en 4 toques, sin cuenta."
+  },
+  "elev": {
+   "url": "https://open-meteo.com/en/docs/elevation-api",
+   "medio": "Copernicus DEM GLO-90 (vía Open-Meteo) y mapa de colonias del SIAPA; cálculo de Agua GDL",
+   "fecha": "2026-11-06",
+   "consultada": true,
+   "revisado": "2026-11-06",
+   "cita": "Altura del centro de cada colonia (modelo de 90 m). 702 colonias con zona en el mapa del SIAPA: mediana 1,587 m, mínima 1,374 m, máxima 1,794 m. Ciudad Granja: 1,671 m, más alta que el 90.3% de ellas. Las otras cuatro colonias con más publicaciones, frente a la mediana: Oblatos −14 m (1,573), Santa Cecilia −63 m (1,524), Talpita −21 m (1,566), Lomas del Paradero −12 m (1,575); Ciudad Granja +84 m. Mitad más alta: 122 de 349 colonias con publicaciones; mitad más baja: 144 de 353. Correlación de Spearman entre altura y número de publicaciones: −0.03 (266 colonias); entre altura y días sin agua: −0.01 (185). Datos y método: experiments/carrusel/datos/ (elevacion.py, stats.json)."
+  },
+  "rot": {
+   "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/",
+   "medio": "Página de la rotación, Gobierno de Jalisco",
+   "fecha": "2026-11-06",
+   "consultada": true,
+   "revisado": "2026-11-06",
+   "cita": "No afectará a toda el Área Metropolitana de Guadalajara, únicamente a los hogares suministrados por la Planta Potabilizadora No. 1 … Cada zona tendrá de 2 a 3 racionamientos por semana por máximo un día, lo que buscará disminuir las afectaciones al mínimo. No serán cortes totales. Los racionamientos consistirán en una disminución de la presión con la que se abastece el agua hacia los hogares. Esto afectará principalmente a las zonas más altas y más lejanas."
+  },
+  "q728": {
+   "url": "https://jalisco.quadratin.com.mx/sucesos/tandeo-deja-sin-agua-a-270-colonias-de-la-zona-metropolitana-de-guadalajara/",
+   "medio": "Quadratín Jalisco",
+   "fecha": "2026-10-19",
+   "revisado": "2026-11-05",
+   "cita": "GUADALAJARA, Jal., 19 de octubre de 2026.- Al menos 270 colonias de la Zona Metropolitana de Guadalajara han registrado la suspensión total del suministro de agua durante los primeros cuatro días del sistema de rotación del Siapa, principalmente en zonas altas o alejadas de la red. El director de la Comisión Estatal del Agua, Luis Barboza Niño, informó que en este periodo se han realizado 272 servicios de pipas en Guadalajara, Tlaquepaque, Tonalá y Zapopan. Detalló que se acumulan 728 registros de colonias con baja presión o suspensión del servicio, aunque la cifra no corresponde a colonias distintas"
+  },
+  "megameses": {
+   "url": "https://www.meganoticias.mx/guadalajara/noticia/suman-meses-de-reclamos-por-problemas-con-el-agua-en-ciudad-granja/782127",
+   "medio": "Meganoticias",
+   "fecha": "2026-10-23",
+   "revisado": "2026-11-06",
+   "cita": "Una de las primeras manifestaciones ocurrió el 5 de marzo, cuando los vecinos bloquearon temporalmente la avenida Vallarta, a la altura de la calzada de los Pirules. En esa ocasión, denunciaron que algunas viviendas llevaban hasta 10 días sin recibir agua. Los residentes también señalaron que el crecimiento habitacional de la zona no ha sido acompañado, a su juicio, por infraestructura hidráulica suficiente para atender la demanda. … El 28 de mayo, más de 50 habitantes volvieron a cerrar la circulación en Vallarta y Pirules durante aproximadamente 40 minutos. … Durante ese encuentro, representantes del SIAPA atribuyeron las fallas a trabajos de mantenimiento en el macrotanque de El Colli. … La inconformidad resurgió el 19 de octubre … Un día después, los vecinos bloquearon la vialidad en ambos sentidos y denunciaron que llevaban más de 15 días sin agua. También acusaron que el calendario de tandeos establecido por el organismo operador no se estaba cumpliendo. El 21 de octubre, alrededor de 100 personas realizaron otro bloqueo parcial, ahora sobre los carriles centrales de Periférico"
+  },
+  "nnc": {
+   "url": "https://nnc.mx/articulo/hasta-22-dias-sin-agua-anuncian-bloqueos-todo-el-fin-de-semana-en-gdl",
+   "medio": "NNC",
+   "fecha": "2026-10-23",
+   "revisado": "2026-11-06",
+   "cita": "A esas movilizaciones se suman los bloqueos de la semana en avenida Vallarta, a la altura de la glorieta Los Pirules, y en Periférico frente a Ciudad Judicial, donde vecinos de Ciudad Granja reclamaron que las pipas que reparte Zapopan no alcanzan."
+  },
+  "cal": {
+   "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/api/ajustes.php",
+   "medio": "Calendario de la rotación, SIAPA",
+   "fecha": "2026-11-03",
+   "revisado": "2026-11-05",
+   "cita": "actualizado 2026-11-03. Días por zona: 1 lunes, jueves, viernes, domingo; 2 lunes, martes, jueves, domingo; 3 miercoles, jueves, viernes; 4 lunes, martes, sabado, domingo; 5 lunes, martes, miercoles, jueves; 6 viernes, sabado, domingo; 7 sabado, domingo."
+  }
+ },
+ "slides": [
+  {
+   "tipo": "portada",
+   "foto": "fuentes/7f33367dbe70.jpg",
+   "kicker": "Ciudad Granja, Zapopan",
+   "cifra": "#1",
+   "titular": "la colonia con más publicaciones sobre falta de agua que hemos reunido",
+   "texto": "77 publicaciones de vecinos y medios desde el 15 de octubre, de 17 medios distintos.",
+   "fuentes": [
+    "pub"
+   ],
+   "calculo": "#1: primera en el conteo por colonia."
+  },
+  {
+   "tipo": "barras",
+   "foto": "fuentes/008fb99889ac.jpg",
+   "kicker": "Publicaciones sobre falta de agua, por colonia",
+   "titular": "Las 5 con más",
+   "barras": [
+    {
+     "etiqueta": "Ciudad Granja, Zapopan",
+     "valor": 77,
+     "texto": "77",
+     "color": "alarm"
+    },
+    {
+     "etiqueta": "Oblatos, Guadalajara",
+     "valor": 59,
+     "texto": "59"
+    },
+    {
+     "etiqueta": "Santa Cecilia, Guadalajara",
+     "valor": 54,
+     "texto": "54"
+    },
+    {
+     "etiqueta": "Talpita, Guadalajara",
+     "valor": 41,
+     "texto": "41"
+    },
+    {
+     "etiqueta": "Lomas del Paradero, Guadalajara",
+     "valor": 36,
+     "texto": "36"
+    }
+   ],
+   "texto": "Lo que reunimos de vecinos y medios en aguagdl.com. No es un conteo oficial ni de todas las quejas.",
+   "fuentes": [
+    "pub"
+   ]
+  },
+  {
+   "tipo": "linea",
+   "foto": "fuentes/18cfe1b2ea54.jpg",
+   "kicker": "Según Meganoticias",
+   "titular": "No empezó con la rotación",
+   "hitos": [
+    {
+     "fecha": "5 de marzo",
+     "texto": "Bloquean Vallarta; algunas casas llevaban «hasta 10 días sin recibir agua»",
+     "color": "gris"
+    },
+    {
+     "fecha": "28 de mayo",
+     "texto": "«Más de 50 habitantes» vuelven a cerrar Vallarta y Pirules",
+     "color": "gris"
+    },
+    {
+     "fecha": "19–21 de octubre",
+     "texto": "Protestas en Vallarta y Periférico; denuncian «más de 15 días sin agua»",
+     "color": "alarm"
+    }
+   ],
+   "fuentes": [
+    "megameses"
+   ]
+  },
+  {
+   "tipo": "altura",
+   "kicker": "Una explicación posible: la altura",
+   "titular": "Ciudad Granja está más arriba que *9 de cada 10* colonias de la rotación",
+   "bins": [
+    {
+     "desde": 1360,
+     "n": 1
+    },
+    {
+     "desde": 1380,
+     "n": 0
+    },
+    {
+     "desde": 1400,
+     "n": 0
+    },
+    {
+     "desde": 1420,
+     "n": 0
+    },
+    {
+     "desde": 1440,
+     "n": 0
+    },
+    {
+     "desde": 1460,
+     "n": 0
+    },
+    {
+     "desde": 1480,
+     "n": 2
+    },
+    {
+     "desde": 1500,
+     "n": 4
+    },
+    {
+     "desde": 1520,
+     "n": 47
+    },
+    {
+     "desde": 1540,
+     "n": 119
+    },
+    {
+     "desde": 1560,
+     "n": 140
+    },
+    {
+     "desde": 1580,
+     "n": 91
+    },
+    {
+     "desde": 1600,
+     "n": 75
+    },
+    {
+     "desde": 1620,
+     "n": 72
+    },
+    {
+     "desde": 1640,
+     "n": 58
+    },
+    {
+     "desde": 1660,
+     "n": 38
+    },
+    {
+     "desde": 1680,
+     "n": 25
+    },
+    {
+     "desde": 1700,
+     "n": 22
+    },
+    {
+     "desde": 1720,
+     "n": 5
+    },
+    {
+     "desde": 1740,
+     "n": 2
+    },
+    {
+     "desde": 1760,
+     "n": 0
+    },
+    {
+     "desde": 1780,
+     "n": 1
+    },
+    {
+     "desde": 1800,
+     "n": 0
+    }
+   ],
+   "marca": {
+    "m": 1671,
+    "etiqueta": "Ciudad Granja · 1,671 m"
+   },
+   "mediana": {
+    "m": 1587,
+    "etiqueta": "La mitad: 1,587 m"
+   },
+   "eje": [
+    "1,400",
+    "1,500",
+    "1,600",
+    "1,700",
+    "1,800"
+   ],
+   "texto": "Cuántas de las 702 colonias de la rotación hay a cada altura, en tramos de 20 m. Altura aproximada del centro de cada colonia.",
+   "fuentes": [
+    "elev"
+   ],
+   "calculo": "90.3% más bajas → 9 de cada 10. Ejes 1,400 1,500 1,600 1,700 1,800 m; tramos de 20 m."
+  },
+  {
+   "tipo": "cita",
+   "foto": "fuentes/7f33367dbe70.jpg",
+   "kicker": "Lo dice el propio gobierno",
+   "cita": "Esto afectará principalmente a las zonas más altas y más lejanas",
+   "quien": "Página de la rotación, Gobierno de Jalisco",
+   "texto": "Y Quadratín, sobre los primeros días: «principalmente en zonas altas o alejadas de la red».",
+   "fuentes": [
+    "rot",
+    "q728"
+   ]
+  },
+  {
+   "tipo": "desnivel",
+   "kicker": "Pero la altura no lo explica todo",
+   "titular": "Las otras cuatro están más abajo que la mitad de la rotación",
+   "izq": "más abajo",
+   "centro": "1,587 m",
+   "der": "más arriba",
+   "filas": [
+    {
+     "etiqueta": "Ciudad Granja",
+     "valor": 84,
+     "texto": "+84 m",
+     "color": "alarm"
+    },
+    {
+     "etiqueta": "Oblatos",
+     "valor": -14,
+     "texto": "−14 m"
+    },
+    {
+     "etiqueta": "Santa Cecilia",
+     "valor": -63,
+     "texto": "−63 m"
+    },
+    {
+     "etiqueta": "Talpita",
+     "valor": -21,
+     "texto": "−21 m"
+    },
+    {
+     "etiqueta": "Lomas del Paradero",
+     "valor": -12,
+     "texto": "−12 m"
+    }
+   ],
+   "texto": "En todas las colonias, la altura casi no sigue al número de publicaciones ni a los días sin agua. Es una pista, no una prueba.",
+   "fuentes": [
+    "elev"
+   ],
+   "calculo": "Diferencia con la mediana de 1,587 m."
+  },
+  {
+   "tipo": "lista",
+   "foto": "fuentes/0a640bacd85a.jpg",
+   "kicker": "Otras explicaciones que se han dado",
+   "titular": "No es solo la altura",
+   "marca": "check",
+   "items": [
+    "*El SIAPA*, en mayo: las fallas se debían a «trabajos de mantenimiento en el macrotanque de El Colli»",
+    "*Los vecinos*: el crecimiento habitacional no ha sido acompañado, «a su juicio, por infraestructura hidráulica suficiente»",
+    "*Los vecinos*, en octubre: las pipas que reparte Zapopan «no alcanzan»"
+   ],
+   "texto": "Las dos primeras, según Meganoticias; la tercera, según NNC.",
+   "fuentes": [
+    "megameses",
+    "nnc"
+   ]
+  },
+  {
+   "tipo": "sitio",
+   "captura": "ciudad-granja",
+   "kicker": "En aguagdl.com/reportes",
+   "cifra": "77",
+   "titular": "publicaciones sobre Ciudad Granja, cada una con su enlace",
+   "items": [
+    "Lo reportan 17 medios",
+    "¿Vives ahí? Cuenta cómo llega el agua, en 4 toques y sin cuenta"
+   ],
+   "url": "aguagdl.com/reportes",
+   "fuentes": [
+    "web_cg",
+    "pub"
+   ]
+  },
+  {
+   "tipo": "cierre",
+   "titular": "¿Vives en Ciudad Granja?",
+   "acciones": [
+    "Reporta cómo llega el agua: aguagdl.com/reportes",
+    "Es zona 6: aviso antes de cada racionamiento en @AvisoAguaGDLbot"
+   ],
+   "url": "aguagdl.com/reportes",
+   "fuentes": [
+    "cal"
+   ]
+  }
+ ]
+}
