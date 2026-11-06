@@ -1693,6 +1693,12 @@ if (window.top !== window.self) {
       document.addEventListener("keydown", key, true);
       hist.hidden = false; show(); hist.querySelector(".x").focus();
     }
+    // The colonia's narrowest side on screen, so the open badge never hides its whole outline.
+    const spanPx = (fs) => {
+      const bb = L.geoJSON({ type: "FeatureCollection", features: fs }).getBounds();
+      const a = map.latLngToContainerPoint(bb.getNorthWest()), z = map.latLngToContainerPoint(bb.getSouthEast());
+      return Math.min(Math.abs(z.x - a.x), Math.abs(z.y - a.y));
+    };
     function drawMarkers() {
       markers.clearLayers();
       // Publication badges count only publications and keep their historical severity. Anonymous
@@ -1708,7 +1714,8 @@ if (window.top !== window.self) {
         // Same scale as the plain badges, so sizes compare; only the ring's width is added.
         // The open colonia's photo badge is large and the same for every colonia, so its photo reads.
         const big = foto && openKey === k;
-        const size = big ? (phone() ? 76 : 104) : foto ? base + (far ? 3 : 4) : base;
+        const small = foto ? base + (far ? 3 : 4) : base;
+        const size = big ? Math.max(small, Math.min(phone() ? 76 : 104, Math.round(0.6 * spanPx(fs)))) : small;
         counts.set(k, total);
         badgeSizes.set(k, size);
         const was = shown.get(k), pop = reduced ? "" : was != null ? (total > was ? " pop" : "") : shown.size ? " nace" : "";
