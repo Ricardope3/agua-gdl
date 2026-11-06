@@ -1,7 +1,7 @@
 {
  "id": "18-zapotillo",
  "titulo": "El Zapotillo: 45% y 100%",
- "caption": "En el mensaje del gobernador que reproduce Expansión (8 de octubre): El Zapotillo «actualmente opera al 45 por ciento». El 28 de octubre, según Milenio, la presidenta destacó que el nuevo proyecto aprovecha «al 100 por ciento» la presa. Dos cifras, dos gobiernos. Las seguimos. aguagdl.com/promesas",
+ "caption": "En el mensaje del gobernador que reproduce Expansión (8 de octubre): El Zapotillo «actualmente opera al 45 por ciento». El 28 de octubre, según Milenio, la presidenta destacó que el nuevo proyecto aprovecha «al 100 por ciento» la presa. Dos cifras, dos gobiernos. Las seguimos. aguagdl.com/promesas\n\nMás en aguagdl.com/promesas (link en la bio).",
  "fuentes": {
   "mil": {
    "url": "https://www.milenio.com/politica/sheinbaum-y-lemus-anuncian-proyecto-garantizar-abasto-agua-guadalajara",
@@ -16,6 +16,14 @@
    "fecha": "2026-10-08",
    "revisado": "2026-11-05",
    "cita": "El plan anunciado por el gobernador Pablo Lemus contempla como medida inmediata dejar de utilizar el agua de la presa Las Pintas … [mensaje del gobernador que reproduce Expansión:] … Este proyecto ya cuenta con el aval de la Conagua (@conagua_mx). También hace falta concluir las obras para garantizar que funcione totalmente el sistema de El Zapotillo, en la cuenca del Río Verde, que actualmente opera al 45 por ciento. He acordado con la Presidenta Claudia Sheinbaum (@Claudiashein) que esas obras serán ejecutadas y pagadas por la Federación. Todas estas acciones no representarán un incremento en las tarifas del SIAPA, no se privatizará el servicio, no será una deuda pública y sí servirá para mejorar la calidad del agua durante muchos años. … Si hacemos esto, podremos ver una mejora sustancial en la calidad del agua que recibe la ciudad en las próximas semanas. … ¿Cuánto tiempo puede durar este esquema de rotación en el servicio? Estimamos que serán seis meses en una primera etapa, en lo que concluyen las obras del acueducto de desvío de La Calera y la ampliación de la Planta Potabilizadora número 1 de Miravalle … reducirá el suministro metropolitano hasta en 2.5 metros cúbicos por segundo durante al menos seis meses."
+  },
+  "web_promesas": {
+   "url": "https://aguagdl.com/promesas",
+   "medio": "Agua GDL, aguagdl.com/promesas",
+   "fecha": "2026-11-06",
+   "consultada": true,
+   "revisado": "2026-11-06",
+   "cita": "en cada compromiso ponemos la frase exacta, quién la dijo y cuándo, junto a lo que dice la ley o el documento oficial, con su liga. Si el gobierno cumple, lo decimos. … Actualizado el 3 de noviembre de 2026. De 15 compromisos, hoy: 0 se contradicen con los documentos · 0 incumplidos · 7 en riesgo · 7 sin pruebas · 1 en curso · 0 se cumplen."
   }
  },
  "slides": [
@@ -58,6 +66,21 @@
    "titular": "¿Cuándo y con qué obras se pasa de una cifra a la otra?",
    "propio": "pregunta nuestra",
    "texto": "Son dos gobiernos con dos cifras. Las seguimos."
+  },
+  {
+   "tipo": "sitio",
+   "captura": "promesas",
+   "kicker": "En aguagdl.com/promesas",
+   "cifra": "15",
+   "titular": "compromisos, cada uno con la frase exacta y su documento",
+   "items": [
+    "Al 3 de noviembre: 0 se cumplen, 7 en riesgo, 7 sin pruebas, 1 en curso",
+    "«Si el gobierno cumple, lo decimos»"
+   ],
+   "url": "aguagdl.com/promesas",
+   "fuentes": [
+    "web_promesas"
+   ]
   },
   {
    "tipo": "cierre",

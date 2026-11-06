@@ -1,7 +1,7 @@
 {
  "id": "12-4-de-cada-10",
  "titulo": "4 de cada 10 hogares",
- "caption": "Según el Gobierno de Jalisco, la rotación solo afecta a los hogares que abastece la planta potabilizadora número 1: «el 40% de los hogares de la ciudad». CNN reportó que los tandeos alcanzan a 2.3 millones de habitantes, de los 5.5 millones de usuarios del agua. ¿Tu casa está en la rotación? aguagdl.com",
+ "caption": "Según el Gobierno de Jalisco, la rotación solo afecta a los hogares que abastece la planta potabilizadora número 1: «el 40% de los hogares de la ciudad». CNN reportó que los tandeos alcanzan a 2.3 millones de habitantes, de los 5.5 millones de usuarios del agua. ¿Tu casa está en la rotación? aguagdl.com\n\nMás en aguagdl.com/avisos (link en la bio).",
  "fuentes": {
   "rot": {
    "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/",
@@ -17,6 +17,14 @@
    "fecha": "2026-10-22",
    "revisado": "2026-11-05",
    "cita": "Agua con olores fétidos y apariencia turbia sale de los grifos de miles de habitantes de la zona metropolitana de Guadalajara desde hace por lo menos dos años, dicen habitantes de la ciudad consultados por CNN. … profesora de la Universidad de Guadalajara y especialista en gestión de recursos hídricos, salud ambiental y toxicología del agua, dijo a CNN que el Gobierno del estado carece de un sistema de medición oficial que de certeza a los ciudadanos sobre la calidad de agua que recibe. “No tenemos un monitoreo digital, continúo, como un semáforo, como la calidad del aire, que hay semáforos todo el tiempo que nos están indicando que la calidad del aire se comparte de una forma de otra para tomar medidas de contingencia atmosférica” …  un programa de tandeos en los que se suspenderá el servicio de dos a tres días por semana a 2.3 millones de habitantes, de los 5.5 millones usuarios del agua."
+  },
+  "web_avisos": {
+   "url": "https://aguagdl.com/avisos",
+   "medio": "Agua GDL, aguagdl.com/avisos",
+   "fecha": "2026-11-06",
+   "consultada": true,
+   "revisado": "2026-11-06",
+   "cita": "¿Qué zona me toca? Busca tu colonia, municipio o código postal Buscar Usar mi ubicación … Calendario del SIAPA verificado el 3 de noviembre. Avisos gratis por Telegram Te avisa dos días antes de cada corte y la noche anterior. … Revisa tu recibo: hasta el 15 de diciembre, las casas y pequeños comercios de las colonias con problemas de calidad del agua tienen 80% de descuento si su consumo promedio es de hasta 25 m³ al mes"
   }
  },
  "slides": [
@@ -59,6 +67,21 @@
    "titular": "Agua turbia y con olor «desde hace por lo menos dos años»",
    "fuentes": [
     "cnn"
+   ]
+  },
+  {
+   "tipo": "sitio",
+   "captura": "avisos",
+   "kicker": "En aguagdl.com/avisos",
+   "titular": "¿Qué zona te toca y cuándo?",
+   "items": [
+    "Busca tu colonia o usa tu ubicación",
+    "Avisos gratis por Telegram: dos días antes y la noche anterior",
+    "Y revisa si te toca el 80% de descuento"
+   ],
+   "url": "aguagdl.com/avisos",
+   "fuentes": [
+    "web_avisos"
    ]
   },
   {

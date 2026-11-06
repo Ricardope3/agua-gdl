@@ -4,6 +4,7 @@
     python3 experiments/carrusel/build.py               check every carousel, render all, write FUENTES.md and contact sheets
     python3 experiments/carrusel/build.py 01-maximo     only carousels whose id starts with this
     python3 experiments/carrusel/build.py --check       validate only (no Chrome)
+    python3 experiments/carrusel/build.py --capturas    retake the aguagdl.com phone screenshots in capturas/
 
 Checks before rendering: every number written on a slide appears in the "cita" of a source the slide cites
 (or in the slide's "calculo", which says how it was computed); every source has url, medio, fecha, cita and
@@ -26,7 +27,7 @@ OUT = HERE / "out"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 W, H = 1080, 1350
 CHROME_BAR = 87  # headless Chrome's viewport is the window minus this; screenshots are cropped back
-TYPES = {"portada", "texto", "cita", "barras", "iconos", "calendario", "versus", "lista", "linea", "pregunta", "cierre"}
+TYPES = {"sitio", "portada", "texto", "cita", "barras", "iconos", "calendario", "versus", "lista", "linea", "pregunta", "cierre"}
 DIAS = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"]
 DIAS_CORTO = ["L", "M", "M", "J", "V", "S", "D"]
 
@@ -51,7 +52,7 @@ def foto_path(rel):
 def slide_texts(s):
     out = []
     for k, v in s.items():
-        if k in ("tipo", "foto", "fuentes", "calculo", "nota", "posicion", "propio"):
+        if k in ("tipo", "foto", "fuentes", "calculo", "nota", "posicion", "propio", "captura"):
             continue
         if isinstance(v, str):
             out.append(v)
@@ -178,7 +179,7 @@ def render_body(s):
             f'<div class="track"><div class="fill {b.get("color", "")}" style="width:{max(2, 100 * b["valor"] / mx):.1f}%"></div></div></div>'
             for b in s["barras"])
         return (f'<div class="stack"><div class="kicker">{md(s.get("kicker", ""))}</div><div class="titular">{md(s["titular"])}</div>'
-                f'<div class="barras{" compact" if len(s["barras"]) > 4 else ""}">{rows}</div>' + (f'<div class="texto small">{md(s["texto"])}</div>' if s.get("texto") else "") + "</div>")
+                f'<div class="barras{" compact" if len(s["barras"]) > 4 else ""}{" tiny" if len(s["barras"]) > 6 else ""}">{rows}</div>' + (f'<div class="texto small">{md(s["texto"])}</div>' if s.get("texto") else "") + "</div>")
     if t == "iconos":
         n, total = s["n"], s["total"]
         cols = s.get("columnas", 10 if total > 12 else total)
@@ -222,6 +223,14 @@ def render_body(s):
             for i, o in enumerate(s["opciones"]))
         return (f'<div class="stack"><div class="kicker">{md(s.get("kicker", ""))}</div><div class="titular">{md(s["titular"])}</div>'
                 f'<div class="ops">{ops}</div>' + (f'<div class="texto small">{md(s["texto"])}</div>' if s.get("texto") else "") + "</div>")
+    if t == "sitio":
+        items = "".join(f'<li>{md(it)}</li>' for it in s.get("items", []))
+        shot = (HERE / "capturas" / f'{s["captura"]}.jpg').as_uri()
+        return (f'<div class="sitio"><div class="scol"><div class="kicker">{md(s.get("kicker", ""))}</div>'
+                + (f'<div class="cifra">{md(s["cifra"])}</div>' if s.get("cifra") else "")
+                + f'<div class="titular">{md(s["titular"])}</div><ul class="acts">{items}</ul>'
+                f'<div class="bio">Link en la bio<b>{md(s["url"])}</b></div></div>'
+                f'<div class="phone"><div class="screen" style="background-image:url(\'{shot}\')"></div></div></div>')
     if t == "cierre":
         acts = "".join(f'<li>{md(a)}</li>' for a in s.get("acciones", []))
         return (f'<div class="stack cierre">{logo()}<div class="titular">{md(s["titular"])}</div>'
@@ -259,6 +268,7 @@ blockquote{font-family:"Avenir Next Condensed";font-weight:800;font-size:82px;li
 .bl{display:flex;justify-content:space-between;align-items:baseline;gap:20px;font-size:32px;font-weight:600;margin-bottom:12px}
 .bl b{font-family:"Avenir Next Condensed";font-weight:800;font-size:54px;white-space:nowrap;color:#3ea6ff}
 .barras.compact{gap:14px}.barras.compact .bl{font-size:28px;margin-bottom:6px}.barras.compact .bl b{font-size:42px}.barras.compact .track{height:30px}
+.barras.tiny{gap:8px}.barras.tiny .bl{font-size:26px;margin-bottom:4px}.barras.tiny .bl b{font-size:36px}.barras.tiny .track{height:22px}
 .track{height:44px;background:rgba(255,255,255,.12);border-radius:8px;overflow:hidden}
 .fill{height:100%;background:#3ea6ff;border-radius:8px}
 .fill.alarm{background:#ff7a66}.bl b.alarm{color:#ff7a66}
@@ -302,6 +312,13 @@ blockquote{font-family:"Avenir Next Condensed";font-weight:800;font-size:82px;li
 .acts{list-style:none;display:flex;flex-direction:column;gap:16px;font-size:36px;font-weight:600}
 .acts li:before{content:"→ ";color:#3ea6ff}
 .url{font-family:"Avenir Next Condensed";font-weight:800;font-size:84px;color:#3ea6ff}
+.sitio{position:relative;width:100%;height:100%;display:flex;align-items:center}
+.scol{width:560px;display:flex;flex-direction:column;gap:22px;position:relative;z-index:2}
+.sitio .cifra{font-size:150px}.sitio .titular{font-size:60px}.sitio .acts{font-size:30px}
+.bio{display:inline-flex;flex-direction:column;align-self:flex-start;gap:4px;margin-top:8px;padding:18px 26px;border-radius:18px;background:#3ea6ff;color:#04121c;font-weight:700;font-size:24px;text-transform:uppercase;letter-spacing:.06em}
+.bio b{font-family:"Avenir Next Condensed";font-size:44px;text-transform:none;letter-spacing:0}
+.phone{position:absolute;right:-30px;top:50%;transform:translateY(-50%) rotate(4deg);width:400px;height:860px;border-radius:56px;background:#0b0f14;padding:14px;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 2px rgba(255,255,255,.12)}
+.screen{width:100%;height:100%;border-radius:44px;background-size:100% auto;background-position:top center;background-repeat:no-repeat;background-color:#fbfaf6}
 .foot{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;font-size:21px;line-height:1.35;opacity:.78;border-top:1px solid rgba(255,255,255,.25);padding-top:18px}
 .foot .src{max-width:760px}
 .foot .site{font-weight:700;font-size:26px;white-space:nowrap;opacity:1}
@@ -373,7 +390,28 @@ def fuentes_md(c):
     return "\n".join(lines) + "\n"
 
 
+PAGINAS = ["reportes", "promesas", "pipas", "exige", "avisos"]
+
+
+def capturas():
+    """Retake the phone screenshots of aguagdl.com used by the sitio slides (500 CSS px wide, 2x)."""
+    (HERE / "capturas").mkdir(exist_ok=True)
+    for p in PAGINAS:
+        png = HERE / "capturas" / f"{p}.png"
+        subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--force-device-scale-factor=2",
+                        "--virtual-time-budget=10000", f"--window-size=500,{1080 + CHROME_BAR}", f"--screenshot={png}",
+                        f"https://aguagdl.com/{p}"], check=True, capture_output=True)
+        crop(png, 1000, 2160)
+        jpg = png.with_suffix(".jpg")
+        subprocess.run(["sips", "-s", "format", "jpeg", "-s", "formatOptions", "80", "-Z", "1512", str(png), "--out", str(jpg)],
+                       check=True, capture_output=True)
+        png.unlink()
+        print(f"  capturas/{jpg.name}")
+
+
 def main():
+    if "--capturas" in sys.argv:
+        return capturas()
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     only_check = "--check" in sys.argv
     fotos_ok = set(json.loads((HERE / "fotos.json").read_text())["fotos"])

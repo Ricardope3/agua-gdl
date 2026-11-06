@@ -1,7 +1,7 @@
 {
  "id": "14-cortes-totales",
  "titulo": "«No serán cortes totales»",
- "caption": "La página oficial de la rotación dice: «No serán cortes totales». Quadratín publicó el 19 de octubre que al menos 270 colonias registraron suspensión total del suministro en los primeros cuatro días. El director de la CEA habló de 728 registros de baja presión o suspensión. ¿Y en tu colonia? aguagdl.com/reportes",
+ "caption": "La página oficial de la rotación dice: «No serán cortes totales». Quadratín publicó el 19 de octubre que al menos 270 colonias registraron suspensión total del suministro en los primeros cuatro días. El director de la CEA habló de 728 registros de baja presión o suspensión. ¿Y en tu colonia? aguagdl.com/reportes\n\nMás en aguagdl.com/reportes (link en la bio).",
  "fuentes": {
   "rot": {
    "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/",
@@ -17,6 +17,14 @@
    "fecha": "2026-10-19",
    "revisado": "2026-11-05",
    "cita": "GUADALAJARA, Jal., 19 de octubre de 2026.- Al menos 270 colonias de la Zona Metropolitana de Guadalajara han registrado la suspensión total del suministro de agua durante los primeros cuatro días del sistema de rotación del Siapa, principalmente en zonas altas o alejadas de la red. El director de la Comisión Estatal del Agua, Luis Barboza Niño, informó que en este periodo se han realizado 272 servicios de pipas en Guadalajara, Tlaquepaque, Tonalá y Zapopan. Detalló que se acumulan 728 registros de colonias con baja presión o suspensión del servicio, aunque la cifra no corresponde a colonias distintas"
+  },
+  "web_reportes": {
+   "url": "https://aguagdl.com/reportes",
+   "medio": "Agua GDL, aguagdl.com/reportes",
+   "fecha": "2026-11-06",
+   "consultada": true,
+   "revisado": "2026-11-06",
+   "cita": "Repórtalo en 4 toques, sin cuenta. … ¿Hay agua en tu colonia? 193 colonias llegaron a una semana o más sin agua, según medios y vecinos: 60 con los días dichos por un medio y 26 con una sola publicación; 155 con quejas de los últimos 3 días. 334 colonias en el mapa 256 notas de medios 60 días lo más largo según un medio"
   }
  },
  "slides": [
@@ -72,6 +80,21 @@
     "q728"
    ],
    "calculo": "«No serán cortes totales» = 0 cortes totales prometidos."
+  },
+  {
+   "tipo": "sitio",
+   "captura": "reportes",
+   "kicker": "En aguagdl.com/reportes",
+   "cifra": "334",
+   "titular": "colonias en el mapa, con lo que publican medios y vecinos",
+   "items": [
+    "256 notas de medios",
+    "Toca tu colonia y mira qué dicen"
+   ],
+   "url": "aguagdl.com/reportes",
+   "fuentes": [
+    "web_reportes"
+   ]
   },
   {
    "tipo": "cierre",

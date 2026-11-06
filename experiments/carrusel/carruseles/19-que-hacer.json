@@ -1,7 +1,7 @@
 {
  "id": "19-que-hacer",
  "titulo": "Si no llega el agua",
- "caption": "Qué hacer si no llega el agua, en 6 pasos. Guárdalo y compártelo con tus vecinos. aguagdl.com",
+ "caption": "Qué hacer si no llega el agua, en 6 pasos. Guárdalo y compártelo con tus vecinos. aguagdl.com\n\nMás en aguagdl.com/pipas (link en la bio).",
  "fuentes": {
   "dec": {
    "url": "https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25482/1785200563-2026-07-27-.pdf",
@@ -17,6 +17,14 @@
    "consultada": true,
    "revisado": "2026-11-05",
    "cita": "Busca tu colonia, municipio o código postal Buscar Usar mi ubicación … Avisos gratis por Telegram Te avisa dos días antes de cada corte y la noche anterior. Abre el bot y manda tu ubicación, tu colonia o tu zona."
+  },
+  "web_pipas": {
+   "url": "https://aguagdl.com/pipas",
+   "medio": "Agua GDL, aguagdl.com/pipas",
+   "fecha": "2026-11-06",
+   "consultada": true,
+   "revisado": "2026-11-06",
+   "cita": "Aquí están los teléfonos y WhatsApp oficiales del SIAPA y de Guadalajara, Zapopan, Tlaquepaque y Tonalá, cada uno con su fuente. … Al SIAPA 33 3668 2482 o 073 Es SIAPATEL. El SIAPA dice: «Si te quedas sin agua, solicita una pipa gratuita», y que atiende «las 24 horas del día»."
   }
  },
  "slides": [
@@ -65,6 +73,21 @@
    "texto": "Casas y pequeños comercios afectados, con consumo de hasta 25 m³ al mes. Detalles en aguagdl.com/avisos.",
    "fuentes": [
     "dec"
+   ]
+  },
+  {
+   "tipo": "sitio",
+   "captura": "pipas",
+   "kicker": "En aguagdl.com/pipas",
+   "cifra": "073",
+   "titular": "o 33 3668 2482: el SIAPATEL, para pedir una pipa",
+   "items": [
+    "Y los teléfonos y WhatsApp de Guadalajara, Zapopan, Tlaquepaque y Tonalá, cada uno con su fuente",
+    "El SIAPA dice: «Si te quedas sin agua, solicita una pipa gratuita»"
+   ],
+   "url": "aguagdl.com/pipas",
+   "fuentes": [
+    "web_pipas"
    ]
   },
   {

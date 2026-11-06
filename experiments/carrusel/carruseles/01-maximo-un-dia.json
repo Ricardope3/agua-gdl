@@ -1,7 +1,7 @@
 {
  "id": "01-maximo-un-dia",
  "titulo": "«Por máximo un día»",
- "caption": "La página oficial de la rotación dice que cada zona tendría «de 2 a 3 racionamientos por semana por máximo un día». Desde el 3 de noviembre, el calendario marca 4 días por semana a las zonas 1, 2, 4 y 5. ¿Cómo te ha ido en tu colonia? Cuéntanos en aguagdl.com/reportes. Fuentes en cada imagen.",
+ "caption": "La página oficial de la rotación dice que cada zona tendría «de 2 a 3 racionamientos por semana por máximo un día». Desde el 3 de noviembre, el calendario marca 4 días por semana a las zonas 1, 2, 4 y 5. ¿Cómo te ha ido en tu colonia? Cuéntanos en aguagdl.com/reportes. Fuentes en cada imagen.\n\nMás en aguagdl.com/reportes (link en la bio).",
  "fuentes": {
   "rot": {
    "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/",
@@ -24,6 +24,14 @@
    "fecha": "2026-11-04",
    "revisado": "2026-11-05",
    "cita": "Hasta dos meses sin agua en Polanquito"
+  },
+  "web_reportes": {
+   "url": "https://aguagdl.com/reportes",
+   "medio": "Agua GDL, aguagdl.com/reportes",
+   "fecha": "2026-11-06",
+   "consultada": true,
+   "revisado": "2026-11-06",
+   "cita": "Repórtalo en 4 toques, sin cuenta. … ¿Hay agua en tu colonia? 193 colonias llegaron a una semana o más sin agua, según medios y vecinos: 60 con los días dichos por un medio y 26 con una sola publicación; 155 con quejas de los últimos 3 días. 334 colonias en el mapa 256 notas de medios 60 días lo más largo según un medio"
   }
  },
  "slides": [
@@ -136,6 +144,21 @@
    "texto": "Titular de UDG TV, 4 de noviembre.",
    "fuentes": [
     "udg"
+   ]
+  },
+  {
+   "tipo": "sitio",
+   "captura": "reportes",
+   "kicker": "En aguagdl.com/reportes",
+   "cifra": "193",
+   "titular": "colonias llegaron a una semana o más sin agua, según medios y vecinos",
+   "items": [
+    "Busca tu colonia en el mapa",
+    "Repórtala en 4 toques, sin cuenta"
+   ],
+   "url": "aguagdl.com/reportes",
+   "fuentes": [
+    "web_reportes"
    ]
   },
   {

@@ -1,7 +1,7 @@
 {
  "id": "06-las-pintas",
  "titulo": "Las Pintas: el 30%",
- "caption": "El gobernador dijo que cerrar Las Pintas «nos quitó alrededor del 30 por ciento del volumen disponible» (Notisistema). Según NTR, en el primer cuatrimestre ya se habían gastado 23 millones en acciones de saneamiento en Las Pintas que no duraron. El 21 de octubre se anunciaron 500 millones para colectores; según El Informador, esas obras y el desazolve de Las Pintas y La Calera concluirían el 15 de diciembre. Lo revisamos ese día. aguagdl.com/promesas",
+ "caption": "El gobernador dijo que cerrar Las Pintas «nos quitó alrededor del 30 por ciento del volumen disponible» (Notisistema). Según NTR, en el primer cuatrimestre ya se habían gastado 23 millones en acciones de saneamiento en Las Pintas que no duraron. El 21 de octubre se anunciaron 500 millones para colectores; según El Informador, esas obras y el desazolve de Las Pintas y La Calera concluirían el 15 de diciembre. Lo revisamos ese día. aguagdl.com/promesas\n\nMás en aguagdl.com/promesas (link en la bio).",
  "fuentes": {
   "noti30": {
    "url": "https://www.notisistema.com/noticias/las-pintas-volvera-a-operar-antes-del-15-de-diciembre-lemus/",
@@ -23,6 +23,14 @@
    "fecha": "2026-10-21",
    "revisado": "2026-11-05",
    "cita": "El secretario de Infraestructura y Obra Pública, David Zamora, anunció una inversión de 500 millones de pesos para intervenir colectores del Sistema Antiguo de Abasto Chapala-Guadalajara, cuyo flujo hacia la Zona Metropolitana fue suspendido por contaminación. … Se destinarán 500 millones de pesos para evitar que las aguas residuales se mezclen con la que transita hacia la presa … Zamora indicó que las intervenciones, junto con el desazolve de las presas de Las Pintas y La Calera, concluirían el 15 de diciembre para reactivar el tránsito de agua por el Sistema Antiguo y contribuir a eliminar los tandeos aplicados por el SIAPA en 627 colonias."
+  },
+  "web_promesas": {
+   "url": "https://aguagdl.com/promesas",
+   "medio": "Agua GDL, aguagdl.com/promesas",
+   "fecha": "2026-11-06",
+   "consultada": true,
+   "revisado": "2026-11-06",
+   "cita": "en cada compromiso ponemos la frase exacta, quién la dijo y cuándo, junto a lo que dice la ley o el documento oficial, con su liga. Si el gobierno cumple, lo decimos. … Actualizado el 3 de noviembre de 2026. De 15 compromisos, hoy: 0 se contradicen con los documentos · 0 incumplidos · 7 en riesgo · 7 sin pruebas · 1 en curso · 0 se cumplen."
   }
  },
  "slides": [
@@ -89,6 +97,21 @@
     "noti30"
    ],
    "calculo": "Primer cuatrimestre = enero a abril de 2026."
+  },
+  {
+   "tipo": "sitio",
+   "captura": "promesas",
+   "kicker": "En aguagdl.com/promesas",
+   "cifra": "15",
+   "titular": "compromisos, cada uno con la frase exacta y su documento",
+   "items": [
+    "Al 3 de noviembre: 0 se cumplen, 7 en riesgo, 7 sin pruebas, 1 en curso",
+    "«Si el gobierno cumple, lo decimos»"
+   ],
+   "url": "aguagdl.com/promesas",
+   "fuentes": [
+    "web_promesas"
+   ]
   },
   {
    "tipo": "cierre",

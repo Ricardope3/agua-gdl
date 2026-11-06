@@ -1,7 +1,7 @@
 {
  "id": "11-dia-con-dia",
  "titulo": "«Día con día»",
- "caption": "El 15 de octubre, el director del SIAPA dijo: «Vamos a seguir informando día con día lo que va presentando este proceso» (El Informador). ¿Has visto el informe de hoy? Si sabes dónde se publica, mándanoslo a soporte@aguagdl.com y lo enlazamos.",
+ "caption": "El 15 de octubre, el director del SIAPA dijo: «Vamos a seguir informando día con día lo que va presentando este proceso» (El Informador). ¿Has visto el informe de hoy? Si sabes dónde se publica, mándanoslo a soporte@aguagdl.com y lo enlazamos.\n\nMás en aguagdl.com/reportes (link en la bio).",
  "fuentes": {
   "jaur": {
    "url": "https://www.informador.mx/jalisco/siapa-comienzan-tandeos-en-la-zmg-con-113-colonias-piden-paciencia-y-verificar-calendario-de-rotacion-de-servicio-20261015-0177.html",
@@ -9,6 +9,14 @@
    "fecha": "2026-10-15",
    "revisado": "2026-11-05",
    "cita": "informó el director del Sistema Intermunicipal de Agua Potable y Alcantarillado (SIAPA), Ismael Jáuregui Castañeda. … “Les pedimos un poco de paciencia. Estamos trabajando para que ustedes, en base al calendario del esquema rotativo, tengan el flujo el día correcto de un agua de calidad. Vamos a seguir informando día con día lo que va presentando este proceso”, expresó."
+  },
+  "web_reportes": {
+   "url": "https://aguagdl.com/reportes",
+   "medio": "Agua GDL, aguagdl.com/reportes",
+   "fecha": "2026-11-06",
+   "consultada": true,
+   "revisado": "2026-11-06",
+   "cita": "Repórtalo en 4 toques, sin cuenta. … ¿Hay agua en tu colonia? 193 colonias llegaron a una semana o más sin agua, según medios y vecinos: 60 con los días dichos por un medio y 26 con una sola publicación; 155 con quejas de los últimos 3 días. 334 colonias en el mapa 256 notas de medios 60 días lo más largo según un medio"
   }
  },
  "slides": [
@@ -41,6 +49,21 @@
     "Colonias sin presión, día por día",
     "Pipas enviadas y a dónde",
     "Cuándo regresó el agua a cada zona"
+   ]
+  },
+  {
+   "tipo": "sitio",
+   "captura": "reportes",
+   "kicker": "Mientras, en aguagdl.com/reportes",
+   "cifra": "334",
+   "titular": "colonias en el mapa, con lo que publican medios y vecinos",
+   "items": [
+    "193 llegaron a una semana o más sin agua, según medios y vecinos",
+    "Reporta la tuya en 4 toques"
+   ],
+   "url": "aguagdl.com/reportes",
+   "fuentes": [
+    "web_reportes"
    ]
   },
   {

@@ -1,7 +1,7 @@
 {
  "id": "05-la-calera-quiz",
  "titulo": "Quiz: ¿cuánto cuesta La Calera?",
- "caption": "Pregunta rápida: ¿cuánto cuesta todo el sistema La Calera, la obra que llevaría agua de la presa La Calera a la planta Los Agaves y se conectaría con el acueducto Chapala–Guadalajara que ya existe? Respuesta en la tercera imagen, con la cifra del propio Plan Integral del Agua. aguagdl.com/exige",
+ "caption": "Pregunta rápida: ¿cuánto cuesta todo el sistema La Calera, la obra que llevaría agua de la presa La Calera a la planta Los Agaves y se conectaría con el acueducto Chapala–Guadalajara que ya existe? Respuesta en la tercera imagen, con la cifra del propio Plan Integral del Agua. aguagdl.com/exige\n\nMás en aguagdl.com/exige (link en la bio).",
  "fuentes": {
   "mil": {
    "url": "https://www.milenio.com/politica/sheinbaum-y-lemus-anuncian-proyecto-garantizar-abasto-agua-guadalajara",
@@ -17,6 +17,14 @@
    "consultada": true,
    "revisado": "2026-11-05",
    "cita": "El proyecto consiste en la construcción del Sistema de Abastecimiento La Calera – Planta Potabilizadora No. 5, mediante el desarrollo de una nueva estación de bombeo, infraestructura de captación, acueducto de conducción, interconexiones hidráulicas, sistemas eléctricos y equipamiento electromecánico que permitirán conducir el agua almacenada en la Presa La Calera hacia la Planta Potabilizadora No. 5 \"Los Agaves\" … establecer una interconexión estratégica con el tanque de cambio de régimen del Acueducto Chapala–Guadalajara. Esta configuración permitirá incorporar volúmenes al sistema metropolitano, reduciendo progresivamente la dependencia del último tramo del Sistema Antiguo Chapala–Guadalajara, el cual actualmente opera mediante conducción a cielo abierto. … Primera etapa: Construcción de acueducto de conducción de 6,732.55 metros de 56 pulgadas de diámetro. … El proyecto está diseñado para bombear un volumen de 2,500 litros por segundo provenientes de la presa La Calera. … Ejecución de su primera etapa en 2025: $441.22 millones … Etapa 2026, estación de bombeo y conexión con el tanque de cambio de régimen del Acueducto existente Chapala – Guadalajara: $756.00 millones. … Población beneficiada 3.15 millones de habitantes. … Monto del proyecto: 1,197.22 millones. El monto del proyecto corresponde a estimaciones obtenidas a partir de estudios y proyectos ejecutivos, por lo que no constituye presupuesto definitivo."
+  },
+  "web_exige": {
+   "url": "https://aguagdl.com/exige",
+   "medio": "Agua GDL, aguagdl.com/exige",
+   "fecha": "2026-11-06",
+   "consultada": true,
+   "revisado": "2026-11-06",
+   "cita": "Pídele al gobernador Pablo Lemus y a las 38 diputaciones del Congreso de Jalisco que saneen los ríos, que el agua llegue limpia y suficiente, que rindan cuentas y que el agua siga siendo pública. Escríbeles por correo, X o Messenger desde tu propia cuenta, o llámales. Agua GDL no ve ni guarda nada. … Son 39 correos: uno para el gobernador y uno para cada diputación, con su nombre."
   }
  },
  "slides": [
@@ -115,6 +123,21 @@
     "mil"
    ],
    "calculo": "9,300 entre 1,197.22 = 7.8, casi 8."
+  },
+  {
+   "tipo": "sitio",
+   "captura": "exige",
+   "kicker": "En aguagdl.com/exige",
+   "cifra": "39",
+   "titular": "correos listos: al gobernador y a cada una de las 38 diputaciones",
+   "items": [
+    "Con tu colonia y tu caso",
+    "Desde tu propio correo: Agua GDL no ve ni guarda nada"
+   ],
+   "url": "aguagdl.com/exige",
+   "fuentes": [
+    "web_exige"
+   ]
   },
   {
    "tipo": "cierre",

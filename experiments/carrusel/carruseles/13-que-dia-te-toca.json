@@ -1,7 +1,7 @@
 {
  "id": "13-que-dia-te-toca",
  "titulo": "¿Qué día te toca?",
- "caption": "El calendario de la rotación cambió el 3 de noviembre. Guarda esta imagen, busca tu zona y recibe un aviso antes de cada racionamiento en Telegram: @AvisoAguaGDLbot. aguagdl.com",
+ "caption": "El calendario de la rotación cambió el 3 de noviembre. Guarda esta imagen, busca tu zona y recibe un aviso antes de cada racionamiento en Telegram: @AvisoAguaGDLbot. aguagdl.com\n\nMás en aguagdl.com/avisos (link en la bio).",
  "fuentes": {
   "cal": {
    "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/api/ajustes.php",
@@ -17,6 +17,22 @@
    "consultada": true,
    "revisado": "2026-11-05",
    "cita": "Busca tu colonia, municipio o código postal Buscar Usar mi ubicación … Avisos gratis por Telegram Te avisa dos días antes de cada corte y la noche anterior. Abre el bot y manda tu ubicación, tu colonia o tu zona."
+  },
+  "web_index": {
+   "url": "https://aguagdl.com/",
+   "medio": "Agua GDL, aguagdl.com",
+   "fecha": "2026-11-06",
+   "consultada": true,
+   "revisado": "2026-11-06",
+   "cita": "Zona 1 2 de sus 11 colonias llegaron a una semana o más sin agua … Zona 2 9 de sus 26 colonias llegaron a una semana o más sin agua … Zona 3 57 de sus 150 colonias llegaron a una semana o más sin agua … Zona 4 31 de sus 149 colonias llegaron a una semana o más sin agua Zona 5 31 de sus 103 colonias llegaron a una semana o más sin agua Zona 6 50 de sus 290 colonias llegaron a una semana o más sin agua Zona 7 1 de sus 10 colonias llegaron a una semana o más sin agua … Cada reporte es un testimonio vecinal que ayuda a ver dónde falta el agua. Sin cuenta y anónimo; no es una medición oficial."
+  },
+  "web_avisos": {
+   "url": "https://aguagdl.com/avisos",
+   "medio": "Agua GDL, aguagdl.com/avisos",
+   "fecha": "2026-11-06",
+   "consultada": true,
+   "revisado": "2026-11-06",
+   "cita": "¿Qué zona me toca? Busca tu colonia, municipio o código postal Buscar Usar mi ubicación … Calendario del SIAPA verificado el 3 de noviembre. Avisos gratis por Telegram Te avisa dos días antes de cada corte y la noche anterior. … Revisa tu recibo: hasta el 15 de diciembre, las casas y pequeños comercios de las colonias con problemas de calidad del agua tienen 80% de descuento si su consumo promedio es de hasta 25 m³ al mes"
   }
  },
  "slides": [
@@ -125,6 +141,69 @@
    "texto": "Un aviso dos días antes y otro la noche anterior, gratis, en Telegram: *@AvisoAguaGDLbot*.",
    "fuentes": [
     "avisos"
+   ]
+  },
+  {
+   "tipo": "barras",
+   "foto": "fuentes/91f71286c29a.jpg",
+   "kicker": "Según medios y vecinos, en aguagdl.com",
+   "titular": "¿Cómo le ha ido a cada zona?",
+   "barras": [
+    {
+     "etiqueta": "Zona 3: 57 de 150 colonias",
+     "valor": 38,
+     "texto": "38%"
+    },
+    {
+     "etiqueta": "Zona 2: 9 de 26 colonias",
+     "valor": 35,
+     "texto": "35%"
+    },
+    {
+     "etiqueta": "Zona 5: 31 de 103 colonias",
+     "valor": 30,
+     "texto": "30%"
+    },
+    {
+     "etiqueta": "Zona 4: 31 de 149 colonias",
+     "valor": 21,
+     "texto": "21%"
+    },
+    {
+     "etiqueta": "Zona 1: 2 de 11 colonias",
+     "valor": 18,
+     "texto": "18%"
+    },
+    {
+     "etiqueta": "Zona 6: 50 de 290 colonias",
+     "valor": 17,
+     "texto": "17%"
+    },
+    {
+     "etiqueta": "Zona 7: 1 de 10 colonias",
+     "valor": 10,
+     "texto": "10%"
+    }
+   ],
+   "texto": "Colonias de cada zona que llegaron a una semana o más sin agua, según lo que publican medios y vecinos. No es una medición oficial.",
+   "fuentes": [
+    "web_index"
+   ],
+   "calculo": "57/150 = 38%; 9/26 = 35%; 31/103 = 30%; 31/149 = 21%; 2/11 = 18%; 50/290 = 17%; 1/10 = 10% (redondeado)."
+  },
+  {
+   "tipo": "sitio",
+   "captura": "avisos",
+   "kicker": "En aguagdl.com/avisos",
+   "titular": "¿Qué zona te toca y cuándo?",
+   "items": [
+    "Busca tu colonia o usa tu ubicación",
+    "Avisos gratis por Telegram: dos días antes y la noche anterior",
+    "Y revisa si te toca el 80% de descuento"
+   ],
+   "url": "aguagdl.com/avisos",
+   "fuentes": [
+    "web_avisos"
    ]
   },
   {

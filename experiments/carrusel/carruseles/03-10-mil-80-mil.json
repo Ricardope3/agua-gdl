@@ -1,7 +1,7 @@
 {
  "id": "03-10-mil-80-mil",
  "titulo": "10 mil que pueden costar 80 mil",
- "caption": "El 20 de octubre, según El Informador, la presidenta dijo que se revisan los esquemas de financiamiento porque puede haber algunos con tasas tan altas «que una obra de 10 mil MDP te acabe costando 80 mil MDP al largo de los años». El 8 de octubre, Jalisco había pedido al Congreso avalar un contrato de 11 mil 922 mdp con pagos anuales durante 20 o 25 años (UDG TV). ¿Qué esquema se firma al final? Hay que leer el contrato. aguagdl.com/promesas",
+ "caption": "El 20 de octubre, según El Informador, la presidenta dijo que se revisan los esquemas de financiamiento porque puede haber algunos con tasas tan altas «que una obra de 10 mil MDP te acabe costando 80 mil MDP al largo de los años». El 8 de octubre, Jalisco había pedido al Congreso avalar un contrato de 11 mil 922 mdp con pagos anuales durante 20 o 25 años (UDG TV). ¿Qué esquema se firma al final? Hay que leer el contrato. aguagdl.com/promesas\n\nMás en aguagdl.com/promesas (link en la bio).",
  "fuentes": {
   "mil": {
    "url": "https://www.milenio.com/politica/sheinbaum-y-lemus-anuncian-proyecto-garantizar-abasto-agua-guadalajara",
@@ -23,6 +23,14 @@
    "fecha": "2026-10-08",
    "revisado": "2026-11-05",
    "cita": "El Gobierno de Jalisco pidió al Congreso avalar un contrato por 11 mil 922 mdp para construir el acueducto sustituto Chapala-Guadalajara. El esquema contempla pagos anuales durante 20 o 25 años y requerirá al menos 26 votos para su aprobación."
+  },
+  "web_promesas": {
+   "url": "https://aguagdl.com/promesas",
+   "medio": "Agua GDL, aguagdl.com/promesas",
+   "fecha": "2026-11-06",
+   "consultada": true,
+   "revisado": "2026-11-06",
+   "cita": "en cada compromiso ponemos la frase exacta, quién la dijo y cuándo, junto a lo que dice la ley o el documento oficial, con su liga. Si el gobierno cumple, lo decimos. … Actualizado el 3 de noviembre de 2026. De 15 compromisos, hoy: 0 se contradicen con los documentos · 0 incumplidos · 7 en riesgo · 7 sin pruebas · 1 en curso · 0 se cumplen."
   }
  },
  "slides": [
@@ -74,6 +82,21 @@
    "texto": "La prueba estará en los contratos: quién paga, cuánto y por cuántos años.",
    "fuentes": [
     "mil"
+   ]
+  },
+  {
+   "tipo": "sitio",
+   "captura": "promesas",
+   "kicker": "En aguagdl.com/promesas",
+   "cifra": "15",
+   "titular": "compromisos, cada uno con la frase exacta y su documento",
+   "items": [
+    "Al 3 de noviembre: 0 se cumplen, 7 en riesgo, 7 sin pruebas, 1 en curso",
+    "«Si el gobierno cumple, lo decimos»"
+   ],
+   "url": "aguagdl.com/promesas",
+   "fuentes": [
+    "web_promesas"
    ]
   },
   {

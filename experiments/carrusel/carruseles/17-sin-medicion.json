@@ -1,7 +1,7 @@
 {
  "id": "17-sin-medicion",
  "titulo": "Sin semáforo del agua",
- "caption": "Para el aire hay semáforos de calidad, recordó a CNN una especialista de la UdeG: «No tenemos un monitoreo digital, continúo, como un semáforo, como la calidad del aire». Según CNN, dijo que el Gobierno del estado «carece de un sistema de medición oficial» sobre la calidad del agua. Pide los datos: aguagdl.com/exige",
+ "caption": "Para el aire hay semáforos de calidad, recordó a CNN una especialista de la UdeG: «No tenemos un monitoreo digital, continúo, como un semáforo, como la calidad del aire». Según CNN, dijo que el Gobierno del estado «carece de un sistema de medición oficial» sobre la calidad del agua. Pide los datos: aguagdl.com/exige\n\nMás en aguagdl.com/exige (link en la bio).",
  "fuentes": {
   "cnn": {
    "url": "https://cnnespanol.cnn.com/2026/10/22/mexico/crisis-agua-guadalajara-olor-que-pasa-orix",
@@ -9,6 +9,14 @@
    "fecha": "2026-10-22",
    "revisado": "2026-11-05",
    "cita": "Agua con olores fétidos y apariencia turbia sale de los grifos de miles de habitantes de la zona metropolitana de Guadalajara desde hace por lo menos dos años, dicen habitantes de la ciudad consultados por CNN. … profesora de la Universidad de Guadalajara y especialista en gestión de recursos hídricos, salud ambiental y toxicología del agua, dijo a CNN que el Gobierno del estado carece de un sistema de medición oficial que de certeza a los ciudadanos sobre la calidad de agua que recibe. “No tenemos un monitoreo digital, continúo, como un semáforo, como la calidad del aire, que hay semáforos todo el tiempo que nos están indicando que la calidad del aire se comparte de una forma de otra para tomar medidas de contingencia atmosférica” …  un programa de tandeos en los que se suspenderá el servicio de dos a tres días por semana a 2.3 millones de habitantes, de los 5.5 millones usuarios del agua."
+  },
+  "web_exige": {
+   "url": "https://aguagdl.com/exige",
+   "medio": "Agua GDL, aguagdl.com/exige",
+   "fecha": "2026-11-06",
+   "consultada": true,
+   "revisado": "2026-11-06",
+   "cita": "Pídele al gobernador Pablo Lemus y a las 38 diputaciones del Congreso de Jalisco que saneen los ríos, que el agua llegue limpia y suficiente, que rindan cuentas y que el agua siga siendo pública. Escríbeles por correo, X o Messenger desde tu propia cuenta, o llámales. Agua GDL no ve ni guarda nada. … Son 39 correos: uno para el gobernador y uno para cada diputación, con su nombre."
   }
  },
  "slides": [
@@ -52,6 +60,21 @@
     "Resultados de laboratorio por colonia, publicados",
     "Fecha y punto de cada muestra",
     "Un aviso cuando el agua no sea apta"
+   ]
+  },
+  {
+   "tipo": "sitio",
+   "captura": "exige",
+   "kicker": "En aguagdl.com/exige",
+   "cifra": "39",
+   "titular": "correos listos: al gobernador y a cada una de las 38 diputaciones",
+   "items": [
+    "Con tu colonia y tu caso",
+    "Desde tu propio correo: Agua GDL no ve ni guarda nada"
+   ],
+   "url": "aguagdl.com/exige",
+   "fuentes": [
+    "web_exige"
    ]
   },
   {

@@ -1,7 +1,7 @@
 {
  "id": "02-24-mil-700",
  "titulo": "24 mil 700 millones: ¿en qué?",
- "caption": "El 28 de octubre, los gobiernos federal y de Jalisco anunciaron 24 mil 700 millones de pesos para el agua de Guadalajara. Así se reparten, según Milenio. Guarda este post: vamos a seguir cada obra hasta que se termine. aguagdl.com/promesas",
+ "caption": "El 28 de octubre, los gobiernos federal y de Jalisco anunciaron 24 mil 700 millones de pesos para el agua de Guadalajara. Así se reparten, según Milenio. Guarda este post: vamos a seguir cada obra hasta que se termine. aguagdl.com/promesas\n\nMás en aguagdl.com/promesas (link en la bio).",
  "fuentes": {
   "mil": {
    "url": "https://www.milenio.com/politica/sheinbaum-y-lemus-anuncian-proyecto-garantizar-abasto-agua-guadalajara",
@@ -9,6 +9,14 @@
    "fecha": "2026-10-28",
    "revisado": "2026-11-05",
    "cita": "Los gobiernos de México y Jalisco invertirán 24 mil 700 millones de pesos en conjunto en el proyecto hídrico para garantizar suficiente agua potable y de calidad a la zona metropolitana de Guadalajara, sin endeudamientos ni privatizaciones de las obras. La Federación destinará 14 mil 500 millones de pesos para la construcción del nuevo acueducto Chapala-Guadalajara (nueve mil 300 mdp), y para el acueducto Calderón-San Gaspar, así como la ampliación de la planta potabilizadora de San Gaspar (cinco mil 200 mdp). En tanto, la administración estatal invertirá 10 mil 200 millones de pesos para la renovación de la planta potabilizadora número uno en Miravalle, el saneamiento del canal y la presa Las Pintas, así como la reparación y la construcción de una nueva red de colectores. … la presidenta Claudia Sheinbaum destacó que se trata de un proyecto que brinda la mejor solución a la región, aprovechando al 100 por ciento la presa El Zapotillo"
+  },
+  "web_promesas": {
+   "url": "https://aguagdl.com/promesas",
+   "medio": "Agua GDL, aguagdl.com/promesas",
+   "fecha": "2026-11-06",
+   "consultada": true,
+   "revisado": "2026-11-06",
+   "cita": "en cada compromiso ponemos la frase exacta, quién la dijo y cuándo, junto a lo que dice la ley o el documento oficial, con su liga. Si el gobierno cumple, lo decimos. … Actualizado el 3 de noviembre de 2026. De 15 compromisos, hoy: 0 se contradicen con los documentos · 0 incumplidos · 7 en riesgo · 7 sin pruebas · 1 en curso · 0 se cumplen."
   }
  },
  "slides": [
@@ -73,6 +81,21 @@
     "¿Quién construye y con qué contrato?",
     "¿Cuándo empieza y cuándo termina cada obra?",
     "¿Dónde se publica el avance?"
+   ]
+  },
+  {
+   "tipo": "sitio",
+   "captura": "promesas",
+   "kicker": "En aguagdl.com/promesas",
+   "cifra": "15",
+   "titular": "compromisos, cada uno con la frase exacta y su documento",
+   "items": [
+    "Al 3 de noviembre: 0 se cumplen, 7 en riesgo, 7 sin pruebas, 1 en curso",
+    "«Si el gobierno cumple, lo decimos»"
+   ],
+   "url": "aguagdl.com/promesas",
+   "fuentes": [
+    "web_promesas"
    ]
   },
   {

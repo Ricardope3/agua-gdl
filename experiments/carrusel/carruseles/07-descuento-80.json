@@ -1,7 +1,7 @@
 {
  "id": "07-descuento-80",
  "titulo": "Revisa tu recibo: 80%",
- "caption": "Hasta el 15 de diciembre, el decreto 30216/LXIV/26 autoriza al SIAPA un descuento del 80% en el consumo de agua para casas y pequeños comercios afectados por la calidad del agua, con consumo promedio de hasta 25 m³ al mes. Si tu colonia no está en la lista, puedes pedirlo: aplica si el SIAPA emite un dictamen técnico que acredite la afectación. Detalles en aguagdl.com/avisos#descuento. Guarda y comparte.",
+ "caption": "Hasta el 15 de diciembre, el decreto 30216/LXIV/26 autoriza al SIAPA un descuento del 80% en el consumo de agua para casas y pequeños comercios afectados por la calidad del agua, con consumo promedio de hasta 25 m³ al mes. Si tu colonia no está en la lista, puedes pedirlo: aplica si el SIAPA emite un dictamen técnico que acredite la afectación. Detalles en aguagdl.com/avisos#descuento. Guarda y comparte.\n\nMás en aguagdl.com/avisos (link en la bio).",
  "fuentes": {
   "dec": {
    "url": "https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25482/1785200563-2026-07-27-.pdf",
@@ -9,6 +9,14 @@
    "fecha": "2026-07-27",
    "revisado": "2026-11-05",
    "cita": "NÚMERO 30216/LXIV/26 EL CONGRESO DEL ESTADO DECRETA: … Artículo Primero. Se autoriza al Sistema Intermunicipal de los Servicios de Agua Potable y Alcantarillado (SIAPA) para aplicar descuentos del 80% (ochenta por ciento) sobre los montos facturados por los servicios de agua potable, con base en el consumo registrado a partir de la publicación del presente decreto y durante el ejercicio fiscal 2026, a las personas usuarias de los servicios habitacional y comercial afectadas por la calidad del agua, cuyo promedio mensual de consumo sea de hasta 25m3 (veinticinco metros cúbicos); tratándose del servicio comercial, el beneficio será aplicable exclusivamente a pequeños comercios. Observando el mismo descuento para el régimen de usuarios en condominio. … Asimismo, serán acreedoras al beneficio previsto en el presente artículo las personas usuarias que no hubiesen sido consideradas en el acuerdo a que se refiere el artículo segundo del presente Decreto y que, durante la vigencia del mismo, presenten afectaciones relacionadas con la calidad del agua, siempre que, a petición de parte, soliciten la aplicación del descuento y la Dirección de Abastecimiento y Operación o la unidad administrativa competente del Sistema Intermunicipal de los Servicios de Agua Potable y Alcantarillado (SIAPA) emita el dictamen técnico correspondiente que acredite dichas afectaciones. … Artículo Cuarto. … Artículo Cuarto. El Sistema Intermunicipal de los Servicios de Agua Potable y Alcantarillado (SIAPA) deberá implementar de manera inmediata las acciones necesarias para garantizar el acceso al agua de calidad en las zonas determinadas conforme al artículo tercero del presente Decreto. Para tal efecto, deberá, cuando menos: I. Instalar y operar plantas potabilizadoras portátiles en los puntos que determine conforme a criterios técnicos y de cobertura de la población afectada; II. Garantizar el suministro gratuito de agua potable mediante pipas a las colonias afectadas, priorizando escuelas, hospitales, centros de salud, estancias para personas adultas mayores y demás instalaciones de atención prioritaria, así como a las personas usuarias que no cuenten con acceso suficiente y de calidad al servicio; III. Implementar programas de distribución gratuita de agua embotellada para consumo humano en las zonas donde las condiciones de calidad del agua así lo requieran, conforme a los dictámenes técnicos correspondientes; y IV. Difundir de manera permanente los puntos de abastecimiento, horarios, rutas de distribución y demás información necesaria para garantizar que la población conozca las medidas implementadas. Artículo Quinto. - El Sistema Intermunicipal de los Servicios de Agua Potable y Alcantarillado (SIAPA) remitirá al Congreso del Estado de Jalisco un informe mensual sobre el cumplimiento del presente Decreto mientras subsistan las medidas previstas en el mismo. … Primero. El presente Decreto entrará en vigor al día siguiente de su publicación en el Periódico Oficial “El Estado de Jalisco” y finalizará el 15 de diciembre de 2026."
+  },
+  "web_avisos": {
+   "url": "https://aguagdl.com/avisos",
+   "medio": "Agua GDL, aguagdl.com/avisos",
+   "fecha": "2026-11-06",
+   "consultada": true,
+   "revisado": "2026-11-06",
+   "cita": "¿Qué zona me toca? Busca tu colonia, municipio o código postal Buscar Usar mi ubicación … Calendario del SIAPA verificado el 3 de noviembre. Avisos gratis por Telegram Te avisa dos días antes de cada corte y la noche anterior. … Revisa tu recibo: hasta el 15 de diciembre, las casas y pequeños comercios de las colonias con problemas de calidad del agua tienen 80% de descuento si su consumo promedio es de hasta 25 m³ al mes"
   }
  },
  "slides": [
@@ -59,6 +67,21 @@
    "texto": "«Finalizará el 15 de diciembre de 2026».",
    "fuentes": [
     "dec"
+   ]
+  },
+  {
+   "tipo": "sitio",
+   "captura": "avisos",
+   "kicker": "En aguagdl.com/avisos",
+   "titular": "¿Qué zona te toca y cuándo?",
+   "items": [
+    "Busca tu colonia o usa tu ubicación",
+    "Avisos gratis por Telegram: dos días antes y la noche anterior",
+    "Y revisa si te toca el 80% de descuento"
+   ],
+   "url": "aguagdl.com/avisos",
+   "fuentes": [
+    "web_avisos"
    ]
   },
   {
