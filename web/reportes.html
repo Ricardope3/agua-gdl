@@ -879,6 +879,7 @@ if (window.top !== window.self) {
   const edad = (iso) => Math.round((Date.parse(hoy()) - Date.parse(iso)) / 864e5);
   const hace = (iso) => { const d = edad(iso); return d <= 0 ? "hoy" : d === 1 ? "ayer" : `hace ${d} días`; };
   const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+  const quien = (q) => q.tipo === "comentario" ? (q.red === "x" ? "Respuesta en X" : "Comentario en Facebook") : q.fuente === "medio" || q.quien ? q.quien : "Vecina o vecino";
   const impactOf = (p) => !!(p.bloqueo && (p.vista || p.captura || (p.en && p.en.vista)));
   const zonaDe = (p) => { const M = window.aguaMapa, ls = M.zonesOf(p.l || ""); return ls.length ? ls : M.zones(p).main; };
   // What the publications say about now; silence never means the water came back.
