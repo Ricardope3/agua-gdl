@@ -27,7 +27,7 @@ OUT = HERE / "out"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 W, H = 1080, 1350
 CHROME_BAR = 87  # headless Chrome's viewport is the window minus this; screenshots are cropped back
-TYPES = {"altura", "desnivel", "sitio", "portada", "texto", "cita", "barras", "iconos", "calendario", "versus", "lista", "linea", "pregunta", "cierre"}
+TYPES = {"perfil", "altura", "desnivel", "sitio", "portada", "texto", "cita", "barras", "iconos", "calendario", "versus", "lista", "linea", "pregunta", "cierre"}
 DIAS = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"]
 DIAS_CORTO = ["L", "M", "M", "J", "V", "S", "D"]
 
@@ -52,7 +52,7 @@ def foto_path(rel):
 def slide_texts(s):
     out = []
     for k, v in s.items():
-        if k in ("tipo", "foto", "fuentes", "calculo", "nota", "posicion", "propio", "captura", "bins"):
+        if k in ("tipo", "foto", "fuentes", "calculo", "nota", "posicion", "propio", "captura", "bins", "alturas"):
             continue
         if isinstance(v, str):
             out.append(v)
@@ -223,6 +223,28 @@ def render_body(s):
             for i, o in enumerate(s["opciones"]))
         return (f'<div class="stack"><div class="kicker">{md(s.get("kicker", ""))}</div><div class="titular">{md(s["titular"])}</div>'
                 f'<div class="ops">{ops}</div>' + (f'<div class="texto small">{md(s["texto"])}</div>' if s.get("texto") else "") + "</div>")
+    if t == "perfil":
+        alt = sorted(s["alturas"])
+        lo, hi = s["eje"]["desde"], s["eje"]["hasta"]
+        L, w, h, top = 96, 832, 400, 60
+        y = lambda m: top + h - h * (m - lo) / (hi - lo)
+        bw = w / len(alt)
+        i = alt.index(s["marca"]["m"])
+        bars = "".join(f'<rect x="{L + k * bw:.2f}" y="{y(m):.1f}" width="{bw + .3:.2f}" height="{top + h - y(m):.1f}" fill="#3ea6ff"/>' for k, m in enumerate(alt))
+        mx, my, med = L + (i + .5) * bw, y(s["marca"]["m"]), y(s["mediana"]["m"])
+        ticks = "".join(f'<line x1="{L}" x2="{L + w}" y1="{y(v):.1f}" y2="{y(v):.1f}" stroke="rgba(255,255,255,.12)"/>'
+                        f'<text x="{L - 12}" y="{y(v) + 8:.1f}" text-anchor="end">{v:,}</text>' for v in s["eje"]["marcas"])
+        svg = (f'<svg class="alt" viewBox="0 0 {L + w} {top + h + 56}">{ticks}{bars}'
+               f'<line x1="{L}" x2="{L + w}" y1="{med:.1f}" y2="{med:.1f}" stroke="#fff" stroke-width="3" stroke-dasharray="10 8"/>'
+               f'<text x="{L + 14}" y="{med - 12:.1f}" class="lab">{html.escape(s["mediana"]["etiqueta"])}</text>'
+               f'<rect x="{mx - 5:.1f}" y="{my:.1f}" width="10" height="{top + h - my:.1f}" fill="#ff7a66"/>'
+               f'<circle cx="{mx:.1f}" cy="{my:.1f}" r="13" fill="#ff7a66" stroke="#06141d" stroke-width="4"/>'
+               f'<text x="{mx - 24:.1f}" y="{my - 22:.1f}" text-anchor="end" class="pin">{html.escape(s["marca"]["etiqueta"])}</text>'
+               f'<text x="{L}" y="{top + h + 42}">{html.escape(s["eje"]["izq"])}</text>'
+               f'<text x="{L + w}" y="{top + h + 42}" text-anchor="end">{html.escape(s["eje"]["der"])}</text>'
+               f'<text x="0" y="{top - 30}">{html.escape(s["eje"]["titulo"])}</text></svg>')
+        return (f'<div class="stack"><div class="kicker">{md(s.get("kicker", ""))}</div><div class="titular">{md(s["titular"])}</div>{svg}'
+                + (f'<div class="texto small">{md(s["texto"])}</div>' if s.get("texto") else "") + "</div>")
     if t == "altura":
         bins = s["bins"]
         w, h, top = 928, 430, 60
