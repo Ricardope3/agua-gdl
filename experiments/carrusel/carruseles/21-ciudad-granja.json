@@ -71,49 +71,11 @@
    "kicker": "Ciudad Granja, Zapopan",
    "cifra": "#1",
    "titular": "la colonia con más publicaciones sobre falta de agua que hemos reunido",
-   "texto": "77 publicaciones de vecinos y medios desde el 15 de octubre, de 17 medios distintos.",
+   "texto": "77 publicaciones de vecinos y medios desde el 15 de octubre, de 17 medios distintos. Le siguen Oblatos (59) y Santa Cecilia (54).",
    "fuentes": [
     "pub"
    ],
    "calculo": "#1: primera en el conteo por colonia."
-  },
-  {
-   "tipo": "barras",
-   "foto": "fuentes/008fb99889ac.jpg",
-   "kicker": "Publicaciones sobre falta de agua, por colonia",
-   "titular": "Las 5 con más",
-   "barras": [
-    {
-     "etiqueta": "Ciudad Granja, Zapopan",
-     "valor": 77,
-     "texto": "77",
-     "color": "alarm"
-    },
-    {
-     "etiqueta": "Oblatos, Guadalajara",
-     "valor": 59,
-     "texto": "59"
-    },
-    {
-     "etiqueta": "Santa Cecilia, Guadalajara",
-     "valor": 54,
-     "texto": "54"
-    },
-    {
-     "etiqueta": "Talpita, Guadalajara",
-     "valor": 41,
-     "texto": "41"
-    },
-    {
-     "etiqueta": "Lomas del Paradero, Guadalajara",
-     "valor": 36,
-     "texto": "36"
-    }
-   ],
-   "texto": "Lo que reunimos de vecinos y medios en aguagdl.com. No es un conteo oficial ni de todas las quejas.",
-   "fuentes": [
-    "pub"
-   ]
   },
   {
    "tipo": "linea",
