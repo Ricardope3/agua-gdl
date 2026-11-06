@@ -359,10 +359,16 @@ def muro(ts, doc):
     by = {t["img"]: t for t in ts}
     grandes = [by[k] for k in doc["muro"]["grandes"]]
     resto = [t for t in ts if t["cartel"] and t not in grandes] + [t for t in ts if t["tema"] == "protesta" and not t["cartel"]]
-    chicas = resto[:16]
-    orden = []
-    for band in range(2):
-        orden += [(t, False) for t in chicas[band * 8:band * 8 + 4]] + [(t, True) for t in grandes[band * 4:band * 4 + 4]] + [(t, False) for t in chicas[band * 8 + 4:band * 8 + 8]]
+    izq = doc["muro"].get("izquierda")
+    chicas = resto[:12 if izq else 16]
+    if izq:
+        # Big tile on the left edge: it takes columns 1-2 of the first band, so that band has 4 small, not 8.
+        orden = [({"img": izq}, True)] + [(t, False) for t in chicas[:2]] + [(t, True) for t in grandes[:4]] + [(t, False) for t in chicas[2:4]]
+        orden += [(t, False) for t in chicas[4:8]] + [(t, True) for t in grandes[4:8]] + [(t, False) for t in chicas[8:12]]
+    else:
+        orden = []
+        for band in range(2):
+            orden += [(t, False) for t in chicas[band * 8:band * 8 + 4]] + [(t, True) for t in grandes[band * 4:band * 4 + 4]] + [(t, False) for t in chicas[band * 8 + 4:band * 8 + 8]]
     thumbs, imgs = {}, []
     for t, big in orden:
         k = f"img/fondo/{pathlib.Path(t['img']).stem}{'-g' if big else ''}.webp"
@@ -399,6 +405,9 @@ def main():
     for k in doc["muro"]["grandes"]:
         if k not in {t["img"] for t in ts}:
             sys.exit(f"fotos: muro.grandes lists {k}, which isn't on /fotos")
+    izq = doc["muro"].get("izquierda")
+    if izq and (izq not in doc["temas"] and izq not in doc["fuera"] or not (WEB / izq).is_file()):
+        sys.exit(f"fotos: muro.izquierda {izq} must be a reviewed image (temas or fuera) that exists in web/")
     wall, thumbs = muro(ts, doc)
     index = INDEX.read_text()
     if not MURO.search(index):

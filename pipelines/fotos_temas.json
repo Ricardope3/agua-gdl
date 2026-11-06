@@ -439,7 +439,7 @@
   }
  ],
  "muro": {
-  "nota": "La pared de la portada: estas fotos van en grande (2×2) en este orden; las demás de carteles llenan los huecos. En escritorio la última queda abajo a la derecha, una columna antes del borde.",
+  "nota": "La pared de la portada: estas fotos van en grande (2×2) en este orden; las demás de carteles llenan los huecos. En escritorio la última queda abajo a la derecha, una columna antes del borde. izquierda: una foto grande en el borde izquierdo (arriba), aunque no esté en /fotos; debe estar revisada (temas o fuera). Iván Becerra García en su video con Somos el Medio, 13 oct (lo pidió Ricardo, 5 nov).",
   "grandes": [
    "img/noticias/2026-11-05-congreso-2.webp",
    "img/noticias/2026-11-05-congreso-1.webp",
@@ -449,6 +449,7 @@
    "fuentes/bd520b623f71.jpg",
    "fuentes/7f33367dbe70.jpg",
    "fuentes/c1a35e45be99.jpg"
-  ]
+  ],
+  "izquierda": "img/videos/youtube-szoxagvQoUE.webp"
  }
 }
