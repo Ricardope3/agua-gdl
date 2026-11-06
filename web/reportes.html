@@ -244,10 +244,21 @@ table.week td.cut { box-shadow: inset 0 0 0 2.5px var(--fg) }
    days-without-water shade and the publication count moves to a red dot at the top right. */
 .sev.foto { overflow: visible }
 .sev.foto span { position: relative; overflow: visible; padding: 0; background: var(--c); border: 3px solid var(--c); box-shadow: 0 1px 3px rgb(3 14 22 / .45) }
-.sev.foto span img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block }
+.sev.foto span img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block }
 .sev.foto.nodays span { background: var(--surface); border: 3px dashed var(--s0) }
 .sev.foto.vieja span { border-color: var(--muted); background: var(--muted) } .sev.foto.vieja span img { filter: grayscale(.6) }
 .sev.foto b { position: absolute; top: -5px; right: -6px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: #dc2626; color: #fff; font: 700 10.5px/18px var(--font); text-align: center; font-variant-numeric: tabular-nums; box-shadow: 0 0 0 1.5px var(--surface) }
+.hist { position: fixed; inset: 0; z-index: 3000; background: rgb(6 10 20 / .96); color: #fff; display: grid; grid-template-rows: auto auto 1fr auto; font-family: var(--font); user-select: none }
+.hist[hidden] { display: none }
+.hist .bars { display: flex; gap: 3px; padding: 10px 12px 0 } .hist .bars i { flex: 1; height: 3px; background: rgb(255 255 255 / .28); border-radius: 2px; overflow: hidden } .hist .bars b { display: block; height: 100%; width: 0; background: #fff }
+.hist .top { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 12px } .hist .top b { font-size: 1rem } .hist .top small { opacity: .75; margin-left: 6px }
+.hist .x { background: none; border: 0; color: #fff; font-size: 1.9rem; line-height: 1; cursor: pointer; padding: 0 6px }
+.hist .stage { position: relative; display: grid; place-items: center; min-height: 0; padding: 0 8px }
+.hist .stage img { max-width: min(100%, 760px); max-height: 100%; object-fit: contain; border-radius: 8px }
+.hist .play { position: absolute; width: 56px; height: 56px; border-radius: 50%; background: rgb(0 0 0 / .55); pointer-events: none } .hist .play::after { content: ""; position: absolute; left: 21px; top: 16px; border: 12px solid transparent; border-left: 18px solid #fff; border-right: 0 }
+.hist .prev, .hist .next { position: absolute; top: 0; bottom: 0; width: 38%; background: none; border: 0; cursor: pointer } .hist .prev { left: 0 } .hist .next { right: 0 }
+.hist .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 14px; padding: 10px 14px 18px; font-size: .9rem } .hist .foot a { color: #fff; font-weight: 600 }
+.sev.foto.abierta span { cursor: zoom-in }
 .sev.foto.far b { min-width: 15px; height: 15px; font-size: 9px; line-height: 15px; padding: 0 4px; top: -4px; right: -5px }
 .sevb { display: inline-grid; place-items: center; min-width: 2.6em; padding: 3px 7px; border-radius: 999px; background: var(--c); color: var(--k); font-weight: 700; font-size: .85rem; line-height: 1.2; white-space: nowrap; font-variant-numeric: tabular-nums }
 .sevb.nodays { background: color-mix(in srgb, var(--c) 18%, var(--surface)); color: var(--fg); border: 1.5px dashed var(--c); font-weight: 600 }
@@ -1698,6 +1709,7 @@ if (window.top !== window.self) {
     const dropBox = () => map.getZoom() < 13 ? { half: 6, mid: 7 } : { half: 11, mid: 13 };
     // Reviewed photos by colonia (web/fotos.json, pipelines/fotos.py), oldest first as [date, path].
     let fotosBy = new Map();
+    let openKey = null; // the open colonia, kept here because drawMarkers runs before `selected` exists
     fetch("/fotos.json").then((r) => r.ok ? r.json() : null).then((d) => {
       if (!d) return;
       fotosBy = new Map(Object.entries(d.colonias || {}));
@@ -1710,6 +1722,57 @@ if (window.top !== window.self) {
       for (const [f, src] of xs) if (!day || f <= day) hit = src;
       return hit;
     };
+    // The open colonia's photo badge plays its photos as a story: 5 s each, hold to pause, tap the sides or swipe.
+    const MES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+    let hist = null;
+    function historia(k, nombre) {
+      const xs = [...(fotosBy.get(k) || [])].reverse();
+      if (!xs.length) return;
+      if (!hist) {
+        hist = document.createElement("div");
+        hist.className = "hist"; hist.hidden = true; hist.setAttribute("role", "dialog"); hist.setAttribute("aria-modal", "true");
+        hist.innerHTML = '<div class="bars"></div><div class="top"><span><b></b><small></small></span><button class="x" type="button" aria-label="Cerrar">×</button></div><div class="stage"><img alt=""><span class="play" hidden></span><button class="prev" type="button" aria-label="Anterior"></button><button class="next" type="button" aria-label="Siguiente"></button></div><div class="foot"><span class="c"></span><a target="_blank" rel="noopener">Ver la publicación</a></div>';
+        document.body.append(hist);
+      }
+      const DUR = 5000, still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let i = 0, t0 = 0, raf = 0, left = DUR, held = false;
+      // A timer, not animation frames: those pause in a background window and the story would stall.
+      const last = document.activeElement;
+      const tick = () => {
+        const p = Math.min(1, (performance.now() - t0) / DUR);
+        const bar = hist.querySelectorAll(".bars b")[i];
+        if (bar) bar.style.width = p * 100 + "%";
+        if (p >= 1) return go(1);
+        raf = setTimeout(tick, 50);
+      };
+      const run = (rest = DUR) => { clearTimeout(raf); t0 = performance.now() - (DUR - rest); if (!still) raf = setTimeout(tick, 50); };
+      const show = () => {
+        const [f, src, url, quien, alt, video] = xs[i], [, mm, dd] = f.split("-");
+        hist.querySelector(".bars").innerHTML = xs.map((_, j) => `<i><b style="width:${j < i ? 100 : 0}%"></b></i>`).join("");
+        hist.querySelector(".top b").textContent = nombre;
+        hist.querySelector(".top small").textContent = `${i + 1} de ${xs.length}`;
+        const img = hist.querySelector(".stage img"); img.src = src; img.alt = alt;
+        hist.querySelector(".play").hidden = !video;
+        hist.querySelector(".c").textContent = `${+dd} ${MES[+mm - 1]} · ${quien}${video ? " · video" : ""}`;
+        hist.querySelector(".foot a").href = url;
+        run();
+      };
+      const go = (d) => { i += d; if (i >= xs.length) return close(); if (i < 0) i = 0; show(); };
+      const close = () => { clearTimeout(raf); hist.hidden = true; document.removeEventListener("keydown", key, true); last?.focus?.(); };
+      // Captured first, so Esc closes the story and not the colonia card behind it.
+      const key = (e) => { if (e.key === "Escape") { e.stopImmediatePropagation(); close(); } else if (e.key === "ArrowRight") go(1); else if (e.key === "ArrowLeft") go(-1); };
+      hist.querySelector(".prev").onclick = () => go(-1);
+      hist.querySelector(".next").onclick = () => go(1);
+      hist.querySelector(".x").onclick = close;
+      const st = hist.querySelector(".stage");
+      st.onpointerdown = () => { held = true; left = DUR - (performance.now() - t0); clearTimeout(raf); };
+      st.onpointerup = st.onpointerleave = () => { if (held) { held = false; run(left); } };
+      let x0 = null;
+      hist.ontouchstart = (e) => { x0 = e.touches[0].clientX; };
+      hist.ontouchend = (e) => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1); x0 = null; };
+      document.addEventListener("keydown", key, true);
+      hist.hidden = false; show(); hist.querySelector(".x").focus();
+    }
     function drawMarkers() {
       markers.clearLayers();
       // Publication badges count only publications and keep their historical severity. Anonymous
@@ -1730,14 +1793,15 @@ if (window.top !== window.self) {
         if (!centers.has(k)) centers.set(k, L.geoJSON(fs[0]).getBounds().getCenter());
         const drop = hollow.get(k), dbox = dropBox();
         const m = L.marker(drop || centers.get(k), {
-          icon: L.divIcon({ ...(drop ? { iconAnchor: [size + dbox.half + 4, size / 2 + dbox.mid] } : {}), className: `sev${far ? " far" : ""}${s ? "" : " nodays"}${foto ? " foto" : ""} ${stateMap(e)}${pop}`, html: foto
+          icon: L.divIcon({ ...(drop ? { iconAnchor: [size + dbox.half + 4, size / 2 + dbox.mid] } : {}), className: `sev${far ? " far" : ""}${s ? "" : " nodays"}${foto ? " foto" : ""}${foto && openKey === k ? " abierta" : ""} ${stateMap(e)}${pop}`, html: foto
             ? `<span style="${sevVars(s)}"><img src="${foto}" alt="" decoding="async"><b>${n}</b></span>`
             : `<span style="${sevVars(s)};font-size:${Math.max(far ? 9 : 10, Math.round(size * (n.length > 2 ? 0.3 : 0.42)))}px">${n}</span>`, iconSize: [size, size] }),
           // Photo badges sit above the plain ones and the report donuts; within each, bigger counts on top.
           keyboard: false, zIndexOffset: (foto ? 5000 : 2000) - Math.min(total, 999),
         });
         if (!phone()) m.bindTooltip(() => tipOf(fs[0]), { className: "map-label", direction: "top", offset: drop ? [-(size / 2 + dbox.half + 4), -(size / 2 + dbox.mid)] : [0, -size / 2] });
-        m.on("click", () => select(fs[0]));
+        // Once its colonia is open, the photo badge plays the colonia's photos as a story.
+        m.on("click", () => foto && openKey === k ? historia(k, nice(fs[0].properties.n)) : select(fs[0]));
         markers.addLayer(m);
       }
       shown = counts;
@@ -1823,6 +1887,7 @@ if (window.top !== window.self) {
       unpin();
       const restore = card.getAttribute("aria-modal") === "true" && cardReturnFocus;
       selected = null;
+      openKey = null;
       cardDay = null;
       closedAt = Date.now();
       for (const g of marks) g.remove();
@@ -1847,7 +1912,7 @@ if (window.top !== window.self) {
       cardDay = atEnd() ? null : DAYS[at];
       if (!atEnd()) showDay(DAYS.length - 1);
       selected = f;
-      window.__key = keyOf(f.properties);
+      window.__key = openKey = keyOf(f.properties);
       selZoom = fit ? null : map.getZoom();
       for (const g of marks) g.remove();
       const all = features.get(keyOf(f.properties)) || [f];

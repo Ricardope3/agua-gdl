@@ -398,11 +398,12 @@ def thumb(src, dest, width, crop=None):
 
 
 def por_colonia(ts):
-    """web/fotos.json: each colonia's reviewed photos, oldest first, as [date, path]; /reportes draws them in its bubbles."""
+    """web/fotos.json: each colonia's reviewed photos, oldest first, as [date, path, post url, who, alt, video];
+    /reportes draws the newest in its bubble and plays them all as a story."""
     by = {}
     for t in sorted(ts, key=lambda t: (t["fecha"], t["img"])):
         for k in t["colonias"]:
-            by.setdefault(k, []).append([t["fecha"], "/" + t["img"]])
+            by.setdefault(k, []).append([t["fecha"], "/" + t["img"], t["url"], t["quien"], t["alt"], 1 if t["video"] else 0])
     return json.dumps({"nota": "Generado por pipelines/fotos.py; solo fotos revisadas.", "colonias": dict(sorted(by.items()))},
                       ensure_ascii=False, separators=(",", ":")) + "\n"
 
