@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-05",
+ "actualizado": "2026-11-06",
  "desde": "2026-10-12",
  "regla": {
   "reacciones": 5,
@@ -18,7 +18,8 @@
   "2026-11-01",
   "2026-11-03",
   "2026-11-04",
-  "2026-11-05"
+  "2026-11-05",
+  "2026-11-06"
  ],
  "publicaciones": [
   {
@@ -44114,6 +44115,138 @@
    "cita": "La inconformidad radica en que, mientras se descargaba el agua al alcantarillado, varias familias de la zona permanecían sin suministro y tenían que comprar agua para cubrir sus necesidades.",
    "dias": null,
    "vista": "fuentes/73d448730591.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Telediario Guadalajara",
+   "url": "https://www.telediario.mx/comunidad/bloqueo-carretera-guadalajara-zapotlanejo-por-agua-hoy-6-noviembre",
+   "fecha": "2026-11-06",
+   "colonias": [
+    "PASEO PUENTE VIEJO|Tonalá|45424"
+   ],
+   "lugar": "colonia Puente Viejo y fraccionamientos aledaños, Tonalá; carretera libre a Zapotlanejo a la altura de San Miguel La Punta",
+   "cita": "habitantes de la colonia Puente Viejo y fraccionamientos aledaños, en el municipio de Tonalá, tomaron y bloquearon por completo ambos sentidos de la carretera libre a Zapotlanejo […] tras acumular 40 días consecutivos sin recibir suministro de agua potable en sus hogares",
+   "dias": 40,
+   "bloqueo": true,
+   "vista": "fuentes/81dee80016f4.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "Telediario Guadalajara",
+   "url": "https://www.facebook.com/reel/1426524436127985",
+   "fecha": "2026-11-06",
+   "colonias": [
+    "PASEO PUENTE VIEJO|Tonalá|45424"
+   ],
+   "lugar": "colonia Puente Viejo, Tonalá; carretera libre a Zapotlanejo",
+   "cita": "Vecinos bloquean la carretera libre a Zapotlanejo, a la altura de la colonia Puente Viejo, para denunciar que llevan alrededor de 40 días sin agua",
+   "dias": null,
+   "bloqueo": true,
+   "video": true,
+   "eco": {
+    "reacciones": 687,
+    "comentarios": 84,
+    "compartidos": 117,
+    "al": "2026-11-06"
+   },
+   "vista": "fuentes/67408355f01b.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "El Occidental",
+   "url": "https://oem.com.mx/eloccidental/local/bloquean-carretera-libre-a-zapotlanejo-por-falta-de-agua-vecinos-llevan-40-dias-sin-suministro-32994690",
+   "fecha": "2026-11-06",
+   "colonias": [
+    "PASEO PUENTE VIEJO|Tonalá|45424",
+    "PRADOS DE LA CAÑADA|Tonalá|45427",
+    "SAN FRANCISCO DE LA SOLEDAD|Tonalá|45424"
+   ],
+   "lugar": "colonias San Miguel de la Punta, Puente Viejo, Prados de la Cañada, San Francisco de la Soledad y Lomas del Salto, Tonalá",
+   "cita": "Habitantes de las colonias San Miguel de la Punta, Puente Viejo, Prados de la Cañada, San Francisco de la Soledad y Lomas del Salto bloquearon desde las 5:00 horas de este viernes la carretera libre a Zapotlanejo, en ambos sentidos, a la altura de San Miguel de la Punta, en Tonalá",
+   "dias": null,
+   "bloqueo": true,
+   "vista": "fuentes/6f96308bcbcc.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "Telediario Guadalajara",
+    "url": "https://www.facebook.com/TelediarioGuadalajara/posts/pfbid0CygJMAjZqD3B2dYDrAmbAYxxhT44WZe2vZJsGRuNngjmXTX3FDZmD4jCDEQPzzRGl",
+    "eco": {
+     "reacciones": 1100,
+     "comentarios": 126,
+     "compartidos": 91,
+     "al": "2026-11-06"
+    }
+   },
+   "url": "https://www.facebook.com/TelediarioGuadalajara/posts/pfbid0CygJMAjZqD3B2dYDrAmbAYxxhT44WZe2vZJsGRuNngjmXTX3FDZmD4jCDEQPzzRGl?comment_id=1660982298854397",
+   "fecha": "2026-11-06",
+   "colonias": [
+    "CIUDAD AZTLAN|Tonalá|45402"
+   ],
+   "lugar": "Ciudad Aztlán, Tonalá",
+   "cita": "cada 8 dias hay agua y es un chorrito ciudad aztlan tonala",
+   "dias": null,
+   "parcial": true,
+   "vista": "fuentes/b5002a8973e8.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "Telediario Guadalajara",
+    "url": "https://www.facebook.com/reel/1426524436127985",
+    "eco": {
+     "reacciones": 687,
+     "comentarios": 84,
+     "compartidos": 117,
+     "al": "2026-11-06"
+    }
+   },
+   "url": "https://www.facebook.com/reel/1426524436127985?comment_id=1055255210935771",
+   "fecha": "2026-11-06",
+   "colonias": [
+    "CENTRO|San Pedro Tlaquepaque|45500"
+   ],
+   "lugar": "Zona centro de San Pedro Tlaquepaque",
+   "cita": "Zona centro de San Pedro Tlaquepaque tenemos desde el martes de esta semana hasta hoy viernes sin agua",
+   "dias": null,
+   "video": true,
+   "vista": "fuentes/67408355f01b.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "tipo": "comentario",
+   "quien": "",
+   "en": {
+    "quien": "Telediario Guadalajara",
+    "url": "https://www.facebook.com/reel/1426524436127985",
+    "eco": {
+     "reacciones": 687,
+     "comentarios": 84,
+     "compartidos": 117,
+     "al": "2026-11-06"
+    }
+   },
+   "url": "https://www.facebook.com/reel/1426524436127985?comment_id=992462389949622",
+   "fecha": "2026-11-06",
+   "colonias": [
+    "EL TAPATIO|San Pedro Tlaquepaque|45580"
+   ],
+   "lugar": "el tapatío",
+   "cita": "También en el tapatío no tenemos agua",
+   "dias": null,
+   "video": true,
+   "vista": "fuentes/67408355f01b.jpg"
   }
  ]
 }

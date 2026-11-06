@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-05",
+ "actualizado": "2026-11-06",
  "videos": [
   {
    "url": "https://www.facebook.com/reel/1600459298762122/",
@@ -1473,6 +1473,45 @@
    ],
    "lugar": "Colonia Polanquito, en Guadalajara",
    "cita": "Las entrevistadas indicaron que desde hace casi ya dos meses no tienen agua potable y cuando les llega llega con baja presión que no les permite juntar el líquido.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1426524436127985",
+   "red": "facebook",
+   "quien": "Telediario Guadalajara",
+   "fecha": "2026-11-06",
+   "colonias": [
+    "PASEO PUENTE VIEJO|Tonalá|45424"
+   ],
+   "lugar": "colonia Puente Viejo, Tonalá; carretera libre a Zapotlanejo",
+   "cita": "Vecinos bloquean la carretera libre a Zapotlanejo, a la altura de la colonia Puente Viejo, para denunciar que llevan alrededor de 40 días sin agua",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1426524436127985?comment_id=1055255210935771",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-06",
+   "colonias": [
+    "CENTRO|San Pedro Tlaquepaque|45500"
+   ],
+   "lugar": "Zona centro de San Pedro Tlaquepaque",
+   "cita": "Zona centro de San Pedro Tlaquepaque tenemos desde el martes de esta semana hasta hoy viernes sin agua",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1426524436127985?comment_id=992462389949622",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-06",
+   "colonias": [
+    "EL TAPATIO|San Pedro Tlaquepaque|45580"
+   ],
+   "lugar": "el tapatío",
+   "cita": "También en el tapatío no tenemos agua",
    "dias": null,
    "video": null
   }
