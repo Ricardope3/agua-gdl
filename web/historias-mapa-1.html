@@ -1740,10 +1740,13 @@ body { padding-bottom: 64px }
       const a = map.latLngToContainerPoint(bb.getNorthWest()), z = map.latLngToContainerPoint(bb.getSouthEast());
       return Math.min(Math.abs(z.x - a.x), Math.abs(z.y - a.y));
     };
-    // A photo badge's count dot scales with the badge, so the number never hides a small badge's photo.
-    const dotOf = (size, n) => {
-      const d = Math.round(Math.max(10, Math.min(24, size * 0.32))) + (n.length > 2 ? 4 : 0);
-      return `min-width:${d}px;height:${d}px;line-height:${d}px;font-size:${Math.max(7, Math.round(d * 0.5))}px;border-radius:${d / 2}px;padding:0 ${Math.round(d / 6)}px;top:${-Math.round(d / 6)}px;right:${-Math.round(d / 6)}px`;
+    // A photo badge's count dot keeps its CSS size (18 px, 13 far, 24 open) unless that's more than ~60 % of a small
+    // badge (few publications); then it shrinks with the badge so the number doesn't hide the photo.
+    const dotOf = (size, n, far, big) => {
+      const normal = big ? 24 : far ? 13 : 18, fit = Math.round(size * 0.6) + (n.length > 2 ? 4 : 0);
+      if (fit >= normal) return "";
+      const d = Math.max(9, fit);
+      return ` style="min-width:${d}px;height:${d}px;line-height:${d}px;font-size:${Math.max(6, Math.round(d * 0.58))}px;border-radius:${d / 2}px;padding:0 ${Math.round(d / 6)}px;top:${-Math.round(d / 5)}px;right:${-Math.round(d / 5)}px"`;
     };
     function drawMarkers() {
       markers.clearLayers();
@@ -1771,7 +1774,7 @@ body { padding-bottom: 64px }
         const drop = hollow.get(k), dbox = dropBox();
         const m = L.marker(drop || centers.get(k), {
           icon: L.divIcon({ ...(drop ? { iconAnchor: [size + dbox.half + 4, size / 2 + dbox.mid] } : {}), className: `sev${far ? " far" : ""}${s ? "" : " nodays"}${foto ? " foto" : ""}${foto && openKey === k ? " abierta" : ""} ${stateMap(e)}${pop}`, html: foto
-            ? `<span style="${sevVars(s)}"><img src="${foto}" alt="" decoding="async"><b style="${dotOf(size, n)}">${n}</b></span>`
+            ? `<span style="${sevVars(s)}"><img src="${foto}" alt="" decoding="async"><b${dotOf(size, n, far, big)}>${n}</b></span>`
             : `<span style="${sevVars(s)};font-size:${Math.max(far ? 9 : 10, Math.round(size * (n.length > 2 ? 0.3 : 0.42)))}px">${n}</span>`, iconSize: [size, size] }),
           // Photo badges sit above the plain ones and the report donuts; within each, bigger counts on top.
           keyboard: false, zIndexOffset: (big ? 9000 : foto ? 5000 : 2000) - Math.min(total, 999),
