@@ -28,7 +28,6 @@ TEMAS = root / "pipelines/fotos_temas.json"
 OUT = WEB / "fotos.html"
 INDEX = WEB / "index.html"
 FONDO = WEB / "img/fondo"
-MURO_CHICAS = 34
 MURO = re.compile(r"(<!-- fotos\.py: muro -->).*?(<!-- /fotos\.py: muro -->)", re.S)
 
 TEMA = {"protesta": "Protesta", "sin-agua": "Sin agua", "calidad": "Agua sucia"}
@@ -351,72 +350,32 @@ def page(ts):
 """
 
 
-MURO_JS = """<script>
-(() => {
-  // The wall packs like /fotos: columns ~200 px wide (~120 on phones), each photo in its own proportions,
-  // big ones (signs, .g) two columns wide; the lowest column takes the next photo that fits without a hole.
-  const box = document.querySelector('.headline .fondo');
-  if (!box) return;
-  const lay = () => {
-    const W = box.clientWidth, H = box.clientHeight;
-    if (!W) return;
-    const g = 2, n = Math.max(3, Math.round(W / (W < 760 ? 125 : 200)));
-    const cw = (W - g * (n - 1)) / n, h = new Array(n).fill(0);
-    box.classList.add('js');
-    const queue = [...box.querySelectorAll('img')];
-    const span = (t) => (t.classList.contains('g') ? 2 : 1);
-    const put = (t, col, s) => {
-      const top = Math.max(...h.slice(col, col + s)), w = cw * s + g * (s - 1), ht = w / parseFloat(t.style.getPropertyValue('--r'));
-      Object.assign(t.style, { left: col * (cw + g) + 'px', top: top + 'px', width: w + 'px', height: ht + 'px', display: '' });
-      for (let i = col; i < col + s; i++) h[i] = top + ht + g;
-    };
-    while (queue.length) {
-      const m = Math.min(...h);
-      if (m >= H) { queue.forEach((t) => { t.style.display = 'none'; }); break; }
-      const low = h.indexOf(m);
-      let done = false;
-      for (let k = 0; k < Math.min(6, queue.length) && !done; k++) {
-        const s = Math.min(n, span(queue[k]));
-        for (let c = Math.max(0, low - s + 1); c <= Math.min(low, n - s); c++) {
-          if (h.slice(c, c + s).every((x) => x <= m + 30)) { put(queue[k], c, s); queue.splice(k, 1); done = true; break; }
-        }
-      }
-      if (!done) { const t = queue.shift(), s = Math.min(n, span(t)); let col = 0, top = Infinity; for (let i = 0; i <= n - s; i++) { const x = Math.max(...h.slice(i, i + s)); if (x < top - 1) { top = x; col = i; } } put(t, col, s); }
-    }
-  };
-  let w = 0, hh = 0;
-  new ResizeObserver(() => { if (box.clientWidth !== w || box.clientHeight !== hh) { w = box.clientWidth; hh = box.clientHeight; lay(); } }).observe(box);
-})();
-</script>"""
-
-
 def muro(ts, doc):
-    """The landing's photo wall, packed like the /fotos collage: every photo in its own proportions.
+    """The landing's photo wall, like /fotos: 8 sign photos in big 2x2 tiles, 16 more in small ones.
 
-    The big ones (muro.izquierda first, then muro.grandes) are two columns wide, spread among MURO_CHICAS small
-    sign and protest photos so the columns reach the bottom on any width; the script hides what doesn't fit.
-    Big copies are 400 px, small 240 px, in web/img/fondo/.
+    Two bands of 4 small, 4 big, 4 small: on 12 columns the big ones take columns 5-12 and the small ones fill
+    1-4 over two rows. Big copies are 400 px, small 240 px, in web/img/fondo/.
     """
     by = {t["img"]: t for t in ts}
+    grandes = [by[k] for k in doc["muro"]["grandes"]]
+    resto = [t for t in ts if t["cartel"] and t not in grandes] + [t for t in ts if t["tema"] == "protesta" and not t["cartel"]]
     izq = doc["muro"].get("izquierda")
-    grandes = ([{"img": izq}] if izq else []) + [by[k] for k in doc["muro"]["grandes"]]
-    resto = [t for t in ts if t["cartel"] and t["img"] not in doc["muro"]["grandes"]] + [t for t in ts if t["tema"] == "protesta" and not t["cartel"]]
-    chicas = resto[:MURO_CHICAS]
-    paso = max(1, len(chicas) // max(1, len(grandes)))
-    orden, ci = [], 0
-    for gi, t in enumerate(grandes):
-        orden.append((t, True))
-        orden += [(c, False) for c in chicas[ci:ci + paso]]
-        ci += paso
-    orden += [(c, False) for c in chicas[ci:]]
+    chicas = resto[:12 if izq else 16]
+    if izq:
+        # Big tile on the left edge: it takes columns 1-2 of the first band, so that band has 4 small, not 8.
+        orden = [({"img": izq}, True)] + [(t, False) for t in chicas[:2]] + [(t, True) for t in grandes[:4]] + [(t, False) for t in chicas[2:4]]
+        orden += [(t, False) for t in chicas[4:8]] + [(t, True) for t in grandes[4:8]] + [(t, False) for t in chicas[8:12]]
+    else:
+        orden = []
+        for band in range(2):
+            orden += [(t, False) for t in chicas[band * 8:band * 8 + 4]] + [(t, True) for t in grandes[band * 4:band * 4 + 4]] + [(t, False) for t in chicas[band * 8 + 4:band * 8 + 8]]
     thumbs, imgs = {}, []
     for t, big in orden:
         k = f"img/fondo/{pathlib.Path(t['img']).stem}{'-g' if big else ''}.webp"
-        w, h = dims(WEB / t["img"])
         thumbs[k] = (t, 400 if big else 240)
-        imgs.append(f'<img src="/{k}"{" class=g" if big else ""} style="--r:{w / h:.3f}" alt="" loading="lazy" decoding="async">')
+        imgs.append(f'<img src="/{k}"{" class=g" if big else ""} alt="" decoding="async">')
     html_ = (f'<div class="fondo" aria-hidden="true">{"".join(imgs)}</div>'
-             f'<p class="pie">Fotos de medios y vecinos · <a href="/fotos">ver las {len(ts)}</a></p>{MURO_JS}')
+             f'<p class="pie">Fotos de medios y vecinos · <a href="/fotos">ver las {len(ts)}</a></p>')
     return html_, thumbs
 
 
