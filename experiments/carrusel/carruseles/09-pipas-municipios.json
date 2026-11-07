@@ -71,7 +71,7 @@
      "texto": "2.9 M"
     }
    ],
-   "texto": "Fechas distintas. «+» = «más de».",
+   "texto": "Fechas distintas. + = más de.",
    "fuentes": [
     "conc",
     "qtlaq",
@@ -88,7 +88,7 @@
    "n": 11,
    "total": 45,
    "columnas": 9,
-   "texto": "Y 17 cisternas de una meta de 100.",
+   "texto": "Y 17 cisternas comunitarias; la meta es «sumar 100».",
    "fuentes": [
     "qzap"
    ]
@@ -99,15 +99,16 @@
    "titular": "Pipas y cisternas",
    "marca": "check",
    "items": [
-    "Guadalajara: *77 pipas* gratuitas, más de 160 colonias (Conciencia Pública, 1 de noviembre)",
-    "Tlaquepaque: *565 viajes* de pipa, 60 cisternas (Quadratín, 22 de octubre)",
+    "Guadalajara: *77 pipas* gratuitas, más de 160 colonias, según su gobierno (Conciencia Pública, 1 de noviembre)",
+    "Tlaquepaque: *565 viajes* de pipa, 60 cisternas, según su gobierno (Quadratín, 22 de octubre)",
     "Tonalá: *38 cisternas* y 10 pipas, 39 colonias (Telediario, 24 de octubre)"
    ],
    "fuentes": [
     "conc",
     "qtlaq",
     "telton"
-   ]
+   ],
+   "kicker": "Según cada municipio, en la prensa"
   },
   {
    "tipo": "sitio",

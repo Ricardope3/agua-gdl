@@ -1,7 +1,7 @@
 {
  "id": "19-que-hacer",
  "titulo": "Si no llega el agua",
- "caption": "Qué hacer si no llega el agua, en 6 pasos. Guárdalo y compártelo con tus vecinos. aguagdl.com\n\n¿Qué paso agregarías tú?\n\nMás en aguagdl.com (link en la bio).",
+ "caption": "Qué hacer si no llega el agua, en 6 pasos. Guárdalo y compártelo con tus vecinos. aguagdl.com\n\n¿Qué pregunta sobre el agua te gustaría que respondiéramos?\n\nMás en aguagdl.com (link en la bio).",
  "fuentes": {
   "dec": {
    "url": "https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25482/1785200563-2026-07-27-.pdf",
@@ -16,7 +16,7 @@
    "fecha": "2026-11-05",
    "consultada": true,
    "revisado": "2026-11-05",
-   "cita": "Busca tu colonia, municipio o código postal Buscar Usar mi ubicación … Avisos gratis por Telegram Te avisa dos días antes de cada corte y la noche anterior. Abre el bot y manda tu ubicación, tu colonia o tu zona."
+   "cita": "Busca tu colonia, municipio o código postal Buscar Usar mi ubicación … Avisos gratis por Telegram Te avisa dos días antes de cada corte y la noche anterior. Abre el bot y manda tu ubicación, tu colonia o tu zona. … [enlace del botón: t.me/AvisoAguaGDLbot]"
   },
   "web_pipas": {
    "url": "https://aguagdl.com/pipas",
@@ -44,7 +44,7 @@
    "items": [
     "Busca tu zona y tus días en *aguagdl.com/avisos*",
     "Activa el aviso en Telegram: *@AvisoAguaGDLbot*",
-    "Llena cubetas y tinaco la noche anterior"
+    "Llena cubetas y tinaco, tapados, la noche anterior"
    ],
    "fuentes": [
     "avisos"
@@ -66,7 +66,7 @@
    "tipo": "texto",
    "foto": "fuentes/bd8ae7d3b0aa.jpg",
    "titular": "Revisa si te toca el *80%* de descuento",
-   "texto": "Hasta 25 m³ al mes. Detalles en aguagdl.com/avisos.",
+   "texto": "Si estás afectado por la calidad del agua y tu consumo promedio es de hasta 25 m³ al mes. Hasta el 15 de diciembre.",
    "fuentes": [
     "dec"
    ]

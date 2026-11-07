@@ -86,6 +86,11 @@ def check(c, fotos_ok, temas):
             fail(f"{cid}: fuente {key} url must be https")
     if not 3 <= len(c["slides"]) <= 10:
         fail(f"{cid}: 3 to 10 slides")
+    allq = " ".join(f["cita"] for f in c["fuentes"].values()).replace("“", "").replace("”", "").replace('"', "")
+    for q in re.findall(r"«([^»]+)»", c["caption"]):
+        for part in (p.strip(" .,") for p in re.split(r"\[…\]|…", q)):
+            if part and part not in allq:
+                fail(f"{cid} caption: «{part}» is not word for word in any cita")
     if "¿" not in c["caption"]:
         fail(f"{cid}: the caption asks the reader something («¿…?») people can answer in the comments")
     if c["slides"][-1]["tipo"] != "cierre":
@@ -115,6 +120,11 @@ def check(c, fotos_ok, temas):
                 fail(f"{where}: {n} is not in the cited citas or the calculo")
         if s["tipo"] != "cierre" and not s.get("fuentes") and not s.get("propio"):
             fail(f"{where}: no fuentes; a slide without a source says why in \"propio\" (our question, proposal, method or service)")
+        pool_q = " ".join(c["fuentes"][k]["cita"] for k in s.get("fuentes", [])).replace("“", "").replace("”", "").replace('"', "")
+        for q in re.findall(r"«([^»]+)»", " ".join(texts)):
+            for part in (p.strip(" .,") for p in re.split(r"\[…\]|…", q.replace("*", ""))):
+                if part and part not in pool_q:
+                    fail(f"{where}: «{part}» is not word for word (capitals and accents included) in the cited citas")
         if s["tipo"] == "cita" and not s.get("fuentes"):
             fail(f"{where}: a quote needs its fuente")
         if s["tipo"] == "cita":

@@ -1,7 +1,7 @@
 {
  "id": "01-maximo-un-dia",
  "titulo": "«Por máximo un día»",
- "caption": "El Gobierno de Jalisco prometió de 2 a 3 racionamientos por semana, «por máximo un día». Desde el 3 de noviembre, el calendario del SIAPA marca 4 días por semana en las zonas 1, 2, 4 y 5.\n\n¿Cuántos días se fue el agua en tu colonia esta semana? Cuéntanos aquí abajo o en aguagdl.com/reportes (link en la bio).",
+ "caption": "El Gobierno de Jalisco prometió de 2 a 3 racionamientos por semana, «por máximo un día». En el calendario del SIAPA actualizado el 3 de noviembre hay 4 días de corte por semana en las zonas 1, 2, 4 y 5.\n\n¿Cuántos días se fue el agua en tu colonia esta semana? Cuéntanos aquí abajo o en aguagdl.com/reportes (link en la bio).",
  "fuentes": {
   "rot": {
    "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/",
@@ -15,8 +15,8 @@
    "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/api/ajustes.php",
    "medio": "Calendario de la rotación, SIAPA",
    "fecha": "2026-11-03",
-   "revisado": "2026-11-05",
-   "cita": "actualizado 2026-11-03. Días por zona: 1 lunes, jueves, viernes, domingo; 2 lunes, martes, jueves, domingo; 3 miercoles, jueves, viernes; 4 lunes, martes, sabado, domingo; 5 lunes, martes, miercoles, jueves; 6 viernes, sabado, domingo; 7 sabado, domingo."
+   "revisado": "2026-11-06",
+   "cita": "Ajustes editados desde /admin: días de corte por zona (zonas) … actualizado 2026-11-03. Días por zona: 1 lunes, jueves, viernes, domingo; 2 lunes, martes, jueves, domingo; 3 miercoles, jueves, viernes; 4 lunes, martes, sabado, domingo; 5 lunes, martes, miercoles, jueves; 6 viernes, sabado, domingo; 7 sabado, domingo."
   },
   "udg": {
    "url": "https://udgtv.com/noticias/hasta-dos-meses-sin-agua-en-polanquito/336885",
@@ -31,7 +31,7 @@
    "fecha": "2026-11-06",
    "consultada": true,
    "revisado": "2026-11-06",
-   "cita": "Repórtalo en 4 toques, sin cuenta. … ¿Hay agua en tu colonia? 193 colonias llegaron a una semana o más sin agua, según medios y vecinos: 60 con los días dichos por un medio y 26 con una sola publicación; 155 con quejas de los últimos 3 días. 334 colonias en el mapa 256 notas de medios 60 días lo más largo según un medio"
+   "cita": "Repórtalo en 4 toques, sin cuenta. … ¿Hay agua en tu colonia? 193 colonias llegaron a una semana o más sin agua, según medios y vecinos: 61 con los días dichos por un medio … 339 colonias en el mapa 259 notas de medios 60 días lo más largo según un medio"
   }
  },
  "slides": [
@@ -47,7 +47,7 @@
   {
    "tipo": "calendario",
    "foto": "fuentes/2dee1722b8e6.jpg",
-   "titular": "Desde el 3 de noviembre: *4 días* por semana en las zonas 1, 2, 4 y 5",
+   "titular": "Calendario actualizado el 3 de noviembre: *4 días de corte* por semana en las zonas 1, 2, 4 y 5",
    "zonas": [
     {
      "zona": "Zona 1",
@@ -116,15 +116,15 @@
   },
   {
    "tipo": "dividido",
-   "titular": "Días por semana: lo prometido y lo que marca el calendario",
+   "titular": "Lo prometido y lo que marca el calendario",
    "izq": {
     "foto": "fuentes/38ae0724be32.jpg",
     "etiqueta": "Prometido",
-    "cifra": "2 a 3 días"
+    "cifra": "2 a 3"
    },
    "der": {
     "foto": "fuentes/2dee1722b8e6.jpg",
-    "etiqueta": "Zonas 1, 2, 4 y 5",
+    "etiqueta": "Calendario",
     "cifra": "4 días",
     "color": "alarm"
    },
@@ -132,8 +132,8 @@
     "rot",
     "cal"
    ],
-   "calculo": "2 a 3 racionamientos por semana, de máximo un día cada uno = 2 a 3 días. Zonas 1, 2, 4 y 5: 4 días cada una (calendario actualizado 2026-11-03).",
-   "texto": "Según la página oficial: «de 2 a 3 racionamientos por semana por máximo un día»."
+   "calculo": "Zonas 1, 2, 4 y 5: 4 días de corte cada una (calendario actualizado 2026-11-03).",
+   "texto": "Prometido: «de 2 a 3 racionamientos por semana por máximo un día». Calendario: 4 días de corte en las zonas 1, 2, 4 y 5."
   },
   {
    "tipo": "foto",

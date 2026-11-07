@@ -1,7 +1,7 @@
 {
  "id": "18-zapotillo",
  "titulo": "El Zapotillo: 45% y 100%",
- "caption": "En el mensaje del gobernador que reproduce Expansión (8 de octubre): El Zapotillo «actualmente opera al 45 por ciento». El 28 de octubre, según Milenio, la presidenta destacó que el nuevo proyecto aprovecha «al 100 por ciento» la presa. Dos cifras, dos gobiernos. Las seguimos.\n\n¿Sabías que El Zapotillo opera al 45 por ciento, según el gobernador?\n\nMás en aguagdl.com (link en la bio).",
+ "caption": "En el mensaje del gobernador que reproduce Expansión (8 de octubre), el sistema de El Zapotillo «actualmente opera al 45 por ciento». El 28 de octubre, según Milenio, la presidenta destacó que el nuevo proyecto aprovecha al 100 por ciento la presa. Son dos medidas distintas: cómo opera hoy y lo que usaría el proyecto.\n\n¿Sabías que El Zapotillo opera al 45 por ciento, según el gobernador?\n\nMás en aguagdl.com (link en la bio).",
  "fuentes": {
   "mil": {
    "url": "https://www.milenio.com/politica/sheinbaum-y-lemus-anuncian-proyecto-garantizar-abasto-agua-guadalajara",
@@ -29,10 +29,10 @@
  "slides": [
   {
    "tipo": "iconos",
-   "foto": "fuentes/0e61b3ddde0a.jpg",
+   "foto": "fuentes/03d97b5d89d9.jpg",
    "kicker": "El gobernador, según Expansión",
    "cifra": "45%",
-   "titular": "«actualmente opera» El Zapotillo",
+   "titular": "opera hoy el sistema de El Zapotillo, según el gobernador",
    "icono": "gota",
    "n": 9,
    "total": 20,
@@ -40,19 +40,20 @@
    "fuentes": [
     "exp"
    ],
-   "calculo": "45% de 20 gotas = 9."
+   "calculo": "45% de 20 gotas = 9.",
+   "texto": "«que actualmente opera al 45 por ciento»"
   },
   {
    "tipo": "iconos",
-   "foto": "fuentes/0e61b3ddde0a.jpg",
+   "foto": "fuentes/03d97b5d89d9.jpg",
    "kicker": "La presidenta, según Milenio",
    "cifra": "100%",
-   "titular": "de la presa aprovechada con el nuevo proyecto",
+   "titular": "de la presa: lo que usaría el nuevo proyecto, según Milenio",
    "icono": "gota",
    "n": 20,
    "total": 20,
    "columnas": 10,
-   "texto": "«Aprovechando al 100 por ciento la presa El Zapotillo».",
+   "texto": "Según Milenio, la presidenta destacó que el proyecto aprovecha al 100 por ciento la presa El Zapotillo.",
    "fuentes": [
     "mil"
    ],
@@ -60,9 +61,13 @@
   },
   {
    "tipo": "texto",
-   "foto": "fuentes/0e61b3ddde0a.jpg",
-   "titular": "¿Cuándo y con qué obras se pasa de una cifra a la otra?",
-   "propio": "pregunta nuestra"
+   "foto": "fuentes/03d97b5d89d9.jpg",
+   "titular": "¿Con qué obras y cuándo?",
+   "texto": "El gobernador habla de cómo opera el sistema; la nota, de lo que usaría el nuevo proyecto. Las seguimos.",
+   "fuentes": [
+    "exp",
+    "mil"
+   ]
   },
   {
    "tipo": "sitio",
@@ -81,7 +86,7 @@
   },
   {
    "tipo": "cierre",
-   "titular": "Dos gobiernos, dos cifras. Seguimos ambas",
+   "titular": "Lo seguimos con documentos",
    "acciones": [
     "aguagdl.com/promesas",
     "Recibe un aviso antes de cada racionamiento: @AvisoAguaGDLbot en Telegram"

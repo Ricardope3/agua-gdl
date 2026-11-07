@@ -1,12 +1,11 @@
 {
   "revisado": "2026-11-05",
-  "nota": "Fondos revisados a mano para los carruseles: sin cara cercana, sin nombre legible de una persona privada, sin marca de agua de un medio ni texto quemado. Todas están también en pipelines/fotos_temas.json (temas). Revisa la foto antes de añadirla.",
+  "nota": "Fondos revisados a mano para los carruseles: sin cara cercana, sin nombre legible de una persona privada, sin marca de agua de un medio ni texto quemado. Todas están también en pipelines/fotos_temas.json (temas). Revisa la foto antes de añadirla. 6 nov: fuera fuentes/0e61b3ddde0a.jpg (marca de agua de Mural visible con la foto nítida).",
   "fotos": [
     "fuentes/008fb99889ac.jpg",
     "fuentes/034c9eb3ca91.jpg",
     "fuentes/03d97b5d89d9.jpg",
     "fuentes/0e1cdcf06f5a.jpg",
-    "fuentes/0e61b3ddde0a.jpg",
     "fuentes/28d8f5f93db4.jpg",
     "fuentes/2dee1722b8e6.jpg",
     "fuentes/38ae0724be32.jpg",

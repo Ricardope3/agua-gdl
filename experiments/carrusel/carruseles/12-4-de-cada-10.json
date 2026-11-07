@@ -1,7 +1,7 @@
 {
  "id": "12-4-de-cada-10",
  "titulo": "4 de cada 10 hogares",
- "caption": "Según el Gobierno de Jalisco, la rotación afecta a los hogares que abastece la planta potabilizadora número 1: «el 40% de los hogares de la ciudad». CNN reportó que los tandeos alcanzan a 2.3 millones de habitantes, de los 5.5 millones de usuarios del agua.\n\n¿Tu casa está en la rotación? Búscala en aguagdl.com/avisos (link en la bio).",
+ "caption": "Según el Gobierno de Jalisco, la rotación afecta a los hogares que abastece la planta potabilizadora número 1: «el 40% de los hogares de la ciudad». CNN reportó que los tandeos suspenderán el servicio de dos a tres días por semana a 2.3 millones de habitantes, de los 5.5 millones de usuarios del agua.\n\n¿Tu casa está en la rotación? Búscala en aguagdl.com/avisos (link en la bio).",
  "fuentes": {
   "rot": {
    "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/",
@@ -24,7 +24,7 @@
    "fecha": "2026-11-06",
    "consultada": true,
    "revisado": "2026-11-06",
-   "cita": "¿Qué zona me toca? Busca tu colonia, municipio o código postal Buscar Usar mi ubicación … Calendario del SIAPA verificado el 3 de noviembre. Avisos gratis por Telegram Te avisa dos días antes de cada corte y la noche anterior. … Revisa tu recibo: hasta el 15 de diciembre, las casas y pequeños comercios de las colonias con problemas de calidad del agua tienen 80% de descuento si su consumo promedio es de hasta 25 m³ al mes"
+   "cita": "¿Qué zona me toca? Busca tu colonia, municipio o código postal Buscar Usar mi ubicación … Calendario del SIAPA verificado el 3 de noviembre. Avisos gratis por Telegram Te avisa dos días antes de cada corte y la noche anterior. … Revisa tu recibo: hasta el 15 de diciembre, las casas y pequeños comercios de las colonias con problemas de calidad del agua tienen 80% de descuento si su consumo promedio es de hasta 25 m³ al mes … [enlace del botón: t.me/AvisoAguaGDLbot]"
   }
  },
  "slides": [
@@ -48,7 +48,7 @@
    "foto": "fuentes/28d8f5f93db4.jpg",
    "kicker": "Según CNN",
    "cifra": "2.3 millones",
-   "titular": "de habitantes con tandeos, de 5.5 millones de usuarios",
+   "titular": "de habitantes a los que se suspenderá el servicio, de 5.5 millones de usuarios",
    "icono": "persona",
    "n": 23,
    "total": 55,

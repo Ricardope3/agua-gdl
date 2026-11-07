@@ -1,7 +1,7 @@
 {
  "id": "04-rio-santiago",
  "titulo": "Un tubo y un río",
- "caption": "Lo anunciado para el nuevo acueducto Chapala–Guadalajara: 9,300 millones (Milenio, 28 de octubre). Lo que el Gobierno de Jalisco reporta haber invertido en seis años de su estrategia para el Río Santiago, 2019–2024: 7,333 millones, con obra de hospitales incluida.\n\n¿Qué debería ir primero: traer más agua o limpiar la que tenemos?\n\nMás en aguagdl.com (link en la bio).",
+ "caption": "Lo anunciado para el nuevo acueducto Chapala–Guadalajara: 9,300 millones (Milenio, 28 de octubre). Lo que el Gobierno de Jalisco presenta como su inversión en la estrategia de recuperación del río Santiago, 2019–2024: 7,333 millones, con obra de hospitales incluida (cifras actualizadas al 17 de octubre de 2024).\n\n¿Qué debería ir primero: traer más agua o limpiar la que tenemos?\n\nMás en aguagdl.com (link en la bio).",
  "fuentes": {
   "mil": {
    "url": "https://www.milenio.com/politica/sheinbaum-y-lemus-anuncian-proyecto-garantizar-abasto-agua-guadalajara",
@@ -14,8 +14,8 @@
    "url": "https://riosantiago.jalisco.gob.mx/wp-content/uploads/2024/07/Presupuesto-Integral-de-la-Estrategia-Revivamos-el-Rio-Santiago-2024pdf.pdf",
    "medio": "Revivamos el Río Santiago, Gobierno de Jalisco",
    "fecha": "2024-10-17",
-   "revisado": "2026-11-05",
-   "cita": "Componente 2019 2020 2021 2022 2023 2024 … Totales anuales: $1,861,115,676 $805,648,208 $299,812,277 $1,713,350,246 $1,738,300,169 $915,181,021 Total general: $7,333,407,597 * Incluye la inversión acumulada en infraestructura del Hospital Civil de Oriente y hospitales comunitarios de Ocotlán y Salto."
+   "revisado": "2026-11-06",
+   "cita": "A continuación, se presenta la inversión del Gobierno de Jalisco en la estrategia de recuperación integral del río Santiago desglosada por componente y año: Componente 2019 2020 2021 2022 2023 2024 … Totales anuales: $1,861,115,676 $805,648,208 $299,812,277 $1,713,350,246 $1,738,300,169 $915,181,021 Total general: $7,333,407,597 * Incluye la inversión acumulada en infraestructura del Hospital Civil de Oriente y hospitales comunitarios de Ocotlán y Salto. … Ultima actualización: 17 de octubre 2024"
   },
   "web_exige": {
    "url": "https://aguagdl.com/exige",
@@ -30,13 +30,13 @@
   {
    "tipo": "portada",
    "foto": "fuentes/80b5ffac1020.jpg",
-   "titular": "Lo anunciado para un acueducto supera lo que Jalisco reporta en *seis años* para el Río Santiago",
-   "texto": "El total del río incluye obra de hospitales.",
+   "titular": "Lo anunciado para un acueducto supera lo que Jalisco presenta como inversión de *2019 a 2024* en el Río Santiago",
+   "texto": "Y eso que el total del río incluye obra de hospitales.",
    "fuentes": [
     "mil",
     "rio"
    ],
-   "calculo": "2019 a 2024 son seis años."
+   "calculo": "2019 a 2024."
   },
   {
    "tipo": "barras",
@@ -55,7 +55,7 @@
      "color": "alarm"
     }
    ],
-   "texto": "Millones de pesos. El río incluye el Hospital Civil de Oriente y hospitales en Ocotlán y El Salto.",
+   "texto": "Millones de pesos. El río incluye obra del Hospital Civil de Oriente y hospitales en Ocotlán y El Salto; cifras al 17 de octubre de 2024.",
    "fuentes": [
     "mil",
     "rio"

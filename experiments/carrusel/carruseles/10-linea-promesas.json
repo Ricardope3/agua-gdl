@@ -47,7 +47,7 @@
    "kicker": "13 de julio",
    "cita": "Vamos a empezar a ver mejor calidad del agua hacia finales de agosto y principios de septiembre",
    "quien": "Pablo Lemus, gobernador, según Notisistema",
-   "texto": "Tomamos el 15 de septiembre como plazo. Ya pasó.",
+   "texto": "Y «una mejora muy, muy importante hacia febrero, marzo y abril del próximo año». Tomamos el 15 de septiembre para la primera parte. Ya pasó.",
    "fuentes": [
     "notijul"
    ],
@@ -60,16 +60,20 @@
    "hitos": [
     {
      "fecha": "15 sep 2026 · plazo pasado",
-     "texto": "«Mejor calidad del agua hacia finales de agosto y principios de septiembre» (Notisistema, 13 de julio)",
+     "texto": "«mejor calidad del agua hacia finales de agosto y principios de septiembre» (Notisistema, 13 de julio)",
      "color": "gris"
     },
     {
      "fecha": "Octubre",
-     "texto": "«Una mejora sustancial en la calidad del agua […] en las próximas semanas», en el mensaje del gobernador que reproduce Expansión el 8 de octubre"
+     "texto": "«Si hacemos esto, podremos ver una mejora sustancial en la calidad del agua que recibe la ciudad en las próximas semanas», en el mensaje que reproduce Expansión el 8 de octubre"
     },
     {
-     "fecha": "«Seis meses»",
-     "texto": "Lo que duraría la rotación «en una primera etapa», según ese mensaje"
+     "fecha": "Seis meses",
+     "texto": "lo que duraría la rotación, «seis meses en una primera etapa», según ese mensaje"
+    },
+    {
+     "fecha": "Feb–abr 2027",
+     "texto": "«una mejora muy, muy importante» (Notisistema, 13 de julio)"
     },
     {
      "fecha": "Marzo 2027",
@@ -81,7 +85,7 @@
     "exp",
     "siapa15"
    ],
-   "calculo": "15 sep 2026: nuestra lectura (aguagdl.com/promesas)."
+   "calculo": "15 sep 2026: nuestra lectura (aguagdl.com/promesas). «febrero, marzo y abril del próximo año» = febrero a abril de 2027."
   },
   {
    "tipo": "texto",

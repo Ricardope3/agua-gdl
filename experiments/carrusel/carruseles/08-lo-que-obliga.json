@@ -1,7 +1,7 @@
 {
  "id": "08-lo-que-obliga",
  "titulo": "Lo que la ley obliga al SIAPA",
- "caption": "El decreto 30216/LXIV/26 no solo da un descuento: obliga al SIAPA a «cuando menos» cuatro acciones en las zonas afectadas, y a informar cada mes al Congreso.\n\n¿Has visto alguna de estas cuatro en tu colonia?\n\nMás en aguagdl.com (link en la bio).",
+ "caption": "El decreto 30216/LXIV/26 no solo da un descuento: obliga al SIAPA a «cuando menos» cuatro acciones en las zonas afectadas, y a informar cada mes al Congreso, hasta el 15 de diciembre.\n\n¿Has visto alguna de estas cuatro en tu colonia?\n\nMás en aguagdl.com (link en la bio).",
  "fuentes": {
   "dec": {
    "url": "https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25482/1785200563-2026-07-27-.pdf",
@@ -24,8 +24,8 @@
    "tipo": "portada",
    "foto": "fuentes/bd8ae7d3b0aa.jpg",
    "kicker": "Decreto 30216/LXIV/26",
-   "titular": "La ley obliga al SIAPA a *al menos 4 cosas* en las zonas afectadas",
-   "texto": "¿Las ves en tu colonia?",
+   "titular": "El decreto obliga al SIAPA a *al menos 4 cosas* en las zonas afectadas",
+   "texto": "Hasta el 15 de diciembre. ¿Las ves en tu colonia?",
    "fuentes": [
     "dec"
    ],
@@ -38,7 +38,7 @@
    "titular": "«deberá, cuando menos:»",
    "marca": "num",
    "items": [
-    "Instalar y operar plantas potabilizadoras portátiles",
+    "Plantas potabilizadoras portátiles «en los puntos que determine conforme a criterios técnicos»",
     "«Garantizar el suministro gratuito de agua potable mediante pipas a las colonias afectadas»",
     "Programas de agua embotellada gratis donde la calidad lo requiera, según dictámenes técnicos",
     "«Difundir de manera permanente los puntos de abastecimiento, horarios, rutas de distribución»"

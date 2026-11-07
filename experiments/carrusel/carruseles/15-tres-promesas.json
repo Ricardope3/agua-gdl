@@ -1,7 +1,7 @@
 {
  "id": "15-tres-promesas",
  "titulo": "Tres promesas en una frase",
- "caption": "En el mensaje del gobernador que reproduce Expansión (8 de octubre): las acciones del agua «no representarán un incremento en las tarifas del SIAPA, no se privatizará el servicio, no será una deuda pública». Son tres promesas. Las revisamos con documentos en aguagdl.com/promesas.\n\n¿Cuál crees que se cumpla primero?\n\nMás en aguagdl.com (link en la bio).",
+ "caption": "En el mensaje del gobernador que reproduce Expansión (8 de octubre): «Todas estas acciones no representarán un incremento en las tarifas del SIAPA, no se privatizará el servicio, no será una deuda pública». Son tres promesas. Las revisamos con documentos en aguagdl.com/promesas.\n\n¿Cuál crees que se cumpla primero?\n\nMás en aguagdl.com (link en la bio).",
  "fuentes": {
   "exp": {
    "url": "https://politica.expansion.mx/mexico/2026/10/08/crisis-agua-jalisco-lemus-acueducto-chapala-guadalajara",
@@ -24,7 +24,7 @@
    "tipo": "cita",
    "foto": "fuentes/0e1cdcf06f5a.jpg",
    "kicker": "El mensaje del gobernador",
-   "cita": "no representarán un incremento en las tarifas del SIAPA, no se privatizará el servicio, no será una deuda pública",
+   "cita": "Todas estas acciones no representarán un incremento en las tarifas del SIAPA, no se privatizará el servicio, no será una deuda pública",
    "quien": "Pablo Lemus, gobernador, en el mensaje que reproduce Expansión",
    "fuentes": [
     "exp"
@@ -33,13 +33,15 @@
   {
    "tipo": "lista",
    "foto": "fuentes/0e1cdcf06f5a.jpg",
-   "titular": "Tres promesas",
-   "propio": "nuestra lista de las tres promesas citadas en la diapositiva 1",
+   "titular": "Tres promesas sobre «Todas estas acciones»",
    "marca": "check",
    "items": [
     "Sin aumento de tarifas del SIAPA",
     "Sin privatizar el servicio",
     "Sin deuda pública"
+   ],
+   "fuentes": [
+    "exp"
    ]
   },
   {
@@ -71,7 +73,7 @@
   },
   {
    "tipo": "cierre",
-   "titular": "Una promesa se cumple en papel",
+   "titular": "Las revisamos con documentos",
    "acciones": [
     "Síguelas en aguagdl.com/promesas",
     "Pide los documentos: aguagdl.com/exige"

@@ -25,7 +25,8 @@ Arguments: the topic, a colonia, or the facts to show. If the ask is vague, prop
 - No cause without a source that states it, and no juxtaposition that implies one (an official promise next to a headline about a colonia without water).
 - Name official programmes and figures as the government's claim, not ours («según el Gobierno de Jalisco, 4 de 10 hogares…»).
 - Don't add conditions or omit them: the 80% discount always carries «hasta 25 m³» and «afectados por la calidad del agua».
-- Captions aren't checked by the build: read each one against the slides' `cita`s yourself.
+- The build checks every «…» on slides (against the slide's cited `cita`s) and in captions (against any `cita`), capitals included; it can't check paraphrase, so still read each caption against the `cita`s.
+- When a photo is shown sharp, re-check it at full size: a faint outlet watermark or a banner naming another colonia can surface (6 Nov: 0e61b3ddde0a dropped for a Mural watermark).
 
 ## Our own analysis
 
