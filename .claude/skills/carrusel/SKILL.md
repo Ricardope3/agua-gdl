@@ -8,7 +8,7 @@ Arguments: the topic, a colonia, or the facts to show. If the ask is vague, prop
 
 ## Before writing
 
-- Read `experiments/carrusel/README.md` (slide types, fields, what the build checks), `.claude/rules/evidence.md`, `docs/EDITORIAL.md`, `.claude/rules/vetos.md`, and the closest carousel in `experiments/carrusel/carruseles/`.
+- Read `experiments/carrusel/REFERENCIAS.md` (what the carousels he admires do) and `experiments/carrusel/README.md` (slide types, fields, what the build checks), `.claude/rules/evidence.md`, `docs/EDITORIAL.md`, `.claude/rules/vetos.md`, and the closest carousel in `experiments/carrusel/carruseles/`.
 - Ask which cards he has already posted on Instagram; don't repeat them (he cut a top-5 bar chart and a protest timeline on 6 Nov for that reason).
 
 ## Facts
@@ -35,7 +35,7 @@ Arguments: the topic, a colonia, or the facts to show. If the ask is vague, prop
 
 ## Shape
 
-- 5–8 slides: a hook (one big number or a question), the evidence, the honest limit, a `sitio` slide, then the `cierre`. Numbers that make people want to check their own colonia beat abstract totals.
+- 5–8 slides: a cover that asks the reader's own question («¿Te toca corte mañana?»), one fact per slide (the same map or frame, one new layer each), the evidence, the honest limit, a `sitio` slide, then the `cierre`. Numbers that make people want to check their own colonia beat abstract totals. Guides people save (how to ask for a pipa, the discount, a letter to a diputación) show the real form or message with the explained part highlighted. The caption tells the whole story, numbers included.
 - The `sitio` slide shows the matching aguagdl.com page with that page's own number and «link en la bio». Run `python3 experiments/carrusel/build.py --capturas` first and copy the live numbers into its `cita`. Screenshots skip pages showing faces, the caricature, or the /promesas stance line (`DESDE` crops it).
 - Backgrounds only from `experiments/carrusel/fotos.json`. To add one, open it first: no close face, no legible private name, no outlet watermark or burned-in text.
 
