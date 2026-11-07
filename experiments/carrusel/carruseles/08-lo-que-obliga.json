@@ -1,7 +1,7 @@
 {
  "id": "08-lo-que-obliga",
  "titulo": "Lo que la ley obliga al SIAPA",
- "caption": "El decreto 30216/LXIV/26 no solo da un descuento: obliga al SIAPA a «cuando menos» cuatro acciones en las zonas afectadas, y a informar cada mes al Congreso. ¿Las ves en tu colonia? Cuéntanos en aguagdl.com/reportes.\n\nMás en aguagdl.com/pipas (link en la bio).",
+ "caption": "El decreto 30216/LXIV/26 no solo da un descuento: obliga al SIAPA a «cuando menos» cuatro acciones en las zonas afectadas, y a informar cada mes al Congreso.\n\n¿Has visto alguna de estas cuatro en tu colonia?\n\nMás en aguagdl.com (link en la bio).",
  "fuentes": {
   "dec": {
    "url": "https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25482/1785200563-2026-07-27-.pdf",
@@ -25,7 +25,7 @@
    "foto": "fuentes/bd8ae7d3b0aa.jpg",
    "kicker": "Decreto 30216/LXIV/26",
    "titular": "La ley obliga al SIAPA a *al menos 4 cosas* en las zonas afectadas",
-   "texto": "¿Las ves en la tuya?",
+   "texto": "¿Las ves en tu colonia?",
    "fuentes": [
     "dec"
    ],
@@ -52,7 +52,6 @@
    "foto": "fuentes/bd8ae7d3b0aa.jpg",
    "kicker": "Las pipas gratis, primero a",
    "titular": "Escuelas, hospitales, centros de salud y estancias de personas mayores",
-   "texto": "Y a quien no tenga «acceso suficiente y de calidad al servicio».",
    "fuentes": [
     "dec"
    ]
@@ -62,7 +61,6 @@
    "foto": "fuentes/bd8ae7d3b0aa.jpg",
    "kicker": "Artículo Quinto",
    "titular": "Un informe al Congreso *cada mes*",
-   "texto": "«Un informe mensual sobre el cumplimiento del presente Decreto».",
    "fuentes": [
     "dec"
    ]

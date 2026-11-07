@@ -1,7 +1,7 @@
 {
  "id": "16-polanquito",
  "titulo": "Polanquito: casi dos meses",
- "caption": "Polanquito, Guadalajara. UDG TV: «Hasta dos meses sin agua». Meganoticias: las familias acarrean agua de un manantial y lo que llega en pipas «apenas les alcanza para uno o dos días». El Gobierno de Guadalajara dice que hay una cisterna comunitaria en el Centro Barrial Polanquito. ¿Y en tu colonia? aguagdl.com/reportes\n\nMás en aguagdl.com/reportes (link en la bio).",
+ "caption": "Polanquito, Guadalajara. UDG TV: «Hasta dos meses sin agua». Meganoticias: las familias acarrean agua de un manantial y lo que llega en pipas «apenas les alcanza para uno o dos días». Según Conciencia Pública, hay una cisterna comunitaria en el Centro Barrial Polanquito.\n\n¿Cuántos días lleva tu colonia sin agua?\n\nMás en aguagdl.com (link en la bio).",
  "fuentes": {
   "udg": {
    "url": "https://udgtv.com/noticias/hasta-dos-meses-sin-agua-en-polanquito/336885",
@@ -35,41 +35,37 @@
  },
  "slides": [
   {
-   "tipo": "portada",
-   "foto": "fuentes/fb29dc00b79f.jpg",
-   "kicker": "Polanquito, Guadalajara",
+   "tipo": "foto",
+   "foto": "fuentes/8f1a73e2ada3.jpg",
    "titular": "«Hasta dos meses sin agua en Polanquito»",
-   "texto": "Titular de UDG TV, 4 de noviembre.",
+   "texto": "UDG TV, 4 de noviembre.",
    "fuentes": [
     "udg"
    ]
   },
   {
-   "tipo": "texto",
-   "foto": "fuentes/fb29dc00b79f.jpg",
-   "kicker": "Según Meganoticias",
+   "tipo": "foto",
+   "foto": "fuentes/03c2737f338f.jpg",
    "titular": "Acarrean agua de un manantial",
-   "texto": "Lo que llega en pipas y plantas potabilizadoras «apenas les alcanza para uno o dos días».",
+   "texto": "Lo que llega en pipas «apenas les alcanza para uno o dos días», según Meganoticias.",
    "fuentes": [
     "mega"
    ]
   },
   {
    "tipo": "texto",
-   "foto": "fuentes/fb29dc00b79f.jpg",
-   "kicker": "Lo que dice el gobierno municipal",
+   "foto": "fuentes/03c2737f338f.jpg",
    "titular": "Una cisterna comunitaria en el Centro Barrial Polanquito",
-   "texto": "Es uno de los «más de 40 espacios públicos» con cisterna del programa del gobierno de Guadalajara, según Conciencia Pública.",
+   "texto": "Una de «más de 40», según Conciencia Pública.",
    "fuentes": [
     "conc"
    ]
   },
   {
    "tipo": "texto",
-   "foto": "fuentes/fb29dc00b79f.jpg",
-   "kicker": "Por qué lo contamos",
+   "foto": "fuentes/8f1a73e2ada3.jpg",
    "titular": "Cada colonia tiene su historia",
-   "texto": "Las de cada colonia, con su fuente, en aguagdl.com/reportes.",
+   "texto": "Con su fuente, en aguagdl.com/reportes.",
    "propio": "servicio de Agua GDL"
   },
   {

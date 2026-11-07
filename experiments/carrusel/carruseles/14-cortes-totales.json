@@ -1,7 +1,7 @@
 {
  "id": "14-cortes-totales",
  "titulo": "«No serán cortes totales»",
- "caption": "La página oficial de la rotación dice: «No serán cortes totales». Quadratín publicó el 19 de octubre que al menos 270 colonias registraron suspensión total del suministro en los primeros cuatro días. El director de la CEA habló de 728 registros de baja presión o suspensión. ¿Y en tu colonia? aguagdl.com/reportes\n\nMás en aguagdl.com/reportes (link en la bio).",
+ "caption": "La página oficial de la rotación dice: «No serán cortes totales». Quadratín publicó el 19 de octubre que al menos 270 colonias registraron suspensión total del suministro en los primeros cuatro días.\n\n¿Fue baja presión o cero agua en tu casa?\n\nMás en aguagdl.com (link en la bio).",
  "fuentes": {
   "rot": {
    "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/",
@@ -31,10 +31,8 @@
   {
    "tipo": "cita",
    "foto": "fuentes/e219eef56feb.jpg",
-   "kicker": "Lo que dice la página oficial",
    "cita": "No serán cortes totales",
    "quien": "Página de la rotación, Gobierno de Jalisco",
-   "texto": "«Los racionamientos consistirán en una disminución de la presión».",
    "fuentes": [
     "rot"
    ]
@@ -42,10 +40,10 @@
   {
    "tipo": "texto",
    "foto": "fuentes/e219eef56feb.jpg",
-   "kicker": "Los primeros cuatro días, según Quadratín",
+   "kicker": "Primeros cuatro días, según Quadratín",
    "cifra": "270",
    "titular": "colonias con suspensión total del suministro",
-   "texto": "«Al menos», dice la nota del 19 de octubre.",
+   "texto": "«Al menos».",
    "fuentes": [
     "q728"
    ]
@@ -53,10 +51,10 @@
   {
    "tipo": "texto",
    "foto": "fuentes/e219eef56feb.jpg",
-   "kicker": "Lo que informó el director de la CEA",
+   "kicker": "El director de la CEA",
    "cifra": "728",
    "titular": "registros de colonias con baja presión o suspensión del servicio",
-   "texto": "La cifra «no corresponde a colonias distintas», detalló, según Quadratín.",
+   "texto": "La cifra «no corresponde a colonias distintas».",
    "fuentes": [
     "q728"
    ]

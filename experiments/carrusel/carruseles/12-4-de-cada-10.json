@@ -1,7 +1,7 @@
 {
  "id": "12-4-de-cada-10",
  "titulo": "4 de cada 10 hogares",
- "caption": "Según el Gobierno de Jalisco, la rotación solo afecta a los hogares que abastece la planta potabilizadora número 1: «el 40% de los hogares de la ciudad». CNN reportó que los tandeos alcanzan a 2.3 millones de habitantes, de los 5.5 millones de usuarios del agua. ¿Tu casa está en la rotación? aguagdl.com\n\nMás en aguagdl.com/avisos (link en la bio).",
+ "caption": "Según el Gobierno de Jalisco, la rotación afecta a los hogares que abastece la planta potabilizadora número 1: «el 40% de los hogares de la ciudad». CNN reportó que los tandeos alcanzan a 2.3 millones de habitantes, de los 5.5 millones de usuarios del agua.\n\n¿Tu casa está en la rotación? Búscala en aguagdl.com/avisos (link en la bio).",
  "fuentes": {
   "rot": {
    "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/",
@@ -38,7 +38,6 @@
    "n": 4,
    "total": 10,
    "columnas": 5,
-   "texto": "Los que abastece la planta potabilizadora número 1: «el 40% de los hogares de la ciudad».",
    "fuentes": [
     "rot"
    ],
@@ -61,9 +60,9 @@
    "calculo": "2.3 millones = 23 figuras de 100 mil; 5.5 millones = 55."
   },
   {
-   "tipo": "texto",
-   "foto": "fuentes/28d8f5f93db4.jpg",
-   "kicker": "Lo que cuentan habitantes a CNN",
+   "tipo": "foto",
+   "foto": "fuentes/c51911ead87a.jpg",
+   "kicker": "Habitantes, a CNN",
    "titular": "Agua turbia y con olor «desde hace por lo menos dos años»",
    "fuentes": [
     "cnn"

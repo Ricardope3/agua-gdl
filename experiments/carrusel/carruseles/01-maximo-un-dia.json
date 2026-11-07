@@ -1,7 +1,7 @@
 {
  "id": "01-maximo-un-dia",
  "titulo": "«Por máximo un día»",
- "caption": "La página oficial de la rotación dice que cada zona tendría «de 2 a 3 racionamientos por semana por máximo un día». Desde el 3 de noviembre, el calendario marca 4 días por semana a las zonas 1, 2, 4 y 5. ¿Cómo te ha ido en tu colonia? Cuéntanos en aguagdl.com/reportes. Fuentes en cada imagen.\n\nMás en aguagdl.com/reportes (link en la bio).",
+ "caption": "El Gobierno de Jalisco prometió de 2 a 3 racionamientos por semana, «por máximo un día». Desde el 3 de noviembre, el calendario del SIAPA marca 4 días por semana en las zonas 1, 2, 4 y 5.\n\n¿Cuántos días se fue el agua en tu colonia esta semana? Cuéntanos aquí abajo o en aguagdl.com/reportes (link en la bio).",
  "fuentes": {
   "rot": {
    "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/",
@@ -38,7 +38,6 @@
   {
    "tipo": "cita",
    "foto": "fuentes/38ae0724be32.jpg",
-   "kicker": "Lo que dice la página oficial",
    "cita": "Cada zona tendrá de 2 a 3 racionamientos por semana por máximo un día",
    "quien": "Página de la rotación, Gobierno de Jalisco",
    "fuentes": [
@@ -48,8 +47,7 @@
   {
    "tipo": "calendario",
    "foto": "fuentes/2dee1722b8e6.jpg",
-   "kicker": "El calendario, actualizado el 3 de noviembre",
-   "titular": "Cuatro zonas tienen *4 días* de racionamiento por semana",
+   "titular": "Desde el 3 de noviembre: *4 días* por semana en las zonas 1, 2, 4 y 5",
    "zonas": [
     {
      "zona": "Zona 1",
@@ -117,29 +115,29 @@
    "calculo": "Calendario actualizado 2026-11-03 (3 de noviembre); el anterior regía hasta esa fecha (api/data/rotation.json, previous until 2026-11-03). Zonas 1, 2, 4 y 5: 4 días cada una; 3 y 6: tres; 7: dos."
   },
   {
-   "tipo": "versus",
-   "foto": "fuentes/2dee1722b8e6.jpg",
-   "titular": "Lo prometido y lo que marca el calendario",
+   "tipo": "dividido",
+   "titular": "Días por semana: lo prometido y lo que marca el calendario",
    "izq": {
-    "kicker": "Prometido",
-    "cifra": "2 a 3",
-    "texto": "racionamientos por semana, «por máximo un día»"
+    "foto": "fuentes/38ae0724be32.jpg",
+    "etiqueta": "Prometido",
+    "cifra": "2 a 3 días"
    },
    "der": {
-    "kicker": "Zonas 1, 2, 4 y 5",
-    "cifra": "4",
-    "texto": "días de racionamiento por semana en el calendario"
+    "foto": "fuentes/2dee1722b8e6.jpg",
+    "etiqueta": "Zonas 1, 2, 4 y 5",
+    "cifra": "4 días",
+    "color": "alarm"
    },
    "fuentes": [
     "rot",
     "cal"
    ],
-   "calculo": "Calendario actualizado 2026-11-03 (3 de noviembre); el anterior regía hasta esa fecha (api/data/rotation.json, previous until 2026-11-03). Zonas 1, 2, 4 y 5: 4 días cada una; 3 y 6: tres; 7: dos."
+   "calculo": "2 a 3 racionamientos por semana, de máximo un día cada uno = 2 a 3 días. Zonas 1, 2, 4 y 5: 4 días cada una (calendario actualizado 2026-11-03).",
+   "texto": "Según la página oficial: «de 2 a 3 racionamientos por semana por máximo un día»."
   },
   {
-   "tipo": "texto",
-   "foto": "fuentes/c8b852c62f69.jpg",
-   "kicker": "Lo que publican los medios",
+   "tipo": "foto",
+   "foto": "fuentes/8f1a73e2ada3.jpg",
    "titular": "«Hasta dos meses sin agua en Polanquito»",
    "texto": "Titular de UDG TV, 4 de noviembre.",
    "fuentes": [

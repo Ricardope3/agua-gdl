@@ -1,7 +1,7 @@
 {
  "id": "09-pipas-municipios",
  "titulo": "Pipas: lo que dicen los municipios",
- "caption": "Cada municipio da sus propias cifras de pipas y litros. Estas son las que publicó la prensa, cada una con su fecha. Son sus datos, no los nuestros: si en tu colonia no llega la pipa, cuéntanos. aguagdl.com/pipas\n\nMás en aguagdl.com/pipas (link en la bio).",
+ "caption": "Cada municipio da sus propias cifras de pipas y litros. Estas son las que publicó la prensa, cada una con su fecha. Son sus datos, no los nuestros.\n\n¿Ha llegado la pipa a tu calle? ¿Cuánto tardó?\n\nMás en aguagdl.com (link en la bio).",
  "fuentes": {
   "conc": {
    "url": "https://concienciapublica.com.mx/2026/11/01/habra-nuevo-esquema-de-tandeos-el-siapa-admite-fracaso-de-tandeos-crece-el-malestar-social/",
@@ -47,12 +47,12 @@
    "kicker": "Pipas y cisternas",
    "titular": "Lo que dicen los municipios",
    "propio": "portada; las cifras van en las siguientes, con fuente",
-   "texto": "Sus cifras, tal como las publicó la prensa, con fecha y fuente. ¿Coinciden con lo que ves en tu calle?"
+   "texto": "Sus cifras en la prensa. ¿Coinciden con tu calle?"
   },
   {
    "tipo": "barras",
    "foto": "fuentes/bd8ae7d3b0aa.jpg",
-   "kicker": "Litros repartidos, según cada gobierno municipal en la prensa",
+   "kicker": "Según cada municipio, en la prensa",
    "titular": "Millones de litros",
    "barras": [
     {
@@ -71,7 +71,7 @@
      "texto": "2.9 M"
     }
    ],
-   "texto": "Fechas distintas: no son comparables entre sí. «+» = «más de».",
+   "texto": "Fechas distintas. «+» = «más de».",
    "fuentes": [
     "conc",
     "qtlaq",
@@ -88,7 +88,7 @@
    "n": 11,
    "total": 45,
    "columnas": 9,
-   "texto": "Y 17 cisternas comunitarias de una meta de 100.",
+   "texto": "Y 17 cisternas de una meta de 100.",
    "fuentes": [
     "qzap"
    ]
@@ -96,7 +96,6 @@
   {
    "tipo": "lista",
    "foto": "fuentes/bd8ae7d3b0aa.jpg",
-   "kicker": "Más cifras de los municipios, en la prensa",
    "titular": "Pipas y cisternas",
    "marca": "check",
    "items": [

@@ -1,7 +1,7 @@
 {
  "id": "06-las-pintas",
  "titulo": "Las Pintas: el 30%",
- "caption": "El gobernador dijo que cerrar Las Pintas «nos quitó alrededor del 30 por ciento del volumen disponible» (Notisistema). Según NTR, en el primer cuatrimestre ya se habían gastado 23 millones en acciones de saneamiento en Las Pintas que no duraron. El 21 de octubre se anunciaron 500 millones para colectores; según El Informador, esas obras y el desazolve de Las Pintas y La Calera concluirían el 15 de diciembre. Lo revisamos ese día. aguagdl.com/promesas\n\nMás en aguagdl.com/promesas (link en la bio).",
+ "caption": "El gobernador dijo que cerrar Las Pintas «nos quitó alrededor del 30 por ciento del volumen disponible» (Notisistema). Según NTR, en el primer cuatrimestre ya se habían gastado 23 millones en acciones de saneamiento en Las Pintas que no duraron. Las obras anunciadas concluirían el 15 de diciembre, según El Informador. Ese día lo revisamos.\n\n¿Crees que estará lista para el 15 de diciembre?\n\nMás en aguagdl.com (link en la bio).",
  "fuentes": {
   "noti30": {
    "url": "https://www.notisistema.com/noticias/las-pintas-volvera-a-operar-antes-del-15-de-diciembre-lemus/",
@@ -37,13 +37,12 @@
   {
    "tipo": "iconos",
    "foto": "fuentes/fb29dc00b79f.jpg",
-   "kicker": "Cerrar Las Pintas, según el gobernador",
+   "kicker": "Según el gobernador",
    "cifra": "~30%",
-   "titular": "menos agua disponible",
+   "titular": "menos agua al cerrar Las Pintas",
    "icono": "gota",
    "n": 7,
    "total": 10,
-   "texto": "«Nos quitó alrededor del 30 por ciento del volumen disponible», dijo, según Notisistema.",
    "fuentes": [
     "noti30"
    ],
@@ -52,18 +51,18 @@
   {
    "tipo": "texto",
    "foto": "fuentes/fb29dc00b79f.jpg",
-   "kicker": "Según NTR, ya se había intentado",
+   "kicker": "Según NTR",
    "cifra": "$23 mdp",
-   "titular": "en acciones de saneamiento en Las Pintas en el primer cuatrimestre de 2026",
-   "texto": "«No duraron al no bloquearse las fuentes de contaminación», publicó NTR.",
+   "titular": "en saneamiento de Las Pintas, enero–abril de 2026",
+   "texto": "«No duraron al no bloquearse las fuentes de contaminación».",
    "fuentes": [
     "ntr"
-   ]
+   ],
+   "calculo": "Primer cuatrimestre = enero a abril de 2026."
   },
   {
    "tipo": "cita",
    "foto": "fuentes/fb29dc00b79f.jpg",
-   "kicker": "El director de la CEA",
    "cita": "De nada nos va a servir sanear o desazolvar la presa de Las Pintas porque posteriormente le seguiría llegando agua residual",
    "quien": "Luis Enrique Barboza Niño, director de la Comisión Estatal del Agua, en NTR",
    "fuentes": [
@@ -73,7 +72,6 @@
   {
    "tipo": "linea",
    "foto": "fuentes/fb29dc00b79f.jpg",
-   "kicker": "Lo que se anunció después",
    "titular": "La meta: 15 de diciembre",
    "hitos": [
     {

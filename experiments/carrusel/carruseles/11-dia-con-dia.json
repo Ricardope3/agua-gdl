@@ -1,7 +1,7 @@
 {
  "id": "11-dia-con-dia",
  "titulo": "«Día con día»",
- "caption": "El 15 de octubre, el director del SIAPA dijo: «Vamos a seguir informando día con día lo que va presentando este proceso» (El Informador). ¿Has visto el informe de hoy? Si sabes dónde se publica, mándanoslo a soporte@aguagdl.com y lo enlazamos.\n\nMás en aguagdl.com/reportes (link en la bio).",
+ "caption": "El 15 de octubre, el director del SIAPA dijo: «Vamos a seguir informando día con día lo que va presentando este proceso» (El Informador).\n\n¿Has visto ese informe diario? Si sabes dónde se publica, mándanos el enlace y lo compartimos.\n\nMás en aguagdl.com (link en la bio).",
  "fuentes": {
   "jaur": {
    "url": "https://www.informador.mx/jalisco/siapa-comienzan-tandeos-en-la-zmg-con-113-colonias-piden-paciencia-y-verificar-calendario-de-rotacion-de-servicio-20261015-0177.html",
@@ -33,15 +33,13 @@
   {
    "tipo": "texto",
    "foto": "fuentes/7f33367dbe70.jpg",
-   "kicker": "Una pregunta sencilla",
    "titular": "¿Dónde se publica el informe de cada día?",
-   "propio": "pregunta nuestra",
-   "texto": "Si lo encuentras, mándanoslo y lo enlazamos."
+   "propio": "pregunta nuestra"
   },
   {
    "tipo": "lista",
    "foto": "fuentes/7f33367dbe70.jpg",
-   "kicker": "Lo que nos gustaría ver en un informe diario",
+   "kicker": "Lo que nos gustaría ver",
    "titular": "Nuestra propuesta",
    "propio": "propuesta nuestra",
    "marca": "check",

@@ -1,7 +1,7 @@
 {
  "id": "10-linea-promesas",
  "titulo": "Promesas con fecha",
- "caption": "Frases con fecha sobre el agua de Guadalajara, y cuándo las revisamos. La de julio ya pasó su plazo. El 15 de septiembre es nuestra lectura de «finales de agosto y principios de septiembre»; la explicamos en aguagdl.com/promesas.\n\nMás en aguagdl.com/promesas (link en la bio).",
+ "caption": "Frases con fecha sobre el agua de Guadalajara, y cuándo las revisamos. La de julio ya pasó su plazo. El 15 de septiembre es nuestra lectura de «finales de agosto y principios de septiembre»; la explicamos en aguagdl.com/promesas.\n\n¿Notas el agua mejor que en julio?\n\nMás en aguagdl.com (link en la bio).",
  "fuentes": {
   "exp": {
    "url": "https://politica.expansion.mx/mexico/2026/10/08/crisis-agua-jalisco-lemus-acueducto-chapala-guadalajara",
@@ -39,8 +39,7 @@
    "foto": "fuentes/40c3eeb4c054.jpg",
    "kicker": "Promesas y plazos",
    "titular": "Lo dijeron. Lo anotamos. Lo vamos a revisar.",
-   "propio": "portada",
-   "texto": "Frases sobre el agua y su fecha."
+   "propio": "portada"
   },
   {
    "tipo": "cita",
@@ -57,7 +56,6 @@
   {
    "tipo": "linea",
    "foto": "fuentes/40c3eeb4c054.jpg",
-   "kicker": "Frases y fechas",
    "titular": "Lo que hay que revisar",
    "hitos": [
     {
@@ -88,10 +86,8 @@
   {
    "tipo": "texto",
    "foto": "fuentes/40c3eeb4c054.jpg",
-   "kicker": "Cómo leemos los plazos",
-   "titular": "Si no hay fecha exacta, la decimos y explicamos cómo la leemos",
-   "propio": "nuestro método (aguagdl.com/promesas)",
-   "texto": "Y si cambian los planes, lo anotamos con su fuente."
+   "titular": "Si no hay fecha exacta, decimos cómo la leemos",
+   "propio": "nuestro método (aguagdl.com/promesas)"
   },
   {
    "tipo": "sitio",

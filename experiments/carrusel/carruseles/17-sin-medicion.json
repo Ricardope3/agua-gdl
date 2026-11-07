@@ -1,7 +1,7 @@
 {
  "id": "17-sin-medicion",
  "titulo": "Sin semáforo del agua",
- "caption": "Para el aire hay semáforos de calidad, recordó a CNN una especialista de la UdeG: «No tenemos un monitoreo digital, continúo, como un semáforo, como la calidad del aire». Según CNN, dijo que el Gobierno del estado «carece de un sistema de medición oficial» sobre la calidad del agua. Pide los datos: aguagdl.com/exige\n\nMás en aguagdl.com/exige (link en la bio).",
+ "caption": "Hay semáforos para la calidad del aire, recordó a CNN una especialista de la UdeG: «No tenemos un monitoreo digital, continúo, como un semáforo, como la calidad del aire». Según CNN, dijo que el Gobierno del estado «carece de un sistema de medición oficial» sobre la calidad del agua.\n\n¿Confías en el agua de tu llave?\n\nMás en aguagdl.com (link en la bio).",
  "fuentes": {
   "cnn": {
    "url": "https://cnnespanol.cnn.com/2026/10/22/mexico/crisis-agua-guadalajara-olor-que-pasa-orix",
@@ -23,9 +23,8 @@
   {
    "tipo": "texto",
    "foto": "fuentes/034c9eb3ca91.jpg",
-   "kicker": "Una pregunta",
    "titular": "¿Cómo sabes si el agua de tu llave está bien hoy?",
-   "texto": "«No tenemos un monitoreo digital, continúo, como un semáforo, como la calidad del aire», dijo a CNN una especialista de la UdeG.",
+   "texto": "«No tenemos un monitoreo digital, continúo, como un semáforo», dijo a CNN una especialista de la UdeG.",
    "fuentes": [
     "cnn"
    ]
@@ -35,15 +34,14 @@
    "foto": "fuentes/034c9eb3ca91.jpg",
    "kicker": "Según CNN, una especialista de la UdeG dijo que",
    "titular": "el Gobierno del estado «carece de un sistema de medición oficial» sobre la calidad del agua",
-   "texto": "Profesora de la Universidad de Guadalajara, especialista en toxicología del agua.",
    "fuentes": [
     "cnn"
    ]
   },
   {
-   "tipo": "texto",
-   "foto": "fuentes/034c9eb3ca91.jpg",
-   "kicker": "Lo que cuentan habitantes a CNN",
+   "tipo": "foto",
+   "foto": "fuentes/c51911ead87a.jpg",
+   "kicker": "Habitantes, a CNN",
    "titular": "Agua turbia y con olor «desde hace por lo menos dos años»",
    "fuentes": [
     "cnn"
@@ -52,7 +50,6 @@
   {
    "tipo": "lista",
    "foto": "fuentes/034c9eb3ca91.jpg",
-   "kicker": "Lo que se puede pedir",
    "titular": "Datos abiertos del agua",
    "propio": "propuesta nuestra",
    "marca": "check",

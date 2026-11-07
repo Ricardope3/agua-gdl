@@ -1,7 +1,7 @@
 {
  "id": "15-tres-promesas",
  "titulo": "Tres promesas en una frase",
- "caption": "En el mensaje del gobernador que reproduce Expansión (8 de octubre): las acciones del agua «no representarán un incremento en las tarifas del SIAPA, no se privatizará el servicio, no será una deuda pública». Son tres promesas. Así las vamos a revisar: aguagdl.com/promesas\n\nMás en aguagdl.com/promesas (link en la bio).",
+ "caption": "En el mensaje del gobernador que reproduce Expansión (8 de octubre): las acciones del agua «no representarán un incremento en las tarifas del SIAPA, no se privatizará el servicio, no será una deuda pública». Son tres promesas. Las revisamos con documentos en aguagdl.com/promesas.\n\n¿Cuál crees que se cumpla primero?\n\nMás en aguagdl.com (link en la bio).",
  "fuentes": {
   "exp": {
    "url": "https://politica.expansion.mx/mexico/2026/10/08/crisis-agua-jalisco-lemus-acueducto-chapala-guadalajara",
@@ -33,21 +33,18 @@
   {
    "tipo": "lista",
    "foto": "fuentes/0e1cdcf06f5a.jpg",
-   "kicker": "Son tres promesas",
-   "titular": "Las anotamos",
+   "titular": "Tres promesas",
    "propio": "nuestra lista de las tres promesas citadas en la diapositiva 1",
    "marca": "check",
    "items": [
     "Sin aumento de tarifas del SIAPA",
     "Sin privatizar el servicio",
     "Sin deuda pública"
-   ],
-   "texto": "Se marcan cuando haya documentos que lo muestren."
+   ]
   },
   {
    "tipo": "lista",
    "foto": "fuentes/0e1cdcf06f5a.jpg",
-   "kicker": "Cómo las vamos a revisar",
    "titular": "Con documentos, no con discursos",
    "propio": "nuestro método (aguagdl.com/promesas)",
    "marca": "num",

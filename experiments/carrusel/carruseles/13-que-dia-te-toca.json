@@ -1,7 +1,7 @@
 {
  "id": "13-que-dia-te-toca",
  "titulo": "¿Qué día te toca?",
- "caption": "El calendario de la rotación cambió el 3 de noviembre. Guarda esta imagen, busca tu zona y recibe un aviso antes de cada racionamiento en Telegram: @AvisoAguaGDLbot. aguagdl.com\n\nMás en aguagdl.com/avisos (link en la bio).",
+ "caption": "El calendario de la rotación cambió el 3 de noviembre. Guarda esta publicación, busca tu zona en aguagdl.com/avisos y recibe un aviso antes de cada racionamiento en Telegram: @AvisoAguaGDLbot.\n\n¿Qué zona eres?\n\nMás en aguagdl.com (link en la bio).",
  "fuentes": {
   "cal": {
    "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/api/ajustes.php",
@@ -41,7 +41,6 @@
    "foto": "fuentes/91f71286c29a.jpg",
    "kicker": "Guarda esta publicación",
    "titular": "¿Qué día te toca racionamiento?",
-   "texto": "El calendario cambió el 3 de noviembre.",
    "fuentes": [
     "cal"
    ],
@@ -50,7 +49,6 @@
   {
    "tipo": "calendario",
    "foto": "fuentes/91f71286c29a.jpg",
-   "kicker": "Calendario actualizado el 3 de noviembre",
    "titular": "Días de racionamiento por zona",
    "zonas": [
     {
@@ -121,7 +119,6 @@
   {
    "tipo": "lista",
    "foto": "fuentes/91f71286c29a.jpg",
-   "kicker": "¿No sabes tu zona?",
    "titular": "Así la encuentras",
    "marca": "num",
    "items": [
@@ -136,7 +133,6 @@
   {
    "tipo": "texto",
    "foto": "fuentes/91f71286c29a.jpg",
-   "kicker": "Que no te agarre sin agua",
    "titular": "Te avisamos antes de cada racionamiento",
    "texto": "Un aviso dos días antes y otro la noche anterior, gratis, en Telegram: *@AvisoAguaGDLbot*.",
    "fuentes": [
@@ -185,7 +181,7 @@
      "texto": "10%"
     }
    ],
-   "texto": "Colonias de cada zona que llegaron a una semana o más sin agua, según lo que publican medios y vecinos. No es una medición oficial.",
+   "texto": "Colonias que llegaron a una semana o más sin agua, según medios y vecinos. No es una medición oficial.",
    "fuentes": [
     "web_index"
    ],

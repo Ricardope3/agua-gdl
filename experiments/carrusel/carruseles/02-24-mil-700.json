@@ -1,7 +1,7 @@
 {
  "id": "02-24-mil-700",
  "titulo": "24 mil 700 millones: ¿en qué?",
- "caption": "El 28 de octubre, los gobiernos federal y de Jalisco anunciaron 24 mil 700 millones de pesos para el agua de Guadalajara. Así se reparten, según Milenio. Guarda este post: vamos a seguir cada obra hasta que se termine. aguagdl.com/promesas\n\nMás en aguagdl.com/promesas (link en la bio).",
+ "caption": "El 28 de octubre, los gobiernos federal y de Jalisco anunciaron 24 mil 700 millones de pesos para el agua de Guadalajara: 10,200 de Jalisco para la planta 1 de Miravalle, Las Pintas y colectores; 9,300 federales para el nuevo acueducto Chapala–Guadalajara, y 5,200 para el Calderón–San Gaspar y la planta de San Gaspar (Milenio). Un anuncio no es una obra: lo seguimos en aguagdl.com/promesas.\n\n¿Qué obra te gustaría que siguiéramos de cerca?\n\nMás en aguagdl.com (link en la bio).",
  "fuentes": {
   "mil": {
    "url": "https://www.milenio.com/politica/sheinbaum-y-lemus-anuncian-proyecto-garantizar-abasto-agua-guadalajara",
@@ -26,7 +26,7 @@
    "kicker": "28 de octubre",
    "cifra": "$24,700",
    "titular": "millones de pesos para el agua de Guadalajara",
-   "texto": "Lo anunciaron los gobiernos federal y de Jalisco. ¿En qué se van?",
+   "texto": "Lo anunciaron los gobiernos federal y de Jalisco. ¿En qué?",
    "fuentes": [
     "mil"
    ],
@@ -35,7 +35,7 @@
   {
    "tipo": "barras",
    "foto": "fuentes/0e61b3ddde0a.jpg",
-   "kicker": "Cómo se reparten, según Milenio",
+   "kicker": "Según Milenio",
    "titular": "Tres bolsas",
    "barras": [
     {
@@ -65,7 +65,7 @@
    "foto": "fuentes/0e61b3ddde0a.jpg",
    "kicker": "Según Milenio, los dos gobiernos invertirán",
    "titular": "«sin endeudamientos ni privatizaciones de las obras»",
-   "texto": "Son palabras de la nota. Un anuncio no es una obra: falta ver contratos, calendarios y avances.",
+   "texto": "Palabras de la nota. Falta ver contratos y avances.",
    "fuentes": [
     "mil"
    ]
@@ -73,7 +73,6 @@
   {
    "tipo": "lista",
    "foto": "fuentes/0e61b3ddde0a.jpg",
-   "kicker": "Lo que vamos a revisar",
    "titular": "Preguntas para cada peso",
    "propio": "preguntas nuestras",
    "marca": "check",

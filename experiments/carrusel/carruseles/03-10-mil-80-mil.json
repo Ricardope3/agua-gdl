@@ -1,7 +1,7 @@
 {
  "id": "03-10-mil-80-mil",
  "titulo": "10 mil que pueden costar 80 mil",
- "caption": "El 20 de octubre, según El Informador, la presidenta dijo que se revisan los esquemas de financiamiento porque puede haber algunos con tasas tan altas «que una obra de 10 mil MDP te acabe costando 80 mil MDP al largo de los años». El 8 de octubre, Jalisco había pedido al Congreso avalar un contrato de 11 mil 922 mdp con pagos anuales durante 20 o 25 años (UDG TV). ¿Qué esquema se firma al final? Hay que leer el contrato. aguagdl.com/promesas\n\nMás en aguagdl.com/promesas (link en la bio).",
+ "caption": "«Una obra de 10 mil MDP te acabe costando 80 mil MDP»: así describió la presidenta el riesgo de esquemas con tasas muy altas (El Informador, 20 de octubre). El 8 de octubre, Jalisco había pedido al Congreso avalar un contrato de 11 mil 922 mdp con pagos anuales durante 20 o 25 años (UDG TV).\n\n¿Crees que los contratos del agua deberían publicarse completos?\n\nMás en aguagdl.com (link en la bio).",
  "fuentes": {
   "mil": {
    "url": "https://www.milenio.com/politica/sheinbaum-y-lemus-anuncian-proyecto-garantizar-abasto-agua-guadalajara",
@@ -37,7 +37,7 @@
   {
    "tipo": "versus",
    "foto": "fuentes/7147fa92d9a6.jpg",
-   "kicker": "El riesgo que describió la presidenta",
+   "kicker": "La presidenta, según El Informador",
    "titular": "Cómo una obra de 10 mil podría costar 80 mil",
    "izq": {
     "kicker": "La obra",
@@ -69,7 +69,7 @@
    "kicker": "8 de octubre, según UDG TV",
    "cifra": "20–25",
    "titular": "años de pagos anuales",
-   "texto": "Es lo que contemplaba el contrato de 11 mil 922 mdp que Jalisco pidió al Congreso avalar para el acueducto.",
+   "texto": "Lo contemplaba el contrato de 11 mil 922 mdp que Jalisco pidió avalar al Congreso.",
    "fuentes": [
     "udg12"
    ]
@@ -79,7 +79,7 @@
    "foto": "fuentes/7147fa92d9a6.jpg",
    "kicker": "28 de octubre, según Milenio",
    "titular": "Los dos gobiernos invertirán «sin endeudamientos ni privatizaciones de las obras»",
-   "texto": "La prueba estará en los contratos: quién paga, cuánto y por cuántos años.",
+   "texto": "La prueba estará en los contratos.",
    "fuentes": [
     "mil"
    ]

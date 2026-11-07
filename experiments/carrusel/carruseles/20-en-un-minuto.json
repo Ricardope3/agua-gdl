@@ -1,7 +1,7 @@
 {
  "id": "20-en-un-minuto",
  "titulo": "La crisis del agua en un minuto",
- "caption": "La crisis del agua en Guadalajara en seis cifras, cada una con su fuente. Guárdalo para cuando te pregunten qué está pasando. aguagdl.com\n\nMás en aguagdl.com/reportes (link en la bio).",
+ "caption": "La crisis del agua en Guadalajara en seis cifras, cada una con su fuente. Guárdalo para cuando te pregunten qué está pasando.\n\n¿Cuál de las seis no sabías?\n\nMás en aguagdl.com (link en la bio).",
  "fuentes": {
   "rot": {
    "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/",
@@ -69,7 +69,6 @@
    "kicker": "Guárdalo",
    "titular": "La crisis del agua de Guadalajara en *6 cifras*",
    "propio": "portada; las cifras van en las siguientes, con fuente",
-   "texto": "Cada una con su fuente.",
    "calculo": "6 cifras en esta publicación."
   },
   {
@@ -90,8 +89,8 @@
    "foto": "fuentes/2dee1722b8e6.jpg",
    "kicker": "2 · Cuántos días",
    "cifra": "4",
-   "titular": "días de racionamiento por semana en las zonas 1, 2, 4 y 5, en el calendario actual",
-   "texto": "La página oficial prometía «de 2 a 3».",
+   "titular": "días por semana en las zonas 1, 2, 4 y 5",
+   "texto": "Prometían «de 2 a 3».",
    "fuentes": [
     "cal",
     "rot"
@@ -104,7 +103,6 @@
    "kicker": "3 · Las Pintas",
    "cifra": "~30%",
    "titular": "menos agua al cerrar la presa, según el gobernador",
-   "texto": "«Alrededor del 30 por ciento del volumen disponible», dijo (Notisistema).",
    "fuentes": [
     "noti30"
    ],
@@ -116,7 +114,7 @@
    "kicker": "4 · Cuánto dinero",
    "cifra": "$24,700",
    "titular": "millones anunciados por la Federación y Jalisco",
-   "texto": "El 28 de octubre (Milenio).",
+   "texto": "28 de octubre (Milenio).",
    "fuentes": [
     "mil"
    ],
@@ -128,7 +126,7 @@
    "kicker": "5 · Tu recibo",
    "cifra": "80%",
    "titular": "de descuento si te afecta la calidad del agua",
-   "texto": "Casas y pequeños comercios con consumo de hasta 25 m³ al mes, hasta el 15 de diciembre (decreto 30216/LXIV/26).",
+   "texto": "Hasta 25 m³ al mes; hasta el 15 de diciembre.",
    "fuentes": [
     "dec"
    ],
@@ -140,7 +138,6 @@
    "kicker": "6 · Hasta cuándo",
    "cifra": "mar 2027",
    "titular": "fin anunciado de la rotación",
-   "texto": "«Se mantendrá hasta marzo de 2027», dice el SIAPA.",
    "fuentes": [
     "siapa15"
    ],

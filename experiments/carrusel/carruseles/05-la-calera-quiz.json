@@ -1,7 +1,7 @@
 {
  "id": "05-la-calera-quiz",
  "titulo": "Quiz: ¿cuánto cuesta La Calera?",
- "caption": "Pregunta rápida: ¿cuánto cuesta todo el sistema La Calera, la obra que llevaría agua de la presa La Calera a la planta Los Agaves y se conectaría con el acueducto Chapala–Guadalajara que ya existe? Respuesta en la tercera imagen, con la cifra del propio Plan Integral del Agua. aguagdl.com/exige\n\nMás en aguagdl.com/exige (link en la bio).",
+ "caption": "Quiz: ¿cuánto cuesta todo el sistema La Calera, la obra que llevaría agua de la presa La Calera a la planta Los Agaves? Respuesta en la tercera imagen, con la cifra del propio Plan Integral del Agua.\n\n¿Le atinaste? Dinos en los comentarios.\n\nMás en aguagdl.com (link en la bio).",
  "fuentes": {
   "mil": {
    "url": "https://www.milenio.com/politica/sheinbaum-y-lemus-anuncian-proyecto-garantizar-abasto-agua-guadalajara",
@@ -38,7 +38,7 @@
     "9,300 millones",
     "24,700 millones"
    ],
-   "texto": "Pista: está diseñada para bombear 2,500 litros por segundo. Desliza.",
+   "texto": "Pista: bombearía 2,500 litros por segundo. Desliza.",
    "fuentes": [
     "calera",
     "mil"
@@ -48,9 +48,8 @@
   {
    "tipo": "texto",
    "foto": "fuentes/eb93db736083.jpg",
-   "kicker": "Qué es",
    "titular": "Llevar agua de la presa La Calera a la planta Los Agaves",
-   "texto": "Según el Plan Integral del Agua, también se conectaría con el acueducto Chapala–Guadalajara que ya existe y reduciría la dependencia del último tramo del Sistema Antiguo, que va a cielo abierto.",
+   "texto": "Y se conectaría con el acueducto Chapala–Guadalajara, según el Plan Integral del Agua.",
    "fuentes": [
     "calera"
    ]
@@ -66,7 +65,7 @@
     "24,700 millones"
    ],
    "respuesta": 0,
-   "texto": "Es una estimación, no un presupuesto definitivo, dice el propio documento.",
+   "texto": "Es una estimación, no un presupuesto definitivo, dice el documento.",
    "fuentes": [
     "calera",
     "mil"
@@ -76,7 +75,6 @@
   {
    "tipo": "barras",
    "foto": "fuentes/eb93db736083.jpg",
-   "kicker": "Millones de pesos",
    "titular": "La Calera, por etapas",
    "barras": [
     {
@@ -104,7 +102,6 @@
   {
    "tipo": "barras",
    "foto": "fuentes/eb93db736083.jpg",
-   "kicker": "Para dimensionar",
    "titular": "Caben casi *8* Caleras en el nuevo acueducto",
    "barras": [
     {

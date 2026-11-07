@@ -1,7 +1,7 @@
 {
  "id": "19-que-hacer",
  "titulo": "Si no llega el agua",
- "caption": "Qué hacer si no llega el agua, en 6 pasos. Guárdalo y compártelo con tus vecinos. aguagdl.com\n\nMás en aguagdl.com/pipas (link en la bio).",
+ "caption": "Qué hacer si no llega el agua, en 6 pasos. Guárdalo y compártelo con tus vecinos. aguagdl.com\n\n¿Qué paso agregarías tú?\n\nMás en aguagdl.com (link en la bio).",
  "fuentes": {
   "dec": {
    "url": "https://apiperiodico.jalisco.gob.mx/api/newspaper/getAsset?q=newspaper/25482/1785200563-2026-07-27-.pdf",
@@ -34,13 +34,11 @@
    "kicker": "Guárdalo",
    "titular": "Si no llega el agua: *6 pasos*",
    "propio": "portada",
-   "texto": "Desde tu celular.",
    "calculo": "6 pasos: 3 + 2 + 1 en esta publicación."
   },
   {
    "tipo": "lista",
    "foto": "fuentes/bd8ae7d3b0aa.jpg",
-   "kicker": "Antes",
    "titular": "Que no te agarre sin agua",
    "marca": "num",
    "items": [
@@ -56,7 +54,6 @@
   {
    "tipo": "lista",
    "foto": "fuentes/bd8ae7d3b0aa.jpg",
-   "kicker": "Cuando no llega",
    "titular": "Pide y avisa",
    "propio": "servicio de Agua GDL (aguagdl.com/pipas, /reportes)",
    "marca": "num",
@@ -68,9 +65,8 @@
   {
    "tipo": "texto",
    "foto": "fuentes/bd8ae7d3b0aa.jpg",
-   "kicker": "Y si el agua llega sucia",
    "titular": "Revisa si te toca el *80%* de descuento",
-   "texto": "Casas y pequeños comercios afectados, con consumo de hasta 25 m³ al mes. Detalles en aguagdl.com/avisos.",
+   "texto": "Hasta 25 m³ al mes. Detalles en aguagdl.com/avisos.",
    "fuentes": [
     "dec"
    ]

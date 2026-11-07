@@ -1,7 +1,7 @@
 {
  "id": "18-zapotillo",
  "titulo": "El Zapotillo: 45% y 100%",
- "caption": "En el mensaje del gobernador que reproduce Expansión (8 de octubre): El Zapotillo «actualmente opera al 45 por ciento». El 28 de octubre, según Milenio, la presidenta destacó que el nuevo proyecto aprovecha «al 100 por ciento» la presa. Dos cifras, dos gobiernos. Las seguimos. aguagdl.com/promesas\n\nMás en aguagdl.com/promesas (link en la bio).",
+ "caption": "En el mensaje del gobernador que reproduce Expansión (8 de octubre): El Zapotillo «actualmente opera al 45 por ciento». El 28 de octubre, según Milenio, la presidenta destacó que el nuevo proyecto aprovecha «al 100 por ciento» la presa. Dos cifras, dos gobiernos. Las seguimos.\n\n¿Sabías que El Zapotillo opera al 45 por ciento, según el gobernador?\n\nMás en aguagdl.com (link en la bio).",
  "fuentes": {
   "mil": {
    "url": "https://www.milenio.com/politica/sheinbaum-y-lemus-anuncian-proyecto-garantizar-abasto-agua-guadalajara",
@@ -30,14 +30,13 @@
   {
    "tipo": "iconos",
    "foto": "fuentes/0e61b3ddde0a.jpg",
-   "kicker": "El gobernador, en el mensaje que reproduce Expansión",
+   "kicker": "El gobernador, según Expansión",
    "cifra": "45%",
    "titular": "«actualmente opera» El Zapotillo",
    "icono": "gota",
    "n": 9,
    "total": 20,
    "columnas": 10,
-   "texto": "«Que actualmente opera al 45 por ciento».",
    "fuentes": [
     "exp"
    ],
@@ -46,14 +45,14 @@
   {
    "tipo": "iconos",
    "foto": "fuentes/0e61b3ddde0a.jpg",
-   "kicker": "28 de octubre, según Milenio",
+   "kicker": "La presidenta, según Milenio",
    "cifra": "100%",
    "titular": "de la presa aprovechada con el nuevo proyecto",
    "icono": "gota",
    "n": 20,
    "total": 20,
    "columnas": 10,
-   "texto": "La presidenta «destacó que se trata de un proyecto que brinda la mejor solución a la región, aprovechando al 100 por ciento la presa El Zapotillo».",
+   "texto": "«Aprovechando al 100 por ciento la presa El Zapotillo».",
    "fuentes": [
     "mil"
    ],
@@ -62,10 +61,8 @@
   {
    "tipo": "texto",
    "foto": "fuentes/0e61b3ddde0a.jpg",
-   "kicker": "Lo que falta saber",
    "titular": "¿Cuándo y con qué obras se pasa de una cifra a la otra?",
-   "propio": "pregunta nuestra",
-   "texto": "Son dos gobiernos con dos cifras. Las seguimos."
+   "propio": "pregunta nuestra"
   },
   {
    "tipo": "sitio",
