@@ -17,7 +17,9 @@ import sys
 
 root = pathlib.Path(__file__).resolve().parent.parent
 DOCS = [root / "AGENTS.md", *sorted((root / ".claude/rules").glob("*.md")), root / "web/llms.txt"]
-SKIP_DIRS = {".git", "node_modules", "__pycache__"}
+# research/ is the private archive (gitignored here); its scripts must not stand in for this repo's (6 Nov: a
+# research build.py shadowed experiments/historias/build.py).
+SKIP_DIRS = {".git", "node_modules", "__pycache__", "research"}
 # SIAPA's remote files, the notes repo and server paths on Fly: not in this repo.
 ALLOW = {
     "ajustes.php", "api/ajustes.php", "colonias_siapa.pdf", "/geo/rotacion-siapa.topo.json",
@@ -79,7 +81,12 @@ for doc in DOCS:
             if is_path(tok) and not exists(tok):
                 errors.append(f"{rel}:{n}: `{tok}` does not exist")
             for m in re.finditer(r"([\w/]+\.py)((?:\s+--?[\w-]+(?:\s+[A-Z]+)?)+)", tok):
-                script = script_for(pathlib.PurePath(m.group(1)).name)
+                named = root / m.group(1)
+                if "/" in m.group(1):
+                    # A named path must be that file, in this repo: no basename fallback, nothing under research/.
+                    script = named if named.is_file() and not (SKIP_DIRS & set(pathlib.PurePath(m.group(1)).parts)) else None
+                else:
+                    script = script_for(m.group(1))
                 if script is None:
                     errors.append(f"{rel}:{n}: `{m.group(1)}` does not exist")
                     continue

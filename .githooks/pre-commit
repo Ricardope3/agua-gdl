@@ -18,3 +18,19 @@ if git diff --cached --name-only | grep -qx AGENTS.md && [ "$(git show :AGENTS.m
   echo "pre-commit: AGENTS.md is over 10 KB; move area detail to .claude/rules/ instead." >&2
   exit 1
 fi
+# The /transparencia skill cites the law with line pins: they and their quotes are checked against the law files in
+# the private research archive, and its unpinned citations may not grow (6 Nov audit: skill edits here skipped that
+# check). Checks the staged version; in a worktree, uses the main checkout's research/.
+skill=.claude/skills/transparencia/SKILL.md
+if git diff --cached --name-only | grep -qx "$skill"; then
+  checker=research/transparency/check_cites.py
+  [ -f "$checker" ] || checker="$(cd "$(git rev-parse --git-common-dir)/.." && pwd)/research/transparency/check_cites.py"
+  if [ -f "$checker" ]; then
+    tmpd=$(mktemp -d -t skill-cites.XXXXXX)
+    git show ":$skill" > "$tmpd/SKILL.md"
+    python3 "$checker" "$tmpd/SKILL.md" || { rm -rf "$tmpd"; echo "pre-commit: fix the skill's law pins ($checker)." >&2; exit 1; }
+    rm -rf "$tmpd"
+  else
+    echo "pre-commit: no research/ archive found, so the skill's law pins weren't checked." >&2
+  fi
+fi
