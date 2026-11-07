@@ -15,11 +15,12 @@ You gather candidates for /reportes. You never decide what gets published and ne
 
 ## Facebook (Claude in Chrome)
 
+- Other agents share this browser: work only in tabs you created, and check the tab id before every `javascript_tool` call (block 3 of `fb-comentarios.js` replaces whatever page it runs on). On 6 Nov one agent's script wiped another's X search.
 - `facebook.com/share/…` redirects; record the canonical URL after the redirect. If a read fails with «navigated to a different domain», read again.
 - Comments: switch the sort to «All comments» / «Todos los comentarios», then use the three blocks in `fb-comentarios.js` (same folder): load everything in the background and poll, extract numeric ids, ages and text, read the rows with `get_page_text`. No comment id, no candidate.
 - Counts: reactions, comments and shares of the post you opened (`[aria-label]` «N comments», «N shares»). A reel page also shows the NEXT reel's counts and scrolling auto-advances: re-check the URL after scrolling. Facebook rounds («1.1K»): record 1100 and say it is rounded.
 - Dates: the post's `creation_time` in the page HTML is UTC epoch seconds (subtract 6 h for Guadalajara). A comment's age («5 h») counts back from when you read (`new Date()` in the page). An age that could fall on either side of midnight is ambiguous: hover its timestamp for the exact time, or leave the comment out.
-- Pages vs people: a page («Página oficial…», a community or news page) can be `en.quien` only once it is in `PAGINAS` in `pipelines/publicaciones.py`; read its About and report the bio and category.
+- Pages vs people: a page («Página oficial…», a community or news page) can be `en.quien` only once it is in `PAGINAS` in `pipelines/publicaciones.py`; read its About and report the bio and category. A person's own or creator account is «Cuenta personal en X» or «Cuenta personal en TikTok».
 - Stop after 3 failed attempts at the same action and report what you got.
 
 ## X, TikTok, YouTube
@@ -32,7 +33,7 @@ You gather candidates for /reportes. You never decide what gets published and ne
 
 - Quote VERBATIM, typos and accents kept, ≤300 characters, to the end of the clause; cut before insults, slogans or names (a quote may start mid-sentence to leave a name out).
 - Never a private person's name: «Cuenta de vecinos», «Cuenta personal en X», «Grupo «…»» (public groups), or the page or outlet name.
-- `dias` only for a plain count («15 días», «3 semanas» = 21, «un mes» = 30); null for «casi», «más de», «alrededor de», «aproximadamente», «pasadito de» or a count from a date («desde el lunes»).
+- `dias` only for a plain count. From `docs/GLOSARIO.md`: «un mes» and «más de un mes» = 30, a range takes its low end, «dos meses», «meses» and a count from a date («desde el lunes») are null, «casi N» is null. The skill's own rules (the glossary doesn't cover them and the file isn't consistent; flag each in the report): «desde hace 20 días» = 20, «3 semanas» = 21, «más de 40 días» = 40 (as most of the file has it), and null for «alrededor de», «aproximadamente», «pasadito de» and «hasta N».
 - Colonia keys from `api/data/colonias_mapa.json` (`NAME|Municipio|CP`). When a name exists in several municipios:
   - the text names the municipio: use it;
   - the thread is one municipio's (a Tlaquepaque neighbourhood page, a post about one protest) and the name exists there: use it and say so in `nota`;
