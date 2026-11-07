@@ -44,3 +44,25 @@ Looked at: «¿Detectaste una ilegalidad ambiental?» (5 slides, posted that day
 6. **Lighter, warmer look for guides**: a flat-colour or illustrated variant beside the dark-photo one, keeping our drop, blue and fonts.
 7. **Caption tells the whole story**, numbers included, for people who don't swipe.
 8. **Campaign posts**: one place, one ask, one link.
+
+## @ecosia (712K followers; looked at 6 Nov 2026 through Instagram's public embeds, since Chrome kept leaving Instagram)
+
+Looked at: «Without trees / With trees» (644,730 likes), «Mexico's Sky Islands are disappearing» (6,387), «Oil companies want this forest», a 2013/2024 satellite before-and-after, and their emotional animal-meme posts («you are going to be okay the trees told me», 4,395).
+
+- **The photo is the argument.** Their biggest post is two photos of the same kind of street, one bare and one shaded, with temperature tags (40 °C vs 32 °C, 46 °C vs 34 °C) stuck on them. No chart, no paragraph: you get it in one second.
+- **Very few words per slide**, huge type, one sentence. The punchline is bold; the context is lighter and smaller.
+- **Same frame, two states**: without/with, 2013/2024, protected/not protected. Split slides that compare.
+- **Sources live in the caption** («📚 Sources: …» with title, outlet, year), not on the image, so the slide stays clean but the claim is still checkable.
+- **The caption ends with a question to the reader** («Does your city need more trees?»): 1,677 comments on that post.
+- **Hope and agency, not only alarm.** Each problem post says what helps («your searches helped keep it standing») and they post «hopecore» before-and-afters of forests coming back.
+- **Tone mix**: serious explainers, then humour, memes, Halloween, a drag artist explaining monocultures. The account feels like people, which earns the reach that the serious posts then use.
+- **Local hooks**: a whole carousel on Mexico, with a partner logo, pointing to a longer video («Link in bio»).
+
+### What we do worse, compared with Ecosia
+
+1. **Too many words per slide.** Our slides carry a kicker, a headline, a context line and a source line; theirs carry one sentence. Ours read as reports.
+2. **The photo is decoration.** We darken and blur it into a texture. They keep it sharp and put the number on it.
+3. **Source lines on every image** make each slide look like a document. We should keep the short source credit (our rules need it) but make it smaller and quieter, and put the full source list in the caption.
+4. **Only alarm.** We never show what helped, what came back, or what one person can do that worked.
+5. **One dark style for everything.** No light posts, no humour, no people.
+6. **Captions don't ask anything.** We end on a link, not a question people answer in the comments.
