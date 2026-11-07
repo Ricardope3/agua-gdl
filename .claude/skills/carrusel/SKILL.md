@@ -9,7 +9,7 @@ Arguments: the topic, a colonia, or the facts to show. If the ask is vague, prop
 ## Before writing
 
 - Read `experiments/carrusel/REFERENCIAS.md` (what the carousels he admires do) and `experiments/carrusel/README.md` (slide types, fields, what the build checks), `.claude/rules/evidence.md`, `docs/EDITORIAL.md`, `.claude/rules/vetos.md`, and the closest carousel in `experiments/carrusel/carruseles/`.
-- Ask which cards he has already posted on Instagram; don't repeat them (he cut a top-5 bar chart and a protest timeline on 6 Nov for that reason).
+- Read `experiments/carrusel/PUBLICADOS.md` and ask which cards he has already posted on Instagram; don't repeat them (he cut a top-5 bar chart and a protest timeline on 6 Nov for that reason).
 
 ## Facts
 
@@ -56,4 +56,4 @@ Arguments: the topic, a colonia, or the facts to show. If the ask is vague, prop
 5. Replace `~/Desktop/carruseles-agua-gdl/<id>/` with the new `out/<id>/`, send him the PNGs, and say what changed.
 6. Commit as soporte@aguagdl.com (check `git log -1 --format=%ae`) on the carousel branch; push only when he says.
 
-Never post, schedule or open Instagram. Before he posts a carousel with dated numbers (calendar, site counts, municipal pipa figures), offer to re-check them.
+When he says a carousel went out, add it to `PUBLICADOS.md`. Never post, schedule or open Instagram. Before he posts a carousel with dated numbers (calendar, site counts, municipal pipa figures), offer to re-check them.
