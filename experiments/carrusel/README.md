@@ -15,9 +15,13 @@ macOS only (headless Chrome, `sips`, Avenir Next). 1080×1350 PNG per slide; `ou
 
 A crisis photo, darkened and slightly blurred, full-bleed; the Agua GDL drop and name at the top, the slide number top right; one big figure in brand blue, a short white headline, one line of context; red (`**…**`) for the bad side of a comparison, blue (`*…*`) for emphasis. The source line and aguagdl.com sit at the bottom of every slide. The last slide is always the `cierre`: logo, one action, the URL and the nonpartisan line.
 
-Slide types: `portada`/`texto` (kicker, cifra, titular, texto), `cita`, `barras` (comparison bars), `iconos` (n of total drops, houses, people, trucks), `calendario` (zones × days), `versus` (two columns), `lista` (numbered or checkboxes), `linea` (timeline), `pregunta` (quiz; `respuesta` marks the answer), `sitio` (an aguagdl.com page on a phone, one of the page's own numbers and «link en la bio»), `cierre`.
+Slide types: `portada`/`texto` (kicker, cifra, titular, texto), `cita`, `barras` (comparison bars), `iconos` (n of total drops, houses, people, trucks), `calendario` (zones × days), `versus` (two columns), `lista` (numbered or checkboxes), `linea` (timeline), `pregunta` (quiz; `respuesta` marks the answer), `perfil` (one bar per value in `alturas`, sorted, y axis from `eje`, with a `marca` and `mediana`), `altura` (histogram of `bins`), `desnivel` (signed bars around a centre value), `sitio` (an aguagdl.com page on a phone, one of the page's own numbers and «link en la bio»), `cierre`.
 
 Every carousel has a `sitio` slide before the `cierre`, so each figure leads to the page where people can see more or find their colonia. Its numbers come from the live page itself (cited as «Agua GDL, aguagdl.com/…, consultada el …») and keep the page's caveats («según medios y vecinos», «no es una medición oficial»). Those numbers change daily: retake the screenshots with `--capturas` and update the `cita` before posting. The screenshots leave out /contamina, the landing's top and /fotos, which show a caricature or people.
+
+## Fields
+
+A carousel is `carruseles/<id>.json`: `id` (the file name), `titulo`, `caption`, `fuentes` (key → `url`, `medio`, `fecha`, `revisado`, `cita`, optional `consultada`) and `slides`. Each slide has `tipo`, optional `foto`, `fuentes` (keys), `calculo` (how a derived number was computed) or `propio` (why it has no source), plus its type's fields. In text, `*…*` is blue and `**…**` red. Our own analyses live in `datos/` (`elevacion.py` → `elevacion.json`, `stats.json`).
 
 ## Rules the build enforces
 
