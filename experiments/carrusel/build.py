@@ -507,7 +507,11 @@ def shoot(src, png):
 
 def caption(c):
     lines = [c["caption"].rstrip(), "", "📚 Fuentes:"]
+    latest = {}
     for f in c["fuentes"].values():
+        if f["url"] not in latest or f["fecha"] > latest[f["url"]]["fecha"]:
+            latest[f["url"]] = f
+    for f in latest.values():
         lines.append(f'- {f["medio"]}, {"consultada el " if f.get("consultada") else ""}{fecha_corta(f["fecha"])}: {f["url"]}')
     return "\n".join(lines) + "\n"
 
