@@ -17337,7 +17337,7 @@
    ],
    "lugar": "Los Naranjos, Santa Paula y Colinas de Tonalá, Tonalá",
    "cita": "En Tonalá se reciben menos reportes, pero hay quejas de las colonias Los Naranjos, Santa Paula y Colinas de Tonalá. En las quejas señalan que no tienen suministro de agua desde hace más de tres semanas, cuando el sistema de tandeos del CIAPA inició apenas el 15 de octubre.",
-   "dias": null,
+   "dias": 21,
    "eco": null,
    "vista": "fuentes/18cfe1b2ea54.jpg",
    "captura": null,
@@ -30794,7 +30794,7 @@
    ],
    "lugar": "Avenida Javier Mina y Pedro Celestino Negrete, Guadalajara",
    "cita": "los vecinos llevaron una cubeta con una muestra del agua que, según explicaron, comenzó a salir aproximadamente media hora antes, luego de más de un mes sin contar con el servicio",
-   "dias": 32,
+   "dias": 30,
    "bloqueo": true,
    "de": "https://www.facebook.com/traficozmg.periodismociudadano/posts/pfbid02vq62RzrLPuHsRVSVK9YWqWAYgacRDtXoQjoFT4PHnAdeMRsXzGv1qkuGT2voQ23il",
    "vista": "fuentes/6b587d55c910.jpg",
@@ -34993,7 +34993,7 @@
    ],
    "lugar": "colonial Tlaquepaque",
    "cita": "Para cuándo el agua ya vamos para más de 10 días en la colonial Tlaquepaque",
-   "dias": 10,
+   "dias": null,
    "vista": "fuentes/2316a82c1754.jpg"
   },
   {
@@ -40653,7 +40653,7 @@
    ],
    "lugar": "Polanquito, Guadalajara",
    "cita": "La falta de agua potable mantiene en dificultades a habitantes de la colonia Polanquito, donde algunas familias aseguran que llevan hasta dos meses sin recibir el servicio.",
-   "dias": 60,
+   "dias": null,
    "eco": null,
    "vista": "fuentes/cf734fa86da7.jpg",
    "captura": "fuentes/cf734fa86da7-t.jpg",
@@ -41056,7 +41056,7 @@
    ],
    "lugar": "Lomas de Camichín, Tonalá",
    "cita": "Ya dejen de hacerse pdejos en lomas de camichin tenemos 2 meses sin gota de agua",
-   "dias": 60,
+   "dias": null,
    "vista": "fuentes/2ad8ad464efa.jpg"
   },
   {
@@ -41758,7 +41758,7 @@
    ],
    "lugar": "Lomas de Camichín, Tonalá",
    "cita": "Lomas de camichin 2 meses sin gota de agua",
-   "dias": 60,
+   "dias": null,
    "video": true,
    "vista": "fuentes/c8b852c62f69.jpg"
   },
@@ -42973,7 +42973,7 @@
    ],
    "lugar": "el vergel tlaquepaque",
    "cita": "No a llegado el agua en el vergel tlaquepaque vía colima y río grande ni una gota más de 15 días en que transcurso la seguimos esperando?",
-   "dias": null,
+   "dias": 15,
    "video": true,
    "vista": "fuentes/f97bf24e32ff.jpg"
   },
@@ -43247,7 +43247,7 @@
    ],
    "lugar": "colonia la Floresta en Tlaquepaque",
    "cita": "Para cuando restablecen rl servicio en la colonia la Floresta en Tlaquepaque. Más de 1 semana sin agua",
-   "dias": null,
+   "dias": 7,
    "vista": "fuentes/95416ebb1652.jpg"
   },
   {
@@ -43397,7 +43397,7 @@
    ],
    "lugar": "Cofradía de Tlaquepaque",
    "cita": "En mi colonia no hay nada de agua que es Cofradía de Tlaquepaque desde hace 2 meses",
-   "dias": 60,
+   "dias": null,
    "video": true,
    "vista": "fuentes/36ca58bab7fb.jpg"
   },
@@ -43476,7 +43476,7 @@
    ],
    "lugar": "col plaza Gudalupe en Zapopan",
    "cita": "en la col plaza Gudalupe en Zapopan . si gota de agua .. más de 45 días sin agua",
-   "dias": null,
+   "dias": 45,
    "video": true,
    "vista": "fuentes/f303ad23b1d8.jpg"
   },
@@ -43518,7 +43518,7 @@
    ],
    "lugar": "colonia Bosques de Boulevard, en el municipio de Guadalajara",
    "cita": "Vecinos de la colonia Bosques de Boulevard, en el municipio de Guadalajara, denuncian llevar más de un mes y medio sin suministro regular de agua potable, situación que los ha obligado a desembolsar entre mil 500 y mil 600 pesos por la compra de pipas para cubrir sus necesidades básicas.",
-   "dias": null,
+   "dias": 45,
    "video": true,
    "vista": "fuentes/ce561aa3766d.jpg"
   },
@@ -43624,7 +43624,7 @@
    ],
    "lugar": "Paseos del Valle",
    "cita": "En Paseos del Valle tenemos más de una semana sin agua y tampoco aparecemos en el listado de los tandeos de agua",
-   "dias": null,
+   "dias": 7,
    "vista": "fuentes/1badac2bf6f8.jpg"
   },
   {
@@ -43751,7 +43751,7 @@
    ],
    "lugar": "Fraccionamiento Puente Viejo",
    "cita": "En Fraccionamiento Puente Viejo tenemos más de un mes sin agua",
-   "dias": null,
+   "dias": 30,
    "video": true,
    "vista": "fuentes/c8b852c62f69.jpg"
   },
@@ -43957,7 +43957,7 @@
    ],
    "lugar": "el Fortin/Foret (zona 6)",
    "cita": "Y ahora si llegara a zona 6??Tenemos más de 20 días sin agua en el Fortin/Foret",
-   "dias": null,
+   "dias": 20,
    "vista": "fuentes/0e63c2f6858b.jpg"
   },
   {
@@ -43996,7 +43996,7 @@
    ],
    "lugar": "avenida Gobernador Curiel, en los límites de Miravalle y Las Juntas, en Tlaquepaque",
    "cita": "En la avenida Gobernador Curiel, en los límites de Miravalle y Las Juntas, en Tlaquepaque habitantes de diversas colonias de la zona reportan hasta tres semanas sin agua por lo que se manifestaron bloqueando la calle.",
-   "dias": null,
+   "dias": 21,
    "bloqueo": true,
    "vista": "fuentes/b529a66944dd.jpg"
   },
@@ -44011,7 +44011,7 @@
    ],
    "lugar": "colonia Jardines de la Cruz",
    "cita": "Viuda de 82 años paga casi 4 mil pesos al SIAPA pese a denunciar más de un mes sin agua y agua sucia.",
-   "dias": null,
+   "dias": 30,
    "vista": "fuentes/89a735792e91.jpg"
   },
   {
@@ -44116,7 +44116,7 @@
    ],
    "lugar": "colonia Bosques del Boulevard, Guadalajara",
    "cita": "Habitantes de la colonia Bosques del Boulevard, en Guadalajara, denuncian la falta de suministro regular de agua potable desde hace más de un mes y medio. Señalan que la situación los ha obligado a organizarse para contratar pipas, por las que pagan entre mil 500 y mil 800 pesos",
-   "dias": null,
+   "dias": 45,
    "vista": "fuentes/f5c4b7b4f398.jpg",
    "captura": "fuentes/f5c4b7b4f398-t.jpg",
    "titular": "Más de mes y medio sin agua: vecinos de Bosques del Boulevard"
@@ -44598,7 +44598,7 @@
    ],
    "lugar": "Las Juntas, por el CECATI",
    "cita": "En las juntas por el CECATI ni gota, por más de 3 semanas",
-   "dias": null
+   "dias": 21
   },
   {
    "fuente": "vecinos",
@@ -45031,7 +45031,7 @@
    ],
    "lugar": "El Vergel, av. de las Rosas y av. Colima",
    "cita": "Vergel, por av de las rosas y av colima ni gota desde hace mas de una semana",
-   "dias": null
+   "dias": 7
   },
   {
    "fuente": "vecinos",
@@ -45055,7 +45055,7 @@
    ],
    "lugar": "El Tapatío",
    "cita": "aquí en colonia el tapatío las beseses q emos echo paros en la carretera ban ino lo prometen inada ya tres meses sin agua",
-   "dias": 90
+   "dias": null
   },
   {
    "fuente": "vecinos",
@@ -45152,7 +45152,7 @@
    ],
    "lugar": "Las Juntas, calle Moctezuma",
    "cita": "NO EN COLONIA LAS JUNTAS EN CALLE MOUTESUMA NO HAY AGUA DESDE ACE MAS DE 15 DIAS",
-   "dias": null
+   "dias": 15
   },
   {
    "fuente": "vecinos",
@@ -47207,7 +47207,7 @@
    ],
    "lugar": "Puente Viejo y Lomas de San Miguel, Tonalá",
    "cita": "Habitantes de fraccionamientos de #Tonalá como Puente Viejo y Lomas de San Miguel bloquearon en ambos sentidos la carretera libre Guadalajara-Zapotlanejo a la altura del puente peatonal La Punta y calle Francisco Villa, en protesta por llevar más de 40 días sin agua y recibir tandeos insuficientes con baja presión.",
-   "dias": null,
+   "dias": 40,
    "bloqueo": true,
    "video": true,
    "vista": "fuentes/d6ed1d9c7d1f.jpg",

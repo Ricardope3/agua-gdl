@@ -1056,7 +1056,7 @@
    ],
    "lugar": "Lomas de Camichín, Tonalá",
    "cita": "Lomas de camichin 2 meses sin gota de agua",
-   "dias": 60,
+   "dias": null,
    "video": null
   },
   {
@@ -1264,7 +1264,7 @@
    ],
    "lugar": "el vergel tlaquepaque",
    "cita": "No a llegado el agua en el vergel tlaquepaque vía colima y río grande ni una gota más de 15 días en que transcurso la seguimos esperando?",
-   "dias": null,
+   "dias": 15,
    "video": null
   },
   {
@@ -1290,7 +1290,7 @@
    ],
    "lugar": "Cofradía de Tlaquepaque",
    "cita": "En mi colonia no hay nada de agua que es Cofradía de Tlaquepaque desde hace 2 meses",
-   "dias": 60,
+   "dias": null,
    "video": null
   },
   {
@@ -1330,7 +1330,7 @@
    ],
    "lugar": "col plaza Gudalupe en Zapopan",
    "cita": "en la col plaza Gudalupe en Zapopan . si gota de agua .. más de 45 días sin agua",
-   "dias": null,
+   "dias": 45,
    "video": null
   },
   {
@@ -1356,7 +1356,7 @@
    ],
    "lugar": "colonia Bosques de Boulevard, en el municipio de Guadalajara",
    "cita": "Vecinos de la colonia Bosques de Boulevard, en el municipio de Guadalajara, denuncian llevar más de un mes y medio sin suministro regular de agua potable, situación que los ha obligado a desembolsar entre mil 500 y mil 600 pesos por la compra de pipas para cubrir sus necesidades básicas.",
-   "dias": null,
+   "dias": 45,
    "video": null
   },
   {
@@ -1395,7 +1395,7 @@
    ],
    "lugar": "Fraccionamiento Puente Viejo",
    "cita": "En Fraccionamiento Puente Viejo tenemos más de un mes sin agua",
-   "dias": null,
+   "dias": 30,
    "video": null
   },
   {
@@ -1760,7 +1760,7 @@
    ],
    "lugar": "Puente Viejo y Lomas de San Miguel, Tonalá",
    "cita": "Habitantes de fraccionamientos de #Tonalá como Puente Viejo y Lomas de San Miguel bloquearon en ambos sentidos la carretera libre Guadalajara-Zapotlanejo a la altura del puente peatonal La Punta y calle Francisco Villa, en protesta por llevar más de 40 días sin agua y recibir tandeos insuficientes con baja presión.",
-   "dias": null,
+   "dias": 40,
    "video": null
   }
  ]
