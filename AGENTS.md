@@ -49,7 +49,7 @@ Run `scripts/check.sh` and read its result before you push. Search with a path (
 - Commits: author `soporte@aguagdl.com`, no AI attribution trailer, English messages with a subject of at most 72 characters and the details in the body. `.githooks/` checks the configured email, the trailer and the subject length (`git config core.hooksPath .githooks`); the rest is on you.
 - Don't force-push. The maintainer may be editing in parallel: check `git status` before you edit or commit.
 - Subagents: `recolector` (Haiku) gathers, `buscador` (Sonnet) finds sources, `navegador` (Opus) reads Facebook, X and TikTok in the logged-in Chrome, `verificador` (Opus) judges evidence, `auditor` (Sonnet) reviews changes. Don't spawn general-purpose agents for these jobs. Keep Bash output small by writing long results to a file and printing counts.
-- Skills: `/barrido-noticias`, `/mapas` (map features and fixes), `/post-social`, `/oficio` (drafts only), `/lesson` (turn a correction into a rule), `/handoff`. Read `.claude/rules/vetos.md` before proposing designs or copy.
+- Skills: `/barrido-noticias`, `/mapas` (map features and fixes), `/post-social`, `/oficio` (drafts only), `/transparencia` (PNT work, drafts only), `/lesson` (turn a correction into a rule), `/handoff`. Read `.claude/rules/vetos.md` before proposing designs or copy.
 - For a long or multi-file task while other sessions may be editing, work in a worktree, not in `main`'s checkout. Commit work in progress instead of stashing.
 - `scripts/live.sh` says what is live: the API's commit from `/version` and whether the site matches `main`.
 
