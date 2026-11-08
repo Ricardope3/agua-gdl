@@ -20,6 +20,7 @@ import (
 type journal struct {
 	file *os.File
 	path string
+	torn bool // a failed append couldn't be cut off; the next one starts a new line
 }
 
 func openJournal(path string) (*journal, error) {
@@ -92,10 +93,32 @@ func (j *journal) append(r *store.WebReport) error {
 	if err != nil {
 		return err
 	}
-	if _, err := j.file.Write(append(line, '\n')); err != nil {
+	if j.file == nil { // rewrite renamed the file but couldn't reopen it
+		if j.file, err = os.OpenFile(j.path, os.O_RDWR|os.O_APPEND, 0o600); err != nil {
+			j.file = nil
+			return err
+		}
+	}
+	info, err := j.file.Stat()
+	if err != nil {
 		return err
 	}
-	return j.file.Sync()
+	rec := append(line, '\n')
+	if j.torn {
+		rec = append([]byte{'\n'}, rec...)
+	}
+	// On failure, cut the file back so a torn line can't swallow the next report and an
+	// unacknowledged one can't replay; replay skips the fragment if the cut fails too.
+	if _, err := j.file.Write(rec); err != nil {
+		j.torn = j.file.Truncate(info.Size()) != nil
+		return err
+	}
+	if err := j.file.Sync(); err != nil {
+		j.torn = j.file.Truncate(info.Size()) != nil
+		return err
+	}
+	j.torn = false
+	return nil
 }
 
 // rewrite is called with the board lock held after a successful database flush.
@@ -126,6 +149,18 @@ func (j *journal) rewrite(rs []store.WebReport) error {
 	if err := os.Rename(tmp.Name(), j.path); err != nil {
 		return err
 	}
+	ok = true
+	// The handle must follow the path now: appends to the old, unlinked file would be
+	// acknowledged and never replayed. If the reopen fails, j.file is nil and the next
+	// append retries it.
+	old := j.file
+	j.file, err = os.OpenFile(j.path, os.O_RDWR|os.O_APPEND, 0o600)
+	old.Close()
+	if err != nil {
+		j.file = nil
+		return err
+	}
+	j.torn = false
 	if dir, err := os.Open(filepath.Dir(j.path)); err == nil {
 		err = dir.Sync()
 		dir.Close()
@@ -133,14 +168,7 @@ func (j *journal) rewrite(rs []store.WebReport) error {
 			return err
 		}
 	}
-	if err := j.file.Close(); err != nil {
-		return err
-	}
-	j.file, err = os.OpenFile(j.path, os.O_RDWR|os.O_APPEND, 0o600)
-	if err == nil {
-		ok = true
-	}
-	return err
+	return nil
 }
 
 func (j *journal) close() error { return j.file.Close() }

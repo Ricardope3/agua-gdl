@@ -3,6 +3,7 @@ package fake
 import (
 	"context"
 	"errors"
+	"slices"
 	"strings"
 	"testing"
 	"time"
@@ -147,5 +148,25 @@ func TestTelegramRefusesWhatTheBotAPIRefuses(t *testing.T) {
 	}
 	if _, err := tel.Send(ctx, tg.NewHTML(1, "<b>a <i>b</i></b> &lt;i&gt;")); err != nil || len(tel.Sent) != 1 {
 		t.Fatalf("tags that nest are sent: %v", err)
+	}
+}
+
+func TestFailedInboundRollsBackZones(t *testing.T) {
+	ctx := context.Background()
+	s := NewStore()
+	subscribe(t, s, store.Telegram, "801", 1)
+	subscribe(t, s, store.Telegram, "801", 3)
+	err := s.ProcessInbound(ctx, "m1", func(b store.BotStore) error {
+		if _, _, err := b.UnsubscribeZone(ctx, store.Telegram, "801", 1); err != nil {
+			t.Fatal(err)
+		}
+		return errors.New("handler failed")
+	})
+	if err == nil {
+		t.Fatal("want the handler's error")
+	}
+	sub, ok, _ := s.Subscriber(ctx, store.Telegram, "801")
+	if !ok || !slices.Equal(sub.Zones, []int{1, 3}) {
+		t.Fatalf("a failed handler must leave the zones as Postgres would: %v %v", ok, sub.Zones)
 	}
 }

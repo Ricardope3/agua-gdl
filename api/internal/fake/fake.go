@@ -62,6 +62,14 @@ func (s *Store) ProcessInbound(ctx context.Context, id string, process func(stor
 	}
 	before := *s
 	before.Subs, before.SeenIDs, before.Replies = maps.Clone(s.Subs), maps.Clone(s.SeenIDs), maps.Clone(s.Replies)
+	// The handlers edit Zones and Replies in place, so the snapshot needs its own slices.
+	for k, sub := range before.Subs {
+		sub.Zones = slices.Clone(sub.Zones)
+		before.Subs[k] = sub
+	}
+	for k, r := range before.Replies {
+		before.Replies[k] = slices.Clone(r)
+	}
 	before.Reports = append([]Report(nil), s.Reports...)
 	before.Water = append([]Report(nil), s.Water...)
 	s.SeenIDs[id] = true
