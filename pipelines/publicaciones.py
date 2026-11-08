@@ -32,7 +32,7 @@ and regla.comentarios comments; news outlets count without. A neighbour's commen
 counts by the post it is in ("en"; on X, the post a reply answers), whose reactions and comments must meet the rule. A news story that
 retells a post names it in "de", so the page counts both as one source. A private person is
 never named: "quien" is the outlet, the public group («Grupo «…»») or a colonia's own account («Cuenta de
-vecinos …»), or empty, and the post a comment is in ("en.quien") is an outlet some "medio" entry names,
+vecinos …»), a civil organisation's page in ORGANIZACIONES, or empty, and the post a comment is in ("en.quien") is an outlet some "medio" entry names,
 such a group or account, or one of the public pages in PAGINAS. Facebook's numbers can't be refreshed
 without a login; they keep the date they were read ("al").
 """
@@ -68,9 +68,11 @@ FUENTES = {"medio", "vecinos"}
 REDES = {"facebook", "x", "web"}
 X_URL = re.compile(r"^https://x\.com/(\w{1,15})/status/(\d{8,20})$")
 VECINOS_QUIEN = ("Grupo «", "Cuenta de vecinos ")
+# Civil organisations' public pages that post neighbours' reports themselves (quien on a "vecinos" entry).
+ORGANIZACIONES = {"IMDEC A.C."}
 # Public pages, not outlets with a "medio" entry, whose posts neighbours comment on (en.quien).
 # «Cuenta personal en X» describes a person's account without naming them.
-PAGINAS = {"Cuenta personal en X", "Cuenta personal en TikTok", "Gobierno de Guadalajara", "Gobierno de Jalisco", "Gobierno de Zapopan", "Jalisco ZMG", "Revista Jalisco", "SIAPA Guadalajara", "Tlaquepaque San Pedro", "Las Juntas, Mercado y Pueblo"}
+PAGINAS = {"Cuenta personal en X", "Cuenta personal en TikTok", "Gobierno de Guadalajara", "Gobierno de Jalisco", "Gobierno de Zapopan", "Jalisco ZMG", "Revista Jalisco", "SIAPA Guadalajara", "Tlaquepaque San Pedro", "Las Juntas, Mercado y Pueblo"} | ORGANIZACIONES
 
 errors = []
 
@@ -196,8 +198,8 @@ def validate(doc):
             fail(where, "quien", quien, "a string", "set \"\" or the outlet/group name")
         elif p.get("fuente") == "medio" and not quien:
             fail(where, "quien", quien, "a news outlet is named", "set the outlet's name")
-        elif p.get("fuente") == "vecinos" and quien and not quien.startswith(VECINOS_QUIEN):
-            fail(where, "quien", quien, "neighbours are never named; empty, «Grupo «…»» or «Cuenta de vecinos …»", "replace the name with an allowed form")
+        elif p.get("fuente") == "vecinos" and quien and not (quien.startswith(VECINOS_QUIEN) or quien in ORGANIZACIONES):
+            fail(where, "quien", quien, "neighbours are never named; empty, «Grupo «…»», «Cuenta de vecinos …» or a civil organisation's page in ORGANIZACIONES", "replace the name with an allowed form")
         if isinstance(quien, str) and "@" in quien:
             fail(where, "quien", quien, "never an @handle; the link keeps it", "remove the @handle")
         d = date(p.get("fecha"), where, "fecha")
@@ -533,7 +535,7 @@ def fetch_captures(doc):
 SCHEMA = [
     ("fuente", "str", "yes", "medio|vecinos", "a news outlet (counts without threshold) or neighbours (need regla)"),
     ("red", "str", "yes", "facebook|x|web", "where it was published; fixes the url shape"),
-    ("quien", "str", "yes", "outlet, «Grupo «…»», «Cuenta de vecinos …» or empty", "who published it; never a private person"),
+    ("quien", "str", "yes", "outlet, «Grupo «…»», «Cuenta de vecinos …», ORGANIZACIONES or empty", "who published it; never a private person"),
     ("url", "str", "yes", "https link", "the post or article"),
     ("fecha", "date", "yes", "desde..actualizado", "publication date"),
     ("colonias", "list[str]", "yes", "keys of api/data/colonias_mapa.json", "SIAPA colonias it names"),

@@ -48246,9 +48246,9 @@
     "quien": "Tonalá de Hoy",
     "url": "https://www.facebook.com/reel/1485223040134941",
     "eco": {
-     "reacciones": 18,
-     "comentarios": 15,
-     "compartidos": 8,
+     "reacciones": 106,
+     "comentarios": 61,
+     "compartidos": 16,
      "al": "2026-11-07"
     }
    },
@@ -48272,9 +48272,9 @@
     "quien": "Tonalá de Hoy",
     "url": "https://www.facebook.com/reel/1485223040134941",
     "eco": {
-     "reacciones": 18,
-     "comentarios": 15,
-     "compartidos": 8,
+     "reacciones": 106,
+     "comentarios": 61,
+     "compartidos": 16,
      "al": "2026-11-07"
     }
    },
@@ -48298,9 +48298,9 @@
     "quien": "Tonalá de Hoy",
     "url": "https://www.facebook.com/reel/1485223040134941",
     "eco": {
-     "reacciones": 18,
-     "comentarios": 15,
-     "compartidos": 8,
+     "reacciones": 106,
+     "comentarios": 61,
+     "compartidos": 16,
      "al": "2026-11-07"
     }
    },
@@ -48324,9 +48324,9 @@
     "quien": "Tonalá de Hoy",
     "url": "https://www.facebook.com/reel/1485223040134941",
     "eco": {
-     "reacciones": 18,
-     "comentarios": 15,
-     "compartidos": 8,
+     "reacciones": 106,
+     "comentarios": 61,
+     "compartidos": 16,
      "al": "2026-11-07"
     }
    },
@@ -48526,6 +48526,49 @@
     }
    },
    "vista": "fuentes/b5002a8973e8.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "Tonalá de Hoy",
+   "url": "https://www.facebook.com/reel/1485223040134941",
+   "fecha": "2026-11-07",
+   "colonias": [
+    "LOMA DORADA DELEGACION C|Tonalá|45402"
+   ],
+   "lugar": "fraccionamiento Parque Las Lomas, Loma Dorada, sección C, Tonalá",
+   "cita": "Vecinos del fraccionamiento Parque Las Lomas, en Loma Dorada, sección C, hacen un llamado urgente al SIAPA y al Gobierno de Tonalá para que atiendan la falta de agua potable que enfrentan desde hace seis días.",
+   "dias": 6,
+   "video": true,
+   "eco": {
+    "reacciones": 106,
+    "comentarios": 61,
+    "compartidos": 16,
+    "al": "2026-11-07"
+   },
+   "vista": "fuentes/095429a43043.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "IMDEC A.C.",
+   "url": "https://www.facebook.com/reel/1103822975756103",
+   "fecha": "2026-11-06",
+   "colonias": [
+    "EL ROSARIO|Guadalajara|44890"
+   ],
+   "lugar": "Unidad Habitacional Infonavit El Rosario, Guadalajara",
+   "cita": "Vecinos de la Unidad Habitacional Infonavit El Rosario denuncian que reciben agua de color negro, similar al petróleo.",
+   "dias": null,
+   "calidad": true,
+   "video": true,
+   "eco": {
+    "reacciones": 44,
+    "comentarios": 8,
+    "compartidos": 12,
+    "al": "2026-11-07"
+   },
+   "vista": "fuentes/8371820b1f5d.jpg"
   }
  ]
 }
