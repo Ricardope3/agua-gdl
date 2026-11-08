@@ -131,7 +131,7 @@ read -s 'WA_TOKEN?Token: '; export WA_TOKEN
 WA_PHONE_NUMBER_ID=… WA_GRAPH_VERSION=… go run ./cmd/notify -zone 6 -tomorrow -send
 ```
 
-Para regenerar colonias, usa el PDF del 12 de octubre de 2026 (34 páginas; está en las notas privadas del proyecto, `siapa/colonias_siapa.pdf`): el que publica hoy el SIAPA es la reedición del 13 de octubre, con columnas cortadas, y el script falla con él.
+Para regenerar colonias, descarga el [PDF del SIAPA](https://rotaciondeserviciosiapa.jalisco.gob.mx/pdf/colonias_siapa.pdf). El script lee el formato del 5 de noviembre de 2026 (23 páginas, cada una de una zona y un municipio, con los días de la zona), que da las mismas 621 colonias que el PDF del 12 de octubre; imprime los días de cada zona para compararlos con `api/data/rotation.json`.
 
 ```sh
 python3 -m venv pipelines/.venv && pipelines/.venv/bin/pip install pdfplumber==0.11.4

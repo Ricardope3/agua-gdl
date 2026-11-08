@@ -7,10 +7,10 @@
  },
  "colonias_siapa.pdf": {
   "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/pdf/colonias_siapa.pdf",
-  "sha256": "fb472e7409ede54b471e1c5cd8d350823f10244587ecbe69d34e00ff259f2918",
-  "bytes": 801346,
-  "last_modified": "Fri, 16 Oct 2026 11:41:18 GMT",
-  "comment": "SIAPA's 13 Oct 2026 reissue (23 pages) with truncated columns (zone 6 Tlaquepaque/Zapopan). api/data/colonias.json comes from the 12 Oct PDF (34 pages, 621 colonias); don't regenerate it from this file."
+  "sha256": "f88d572de9eaae372230fb911c3c5b84b1d13c6592a3e00f8623c65d5e1c15a9",
+  "bytes": 628377,
+  "last_modified": "Thu, 05 Nov 2026 19:34:37 GMT",
+  "comment": "Served since 5 Nov 2026 (23 pages, each for one zone and municipio, with the zone's days). Checked 8 Nov: complete, same 621 colonias, zones and * marks as api/data/colonias.json, which pipelines/siapa_colonias.py rebuilds from it byte for byte; its days match api/data/rotation.json."
  },
  "ajustes.php": {
   "url": "https://rotaciondeserviciosiapa.jalisco.gob.mx/api/ajustes.php",
