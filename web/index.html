@@ -24,88 +24,38 @@
 :root {
   --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
   --brand: #0284c7; --brand-deep: #0369a1; --link: #0369a1; --on-brand: #ffffff;
-  --primary: #0284c7; --on-primary: #ffffff; --ring: #0284c766;
-  --shadow: 0 1px 2px rgb(3 105 161 / .08);
-  --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --soon: #8a5a00; --soon-bg: #fff3d6;
+  --primary: #0284c7; --on-primary: #ffffff; --ring: #0284c766; --alarm: #dc2626;
+  --font: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
   --mark: #fcd34d; --mark-fg: #1c1400;
+  --s1: #f59d8b; --s2: #ea6d56; --s3: #cc361e; --s4: #90200e;
 }
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #06141d; --surface: #0a1c28; --subtle: #0c3149; --fg: #f0f9ff; --muted: #9bb8ca; --line: #18384d;
-    --link: #7dd3fc; --primary: #0ea5e9; --on-primary: #ffffff; --ring: #38bdf866; --brand: #0ea5e9; --brand-deep: #0284c7;
-    --soon: #ffd27a; --soon-bg: #3a2c10;
+    --link: #7dd3fc; --primary: #0ea5e9; --on-primary: #ffffff; --ring: #38bdf866; --brand: #0ea5e9; --brand-deep: #0284c7; --alarm: #f87171;
     --mark: #fbbf24; --mark-fg: #1c1400;
+    --s1: #993b2b; --s2: #cb4832; --s3: #ea6d56; --s4: #fca391;
     color-scheme: dark;
   }
 }
 * { box-sizing: border-box }
 [hidden] { display: none !important }
 html { -webkit-text-size-adjust: 100% }
-body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 var(--font) }
-a { color: var(--link) }
-a:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; border-radius: 4px }
-.wrap { max-width: 960px; margin: 0 auto; padding: 0 20px }
-header.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 20px 0 }
-.brand { display: flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; font-weight: 800; font-size: 1.25rem; letter-spacing: -.01em }
-.brand img { width: 30px; height: auto }
-.hero { display: grid; grid-template-columns: 1fr; gap: 28px; align-items: center; padding: 28px 0 44px }
-h1 { font-size: clamp(2.1rem, 6vw, 3.4rem); line-height: 1.05; letter-spacing: -.02em; margin: 0 0 16px; text-wrap: balance }
-.lede { font-size: 1.15rem; color: var(--muted); margin: 0; max-width: 60ch }
-.button { display: inline-block; background: var(--brand-deep); color: var(--on-brand); font-weight: 700; text-decoration: none; padding: 11px 18px; border-radius: 8px }
-.button:hover { background: var(--brand) }
-section { padding: 40px 0; border-top: 1px solid var(--line) }
-h2 { font-size: 1.6rem; line-height: 1.2; margin: 0 0 18px; letter-spacing: -.01em }
-.cards { display: grid; grid-template-columns: 1fr; gap: 14px; list-style: none; margin: 0; padding: 0 }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px }
-.card h3 { margin: 0 0 6px; font-size: 1.1rem }
-.card p { margin: 0 0 12px; color: var(--muted) }
-.why p { max-width: 65ch; margin: 0 0 14px }
-.values { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 18px 0 0 }
-.values li { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 5px 14px; font-size: .92rem; font-weight: 600 }
-.contact p { margin: 0 0 16px; max-width: 60ch }
-.email { font-size: 1.2rem; font-weight: 700; overflow-wrap: anywhere }
-footer { border-top: 1px solid var(--line); padding: 28px 0 48px; color: var(--muted); font-size: .9rem }
-footer p { margin: 0 0 8px; max-width: 70ch }
-@media (min-width: 720px) {
-  .hero { grid-template-columns: 1fr 200px }
-  .cards { grid-template-columns: repeat(2, 1fr) }
+html, body { overflow-x: clip }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased }
+a { color: var(--link); text-underline-offset: 3px }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); border-radius: 4px }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 16px }
+@media (min-width: 1100px) {
+  .wrap { max-width: 1320px }
+  main > :not(.maphero), .maphero .mapnote, .wrap > footer { max-width: 928px; margin-left: auto; margin-right: auto }
 }
-body { font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased }
-a { text-underline-offset: 3px }
-a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); border-radius: 6px }
-.wrap { padding: 0 16px }
-header.top { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); margin: 0 -16px 20px; padding: 12px 16px }
-.brand { gap: 8px; font-weight: 600; font-size: 1rem }
-.brand img { width: 20px }
-h1 { letter-spacing: -.03em; font-weight: 700 }
-h2 { font-weight: 600; letter-spacing: -.02em }
-.lede { font-size: 1.05rem }
-.button { display: inline-flex; align-items: center; gap: 6px; background: var(--primary); color: var(--on-primary); font-weight: 500; font-size: .95rem; padding: 10px 18px; border: 1px solid transparent; border-radius: 8px; box-shadow: var(--shadow); transition: background .15s }
-.button:hover { background: var(--brand-deep) }
-.signup, .finder, .summary { border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; box-shadow: var(--shadow) }
-.card, .zone, .msg, .empty, .choice, .values li { box-shadow: var(--shadow) }
-.search input, .filter select { border: 1px solid var(--line); box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s }
-.search input:focus-visible, .filter select:focus-visible { border-color: var(--brand) }
-footer { font-size: .85rem }
-.congreso { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; box-shadow: var(--shadow); padding: 28px 24px; margin: 0 0 40px }
-.congreso p { max-width: 65ch; color: var(--muted); margin: 0 0 16px }
-.facts { list-style: none; padding: 0; margin: 0 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px }
-.facts li { background: var(--subtle); border-radius: 10px; padding: 14px 16px }
-.facts strong { display: block; font-size: 1.35rem; line-height: 1.2; letter-spacing: -.02em; color: var(--fg) }
-.facts span { color: var(--muted); font-size: .9rem }
-.buttons { display: flex; flex-wrap: wrap; gap: 10px }
-.button.alt { background: color-mix(in srgb, var(--brand) 12%, var(--surface)); color: var(--link); border: 1.5px solid var(--brand) }
-.button.alt:hover { background: color-mix(in srgb, var(--brand) 22%, var(--surface)) }
-.nw { white-space: nowrap }
-mark { color: var(--mark-fg); font-weight: 600; background: var(--mark); padding: 1px 5px; border-radius: 4px; -webkit-box-decoration-break: clone; box-decoration-break: clone }
-.tg { width: 1em; height: 1em; vertical-align: -.14em }
-.i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
-h2.ih, h3.ih { display: flex; align-items: center; gap: 10px }
-.ih .i-badge { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--subtle); color: var(--brand); flex-shrink: 0 }
-h3.ih .i-badge { width: 28px; height: 28px }
-.values li { display: inline-flex; align-items: center; gap: 6px }
-header.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px }
+
+/* Header and menu: the same on every page */
+header.top { position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px; background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); margin: 0 -16px 20px; padding: 12px 16px }
+.brand { display: flex; align-items: center; gap: 8px; color: var(--fg); text-decoration: none; font-weight: 600; font-size: 1rem; letter-spacing: -.01em }
+.brand img { width: 20px; height: auto }
 .site-nav { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; margin: 0 -6px }
 .site-nav a { display: inline-flex; align-items: center; gap: 4px; padding: 6px 6px; border-radius: 8px; color: var(--muted); font-size: .9rem; font-weight: 500; text-decoration: none; white-space: nowrap }
 .site-nav a:hover { color: var(--fg); background: var(--subtle) }
@@ -113,264 +63,157 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 @media (max-width: 980px) { .site-nav .i { display: none } }
 @media (max-width: 760px) { .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center } .site-nav a { flex: 1 1 22%; justify-content: center } }
 @media (max-width: 560px) { header.top { position: static; padding: 8px 16px } .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center; gap: 2px } .site-nav a { flex: 1 1 22%; justify-content: center; padding: 4px; font-size: .82rem; line-height: 1.35 } .site-nav .i { display: none } }
-.ih .i-badge { background: var(--brand); color: var(--on-primary) }
-.site-nav .i { color: var(--brand) }
-.site-nav a[aria-current="page"] .i { color: inherit }
-li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
-.i { --ic: var(--brand) }
-.i:has(use[href$="#bell"]), .i:has(use[href$="#megaphone"]) { --ic: #d97706 }
-.i:has(use[href$="#map-pin"]) { --ic: #e11d48 }
-.i:has(use[href$="#landmark"]) { --ic: #7c3aed }
-.i:has(use[href$="#heart"]) { --ic: #dc2626 }
-.i:has(use[href$="#check"]) { --ic: #16a34a }
-.i:has(use[href$="#shield-check"]) { --ic: #16a34a }
-.i:has(use[href$="#mail"]) { --ic: #0d9488 }
-.i:has(use[href$="#pen-line"]) { --ic: #ea580c }
-.i:has(use[href$="#calendar"]) { --ic: #4f46e5 }
-.i:has(use[href$="#send"]) { --ic: #229ed9 }
-@media (prefers-color-scheme: dark) { .i:has(use[href$="#bell"]), .i:has(use[href$="#megaphone"]) { --ic: #fbbf24 } .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#landmark"]) { --ic: #a78bfa } .i:has(use[href$="#heart"]) { --ic: #f87171 } .i:has(use[href$="#check"]) { --ic: #4ade80 } .i:has(use[href$="#shield-check"]) { --ic: #4ade80 } .i:has(use[href$="#mail"]) { --ic: #2dd4bf } .i:has(use[href$="#pen-line"]) { --ic: #fb923c } .i:has(use[href$="#calendar"]) { --ic: #818cf8 } .i:has(use[href$="#send"]) { --ic: #2aabee } }
-.site-nav .i, li > .i, p > .i, summary > .i, h3 > .i { color: var(--ic) }
-.ih .i-badge:has(use[href$="#bell"]), .ih .i-badge:has(use[href$="#megaphone"]) { background: #d97706 }
-.ih .i-badge:has(use[href$="#map-pin"]) { background: #e11d48 }
-.ih .i-badge:has(use[href$="#landmark"]) { background: #7c3aed }
-.ih .i-badge:has(use[href$="#heart"]) { background: #dc2626 }
-.ih .i-badge:has(use[href$="#check"]) { background: #16a34a }
-.ih .i-badge:has(use[href$="#shield-check"]) { background: #16a34a }
-.ih .i-badge:has(use[href$="#mail"]) { background: #0d9488 }
-.ih .i-badge:has(use[href$="#pen-line"]) { background: #ea580c }
-.ih .i-badge:has(use[href$="#calendar"]) { background: #4f46e5 }
 
+/* Pieces */
+.i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
+.nw { white-space: nowrap }
+mark { color: var(--mark-fg); font-weight: 600; background: var(--mark); padding: 0 4px; border-radius: 4px; -webkit-box-decoration-break: clone; box-decoration-break: clone }
+.button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--primary); color: var(--on-primary); font: inherit; font-size: .95rem; font-weight: 500; line-height: 1.5; text-decoration: none; padding: 10px 16px; border: 1px solid transparent; border-radius: 4px; cursor: pointer; transition: background-color .15s }
+.button:hover { background: var(--brand-deep) }
+.button.alt { background: color-mix(in srgb, var(--brand) 12%, var(--surface)); color: var(--link); border: 1.5px solid var(--brand) }
+.button.alt:hover { background: color-mix(in srgb, var(--brand) 22%, var(--surface)) }
+.buttons { display: flex; flex-wrap: wrap; gap: 8px }
+section { padding: 40px 0; border-top: 1px solid var(--line) }
+main h1, main h2 { font-family: var(--serif); font-weight: 400; font-style: italic; letter-spacing: -.01em }
+h2 { font-size: 1.6rem; line-height: 1.2; margin: 0 0 16px }
+.lede { font-size: 1.05rem; margin: 0; max-width: 60ch }
+.note { color: var(--muted); font-size: .82rem; margin: 8px 0 16px }
 
-.hero-map { padding: 12px 0 28px }
-.hero-map .cta { margin: 20px 0 0 }
-.aviso { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; padding: 10px 14px; color: var(--fg); text-decoration: none; box-shadow: var(--shadow) }
-.aviso:hover { border-color: var(--brand) }
-.aviso-head { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: .95rem; line-height: 1.3 }
-.aviso-head .i-badge { display: inline-grid; place-items: center; flex-shrink: 0; width: 24px; height: 24px; border-radius: 7px; background: #d97706; color: #fff }
-.aviso-time { grid-column: 1; grid-row: 2; font-size: 1.9rem; font-weight: 700; letter-spacing: -.04em; line-height: 1; color: var(--brand); white-space: nowrap }
-.aviso-text { grid-column: 2; grid-row: 2 / span 2; align-self: center; color: var(--muted); font-size: .88rem; line-height: 1.4 }
-.aviso .button { grid-column: 1; grid-row: 3; justify-self: start; margin-top: 2px; padding: 6px 14px; font-size: .88rem }
-.hero-side { display: grid; gap: 12px; align-content: start }
-.hero-fig { margin: 0; display: grid; gap: 6px }
-.hero-fig .note { margin: 0; color: var(--muted); font-size: .8rem }
-.hero-mapimg { display: block; margin: 0; background: var(--subtle); border: 1px solid var(--line); border-radius: 14px; padding: 8px; box-shadow: var(--shadow) }
-.hero-mapimg img { display: block; width: 100%; height: auto }
-.hero-mapimg { position: relative }
-.map-open { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); white-space: nowrap; padding: 4px 10px; font-size: .78rem; gap: 4px; border-radius: 6px; box-shadow: 0 2px 8px rgb(0 0 0 / .3) }
-.map-open .i { color: inherit }
-@media (min-width: 720px) { .hero.hero-map { grid-template-columns: 1.05fr 1fr; gap: 36px } .hero-map h1 { font-size: clamp(2.1rem, 4.6vw, 3rem) } }
-
-
-.hero1 { display: grid; gap: 28px; padding: 20px 0 36px }
-.hero1 h1 { margin-bottom: 10px }
-.quick { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--brand); border-radius: 12px; box-shadow: var(--shadow); padding: 18px; margin: 22px 0 0 }
-.quick label { display: block; font-weight: 600; margin: 0 0 8px }
-.quick .row { display: flex; flex-wrap: wrap; gap: 8px }
-.quick input { flex: 1 1 220px; min-width: 0; font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; box-shadow: var(--shadow) }
-.quick input:focus-visible { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px var(--ring) }
-.quick button.button { font: inherit; font-weight: 500; font-size: .95rem; cursor: pointer }
-.quick .or { margin: 10px 0 0; color: var(--muted); font-size: .9rem }
-.band { display: grid; gap: 14px; margin: 0 0 40px }
-@media (min-width: 720px) { .hero1 { grid-template-columns: 1.05fr 1fr; align-items: center } .band { grid-template-columns: 1fr 1fr } }
-
-.hero2 { padding: 20px 0 8px }
-.hero2 .lede { margin: 0 0 18px }
-.today { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 14px; font-weight: 600 }
-.pulse { margin: 16px 0 0; font-weight: 600; max-width: 60ch }
-.pulse b { font-variant-numeric: tabular-nums }
-.pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: .85rem }
-.pill.hot { background: #fee2e2; color: #991b1b } .pill.warm { background: #fef3c7; color: #92400e }
-.ztiles { list-style: none; margin: 0 0 18px; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr)); gap: 10px }
-.ztile { display: block; height: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; color: var(--fg); text-decoration: none; box-shadow: var(--shadow); border-left: 5px solid var(--zc, var(--brand)) }
-.ztile { --zc: var(--zl) }
-.ztile:hover { border-color: var(--zc, var(--brand)) }
-.ztile b { display: block; font-size: 1.05rem }
-.ztile .when { display: block; font-size: 1.35rem; font-weight: 700; letter-spacing: -.02em; line-height: 1.2; margin: 4px 0 2px }
-.ztile .when::first-letter { text-transform: uppercase }
-.ztile small { color: var(--muted); font-size: .8rem }
-.ztile.hot { background: color-mix(in srgb, #ef4444 10%, var(--surface)) } .ztile.warm { background: color-mix(in srgb, #f59e0b 12%, var(--surface)) }
-.ztiles .skeleton { height: 92px; border-radius: 12px; background: var(--subtle) }
-.hero2 .buttons { margin: 0 0 32px }
-.split { display: grid; gap: 14px; margin: 0 0 40px }
-@media (min-width: 720px) { .split { grid-template-columns: 1.2fr 1fr; align-items: start } }
-@media (prefers-color-scheme: dark) { .pill.hot { background: #450a0a; color: #fecaca } .pill.warm { background: #422006; color: #fde68a } .ztile { --zc: var(--zd) } }
-
-.hero5 { display: grid; gap: 24px; padding: 20px 0 32px }
-.hero5 .side h2 { font-size: 1.1rem; margin: 0 0 8px }
-.hero5 .ztiles { grid-template-columns: repeat(2, 1fr); gap: 8px }
-.hero5 .ztile { padding: 8px 12px; display: grid; grid-template-columns: auto 1fr; column-gap: 10px; align-items: baseline }
-.hero5 .ztile .when { font-size: 1.05rem; margin: 0 }
-.hero5 .ztile small { grid-column: 1 / -1 }
-.hero5 .ztiles .skeleton { height: 56px }
-.mapband { display: grid; gap: 14px; margin: 0 0 40px }
-@media (min-width: 720px) { .hero5 { grid-template-columns: 1.1fr 1fr; align-items: start } .mapband { grid-template-columns: 1.2fr 1fr; align-items: start } }
-.hero5 .side { display: grid; gap: 14px; align-content: start }
-.alerta { background: #fef2f2; border: 1px solid #fecaca; border-top: 3px solid var(--alarm); border-radius: 12px; padding: 10px 14px; box-shadow: var(--shadow); color: #7f1d1d; font-size: .88rem; line-height: 1.4 }
-.alerta p { margin: 0 }
-.alerta .alerta-head { display: flex; align-items: center; gap: 8px; margin: 0 0 6px; color: #991b1b; font-size: .95rem; font-weight: 700; line-height: 1.3 }
-.alerta-i { display: inline-grid; place-items: center; flex-shrink: 0; width: 24px; height: 24px; border-radius: 7px; background: #dc2626; color: #fff; font-weight: 800 }
-.alerta a { color: inherit; font-weight: 600 }
-@media (prefers-color-scheme: dark) { .alerta { background: #2d0b10; border-color: #7f1d1d; border-top-color: var(--alarm); color: #fecaca } .alerta .alerta-head { color: #fca5a5 } }
-.vs { margin: 8px 0 44px }
-.vs h2 { font-size: clamp(1.5rem, 3.6vw, 2.1rem); line-height: 1.15; letter-spacing: -.02em; margin: 0 0 18px; text-wrap: balance }
-.vs-grid { display: grid; gap: 14px }
-@media (min-width: 760px) { .vs-grid { grid-template-columns: 1fr 1.3fr; align-items: start } .promesa { position: sticky; top: 112px } }
-.vs-col { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 18px }
-.vs-col h3 { margin: 0 0 14px; font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted) }
-.promesa { border-top: 4px solid var(--brand) }
-.realidad { border-top: 4px solid var(--alarm) }
-.promesa blockquote { margin: 0 0 14px; padding: 0 0 0 12px; border-left: 3px solid var(--line); font-size: 1.05rem; line-height: 1.45 }
-.vs-facts { list-style: none; margin: 0 0 18px; padding: 0; display: grid; grid-template-columns: max-content 1fr; gap: 12px 14px; align-items: baseline }
-.vs-facts li { display: contents }
-.vs-facts strong { font-size: 1.5rem; font-weight: 700; letter-spacing: -.03em; line-height: 1.1; color: var(--alarm); white-space: nowrap }
-.vs-facts span { color: var(--muted); font-size: .92rem; line-height: 1.4 }
-@media (max-width: 480px) { .vs-facts { grid-template-columns: 1fr; gap: 2px } .vs-facts span { margin-bottom: 10px } }
-.realidad h4 { margin: 0 0 10px; font-size: .95rem }
-.posts + h4 { margin-top: 18px }
-.posts { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px }
-.posts li { margin: 0; padding: 10px 12px; background: var(--bg); border: 1px solid var(--line); border-left: 3px solid var(--alarm); border-radius: 10px }
-.posts q { display: block; quotes: "«" "»"; line-height: 1.45 }
-.posts .who { display: block; margin-top: 4px; color: var(--muted); font-size: .82rem }
-.vs .note { color: var(--muted); font-size: .82rem; margin: 12px 0 0 }
-.vs .via { color: var(--muted); font-size: .85rem; margin: 4px 0 0 }
-.vs .buttons { margin-top: 18px }
-.dice { display: grid; gap: 12px; margin: 16px 0 }
-@media (min-width: 760px) { .dice { grid-template-columns: 1fr 1fr } }
-.dice > div { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--brand); border-radius: 12px; box-shadow: var(--shadow); padding: 14px 16px }
-.dice > div:last-child { border-top-color: var(--alarm) }
-.dice h3 { margin: 0 0 8px; font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted) }
-.dice p { margin: 0; line-height: 1.45 }
-.dice .via { margin: 6px 0 0; font-size: .85rem; color: var(--muted) }
-:root { --alarm: #dc2626 }
-@media (prefers-color-scheme: dark) { :root { --alarm: #f87171 } }
-
-:root { --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif }
-main h1, main h2 { font-family: var(--serif); font-weight: 700; letter-spacing: -.015em }
-main h1 { line-height: 1.03 }
-main .lede { color: var(--fg) }
-.kicker { margin: 0 0 12px; font-family: var(--font); color: var(--alarm); font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase }
-.headline { padding: 10px 0 16px }
-.headline h1 { font-size: clamp(1.9rem, 4.4vw, 2.9rem); max-width: 34ch; margin: 0 }
-html, body { overflow-x: clip }
-@media (min-width: 1100px) {
-  .wrap { max-width: 1320px }
-  main > :not(.maphero), .maphero .mapnote, .wrap > footer { max-width: 928px; margin-left: auto; margin-right: auto }
+/* Headline over the photo wall */
+.kicker { margin: 0 0 12px; font-family: var(--font); font-size: .78rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase }
+.headline h1 { font-size: clamp(1.9rem, 4.4vw, 2.9rem); line-height: 1.04; max-width: 34ch; margin: 0; text-wrap: balance }
+.cartel { display: grid; gap: 8px 32px; align-items: center; padding: 8px 0 20px }
+.cartel .ilus { width: min(60vw, 240px); height: auto; justify-self: center }
+@media (min-width: 760px) { .cartel { grid-template-columns: 1fr auto } .cartel .ilus { width: 240px } }
+@media (max-width: 760px) {
+  .cartel { grid-template-columns: minmax(0, 1fr) 92px; gap: 4px 12px; padding: 4px 0 12px }
+  .cartel h1 { font-size: 1.55rem }
+  .cartel .kicker { font-size: .72rem; margin-bottom: 4px }
+  .cartel .ilus { width: 92px; justify-self: end }
+  .headline .buttons .button { flex: 1 1 100% }
 }
-.maphero { margin: 4px 0 30px }
-.mapframe-box { position: relative; width: 100vw; margin-left: calc(50% - 50vw); height: min(88vh, 920px); min-height: 460px; border-block: 1px solid var(--fg); overflow: hidden; background: var(--subtle) }
+
+/* The /reportes frame */
+.maphero { margin: 4px 0 32px }
+.mapframe-box { position: relative; width: 100vw; margin-left: calc(50% - 50vw); height: min(88vh, 920px); min-height: 460px; border-block: 1px solid var(--fg); border-top: 0; overflow: hidden; background: var(--subtle) }
 .mapframe-box::before { content: "Cargando el mapa…"; position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: .9rem }
 .mapframe { position: relative; display: block; width: 100%; height: 100%; border: 0; opacity: 0; transition: opacity .3s }
 .mapframe.ready { opacity: 1 }
 .mapnote { margin: 8px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.45 }
 .mapnote a { white-space: nowrap; font-weight: 600 }
-@media (max-width: 760px) { .mapframe-box { height: 80vh; min-height: 430px } }
-.vs-grid { gap: 0; border-top: 3px solid var(--fg); border-bottom: 1px solid var(--fg) }
-.vs-col { background: none; border: 0; border-radius: 0; box-shadow: none; padding: 20px 0 }
-.vs-col h3 { margin: 0 0 14px; color: var(--alarm); letter-spacing: .12em }
-.promesa h3 { color: var(--muted) }
-@media (min-width: 760px) { .vs-grid > :first-child { padding-right: 28px } .vs-grid > :last-child { border-left: 1px solid var(--line); padding-left: 28px } }
-.promesa blockquote { font-family: var(--serif); font-style: italic; font-size: 1.22rem; line-height: 1.38; border: 0; padding: 0; margin: 0 0 16px }
-.promesa blockquote mark { font-style: normal }
-.vs-facts { grid-template-columns: 1fr; gap: 0; margin: 0 0 4px }
-.vs-facts li { display: block; padding: 0 0 18px; margin: 0 0 18px; border-bottom: 1px solid var(--line) }
-.vs-facts li:last-child { border: 0; margin: 0; padding: 0 }
-.vs-facts strong { display: block; font-family: var(--serif); font-size: clamp(2.6rem, 9vw, 3.6rem); line-height: 1; letter-spacing: -.02em; margin: 0 0 6px }
-.vs-facts span { font-size: .95rem; margin: 0 }
-.contrast { margin: 0 0 8px }
-.contrast .promesa { position: static }
-@media (min-width: 760px) { .contrast { grid-template-columns: 1fr 1fr } }
-.yours { margin: 0 0 8px; padding: 26px 0; border-top: 0 }
-.yours h2 { font-size: clamp(1.6rem, 4.4vw, 2.2rem); margin: 0 0 10px }
-.posts { display: block }
-.posts li { margin: 0 0 12px; background: none; border: 0; border-left: 2px solid var(--alarm); border-radius: 0; padding: 2px 0 2px 14px }
-.posts q { font-family: var(--serif); font-size: 1.08rem }
-.wall { padding: 30px 0 36px; border-top: 3px solid var(--fg) }
-.wall h2 { font-size: 1.6rem; margin: 0 0 18px }
-.wall .cols { columns: 2 300px; column-gap: 28px }
-.wall h4 { break-after: avoid; margin: 0 0 10px; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--alarm) }
-.wall .posts { margin: 0 0 18px }
-.wall .posts li { break-inside: avoid }
-.wall .note { color: var(--muted); font-size: .82rem; margin: 6px 0 0 }
-.boxes { display: grid; gap: 12px; margin: 0 0 40px }
-@media (min-width: 860px) { .boxes { grid-template-columns: repeat(3, 1fr) } }
-.cartel { display: grid; gap: 8px 32px; align-items: center; padding: 8px 0 20px }
-.cartel .ilus { width: min(60vw, 240px); height: auto; justify-self: center }
-@media (min-width: 760px) { .cartel { grid-template-columns: 1fr auto } .cartel .ilus { width: 240px } }
-
-@media (max-width: 760px) {
-  .cartel { grid-template-columns: minmax(0, 1fr) 92px; gap: 4px 12px; padding: 4px 0 12px }
-  .cartel h1 { font-size: 1.55rem; margin: 0 }
-  .cartel .kicker { font-size: .72rem; margin-bottom: 4px }
-  .cartel .ilus { width: 92px; justify-self: end }
-}
-.m-only { display: none }
-@media (max-width: 760px) { .m-only { display: block } }
-.m-num { font: 800 3.4rem/1 var(--serif, Georgia, serif); color: var(--alarm); font-variant-numeric: tabular-nums }
-.m-k { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin: 0 0 6px }
-.m-rank { list-style: none; margin: 0; padding: 0 }
-.m-rank li { border-bottom: 1px solid var(--line) }
-.m-rank a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; padding: 10px 0; color: inherit; text-decoration: none }
-.m-rank b { font-weight: 600 } .m-rank small { color: var(--muted); grid-column: 1 }
-.m-rank .d { grid-row: 1 / 3; grid-column: 2; align-self: center; font-weight: 800; color: var(--alarm); font-variant-numeric: tabular-nums }
-.m-bar { height: 6px; border-radius: 3px; background: var(--subtle); overflow: hidden }
-.m-rank .m-bar { grid-column: 1 / -1 }
-.m-bar i { display: block; height: 100%; background: var(--alarm) }
-
-:root { --s1: #f59d8b; --s2: #ea6d56; --s3: #cc361e; --s4: #90200e }
-@media (prefers-color-scheme: dark) { :root { --s1: #993b2b; --s2: #cb4832; --s3: #ea6d56; --s4: #fca391 } .m5-map .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) } .m5-map.leaflet-container { background: #0c1e2c } }
-@media (max-width: 760px) {
-  .m5 { margin: 0 -16px 14px }
-  .m5-track { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 16px; scrollbar-width: none }
-  .m5-card { position: relative; flex: 0 0 84%; scroll-snap-align: center; border: 3px double var(--zc, var(--brand)); border-radius: 6px; background: var(--subtle); overflow: hidden }
-  .m5-card a { display: block }
-  .m5-map { display: block; width: 100%; aspect-ratio: 4 / 5; pointer-events: none; background: var(--subtle) }
-  .m5-map .leaflet-control-attribution { font-size: 9px }
-  .m5-b { display: grid; place-items: center; border-radius: 50%; border: 1px solid #fff; font: 700 9px/1 system-ui, sans-serif; color: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / .35) }
-  .m5-b.l { color: #3b0d05 }
-  .m5-tag { position: absolute; z-index: 1000; left: 10px; top: 10px; font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: var(--zc, var(--fg)); color: #fff; padding: 3px 8px; border-radius: 4px; pointer-events: none }
-  .m5-dots, .m4-dots { display: flex; justify-content: center; gap: 6px; margin-top: 10px }
-  .m5-dots i, .m4-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line) }
-  .m5-dots i.on, .m4-dots i.on { background: var(--brand) }
-}
 @media (max-width: 760px) { .maphero { display: none } }
 
+/* What was promised against what is happening */
+.vs-grid { display: grid; margin: 0 0 8px; border-top: 3px double var(--brand); border-bottom: 1px solid var(--fg) }
+.vs-col { padding: 24px 0 }
+.vs-col h3 { margin: 0 0 16px; font-family: var(--serif); font-size: 1.15rem; font-style: italic; font-weight: 400; color: var(--alarm) }
+.promesa h3 { color: var(--muted) }
+@media (min-width: 760px) { .vs-grid { grid-template-columns: 1fr 1fr } .vs-grid > :first-child { padding-right: 32px } .vs-grid > :last-child { border-left: 1px solid var(--line); padding-left: 32px } }
+.promesa blockquote { font-family: var(--serif); font-style: italic; font-size: 1.2rem; line-height: 1.4; margin: 0 0 16px }
+.promesa blockquote mark { font-style: normal }
+.via { color: var(--muted); font-size: .88rem; margin: 4px 0 0 }
+.vs-facts { list-style: none; margin: 0 0 4px; padding: 0 }
+.vs-facts li { padding: 0 0 16px; margin: 0 0 16px; border-bottom: 1px solid var(--line) }
+.vs-facts li:last-child { border: 0; margin: 0; padding: 0 }
+.vs-facts strong { display: block; font-family: var(--serif); font-size: clamp(2.6rem, 9vw, 3.6rem); font-weight: 400; line-height: 1; letter-spacing: -.02em; margin: 0 0 8px; color: var(--alarm); font-variant-numeric: tabular-nums; white-space: nowrap }
+.vs-facts span { color: var(--muted); font-size: .95rem; line-height: 1.4 }
+
+/* ¿Y en tu colonia? */
+.yours { margin: 0 0 8px; padding: 24px 0; border-top: 0 }
+.yours h2 { font-size: clamp(1.6rem, 4.4vw, 2.2rem); margin: 0 0 12px }
+.pulse { margin: 16px 0 0; font-weight: 500; max-width: 60ch }
+.pulse b { font-weight: 600; font-variant-numeric: tabular-nums }
+.quick { background: var(--surface); border: 3px double var(--brand); border-radius: 4px; padding: 16px; margin: 24px 0 0 }
+.quick label { display: block; font-weight: 600; margin: 0 0 8px }
+.quick .row { display: flex; flex-wrap: wrap; gap: 8px }
+.quick input { flex: 1 1 220px; min-width: 0; font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 8px 12px; transition: border-color .15s }
+.quick input:focus-visible { border-color: var(--brand) }
+.quick .or { margin: 12px 0 0; color: var(--muted); font-size: .9rem }
+
+/* Lo que se publica */
+.wall { padding: 32px 0 40px; border-top: 3px double var(--brand) }
+.wall .cols { columns: 2 300px; column-gap: 32px }
+.wall h4 { break-after: avoid; margin: 0 0 12px; font-family: var(--serif); font-size: 1.1rem; font-style: italic; font-weight: 400; color: var(--alarm) }
+.posts { list-style: none; margin: 0 0 20px; padding: 0 }
+.posts li { break-inside: avoid; margin: 0 0 12px; padding: 2px 0 2px 16px; border-left: 3px double var(--brand) }
+.posts q { display: block; quotes: "«" "»"; font-family: var(--serif); font-size: 1.05rem; line-height: 1.45 }
+.posts .who { display: block; margin-top: 4px; color: var(--muted); font-size: .82rem }
+
+/* Three boxes: the CEA's count, /exige and the rivers */
+.boxes { display: grid; gap: 16px; margin: 0 0 40px }
+@media (min-width: 860px) { .boxes { grid-template-columns: repeat(3, 1fr) } }
+.box { display: grid; grid-row: span 4; grid-template-rows: subgrid; row-gap: 8px; align-content: start; padding: 16px 20px; background: var(--surface); border: 3px double var(--brand); border-radius: 4px; color: var(--fg); text-decoration: none; transition: background-color .15s }
+a.box:hover { background: color-mix(in srgb, var(--brand) 6%, var(--surface)) }
+.box-head { margin: 0; font-family: var(--serif); font-size: 1.15rem; font-style: italic; line-height: 1.3 }
+.box-num { font-family: var(--serif); font-size: 2.6rem; line-height: 1; color: var(--alarm); font-variant-numeric: tabular-nums; white-space: nowrap }
+.box-text { margin: 0; color: var(--muted); font-size: .92rem; line-height: 1.45 }
+.box .button { align-self: end; justify-self: start; margin-top: 8px }
+
+/* Lemus and the Congreso */
+.congreso { background: var(--surface); padding: 32px 24px; margin: 0 0 40px }
+.congreso p { max-width: 65ch; color: var(--muted); margin: 0 0 16px }
+.facts { list-style: none; padding: 0; margin: 0 0 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(176px, 1fr)); gap: 12px }
+.facts li { background: var(--subtle); border-radius: 4px; padding: 12px 16px }
+.facts strong { display: block; font-family: var(--serif); font-size: 1.5rem; font-weight: 400; line-height: 1.2; color: var(--fg); font-variant-numeric: tabular-nums }
+.facts span { color: var(--muted); font-size: .9rem }
+
+/* También puedes, por qué, contacto */
+.indice { list-style: none; margin: 0; padding: 0; display: grid; column-gap: 32px }
+@media (min-width: 720px) { .indice { grid-template-columns: 1fr 1fr } }
+.indice li { padding: 16px 0; border-top: 1px solid var(--line) }
+.indice h3 { margin: 0 0 4px; font-family: var(--serif); font-size: 1.2rem; font-style: italic; font-weight: 400; line-height: 1.3 }
+.indice p { margin: 0 0 8px; color: var(--muted) }
+.why p { max-width: 65ch; margin: 0 0 16px }
+.values { list-style: none; padding: 0; margin: 16px 0 0; display: flex; flex-wrap: wrap; color: var(--muted); font-size: .92rem }
+.values li + li::before { content: "·"; margin: 0 8px }
+.contact p { margin: 0 0 16px; max-width: 60ch }
+.email { font-size: 1.2rem; font-weight: 500; overflow-wrap: anywhere }
+footer { border-top: 1px solid var(--line); padding: 28px 0 48px; color: var(--muted); font-size: .85rem }
+footer p { margin: 0 0 8px; max-width: 70ch }
+
+/* Phones: zone maps and four cards instead of the frame */
+.m-only { display: none }
+@media (max-width: 760px) { .m-only { display: block } }
+.m-num { font: 400 3.4rem/1 var(--serif); color: var(--alarm); font-variant-numeric: tabular-nums }
+.m-k { font-size: .85rem; color: var(--muted); font-weight: 600; margin: 0 0 8px }
+.m-rank { list-style: none; margin: 0; padding: 0 }
+.m-rank li { border-bottom: 1px solid var(--line) }
+.m-rank a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; padding: 8px 0; color: inherit; text-decoration: none }
+.m-rank b { font-weight: 600 } .m-rank small { color: var(--muted); grid-column: 1 }
+.m-rank .d { grid-row: 1 / 3; grid-column: 2; align-self: center; font-weight: 600; color: var(--alarm); font-variant-numeric: tabular-nums }
+.m-bar { grid-column: 1 / -1; height: 4px; border-radius: 2px; background: var(--subtle); overflow: hidden }
+.m-bar i { display: block; height: 100%; background: var(--alarm) }
+@media (prefers-color-scheme: dark) { .m5-map .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) } .m5-map.leaflet-container { background: #0c1e2c } }
 @media (max-width: 760px) {
-  .m4 { margin: 0 -16px 18px }
-  .m4-track { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 16px; scrollbar-width: none }
-  .m4-card { flex: 0 0 84%; scroll-snap-align: center; min-height: 260px; display: flex; flex-direction: column; border: 3px double var(--brand); border-radius: 6px; background: var(--surface); padding: 16px }
-  .m4-card h3 { font-size: 1.25rem; margin: 0 0 8px; font-style: italic; font-weight: 400 }
-  .m4-card p { margin: 6px 0 0 }
-  .m4-card q { display: block; font-size: 1.15rem; line-height: 1.4; font-style: italic }
+  .m4, .m5 { margin: 0 -16px 16px }
+  .m5 { padding-top: 16px }
+  .m4-track, .m5-track { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 16px; scrollbar-width: none }
+  .m4-dots, .m5-dots { display: flex; justify-content: center; gap: 8px; margin-top: 12px }
+  .m4-dots i, .m5-dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--line) }
+  .m4-dots i.on, .m5-dots i.on { background: var(--brand) }
+  .m5-card { position: relative; flex: 0 0 84%; scroll-snap-align: center; border: 3px double var(--zc, var(--brand)); border-radius: 4px; background: var(--subtle); overflow: hidden }
+  .m5-card a { display: block }
+  .m5-map { display: block; width: 100%; aspect-ratio: 2 / 3; pointer-events: none; background: var(--subtle) }
+  .m5-card .leaflet-control-attribution { display: none }
+  .m5-b { display: grid; place-items: center; border-radius: 50%; border: 1px solid #fff; font: 600 9px/1 system-ui, sans-serif; color: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / .35) }
+  .m5-b.l { color: #3b0d05 }
+  .m5-tag { position: absolute; z-index: 1000; left: 12px; top: 12px; font-size: .85rem; font-weight: 600; background: var(--zc, var(--fg)); color: #fff; padding: 2px 8px; border-radius: 4px; pointer-events: none }
+  .m5-over { position: absolute; z-index: 1000; left: 0; right: 0; bottom: 0; padding: 32px 12px 12px; pointer-events: none;
+    background: linear-gradient(transparent, color-mix(in srgb, var(--surface) 92%, transparent) 38%); color: var(--fg); font-size: .9rem; line-height: 1.3 }
+  .m5-over:empty { display: none }
+  .h-row { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap }
+  .h-big { font: 400 2.4rem/1 var(--serif); color: var(--s3); font-variant-numeric: tabular-nums }
+  .m4-card { flex: 0 0 84%; scroll-snap-align: center; min-height: 260px; display: flex; flex-direction: column; border: 3px double var(--brand); border-radius: 4px; background: var(--surface); padding: 16px }
+  .m4-card h3 { font-family: var(--serif); font-size: 1.25rem; margin: 0 0 8px; font-style: italic; font-weight: 400 }
+  .m4-card p { margin: 8px 0 0 }
   .m4-card .who { margin-top: auto; color: var(--muted); font-size: .85rem }
-  .m4-card .button { margin-top: auto; justify-content: center }
-  .m4-card .m-rank a { padding: 7px 0 }
-  .m4-dots { display: flex; justify-content: center; gap: 6px; margin-top: 10px }
-  .m4-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line) }
-  .m4-dots i.on { background: var(--brand) }
-  .m4-vs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px }
+  .m4-card .button { margin-top: auto }
+  .m4-card .m-rank a { padding: 8px 0 }
+  .m4-vs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px }
   .m4-vs > div { border-top: 3px solid var(--line); padding-top: 8px }
   .m4-vs .m-k { min-height: 2.6em }
   .m4-vs .m-num { font-size: 2.6rem }
   .m4-vs > div:first-child .m-num { color: var(--brand) }
-  .mapframe-box { height: 70svh; min-height: 400px }
-  .maphero .mapnote { font-size: .85rem }
-}
-@media (max-width: 760px) {
-  .m5-map { aspect-ratio: 2 / 3 }
-  .m5-over { position: absolute; z-index: 1000; left: 0; right: 0; bottom: 0; padding: 34px 12px 12px; pointer-events: none;
-    background: linear-gradient(transparent, color-mix(in srgb, var(--surface) 92%, transparent) 38%); color: var(--fg); font-size: .9rem; line-height: 1.3 }
-  .m5-over:empty { display: none }
-  .m5-card .leaflet-control-attribution { display: none }
-  .h-k { font-size: .68rem; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); font-weight: 700 }
-  .h-big { font: 800 2.4rem/1 var(--serif, Georgia, serif); color: #cc361e; font-variant-numeric: tabular-nums }
-  @media (prefers-color-scheme: dark) { .h-big { color: #ea6d56 } }
-  .h-hoy { display: inline-block; background: var(--zc); color: #fff; font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px }
-  .h-week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; margin-top: 6px }
-  .h-week span { display: grid; place-items: center; height: 26px; border-radius: 4px; font-size: .72rem; font-weight: 700; border: 1px solid var(--line); background: var(--surface); color: var(--muted) }
-  .h-week span.c { background: var(--zc); border-color: var(--zc); color: #fff }
-  .h-week span.t { outline: 2px solid var(--fg); outline-offset: 1px }
-  .h-row { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap }
-  .h-name { font-weight: 700; font-size: 1.05rem }
 }
 </style>
 <style>/* Talavera */
@@ -388,7 +231,7 @@ main h1, main h2 { font-weight: 400; font-style: italic }
 footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-top: 34px }
 </style>
 <style>/* Muro de fotos: the headline over the protest-sign photos; pipelines/fotos.py writes the wall between its markers */
-main > .headline.cartel { position: relative; isolation: isolate; padding: 30px 0 36px; margin-top: -10px; margin-bottom: 0; color: #fff }
+main > .headline.cartel { position: relative; isolation: isolate; padding: 32px 0 40px; margin-top: -10px; margin-bottom: 0; color: #fff }
 main > .headline.cartel + .m-only + .m-only + .maphero { margin-top: 0 }
 .maphero .mapframe-box { border-top: 0 }
 .headline .fondo { position: absolute; z-index: -1; top: 0; bottom: 0; left: calc(50% - 50vw); right: calc(50% - 50vw); display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: minmax(0, 1fr); grid-auto-flow: dense; gap: 2px; background: #0a1022; overflow: hidden }
@@ -398,10 +241,10 @@ main > .headline.cartel + .m-only + .m-only + .maphero { margin-top: 0 }
 .headline .fondo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgb(10 16 34 / .9), rgb(10 16 34 / .76) 60%, rgb(10 16 34 / .5)) }
 @media (min-width: 1100px) { .headline .fondo::after { background: linear-gradient(90deg, rgb(10 16 34 / .45), rgb(10 16 34 / .9) calc(50vw - 464px), rgb(10 16 34 / .76) 60%, rgb(10 16 34 / .5)) } }
 .headline.cartel h1, .headline.cartel > div > p:not(.buttons):not(.kicker) { color: #fff }
-.headline.cartel .kicker { color: #fca5a5 }
+.headline.cartel .kicker { color: var(--mark) }
 .headline .pie { position: absolute; left: 0; bottom: 8px; margin: 0; font-size: .74rem; color: rgb(255 255 255 / .82) }
 .headline .pie a { color: #fff }
-@media (max-width: 760px) { .headline .fondo { grid-template-columns: repeat(4, 1fr) } main > .headline.cartel { padding: 18px 0 32px } }
+@media (max-width: 760px) { .headline .fondo { grid-template-columns: repeat(4, 1fr) } main > .headline.cartel { padding: 16px 0 32px } }
 </style>
 <script src="/theme.js"></script>
 <link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
@@ -432,7 +275,7 @@ main > .headline.cartel + .m-only + .m-only + .maphero { margin-top: 0 }
         <p class="kicker">El agua es un derecho. Exígelo.</p>
         <h1>El Gobierno de Jalisco prometió un día. Hay vecinos con semanas sin agua.</h1>
         <p>Agua GDL es un servicio ciudadano, gratuito y no oficial: te ayuda a saber cómo está el agua en tu colonia, prepararte para los cortes y pedir apoyo.</p>
-        <p class="buttons"><a class="button" href="/reportes">¿Hay agua en tu colonia?</a><a class="button alt" href="/avisos">Mi zona y avisos</a><a class="button alt" href="/pipas">Pedir una pipa</a></p>
+        <p class="buttons"><a class="button" href="/reportes">¿Hay agua en tu colonia?</a><a class="button alt" href="/avisos">Mi zona y avisos</a></p>
       </div>
       <img class="ilus" src="/img/ilustracion.png" alt="Caricatura de Pablo Lemus con la mano en una llave de la que cae una gota, sobre la Catedral de Guadalajara y una multitud que protesta" width="517" height="640">
     </div>
@@ -474,7 +317,7 @@ main > .headline.cartel + .m-only + .m-only + .maphero { margin-top: 0 }
     </div>
     <section class="yours" aria-labelledby="tuya">
       <h2 id="tuya">¿Y en tu colonia?</h2>
-      <p class="lede">El <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">Gobierno de Jalisco</a> prometió «por máximo un día»; hay vecinos con <a href="https://www.nmas.com.mx/jalisco/sociedad/colonias-limitrofes-entre-tlaquepaque-y-guadalajara-carecen-de-agua/" rel="noopener">semanas sin agua</a>. Reporta tu colonia: <mark>cada reporte es un testimonio vecinal</mark> que ayuda a documentar dónde falta el agua. No es una medición oficial; puedes usarlo al exigir una solución. Sin cuenta y anónimo.</p>
+      <p class="lede">El <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">Gobierno de Jalisco</a> prometió «por máximo un día»; hay vecinos con <a href="https://www.nmas.com.mx/jalisco/sociedad/colonias-limitrofes-entre-tlaquepaque-y-guadalajara-carecen-de-agua/" rel="noopener">semanas sin agua</a>. Reporta tu colonia: cada reporte es un testimonio vecinal que ayuda a documentar dónde falta el agua. No es una medición oficial; puedes usarlo al exigir una solución. Sin cuenta y anónimo.</p>
       <p class="pulse" id="pulse" aria-live="polite" hidden></p>
       <form class="quick" action="/reportes" method="get" role="search">
         <label for="q">Tu colonia</label>
@@ -515,25 +358,26 @@ main > .headline.cartel + .m-only + .m-only + .maphero { margin-top: 0 }
       </div>
     </section>
     <div class="boxes">
-      <div class="alerta">
-        <p class="alerta-head"><span class="alerta-i" aria-hidden="true">!</span><span>El Gobierno de Jalisco dijo <span class="nw">«no serán cortes totales».</span><br>La CEA documentó afectaciones mayores.</span></p>
-        <p>La propia CEA reconoció el 19 de octubre <a href="https://siker.com.mx/zmg/94-colonias-se-quedan-sin-agua-o-reciben-caudal-minimo-tras-inicio-de-rotacion-en-la-zmg/" rel="noopener">94 colonias sin agua o con un caudal mínimo</a>, cuatro días después de que empezó la rotación.</p>
+      <div class="box">
+        <p class="box-head">El Gobierno de Jalisco dijo <span class="nw">«no serán cortes totales».</span> La CEA documentó afectaciones mayores</p>
+        <span class="box-num">94</span>
+        <p class="box-text"><a href="https://siker.com.mx/zmg/94-colonias-se-quedan-sin-agua-o-reciben-caudal-minimo-tras-inicio-de-rotacion-en-la-zmg/" rel="noopener">colonias sin agua o con un caudal mínimo</a> reconoció la propia CEA el 19 de octubre, cuatro días después de que empezó la rotación.</p>
       </div>
-      <a class="aviso" href="/exige">
-        <span class="aviso-head"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg></span>Exígeles a Lemus y al Congreso agua limpia y ríos sanos</span>
-        <span class="aviso-time">1&nbsp;día</span>
-        <span class="aviso-text">es lo más que iba a durar cada racionamiento, según el Gobierno de Jalisco. Si en tu colonia no se cumple, exígeselo al gobernador y a las 38 diputaciones, desde tu correo, X o Messenger.</span>
+      <a class="box" href="/exige">
+        <span class="box-head">Exígeles a Lemus y al Congreso agua limpia y ríos sanos</span>
+        <span class="box-num">1&nbsp;día</span>
+        <span class="box-text">es lo más que iba a durar cada racionamiento, según el Gobierno de Jalisco. Si en tu colonia no se cumple, exígeselo al gobernador y a las 38 diputaciones, desde tu correo, X o Messenger.</span>
         <span class="button">Exigir</span>
       </a>
-      <a class="aviso" href="/contamina">
-        <span class="aviso-head"><span class="i-badge" style="background:#0d9488"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg></span>Que saneen los ríos</span>
-        <span class="aviso-time">39</span>
-        <span class="aviso-text">empresas y puntos de descarga nombran los registros oficiales del Río Santiago. Un acueducto nuevo no limpia el agua: detener las descargas, sí.</span>
+      <a class="box" href="/contamina">
+        <span class="box-head">Que saneen los ríos</span>
+        <span class="box-num">39</span>
+        <span class="box-text">empresas y puntos de descarga nombran los registros oficiales del Río Santiago. Un acueducto nuevo no limpia el agua: detener las descargas, sí.</span>
         <span class="button">¿Quién contamina?</span>
       </a>
     </div>
     <section class="congreso" aria-labelledby="exige-rios">
-      <h2 id="exige-rios" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg></span>Pídeles a Lemus y al Congreso que saneen los ríos</h2>
+      <h2 id="exige-rios">Pídeles a Lemus y al Congreso que saneen los ríos</h2>
       <p>El 28 de octubre, la presidenta anunció que la Federación invertirá, a través de la Conagua, 14 mil 500 millones de pesos en los acueductos Chapala–Guadalajara y Calderón–San Gaspar y en ampliar la potabilizadora de San Gaspar, y el gobernador, que Jalisco pondrá 10 mil 200 millones (<a href="https://www.gob.mx/presidencia/prensa/gobierno-de-mexico-invertira-14-mil-500-mdp-para-garantizar-agua-en-guadalajara-sin-deuda-ni-privatizacion-presidenta-claudia-sheinbaum" rel="noopener" target="_blank">Presidencia</a>). Pero un tubo nuevo no limpia el agua: el Río Santiago lleva décadas contaminado por descargas industriales, y el SIAPA dice que el canal Las Pintas recibe descargas irregulares de aguas residuales (<a href="/contamina">fuentes</a>). Pídeles al gobernador y a las 38 diputaciones que saneen los ríos, que el agua llegue limpia y suficiente, que rindan cuentas y que el agua siga siendo pública.</p>
       <ul class="facts">
         <li><strong>$14,500 millones</strong><span>invertirá la Federación, a través de la Conagua, en los acueductos Chapala–Guadalajara y Calderón–San Gaspar y en ampliar la potabilizadora de San Gaspar, según <a href="https://www.gob.mx/presidencia/prensa/gobierno-de-mexico-invertira-14-mil-500-mdp-para-garantizar-agua-en-guadalajara-sin-deuda-ni-privatizacion-presidenta-claudia-sheinbaum" rel="noopener" target="_blank">Presidencia</a> (28 de octubre)</span></li>
@@ -548,54 +392,54 @@ main > .headline.cartel + .m-only + .m-only + .maphero { margin-top: 0 }
     </section>
     <section aria-labelledby="mas">
       <h2 id="mas">También puedes</h2>
-      <ul class="cards">
-        <li class="card">
-          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bell"/></svg></span>Recibir avisos de tu zona</h3>
+      <ul class="indice">
+        <li>
+          <h3>Recibir avisos de tu zona</h3>
           <p>Avisos ciudadanos por Telegram o en tu calendario antes de una tanda de cortes. Confirma siempre con el SIAPA.</p>
           <a href="/avisos">Activar avisos</a>
         </li>
-        <li class="card">
-          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#check"/></svg></span>Revisar cómo trabajamos</h3>
+        <li>
+          <h3>Revisar cómo trabajamos</h3>
           <p>Fuentes, privacidad, criterios editoriales, correcciones y formas de participar. También hay una versión sencilla para conexiones lentas.</p>
           <a href="/transparencia">Transparencia</a> · <a href="/simple">Versión sencilla</a>
         </li>
-        <li class="card">
-          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#phone"/></svg></span>Pedir una pipa</h3>
+        <li>
+          <h3>Pedir una pipa</h3>
           <p>Los teléfonos y WhatsApp oficiales del SIAPA y de Guadalajara, Zapopan, Tlaquepaque y Tonalá, cada uno con su fuente.</p>
           <a href="/pipas">¿Sin agua? Pide una pipa</a>
         </li>
-        <li class="card">
-          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg></span>Leer la crisis al día</h3>
+        <li>
+          <h3>Leer la crisis al día</h3>
           <p>Los cortes, la marcha, las personas detenidas y el acueducto privado, con sus fuentes.</p>
           <a href="/noticias">Noticias</a>
         </li>
-        <li class="card">
-          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg></span>Ver quién contamina el agua</h3>
+        <li>
+          <h3>Ver quién contamina el agua</h3>
           <p>Las 39 empresas y puntos de descarga que nombran los registros oficiales del Río Santiago y el daño a la salud, con sus fuentes.</p>
           <a href="/contamina">¿Quién contamina?</a>
         </li>
-        <li class="card">
-          <h3 class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg></span>Ver lo que prometieron</h3>
+        <li>
+          <h3>Ver lo que prometieron</h3>
           <p>Las promesas del gobierno sobre el agua y el acueducto, cada una junto a la ley o el documento oficial, con fuentes y plazos.</p>
           <a href="/promesas">Las promesas</a>
         </li>
       </ul>
     </section>
     <section class="why" aria-labelledby="por-que">
-      <h2 id="por-que" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#heart"/></svg></span>Por qué</h2>
+      <h2 id="por-que">Por qué</h2>
       <p>El agua es un derecho, y en Guadalajara no se está cumpliendo. Queremos que sea fácil comprobarlo y exigirlo: dónde falta el agua, a quién le toca arreglarlo y qué prometió.</p>
       <p>Juntamos los reportes de los vecinos en un <a href="/reportes">mapa</a>. También puedes <a href="/exige">exigir por tu cuenta</a> y ver <a href="/promesas">las promesas del acueducto frente a los documentos</a>.</p>
       <ul class="values">
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#check"/></svg>Gratuito</li>
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#check"/></svg>Sin anuncios</li>
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#check"/></svg>No oficial</li>
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#check"/></svg>Sin partido</li>
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#check"/></svg>No guardamos tu nombre ni tu teléfono</li>
-        <li><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#check"/></svg>Código abierto</li>
+        <li>Gratuito</li>
+        <li>Sin anuncios</li>
+        <li>No oficial</li>
+        <li>Sin partido</li>
+        <li>No guardamos tu nombre ni tu teléfono</li>
+        <li>Código abierto</li>
       </ul>
     </section>
     <section class="contact" aria-labelledby="contacto">
-      <h2 id="contacto" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#mail"/></svg></span>Contacto</h2>
+      <h2 id="contacto">Contacto</h2>
       <p>¿Tienes dudas o datos sobre el agua en tu colonia, o quieres ayudar? Si eres de una organización vecinal o civil que trabaja por el agua, también nos encantaría hablar.</p>
       <a class="email" href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>
     </section>
@@ -653,7 +497,7 @@ const aguaM = (() => {
 
 // On a phone m5 stays where the visitor lands: no scroll down to the map.
 if (aguaM.phone) document.documentElement.dataset.quieto = "";
-if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.datos, fetch("https://api.aguagdl.com/v1/zones").then((r) => r.json()).catch(() => [])]).then(([topo, d, api]) => {
+if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.datos]).then(([topo, d]) => {
   const g = aguaMapa.decode(topo), pubs = new Map(d.cols.map((c) => [c.k, c]));
   // Colour and size both follow the colonia's reports: the more, the bigger and the deeper red, in either theme.
   const STEP = (n) => n >= 15 ? 4 : n >= 5 ? 3 : n >= 2 ? 2 : 1, RED = [, "#f59d8b", "#ea6d56", "#cc361e", "#90200e"];
@@ -693,22 +537,10 @@ if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.
     if (n === 3) map.panBy([-30, 0], { animate: false }); // zone 3's reports sit left of its outline's middle
   };
 
-  const DAYS = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];
-  const hoyISO = new Date().toLocaleDateString("en-CA", { timeZone: "America/Mexico_City" });
-  const dayName = (iso) => new Date(iso + "T12:00").toLocaleDateString("es-MX", { weekday: "long", day: "numeric", month: "long" });
   const info = (n) => {
-    const z = (api.zones || []).find((x) => x.zone === n) || { days: [], next: [] };
     const cs = unique(mine(n)), total = new Set(g.colonias.filter((f) => inZone(f, n)).map(key)).size;
-    const next = z.next.find((x) => x >= hoyISO);
-    return { days: z.days, hoy: next === hoyISO, next: z.next.find((x) => x > hoyISO), total, cs,
-      week: cs.filter((c) => c.pub.dias >= 7).length, top: [...cs].sort((a, b) => b.pub.n - a.pub.n)[0] };
+    return { total, week: cs.filter((c) => c.pub.dias >= 7).length };
   };
-  const week = (i) => `<div class="h-week">${DAYS.map((d, j) => {
-    const today = (new Date(hoyISO + "T12:00").getDay() + 6) % 7 === j;
-    return `<span class="${i.days.includes(d) ? "c" : ""}${today ? " t" : ""}">${d[0].toUpperCase()}</span>`;
-  }).join("")}</div>`;
-  const cut = (i) => i.hoy ? '<span class="h-hoy">Hoy hay corte</span>' : i.next ? `Próximo corte: <b>${dayName(i.next)}</b>` : "";
-  const nm = (c) => aguaM.name(`${c.f.properties.n}|`);
   const over = (n) => { const i = info(n); return `<div class="h-row"><span class="h-big">${i.week}</span><span>de sus ${i.total} colonias llegaron a <b>una semana o más sin agua</b></span></div>`; };
   const track = document.getElementById("m5-track"), dots = document.getElementById("m5-dots");
   track.innerHTML = g.zonas.map((z) => { const n = z.properties.z; return `<article class="m5-card" style="--zc:${zc(n)}"><a href="/reportes?zona=${n}" aria-label="La zona ${n} en el mapa de reportes"><div class="m5-map" data-z="${n}"></div></a><span class="m5-tag">Zona ${n}</span><div class="m5-over">${over(n)}</div></article>`; }).join("");

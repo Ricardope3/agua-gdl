@@ -54,12 +54,7 @@ header.top { position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wr
 @media (max-width: 760px) { .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center } .site-nav a { flex: 1 1 22%; justify-content: center } }
 @media (max-width: 560px) { header.top { position: static; padding: 8px 16px } .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center; gap: 2px } .site-nav a { flex: 1 1 22%; justify-content: center; padding: 4px; font-size: .82rem; line-height: 1.35 } .site-nav .i { display: none } }
 .i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
-.i { --ic: var(--brand) }
-.i:has(use[href$="#bell"]), .i:has(use[href$="#megaphone"]) { --ic: #d97706 }
-.i:has(use[href$="#map-pin"]) { --ic: #e11d48 }
-.i:has(use[href$="#landmark"]) { --ic: #7c3aed }
-.i:has(use[href$="#heart"]) { --ic: #dc2626 }
-@media (prefers-color-scheme: dark) { .i:has(use[href$="#bell"]), .i:has(use[href$="#megaphone"]) { --ic: #fbbf24 } .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#landmark"]) { --ic: #a78bfa } .i:has(use[href$="#heart"]) { --ic: #f87171 } }
+.i { --ic: currentColor }
 .site-nav .i { color: var(--ic) }
 .site-nav a[aria-current="page"] .i { color: inherit }
 h1 { font-size: clamp(2rem, 6vw, 3rem); line-height: 1.08; letter-spacing: -.03em; font-weight: 700; margin: 20px 0 16px; text-wrap: balance }

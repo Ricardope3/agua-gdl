@@ -68,13 +68,7 @@ header.top { position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wr
 h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.08; letter-spacing: -.03em; font-weight: 700; margin: 12px 0 10px; text-wrap: balance }
 .lede { font-size: 1.05rem; color: var(--muted); margin: 0 0 16px; max-width: 64ch }
 .i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
-.i { --ic: var(--brand) }
-.i:has(use[href$="#megaphone"]) { --ic: #d97706 }
-.i:has(use[href$="#landmark"]) { --ic: #7c3aed }
-.i:has(use[href$="#heart"]) { --ic: #dc2626 }
-.i:has(use[href$="#map-pin"]) { --ic: #e11d48 }
-.i:has(use[href$="#send"]) { --ic: #229ed9 }
-@media (prefers-color-scheme: dark) { .i:has(use[href$="#megaphone"]) { --ic: #fbbf24 } .i:has(use[href$="#landmark"]) { --ic: #a78bfa } .i:has(use[href$="#heart"]) { --ic: #f87171 } .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#send"]) { --ic: #2aabee } }
+.i { --ic: currentColor }
 .site-nav .i, p > .i, h2 > .i { color: var(--ic) }
 .site-nav a[aria-current="page"] .i { color: inherit }
 .button { display: inline-flex; align-items: center; gap: 6px; background: var(--primary); color: var(--on-primary); font: inherit; font-weight: 500; font-size: .95rem; text-decoration: none; padding: 10px 16px; border: 1px solid transparent; border-radius: 8px; box-shadow: var(--shadow); cursor: pointer; transition: background .15s }

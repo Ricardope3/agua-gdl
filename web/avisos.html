@@ -66,15 +66,7 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 @media (max-width: 760px) { .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center } .site-nav a { flex: 1 1 22%; justify-content: center } }
 @media (max-width: 560px) { header.top { padding: 8px 16px } .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center; gap: 2px } .site-nav a { flex: 1 1 22%; justify-content: center; padding: 4px; font-size: .82rem; line-height: 1.35 } .site-nav .i { display: none } }
 .i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
-.i { --ic: var(--brand) }
-.i:has(use[href$="#bell"]), .i:has(use[href$="#megaphone"]) { --ic: #d97706 }
-.i:has(use[href$="#map-pin"]) { --ic: #e11d48 }
-.i:has(use[href$="#landmark"]) { --ic: #7c3aed }
-.i:has(use[href$="#heart"]) { --ic: #dc2626 }
-.i:has(use[href$="#check"]) { --ic: #16a34a }
-.i:has(use[href$="#calendar"]) { --ic: #4f46e5 }
-.i:has(use[href$="#send"]) { --ic: #229ed9 }
-@media (prefers-color-scheme: dark) { .i:has(use[href$="#bell"]), .i:has(use[href$="#megaphone"]) { --ic: #fbbf24 } .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#landmark"]) { --ic: #a78bfa } .i:has(use[href$="#heart"]) { --ic: #f87171 } .i:has(use[href$="#check"]) { --ic: #4ade80 } .i:has(use[href$="#calendar"]) { --ic: #818cf8 } .i:has(use[href$="#send"]) { --ic: #2aabee } }
+.i { --ic: currentColor }
 .site-nav .i, li > .i, p > .i, summary > .i, h2 > .i, h3 > .i { color: var(--ic) }
 .site-nav a[aria-current="page"] .i { color: inherit }
 .button { display: inline-flex; align-items: center; gap: 6px; background: var(--primary); color: var(--on-primary); font: inherit; font-weight: 500; font-size: .95rem; text-decoration: none; padding: 10px 16px; border: 1px solid transparent; border-radius: 8px; box-shadow: var(--shadow); cursor: pointer; transition: background .15s }
@@ -263,7 +255,7 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 section { padding: 30px 0 8px }
 h2.sec { font-size: 1.4rem; line-height: 1.2; margin: 0 0 12px; letter-spacing: -.02em; font-weight: 600; text-wrap: balance }
 h2.ih { display: flex; align-items: center; gap: 10px }
-.ih .i-badge { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--brand); color: var(--on-primary); flex-shrink: 0 }
+.ih .i-badge { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--subtle); color: var(--brand); flex-shrink: 0 }
 .ih .i-badge .i { color: inherit }
 section p { margin: 0 0 14px; max-width: 70ch }
 ul.plain { padding-left: 1.3em; margin: 0 0 14px }

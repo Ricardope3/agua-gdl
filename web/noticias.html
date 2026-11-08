@@ -81,14 +81,9 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 @media (max-width: 760px) { .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center } .site-nav a { flex: 1 1 22%; justify-content: center } }
 @media (max-width: 560px) { header.top { position: static; padding: 8px 16px } .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center; gap: 2px } .site-nav a { flex: 1 1 22%; justify-content: center; padding: 8px 4px; font-size: .82rem; line-height: 1.35 } .site-nav .i { display: none } }
 main > section + section { margin-top: 8px }
-.ih .i-badge { background: var(--brand); color: var(--on-primary) }
+.ih .i-badge { background: var(--subtle); color: var(--brand) }
 .site-nav a[aria-current="page"] .i { color: inherit }
-.i { --ic: var(--brand) }
-.i:has(use[href$="#megaphone"]) { --ic: #d97706 }
-.i:has(use[href$="#map-pin"]) { --ic: #e11d48 }
-.i:has(use[href$="#heart"]) { --ic: #dc2626 }
-.i:has(use[href$="#shield-check"]) { --ic: #16a34a }
-@media (prefers-color-scheme: dark) { .i:has(use[href$="#megaphone"]) { --ic: #fbbf24 } .i:has(use[href$="#map-pin"]) { --ic: #fb7185 } .i:has(use[href$="#heart"]) { --ic: #f87171 } .i:has(use[href$="#shield-check"]) { --ic: #4ade80 } }
+.i { --ic: currentColor }
 .site-nav .i, li > .i, p > .i, summary > .i, h3 > .i { color: var(--ic) }
 :root { --rep: #dc2626; --jus: #ea580c; --agua: #0284c7; --acu: #7c3aed; --pro: #0d9488; --night: #0b1118 }
 @media (prefers-color-scheme: dark) { :root { --rep: #f87171; --jus: #fb923c; --agua: #38bdf8; --acu: #a78bfa; --pro: #2dd4bf } }
