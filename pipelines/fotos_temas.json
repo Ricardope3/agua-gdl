@@ -177,7 +177,8 @@
   "img/videos/youtube-HI7IvAGzMjw.webp": "protesta",
   "img/videos/youtube-JgLc7pyUj0M.webp": "protesta",
   "img/videos/youtube-UB-TR9GkYOQ.webp": "protesta",
-  "img/videos/youtube-upEOMWRrHuQ.webp": "protesta"
+  "img/videos/youtube-upEOMWRrHuQ.webp": "protesta",
+  "img/fotos/telediario-reel-1843437323326305.webp": "protesta"
  },
  "fuera": [
   "fuentes/00d93c39a1c2.jpg",
@@ -460,7 +461,8 @@
   "img/fotos/zonadocs-2026-11-01-queremos-agua.webp",
   "img/noticias/2026-11-05-congreso-1.webp",
   "img/noticias/2026-11-05-congreso-2.webp",
-  "img/videos/x-2109389377801486675.webp"
+  "img/videos/x-2109389377801486675.webp",
+  "img/fotos/telediario-reel-1843437323326305.webp"
  ],
  "extra": [
   {
@@ -498,6 +500,26 @@
     "al": "2026-11-05"
    },
    "nota": "creation_time 1793563230 (1 nov 2026, 14:00 en Guadalajara). Foto de la columna, recortada sin el sello «Manos Libres»."
+  },
+  {
+   "img": "img/fotos/telediario-reel-1843437323326305.webp",
+   "url": "https://www.facebook.com/reel/1843437323326305",
+   "fecha": "2026-11-06",
+   "quien": "Telediario Guadalajara",
+   "colonias": [
+    "PASEO PUENTE VIEJO|Tonalá|45424"
+   ],
+   "video": true,
+   "alt": "Carteles en el bloqueo de la carretera libre a Zapotlanejo: «SIAPA queremos Echos no palabras. Puente viejo» y «¿Sheinbaum tu acarreas agua? ¡Verdad que no? Att: el pueblo»",
+   "tema": "protesta",
+   "cita": "▶️ #ÚLTIMAHORA | “A menos de que haya una respuesta del SIAPA, no nos pensamos mover”: Vecinos bloquean la carretera libre a Zapotlanejo, a la altura de la colonia Puente Viejo, para denunciar que llevan 40 días sin agua.\n\n📺 #TelediarioMatutino",
+   "eco": {
+    "reacciones": 161,
+    "comentarios": 16,
+    "compartidos": 15,
+    "al": "2026-11-07"
+   },
+   "nota": "Página de Telediario Guadalajara (ya en publicaciones.json). creation_time 1793976350 (6 nov 2026, 8:45 en Guadalajara). Cuadro del segundo 8 del reel, recortado arriba de la franja «Denuncian 40 días sin agua»; los carteles tapan las caras. Mismo bloqueo que la nota y los reels 1426524436127985 y 1689233352622849 (publicaciones.json); va aquí y no allá porque repite la historia, con otros carteles. Colonia como en esas entradas."
   }
  ],
  "muro": {
