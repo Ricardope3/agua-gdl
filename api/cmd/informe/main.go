@@ -159,10 +159,11 @@ func email(w *informe.Week) string {
 	fmt.Fprintf(&b, "Asunto: Reportes de vecinos sobre el agua, %s\n\n", strings.ToLower(w.Title()[:1])+w.Title()[1:])
 	b.WriteString("Buenos días:\n\nSomos Agua GDL (aguagdl.com), una iniciativa ciudadana sin partido. Cada semana contamos los reportes que los vecinos hacen en nuestro mapa sobre el agua en su colonia.\n\n")
 	if t := w.Total(); t > 0 {
-		fmt.Fprintf(&b, "Esa semana llegaron %d reportes de %d colonias: %d sin agua, %d con poca presión y %d con agua.",
-			t, len(w.Colonias), w.SinAgua, w.Baja, w.ConAgua)
+		c := len(w.Colonias)
+		fmt.Fprintf(&b, "Esa semana %s %d %s de %d %s: %d sin agua, %d con poca presión y %d con agua.",
+			informe.Plural(t, "llegó", "llegaron"), t, informe.Plural(t, "reporte", "reportes"), c, informe.Plural(c, "colonia", "colonias"), w.SinAgua, w.Baja, w.ConAgua)
 		if n := w.LongDry(); n > 0 {
-			fmt.Fprintf(&b, " En %d colonias hubo reportes «sin agua» en más de un día, aunque el SIAPA anunció racionamientos «por máximo un día».", n)
+			fmt.Fprintf(&b, " En %d %s hubo reportes «sin agua» en más de un día, aunque el Gobierno de Jalisco anunció racionamientos «por máximo un día».", n, informe.Plural(n, "colonia", "colonias"))
 		}
 		b.WriteString("\n\n")
 	} else {

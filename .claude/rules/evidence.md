@@ -33,7 +33,7 @@ Three checks the scripts can't make (5 Nov legal review): a quote from a scanned
 
 Four more from the 5 Nov appeals (private research repo, lessons-learned §18), each caught only by a reader: credit words to whoever the source credits them to (an oficio's paraphrase of the President is the oficio's, «según el oficio»; a press quote with no speech verb is «la nota cita», not «X dijo»); keep a figure's qualifier as the source gives it («en condiciones operativas» is not «operan»; read every row before calling a table monthly); quote to the end of the clause that sets the meaning; and describe a request, promise or document point with all its alternatives, not the one that suits the argument.
 
-Field meanings, SIAPA's terms to quote as written, and word pairs agents got wrong: `docs/GLOSARIO.md`.
+Field meanings, official terms to quote as written, and word pairs agents got wrong: `docs/GLOSARIO.md`.
 
 Errors a fact-check found are listed in `KNOWN_ERRORS` (`pipelines/copy_rules.py`); `scripts/check_known_errors.py` (in `check.sh`) fails when one comes back in `web/`, `docs/`, `pipelines/` or the local `research/`, quotes included. When you find an error that could recur, add it there in the same commit as the fix.
 

@@ -51,7 +51,7 @@ KNOWN_ERRORS = [
          wrong=r"siapa(</a>)? (prometio|dijo|dice|anuncio)[^.;]{0,40}(un dia|cortes totales|racionamiento)|prometio el siapa|(segun|dice) el siapa[^.;]{0,40}(maximo un dia|cortes totales|racionamientos? (dura|por semana))|(maximo un dia|cortes totales|racionamiento)»?[^.;]{0,30}segun el siapa|segun el <a[^>]*rotaciondeservicio[^>]*>siapa</a>",
          ok=r"sistema|director|ajustar|tandeo|lista",
          msg="the rotation page that promises «por máximo un día» and «no serán cortes totales» speaks as the Gobierno de Jalisco, not SIAPA",
-         found="3 Nov 2026 (fact-check #5); still on 2,238 pages, the bot and the calendars on 4 Nov"),
+         found="3 Nov 2026 (fact-check #5); still on 2,238 pages, the bot and the calendars on 4 Nov; in the weekly email (api/cmd/informe, outside the scan until 7 Nov)"),
     dict(id="dos-a-tres-presente",
          bad='Según el SIAPA, cada zona tiene de 2 a 3 racionamientos por semana.', good='El Gobierno de Jalisco prometió de 2 a 3 racionamientos por semana; desde el 3 de noviembre su calendario marca cuatro días a las zonas 1, 2, 4 y 5.',
          wrong=r"cada zona tiene (de )?(2|dos) (a|y) (3|tres)|tiene entre (2|dos) y (3|tres) racionamientos|each zone has 2 to 3",

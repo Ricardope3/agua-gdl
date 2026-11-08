@@ -62,4 +62,8 @@ func TestWriteListsEachWeekNewestFirst(t *testing.T) {
 	if got := email(&informe.Week{From: date("2026-10-19")}); !strings.HasPrefix(got, "Asunto: Reportes de vecinos sobre el agua, semana del 19 al 25 de octubre de 2026") {
 		t.Errorf("email starts %q", got[:80])
 	}
+	one := &informe.Week{From: date("2026-10-19"), SinAgua: 1, Colonias: []informe.Colonia{{DryDays: 2}}}
+	if got := email(one); !strings.Contains(got, "Esa semana llegó 1 reporte de 1 colonia:") || !strings.Contains(got, "En 1 colonia hubo") || !strings.Contains(got, "el Gobierno de Jalisco anunció") {
+		t.Errorf("one report, one colonia:\n%s", got)
+	}
 }

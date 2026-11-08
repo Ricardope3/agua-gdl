@@ -19,7 +19,7 @@ from copy_rules import known_errors  # noqa: E402
 SUFFIXES = {".html", ".json", ".md", ".py", ".go", ".txt", ".yml", ".mjs", ".js"}
 SKIP_DIRS = {".git", "node_modules", "__pycache__", "worktrees", "combined", "text", "extracted", "ocr-images", "public-sources", "responses", "captures"}
 SKIP_FILES = {root / "pipelines/copy_rules.py"}
-DEFAULT = ["web", "docs", ".claude", ".github", "pipelines", "experiments", "api/internal/bot", "AGENTS.md", "README.md", "research"]
+DEFAULT = ["web", "docs", ".claude", ".github", "pipelines", "experiments", "api", "AGENTS.md", "README.md", "research"]
 
 def files(paths):
     for p in paths:

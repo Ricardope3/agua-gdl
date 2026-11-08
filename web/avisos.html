@@ -440,8 +440,10 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
 
   /* == SECTION: API and zones == */
   async function get(path, opts) {
-    const timeout = typeof AbortSignal.timeout === "function" ? { signal: AbortSignal.timeout(15000) } : {};
-    const res = await fetch(API + path, { ...timeout, ...opts });
+    // Keep the 15 s limit when the caller brings its own signal (the search cancels stale requests).
+    const sigs = [opts && opts.signal, typeof AbortSignal.timeout === "function" ? AbortSignal.timeout(15000) : null].filter(Boolean);
+    const signal = sigs.length > 1 && typeof AbortSignal.any === "function" ? AbortSignal.any(sigs) : sigs[0];
+    const res = await fetch(API + path, { ...opts, ...(signal ? { signal } : {}) });
     if (!res.ok) throw new Error("HTTP " + res.status);
     return res.json();
   }
@@ -507,7 +509,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
         el("a", { class: "button alt", href: googleCalendar(zone), rel: "noopener", target: "_blank" }, "Android o Google Calendar"),
         copy),
       el("p", { class: "note" }, `Cada día de racionamiento de la zona ${zone}, con alertas a las 8 p. m. dos días antes y la noche antes de cada tanda de cortes. No guardamos ningún dato tuyo.`),
-      el("p", { class: "note" }, el("strong", {}, "En iPhone, «agregar con alerta» "), "copia los días a tu calendario con la alerta incluida (ábrelo en Safari y toca «Agregar todo»). No se actualiza: si el SIAPA cambia el calendario lo avisaremos aquí y en el bot, y tendrás que borrarlos y agregarlos otra vez."),
+      el("p", { class: "note" }, el("strong", {}, "En iPhone, «agregar con alerta» "), "copia los días a tu calendario con la alerta incluida (ábrelo en Safari y toca «Agregar todo»). No se actualiza: si el SIAPA cambia el calendario, lo avisaremos aquí y tendrás que borrarlos y agregarlos otra vez."),
       el("p", { class: "note" }, el("strong", {}, "«Suscribirme» "), "se actualiza solo, pero al suscribirte desactiva «Eliminar alertas» o no te llegará el aviso. Si ya te suscribiste: Ajustes › Apps › Calendario › Cuentas › Calendarios suscritos › Agua GDL › desactiva «Eliminar alertas»."),
       el("p", { class: "note" }, el("strong", {}, "En Android: "), "Google Calendar no usa las alertas de los calendarios suscritos. En la app, abre Configuración › Agua GDL › Notificaciones de eventos de todo el día y agrega una el día anterior a las 8 p. m. (y otra dos días antes, si la quieres). Google Calendar las usa en cada día de corte, no solo en el primero de cada tanda."));
   }

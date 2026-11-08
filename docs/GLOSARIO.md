@@ -18,16 +18,16 @@ What words mean here. Rules for each field are in `.claude/rules/evidence.md`; t
 - `vista`: our 480 px JPEG of the post's preview in `web/fuentes/`; `null` for a logo or stock picture.
 - `captura`: our screenshot of the top of a news article (`web/fuentes/<hash>-t.jpg`). In `promesas.json`, `"captura": "privada"` instead means a private copy in the notes repo.
 
-## SIAPA's terms: quote them, don't paraphrase
+## Official terms: quote them, don't paraphrase
 
-- «racionamiento(s)», «por máximo un día», «no serán cortes totales», «disminución de la presión», «menos agua pero de mejor calidad». Put them in «…» and say they are SIAPA's; neighbours' reports stay theirs.
+- «racionamiento(s)», «por máximo un día», «no serán cortes totales», «disminución de la presión», «menos agua pero de mejor calidad». Put them in «…» and name who said them: «por máximo un día» and «no serán cortes totales» are the rotation page's, which speaks as the Gobierno de Jalisco (fact-check #5, 3 Nov); check the source for the others. Neighbours' reports stay theirs.
 
 ## Pairs agents got wrong (from git log)
 
 | Write | Not | Commit |
 |---|---|---|
 | avisos «de los cortes», «una vez por tanda cuando los cortes van seguidos» | «de cada corte» | 922b162 |
-| SIAPA: «por máximo un día», «no serán cortes totales» (quoted) | «solo baja la presión y por un día» | 922b162 |
+| Gobierno de Jalisco: «por máximo un día», «no serán cortes totales» (quoted) | «solo baja la presión y por un día» | 922b162 |
 | «ID de usuario de Telegram» | «ID de chat» | 922b162, e7a6bb9 |
 | te suscribes al mandar ubicación, colonia o zona | aceptas al tocar «Iniciar» | e7a6bb9 |
 | hashes / con hash | «cifradas» | e7a6bb9 |

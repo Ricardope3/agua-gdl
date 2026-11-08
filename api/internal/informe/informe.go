@@ -169,6 +169,14 @@ func b2i(b bool) int {
 	return 0
 }
 
+// Plural picks one when n is 1 and many otherwise.
+func Plural(n int, one, many string) string {
+	if n == 1 {
+		return one
+	}
+	return many
+}
+
 // Total counts the week's reports from the map.
 func (w *Week) Total() int { return w.SinAgua + w.Baja + w.ConAgua }
 
@@ -189,7 +197,7 @@ func (w *Week) Title() string {
 
 var months = [...]string{"enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"}
 
-// LongDry counts the colonias with «sin agua» reports on more days than SIAPA's one a cut.
+// LongDry counts the colonias with «sin agua» reports on more days than the rotation page's «por máximo un día».
 func (w *Week) LongDry() int {
 	n := 0
 	for _, c := range w.Colonias {
@@ -240,12 +248,7 @@ var page = template.Must(template.New("week").Funcs(template.FuncMap{
 		}
 		return strings.Join(s, " y ")
 	},
-	"plural": func(n int, one, many string) string {
-		if n == 1 {
-			return one
-		}
-		return many
-	},
+	"plural": Plural,
 }).Parse(`  <main>
     <p class="crumbs"><a href="/informes">El conteo de cada semana</a></p>
     <h1>{{.Title}}</h1>
