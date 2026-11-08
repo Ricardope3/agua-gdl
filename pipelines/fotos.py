@@ -12,6 +12,7 @@ anything showing a private person's name stay out, and a new preview stays out u
 Photos in "carteles" (a protest sign or banner you can read) take two columns; every photo keeps its
 proportions (the small masonry script places them; without JS, CSS columns show them one column wide).
 """
+import datetime
 import html
 import json
 import pathlib
@@ -102,13 +103,22 @@ def from_publicaciones(temas):
     return out
 
 
+def iso_day(month, day):
+    """/noticias gives no year. The rotation runs Oct 2026 to Mar 2027, so January to June
+    are 2027 unless that is still in the future (an older story)."""
+    d = datetime.date(2027 if month <= 6 else 2026, month, day)
+    if d > datetime.date.today():
+        d = d.replace(year=d.year - 1)
+    return d.isoformat()
+
+
 def from_noticias(temas):
     text = NOTICIAS.read_text()
     out = []
     day = None
     for m in re.finditer(r"<h3>(\d{1,2}) de (\w+)</h3>|<article\b.*?</article>|<figure class=\"video\".*?</figure>", text, re.S):
         if m.group(1):
-            day = f"2026-{MESES_LARGOS.index(m.group(2)) + 1:02d}-{int(m.group(1)):02d}"
+            day = iso_day(MESES_LARGOS.index(m.group(2)) + 1, int(m.group(1)))
             continue
         block = m.group(0)
         for fig in re.findall(r'<figure class="video".*?</figure>', block, re.S):
@@ -118,7 +128,7 @@ def from_noticias(temas):
             src = re.search(r'<span class="src">([^<]+) · (\d{1,2}) (\w{3})[^<]*</span>', fig)
             href = re.search(r'<figcaption><a href="([^"]+)"', fig).group(1)
             vt = re.search(r'<span class="vt">([^<]+)</span>', fig)
-            iso = f"2026-{MESES.index(src.group(3)) + 1:02d}-{int(src.group(2)):02d}"
+            iso = iso_day(MESES.index(src.group(3)) + 1, int(src.group(2)))
             out.append({"img": img, "tema": temas[img], "fecha": iso, "url": html.unescape(href), "quien": html.unescape(src.group(1)),
                         "lugar": "", "colonias": [], "video": True, "alt": html.unescape(vt.group(1)) if vt else "",
                         "titular": html.unescape(vt.group(1)) if vt else "", "cita": ""})
@@ -291,7 +301,7 @@ LAYOUT_JS = """<script>
         put(t, col, s);
       }
     }
-    box.style.height = Math.max(0, ...h) - g + 'px';
+    box.style.height = Math.max(0, Math.max(0, ...h) - g) + 'px';
   };
   let w = 0;
   new ResizeObserver(() => { if (box.clientWidth !== w) { w = box.clientWidth; lay(); } }).observe(box);

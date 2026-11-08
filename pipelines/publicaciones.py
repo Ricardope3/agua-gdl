@@ -237,7 +237,7 @@ def validate(doc):
         # source names; calidad: water quality (smell, color, sediment), not absence.
         if "regreso" in p:
             r = date(p.get("regreso"), where, "regreso")
-            if not r or r < since or (d and r > d):
+            if not r or (since and r < since) or (d and r > d):
                 fail(where, "regreso", p.get("regreso"), "an ISO date within desde..fecha", "use the date the source gives, or remove it")
         if p.get("parcial") not in (None, True):
             fail(where, "parcial", p.get("parcial"), "true or absent", "set true or remove the field")

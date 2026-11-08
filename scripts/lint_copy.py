@@ -33,11 +33,12 @@ def visible_html(text):
 
 def go_strings(text):
     # Keep only string literals ("…" and `…`), so identifiers and comments don't count.
+    # One left-to-right pass, so a // inside a string and a "…" inside a comment both stay
+    # what they are; rune literals are matched so '"' doesn't open a string.
     out = [" " if c != "\n" else "\n" for c in text]
-    for m in re.finditer(r'"(?:[^"\\\n]|\\.)*"|`[^`]*`', text):
-        out[m.start():m.end()] = m.group(0)
-    for m in re.finditer(r"//[^\n]*", "".join(out)):
-        out[m.start():m.end()] = blank(m)
+    for m in re.finditer(r'"(?:[^"\\\n]|\\.)*"|`[^`]*`|//[^\n]*|/\*.*?\*/|\'(?:[^\'\\\n]|\\.)*\'', text, re.S):
+        if m.group(0)[0] in '"`':
+            out[m.start():m.end()] = m.group(0)
     return "".join(out)
 
 

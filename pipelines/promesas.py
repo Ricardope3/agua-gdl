@@ -102,10 +102,13 @@ def strings(node, path=""):
 
 
 def is_quote(path, entry, text):
-    """Quotes are verbatim and exempt from the wording checks; a title counts when it is the quote itself."""
-    if path == "cita" or path.endswith(".cita") or re.search(r"\.citas\[\d+\]\.texto$", path):
+    """Quotes are verbatim and exempt from the wording checks; a title counts when it is the quote itself.
+    A paraphrased cita is our wording, not a quote."""
+    if path == "cita":
+        return not entry.get("parafrasis")
+    if path.endswith(".cita") or re.search(r"\.citas\[\d+\]\.texto$", path):
         return True
-    return path == "titulo" and text.strip("«» ") == entry.get("cita", "").strip()
+    return path == "titulo" and not entry.get("parafrasis") and text.strip("«» ") == entry.get("cita", "").strip()
 
 
 def validate(data):
@@ -117,15 +120,17 @@ def validate(data):
             if p.get(key) in seen or not p.get(key):
                 fail(where, key, p.get(key), "present and unique", f"set a {key} no other promesa uses")
             seen.add(p.get(key))
-        if not re.fullmatch(r"[a-z0-9-]+", p.get("id", "")):
+        if not re.fullmatch(r"[a-z0-9-]+", p.get("id") or ""):
             fail(where, "id", p.get("id"), "lowercase letters, digits and hyphens", "rename it, e.g. agua-potable-2027")
         if p.get("seccion") not in SECTIONS:
             fail(where, "seccion", p.get("seccion"), f"one of {sorted(SECTIONS)}", "set app or gobierno")
         if p.get("veredicto") not in VERDICTS:
             fail(where, "veredicto", p.get("veredicto"), f"one of {ORDER}", "use one of those keys")
-        for field in ("titulo", "cita", "quien", "cargo", "nota"):
-            if not str(p.get(field) or "").strip():
-                fail(where, field, p.get(field), "required, not blank", f"fill in {field}")
+        def required(node, prefix, *fields):
+            for field in fields:
+                if not str(node.get(field) or "").strip():
+                    fail(where, prefix + field, node.get(field), "required, not blank", f"fill in {prefix + field}")
+        required(p, "", "titulo", "cita", "quien", "cargo", "nota", "donde")
         date(p.get("fecha"), where, "fecha")
         date(p.get("veredicto_fecha"), where, "veredicto_fecha")
         sources = p.get("fuentes", [])
@@ -136,10 +141,13 @@ def validate(data):
         for j, s in enumerate(sources):
             source(s, where, f"fuentes[{j}]")
         for k, t in enumerate(p.get("tambien", [])):
+            required(t, f"tambien[{k}].", "cita", "quien", "cargo")
             date(t.get("fecha"), where, f"tambien[{k}].fecha")
             for j, s in enumerate(t.get("fuentes", [])):
                 source(s, where, f"tambien[{k}].fuentes[{j}]")
         doc = p.get("documento") or {}
+        for j, c in enumerate(doc.get("citas", [])):
+            required(c, f"documento.citas[{j}].", "texto")
         for j, s in enumerate(doc.get("fuentes", [])):
             source(s, where, f"documento.fuentes[{j}]")
         plazo = p.get("plazo") or {}
@@ -153,12 +161,16 @@ def validate(data):
         if sum(1 for s in steps if s.get("core")) != 1:
             fail(where, "pasos", f"{sum(1 for s in steps if s.get('core'))} core", "exactly one paso is core", "set core: true on exactly one paso")
         for i, s in enumerate(steps, 1):
+            required(s, f"paso {i}.", "texto")
             if s.get("estado") not in STEPS:
                 fail(where, f"paso {i}.estado", s.get("estado"), f"one of {sorted(STEPS)}", "use one of those estados")
             if s.get("estado") in NEEDS_EVIDENCE and not s.get("evidencia"):
                 fail(where, f"paso {i}.evidencia", s.get("evidencia"), f"{s.get('estado')} needs evidencia", "add a source or set estado pendiente")
             for j, ev in enumerate(s.get("evidencia", [])):
                 source(ev, where, f"paso {i}.evidencia[{j}]")
+        if r := p.get("respuesta"):
+            required(r, "respuesta.", "texto")
+            date(r.get("fecha"), where, "respuesta.fecha")
         verdict = p.get("veredicto")
         if verdict == "se_contradice" and not (any(str(c.get("texto", "")).strip() for c in doc.get("citas", [])) and doc.get("fuentes")):
             fail(where, "documento", doc, "«Se contradice» needs the document's exact words and its link", "add documento.citas[].texto and documento.fuentes")
@@ -184,6 +196,9 @@ def validate(data):
         date(c.get("fecha"), "top", f"correcciones[{k}].fecha")
     for k, r in enumerate(data.get("solicitudes", [])):
         date(r.get("fecha"), "top", f"solicitudes[{k}].fecha")
+    if asked := data.get("replica"):
+        date(asked.get("enviada"), "top", "replica.enviada")
+        date(str(asked.get("cierra") or "")[:10] or None, "top", "replica.cierra", future_ok=True)
 
 
 e = html.escape
