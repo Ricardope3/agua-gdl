@@ -37,6 +37,7 @@ TEMA = {"protesta": "Protesta", "sin-agua": "Sin agua", "calidad": "Agua sucia"}
 MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
 MESES_LARGOS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
 CHICAS = {"de", "del", "la", "las", "los", "el", "y", "en"}
+ROMANO = re.compile(r"(i{1,3}|iv|vi{0,3}|ix|x)$")  # as /reportes and /avisos write a colonia's «II»
 VIDEO_URL = re.compile(r"facebook\.com/(reel|watch|share/[rv])|fb\.watch|youtube\.com|youtu\.be|tiktok\.com")
 
 
@@ -70,8 +71,13 @@ def dims(path):
 
 def nombre(key):
     n, m, _ = key.split("|")
-    words = [w.capitalize() if i == 0 or w.lower() not in CHICAS else w.lower() for i, w in enumerate(n.split())]
-    return " ".join(words), m
+
+    def word(i, w):
+        pre, core = ("(", w[1:]) if w.startswith("(") else ("", w)
+        if ROMANO.match(core.lower().rstrip(")")):
+            return pre + core.upper()
+        return pre + (core.lower() if i and not pre and core.lower() in CHICAS else core.capitalize())
+    return " ".join(word(i, w) for i, w in enumerate(n.split())), m
 
 
 def fecha_larga(iso):

@@ -1,5 +1,6 @@
 {
  "_nota": "Fuente curada a mano el 3 nov 2026. Tlaquepaque: capas MUNICIPAL 1 y SIAPA del mapa público del Ayuntamiento (Google My Maps mid=1RDUyGrhgZPHMVaRZDfdnN0RZvI8HL6U, exportado como KML); solo dirección y coordenadas, sin los campos de personas; sin la capa PROPUESTAS. Guadalajara y Tonalá: solo la colonia que nombra la fuente.",
+ "revisado": "2026-11-03",
  "fuentes": {
   "tlq": {
    "url": "https://www.cronica.com.mx/jalisco/guadalajara/2026/10/22/distribuye-tlaquepaque-56-millones-de-litros-de-agua-ante-desabasto-por-tandeos",

@@ -165,6 +165,8 @@ def validate(doc):
                 fail("top", "busquedas", [busquedas[0], busquedas[-1]], "within desde..actualizado", "drop out-of-range dates or move desde/actualizado")
     seen = set()
     said = set()
+    twins = {}
+    spellings = {}
     pages = PAGINAS | {p["quien"] for p in doc.get("publicaciones") or [] if p.get("fuente") == "medio" and isinstance(p.get("quien"), str)}
     for i, p in enumerate(doc.get("publicaciones") or []):
         where = f"{i} {show(p.get('url', ''))}"
@@ -191,6 +193,17 @@ def validate(doc):
                 if (words, k) in said:
                     fail(where, "cita", k, "a neighbour's words count once per colonia", "drop this colonia or the repeated entry")
                 said.add((words, k))
+        if p.get("fuente") == "medio" and isinstance(p.get("quien"), str) and p["quien"]:
+            # One outlet, one spelling: /reportes counts an outlet's stories as one source by its name.
+            name = "".join(c for c in unicodedata.normalize("NFD", p["quien"].lower()) if c.isalnum())
+            if name and spellings.setdefault(name, p["quien"]) != p["quien"]:
+                fail(where, "quien", p["quien"], f"the outlet's name as other entries spell it ({spellings[name]})", "use one spelling for the outlet")
+            # An outlet's story under two links (its article and its video) is one story: both name
+            # the post it retells, or neither does, so they count as the same source.
+            if isinstance(p.get("cita"), str):
+                story = (name, "".join(c for c in unicodedata.normalize("NFD", p["cita"].lower()) if c.isalnum()))
+                if twins.setdefault(story, p.get("de")) != p.get("de"):
+                    fail(where, "de", p.get("de"), f"the same de as the outlet's other entry with these words ({twins[story]})", "set the same de on both entries, or remove it from both")
         if "de" in p and not (p.get("fuente") == "medio" and str(p["de"]).startswith("https://")):
             fail(where, "de", p["de"], "de is the https post a news story retells (fuente medio)", "set an https URL on a medio entry or remove de")
         quien = p.get("quien")

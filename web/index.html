@@ -456,7 +456,7 @@ main > .headline.cartel + .m-only + .m-only + .maphero { margin-top: 0 }
 
 const aguaM = (() => {
   const SMALL = ["de", "del", "la", "las", "los", "el", "y"];
-  const name = (k) => k.split("|")[0].toLowerCase().replace(/(^|[\s(])([^\s(]+)/g, (m, p, w) => p + (SMALL.includes(w) && p ? w : w[0].toUpperCase() + w.slice(1)));
+  const name = (k) => k.split("|")[0].toLowerCase().replace(/(^|[\s(])([^\s(]+)/g, (m, p, w) => p + (/^(i{1,3}|iv|vi{0,3}|ix|x)\)?$/.test(w) ? w.toUpperCase() : SMALL.includes(w) && p && p !== "(" ? w : w[0].toUpperCase() + w.slice(1)));
   const link = (k) => { const [q, m, cp] = k.split("|"); return "/reportes?" + new URLSearchParams({ q, m, cp }); };
   const fmt = (n) => n.toLocaleString("es-MX");
   const datos = fetch("/publicaciones.json").then((r) => r.json()).then((d) => {

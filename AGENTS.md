@@ -28,7 +28,7 @@ Layout: `api/` Go module (Go 1.27, pgx v5) on Fly.io with Neon Postgres; `pipeli
 ```sh
 scripts/check.sh          # vet, unit tests and data/web checks; integration tests skip (seconds)
 scripts/check.sh --quick  # skip Go
-scripts/check.sh --full   # what CI runs (bar govulncheck and the Docker build): race + integration tests on a throwaway Postgres
+scripts/check.sh --full   # CI's run (bar govulncheck, Docker build) plus smoke.sh, off in CI: race + integration tests on a throwaway Postgres
 npm run dev               # preview web/ at http://localhost:7100 (applies _redirects and _headers)
 node scripts/shot.mjs /reportes   # screenshots at 390 and 1300 px; the preview must be running
 ```

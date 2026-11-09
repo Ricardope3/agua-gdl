@@ -7,6 +7,7 @@ the colonia's outline from web/colonias_siapa.topo.json.
 """
 import json
 import pathlib
+import re
 import sys
 
 HERE = pathlib.Path(__file__).resolve().parent
@@ -82,8 +83,11 @@ def main():
             raise SystemExit(f"{c['municipio']} {c['colonia']}: {len(hits)} matches in the SIAPA layer")
         forma = outline(arcs, hits[0])
         colonias.append({**c, "centro": centre(max((poly[0] for poly in forma), key=len)), "forma": forma})
+    # The day the sources were last checked lives beside them, so editing one means moving it.
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(src.get("revisado"))):
+        raise SystemExit("cisternas_fuente.json: revisado must be the ISO date the sources were last checked")
     out = {
-        "revisado": "2026-11-03",
+        "revisado": src["revisado"],
         "fuentes": src["fuentes"],
         "puntos": src["puntos"],
         "colonias": colonias,

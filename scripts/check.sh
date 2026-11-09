@@ -2,7 +2,8 @@
 # Runs the checks CI runs. Usage: scripts/check.sh [--quick | --full]
 #   --quick  skip Go
 #   --full   go test -race with integration tests, against TEST_DATABASE_URL or a throwaway Postgres,
-#            and scripts/smoke.sh (headless Chrome; SKIPs when Chrome is missing)
+#            and scripts/smoke.sh (headless Chrome; SKIPs when Chrome is missing, and in CI
+#            unless SMOKE_CI=1, so CI does not run it)
 set -euo pipefail
 
 mode=default
@@ -83,7 +84,7 @@ if [[ $mode != quick ]]; then
 fi
 step "status_test.mjs" node --test experiments/reportes/status_test.mjs
 step "python unittest" python3 -m unittest discover -s pipelines -p 'test_*.py'
-for p in mapa_colonias promesas publicaciones zonas_json simple_page videos colonia_pages sitemap cisternas fotos; do
+for p in mapa_colonias promesas publicaciones zonas_json simple_page videos colonia_pages sitemap cisternas fotos secciones_escribe; do
   step "$p.py --check" python3 "pipelines/$p.py" --check
 done
 step "check_web.mjs" node scripts/check_web.mjs

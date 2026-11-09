@@ -7,6 +7,8 @@ import json
 from collections import Counter
 from pathlib import Path
 
+from fotos import nombre
+
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "web" / "simple.html"
 MONTHS = ("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre")
@@ -34,7 +36,7 @@ def build():
     colonias = Counter()
     for post in recent:
         for key in post["colonias"]:
-            colonias[key.split("|", 1)[0].strip().title()] += 1
+            colonias[nombre(key)[0]] += 1
     names = ", ".join(name for name, _ in colonias.most_common(12)) or "Sin publicaciones registradas en este periodo"
     posts = []
     for post in recent[:8]:
