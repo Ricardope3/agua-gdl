@@ -52763,6 +52763,28 @@
     }
    },
    "vista": null
+  },
+  {
+   "fuente": "medio",
+   "red": "x",
+   "quien": "Somos El Medio",
+   "url": "https://x.com/Somoselmedio/status/2119843785018651115",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "BELISARIO DOMINGUEZ|Guadalajara|44320",
+    "BELISARIO DOMINGUEZ|Guadalajara|44340",
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "colonias cercanas a Belisario Domínguez y Oblatos, Guadalajara",
+   "cita": "Vecinas y vecinos de colonias cercanas a Belisario Domínguez y Oblatos inician una marcha desde el cruce de Belisario Domínguez y Javier Mina rumbo al Congreso de Jalisco. Denuncian que llevan 40 días sin agua potable en sus hogares y entregarán un pliego petitorio",
+   "dias": 40,
+   "video": true,
+   "eco": {
+    "reacciones": 4,
+    "comentarios": 1,
+    "al": "2026-11-09"
+   },
+   "vista": "fuentes/eca44e5b5a7d.jpg"
   }
  ]
 }
