@@ -45,6 +45,30 @@ def municipios(m):
     return [fold(x).removeprefix("SAN PEDRO ") for x in re.split(r" y (?=[A-ZÁÉÍÓÚ])", m)]
 
 
+def unsafe(p):
+    """The keys among n, m and cp that the pages couldn't write into HTML as they are: an
+    HTML-significant or control character, or a postal code that isn't up to five digits.
+    Stricter than the escaping the pages do, on purpose: SIAPA's names have never held
+    one of these, so one appearing is a change to look at before anything is written."""
+    bad = [k for k in ("n", "m") if re.search(r'[<>&"\'\x00-\x1f]', str(p.get(k, "")))]
+    if not re.fullmatch(r"[0-9]{0,5}", str(p.get("cp", ""))):
+        bad.append("cp")
+    return bad
+
+
+def check_plain(topo):
+    """Fails on the first colonia whose properties aren't plain; returns how many it examined."""
+    n = 0
+    for g in topo["objects"]["colonias"]["geometries"]:
+        n += 1
+        if bad := unsafe(g["properties"]):
+            p = g["properties"]
+            sys.exit(f"{SRC.name}: {bad} of {p.get('n')!r} ({p.get('m')!r}, {p.get('cp')!r}) isn't plain text or digits; {n} properties examined")
+    if not n:
+        sys.exit(f"{SRC.name}: no colonias to check")
+    return n
+
+
 def decode_arcs(topo):
     sx, sy = topo["transform"]["scale"]
     tx, ty = topo["transform"]["translate"]
@@ -119,12 +143,13 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--check", action="store_true", help="fail if a file is out of date")
     args = ap.parse_args()
+    examined = check_plain(json.loads(SRC.read_bytes()))
     mapa, n, others, changed = build()
     if args.check:
         for path, text in ((OUT, mapa), (OTHERS, others)):
             if not path.exists() or path.read_text(encoding="utf-8") != text:
                 sys.exit(f"{path} is out of date: run python3 pipelines/mapa_colonias.py")
-        print(f"{OUT.name} and {OTHERS.name}: up to date ({n} colonias)")
+        print(f"{OUT.name} and {OTHERS.name}: up to date ({n} colonias; {examined} map properties plain)")
         return
     OUT.write_text(mapa, encoding="utf-8")
     OTHERS.write_text(others, encoding="utf-8")

@@ -199,16 +199,24 @@ func (r *Runner) sendChannel(ctx context.Context, channel string) (err error) {
 				}
 				budget = r.budget()
 			}
-			attempted, sendErr = r.Store.SendReminder(sendCtx, s, tomorrow, zones, budget, func(current store.Subscriber) (string, error) {
-				if current.Channel == store.Telegram {
-					m, err := bot.TelegramReminder(current.UserID, current.Zone, r.Schedule.Block(current.Zone, tomorrow))
-					if err != nil {
+			// Each attempt makes one request inside its own reservation, so the subscriber's
+			// row and the pool connection are held for one request, never across a wait: a
+			// refused attempt is recorded 'rejected' and the next one reserves it again (a
+			// BAJA in between wins). Waits stop at shutdown (ctx); requests use sendCtx.
+			sendErr = tg.Retry(func() error {
+				attempted, sendErr = r.Store.SendReminder(sendCtx, s, tomorrow, zones, budget, func(current store.Subscriber) (string, error) {
+					if current.Channel == store.Telegram {
+						m, err := bot.TelegramReminder(current.UserID, current.Zone, r.Schedule.Block(current.Zone, tomorrow))
+						if err != nil {
+							return "", err
+						}
+						_, err = r.Telegram.Send(sendCtx, m)
 						return "", err
 					}
-					return "", r.sendTelegram(ctx, sendCtx, m)
-				}
-				return r.Sender.Send(sendCtx, r.reminder(current, date))
-			})
+					return r.Sender.Send(sendCtx, r.reminder(current, date))
+				})
+				return sendErr
+			}, func(d time.Duration) error { return r.sleep(ctx, d) })
 			// Another sender may have taken the last slot since waitForCap looked.
 			if !errors.Is(sendErr, store.ErrOverBudget) {
 				break
@@ -302,15 +310,6 @@ func (r *Runner) sleep(ctx context.Context, d time.Duration) error {
 	}
 }
 
-// sendTelegram sends m through tg.Retry. Waits stop at shutdown (ctx); requests use sendCtx,
-// which doesn't.
-func (r *Runner) sendTelegram(ctx, sendCtx context.Context, m tg.Message) error {
-	return tg.Retry(func() error {
-		_, err := r.Telegram.Send(sendCtx, m)
-		return err
-	}, func(d time.Duration) error { return r.sleep(ctx, d) })
-}
-
 // sendAhead sends Telegram's notice two days before each block of cuts: neighbours report
 // the water goes a day early, so the evening before can be too late.
 func (r *Runner) sendAhead(ctx context.Context) error {
@@ -379,13 +378,19 @@ func (r *Runner) sendNotices(ctx context.Context, subs []store.Subscriber, key s
 			}
 		}
 		sendCtx := context.WithoutCancel(ctx)
-		attempted, sendErr := r.Store.SendNotice(sendCtx, s, key, nil, func(current store.Subscriber) (string, error) {
-			m, err := render(current)
-			if err != nil {
+		var attempted bool
+		var sendErr error
+		sendErr = tg.Retry(func() error { // one request per reservation, as in sendChannel
+			attempted, sendErr = r.Store.SendNotice(sendCtx, s, key, nil, func(current store.Subscriber) (string, error) {
+				m, err := render(current)
+				if err != nil {
+					return "", err
+				}
+				_, err = r.Telegram.Send(sendCtx, m)
 				return "", err
-			}
-			return "", r.sendTelegram(ctx, sendCtx, m)
-		})
+			})
+			return sendErr
+		}, func(d time.Duration) error { return r.sleep(ctx, d) })
 		var unreachable interface{ Gone() bool }
 		if errors.As(sendErr, &unreachable) && unreachable.Gone() {
 			r.Log.Info("subscriber blocked the bot; subscription deleted", "subscriber", s.ID)

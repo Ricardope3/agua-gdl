@@ -33,6 +33,9 @@ import unicodedata
 import urllib.request
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import mapa_colonias  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 TOPO_URL = "https://rotaciondeserviciosiapa.jalisco.gob.mx/geo/rotacion-siapa.topo.json"
 AJUSTES_URL = "https://rotaciondeserviciosiapa.jalisco.gob.mx/api/ajustes.php"
@@ -208,6 +211,9 @@ def main():
         p = g["properties"]
         z = zones_of(p.get("z", ""))
         props = {"n": p["n"].strip(), "m": p["m"].strip(), "cp": str(p.get("cp", "")).strip(), "z": ",".join(map(str, z))}
+        if bad := mapa_colonias.unsafe(props):
+            sys.exit(f"siapa_mapa: {bad} of {props['n']!r} ({props['m']!r}, {props['cp']!r}) isn't plain text or digits; "
+                     f"{len(colonias) + 1} properties examined, nothing written")
         with_zone += bool(z)
         hits = [listed[(fold(p["n"]), m)] for m in map(municipio, re.split(r"\s+Y\s+", fold(p["m"]))) if (fold(p["n"]), m) in listed]
         if hits:

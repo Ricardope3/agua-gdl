@@ -1346,3 +1346,39 @@ func TestWebReportsAndBotAnswers(t *testing.T) {
 		}
 	}
 }
+
+func TestAnswersProceedDuringAnInFlightSend(t *testing.T) {
+	db := testDB(t)
+	s := testSubscriber(t, db)
+	ctx, date := context.Background(), time.Now()
+	entered, release := make(chan struct{}), make(chan struct{})
+	sent := make(chan error, 1)
+	go func() {
+		_, err := db.SendReminder(ctx, s, date, []int{4}, nil, func(Subscriber) (string, error) { close(entered); <-release; return "accepted", nil })
+		sent <- err
+	}()
+	select {
+	case <-entered:
+	case err := <-sent:
+		t.Fatalf("send never started: %v", err)
+	case <-time.After(3 * time.Second):
+		t.Fatal("send timed out")
+	}
+	// The subscriber's own answer references their row (a key share), which the send's
+	// no-key lock lets through; BAJA and zone changes still wait (the test above).
+	answered := make(chan error, 1)
+	go func() { _, err := db.SaveWater(ctx, s.ID, 4, date, "no"); answered <- err }()
+	select {
+	case err := <-answered:
+		if err != nil {
+			t.Fatal(err)
+		}
+	case <-time.After(2 * time.Second):
+		close(release)
+		t.Fatal("an answer waited on the in-flight send")
+	}
+	close(release)
+	if err := <-sent; err != nil {
+		t.Fatal(err)
+	}
+}

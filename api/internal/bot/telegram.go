@@ -5,17 +5,90 @@ import (
 	"errors"
 	"fmt"
 	"regexp"
+	"slices"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 
+	"aguagdl/api/internal/colonias"
 	"aguagdl/api/internal/rotation"
 	"aguagdl/api/internal/store"
 	"aguagdl/api/internal/tg"
 )
 
+// ChatBudget is how many updates one chat may send per day. Past it, the update is
+// acknowledged and dropped before any store call, which caps what any one chat can cost
+// in Postgres time and sends. BAJA is served regardless, and so is Telegram's redelivery
+// of an update already counted (it carries a pending reply). A normal day is well under
+// it: subscribing takes 5 to 10 updates, an answer one.
+const ChatBudget = 40
+
+// maxBudgetedChats bounds the counter's memory; past it, new chats are let through.
+const maxBudgetedChats = 50000
+
+// chats counts each chat's updates today. Like buttonKey it is per process (the server
+// runs one Bot); it can't be a Bot field because process copies the Bot by value.
+var chats chatBudget
+
+type chatBudget struct {
+	mu     sync.Mutex
+	day    time.Time
+	counts map[int64]chatCount
+}
+
+type chatCount struct {
+	n    int
+	last int64 // the highest update ID seen; Telegram's IDs grow, so a lower one is a redelivery
+}
+
+// allow reports whether to process update id from chat today, and whether it is the first
+// one dropped for the chat today (the only drop worth a log line).
+func (c *chatBudget) allow(chat, id int64, day time.Time) (ok, firstDrop bool) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	if !day.Equal(c.day) {
+		c.day, c.counts = day, map[int64]chatCount{}
+	}
+	cc, seen := c.counts[chat]
+	if seen && id <= cc.last {
+		return true, false
+	}
+	if !seen && len(c.counts) >= maxBudgetedChats {
+		return true, false
+	}
+	c.counts[chat] = chatCount{n: cc.n + 1, last: id}
+	return cc.n < ChatBudget, cc.n == ChatBudget
+}
+
+// stopWord reports whether u is a plain BAJA, which the budget never drops.
+func stopWord(u tg.Update) bool {
+	return u.Message != nil && slices.Contains(stopWords, colonias.Normalize(u.Message.Text))
+}
+
+// chatOf is the chat an update comes from, or 0.
+func chatOf(u tg.Update) int64 {
+	switch {
+	case u.MyChatMember != nil:
+		return u.MyChatMember.Chat.ID
+	case u.CallbackQuery != nil:
+		return u.CallbackQuery.From.ID
+	case u.Message != nil:
+		return u.Message.Chat.ID
+	}
+	return 0
+}
+
 // HandleTelegram processes one webhook update. Returning an error makes Telegram retry it.
 func (b *Bot) HandleTelegram(ctx context.Context, u tg.Update) error {
+	if chat := chatOf(u); chat != 0 && !stopWord(u) {
+		if ok, first := chats.allow(chat, u.UpdateID, b.Schedule.Day(b.Now())); !ok {
+			if first {
+				b.Log.Warn("telegram updates dropped: a chat is over its daily budget")
+			}
+			return nil // 200: Telegram must not redeliver it
+		}
+	}
 	id := "tg:" + strconv.FormatInt(u.UpdateID, 10)
 	switch {
 	case u.MyChatMember != nil && u.MyChatMember.Chat.Type == "private":

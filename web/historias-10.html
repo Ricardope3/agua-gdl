@@ -656,9 +656,7 @@ const aguaM = (() => {
     const t = setInterval(() => { go(); try { if (f.contentDocument.getElementById("movil")) clearInterval(t); } catch {} }, 50);
     f.addEventListener("load", go);
   };
-  const rank = (list, n, max) => list.slice(0, n).map((c) =>
-    `<li><a href="${link(c.k)}"><b>${name(c.k)}</b><span class="d">${c.dias ? c.dias + " días" : c.n + " rep."}</span><small>${c.muni} · ${c.n} ${c.n === 1 ? "publicación" : "publicaciones"}</small>${max ? `<span class="m-bar"><i style="width:${Math.max(4, 100 * c.dias / max)}%"></i></span>` : ""}</a></li>`).join("");
-  return { datos, frame, name, link, fmt, rank, phone: matchMedia("(max-width: 760px)").matches };
+  return { datos, frame, name, link, fmt, phone: matchMedia("(max-width: 760px)").matches };
 })();
 { const f = document.querySelector(".mapframe"); if (!aguaM.phone) f.src = f.dataset.src; }
 
@@ -734,10 +732,11 @@ if (aguaM.phone) Promise.all([fetch(aguaMapa.DATA).then((r) => r.json()), aguaM.
   if (tres) { track.scrollLeft = tres.closest(".m5-card").offsetLeft - track.children[0].offsetLeft; mark(); }
 });
 
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 aguaM.datos.then((d) => {
   document.getElementById("m4-num").textContent = aguaM.fmt(d.semana);
   document.getElementById("m4-max").textContent = d.max;
-  document.getElementById("m4-munis").innerHTML = d.munis.slice(0, 5).map(([m, n]) => `<li><a href="/reportes"><b>${m.replace(/San Pedro Tlaquepaque/g, "Tlaquepaque")}</b><span class="d">${n}</span><small>colonias con publicaciones</small></a></li>`).join("");
+  document.getElementById("m4-munis").innerHTML = d.munis.slice(0, 5).map(([m, n]) => `<li><a href="/reportes"><b>${esc(m.replace(/San Pedro Tlaquepaque/g, "Tlaquepaque"))}</b><span class="d">${n}</span><small>colonias con publicaciones</small></a></li>`).join("");
 });
 const track = document.getElementById("m4-track"), dots = document.getElementById("m4-dots");
 dots.innerHTML = [...track.children].map(() => "<i></i>").join("");

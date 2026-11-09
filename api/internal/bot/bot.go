@@ -716,10 +716,11 @@ func (b *Bot) saveReport(ctx context.Context, r User, zone int, date, answer, si
 	if !s.CreatedAt.Before(d) {
 		return b.text(ctx, r, msgReportBeforeJoin)
 	}
-	// An unsigned current-zone button predates signatures. It proves no zone or date, so after
-	// a zone change it must not authorize a cut from before that change. Signed buttons keep
-	// the zone and date the bot actually offered, including after a change.
-	if sig == "" && !s.UpdatedAt.Before(d) {
+	// A current-zone button whose signature doesn't verify (older unsigned buttons, or
+	// made-up callback data) proves no zone or date, so after a zone change it must not
+	// authorize a cut from before that change. Signed buttons keep the zone and date the
+	// bot actually offered, including after a change.
+	if !signatureValid(r.ID, "R", zone, date, answer, sig) && !s.UpdatedAt.Before(d) {
 		return b.text(ctx, r, msgReportClosed)
 	}
 	if err := b.Store.SaveReport(ctx, s.ID, zone, d, answer); err != nil {
