@@ -5,6 +5,8 @@ import (
 	"compress/gzip"
 	"context"
 	"encoding/json"
+	"errors"
+	"fmt"
 	"io"
 	"log/slog"
 	"net/http"
@@ -451,6 +453,29 @@ func TestReportsFromTheMap(t *testing.T) {
 	var s webreports.Summary
 	if rec.Code != http.StatusOK || json.Unmarshal(rec.Body.Bytes(), &s) != nil || s.Total != 3 || s.Colonias != 1 || rec.Header().Get("Cache-Control") != "public, max-age=30" {
 		t.Errorf("summary: %d %s", rec.Code, rec.Body)
+	}
+}
+
+func TestReportFailureKeepsStorageErrorsOutOfTheReply(t *testing.T) {
+	disk := fmt.Errorf("durable report acknowledgement: %w", errors.New("write /data/web-reports.wal: no space left on device"))
+	if code, body, retry := reportFailure(disk); code != http.StatusInternalServerError || body != "internal error" || retry != "" {
+		t.Errorf("a failed log write: %d %q %q", code, body, retry)
+	}
+	for _, c := range []struct {
+		err   error
+		code  int
+		body  string
+		retry string
+	}{
+		{webreports.ErrUnknownColonia, http.StatusBadRequest, "unknown colonia", ""},
+		{webreports.ErrBadStatus, http.StatusBadRequest, "unknown status", ""},
+		{webreports.ErrTooMany, http.StatusTooManyRequests, "too many reports", "3600"},
+		{webreports.ErrBusy, http.StatusServiceUnavailable, "too many reports this hour", "600"},
+		{webreports.ErrColoniaFull, http.StatusTooManyRequests, "colonia: too many reports this hour", "900"},
+	} {
+		if code, body, retry := reportFailure(c.err); code != c.code || body != c.body || retry != c.retry {
+			t.Errorf("%v: %d %q %q", c.err, code, body, retry)
+		}
 	}
 }
 

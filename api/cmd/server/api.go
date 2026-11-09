@@ -486,24 +486,35 @@ func (a *api) reportesPost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	c, err := a.reports.Add(limitKey(clientIP(r)), in.Name, in.Municipio, in.CP, in.Status, in.Turbia, in.Olor, in.Sedimento)
-	switch {
-	case errors.Is(err, webreports.ErrTooMany):
-		w.Header().Set("Retry-After", "3600")
-		http.Error(w, "too many reports", http.StatusTooManyRequests)
-		return
-	case errors.Is(err, webreports.ErrBusy):
-		w.Header().Set("Retry-After", "600")
-		http.Error(w, "too many reports this hour", http.StatusServiceUnavailable)
-		return
-	case errors.Is(err, webreports.ErrColoniaFull):
-		w.Header().Set("Retry-After", "900")
-		http.Error(w, "colonia: too many reports this hour", http.StatusTooManyRequests)
-		return
-	case err != nil:
-		http.Error(w, err.Error(), http.StatusBadRequest)
+	if err != nil {
+		code, body, retry := reportFailure(err)
+		if code == http.StatusInternalServerError {
+			a.log.Error("reportes", "err", err)
+		}
+		if retry != "" {
+			w.Header().Set("Retry-After", retry)
+		}
+		http.Error(w, body, code)
 		return
 	}
 	writeJSON(w, c, "no-store")
+}
+
+// reportFailure is the reply to a report Add refused: status, body and Retry-After. /reportes
+// reads the status and these bodies. Anything Add doesn't name (the report log couldn't be
+// written) is the server's fault and gets no detail.
+func reportFailure(err error) (code int, body, retryAfter string) {
+	switch {
+	case errors.Is(err, webreports.ErrTooMany):
+		return http.StatusTooManyRequests, "too many reports", "3600"
+	case errors.Is(err, webreports.ErrBusy):
+		return http.StatusServiceUnavailable, "too many reports this hour", "600"
+	case errors.Is(err, webreports.ErrColoniaFull):
+		return http.StatusTooManyRequests, "colonia: too many reports this hour", "900"
+	case errors.Is(err, webreports.ErrUnknownColonia), errors.Is(err, webreports.ErrBadStatus):
+		return http.StatusBadRequest, err.Error(), ""
+	}
+	return http.StatusInternalServerError, "internal error", ""
 }
 
 // reportesOptions answers the browser's preflight for the JSON POST.
