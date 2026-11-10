@@ -69,10 +69,10 @@ REDES = {"facebook", "x", "web"}
 X_URL = re.compile(r"^https://x\.com/(\w{1,15})/status/(\d{8,20})$")
 VECINOS_QUIEN = ("Grupo «", "Cuenta de vecinos ")
 # Civil organisations' public pages that post neighbours' reports themselves (quien on a "vecinos" entry).
-ORGANIZACIONES = {"IMDEC A.C."}
+ORGANIZACIONES = {"IMDEC A.C.", "Mov. Colonias Unidas por el Agua"}
 # Public pages, not outlets with a "medio" entry, whose posts neighbours comment on (en.quien).
 # «Cuenta personal en X» describes a person's account without naming them.
-PAGINAS = {"Cuenta personal en X", "Cuenta personal en TikTok", "Gobierno de Guadalajara", "Gobierno de Jalisco", "Gobierno de Zapopan", "Jalisco ZMG", "Revista Jalisco", "SIAPA Guadalajara", "Tlaquepaque San Pedro", "Las Juntas, Mercado y Pueblo"} | ORGANIZACIONES
+PAGINAS = {"Cuenta personal en X", "Cuenta personal en TikTok", "Gobierno de Guadalajara", "Gobierno de Jalisco", "Gobierno de Zapopan", "Jalisco ZMG", "Revista Jalisco", "SIAPA Guadalajara", "Tlaquepaque San Pedro", "Las Juntas, Mercado y Pueblo", "GDL Norte"} | ORGANIZACIONES
 
 errors = []
 
