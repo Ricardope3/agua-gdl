@@ -9645,7 +9645,7 @@
     }
    },
    "url": "https://www.facebook.com/elinformador/posts/pfbid029YoC6Bfo3pdKqxVpAgqqajtaWLLxwKLvPSBcSyTp6mqTgsXw32ki8rQvkwYyQmPnl?comment_id=1419658456389646",
-   "fecha": "2026-10-20",
+   "fecha": "2026-10-19",
    "colonias": [
     "EL ORGANO|San Pedro Tlaquepaque|45588",
     "JARDINES DE SAN MARTIN|San Pedro Tlaquepaque|45580",
@@ -29336,36 +29336,6 @@
      "al": "2026-10-27"
     }
    },
-   "url": "https://www.facebook.com/TonaladeHoy/posts/pfbid02VLpLBGvNwrBDeb1KUv1z4gLFGCg8bGXMsRA2Nt7s37G8fDeLppkn5MVRpgRm2oJvl?comment_id=1908691803843195",
-   "fecha": "2026-10-26",
-   "colonias": [
-    "20 DE NOVIEMBRE|Tonalá|45404"
-   ],
-   "lugar": "20 de Noviembre, Tonalá",
-   "cita": "20 de noviembre",
-   "dias": null,
-   "eco": {
-    "reacciones": 9,
-    "comentarios": 2,
-    "al": "2026-10-27"
-   },
-   "vista": "fuentes/b730a2a3d48b.jpg"
-  },
-  {
-   "fuente": "vecinos",
-   "red": "facebook",
-   "tipo": "comentario",
-   "quien": "",
-   "en": {
-    "quien": "Tonalá de Hoy",
-    "url": "https://www.facebook.com/TonaladeHoy/posts/pfbid02VLpLBGvNwrBDeb1KUv1z4gLFGCg8bGXMsRA2Nt7s37G8fDeLppkn5MVRpgRm2oJvl",
-    "eco": {
-     "reacciones": 720,
-     "comentarios": 782,
-     "compartidos": 75,
-     "al": "2026-10-27"
-    }
-   },
    "url": "https://www.facebook.com/TonaladeHoy/posts/pfbid02VLpLBGvNwrBDeb1KUv1z4gLFGCg8bGXMsRA2Nt7s37G8fDeLppkn5MVRpgRm2oJvl?comment_id=2486852371841565",
    "fecha": "2026-10-26",
    "colonias": [
@@ -29638,7 +29608,8 @@
     "comentarios": 1,
     "al": "2026-10-31"
    },
-   "vista": "fuentes/bd8ae7d3b0aa.jpg"
+   "vista": "fuentes/bd8ae7d3b0aa.jpg",
+   "parcial": true
   },
   {
    "fuente": "vecinos",
@@ -32518,31 +32489,6 @@
      "al": "2026-11-04"
     }
    },
-   "url": "https://www.facebook.com/groups/276999063447388/posts/1805363240610955?comment_id=1805467903933822",
-   "eco": null,
-   "fecha": "2026-10-31",
-   "colonias": [
-    "20 DE NOVIEMBRE|Tonalá|45404"
-   ],
-   "lugar": "20 de noviembre, Tonalá",
-   "cita": "Ojalá resuelvan algo acá en la 20 de noviembre Tonalá Jalisco",
-   "vista": "fuentes/016f9309e9f9.jpg"
-  },
-  {
-   "fuente": "vecinos",
-   "red": "facebook",
-   "tipo": "comentario",
-   "quien": "",
-   "en": {
-    "quien": "Tonalá de Hoy",
-    "url": "https://www.facebook.com/groups/276999063447388/posts/1805363240610955",
-    "eco": {
-     "reacciones": 43,
-     "comentarios": 28,
-     "compartidos": 25,
-     "al": "2026-11-04"
-    }
-   },
    "url": "https://www.facebook.com/groups/276999063447388/posts/1805363240610955?comment_id=1807907710356508",
    "eco": null,
    "fecha": "2026-11-02",
@@ -32551,32 +32497,6 @@
    ],
    "lugar": "col 20 noviembre",
    "cita": "Otra vez sin agua, col 20 noviembre ya hagan algo",
-   "vista": "fuentes/016f9309e9f9.jpg"
-  },
-  {
-   "fuente": "vecinos",
-   "red": "facebook",
-   "tipo": "comentario",
-   "quien": "",
-   "en": {
-    "quien": "Tonalá de Hoy",
-    "url": "https://www.facebook.com/groups/276999063447388/posts/1805363240610955",
-    "eco": {
-     "reacciones": 43,
-     "comentarios": 28,
-     "compartidos": 25,
-     "al": "2026-11-04"
-    }
-   },
-   "url": "https://www.facebook.com/groups/276999063447388/posts/1805363240610955?comment_id=1807898150357464",
-   "eco": null,
-   "fecha": "2026-11-02",
-   "colonias": [
-    "20 DE NOVIEMBRE|Tonalá|45404"
-   ],
-   "lugar": "20 de Noviembre, Tonalá (según la publicación)",
-   "cita": "Llevamos 3 semanas sin agua ya es demasiado tiempo",
-   "dias": 21,
    "vista": "fuentes/016f9309e9f9.jpg"
   },
   {
@@ -39964,7 +39884,7 @@
     "JARDINES DE SAN MARTIN|San Pedro Tlaquepaque|45580"
    ],
    "lugar": "Jardines de San Martín, Tlaquepaque",
-   "cita": "Mi colonia jardines de San Martin Tlaquepaque ya dos meses,, hijos de de su puta madre",
+   "cita": "Mi colonia jardines de San Martin Tlaquepaque ya dos meses",
    "dias": null,
    "vista": "fuentes/4419005db122.jpg"
   },
@@ -49199,7 +49119,8 @@
     }
    },
    "vista": "fuentes/b0fb8ae633fb.jpg",
-   "captura": "fuentes/12ae9d282964-t.jpg"
+   "captura": "fuentes/12ae9d282964-t.jpg",
+   "desde": "2026-11-02"
   },
   {
    "fuente": "vecinos",
