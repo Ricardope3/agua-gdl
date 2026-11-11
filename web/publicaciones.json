@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-10",
+ "actualizado": "2026-11-11",
  "desde": "2026-10-12",
  "regla": {
   "reacciones": 5,
@@ -22,7 +22,8 @@
   "2026-11-06",
   "2026-11-07",
   "2026-11-09",
-  "2026-11-10"
+  "2026-11-10",
+  "2026-11-11"
  ],
  "publicaciones": [
   {
@@ -49202,7 +49203,8 @@
      "al": "2026-11-08"
     }
    },
-   "vista": "fuentes/b0fb8ae633fb.jpg"
+   "vista": "fuentes/b0fb8ae633fb.jpg",
+   "captura": "fuentes/08d02f50c0d7-t.jpg"
   },
   {
    "fuente": "vecinos",
@@ -49391,7 +49393,8 @@
      "al": "2026-11-08"
     }
    },
-   "vista": "fuentes/b0fb8ae633fb.jpg"
+   "vista": "fuentes/b0fb8ae633fb.jpg",
+   "captura": "fuentes/2ccb675c84ba-t.jpg"
   },
   {
    "fuente": "vecinos",
@@ -49716,7 +49719,8 @@
      "al": "2026-11-08"
     }
    },
-   "vista": "fuentes/8e6f016fb3af.jpg"
+   "vista": "fuentes/8e6f016fb3af.jpg",
+   "captura": "fuentes/ab0491b5e4bb-t.jpg"
   },
   {
    "fuente": "vecinos",
@@ -54427,6 +54431,2462 @@
     }
    },
    "parcial": true
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Notisistema",
+   "url": "https://www.notisistema.com/noticias/guadalajara-utiliza-pipas-de-bomberos-para-abastecer-de-agua-a-edificios-de-miravalle/",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "MIRAVALLE|Guadalajara|44990"
+   ],
+   "lugar": "colonia Miravalle",
+   "cita": "Cabe mencionar que en la colonia Miravalle llevan más de 10 días sin agua.",
+   "dias": 10,
+   "vista": "fuentes/7eba5fc996d6.jpg",
+   "captura": "fuentes/7eba5fc996d6-t.jpg",
+   "titular": "Guadalajara apoya con pipas de bomberos el abasto de agua en edificios de Miravalle"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Imagen TV Guadalajara",
+   "url": "https://www.youtube.com/watch?v=lmctpYdNP8I",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "Oblatos, Guadalajara",
+   "cita": "Habitantes de Oblatos, en Guadalajara, protestaron porque llevan más de 15 días sin agua.",
+   "dias": 15,
+   "video": true,
+   "vista": "fuentes/3d97f98ba908.jpg",
+   "captura": "fuentes/3d97f98ba908-t.jpg",
+   "titular": "Vecinos de Oblatos exigen al SIAPA respetar el calendario de suministro de agua | Noticias GDL"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Imagen TV Guadalajara",
+   "url": "https://www.youtube.com/watch?v=JVz640IWsbQ",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "zona de Oblatos, Guadalajara",
+   "cita": "Habitantes de la zona de Oblatos, en #Guadalajara, enfrentan más de 15 días continuos sin suministro de agua potable, rebasando el calendario oficial de tandeos del #SIAPA",
+   "dias": 15,
+   "video": true,
+   "vista": "fuentes/b223f8fe6fc9.jpg",
+   "captura": "fuentes/b223f8fe6fc9-t.jpg",
+   "titular": "¡Crisis por desabasto en Oblatos! suman más de 15 días sin agua | Noticias GDL"
+  },
+  {
+   "fuente": "medio",
+   "red": "x",
+   "quien": "Tráfico ZMG",
+   "url": "https://x.com/Trafico_ZMG/status/2120607968911614041",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "LOS SANTIBAÑEZ|San Pedro Tlaquepaque|45630"
+   ],
+   "lugar": "colonia Santibáñez, Tlaquepaque; bloqueo en la carretera libre a Zapotlanejo",
+   "cita": "Cinco meses sin una sola gota de agua ❗️💧 Así lo denunciaron vecinos de la colonia Santibáñez, en Tlaquepaque, durante el bloqueo que realizaron esta mañana en la carretera libre a Zapotlanejo.",
+   "dias": null,
+   "bloqueo": true,
+   "vista": "fuentes/31ca4cbd4863.jpg",
+   "video": true
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/mayel_alan/status/2120339885441630441",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "MAGAÑA|Guadalajara|44800"
+   ],
+   "lugar": "colonia Magaña",
+   "cita": "no tenemos agua en la colonia Magaña, sus rotaciones son una mentira",
+   "dias": null,
+   "eco": {
+    "reacciones": 15,
+    "comentarios": 1,
+    "al": "2026-11-11"
+   }
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/FerCaabrera/status/2120506458156540070",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "SAN MARCOS|Guadalajara|44330"
+   ],
+   "lugar": "Colonia San Marcos",
+   "cita": "En la Colonia San Marcos llevamos mes y medio sin que nos caiga una gota de agua",
+   "dias": 45,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2120158219792158870",
+    "eco": {
+     "reacciones": 26,
+     "comentarios": 105,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/60f0d5c78bb8.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/BeatrizFlo72/status/2120280335640601015",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "colonia Ciudad Granja, zona 6",
+   "cita": "hoy MARTES 10 de noviembre en la colonia Ciudad Granja ZONA 6 nos acaban de cortar el agua hace unos momentos y la abrieron ayer a las 9:30 p.m., ni siquiera 24 hrs. de agua y para acabarla sin presión.",
+   "dias": null,
+   "parcial": true,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2120158219792158870",
+    "eco": {
+     "reacciones": 26,
+     "comentarios": 105,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/60f0d5c78bb8.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/sarah_gallego/status/2120274180872532072",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "VILLA LA CIMA|Zapopan|45110"
+   ],
+   "lugar": "zona 6 (Villa la cima)",
+   "cita": "En la zona 6 (Villa la cima) llevamos al menos 10 días sin que caiga agua. No están respetando sus propios días de tandeo.",
+   "dias": 10,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2120158219792158870",
+    "eco": {
+     "reacciones": 26,
+     "comentarios": 105,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/60f0d5c78bb8.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/GdlPgarcia/status/2120181134843654401",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "MARIANO OTERO|Zapopan|45067"
+   ],
+   "lugar": "col. Mariano Otero, zona 6",
+   "cita": "de que hablan si col. Mariano Otero sigue sin una gota ya son 5 días",
+   "dias": 5,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2120158219792158870",
+    "eco": {
+     "reacciones": 26,
+     "comentarios": 105,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/60f0d5c78bb8.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/DuchessKlaus/status/2120313456557457698",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "ATLAS|Guadalajara|44870",
+    "JARDINES DEL ROSARIO|Guadalajara|44890"
+   ],
+   "lugar": "zona 3, colonia Atlas y Jardines del Rosario",
+   "cita": "Seguimos sin agua en la zona 3, colonia Atlas y Jardínes del Rosario",
+   "dias": null,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2120158219792158870",
+    "eco": {
+     "reacciones": 26,
+     "comentarios": 105,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/60f0d5c78bb8.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/ChavezDaniel25/status/2120182710920470723",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "ARRAYANES HABITAT|Zapopan|45100"
+   ],
+   "lugar": "Arrayanes Habitat coto 3, zona 6",
+   "cita": "Arrayanes habitat coto 3 es Zona 6 y seguimos sin agua",
+   "dias": null,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2120158219792158870",
+    "eco": {
+     "reacciones": 26,
+     "comentarios": 105,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/60f0d5c78bb8.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/RaulitoRdzPerez/status/2120020078330626380",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "LOS ALTOS|San Pedro Tlaquepaque|45520"
+   ],
+   "lugar": "colonia Los Altos, Tlaquepaque",
+   "cita": "La colonia Los Altos en Tlaquepaque ya tiene 9 días sin agua",
+   "dias": 9,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2119915502743224499",
+    "eco": {
+     "reacciones": 7,
+     "comentarios": 40,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/89581a8c4a5d.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/r_livier/status/2119811667605205305",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "PARQUES DE LA VICTORIA|San Pedro Tlaquepaque|45620"
+   ],
+   "lugar": "Parques de la Victoria, Tlaquepaque",
+   "cita": "tenemos tres semanas sin agua la colonia es parques de la victoria en Tlaquepaque",
+   "dias": 21,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2119778407185633367",
+    "eco": {
+     "reacciones": 21,
+     "comentarios": 102,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/175ae948defd.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/Mayo_Marino/status/2120153079483933131",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "LOMAS DEL CAMICHIN|Tonalá|45403"
+   ],
+   "lugar": "Lomas del Camichín, Tonalá",
+   "cita": "En Lomas del Camichin, Tonalá, no hay agua desde hace 2 semanas.",
+   "dias": 14,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2119858852808339475",
+    "eco": {
+     "reacciones": 19,
+     "comentarios": 70,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/643e1d1e4b9a.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/JesusVi38812404/status/2119788168941588582",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "RANCHO DE LA CRUZ|Tonalá|45410"
+   ],
+   "lugar": "Rancho de la Cruz, Tonalá",
+   "cita": "Este es mi número de reporte que ya 15 dias sin agua […] pero nunca acude nadie o no dan agua mínimo en las madrugadas para que se llene el tinaco […] ésto en rancho de la cruz tonala",
+   "dias": 15,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2119419115098210404",
+    "eco": {
+     "reacciones": 32,
+     "comentarios": 123,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/9a09959ee92e.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/Eduardo_gabanna/status/2120495299894694378",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "LAS HUERTAS|San Pedro Tlaquepaque|45589"
+   ],
+   "lugar": "Las Huertas, Tlaquepaque",
+   "cita": "Ya empezamos la 4ta semana sin agua en las huertas Tlaquepaque.",
+   "dias": null,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2110068351615852708",
+    "eco": {
+     "reacciones": 20,
+     "comentarios": 18,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/c6200c1db3c1.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/hipstervintage/status/2120336451141333428",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "CHAPALITA INN|Zapopan|45037"
+   ],
+   "lugar": "Chapalita Inn, zona 6",
+   "cita": "1 mes sin agua en zona 6, específicamente color chapalita inn, zona Guadalupe, periférico y no ayudan al menos con pipas",
+   "dias": 30,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2120158219792158870",
+    "eco": {
+     "reacciones": 26,
+     "comentarios": 105,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/60f0d5c78bb8.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/oabs86/status/2119788009214120411",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "CENTRO|San Pedro Tlaquepaque|45500",
+    "ATLAS|Guadalajara|44870",
+    "JARDINES DEL ROSARIO|Guadalajara|44890"
+   ],
+   "lugar": "Tlaquepaque Centro, Atlas, Jardines del Rosario, Rancho Blanco (zona 3)",
+   "cita": "Tlaquepaque Centro, Atlas, Jardines del Rosario, Rancho Blanco, son zona 3 y seguimos sin agua hoy Lunes 9 de Noviembre.",
+   "dias": null,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2119778407185633367",
+    "eco": {
+     "reacciones": 21,
+     "comentarios": 102,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/175ae948defd.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/bitegtz/status/2120355980777001303",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "PLAZA GUADALUPE|Zapopan|45030"
+   ],
+   "lugar": "Residencial Plaza Guadalupe",
+   "cita": "Si llevo más de mes y medio sin agua en residencial plaza Guadalupe!",
+   "dias": 45,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/2120158219792158870",
+    "eco": {
+     "reacciones": 26,
+     "comentarios": 105,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/60f0d5c78bb8.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/Medicocs4/status/2120360737721978902",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "MONUMENTAL|Guadalajara|44320"
+   ],
+   "lugar": "colonia Monumental",
+   "cita": "Colonia monumental 1 semana sin agua, urgen soluciones",
+   "dias": 7,
+   "tipo": "comentario",
+   "en": {
+    "quien": "Cuenta personal en X",
+    "url": "https://x.com/quake_jv/status/2120258065924866083",
+    "eco": {
+     "reacciones": 9,
+     "comentarios": 1,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/55a0f9ab9e51.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/PalosMartin/status/2120345257925824644",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "EL MANTE|Zapopan|45235"
+   ],
+   "lugar": "colonia El Mante, Zapopan",
+   "cita": "Igual si NOS MANDA AGUA a la Colonia El Mante […] MÁS DE UN MES SIN AGUA",
+   "dias": 30,
+   "tipo": "comentario",
+   "en": {
+    "quien": "Cuenta personal en X",
+    "url": "https://x.com/JuanJoseFrangie/status/2120260215144854013",
+    "eco": {
+     "reacciones": 11,
+     "comentarios": 10,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/4a709eda83ab.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/CarolinaVaBa/status/2119768447802376292",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "LOMA DORADA DELEGACION C|Tonalá|45402"
+   ],
+   "lugar": "Parque Las Lomas, Tonalá",
+   "cita": "No hay agua en parque las lomas en tonala no es parte ni de los tandeos y no tenemos agua ya tenemos una semana",
+   "dias": 7,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://x.com/siapagdl/status/1911850114177700307",
+    "eco": {
+     "reacciones": 147,
+     "comentarios": 992,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/5614e7169f0b.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid0wm9rUqJM8ErkHRrTZEoxRkTjQ91NBQrfmjCgqMZgvRMNM3gFQgwkEpkUe8n7kBLhl?comment_id=1604806577587195",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "JARDINES DE GUADALUPE|Zapopan|45030"
+   ],
+   "lugar": "Jardines de Guadalupe, Zapopan, 45030 (Toreros entre Ganaderos y Ecónomos)",
+   "cita": "Día 31 sin agua en: Toreros, entre Ganaderos y Ecónomos. Jardines de Guadalupe. Zapopan. 45030",
+   "dias": 31,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid0wm9rUqJM8ErkHRrTZEoxRkTjQ91NBQrfmjCgqMZgvRMNM3gFQgwkEpkUe8n7kBLhl",
+    "eco": {
+     "reacciones": 114,
+     "comentarios": 270,
+     "compartidos": 7,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/45e9564d8f06.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid0wm9rUqJM8ErkHRrTZEoxRkTjQ91NBQrfmjCgqMZgvRMNM3gFQgwkEpkUe8n7kBLhl?comment_id=1475264444812410",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "LOMAS DE LA PRIMAVERA|Zapopan|45066"
+   ],
+   "lugar": "Lomas de Primavera (zona 6)",
+   "cita": "si lomas de primavera es zona 6 y seguimos sin agua ya más de un mes y medio de que rotación hablas",
+   "dias": 45,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid0wm9rUqJM8ErkHRrTZEoxRkTjQ91NBQrfmjCgqMZgvRMNM3gFQgwkEpkUe8n7kBLhl",
+    "eco": {
+     "reacciones": 114,
+     "comentarios": 270,
+     "compartidos": 7,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/45e9564d8f06.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid02wNmEfbQBhMGVxthDHz81TXH5f6zrT6eRbJskM1qvyGo518qT18AeZGPN4h6Yhsvkl?comment_id=969249139203243",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "MIRAMAR|Zapopan|45060"
+   ],
+   "lugar": "Miramar (zona 6)",
+   "cita": "En Miramar zona 6, desde el jueves en la mañana se fue el agua, y apenas hoy llegó un poco de agua, nada de presion.",
+   "parcial": true,
+   "tipo": "comentario",
+   "dias": null,
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid02wNmEfbQBhMGVxthDHz81TXH5f6zrT6eRbJskM1qvyGo518qT18AeZGPN4h6Yhsvkl",
+    "eco": {
+     "reacciones": 243,
+     "comentarios": 413,
+     "compartidos": 30,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/1881e91cd827.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid02wNmEfbQBhMGVxthDHz81TXH5f6zrT6eRbJskM1qvyGo518qT18AeZGPN4h6Yhsvkl?comment_id=1695296145455554",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "LA LOMA|Guadalajara|44410"
+   ],
+   "lugar": "Colonia La Loma (zona 3)",
+   "cita": "Zona 3, colonia La Loma, desde el martes pasado no hay agua;llegó el día de ayer con poca presión pero ahora no cayó ni una gota",
+   "parcial": true,
+   "tipo": "comentario",
+   "dias": null,
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid02wNmEfbQBhMGVxthDHz81TXH5f6zrT6eRbJskM1qvyGo518qT18AeZGPN4h6Yhsvkl",
+    "eco": {
+     "reacciones": 243,
+     "comentarios": 413,
+     "compartidos": 30,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/1881e91cd827.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid02wNmEfbQBhMGVxthDHz81TXH5f6zrT6eRbJskM1qvyGo518qT18AeZGPN4h6Yhsvkl?comment_id=2467099257366698",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "TETLAN RIO VERDE|Guadalajara|44720"
+   ],
+   "lugar": "Tetlán Río Verde (zona 3)",
+   "cita": "Zona 3 tetlan rio verde tenemos una semana sin agua solo el lunes llego y fue todo",
+   "dias": 7,
+   "parcial": true,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid02wNmEfbQBhMGVxthDHz81TXH5f6zrT6eRbJskM1qvyGo518qT18AeZGPN4h6Yhsvkl",
+    "eco": {
+     "reacciones": 243,
+     "comentarios": 413,
+     "compartidos": 30,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/1881e91cd827.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid0wm9rUqJM8ErkHRrTZEoxRkTjQ91NBQrfmjCgqMZgvRMNM3gFQgwkEpkUe8n7kBLhl?comment_id=2754760051585859",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "JARDINES DE SAN FRANCISCO|Guadalajara|44790"
+   ],
+   "lugar": "Jardines de San Francisco, C.P. 44790",
+   "cita": "En la colonia Jardines de San Francisco, fuera del área de rotación, C.P. 44790, no tenemos nada de agua desde antier lunes 9 de Noviembre en la noche...",
+   "tipo": "comentario",
+   "dias": null,
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid0wm9rUqJM8ErkHRrTZEoxRkTjQ91NBQrfmjCgqMZgvRMNM3gFQgwkEpkUe8n7kBLhl",
+    "eco": {
+     "reacciones": 114,
+     "comentarios": 270,
+     "compartidos": 7,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/45e9564d8f06.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid0wm9rUqJM8ErkHRrTZEoxRkTjQ91NBQrfmjCgqMZgvRMNM3gFQgwkEpkUe8n7kBLhl?comment_id=1477940881097514",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "5 DE MAYO|Guadalajara|44960",
+    "ECHEVERRIA|Guadalajara|44970"
+   ],
+   "lugar": "5 de Mayo 1a y 2a sección, Vista Hermosa, Echeverría (zona 5)",
+   "cita": "Zona 5 más de 10 días sin una gota de agua col. 5 de mayo primera y segunda sección, vista hermosa ,echeverria queremos agua",
+   "dias": 10,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid0wm9rUqJM8ErkHRrTZEoxRkTjQ91NBQrfmjCgqMZgvRMNM3gFQgwkEpkUe8n7kBLhl",
+    "eco": {
+     "reacciones": 114,
+     "comentarios": 270,
+     "compartidos": 7,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/45e9564d8f06.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid02wNmEfbQBhMGVxthDHz81TXH5f6zrT6eRbJskM1qvyGo518qT18AeZGPN4h6Yhsvkl?comment_id=2424935811609249",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "JARDINES DEL SUR|Guadalajara|44950"
+   ],
+   "lugar": "Jardines del Sur, Guadalajara",
+   "cita": "Agua para la colonia jardines del sur guadalajara urge ya más de 15 días sin agua",
+   "dias": 15,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid02wNmEfbQBhMGVxthDHz81TXH5f6zrT6eRbJskM1qvyGo518qT18AeZGPN4h6Yhsvkl",
+    "eco": {
+     "reacciones": 243,
+     "comentarios": 413,
+     "compartidos": 30,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/1881e91cd827.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid0wm9rUqJM8ErkHRrTZEoxRkTjQ91NBQrfmjCgqMZgvRMNM3gFQgwkEpkUe8n7kBLhl?comment_id=28966502166375099",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "ALAMEDAS DE ZALATITAN|Tonalá|45407"
+   ],
+   "lugar": "Alamedas de Zalatitán",
+   "cita": "En alamedas de zalatitan tenemos varios dias sin agua pedi servicio de pipa y ni eso an mandado",
+   "tipo": "comentario",
+   "dias": null,
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid0wm9rUqJM8ErkHRrTZEoxRkTjQ91NBQrfmjCgqMZgvRMNM3gFQgwkEpkUe8n7kBLhl",
+    "eco": {
+     "reacciones": 114,
+     "comentarios": 270,
+     "compartidos": 7,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/45e9564d8f06.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid0wm9rUqJM8ErkHRrTZEoxRkTjQ91NBQrfmjCgqMZgvRMNM3gFQgwkEpkUe8n7kBLhl?comment_id=1017079528134822",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "COLINAS DE TONALA|Tonalá|45418"
+   ],
+   "lugar": "Colinas de Tonalá",
+   "cita": "Colinas de tonala, primero pongan el agua, se supone q hoy deberiamos de tener y no tenemos, cumplan con darnos el agua, tenemos mas de dos semanas sin agua",
+   "dias": 14,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid0wm9rUqJM8ErkHRrTZEoxRkTjQ91NBQrfmjCgqMZgvRMNM3gFQgwkEpkUe8n7kBLhl",
+    "eco": {
+     "reacciones": 114,
+     "comentarios": 270,
+     "compartidos": 7,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/45e9564d8f06.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid0wm9rUqJM8ErkHRrTZEoxRkTjQ91NBQrfmjCgqMZgvRMNM3gFQgwkEpkUe8n7kBLhl?comment_id=1442409038086235",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "ARCOS DE ZAPOPAN|Zapopan|45130",
+    "LOMAS DE ZAPOPAN|Zapopan|45130",
+    "REAL DE VALDEPEÑAS|Zapopan|45160"
+   ],
+   "lugar": "Rinconada de las Palmas, Valdepeñas, Federalistas, Arcos de Zapopan, Lomas de Zapopan, Real de Valdepeñas",
+   "cita": "Rinconada de las palmas valdepeñas federalistas arcos de zapopan lomas de zapopan real de valdepeñas y todooooooo esta periferia sin agua 3 días ya y ninguna d estas colonias están en estas listas hasta cuando?",
+   "dias": 3,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid0wm9rUqJM8ErkHRrTZEoxRkTjQ91NBQrfmjCgqMZgvRMNM3gFQgwkEpkUe8n7kBLhl",
+    "eco": {
+     "reacciones": 114,
+     "comentarios": 270,
+     "compartidos": 7,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/45e9564d8f06.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid02wNmEfbQBhMGVxthDHz81TXH5f6zrT6eRbJskM1qvyGo518qT18AeZGPN4h6Yhsvkl?comment_id=1446438500240472",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "LOMAS DE OBLATOS|Guadalajara|44720"
+   ],
+   "lugar": "Lomas de Oblatos (zona 3)",
+   "cita": "casi 10 días sin agua zona 3 lomas de oblatos, como el agua no llega con suficiente presión no alcanza a subir ni si quiera al aljibe.",
+   "parcial": true,
+   "tipo": "comentario",
+   "dias": null,
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid02wNmEfbQBhMGVxthDHz81TXH5f6zrT6eRbJskM1qvyGo518qT18AeZGPN4h6Yhsvkl",
+    "eco": {
+     "reacciones": 243,
+     "comentarios": 413,
+     "compartidos": 30,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/1881e91cd827.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid0wm9rUqJM8ErkHRrTZEoxRkTjQ91NBQrfmjCgqMZgvRMNM3gFQgwkEpkUe8n7kBLhl?comment_id=1008185004961733",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "SANTA ANA TEPETITLAN|Zapopan|45230"
+   ],
+   "lugar": "Santa Ana Tepetitlán (zona 6)",
+   "cita": "Zona 6 Santa Ana tepetitlan, una semana sin agua ..",
+   "dias": 7,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid0wm9rUqJM8ErkHRrTZEoxRkTjQ91NBQrfmjCgqMZgvRMNM3gFQgwkEpkUe8n7kBLhl",
+    "eco": {
+     "reacciones": 114,
+     "comentarios": 270,
+     "compartidos": 7,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/45e9564d8f06.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "web",
+   "quien": "",
+   "url": "https://www.tiktok.com/@albertorazoellpelon/video/7706662304821087509?comment_id=7706944600120312596",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "SAN MARCOS|Guadalajara|44330"
+   ],
+   "lugar": "San Marcos, Guadalajara",
+   "cita": "Y no hay agua en la colonia San Marcos llevan calles 35 días sin una gota del sector libertad",
+   "dias": 35,
+   "tipo": "comentario",
+   "video": true,
+   "en": {
+    "quien": "Cuenta personal en TikTok",
+    "url": "https://www.tiktok.com/@albertorazoellpelon/video/7706662304821087509",
+    "eco": {
+     "reacciones": 1683,
+     "comentarios": 227,
+     "compartidos": 71,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/153c4a5358e0.jpg",
+   "captura": "fuentes/e1ba28d4ac4c-t.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "web",
+   "quien": "",
+   "url": "https://www.tiktok.com/@albertorazoellpelon/video/7706662304821087509?comment_id=7706698843186791188",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "SANTA CECILIA|Guadalajara|44700"
+   ],
+   "lugar": "Santa Cecilia, Guadalajara",
+   "cita": "En la colonia Santa Cecilia tienen casi dos meses sin una sola gota de agua!",
+   "tipo": "comentario",
+   "video": true,
+   "dias": null,
+   "en": {
+    "quien": "Cuenta personal en TikTok",
+    "url": "https://www.tiktok.com/@albertorazoellpelon/video/7706662304821087509",
+    "eco": {
+     "reacciones": 1683,
+     "comentarios": 227,
+     "compartidos": 71,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/153c4a5358e0.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "web",
+   "quien": "",
+   "url": "https://www.tiktok.com/@fredd_annira/video/7705243828206193938?comment_id=7706315904426787636",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "ANALCO|Guadalajara|44450"
+   ],
+   "lugar": "Analco, Guadalajara",
+   "cita": "en la colonia analco tenemos 15 días sin agua los de las pipas en tono de burla te dicen saquen sus tinacos q les dimos para llenarlos",
+   "dias": 15,
+   "tipo": "comentario",
+   "video": true,
+   "en": {
+    "quien": "Cuenta personal en TikTok",
+    "url": "https://www.tiktok.com/@fredd_annira/video/7705243828206193938",
+    "eco": {
+     "reacciones": 3628,
+     "comentarios": 371,
+     "compartidos": 377,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/b0fb8ae633fb.jpg",
+   "captura": "fuentes/e597bfab143a-t.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "web",
+   "quien": "",
+   "url": "https://www.tiktok.com/@fredd_annira/video/7705243828206193938?comment_id=7706248668601811733",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "MONUMENTAL|Guadalajara|44320"
+   ],
+   "lugar": "Monumental (Belisario Domínguez y Paseo Bohemio), Guadalajara",
+   "cita": "en la colonia monumental en especifico Belisario Domínguez y paseo bohemio varias casas 1 mes sin agua",
+   "dias": 30,
+   "tipo": "comentario",
+   "video": true,
+   "en": {
+    "quien": "Cuenta personal en TikTok",
+    "url": "https://www.tiktok.com/@fredd_annira/video/7705243828206193938",
+    "eco": {
+     "reacciones": 3628,
+     "comentarios": 371,
+     "compartidos": 377,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/b0fb8ae633fb.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "web",
+   "quien": "",
+   "url": "https://www.tiktok.com/@fredd_annira/video/7705243828206193938?comment_id=7706299487165678343",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "MARIANO OTERO|Zapopan|45067"
+   ],
+   "lugar": "Mariano Otero, Zapopan",
+   "cita": "4 días sin agua, colonia Mariano Otero en Zapopan",
+   "dias": 4,
+   "tipo": "comentario",
+   "video": true,
+   "en": {
+    "quien": "Cuenta personal en TikTok",
+    "url": "https://www.tiktok.com/@fredd_annira/video/7705243828206193938",
+    "eco": {
+     "reacciones": 3628,
+     "comentarios": 371,
+     "compartidos": 377,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/b0fb8ae633fb.jpg",
+   "captura": "fuentes/6e8f4b179950-t.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "web",
+   "quien": "",
+   "url": "https://www.tiktok.com/@alexmxnoticias/video/7705322095349189908?comment_id=7706407128798511879",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "BOSQUES DE TONALA|Tonalá|45416"
+   ],
+   "lugar": "Bosques de Tonalá, Tonalá",
+   "cita": "pues hoy llego acá en bosques de Tonalá y esto después de 5 días de no tener agua",
+   "dias": 5,
+   "regreso": "2026-11-09",
+   "tipo": "comentario",
+   "video": true,
+   "en": {
+    "quien": "Cuenta personal en TikTok",
+    "url": "https://www.tiktok.com/@alexmxnoticias/video/7705322095349189908",
+    "eco": {
+     "reacciones": 2208,
+     "comentarios": 306,
+     "compartidos": 258,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/8e6f016fb3af.jpg",
+   "captura": "fuentes/e8144780710a-t.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "web",
+   "quien": "",
+   "url": "https://www.tiktok.com/@alexmxnoticias/video/7705322095349189908?comment_id=7706551019287675655",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "ATLAS|Guadalajara|44870"
+   ],
+   "lugar": "Atlas, Guadalajara",
+   "cita": "hoy cumplimos 10 días sin que caiga ni una gota acá en col. atlas",
+   "dias": 10,
+   "tipo": "comentario",
+   "video": true,
+   "en": {
+    "quien": "Cuenta personal en TikTok",
+    "url": "https://www.tiktok.com/@alexmxnoticias/video/7705322095349189908",
+    "eco": {
+     "reacciones": 2208,
+     "comentarios": 306,
+     "compartidos": 258,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/8e6f016fb3af.jpg",
+   "captura": "fuentes/9b6976342535-t.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "web",
+   "quien": "",
+   "url": "https://www.tiktok.com/@alexmxnoticias/video/7705322095349189908?comment_id=7706528450836382471",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "CONSTITUCION|Zapopan|45184"
+   ],
+   "lugar": "Constitución, Zapopan",
+   "cita": "en la colonia Constitución en zapopan no está cayendo agua y cuando cae el agua sale con basura",
+   "parcial": true,
+   "tipo": "comentario",
+   "video": true,
+   "dias": null,
+   "en": {
+    "quien": "Cuenta personal en TikTok",
+    "url": "https://www.tiktok.com/@alexmxnoticias/video/7705322095349189908",
+    "eco": {
+     "reacciones": 2208,
+     "comentarios": 306,
+     "compartidos": 258,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/8e6f016fb3af.jpg",
+   "captura": "fuentes/8efbbcd5f30c-t.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "web",
+   "quien": "",
+   "url": "https://www.tiktok.com/@impactojalisco/video/7706644355263581448?comment_id=7706707860515848967",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "LOMAS DE SAN EUGENIO|Guadalajara|44720"
+   ],
+   "lugar": "Lomas de San Eugenio, Guadalajara",
+   "cita": "Colonia Lomas de San Eugenio una semana cumplida sin agua",
+   "dias": 7,
+   "tipo": "comentario",
+   "video": true,
+   "en": {
+    "quien": "Cuenta personal en TikTok",
+    "url": "https://www.tiktok.com/@impactojalisco/video/7706644355263581448",
+    "eco": {
+     "reacciones": 348,
+     "comentarios": 209,
+     "compartidos": 29,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/7a0dcbdff2ef.jpg",
+   "captura": "fuentes/969f2bc9b608-t.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "web",
+   "quien": "",
+   "url": "https://www.tiktok.com/@notigram_jalisco/video/7706652412718664980?comment_id=7706993675666293505",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "OLIMPICA|Guadalajara|44840",
+    "QUINTA VELARDE|Guadalajara|44430"
+   ],
+   "lugar": "Olímpica, Quinta Velarde y González Gallo, Guadalajara",
+   "cita": "colonia olimpica,quinta velarde y Gonzalez gallo no tenenos agua no alcabza a subir al tinaco porque no hay presión",
+   "parcial": true,
+   "tipo": "comentario",
+   "video": true,
+   "dias": null,
+   "en": {
+    "quien": "Cuenta personal en TikTok",
+    "url": "https://www.tiktok.com/@notigram_jalisco/video/7706652412718664980",
+    "eco": {
+     "reacciones": 136,
+     "comentarios": 31,
+     "compartidos": 7,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/27bfea4c6379.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "web",
+   "quien": "",
+   "url": "https://www.tiktok.com/@notigram_jalisco/video/7706652412718664980?comment_id=7706773727691146002",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "EL ORGANO|San Pedro Tlaquepaque|45588"
+   ],
+   "lugar": "El Órgano, Tlaquepaque",
+   "cita": "3 meses sin agua enla colonia el organo",
+   "tipo": "comentario",
+   "video": true,
+   "dias": null,
+   "en": {
+    "quien": "Cuenta personal en TikTok",
+    "url": "https://www.tiktok.com/@notigram_jalisco/video/7706652412718664980",
+    "eco": {
+     "reacciones": 136,
+     "comentarios": 31,
+     "compartidos": 7,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/27bfea4c6379.jpg",
+   "captura": "fuentes/50cbd62f70d6-t.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "web",
+   "quien": "",
+   "url": "https://www.tiktok.com/@gloria.reza.reportera/video/7706713186048691477?comment_id=7707010351019180820",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "LA CAPACHA|San Pedro Tlaquepaque|45560"
+   ],
+   "lugar": "La Capacha, Tlaquepaque",
+   "cita": "Tlaquepaque la capacha 30 días sin agua 3 pipas llevo gastadas",
+   "dias": 30,
+   "tipo": "comentario",
+   "video": true,
+   "en": {
+    "quien": "Cuenta personal en TikTok",
+    "url": "https://www.tiktok.com/@gloria.reza.reportera/video/7706713186048691477",
+    "eco": {
+     "reacciones": 15,
+     "comentarios": 20,
+     "compartidos": 0,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/abd719491a17.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "Tonalá de Hoy",
+   "url": "https://www.facebook.com/reel/2641384006284221",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "VALLE DE TONANTZIN|Tonalá|45410"
+   ],
+   "lugar": "Valle de Tonantzin 2, Tonalá",
+   "cita": "el agua llega con una presión extremadamente baja y únicamente durante tres horas, entre las 3:00 y las 6:00 de la madrugada",
+   "parcial": true,
+   "eco": {
+    "reacciones": 31,
+    "comentarios": 11,
+    "compartidos": 3,
+    "al": "2026-11-11"
+   },
+   "video": true,
+   "dias": null,
+   "vista": "fuentes/af4f5d4ee8d7.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl?comment_id=1109262718664785",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "EL ZALATE|Guadalajara|44760"
+   ],
+   "lugar": "El Zalate, Guadalajara",
+   "cita": "NO TENEMOS AGUA EN LA COL. ÉL ZALATE DESDÉ HACE 5 DÍAS",
+   "dias": 5,
+   "tipo": "comentario",
+   "en": {
+    "quien": "Jalisco ZMG",
+    "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl",
+    "eco": {
+     "reacciones": 1495,
+     "comentarios": 424,
+     "compartidos": 340,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/5234725d84f1.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl?comment_id=1636250784632704",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "LOMAS DE LA PRIMAVERA|Zapopan|45066"
+   ],
+   "lugar": "Lomas de la Primavera, Zapopan",
+   "cita": "Sería justo no pagar por el servicio en lomas de la primavera Zapopan,estamos sin servicio más de un mes y medio",
+   "dias": 45,
+   "tipo": "comentario",
+   "en": {
+    "quien": "Jalisco ZMG",
+    "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl",
+    "eco": {
+     "reacciones": 1495,
+     "comentarios": 424,
+     "compartidos": 340,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/5234725d84f1.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/ZapopanGob/posts/pfbid0VzWBR7zoTZqy2VrsqqnM2JJQfQXQcWfUt3hmmsPJdR1WGba61NEZByrpXyRNxQr5l?comment_id=1820551875822947",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "GUADALUPE INN|Zapopan|45037"
+   ],
+   "lugar": "Guadalupe Inn, Zapopan",
+   "cita": "Mes y medio. GUADALUPE inn sin AGUA.",
+   "dias": 45,
+   "tipo": "comentario",
+   "en": {
+    "quien": "Gobierno de Zapopan",
+    "url": "https://www.facebook.com/ZapopanGob/posts/pfbid0VzWBR7zoTZqy2VrsqqnM2JJQfQXQcWfUt3hmmsPJdR1WGba61NEZByrpXyRNxQr5l",
+    "eco": {
+     "reacciones": 23,
+     "comentarios": 23,
+     "compartidos": 4,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/4a1f81faa2d8.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl?comment_id=1596984428407393",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "PRADOS VALLARTA|Zapopan|45020"
+   ],
+   "lugar": "Prados Vallarta, Zapopan",
+   "cita": "Aquí van 15 días, qué no cae una gota. Ya se vacío mi aljibe y tampoco hay pipas. Prados Vallarta",
+   "dias": 15,
+   "tipo": "comentario",
+   "en": {
+    "quien": "Jalisco ZMG",
+    "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl",
+    "eco": {
+     "reacciones": 1495,
+     "comentarios": 424,
+     "compartidos": 340,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/5234725d84f1.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl?comment_id=1835626927468551",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "MISION DE LA CANTERA|Tonalá|45404"
+   ],
+   "lugar": "Fraccionamiento Misión de la Cantera, Tonalá",
+   "cita": "En el fraccionamiento Misión de la cantera Tonalá, todo el mes no hay agua nos llegó 1 día y te tenemos 2 semanas sin agua",
+   "dias": 14,
+   "tipo": "comentario",
+   "en": {
+    "quien": "Jalisco ZMG",
+    "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl",
+    "eco": {
+     "reacciones": 1495,
+     "comentarios": 424,
+     "compartidos": 340,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/5234725d84f1.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl?comment_id=1524090816228026",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "ARCOS DE ZAPOPAN|Zapopan|45130"
+   ],
+   "lugar": "Arcos de Zapopan",
+   "cita": "En Arcos de Zapopan el día de su yer domingo 8 de noviembre no hubo agua regreso en la madrugada muuuy sucia y a media mañana de hoy lunes se fue unas 3 horas regreso igual de sucia.",
+   "desde": "2026-11-08",
+   "regreso": "2026-11-09",
+   "tipo": "comentario",
+   "dias": null,
+   "en": {
+    "quien": "Jalisco ZMG",
+    "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl",
+    "eco": {
+     "reacciones": 1495,
+     "comentarios": 424,
+     "compartidos": 340,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/5234725d84f1.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl?comment_id=1397917138826630",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "5 DE MAYO|Guadalajara|44960",
+    "ECHEVERRIA|Guadalajara|44970"
+   ],
+   "lugar": "5 de Mayo y Echeverría, Guadalajara",
+   "cita": "Desde el sábado no tenemos agua de las 5 de Mayo y Colonia Echeverría",
+   "tipo": "comentario",
+   "dias": null,
+   "en": {
+    "quien": "Jalisco ZMG",
+    "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl",
+    "eco": {
+     "reacciones": 1495,
+     "comentarios": 424,
+     "compartidos": 340,
+     "al": "2026-11-11"
+    }
+   },
+   "desde": "2026-11-07",
+   "vista": "fuentes/5234725d84f1.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl?comment_id=1024931547291928",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "CENTRO|San Pedro Tlaquepaque|45500"
+   ],
+   "lugar": "Tlaquepaque centro",
+   "cita": "En mi colonia Tlaquepaque centro ya no sale agua sucia […] Es más ni agua sale",
+   "tipo": "comentario",
+   "dias": null,
+   "en": {
+    "quien": "Jalisco ZMG",
+    "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl",
+    "eco": {
+     "reacciones": 1495,
+     "comentarios": 424,
+     "compartidos": 340,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/5234725d84f1.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl?comment_id=2961237020906833",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "MIRAVALLE|San Pedro Tlaquepaque|44990"
+   ],
+   "lugar": "Miravalle, Tlaquepaque",
+   "cita": "NO TENEMOS AGUA EN MIRAVALLE TLAQUEPAQUE",
+   "tipo": "comentario",
+   "dias": null,
+   "en": {
+    "quien": "Jalisco ZMG",
+    "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl",
+    "eco": {
+     "reacciones": 1495,
+     "comentarios": 424,
+     "compartidos": 340,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/5234725d84f1.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl?comment_id=1465710632331146",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "SAN MARCOS|Guadalajara|44330"
+   ],
+   "lugar": "San Marcos, Mesa del Norte y Oblatos, Guadalajara",
+   "cita": "En toda la colonia San marcos no hay. Ni en mesa del norte. Ni en oblatos.",
+   "tipo": "comentario",
+   "dias": null,
+   "en": {
+    "quien": "Jalisco ZMG",
+    "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl",
+    "eco": {
+     "reacciones": 1495,
+     "comentarios": 424,
+     "compartidos": 340,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/5234725d84f1.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl?comment_id=1150312337539410",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "EL RETIRO|Guadalajara|44280"
+   ],
+   "lugar": "El Retiro, Guadalajara",
+   "cita": "Aki en la colonia el retiro sigue el problema poca agua sucia turbia",
+   "parcial": true,
+   "tipo": "comentario",
+   "dias": null,
+   "en": {
+    "quien": "Jalisco ZMG",
+    "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl",
+    "eco": {
+     "reacciones": 1495,
+     "comentarios": 424,
+     "compartidos": 340,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/5234725d84f1.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/ZapopanGob/posts/pfbid0VzWBR7zoTZqy2VrsqqnM2JJQfQXQcWfUt3hmmsPJdR1WGba61NEZByrpXyRNxQr5l?comment_id=905559752546027",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "LA TUZANIA|Zapopan|45138"
+   ],
+   "lugar": "La Tuzanía, Zapopan",
+   "cita": "En la tuzania no tenemos agua!",
+   "tipo": "comentario",
+   "dias": null,
+   "en": {
+    "quien": "Gobierno de Zapopan",
+    "url": "https://www.facebook.com/ZapopanGob/posts/pfbid0VzWBR7zoTZqy2VrsqqnM2JJQfQXQcWfUt3hmmsPJdR1WGba61NEZByrpXyRNxQr5l",
+    "eco": {
+     "reacciones": 23,
+     "comentarios": 23,
+     "compartidos": 4,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/4a1f81faa2d8.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid033eS8GwwtrBJS94MmuHVVQPqWZb9fMpYPyKhTa7NBgbcAqfM5GgfPZH5dgHM7rha6l?comment_id=1115676511364134",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Ciudad Granja, Zapopan",
+   "cita": "Pues si cobran aquí en ciudad granja ya llegó el recibo […] y no tenemos agua",
+   "tipo": "comentario",
+   "dias": null,
+   "en": {
+    "quien": "Jalisco ZMG",
+    "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid033eS8GwwtrBJS94MmuHVVQPqWZb9fMpYPyKhTa7NBgbcAqfM5GgfPZH5dgHM7rha6l",
+    "eco": {
+     "reacciones": 2025,
+     "comentarios": 347,
+     "compartidos": 524,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/df82186ed974.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl?comment_id=1138878075232134",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "LOMAS DE SAN EUGENIO|Guadalajara|44720"
+   ],
+   "lugar": "Lomas de San Eugenio, Guadalajara",
+   "cita": "En mi colonia lomas de San Eugenio para ser específica nos dejan sin agua 4 días, no tenemos tinacos",
+   "parcial": true,
+   "tipo": "comentario",
+   "dias": null,
+   "en": {
+    "quien": "Jalisco ZMG",
+    "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl",
+    "eco": {
+     "reacciones": 1495,
+     "comentarios": 424,
+     "compartidos": 340,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/5234725d84f1.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl?comment_id=2667591240357355",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "LOMAS DE TABACHINES|Zapopan|45180"
+   ],
+   "lugar": "Lomas de Tabachines, Zapopan",
+   "cita": "Acá en lomas de Tabachines el agua está asquerosa apestosa",
+   "calidad": true,
+   "tipo": "comentario",
+   "dias": null,
+   "en": {
+    "quien": "Jalisco ZMG",
+    "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl",
+    "eco": {
+     "reacciones": 1495,
+     "comentarios": 424,
+     "compartidos": 340,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/5234725d84f1.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl?comment_id=1869424578145928",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "AARON JOAQUIN|Guadalajara|44760"
+   ],
+   "lugar": "Aarón Joaquín, Guadalajara",
+   "cita": "En la colonia aaron Joaquin no ay agua",
+   "tipo": "comentario",
+   "dias": null,
+   "en": {
+    "quien": "Jalisco ZMG",
+    "url": "https://www.facebook.com/JaliscoZMG/posts/pfbid02D1yLDubyR6C82ckDc5zgufLP7CULQCFPhRoNSEu23MZvCenyYUyCDCWgz1t3WCNJl",
+    "eco": {
+     "reacciones": 1495,
+     "comentarios": 424,
+     "compartidos": 340,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/5234725d84f1.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "Meganoticias",
+   "url": "https://www.facebook.com/reel/2215121272761682",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "INFONAVIT TONALA (RIO NILO)|Tonalá|45403",
+    "LOMAS DEL CAMICHIN|Tonalá|45403",
+    "FLORES MAGON|Tonalá|45403"
+   ],
+   "lugar": "Infonavit Río Nilo, Lomas del Camichín, Flores Magón (Tonalá)",
+   "cita": "La falta de agua potable mantiene en condiciones de incertidumbre a habitantes de Infonavit Río Nilo, Lomas del Camichín, Flores Magón y otras colonias de Tonalá, quienes aseguran que desde hace más de 15 días dejaron de recibir el suministro",
+   "dias": 15,
+   "eco": {
+    "reacciones": 362,
+    "comentarios": 45,
+    "compartidos": 88,
+    "al": "2026-11-11"
+   },
+   "video": true,
+   "vista": "fuentes/ba389f6a8a75.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "facebook",
+   "quien": "Meganoticias",
+   "url": "https://www.facebook.com/reel/2015659662458687",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "VILLA HERMOSA|Guadalajara|44970",
+    "5 DE MAYO|Guadalajara|44960",
+    "MIRAVALLE|Guadalajara|44990",
+    "EL MANANTIAL|Guadalajara|44990"
+   ],
+   "lugar": "Villa Hermosa, 5 de Mayo, Miravalle, El Manantial (Guadalajara)",
+   "cita": "Habitantes de las colonias Villa Hermosa, 5 de Mayo, Miravalle y El Manantial en Guadalajara bloquean esta noche el Macrobús y la circulación vehicular […] para exigir al SIAPA el restablecimiento del agua potable",
+   "bloqueo": true,
+   "eco": {
+    "reacciones": 437,
+    "comentarios": 53,
+    "compartidos": 52,
+    "al": "2026-11-11"
+   },
+   "video": true,
+   "dias": null,
+   "vista": "fuentes/742af2128cdb.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/reel/2215121272761682?comment_id=1673402564322961",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "Oblatos, Guadalajara",
+   "cita": "Todo guadalajara esta igual, oblatos también tenemos dos semanas sin agua",
+   "dias": 14,
+   "tipo": "comentario",
+   "en": {
+    "quien": "Meganoticias",
+    "url": "https://www.facebook.com/reel/2215121272761682",
+    "eco": {
+     "reacciones": 362,
+     "comentarios": 45,
+     "compartidos": 88,
+     "al": "2026-11-11"
+    }
+   },
+   "video": true,
+   "vista": "fuentes/ba389f6a8a75.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/reel/2215121272761682?comment_id=1105112709184774",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "BOSQUES DE TONALA|Tonalá|45416"
+   ],
+   "lugar": "Bosques de Tonalá, Tonalá",
+   "cita": "Tampoco aparece bosques de Tonalá y ya tenemos casi tres semanas sin agua",
+   "tipo": "comentario",
+   "en": {
+    "quien": "Meganoticias",
+    "url": "https://www.facebook.com/reel/2215121272761682",
+    "eco": {
+     "reacciones": 362,
+     "comentarios": 45,
+     "compartidos": 88,
+     "al": "2026-11-11"
+    }
+   },
+   "video": true,
+   "dias": null,
+   "vista": "fuentes/ba389f6a8a75.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/reel/2215121272761682?comment_id=4746938292294005",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "EL ZAPOTE|Tonalá|45400"
+   ],
+   "lugar": "El Zapote, Tonalá",
+   "cita": "También la colonia el zapote de Tonalá está igual, esta colonia no aparece con tandeos y en la colonia que nunca tiene agua",
+   "tipo": "comentario",
+   "en": {
+    "quien": "Meganoticias",
+    "url": "https://www.facebook.com/reel/2215121272761682",
+    "eco": {
+     "reacciones": 362,
+     "comentarios": 45,
+     "compartidos": 88,
+     "al": "2026-11-11"
+    }
+   },
+   "video": true,
+   "dias": null,
+   "vista": "fuentes/ba389f6a8a75.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/reel/1645395703695709?comment_id=1114340514545297",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "JARDINES TAPATIOS|Zapopan|45066",
+    "LOMAS DE LA PRIMAVERA|Zapopan|45066"
+   ],
+   "lugar": "Jardines Tapatíos, Lomas de la Primavera (Zapopan)",
+   "cita": "En zona 6 para cuando? Jardines tapatios, lomas de la primavera etc..\nya van 2 pipas de agua que se tienen que comprar y los tandeos no se respetan.",
+   "tipo": "comentario",
+   "en": {
+    "quien": "Telediario Guadalajara",
+    "url": "https://www.facebook.com/reel/1645395703695709",
+    "eco": {
+     "reacciones": 94,
+     "comentarios": 48,
+     "compartidos": 2,
+     "al": "2026-11-11"
+    }
+   },
+   "video": true,
+   "dias": null,
+   "vista": "fuentes/5ac089070b3c.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/reel/1836824534180929/?comment_id=1437085751353890",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "PLAZA GUADALUPE|Zapopan|45030"
+   ],
+   "lugar": "Plaza Guadalupe, Zapopan",
+   "cita": "ni una gota de agua tenemos en la colonia Plaza Guadalupe en Zapopan desde hace 35 días",
+   "dias": 35,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/reel/1836824534180929/",
+    "eco": {
+     "reacciones": 159,
+     "comentarios": 131,
+     "compartidos": 5,
+     "al": "2026-11-11"
+    }
+   },
+   "video": true,
+   "vista": "fuentes/8788123b28e9.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/reel/1836824534180929/?comment_id=1977992033177850",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "JARDINES DE GUADALUPE|Zapopan|45030"
+   ],
+   "lugar": "Jardines de Guadalupe, Zapopan",
+   "cita": "Jardines de Guadalupe Zapopan 29 días sin agua",
+   "dias": 29,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/reel/1836824534180929/",
+    "eco": {
+     "reacciones": 159,
+     "comentarios": 131,
+     "compartidos": 5,
+     "al": "2026-11-11"
+    }
+   },
+   "video": true,
+   "vista": "fuentes/8788123b28e9.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid0n8eppPauScXdkuRWGobnpEpxyE3vJBfwxMoLA3GBT9VRDgJrycemE2cV5pATH1jFl?comment_id=1380502320621611",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "JARDINES ALCALDE|Guadalajara|44290"
+   ],
+   "lugar": "Jardines Alcalde",
+   "cita": "SIAPA está enviando el agua contaminada a Jardines Alcalde, este video es de ayer 8 de noviembre de 2026, cada semana se lava el tinaco porque ya estamos enfermos por el agua contaminada",
+   "calidad": true,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid0n8eppPauScXdkuRWGobnpEpxyE3vJBfwxMoLA3GBT9VRDgJrycemE2cV5pATH1jFl",
+    "eco": {
+     "reacciones": 349,
+     "comentarios": 345,
+     "compartidos": 24,
+     "al": "2026-11-11"
+    }
+   },
+   "dias": null,
+   "vista": "fuentes/48ada7946a04.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid03dfuXyToDA6TzeunMKRde2kugBVVUiZfsB3MPwwockgRxk1T3MA6mnxSNtchM45Ll?comment_id=29522177454081546",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "EL MORAL|Tonalá|45418"
+   ],
+   "lugar": "El Moral, Tonalá",
+   "cita": "Zona 4 el moral Tonalá 3 semanas sin agua",
+   "dias": 21,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid03dfuXyToDA6TzeunMKRde2kugBVVUiZfsB3MPwwockgRxk1T3MA6mnxSNtchM45Ll",
+    "eco": {
+     "reacciones": 348,
+     "comentarios": 508,
+     "compartidos": 36,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/fbf6ea429d0c.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid03dfuXyToDA6TzeunMKRde2kugBVVUiZfsB3MPwwockgRxk1T3MA6mnxSNtchM45Ll?comment_id=1419503016573054",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "SAN JUAN DE DIOS|Guadalajara|44360"
+   ],
+   "lugar": "San Juan de Dios",
+   "cita": "Más bien digan y cumplan que días vamos a tener agua, San Juan de Dios ya 14 días sin agua...",
+   "dias": 14,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid03dfuXyToDA6TzeunMKRde2kugBVVUiZfsB3MPwwockgRxk1T3MA6mnxSNtchM45Ll",
+    "eco": {
+     "reacciones": 348,
+     "comentarios": 508,
+     "compartidos": 36,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/fbf6ea429d0c.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid03dfuXyToDA6TzeunMKRde2kugBVVUiZfsB3MPwwockgRxk1T3MA6mnxSNtchM45Ll?comment_id=1451174313638332",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "EL TAPATIO|San Pedro Tlaquepaque|45580"
+   ],
+   "lugar": "El Tapatío, Tlaquepaque",
+   "cita": "Colonia el tapatío .. 8 días sin una gota de agua … y hoy volverán a cerrar la carretera",
+   "dias": 8,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid03dfuXyToDA6TzeunMKRde2kugBVVUiZfsB3MPwwockgRxk1T3MA6mnxSNtchM45Ll",
+    "eco": {
+     "reacciones": 348,
+     "comentarios": 508,
+     "compartidos": 36,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/fbf6ea429d0c.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid03dfuXyToDA6TzeunMKRde2kugBVVUiZfsB3MPwwockgRxk1T3MA6mnxSNtchM45Ll?comment_id=3040711129620329",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "SANTA CECILIA|Guadalajara|44700"
+   ],
+   "lugar": "Santa Cecilia",
+   "cita": "En santa Cecilia es zona 3 y tenemos 10 días sin agua !!!",
+   "dias": 10,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid03dfuXyToDA6TzeunMKRde2kugBVVUiZfsB3MPwwockgRxk1T3MA6mnxSNtchM45Ll",
+    "eco": {
+     "reacciones": 348,
+     "comentarios": 508,
+     "compartidos": 36,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/fbf6ea429d0c.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid03dfuXyToDA6TzeunMKRde2kugBVVUiZfsB3MPwwockgRxk1T3MA6mnxSNtchM45Ll?comment_id=4520977364845107",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "EL ROSARIO|Tonalá|45404"
+   ],
+   "lugar": "El Rosario, Tonalá",
+   "cita": "Ya tenemos 5 días sin agua en El Rosario Tonalá no están respetando los tandeo",
+   "dias": 5,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid03dfuXyToDA6TzeunMKRde2kugBVVUiZfsB3MPwwockgRxk1T3MA6mnxSNtchM45Ll",
+    "eco": {
+     "reacciones": 348,
+     "comentarios": 508,
+     "compartidos": 36,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/fbf6ea429d0c.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid03dfuXyToDA6TzeunMKRde2kugBVVUiZfsB3MPwwockgRxk1T3MA6mnxSNtchM45Ll?comment_id=1775584823517523",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "PASEOS DEL PARQUE|Zapopan|45010"
+   ],
+   "lugar": "Paseos del Parque",
+   "cita": "Zona 6 hoy corresponde agua lunes y solamente tuvimos agua 4 horas paseos del Parque",
+   "parcial": true,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid03dfuXyToDA6TzeunMKRde2kugBVVUiZfsB3MPwwockgRxk1T3MA6mnxSNtchM45Ll",
+    "eco": {
+     "reacciones": 348,
+     "comentarios": 508,
+     "compartidos": 36,
+     "al": "2026-11-11"
+    }
+   },
+   "dias": null,
+   "vista": "fuentes/fbf6ea429d0c.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid02Xrwy59Yqu1b6ScPRiLG84fPdYVLfbBh31TQKh8ou3tvHPth3NVsBL4XBJ31bWZJTl?comment_id=1069877416074651",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "SUTAJ|Guadalajara|44840"
+   ],
+   "lugar": "Sutaj (Av. Justo Corro y Rafael Delgado)",
+   "cita": "en la colonia sutaj sin gota de agua desde hace más de 15 días, la poca que llega es para tinacos y aljibes, no sube agua a los tinacos",
+   "dias": 15,
+   "parcial": true,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid02Xrwy59Yqu1b6ScPRiLG84fPdYVLfbBh31TQKh8ou3tvHPth3NVsBL4XBJ31bWZJTl",
+    "eco": {
+     "reacciones": 142,
+     "comentarios": 105,
+     "compartidos": 5,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/9c3cae39fea2.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/siapagdl/posts/pfbid03879p94uzA2Tyj8pknQn2kscaagVei6YJ5emGnNWitxTVXYF1EeqW2d3ttiEz3kKol?comment_id=1641257894404400",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "BEATRIZ HERNANDEZ|Guadalajara|44760"
+   ],
+   "lugar": "Beatriz Hernández",
+   "cita": "11 dias sin gota de agua en la colonia Beatriz hernandez, ya ni en el aljibe hay",
+   "dias": 11,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/siapagdl/posts/pfbid03879p94uzA2Tyj8pknQn2kscaagVei6YJ5emGnNWitxTVXYF1EeqW2d3ttiEz3kKol",
+    "eco": {
+     "reacciones": 118,
+     "comentarios": 116,
+     "compartidos": 7,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/69113353613e.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/reel/2670168010099295/?comment_id=1148992767646548",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "5 DE MAYO|Guadalajara|44960"
+   ],
+   "lugar": "5 de Mayo (Manuel Varela y Pedro García Conde)",
+   "cita": "nos pueden mandar una a la col 5 de mayo en Manuel varela y Pedro García conde no tenemos agua desde hace una semana y ya no tenemos reservas urge el agua",
+   "dias": 7,
+   "tipo": "comentario",
+   "en": {
+    "quien": "SIAPA Guadalajara",
+    "url": "https://www.facebook.com/reel/2670168010099295/",
+    "eco": {
+     "reacciones": 73,
+     "comentarios": 64,
+     "compartidos": 6,
+     "al": "2026-11-11"
+    }
+   },
+   "video": true,
+   "vista": "fuentes/8ddd56be6a3c.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/TelediarioGuadalajara/posts/pfbid02z8DAzixExQ4aytAmMojUvARcs2ggSEVxTb7qjnr7a7LS9PMManGQuE7TxUCQZsxvl?comment_id=2064484240932275",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "OBLATOS|Guadalajara|44360"
+   ],
+   "lugar": "Oblatos (zona 2), zona del tren y ex penal",
+   "cita": "Hoy van 37 días sin agua en zona tren oblatos y miren el agua que llega al medidor en zona ex penal a las 10pm 10/11/26.",
+   "dias": 37,
+   "tipo": "comentario",
+   "en": {
+    "quien": "Telediario Guadalajara",
+    "url": "https://www.facebook.com/TelediarioGuadalajara/posts/pfbid02z8DAzixExQ4aytAmMojUvARcs2ggSEVxTb7qjnr7a7LS9PMManGQuE7TxUCQZsxvl",
+    "eco": {
+     "reacciones": 88,
+     "comentarios": 60,
+     "compartidos": 2,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/577f293d0f74.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/reel/2215121272761682?comment_id=996617276208591",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "ALAMEDAS DE ZALATITAN|Tonalá|45407"
+   ],
+   "lugar": "Alamedas de Zalatitán",
+   "cita": "Un mes sin agua en alamedas de zalatitan y Siapa no se arrima para nada",
+   "dias": 30,
+   "tipo": "comentario",
+   "video": true,
+   "en": {
+    "quien": "Meganoticias",
+    "url": "https://www.facebook.com/reel/2215121272761682",
+    "eco": {
+     "reacciones": 363,
+     "comentarios": 45,
+     "compartidos": 88,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/ba389f6a8a75.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/reel/1829282058201789?comment_id=1054270714345654",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "FRANCISCO SILVA ROMERO|San Pedro Tlaquepaque|45630"
+   ],
+   "lugar": "Francisco Silva Romero, Tlaquepaque",
+   "cita": "En la col. Francisco Silva Romero de Tlaquepaque tenemos más de un mes sin agua 😨😡 aveces la mandan apartir de las 11:00 de la noche y en la mañana ya no hay.",
+   "dias": 30,
+   "parcial": true,
+   "tipo": "comentario",
+   "video": true,
+   "en": {
+    "quien": "Telediario Guadalajara",
+    "url": "https://www.facebook.com/reel/1829282058201789",
+    "eco": {
+     "reacciones": 68,
+     "comentarios": 19,
+     "compartidos": 9,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/c242189758cd.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/reel/2215121272761682?comment_id=3712469468904475",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "20 DE NOVIEMBRE|Tonalá|45404"
+   ],
+   "lugar": "20 de Noviembre, Tonalá",
+   "cita": "En la colonia 20 de noviembre en tonala tenemos el mismo tema, para la colonia la cortan y nos dejan hasta 15 días sin agua",
+   "dias": 15,
+   "tipo": "comentario",
+   "video": true,
+   "en": {
+    "quien": "Meganoticias",
+    "url": "https://www.facebook.com/reel/2215121272761682",
+    "eco": {
+     "reacciones": 363,
+     "comentarios": 45,
+     "compartidos": 88,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/ba389f6a8a75.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/reel/2215121272761682?comment_id=2051621162216950",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "ALTAMIRA|Tonalá|45400"
+   ],
+   "lugar": "Altamira, Tonalá",
+   "cita": "Nosotros también te emos ya quinse días sin agua en Altamira Tonalá y tampoco estamos en los tandeos",
+   "dias": 15,
+   "tipo": "comentario",
+   "video": true,
+   "en": {
+    "quien": "Meganoticias",
+    "url": "https://www.facebook.com/reel/2215121272761682",
+    "eco": {
+     "reacciones": 363,
+     "comentarios": 45,
+     "compartidos": 88,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/ba389f6a8a75.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/reel/2215121272761682?comment_id=4697805380441611",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "LOS PUESTOS|Tonalá|45630"
+   ],
+   "lugar": "Los Puestos",
+   "cita": "En los puestos tampoco ay agua más de 15 dias",
+   "dias": 15,
+   "tipo": "comentario",
+   "video": true,
+   "en": {
+    "quien": "Meganoticias",
+    "url": "https://www.facebook.com/reel/2215121272761682",
+    "eco": {
+     "reacciones": 363,
+     "comentarios": 45,
+     "compartidos": 88,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/ba389f6a8a75.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/reel/1450121636549944?comment_id=4254774717989922",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "5 DE MAYO|Guadalajara|44960"
+   ],
+   "lugar": "5 de Mayo",
+   "cita": "en tu casa en la 5 de mayo no hubo ni una gota más de 10 días sin agua en la 5 de mayo en unas casas cae en otras no",
+   "dias": 10,
+   "parcial": true,
+   "tipo": "comentario",
+   "video": true,
+   "en": {
+    "quien": "Tráfico ZMG",
+    "url": "https://www.facebook.com/reel/1450121636549944",
+    "eco": {
+     "reacciones": 1365,
+     "comentarios": 113,
+     "compartidos": 61,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/b30ff94f0de7.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/TelediarioGuadalajara/posts/pfbid02QuXTZFvGfCbjWEhSXH6Qg1QKdxxiLwVJBQF5yABFHan2TxjsYFErUdTETK5MG5c9l?comment_id=1843232870328468",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "ATLAS|Guadalajara|44870"
+   ],
+   "lugar": "Atlas (zona 3)",
+   "cita": "llevamos como 10 días sin agua sona 3 col.atlas",
+   "tipo": "comentario",
+   "dias": null,
+   "en": {
+    "quien": "Telediario Guadalajara",
+    "url": "https://www.facebook.com/TelediarioGuadalajara/posts/pfbid02QuXTZFvGfCbjWEhSXH6Qg1QKdxxiLwVJBQF5yABFHan2TxjsYFErUdTETK5MG5c9l",
+    "eco": {
+     "reacciones": 22,
+     "comentarios": 33,
+     "compartidos": 1,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/TelediarioGuadalajara/posts/pfbid02z8DAzixExQ4aytAmMojUvARcs2ggSEVxTb7qjnr7a7LS9PMManGQuE7TxUCQZsxvl?comment_id=1120144767663026",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "COLINAS DE TONALA|Tonalá|45418"
+   ],
+   "lugar": "Colinas de Tonalá",
+   "cita": "tenemos mas de una semana sin agua en colinas de tonala, se supone q hoy deberíamos tener agua y nada",
+   "dias": 7,
+   "tipo": "comentario",
+   "en": {
+    "quien": "Telediario Guadalajara",
+    "url": "https://www.facebook.com/TelediarioGuadalajara/posts/pfbid02z8DAzixExQ4aytAmMojUvARcs2ggSEVxTb7qjnr7a7LS9PMManGQuE7TxUCQZsxvl",
+    "eco": {
+     "reacciones": 88,
+     "comentarios": 60,
+     "compartidos": 2,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/577f293d0f74.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/reel/1645395703695709?comment_id=1148688841177679",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "EL TIZATE|Zapopan|45100"
+   ],
+   "lugar": "El Tizate",
+   "cita": "para el tizate nada más nada y llevamos ya casi para los dos meses sin agua",
+   "tipo": "comentario",
+   "video": true,
+   "dias": null,
+   "en": {
+    "quien": "Telediario Guadalajara",
+    "url": "https://www.facebook.com/reel/1645395703695709",
+    "eco": {
+     "reacciones": 94,
+     "comentarios": 48,
+     "compartidos": 2,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/5ac089070b3c.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/reel/1645395703695709?comment_id=1326652916182645",
+   "fecha": "2026-11-09",
+   "colonias": [
+    "LOMAS DE LA PRIMAVERA|Zapopan|45066"
+   ],
+   "lugar": "Lomas de la Primavera",
+   "cita": "Lomas de la primavera ya casi 2 meses sin agua y dónde reclaman la gente si no contestan",
+   "tipo": "comentario",
+   "video": true,
+   "dias": null,
+   "en": {
+    "quien": "Telediario Guadalajara",
+    "url": "https://www.facebook.com/reel/1645395703695709",
+    "eco": {
+     "reacciones": 94,
+     "comentarios": 48,
+     "compartidos": 2,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/5ac089070b3c.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/reel/1645395703695709?comment_id=1151142777278966",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "LOMAS DE ZAPOPAN|Zapopan|45130"
+   ],
+   "lugar": "Lomas de Zapopan",
+   "cita": "No es cierto en Lomas de Zapopan llegaba el agua bien y a partir de ayer llega turbia y apestosa.",
+   "calidad": true,
+   "tipo": "comentario",
+   "video": true,
+   "dias": null,
+   "en": {
+    "quien": "Telediario Guadalajara",
+    "url": "https://www.facebook.com/reel/1645395703695709",
+    "eco": {
+     "reacciones": 94,
+     "comentarios": 48,
+     "compartidos": 2,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/5ac089070b3c.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/TelediarioGuadalajara/posts/pfbid02z8DAzixExQ4aytAmMojUvARcs2ggSEVxTb7qjnr7a7LS9PMManGQuE7TxUCQZsxvl?comment_id=1102822425963806",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "CIUDAD GRANJA|Zapopan|45010"
+   ],
+   "lugar": "Ciudad Granja",
+   "cita": "En ciudad granja no respetan los tandeos solo un día llegó agua de los 4 días que tocan y solo a una parte de la colonia le llegó por unas horas y después la quitaron.",
+   "parcial": true,
+   "tipo": "comentario",
+   "dias": null,
+   "en": {
+    "quien": "Telediario Guadalajara",
+    "url": "https://www.facebook.com/TelediarioGuadalajara/posts/pfbid02z8DAzixExQ4aytAmMojUvARcs2ggSEVxTb7qjnr7a7LS9PMManGQuE7TxUCQZsxvl",
+    "eco": {
+     "reacciones": 88,
+     "comentarios": 60,
+     "compartidos": 2,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/577f293d0f74.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/TelediarioGuadalajara/posts/pfbid02QuXTZFvGfCbjWEhSXH6Qg1QKdxxiLwVJBQF5yABFHan2TxjsYFErUdTETK5MG5c9l?comment_id=1152057647239936",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "SANTA CECILIA|Guadalajara|44700"
+   ],
+   "lugar": "Santa Cecilia",
+   "cita": "Sta Cecilia Diario hay tandeo nunca cay agua aca arriva",
+   "tipo": "comentario",
+   "dias": null,
+   "en": {
+    "quien": "Telediario Guadalajara",
+    "url": "https://www.facebook.com/TelediarioGuadalajara/posts/pfbid02QuXTZFvGfCbjWEhSXH6Qg1QKdxxiLwVJBQF5yABFHan2TxjsYFErUdTETK5MG5c9l",
+    "eco": {
+     "reacciones": 22,
+     "comentarios": 33,
+     "compartidos": 1,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": null
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/reel/1450121636549944?comment_id=1483143260346132",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "ANALCO|Guadalajara|44450"
+   ],
+   "lugar": "Analco, hacia San Juan de Dios",
+   "cita": "EN COLONIA ANALCO HACIA SAN JUAN DE DIOS SIN AGUA DESDE EL DIA 6 DE NOVIEMBRE 2026.",
+   "desde": "2026-11-06",
+   "tipo": "comentario",
+   "video": true,
+   "dias": null,
+   "en": {
+    "quien": "Tráfico ZMG",
+    "url": "https://www.facebook.com/reel/1450121636549944",
+    "eco": {
+     "reacciones": 1365,
+     "comentarios": 113,
+     "compartidos": 61,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/b30ff94f0de7.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "facebook",
+   "quien": "",
+   "url": "https://www.facebook.com/TelediarioGuadalajara/posts/pfbid02z8DAzixExQ4aytAmMojUvARcs2ggSEVxTb7qjnr7a7LS9PMManGQuE7TxUCQZsxvl?comment_id=1011731351963537",
+   "fecha": "2026-11-10",
+   "colonias": [
+    "MIGUEL HIDALGO|Guadalajara|44760",
+    "LOS ARRAYANES|Guadalajara|44760"
+   ],
+   "lugar": "Miguel Hidalgo y Arrayanes, Guadalajara",
+   "cita": "No tenemos agua Col. MIGUEL HIDALGO, COL. ARRAYANES en Guadalajara. Es urgente envíen agua es nuestro derecho.",
+   "tipo": "comentario",
+   "dias": null,
+   "en": {
+    "quien": "Telediario Guadalajara",
+    "url": "https://www.facebook.com/TelediarioGuadalajara/posts/pfbid02z8DAzixExQ4aytAmMojUvARcs2ggSEVxTb7qjnr7a7LS9PMManGQuE7TxUCQZsxvl",
+    "eco": {
+     "reacciones": 88,
+     "comentarios": 60,
+     "compartidos": 2,
+     "al": "2026-11-11"
+    }
+   },
+   "vista": "fuentes/577f293d0f74.jpg"
   }
  ]
 }
