@@ -197,7 +197,12 @@
   "img/videos/youtube-HI7IvAGzMjw.webp": "protesta",
   "img/videos/youtube-JgLc7pyUj0M.webp": "protesta",
   "img/videos/youtube-UB-TR9GkYOQ.webp": "protesta",
-  "img/videos/youtube-upEOMWRrHuQ.webp": "protesta"
+  "img/videos/youtube-upEOMWRrHuQ.webp": "protesta",
+  "img/fotos/coyotera-2026-11-10-1483814107275197.webp": "protesta",
+  "img/fotos/coyotera-2026-11-10-1483814123941862.webp": "protesta",
+  "img/fotos/coyotera-2026-11-10-1483814113941863.webp": "protesta",
+  "img/fotos/coyotera-2026-11-10-1483814110608530.webp": "protesta",
+  "img/fotos/coyotera-2026-11-10-1483814120608529.webp": "protesta"
  },
  "fuera": [
   "fuentes/00d93c39a1c2.jpg",
@@ -530,7 +535,12 @@
   "img/fotos/zonadocs-2026-11-01-queremos-agua.webp",
   "img/noticias/2026-11-05-congreso-1.webp",
   "img/noticias/2026-11-05-congreso-2.webp",
-  "img/videos/x-2109389377801486675.webp"
+  "img/videos/x-2109389377801486675.webp",
+  "img/fotos/coyotera-2026-11-10-1483814107275197.webp",
+  "img/fotos/coyotera-2026-11-10-1483814123941862.webp",
+  "img/fotos/coyotera-2026-11-10-1483814113941863.webp",
+  "img/fotos/coyotera-2026-11-10-1483814110608530.webp",
+  "img/fotos/coyotera-2026-11-10-1483814120608529.webp"
  ],
  "extra": [
   {
@@ -588,6 +598,121 @@
     "al": "2026-11-07"
    },
    "nota": "Página de Telediario Guadalajara (ya en publicaciones.json). creation_time 1793976350 (6 nov 2026, 8:45 en Guadalajara). Cuadro del segundo 8 del reel, recortado arriba de la franja «Denuncian 40 días sin agua»; los carteles tapan las caras. Mismo bloqueo que la nota y los reels 1426524436127985 y 1689233352622849 (publicaciones.json); va aquí y no allá porque repite la historia, con otros carteles. Colonia como en esas entradas."
+  },
+  {
+   "img": "img/fotos/coyotera-2026-11-10-1483814107275197.webp",
+   "url": "https://www.facebook.com/photo/?fbid=1483814107275197",
+   "fecha": "2026-11-10",
+   "quien": "La Coyotera Radio Comunitaria",
+   "colonias": [
+    "BELISARIO DOMINGUEZ|Guadalajara|44320",
+    "BELISARIO DOMINGUEZ|Guadalajara|44340",
+    "OBLATOS|Guadalajara|44700",
+    "SAN ANDRES|Guadalajara|44810"
+   ],
+   "video": false,
+   "alt": "Una manta en la marcha: «NO MAS AGUA SUCIA EN GUADALAJARA», del Frente Nacional Emiliano Zapata",
+   "tema": "protesta",
+   "cita": "El día de ayer habitantes de Belisario Domínguez, Oblatos, San Andrés y San Felipe se manifestaron pacíficamente para denunciar la falta de agua potable que enfrentan desde hace más de un mes.\nLa manifestación inició alrededor de las 11:00 de la mañana y avanzó por las avenidas Javier Mina, Calzada Independencia y Juárez, en dirección a las instalaciones del Congreso del Estado de Jalisco. Durante el recorrido, las y los vecinos expresaron su inconformidad mediante consignas para exigir el restablecimiento del servicio de agua potable.",
+   "eco": {
+    "reacciones": 225,
+    "comentarios": 18,
+    "compartidos": 73,
+    "al": "2026-11-11"
+   },
+   "nota": "Foto de la publicación 1483814203941854 de La Coyotera (facebook.com/lacoyoteraradio/posts/pfbid02PFCjMjt9gCCJjZXDSr2URH7LXebAH5GXBnibBKYGrr55SouxXyuyAnsvzfiUB73dl), creation_time 1794348004 (10 nov 2026, 16:00 en Guadalajara), sobre la marcha del 9 nov al Congreso; misma marcha que su reel 3801507829997181 (publicaciones.json), por eso va aquí y no allá. Sin San Felipe: en el mapa solo está en Zapotlanejo. Guardada a 672 px con la marca de agua de La Coyotera."
+  },
+  {
+   "img": "img/fotos/coyotera-2026-11-10-1483814123941862.webp",
+   "url": "https://www.facebook.com/photo/?fbid=1483814123941862",
+   "fecha": "2026-11-10",
+   "quien": "La Coyotera Radio Comunitaria",
+   "colonias": [
+    "BELISARIO DOMINGUEZ|Guadalajara|44320",
+    "BELISARIO DOMINGUEZ|Guadalajara|44340",
+    "OBLATOS|Guadalajara|44700",
+    "SAN ANDRES|Guadalajara|44810"
+   ],
+   "video": false,
+   "alt": "Un vecino sostiene dos cartones: «QUEREMOS AGUA» y «40 DIAS»",
+   "tema": "protesta",
+   "cita": "El día de ayer habitantes de Belisario Domínguez, Oblatos, San Andrés y San Felipe se manifestaron pacíficamente para denunciar la falta de agua potable que enfrentan desde hace más de un mes.\nLa manifestación inició alrededor de las 11:00 de la mañana y avanzó por las avenidas Javier Mina, Calzada Independencia y Juárez, en dirección a las instalaciones del Congreso del Estado de Jalisco. Durante el recorrido, las y los vecinos expresaron su inconformidad mediante consignas para exigir el restablecimiento del servicio de agua potable.",
+   "eco": {
+    "reacciones": 225,
+    "comentarios": 18,
+    "compartidos": 73,
+    "al": "2026-11-11"
+   },
+   "nota": "Foto de la publicación 1483814203941854 de La Coyotera (facebook.com/lacoyoteraradio/posts/pfbid02PFCjMjt9gCCJjZXDSr2URH7LXebAH5GXBnibBKYGrr55SouxXyuyAnsvzfiUB73dl), creation_time 1794348004 (10 nov 2026, 16:00 en Guadalajara), sobre la marcha del 9 nov al Congreso; misma marcha que su reel 3801507829997181 (publicaciones.json), por eso va aquí y no allá. Sin San Felipe: en el mapa solo está en Zapotlanejo. Guardada a 672 px con la marca de agua de La Coyotera."
+  },
+  {
+   "img": "img/fotos/coyotera-2026-11-10-1483814113941863.webp",
+   "url": "https://www.facebook.com/photo/?fbid=1483814113941863",
+   "fecha": "2026-11-10",
+   "quien": "La Coyotera Radio Comunitaria",
+   "colonias": [
+    "BELISARIO DOMINGUEZ|Guadalajara|44320",
+    "BELISARIO DOMINGUEZ|Guadalajara|44340",
+    "OBLATOS|Guadalajara|44700",
+    "SAN ANDRES|Guadalajara|44810"
+   ],
+   "video": false,
+   "alt": "Un cartel rosa en la marcha: «Soy mamá Soltera Como muchas y no puedo Pagar Agua Lavanderia y dar de Comer Pagar medicamentos la Piel de mi niña está sufriendo Solución»",
+   "tema": "protesta",
+   "cita": "El día de ayer habitantes de Belisario Domínguez, Oblatos, San Andrés y San Felipe se manifestaron pacíficamente para denunciar la falta de agua potable que enfrentan desde hace más de un mes.\nLa manifestación inició alrededor de las 11:00 de la mañana y avanzó por las avenidas Javier Mina, Calzada Independencia y Juárez, en dirección a las instalaciones del Congreso del Estado de Jalisco. Durante el recorrido, las y los vecinos expresaron su inconformidad mediante consignas para exigir el restablecimiento del servicio de agua potable.",
+   "eco": {
+    "reacciones": 225,
+    "comentarios": 18,
+    "compartidos": 73,
+    "al": "2026-11-11"
+   },
+   "nota": "Foto de la publicación 1483814203941854 de La Coyotera (facebook.com/lacoyoteraradio/posts/pfbid02PFCjMjt9gCCJjZXDSr2URH7LXebAH5GXBnibBKYGrr55SouxXyuyAnsvzfiUB73dl), creation_time 1794348004 (10 nov 2026, 16:00 en Guadalajara), sobre la marcha del 9 nov al Congreso; misma marcha que su reel 3801507829997181 (publicaciones.json), por eso va aquí y no allá. Sin San Felipe: en el mapa solo está en Zapotlanejo. Guardada a 672 px con la marca de agua de La Coyotera."
+  },
+  {
+   "img": "img/fotos/coyotera-2026-11-10-1483814110608530.webp",
+   "url": "https://www.facebook.com/photo/?fbid=1483814110608530",
+   "fecha": "2026-11-10",
+   "quien": "La Coyotera Radio Comunitaria",
+   "colonias": [
+    "BELISARIO DOMINGUEZ|Guadalajara|44320",
+    "BELISARIO DOMINGUEZ|Guadalajara|44340",
+    "OBLATOS|Guadalajara|44700",
+    "SAN ANDRES|Guadalajara|44810"
+   ],
+   "video": false,
+   "alt": "Un manifestante levanta un cartel: «NO HABRA PAGO AL SIAPA HASTA QUE LLEGUE AGUA LIMPIA A MI HOGAR ¿NI UN PESO MAS?»",
+   "tema": "protesta",
+   "cita": "El día de ayer habitantes de Belisario Domínguez, Oblatos, San Andrés y San Felipe se manifestaron pacíficamente para denunciar la falta de agua potable que enfrentan desde hace más de un mes.\nLa manifestación inició alrededor de las 11:00 de la mañana y avanzó por las avenidas Javier Mina, Calzada Independencia y Juárez, en dirección a las instalaciones del Congreso del Estado de Jalisco. Durante el recorrido, las y los vecinos expresaron su inconformidad mediante consignas para exigir el restablecimiento del servicio de agua potable.",
+   "eco": {
+    "reacciones": 225,
+    "comentarios": 18,
+    "compartidos": 73,
+    "al": "2026-11-11"
+   },
+   "nota": "Foto de la publicación 1483814203941854 de La Coyotera (facebook.com/lacoyoteraradio/posts/pfbid02PFCjMjt9gCCJjZXDSr2URH7LXebAH5GXBnibBKYGrr55SouxXyuyAnsvzfiUB73dl), creation_time 1794348004 (10 nov 2026, 16:00 en Guadalajara), sobre la marcha del 9 nov al Congreso; misma marcha que su reel 3801507829997181 (publicaciones.json), por eso va aquí y no allá. Sin San Felipe: en el mapa solo está en Zapotlanejo. Guardada a 672 px con la marca de agua de La Coyotera."
+  },
+  {
+   "img": "img/fotos/coyotera-2026-11-10-1483814120608529.webp",
+   "url": "https://www.facebook.com/photo/?fbid=1483814120608529",
+   "fecha": "2026-11-10",
+   "quien": "La Coyotera Radio Comunitaria",
+   "colonias": [
+    "BELISARIO DOMINGUEZ|Guadalajara|44320",
+    "BELISARIO DOMINGUEZ|Guadalajara|44340",
+    "OBLATOS|Guadalajara|44700",
+    "SAN ANDRES|Guadalajara|44810"
+   ],
+   "video": false,
+   "alt": "Un cartel frente al Congreso: «VERO DELGADILLO ¡EL AGUA HUELE A TU \"FUNDILLO\" ¡AGUA LIMPIA YA!»",
+   "tema": "protesta",
+   "cita": "El día de ayer habitantes de Belisario Domínguez, Oblatos, San Andrés y San Felipe se manifestaron pacíficamente para denunciar la falta de agua potable que enfrentan desde hace más de un mes.\nLa manifestación inició alrededor de las 11:00 de la mañana y avanzó por las avenidas Javier Mina, Calzada Independencia y Juárez, en dirección a las instalaciones del Congreso del Estado de Jalisco. Durante el recorrido, las y los vecinos expresaron su inconformidad mediante consignas para exigir el restablecimiento del servicio de agua potable.",
+   "eco": {
+    "reacciones": 225,
+    "comentarios": 18,
+    "compartidos": 73,
+    "al": "2026-11-11"
+   },
+   "nota": "Foto de la publicación 1483814203941854 de La Coyotera (facebook.com/lacoyoteraradio/posts/pfbid02PFCjMjt9gCCJjZXDSr2URH7LXebAH5GXBnibBKYGrr55SouxXyuyAnsvzfiUB73dl), creation_time 1794348004 (10 nov 2026, 16:00 en Guadalajara), sobre la marcha del 9 nov al Congreso; misma marcha que su reel 3801507829997181 (publicaciones.json), por eso va aquí y no allá. Sin San Felipe: en el mapa solo está en Zapotlanejo. Guardada a 672 px con la marca de agua de La Coyotera."
   }
  ],
  "muro": {
