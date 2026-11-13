@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 """Check that the agent docs point at things that exist.
 
-    python3 scripts/check_docs.py    exit 1 if AGENTS.md, .claude/rules/*.md or web/llms.txt is stale
+    python3 scripts/check_docs.py    exit 1 if AGENTS.md, .claude/rules/*.md, web/llms.txt, an agent or a skill is stale
 
 - A backticked repo path (`web/x.html`, `cmd/notify`, `promesas.py`) exists: from the repo root, under
   api/ (Go packages), or, for a bare file name, anywhere in the repo.
 - A backticked `X.py --flag` mention: pipelines/X.py (or the file of that name) defines "--flag".
 - Every /v1 route in web/llms.txt is registered in api/cmd/server/api.go's mux.
+- Agent docs (the above bar llms.txt, plus .claude/agents and skills) say how things are now: no «was removed»
+  or «used to be»; a file named beside «git history» has its full path when a tracked file shares its name.
+  Only these forms are caught (was/were/got/been removed, retired, deleted or ported; used to + a verb).
+- .claude/rules/vetos.md stays under the line limit it states.
 URLs, globs, placeholders, the private notes repo (~/agua-gdl-notes) and SIAPA's own remote paths are
 in ALLOW or skipped by shape.
 """
@@ -101,6 +105,41 @@ for n, line in enumerate((root / "web/llms.txt").read_text(encoding="utf-8").spl
         if route not in routes:
             errors.append(f"web/llms.txt:{n}: {route} is not in api/cmd/server/api.go's mux")
 
+# Agent docs say how things are now (AGENTS.md): the story of a change belongs in git. Text inside «…» is quoted,
+# not said. A file named as gone or in git history carries its full path when a tracked file shares its name
+# (12 Nov: `videos.py` «is in git history» beside the live pipelines/videos.py).
+PROSE = [d for d in DOCS if d.suffix == ".md"] + sorted(
+    p for pat in ("agents/*.md", "skills/*/SKILL.md", "skills/*/references/*.md")
+    for p in (root / ".claude").glob(pat) if p.is_file() and not any(q.is_symlink() for q in p.parents if q != root and root in q.parents))
+HISTORY = re.compile(r"\b(?:was|were|got|been) (?:removed|retired|deleted|ported)\b|\bused to (?:be|have|do|say|show|read|write|build|run|link|live|open|play)\b", re.I)
+prose_lines = 0
+for doc in PROSE:
+    rel = doc.relative_to(root)
+    for n, line in enumerate(doc.read_text(encoding="utf-8").splitlines(), 1):
+        prose_lines += 1
+        said = re.sub(r"«[^»]*»", "", line)
+        for m in HISTORY.finditer(said):
+            errors.append(f"{rel}:{n}: «{m.group(0)}» tells the history; say how it is now")
+        for sentence in re.split(r"(?<=[.;:]) ", said):
+            if "git history" not in sentence:
+                continue
+            for tok in re.findall(r"`([^`\n/ ]+\.\w+)`", sentence):
+                if tok in names:
+                    errors.append(f"{rel}:{n}: `{tok}` is named beside «git history» but a tracked file has that name; give full paths")
+
+# A size limit a doc states for itself is checked here, so it can't drift (AGENTS.md's is in .githooks/pre-commit).
+vetos_file = root / ".claude/rules/vetos.md"
+vetos = vetos_file.read_text(encoding="utf-8") if vetos_file.is_file() else ""
+limit = re.search(r"keep this file under (\d+) lines", vetos)
+if not limit:
+    errors.append(".claude/rules/vetos.md: its line limit is not stated as «keep this file under N lines»")
+elif len(vetos.splitlines()) >= int(limit.group(1)):
+    errors.append(f".claude/rules/vetos.md: {len(vetos.splitlines())} lines, its own limit is under {limit.group(1)}")
+
 for e in errors:
     print(e)
+if len(PROSE) < 15 or prose_lines < 300:
+    print(f"check_docs.py: read only {len(PROSE)} agent docs, {prose_lines} lines; expected the rules, skills and agents")
+    sys.exit(1)
+print(f"check_docs.py: {len(DOCS)} docs for paths, {len(PROSE)} agent docs ({prose_lines} lines) for history wording")
 sys.exit(1 if errors else 0)
