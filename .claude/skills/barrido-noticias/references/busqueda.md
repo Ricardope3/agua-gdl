@@ -15,7 +15,7 @@ You gather candidates for /reportes. You never decide what gets published and ne
 
 ## Facebook (Claude in Chrome)
 
-- Other agents share this browser: work only in tabs you created, and check the tab id before every `javascript_tool` call (block 3 of `fb-comentarios.js` replaces whatever page it runs on). On 6 Nov one agent's script wiped another's X search.
+- Other agents share this browser: work only in tabs you created, and check the tab id before every `javascript_tool` call (block 3 of `fb-comentarios.js` replaces whatever page it runs on).
 - `facebook.com/share/…` redirects; record the canonical URL after the redirect. If a read fails with «navigated to a different domain», read again.
 - Comments: switch the sort to «All comments» / «Todos los comentarios», then use the three blocks in `fb-comentarios.js` (same folder): load everything in the background and poll, extract numeric ids, ages and text, read the rows with `get_page_text`. No comment id, no candidate.
 - Counts: reactions, comments and shares of the post you opened (`[aria-label]` «N comments», «N shares»). A reel page also shows the NEXT reel's counts and scrolling auto-advances: re-check the URL after scrolling. Facebook rounds («1.1K»): record 1100 and say it is rounded.

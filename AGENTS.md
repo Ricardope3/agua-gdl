@@ -57,7 +57,7 @@ Run `scripts/check.sh` and read its result before you push. Search with a path (
 
 Lessons from mistakes agents made here; each one shipped once.
 
-- Verify before you state. A claim in docs, copy or a report needs its source in the code, the data or a cited page; say "not verified" otherwise. A source's claim stays its claim (SIAPA says the cuts aren't total; neighbours report early loss and late return).
+- Verify before you state. A claim in docs, copy or a report needs its source in the code, the data or a cited page (see «No overstatement» below). A source's claim stays its claim (SIAPA says the cuts aren't total; neighbours report early loss and late return).
 - When you move or restructure a file, run a lost-lines check: every line of the old file is in a new file or deliberately dropped. List what you dropped.
 - When you delete or rename anything, grep for every name and check every generator that writes there, so nothing links to it or writes it back.
 - After a multi-file change, run an adversarial review before committing: one read-only reviewer per area, briefed to assume mistakes exist. Fix what it finds, then commit.
