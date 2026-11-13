@@ -127,8 +127,8 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 .status:empty { display: none }
 
 
-/* The sheet: a colonia's card or a zone's, under the finder on wide screens and from the bottom on phones. */
-.stage .card { position: absolute; z-index: 1200; top: calc(var(--fh, 150px) + 22px); left: 12px; width: min(440px, calc(100% - 24px)); max-height: calc(100% - var(--fh, 150px) - var(--sh, 120px) - 56px); overflow: auto; overscroll-behavior: contain; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; box-shadow: 0 10px 30px rgb(3 14 22 / .24) }
+/* The sheet: a colonia's card or a zone's, top right beside the map's buttons on wide screens and from the bottom on phones. */
+.stage .card { position: absolute; z-index: 1200; top: 12px; right: 58px; width: min(440px, calc(100% - 24px)); max-height: calc(100% - var(--sh, 120px) - 46px); overflow: auto; overscroll-behavior: contain; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; box-shadow: 0 10px 30px rgb(3 14 22 / .24) }
 .stage .card.zcard { border-top: 6px solid var(--zc) }
 .card h2 { margin: 0 34px 2px 0; font-size: 1.3rem; line-height: 1.2; letter-spacing: -.02em; color: var(--link); text-transform: uppercase }
 .card.zcard h2 { text-transform: none; color: var(--fg) }
@@ -225,6 +225,11 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 .zlabel span { display: inline-block; transform: translate(-50%, -50%); padding: 2px 9px; border-radius: 999px; background: var(--zc); color: #fff; font: 800 12.5px/1.4 var(--font); white-space: nowrap; box-shadow: 0 0 0 2px var(--surface), 0 2px 6px rgb(3 14 22 / .35); cursor: pointer }
 .pin { background: var(--fg); border: 3px solid var(--surface); border-radius: 50%; box-shadow: 0 1px 4px rgb(3 14 22 / .5) }
 
+/* Too narrow for the finder and the card side by side: the card goes back under the finder. */
+@media (min-width: 761px) and (max-width: 980px) {
+  .stage .card { top: calc(var(--fh, 150px) + 22px); left: 12px; right: auto; max-height: calc(100% - var(--fh, 150px) - var(--sh, 120px) - 56px) }
+}
+
 @media (max-width: 760px) {
   .stage { height: calc(100dvh - var(--hh, 110px)); min-height: 480px }
   .finder { top: 8px; left: 8px; width: calc(100% - 16px); padding: 8px 10px 10px; border-radius: 12px }
@@ -238,7 +243,7 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
   .stage .leaflet-top.leaflet-right { top: calc(var(--fh, 140px) + 4px) }
   .zstrip { left: 8px; right: 8px; bottom: 8px; scroll-snap-type: x proximity }
   .ztile { flex: 0 0 136px; scroll-snap-align: start }
-  .stage .card { top: auto; bottom: 8px; left: 8px; width: calc(100% - 16px); max-height: min(58%, calc(100% - var(--fh, 140px) - 40px)); padding: 12px 14px 14px; border-radius: 16px }
+  .stage .card { top: auto; bottom: 8px; left: 8px; right: auto; width: calc(100% - 16px); max-height: min(58%, calc(100% - var(--fh, 140px) - 40px)); padding: 12px 14px 14px; border-radius: 16px }
   .stage .card.zcard { bottom: calc(var(--sh, 110px) + 14px); max-height: min(46%, calc(100% - var(--fh, 140px) - var(--sh, 110px) - 40px)) }
   .stage .card .grab { display: block; width: 40px; height: 4px; border-radius: 2px; background: var(--line); margin: -4px auto 8px }
   .stage.sheet-colonia .zstrip { display: none }
@@ -333,7 +338,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
       </div>
       <p class="note" id="calendario-fuente"></p>
       <a class="button tgcta" href="https://t.me/AvisoAguaGDLbot?start=hola" rel="noopener"><svg class="tgi" aria-hidden="true"><use href="/icons.svg?v=5#telegram"/></svg><span><strong>Avisos gratis por Telegram</strong><small>Te avisa dos días antes de cada corte y la noche anterior. Abre el bot y manda tu ubicación, tu colonia o tu zona.</small></span></a>
-      <p class="note tgnote">¿Sin Telegram? Agrega el calendario de tu zona desde su tarjeta.</p>
+      <p class="note tgnote">¿Sin Telegram? Busca tu colonia o toca tu zona y usa el botón «Calendario» para recibir los cortes en tu calendario.</p>
       <p class="status" id="estado" aria-live="polite">Cargando el mapa de colonias…</p>
       <noscript><p class="status">Consulta la <a href="/simple">versión sencilla</a> o el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa oficial del SIAPA</a>.</p></noscript>
     </div>
@@ -1081,9 +1086,9 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
       return { paddingTopLeft: [24, Math.min(top, H * 0.5)], paddingBottomRight: [24, Math.min(bottom, H * 0.6)] };
     }
     let left = finder.offsetLeft + finder.offsetWidth + 24;
-    if (shown(node)) left = Math.max(left, node.offsetLeft + node.offsetWidth + 24);
-    if (W - left < 260) left = 24;
-    return { paddingTopLeft: [left, 24], paddingBottomRight: [64, sh] };
+    let right = shown(node) ? W - node.offsetLeft + 24 : 64;
+    if (W - left - right < 260) { left = 24; right = 64; }
+    return { paddingTopLeft: [left, 24], paddingBottomRight: [right, sh] };
   }
   function fitTo(bounds, animate, maxZoom = 15) {
     if (sheet) sheet.bounds = bounds;
