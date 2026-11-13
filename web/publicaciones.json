@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-11",
+ "actualizado": "2026-11-12",
  "desde": "2026-10-12",
  "regla": {
   "reacciones": 5,
@@ -23,7 +23,8 @@
   "2026-11-07",
   "2026-11-09",
   "2026-11-10",
-  "2026-11-11"
+  "2026-11-11",
+  "2026-11-12"
  ],
  "publicaciones": [
   {
@@ -56887,6 +56888,38 @@
     }
    },
    "vista": "fuentes/577f293d0f74.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "Tráfico ZMG",
+   "url": "https://traficozmg.com/2026/11/vecinos-bloquean-la-carretera-libre-a-zapotlanejo-por-falta-de-agua-liberan-tras-acuerdo-temporal/",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "LOS SANTIBAÑEZ|San Pedro Tlaquepaque|45630"
+   ],
+   "lugar": "colonia Santibáñez; bloqueo en la carretera libre a Zapotlanejo",
+   "cita": "los manifestantes aseguraban llevar casi cinco meses sin recibir una sola gota de agua potable en sus viviendas, pese a que continúan pagando sus recibos de manera puntual mes con mes",
+   "dias": null,
+   "bloqueo": true,
+   "titular": "Vecinos bloquean la carretera libre a Zapotlanejo por falta de agua; liberan tras acuerdo temporal",
+   "vista": "fuentes/7e257eb786b9.jpg"
+  },
+  {
+   "fuente": "medio",
+   "red": "web",
+   "quien": "El Occidental",
+   "url": "https://agua.org.mx/jalisco-habitantes-de-arroyo-de-enmedio-en-tonala-bloquean-carretera-libre-a-zapotlanejo-por-falta-de-agua-el-occidental/",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "ARROYO DE ENMEDIO|Tonalá|45426"
+   ],
+   "lugar": "Arroyo de Enmedio, Tonalá; bloqueo en la carretera Libre a Zapotlanejo",
+   "cita": "Habitantes de Arroyo de Enmedio, en Tonalá, Jalisco, bloquearon la carretera Libre a Zapotlanejo para exigir el restablecimiento del suministro de agua potable, luego de permanecer varios días sin recibir el servicio en sus hogares.",
+   "dias": null,
+   "bloqueo": true,
+   "titular": "Habitantes de Arroyo de Enmedio, en Tonalá, bloquean carretera Libre a Zapotlanejo por falta de agua",
+   "vista": "fuentes/ea589ded4ba3.jpg"
   }
  ]
 }
