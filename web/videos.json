@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-12",
+ "actualizado": "2026-11-13",
  "videos": [
   {
    "url": "https://www.facebook.com/reel/1600459298762122/",
@@ -3532,6 +3532,97 @@
    ],
    "lugar": "Alamedas de Zalatitán, Tonalá",
    "cita": "acá en alamedas de zalatitan en tonala no hay agua pero como la mayoría de la gente tiene aljiber no se manifiestan",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/MeganoticiasGdl/videos/1983144675979429",
+   "red": "facebook",
+   "quien": "Meganoticias",
+   "fecha": "2026-11-13",
+   "colonias": [
+    "ALTUS PINAR|Tonalá|45410"
+   ],
+   "lugar": "Fraccionamiento Altus Pinar, Rancho de la Cruz (Tonalá)",
+   "cita": "Habitantes del Fraccionamiento Altus Pinar, en Rancho de la Cruz en el municipio de Tonalá, acumulan más de 22 días sin agua potable. Ante la falta de suministro, compran pipas a precios cada vez más elevados y denuncian robos de agua de tinacos.",
+   "dias": 22,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/MeganoticiasGdl/videos/1983144675979429",
+   "red": "facebook",
+   "quien": "Meganoticias",
+   "fecha": "2026-11-13",
+   "colonias": [
+    "JARDINES DE LA REINA|Tonalá|45410"
+   ],
+   "lugar": "Jardines de la Cruz, Jardines de la Reina y Puerta del Sol (Tonalá)",
+   "cita": "La problemática también afecta a Jardines de la Cruz, Jardines de la Reina y Puerta del Sol.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/MeganoticiasGdl/videos/1983144675979429?comment_id=1815056539723621",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-13",
+   "colonias": [
+    "RANCHO DE LA CRUZ|Tonalá|45410"
+   ],
+   "lugar": "Rancho de la Cruz, por la Guardia Nacional (Tonalá)",
+   "cita": "Aquí mismo por la guardia nacional en rancho de la cruz no hay agua hace 3 semanas",
+   "dias": 21,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/MeganoticiasGdl/videos/1983144675979429?comment_id=1727174769028409",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-13",
+   "colonias": [
+    "ALTUS PINAR|Tonalá|45410"
+   ],
+   "lugar": "Altus Pinar (Tonalá)",
+   "cita": "EN ALTUS PINAR NO HAY NADA DE AGUA",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/MeganoticiasGdl/videos/1983144675979429?comment_id=1450069410666852",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-13",
+   "colonias": [
+    "VISTA REINA|Tonalá|45417"
+   ],
+   "lugar": "Vista Reyna (Tonalá)",
+   "cita": "Aquí en vista reyna tenemos casi un mes sin agua tenemos que comprar de garrafón",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/MeganoticiasGdl/videos/1983144675979429?comment_id=1963366138403035",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-13",
+   "colonias": [
+    "EL VADO|Tonalá|45429"
+   ],
+   "lugar": "El Vado (Tonalá)",
+   "cita": "Estamos igual en el vado y nomás no asen caso",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1442480794763295?comment_id=1693115575723315",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-13",
+   "colonias": [
+    "ALTAMIRA|Tonalá|45400"
+   ],
+   "lugar": "colonia Altamira / colonia Cihuapilli, Tonalá",
+   "cita": "Pues aquí en colonia Altamira estamos igual en colonia Cihuapilli en tonala ya tenemos más de 15 y cuando cae es un chorrito y luego luego la quitan",
    "dias": null,
    "video": null
   }
