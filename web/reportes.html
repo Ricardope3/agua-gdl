@@ -482,7 +482,7 @@ html.en-portada { overflow: hidden }
 .tl-chart .cur { stroke: var(--fg); stroke-width: 2 }
 .tl-chart .knob { fill: var(--surface); stroke: var(--fg); stroke-width: 2.5 }
 .tl-chart .tot { font: 800 11px/1 var(--font); fill: var(--fg); font-variant-numeric: tabular-nums }
-.tl-chart .slide { transition: transform .45s cubic-bezier(.3, .7, .3, 1) }
+.tl-chart .slide { transition: transform var(--paso, .45s) cubic-bezier(.3, .7, .3, 1) }
 @media (prefers-reduced-motion: reduce) { .tl-chart .slide { transition: none } }
 .tl-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 10px; margin: 4px 0 0; font-size: .68rem; color: var(--muted); line-height: 1.3 }
 .tl-foot .sevkey { font-size: .66rem }
@@ -2644,21 +2644,29 @@ if (window.top !== window.self) {
       if (playing) stage.classList.remove("acabo"); else acaboT = setTimeout(() => stage.classList.add("acabo"), 2000);
     }
     function stop() { if (!playing) return; playing = false; clearTimeout(timer); setPlay(); }
-    const STEP_MS = 650;
-    const DOS_EN_DOS = "2026-10-20";
+    // Playback lasts about PLAY_MS however many days there are: one day a step (650 ms at most), and
+    // more days a step once one would be shorter than 200 ms.
+    const PLAY_MS = 9000;
+    function pace(n) {
+      const stride = Math.max(1, Math.ceil(n * 200 / PLAY_MS));
+      return { stride, ms: Math.round(Math.min(650, PLAY_MS * stride / Math.max(1, n))) };
+    }
+    const PACE = pace(DAYS.length);
+    chart.style.setProperty("--paso", `${Math.min(450, Math.round(PACE.ms * 0.85))}ms`);
     function play() {
       if (!DAYS.length) return;
       if (atEnd()) showDay(0);
       playing = true;
       setPlay();
-      timer = setTimeout(tick, STEP_MS * 0.7);
+      timer = setTimeout(tick, PACE.ms * 0.7);
     }
     let onPlayed = null;   // what to do once the timeline has played to the end, once
     function tick() {
       if (!playing) return;
-      // Two days a step through the first, slower days (to 20 Oct, which it always lands on), then one.
-      showDay(at + ((DAYS[at + 2] || "9999") <= DOS_EN_DOS ? 2 : 1), { pulse: true });
-      if (!atEnd()) { timer = setTimeout(tick, STEP_MS); return; }
+      const t = performance.now();
+      showDay(at + PACE.stride, { pulse: true, from: at });
+      // Drawing a day takes time too: wait only what's left of the step.
+      if (!atEnd()) { timer = setTimeout(tick, Math.max(0, PACE.ms - (performance.now() - t))); return; }
       playing = false;
       setPlay();
       if (onPlayed) { const then = onPlayed; onPlayed = null; setTimeout(then, 700); }
@@ -2677,9 +2685,10 @@ if (window.top !== window.self) {
 
     // The colonias that got their first publication that day, drawn as SVG so CSS can spread a ring from them.
     const pulseRenderer = L.svg({ padding: 0.5 });
-    function pulse(i) {
+    // Playback passes `from`, the day it stepped from, so a step of several days rings every colonia it passed.
+    function pulse(i, from = i - 1) {
       if (reduced || !i) return;
-      const fresh = [...evByDay[i].keys()].filter((k) => !evByDay[i - 1].has(k) && features.has(k));
+      const fresh = [...evByDay[i].keys()].filter((k) => !evByDay[from].has(k) && features.has(k));
       if (!fresh.length) return;
       const feats = fresh.flatMap((k) => features.get(k).map((f) => ({ type: "Feature", geometry: f.geometry, properties: { s: sevOf(evByDay[i].get(k).dias) } })));
       const g = L.geoJSON({ type: "FeatureCollection", features: feats }, { interactive: false, renderer: pulseRenderer,
@@ -2687,14 +2696,14 @@ if (window.top !== window.self) {
       setTimeout(() => g.remove(), 1500);
     }
 
-    function showDay(i, { pulse: ring = false } = {}) {
+    function showDay(i, { pulse: ring = false, from = i - 1 } = {}) {
       if (!DAYS.length) return;
       i = Math.max(0, Math.min(DAYS.length - 1, i));
       const moved = i !== at;
       at = i;
       evNow = evByDay[i];
       if (moved || ring) { layer.setStyle(styleOf); drawMarkers(); }
-      if (ring) pulse(i);
+      if (ring) pulse(i, Math.min(from, i - 1));
       renderTimeline();
       renderMunicipios();
       renderSlices();

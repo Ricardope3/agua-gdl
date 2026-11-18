@@ -68,3 +68,22 @@ test("sources without de keep counting as themselves", () => {
   assert.equal(sourceOf({ fuente: "vecinos", red: "x", url: "https://x.com/Vecino/status/5" }, byUrl), "x:vecino");
   assert.equal(sourceOf({ fuente: "vecinos", red: "facebook", url: "https://www.facebook.com/groups/99/posts/1" }, byUrl), "g:99");
 });
+
+const paceBlock = source.match(/    const PLAY_MS = \d+;\n    function pace\(n\) \{[\s\S]*?\n    \}\n/);
+assert.ok(paceBlock, "the timeline's pace is present in /reportes");
+const paceIn = vm.runInNewContext(`${paceBlock[0]}; pace`);
+const pace = (n) => ({ ...paceIn(n) });
+
+test("the timeline plays in about nine seconds however many days there are", () => {
+  assert.deepEqual(pace(1), { stride: 1, ms: 650 });
+  assert.deepEqual(pace(10), { stride: 1, ms: 650 });
+  assert.deepEqual(pace(37), { stride: 1, ms: 243 });
+  assert.deepEqual(pace(45), { stride: 1, ms: 200 });
+  assert.deepEqual(pace(46), { stride: 2, ms: 391 });
+  assert.deepEqual(pace(170), { stride: 4, ms: 212 });
+  for (const n of [14, 37, 60, 100, 170]) {
+    const { stride, ms } = pace(n), steps = Math.ceil((n - 1) / stride);
+    assert.ok(ms >= 200 && ms <= 650, `${n} days: ${ms} ms a step`);
+    assert.ok(steps * ms <= 9300, `${n} days: ${steps * ms} ms in all`);
+  }
+});
