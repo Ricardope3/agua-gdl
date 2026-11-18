@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-13",
+ "actualizado": "2026-11-18",
  "videos": [
   {
    "url": "https://www.facebook.com/reel/1600459298762122/",
@@ -3623,6 +3623,240 @@
    ],
    "lugar": "colonia Altamira / colonia Cihuapilli, Tonalá",
    "cita": "Pues aquí en colonia Altamira estamos igual en colonia Cihuapilli en tonala ya tenemos más de 15 y cuando cae es un chorrito y luego luego la quitan",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/2394768681294938?comment_id=1127362953237418",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-14",
+   "colonias": [
+    "RANCHO DE LA CRUZ|Tonalá|45410"
+   ],
+   "lugar": "Rancho de la Cruz",
+   "cita": "ya tenemos casi un mes sin agua en el rancho de la cruz",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/2394768681294938?comment_id=1856063982092024",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-14",
+   "colonias": [
+    "ALAMEDAS DE ZALATITAN|Tonalá|45407"
+   ],
+   "lugar": "Alamedas de Zalatitán",
+   "cita": "Alamedas de zalatitan tampoco tiene agua desde ase 11 dias",
+   "dias": 11,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/2394768681294938?comment_id=1879956969844789",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-16",
+   "colonias": [
+    "JARDINES DE LA CRUZ ORIENTE|Tonalá|45417"
+   ],
+   "lugar": "Jardines de la Cruz Oriente",
+   "cita": "Falta agua jardines de la cruz oriente fraccionamiento q está adelantito de viñedos",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/2394768681294938",
+   "red": "facebook",
+   "quien": "Tráfico ZMG",
+   "fecha": "2026-11-14",
+   "colonias": [
+    "RANCHO DE LA CRUZ|Tonalá|45410"
+   ],
+   "lugar": "Rancho de la Cruz, Tonalá; cruce de avenida Juárez, Periférico y Tonaltecas",
+   "cita": "Vecinos de Rancho de la Cruz se manifiestan por la falta de agua en Tonalá.\nLa protesta se registra en el cruce de avenida Juárez, Periférico y Tonaltecas.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.youtube.com/watch?v=x43TzLt7AYo",
+   "red": "web",
+   "quien": "Imagen TV Guadalajara",
+   "fecha": "2026-11-17",
+   "colonias": [
+    "BOSQUES DEL BOULEVARD|Guadalajara|44430"
+   ],
+   "lugar": "Bosques del Boulevard",
+   "cita": "Vecinos de Bosques del Boulevard denuncian semanas sin agua, incluso en los días programados por el SIAPA. Exigen que se respete el calendario de tandeos y tener presión suficiente para llenar sus tinacos.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.youtube.com/watch?v=dYH-qijNLfc",
+   "red": "web",
+   "quien": "N+",
+   "fecha": "2026-11-17",
+   "colonias": [
+    "VISTA DEL PINAR|Zapopan|45037"
+   ],
+   "lugar": "Vistas del Pinar, Zapopan",
+   "cita": "Una fuga de agua potable lleva más de un año sin ser atendida en el fraccionamiento de Zapopan",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/2028507057840553",
+   "red": "facebook",
+   "quien": "Meganoticias",
+   "fecha": "2026-11-15",
+   "colonias": [
+    "REVOLUCION|Guadalajara|44400"
+   ],
+   "lugar": "Calles 34 y Aldama, colonia Revolución, Guadalajara",
+   "cita": "Un video viral en redes sociales exhibió agua sucia distribuida por una pipa a vecinos de los cruces de las calles 34 y Aldama, en la colonia Revolución, en Guadalajara.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1442480794763295?comment_id=1138712378914065",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-14",
+   "colonias": [
+    "ALAMEDAS DE ZALATITAN|Tonalá|45407"
+   ],
+   "lugar": "Alamedas de Zalatitán, Tonalá",
+   "cita": "Tampoco tenemos en alamedas de zalatitan ya son 8 días sin una gota",
+   "dias": 8,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1442480794763295?comment_id=1693546908950328",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-14",
+   "colonias": [
+    "LOMAS DE LA PRIMAVERA|Zapopan|45066"
+   ],
+   "lugar": "Lomas de la Primavera",
+   "cita": "En la colonia lomas de la primavera ya tenemos 4 semanas sin una gota de agua",
+   "dias": 28,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1442480794763295?comment_id=1161618096210616",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-14",
+   "colonias": [
+    "LOMA BONITA|Tonalá|45405"
+   ],
+   "lugar": "Colonia Loma Bonita, Tonalá",
+   "cita": "Aquí en la Colonia Loma bonita tampoco hay agua tenemos ya cuatro semanas sin tener el agua ya vemos comprado pipas y está colonia no estaba contemplada en el calendario de quedarnos sin agua",
+   "dias": 28,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1442480794763295?comment_id=1998313044471852",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-14",
+   "colonias": [
+    "LOMA BONITA|Tonalá|45405"
+   ],
+   "lugar": "Loma Bonita, Zalatitán (Tonalá)",
+   "cita": "igual sin agua en loma bonita zalatitan.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1442480794763295?comment_id=1550185486793239",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-14",
+   "colonias": [
+    "VISTA REINA|Tonalá|45417"
+   ],
+   "lugar": "Vista Reyna (Tonalá)",
+   "cita": "EN VISTA REYNA ESTAMOS IGUAL!! SIN agua",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.tiktok.com/@cecy.orocis/video/7708471180201676052?comment_id=7708570613066515220",
+   "red": "web",
+   "quien": "",
+   "fecha": "2026-11-15",
+   "colonias": [
+    "CENTRO|San Pedro Tlaquepaque|45500"
+   ],
+   "lugar": "Tlaquepaque centro",
+   "cita": "tenemos más de una semana sin agua aquí en Tlaquepaque centro",
+   "dias": 7,
+   "video": null
+  },
+  {
+   "url": "https://www.tiktok.com/@jnlomeli/video/7709180380909243654?comment_id=7709330160805479188",
+   "red": "web",
+   "quien": "",
+   "fecha": "2026-11-17",
+   "colonias": [
+    "BEATRIZ HERNANDEZ|Guadalajara|44760"
+   ],
+   "lugar": "colonia Beatriz Hernández",
+   "cita": "me di cuenta que era agua puerca 🫠\na mí me llenaron un tambo y me arrepentí muchísimo. Primera vez que en mi calle pasa una pipa y jamás volveré a pedir agua de ellas... colonia Beatriz Hernández",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.tiktok.com/@jnlomeli/video/7709180380909243654?comment_id=7709502007723262741",
+   "red": "web",
+   "quien": "",
+   "fecha": "2026-11-18",
+   "colonias": [
+    "MONUMENTAL|Guadalajara|44320"
+   ],
+   "lugar": "Colonia Monumental",
+   "cita": "también en la Colonia monumental distribuyeron el sábado agua sucia",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1921623682552975",
+   "red": "facebook",
+   "quien": "Tonalá de Hoy",
+   "fecha": "2026-11-13",
+   "colonias": [
+    "VISTAS DEL PEDREGAL|Tonalá|45429"
+   ],
+   "lugar": "Fraccionamiento Vistas del Pedregal (Tonalá)",
+   "cita": "De acuerdo con los reportes ciudadanos, pese a los ajustes en las válvulas y al esquema de tandeos, numerosas familias continúan sin recibir agua en sus hogares.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1921623682552975?comment_id=1773417543721987",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-13",
+   "colonias": [
+    "BOSQUES DE TONALA|Tonalá|45416"
+   ],
+   "lugar": "Bosques de Tonalá",
+   "cita": "Estamos igual en Bosques de Tonala , ya van 15 días sin agua",
+   "dias": 15,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1921623682552975?comment_id=1462102642727766",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-13",
+   "colonias": [
+    "ALTUS PINAR|Tonalá|45410"
+   ],
+   "lugar": "Fraccionamiento Altus Pinar, Rancho de la Cruz (Tonalá)",
+   "cita": "en el fraccionamiento Altus pinar rancho de la cruz estamos en las mismas condiciones tenemos un mes y una semana sin agua en nuestras llaves de agua",
    "dias": null,
    "video": null
   }
