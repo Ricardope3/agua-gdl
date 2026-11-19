@@ -533,7 +533,7 @@ def fuentes_md(c):
 
 
 PAGINAS = {"reportes": "reportes", "promesas": "promesas", "pipas": "pipas", "exige": "exige", "avisos": "avisos",
-           "ciudad-granja": "reportes?q=CIUDAD%20GRANJA&m=Zapopan&cp=45010"}
+           "ciudad-granja": "reportes?q=CIUDAD%20GRANJA&m=Zapopan&cp=45010", "reportes-zapopan": "reportes-zapopan"}
 DESDE = {"promesas": 520, "ciudad-granja": 75}  # CSS px to skip at the top (/promesas starts at its meter, not its opening stance)
 
 

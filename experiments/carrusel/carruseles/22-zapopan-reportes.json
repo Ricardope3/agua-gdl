@@ -1,0 +1,166 @@
+{
+ "id": "22-zapopan-reportes",
+ "titulo": "9,828 reportes en Zapopan",
+ "caption": "El Gobierno de Zapopan nos entregó por transparencia su lista de reportes de falta de agua: 9,828 del 15 de octubre al 4 de noviembre, «con corte al 04 de noviembre de la presente anualidad».\n\n📊 Lo que dice la lista:\n• 8,857, 9 de cada 10, aparecen «En proceso». «Concluido» o «Resuelto» no dicen si el agua regresó ni cuándo.\n• Las colonias que más se nombran, sumando las formas de escribir cada nombre: Lomas de la Primavera (533), Ciudad Granja (472), Santa Ana Tepetitlán (374), Guadalupe Inn (362) y Chapalita Inn (258). 1,936 reportes no dicen colonia.\n• 5,362 llegaron por el canal «24/7» y 3,602 por el que la lista llama «SIAPA».\n\nMás reportes no quiere decir que una colonia estuvo peor: una casa puede reportar varias veces, y la lista no dice cuántas casas se quedaron sin agua. La columna de ubicación llegó tachada, y es solo Zapopan.\n\nPublicamos el PDF completo y la lista en CSV para que cualquiera la revise: aguagdl.com/reportes-zapopan (link en la bio).\n\n¿Reportaste la falta de agua en tu colonia? ¿Por qué canal?\n\n📚 Fuentes: Gobierno de Zapopan, respuesta a la solicitud de transparencia 140292426004981 (17 nov 2026), aguagdl.com/datos/zapopan-respuesta-140292426004981.pdf · Agua GDL, aguagdl.com/reportes-zapopan (consultada el 18 nov 2026)",
+ "fuentes": {
+  "zap": {
+   "url": "https://aguagdl.com/datos/zapopan-respuesta-140292426004981.pdf",
+   "medio": "Gobierno de Zapopan, respuesta a la solicitud 140292426004981",
+   "fecha": "2026-11-17",
+   "revisado": "2026-11-18",
+   "cita": "[oficio 11000000/CER.CIU/2026/0878, pp. 5-6, leído de la imagen] se encontró un total de 9,828 reportes por falta de agua, con corte al 04 de noviembre de la presente anualidad, mismos que fueron recibidos por los distintos mecanismos de reporte, los cuales se harán llegar al correo electrónico transparencia@zapopan.gob.mx en formato Excel para su consulta, indicando para ello folio, fecha, hora, colonia, calle y estatus. … [tabla, p. 9] Folio Fecha Colonia Origen Ubicacion Subcategoria Categoria Dependencia Estatus SIAPAZAP20578542 2026/10/15 07:22:00 SANTA ANA TEPETITLAN 24/7 Falta de agua en casa habitación Agua y Drenaje SIAPA Concluido … [p. 78] SIAPAZAP14571764 2026/10/25 09:41:03 RINCONADA DEL BOSQUE Coordinación De Cercanía Ciudadana Falta de agua en casa habitación Agua y Drenaje SIAPA En proceso … [la columna Ubicacion viene tachada en negro]"
+  },
+  "web": {
+   "url": "https://aguagdl.com/reportes-zapopan",
+   "medio": "Agua GDL, aguagdl.com/reportes-zapopan",
+   "fecha": "2026-11-18",
+   "consultada": true,
+   "revisado": "2026-11-18",
+   "cita": "9,828 reportes en 21 días 8,857 aparecen «En proceso» en la lista ( 90 %) 167 nombres de colonias del mapa del SIAPA aparecen en la lista 1,936 reportes sin colonia: dicen «No disponible» o están en blanco … Estatus en la lista En proceso 8,857 90 % Concluido 789 8 % Resuelto 170 2 % Cancelado 12 0 % Es el estatus que trae la lista, que no dice en qué fecha se tomó. «Concluido» o «Resuelto» no dicen si el agua regresó ni cuándo. … Por dónde llegaron 24/7 5,362 55 % SIAPA 3,602 37 % Visores Zapopan 489 5 % GuaZap 240 2 % Coordinación De Cercanía Ciudadana 46 0 % Agentes De Cercanía Ciudadana 40 0 % Dirección De Contacto Ciudadano 27 0 % Participación Ciudadana 20 0 % Delegaciones 2 … Las 20 colonias con más reportes LOMAS DE LA PRIMAVERA 533 5 % CIUDAD GRANJA 472 5 % SANTA ANA TEPETITLAN 374 4 % GUADALUPE INN 362 4 % CHAPALITA INN 258 … Un reporte no es una casa ni una colonia entera. Una casa puede reportar varias veces, y la lista no dice cuántas casas se quedaron sin agua. Que una colonia tenga más reportes quiere decir que ahí se reportó más, no que estuvo peor que otra. … a nosotros nos llegó un PDF de 166 páginas con la columna «Ubicacion» tachada. Lo pasamos a CSV."
+  }
+ },
+ "slides": [
+  {
+   "tipo": "portada",
+   "foto": "fuentes/7147fa92d9a6.jpg",
+   "kicker": "Zapopan, del 15 de octubre al 4 de noviembre",
+   "cifra": "9,828",
+   "titular": "reportes de falta de agua en 21 días",
+   "texto": "¿Está tu colonia en la lista?",
+   "fuentes": [
+    "zap",
+    "web"
+   ],
+   "calculo": "Primer y último día con reportes en la lista: 15 de octubre y 4 de noviembre de 2026; 21 días."
+  },
+  {
+   "tipo": "iconos",
+   "foto": "fuentes/40c3eeb4c054.jpg",
+   "kicker": "Según la lista de Zapopan",
+   "cifra": "9 de cada 10",
+   "titular": "reportes aparecen «En proceso»",
+   "icono": "gota",
+   "n": 9,
+   "total": 10,
+   "columnas": 5,
+   "texto": "«Concluido» o «Resuelto» no dicen si el agua regresó ni cuándo.",
+   "fuentes": [
+    "zap",
+    "web"
+   ],
+   "calculo": "8,857 de 9,828 = 90 % = 9 de cada 10."
+  },
+  {
+   "tipo": "barras",
+   "foto": "fuentes/0a640bacd85a.jpg",
+   "kicker": "Reportes que nombran a cada colonia",
+   "titular": "Dónde se reportó más",
+   "barras": [
+    {
+     "etiqueta": "Lomas de la Primavera",
+     "valor": 533,
+     "texto": "533"
+    },
+    {
+     "etiqueta": "Ciudad Granja",
+     "valor": 472,
+     "texto": "472"
+    },
+    {
+     "etiqueta": "Santa Ana Tepetitlán",
+     "valor": 374,
+     "texto": "374"
+    },
+    {
+     "etiqueta": "Guadalupe Inn",
+     "valor": 362,
+     "texto": "362"
+    },
+    {
+     "etiqueta": "Chapalita Inn",
+     "valor": 258,
+     "texto": "258"
+    }
+   ],
+   "texto": "1,936 reportes no dicen colonia. Más reportes no quiere decir que estuvo peor: una casa puede reportar varias veces.",
+   "fuentes": [
+    "web"
+   ],
+   "calculo": "Conteo de Agua GDL por colonia, sumando las formas de escribir el mismo nombre (pipelines/zapopan_reportes.py): LOMAS DE LA PRIMAVERA 520 + 13 en minúsculas = 533; CIUDAD GRANJA 470 + 2 = 472; SANTA ANA TEPETITLAN 294 + 80 con acento = 374; GUADALUPE INN 350 + 12 con FRACCIONAMIENTO delante = 362; CHAPALITA INN 255 + 2 en minúsculas + 1 escrito CHAPLITA INN = 258. Las secciones, como GUADALUPE INN CONDOMINIO UNO, van aparte."
+  },
+  {
+   "tipo": "barras",
+   "foto": "fuentes/7147fa92d9a6.jpg",
+   "kicker": "Columna «Origen» de la lista",
+   "titular": "Por dónde llegaron",
+   "barras": [
+    {
+     "etiqueta": "24/7",
+     "valor": 5362,
+     "texto": "5,362"
+    },
+    {
+     "etiqueta": "SIAPA",
+     "valor": 3602,
+     "texto": "3,602"
+    },
+    {
+     "etiqueta": "Visores Zapopan",
+     "valor": 489,
+     "texto": "489"
+    },
+    {
+     "etiqueta": "GuaZap",
+     "valor": 240,
+     "texto": "240"
+    },
+    {
+     "etiqueta": "Otros cinco",
+     "valor": 135,
+     "texto": "135"
+    }
+   ],
+   "texto": "La lista no explica cada canal.",
+   "fuentes": [
+    "zap",
+    "web"
+   ],
+   "calculo": "Otros cinco: 46 + 40 + 27 + 20 + 2 = 135 (Coordinación y Agentes de Cercanía Ciudadana, Dirección de Contacto Ciudadano, Participación Ciudadana y Delegaciones)."
+  },
+  {
+   "tipo": "texto",
+   "foto": "fuentes/40c3eeb4c054.jpg",
+   "kicker": "Lo que la lista no dice",
+   "titular": "Cuántas casas se quedaron sin agua, ni si el agua regresó",
+   "texto": "La columna de ubicación llegó tachada, y es solo Zapopan.",
+   "fuentes": [
+    "zap",
+    "web"
+   ]
+  },
+  {
+   "tipo": "sitio",
+   "captura": "reportes-zapopan",
+   "kicker": "En aguagdl.com/reportes-zapopan",
+   "cifra": "9,828",
+   "titular": "reportes de Zapopan, colonia por colonia",
+   "items": [
+    "Busca la tuya en el mapa y la tabla",
+    "Descarga el PDF y la lista en CSV"
+   ],
+   "url": "aguagdl.com/reportes-zapopan",
+   "fuentes": [
+    "web"
+   ]
+  },
+  {
+   "tipo": "cierre",
+   "titular": "¿Reportaste en Zapopan?",
+   "acciones": [
+    "Busca tu colonia en aguagdl.com/reportes-zapopan",
+    "Reporta la tuya en aguagdl.com/reportes"
+   ],
+   "url": "aguagdl.com/reportes-zapopan"
+  }
+ ]
+}
