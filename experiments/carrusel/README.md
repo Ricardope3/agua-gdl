@@ -30,6 +30,11 @@ A carousel is `carruseles/<id>.json`: `id` (the file name), `titulo`, `caption`,
 - A `cita` slide's quote is word for word in its source's `cita`.
 - Every source has `url`, `medio`, `fecha`, `cita` and `revisado`; `consultada: true` for undated pages (the footer says «consultada el …»).
 - Every background is in `fotos.json`, reviewed by eye: no close face, no legible private name, no outlet watermark or burned-in caption. Three were dropped on 5 Nov for showing faces.
+- Each entry in `creditos.json` is a photo in `fotos.json` with `credito`, `porque` and `revisado`.
+
+## Photo credits
+
+The footer credits a background as «Foto: outlet, colonia», taken from its post in `web/publicaciones.json` (the first colonia listed), unless `creditos.json` gives a reviewed credit. The generated one is only true when the image is the outlet's own and was taken in that colonia, which the post's colonias don't show. Read the outlet's photo caption before using a background; when it credits someone outside the outlet, or names another place or none, add the photo to `creditos.json`: the credit says only what the source says, and anything we worked out ourselves (a municipio from the map) goes in `porque`. On 18 Nov 2026 all three photos checked had generated credits naming a colonia their source doesn't give: UDG TV's protest image is «de redes sociales», at Periférico and avenida Guadalupe, not in Hacienda del Tepeyac; Meganoticias' lead image has no caption, so it takes only its story's place, «nota sobre colonias de Zapopan»; NTR's caption gives a metropolitan figure and its story names colonias in two municipios, so it has no place (carousel 21, posted, has used it since its first commit, so its footer reads La Mesa Colorada Poniente). A photo whose source places it nowhere, not even through its story, doesn't go on a slide about one colonia or municipio.
 
 ## Rules it can't enforce
 

@@ -1,0 +1,20 @@
+{
+ "nota": "Créditos de fondo revisados contra el pie de foto del medio. Sin entrada aquí, build.py escribe «Foto: medio, primera colonia» desde publicaciones.json, que solo es cierto si la imagen es del medio y se tomó en esa colonia. Lee el pie antes de usar una foto y añádela aquí si no lo es.",
+ "creditos": {
+  "fuentes/7147fa92d9a6.jpg": {
+   "credito": "Imagen: redes sociales vía UDG TV, cierre de Periférico a la altura de avenida Guadalupe",
+   "porque": "UDG TV la atribuye a «Imagen de redes sociales» de una cuenta de X y sitúa el cierre «a la altura de avenida Guadalupe», con «vecinos de distintas colonias»; no nombra Hacienda del Tepeyac ni Zapopan. Que el cruce está en Zapopan es comprobación nuestra, no de UDG TV: los nodos que comparten avenida Guadalupe y Periférico en OpenStreetMap caen en Chapalita Inn y La Gloria del Colli, Zapopan, en el mapa del SIAPA.",
+   "revisado": "2026-11-18"
+  },
+  "fuentes/40c3eeb4c054.jpg": {
+   "credito": "Foto: Meganoticias, nota sobre colonias de Zapopan",
+   "porque": "Es la imagen principal de la nota, sin pie de foto; la nota habla de Guadalupe Jardín, Jardines de Guadalupe y otras colonias de Zapopan, pero no dice dónde se tomó la imagen.",
+   "revisado": "2026-11-18"
+  },
+  "fuentes/0a640bacd85a.jpg": {
+   "credito": "Foto: NTR Guadalajara",
+   "porque": "El pie de NTR da el nombre de la fotógrafa y una cifra metropolitana, no el lugar; la nota nombra colonias de Zapopan y de Guadalajara. No la uses para hablar de una colonia o un municipio.",
+   "revisado": "2026-11-18"
+  }
+ }
+}

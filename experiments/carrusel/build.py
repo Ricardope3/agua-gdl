@@ -441,23 +441,24 @@ def nombre(c):
     return " ".join(x.lower() if i and x.lower() in ("de", "del", "la", "las", "los", "el", "y") else x for i, x in enumerate(w))
 
 
+def creditos():
+    return json.loads((HERE / "creditos.json").read_text())["creditos"]
+
+
 def credito(s):
-    """«Foto: outlet, colonia» for a background from publicaciones.json, so a photo never stands for another place."""
+    """«Foto: outlet, colonia» for a background from publicaciones.json, so a photo never stands for another place;
+    creditos.json overrides it where the outlet's caption says the image isn't its own or doesn't say where it was taken."""
     global _VISTAS
     fotos = [s["foto"]] if s.get("foto") else [h["foto"] for h in (s.get("izq"), s.get("der")) if isinstance(h, dict) and h.get("foto")]
     if not fotos:
         return ""
     if _VISTAS is None:
-        _VISTAS = {}
+        _VISTAS = {f: x["credito"] for f, x in creditos().items()}
         for x in json.loads((ROOT / "web/publicaciones.json").read_text())["publicaciones"]:
             if x.get("vista") and x["vista"] not in _VISTAS:
-                _VISTAS[x["vista"]] = (x["quien"] or "vecinos", nombre(x["colonias"][0].split("|")[0]) if x["colonias"] else "")
-    out = []
-    for f in fotos:
-        q, col = _VISTAS.get(f, ("", ""))
-        if q:
-            out.append(f"Foto: {q}{', ' + col if col else ''}")
-    return "; ".join(dict.fromkeys(out))
+                col = nombre(x["colonias"][0].split("|")[0]) if x["colonias"] else ""
+                _VISTAS[x["vista"]] = f"Foto: {x['quien'] or 'vecinos'}{', ' + col if col else ''}"
+    return "; ".join(dict.fromkeys(_VISTAS[f] for f in fotos if f in _VISTAS))
 
 
 MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
@@ -561,6 +562,13 @@ def main():
     only_check = "--check" in sys.argv
     fotos_ok = set(json.loads((HERE / "fotos.json").read_text())["fotos"])
     temas = set(json.loads((ROOT / "pipelines/fotos_temas.json").read_text())["temas"])
+    cred = creditos()
+    for f, x in cred.items():
+        if f not in fotos_ok:
+            fail(f"creditos.json: {f} is not in fotos.json")
+        if not all(isinstance(x.get(k), str) and x[k].strip() for k in ("credito", "porque", "revisado")):
+            fail(f"creditos.json: {f} needs credito, porque (what the outlet's caption says) and revisado")
+    print(f"carrusel: {len(cred)} photo credits from creditos.json")
     files = sorted((HERE / "carruseles").glob("*.json"))
     carr = [json.loads(f.read_text()) for f in files]
     ids = [c["id"] for c in carr]
