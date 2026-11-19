@@ -521,7 +521,7 @@ html.en-portada { overflow: hidden }
 /* r1: the municipios' panel sits inside the overview, as one more slice of the timeline's day. */
 .lv-h { margin: 12px 0 5px; font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 700 }
 .lv-top { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px }
-.lv-top button { display: grid; grid-template-columns: 5.6em minmax(0, 1fr); gap: 8px; align-items: center; width: 100%; padding: 5px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--fg); font: inherit; font-size: .84rem; text-align: left; cursor: pointer; line-height: 1.25 }
+.lv-top button { display: grid; grid-template-columns: 3.2em minmax(0, 1fr); gap: 8px; align-items: center; width: 100%; padding: 5px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--fg); font: inherit; font-size: .84rem; text-align: left; cursor: pointer; line-height: 1.25 }
 .lv-top button:hover { border-color: var(--brand) }
 .lv-top small { display: block; color: var(--muted); font-size: .74rem }
 .lv-top .sevb { font-size: .74rem; padding: 2px 5px; min-width: 0; justify-self: start }
@@ -1007,7 +1007,7 @@ if (window.top !== window.self) {
             <small class="munis-nota">Un municipio sin publicaciones no aparece; eso no quiere decir que tenga agua.</small>
             <p>De las colonias que la rotación del SIAPA cubre (las con zona asignada), las que tienen publicaciones de medios o vecinos que dicen que no tenían agua, <span id="munis-al">hasta hoy</span>. Las colonias fuera de la rotación no se cuentan aquí.</p>
           </details>
-          <div id="top-box" hidden><p class="lv-h" id="top-h">Las que tienen más reportes</p><ol class="lv-top" id="top-reportes"></ol></div>
+          <div id="top-box" hidden><p class="lv-h" id="top-h">Las que tienen más publicaciones</p><ol class="lv-top" id="top-reportes"></ol></div>
           <p class="note" id="estado" aria-live="polite">Cargando el mapa de colonias…</p>
           <div class="ov-actions">
             <button class="button" type="button" id="reportar"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Reportar mi colonia</button>
@@ -1504,7 +1504,9 @@ if (window.top !== window.self) {
     const zoneLayer = L.geoJSON({ type: "FeatureCollection", features: zonas }, { interactive: false, style: zoneStyle }).addTo(map);
     // The opening view, chosen by hand on 4 Nov 2026: from Ciudad Granja to San Martín de las Flores, where the
     // publications are; the zones' full extent left most of the screen empty.
-    const home = L.latLngBounds([20.541, -103.545], [20.738, -103.172]);
+    // In the landing's frame on desktop, Ricardo's framing of 19 Nov 2026 (from his screenshot): the same city a
+    // little east, zoom 12.25 on a frame about 1500 px wide, the outer colonias partly under the key and summary.
+    const home = framed && !phone() ? L.latLngBounds([20.542, -103.561], [20.739, -103.140]) : L.latLngBounds([20.541, -103.545], [20.738, -103.172]);
     M.recenter(L, map, () => map.flyToBounds(home, { duration: 0.6 }));
     if (M.cisternas) M.cisternas(L, map, "bottomright");
     // Current reports colour the outline first. Stale reports make the outline neutral and dashed,
@@ -1714,7 +1716,9 @@ if (window.top !== window.self) {
       markers.clearLayers();
       // Publication badges count only publications and keep their historical severity. Anonymous
       // reports have separate donuts, including on days in the timeline and over published colonias.
-      const far = map.getZoom() < 12, counts = new Map(), badgeSizes = new Map();
+      // Compact below zoom 13, where the city's centre holds dozens of small colonias: the landing's
+      // frame and /reportes open around 12 (19 Nov 2026; it was below 12).
+      const far = map.getZoom() < 13, counts = new Map(), badgeSizes = new Map();
       for (const [k, e] of evNow) {
         const fs = features.get(k);
         if (!fs) continue;
@@ -2544,20 +2548,21 @@ if (window.top !== window.self) {
     // neighbours say it, how long half of them have gone without water, and the SIAPA zone they're in
     // (a colonia's main zone, the one with most of its area).
     const mainZone = (k) => M.zones(features.get(k)[0].properties).all[0];
-    // r1: below the municipios, the four colonias with the most reports up to the timeline's day
-    // (publications, plus this map's 24 hours on the latest day), as their badges count them.
+    // r1: below the municipios, the four colonias with the most publications up to the timeline's day, the
+    // number their map badges show, bare like the badge (the heading says «publicaciones»); on the latest live day this map's own
+    // 24-hour reports follow in the small line, never added into that number.
     function renderSlices() {
       unhover();
       $("ov-dia").hidden = true;
       const rows = onMap(evNow).map((k) => {
         const e = evNow.get(k), c = live() ? byKey.get(k) : null;
-        return { k, e, f: features.get(k)[0], total: e.posts.length + (c ? totalOf(c) : 0) };
+        return { k, e, f: features.get(k)[0], total: e.posts.length, rep: c ? totalOf(c) : 0 };
       }).sort((a, b) => b.total - a.total || daysOr0(b.e) - daysOr0(a.e) || b.e.fuentes - a.e.fuentes).slice(0, 4);
-      $("top-h").textContent = `${rows.length > 1 ? "Las que tienen más reportes" : "La colonia con reportes"}${live() ? "" : `, al ${dateES(DAYS[at], true)}`}`;
-      $("top-reportes").replaceChildren(...rows.map(({ e, f, total }) => {
+      $("top-h").textContent = `${rows.length > 1 ? "Las que tienen más publicaciones" : "La colonia con publicaciones"}${live() ? "" : `, al ${dateES(DAYS[at], true)}`}`;
+      $("top-reportes").replaceChildren(...rows.map(({ e, f, total, rep }) => {
         const s = sevOf(e.dias);
-        const b = el("button", { type: "button" }, el("span", { class: s ? "sevb" : "sevb nodays", style: sevVars(s) }, plural(total, "reporte", "reportes")),
-          el("span", {}, el("strong", {}, nice(f.properties.n)), el("small", {}, [muniES(f.properties.m), s ? `hasta ${daysWord(e.dias)}` : null, e.medios ? plural(e.medios, "medio", "medios") : null].filter(Boolean).join(" · "))));
+        const b = el("button", { type: "button" }, el("span", { class: s ? "sevb" : "sevb nodays", style: sevVars(s), title: plural(total, "publicación", "publicaciones") }, fmt(total)),
+          el("span", {}, el("strong", {}, nice(f.properties.n)), el("small", {}, [muniES(f.properties.m), s ? `hasta ${daysWord(e.dias)}` : null, e.medios ? plural(e.medios, "medio", "medios") : null, rep ? `${plural(rep, "reporte", "reportes")} en 24 h` : null].filter(Boolean).join(" · "))));
         b.addEventListener("click", () => select(f));
         hoverable(b, () => features.get(keyOf(f.properties)));
         return el("li", {}, b);
@@ -2975,8 +2980,7 @@ if (window.top !== window.self) {
     if (zf) {
       const zl = L.geoJSON(zf, { interactive: false, style: { color: M.COLORS[aguaDark() ? "dark" : "light"][zona], weight: 4, opacity: 0.95, fill: true, fillOpacity: 0.08 } }).addTo(map);
       map.fitBounds(zl.getBounds(), phone() ? { paddingTopLeft: [10, 110], paddingBottomRight: [10, 150], animate: false } : { padding: [40, 40], animate: false });
-    // In the landing's frame on wide screens the city sits a little right of centre, clear of the timeline.
-    } else if (!selected) map.fitBounds(home, framed && !phone() ? { paddingTopLeft: [160, 0], animate: false } : { animate: false });
+    } else if (!selected) map.fitBounds(home, { animate: false });
     addStreets();
     ready();
     if (!framed) {
