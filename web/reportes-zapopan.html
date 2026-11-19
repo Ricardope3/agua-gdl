@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="facebook-domain-verification" content="li0vsm7edv0afccxodm5t0jvyiw0za">
+<title>Reportes de falta de agua en Zapopan · Agua GDL</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Los 9,828 reportes de falta de agua que el Gobierno de Zapopan entregó por transparencia, del 15 de octubre al 4 de noviembre de 2026: por colonia, por día, por canal y por estatus.">
+<link rel="canonical" href="https://aguagdl.com/reportes-zapopan">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aguagdl.com/reportes-zapopan">
+<meta property="og:title" content="Reportes de falta de agua en Zapopan">
+<meta property="og:description" content="9,828 reportes de falta de agua en 21 días, según la lista que entregó el Gobierno de Zapopan por transparencia.">
+<meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
+<style>
+:root {
+  --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
+  --brand: #0284c7; --brand-deep: #0369a1; --link: #0369a1; --on-brand: #ffffff;
+  --primary: #0284c7; --on-primary: #ffffff; --ring: #0284c766;
+  --shadow: 0 1px 2px rgb(3 105 161 / .08);
+  --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --warn: #8a5a00; --warn-bg: #fff3d6;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #06141d; --surface: #0a1c28; --subtle: #0c3149; --fg: #f0f9ff; --muted: #9bb8ca; --line: #18384d;
+    --link: #7dd3fc; --primary: #0ea5e9; --on-primary: #ffffff; --ring: #38bdf866; --brand: #0ea5e9; --brand-deep: #0284c7;
+    --warn: #ffd27a; --warn-bg: #3a2c10;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+[hidden] { display: none !important }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased }
+a { color: var(--link); text-underline-offset: 3px }
+a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); border-radius: 6px }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px }
+header.top { position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px; background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); margin: 0 -16px 20px; padding: 12px 16px }
+.brand { display: inline-flex; align-items: center; gap: 8px; color: var(--fg); text-decoration: none; font-weight: 600; font-size: 1rem; letter-spacing: -.01em }
+.brand img { width: 20px; height: auto }
+.site-nav { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; margin: 0 -6px }
+.site-nav a { display: inline-flex; align-items: center; gap: 4px; padding: 6px 6px; border-radius: 8px; color: var(--muted); font-size: .9rem; font-weight: 500; text-decoration: none; white-space: nowrap }
+.site-nav a:hover { color: var(--fg); background: var(--subtle) }
+@media (max-width: 980px) { .site-nav .i { display: none } }
+@media (max-width: 760px) { .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center } .site-nav a { flex: 1 1 22%; justify-content: center } }
+@media (max-width: 560px) { header.top { position: static; padding: 8px 16px } .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center; gap: 2px } .site-nav a { flex: 1 1 22%; justify-content: center; padding: 4px; font-size: .82rem; line-height: 1.35 } .site-nav .i { display: none } }
+h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.08; letter-spacing: -.03em; font-weight: 700; margin: 12px 0 10px; text-wrap: balance }
+.lede { font-size: 1.05rem; color: var(--muted); margin: 0 0 16px; max-width: 64ch }
+.i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
+.i { --ic: currentColor }
+.site-nav .i, p > .i, h2 > .i { color: var(--ic) }
+.note { margin: 10px 0 0; font-size: .92rem; color: var(--muted); max-width: 80ch }
+.bigmap { height: clamp(420px, 70vh, 720px); border-radius: 12px; border: 1px solid var(--line); background: var(--subtle) }
+.bigmap:focus-visible { outline: 3px solid var(--brand) }
+@media (prefers-color-scheme: dark) { .bigmap .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) } .bigmap.leaflet-container { background: #0c1e2c } }
+.map-label { background: var(--surface); color: var(--fg); border: 1px solid var(--line); font: 600 13px/1.3 var(--font); box-shadow: var(--shadow); padding: 6px 8px; white-space: normal; width: max-content; max-width: 260px }
+.map-label::before { display: none }
+.map-label .sub { display: block; font-weight: 500; color: var(--muted) }
+.leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--surface); color: var(--fg) }
+.leaflet-popup-content { font: 600 14px/1.35 var(--font); margin: 10px 14px }
+.leaflet-popup-content .sub { display: block; font-weight: 500; color: var(--muted) }
+section { padding: 30px 0 8px }
+h2.ih { display: flex; align-items: center; gap: 10px; font-size: 1.4rem; line-height: 1.2; margin: 0 0 12px; letter-spacing: -.02em; font-weight: 600 }
+.ih .i-badge { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--subtle); color: var(--brand); flex-shrink: 0 }
+.ih .i { color: inherit }
+section p, section li { max-width: 70ch }
+ul.plain { padding-left: 1.3em; margin: 0 0 14px }
+ul.plain li { margin: 0 0 8px }
+footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .85rem }
+footer p { margin: 0 0 8px; max-width: 70ch }
+.wrap:has(> header.top) { max-width: 960px }
+@media (min-width: 1100px) { .wrap:has(> header.top) { max-width: 1320px } }
+.wrap:has(> header.top) > :not(header.top) { max-width: 1068px; margin-left: auto; margin-right: auto }
+</style>
+<style>/* Talavera */
+:root { --bg:#fbfaf6; --surface:#ffffff; --subtle:#e4eaf8; --fg:#14213d; --muted:#4f5b7a; --line:#c4cfe9;
+ --brand:#1d3f9e; --brand-deep:#142d75; --link:#1d3f9e; --primary:#1d3f9e; --on-primary:#fff; --ring:#1d3f9e55; --alarm:#1d3f9e; --mark:#f2c84b; --mark-fg:#14213d;
+ --font: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; --serif: Baskerville, "Baskerville Old Face", "Libre Baskerville", Georgia, serif; --shadow:none;
+ --tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M12 2l4 10-4 10-4-10z M2 12l10-4 10 4-10 4z' fill='%231d3f9e'/%3E%3C/svg%3E") }
+@media (prefers-color-scheme: dark) { :root { --bg:#0c1328; --surface:#121b36; --subtle:#1a2850; --fg:#eef1fb; --muted:#a6b1d6; --line:#2a3a6e; --brand:#7f9cf5; --brand-deep:#5b7be8; --link:#a9bdfa; --primary:#5b7be8; --alarm:#9fb4ff; --mark:#c9a12f; --tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M12 2l4 10-4 10-4-10z M2 12l10-4 10 4-10 4z' fill='%237f9cf5'/%3E%3C/svg%3E") } }
+header.top { position: relative; border-bottom: 0 } html { overflow-x: clip } header.top::after { content: ""; position: absolute; left: calc(50% - 50vw); width: 100vw; bottom: -6px; height: 12px; background: var(--tile) center/12px 12px repeat-x; transition: opacity .2s }
+main h1, main h2 { font-weight: 400; font-style: italic }
+.boxes > * { border-radius: 4px !important; border: 3px double var(--brand) !important; box-shadow: none !important }
+footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-top: 34px }
+</style>
+<style>
+/* Chart colours: categorical slots 1-3 and grid ink, light and dark (validated for this page's surfaces). */
+:root { --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --grid: #e1e0d9; --axis: #c3c2b7 }
+@media (prefers-color-scheme: dark) { :root { --s1: #3987e5; --s2: #d95926; --s3: #199e70; --grid: #2a3a6e; --axis: #4a5a8e } }
+.boxes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 18px 0 6px; padding: 0; list-style: none }
+@media (max-width: 760px) { .boxes { grid-template-columns: repeat(2, minmax(0, 1fr)) } }
+.boxes li { background: var(--surface); padding: 12px 14px }
+.boxes .fig { display: block; font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1.1; color: var(--brand); font-weight: 600 }
+.boxes .what { display: block; font-size: .92rem; color: var(--muted); line-height: 1.35; margin-top: 4px }
+.keys { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 10px 0 0; padding: 0; list-style: none; font-size: .92rem }
+.keys li { display: inline-flex; align-items: center; gap: 7px }
+.keys .sw { width: 14px; height: 14px; border-radius: 3px; background: var(--sw); border: 1px solid rgb(0 0 0 / .2) }
+.keys .sw.none { background: transparent; border: 1.5px solid var(--muted) }
+.chart { position: relative; margin: 6px 0 0 }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible }
+.chart text { font: 12px var(--font); fill: var(--muted); font-variant-numeric: tabular-nums }
+.chart .gl { stroke: var(--grid); stroke-width: 1 }
+.chart .base { stroke: var(--axis); stroke-width: 1 }
+.chart .col:hover .hit, .chart .col.on .hit { fill: var(--subtle); opacity: .6 }
+.tip { position: absolute; z-index: 5; pointer-events: none; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; font-size: .88rem; line-height: 1.35; box-shadow: 0 6px 18px rgb(3 14 22 / .16); min-width: 170px }
+.tip b { display: block; margin-bottom: 2px }
+.tip .r { display: flex; align-items: center; gap: 6px; justify-content: space-between }
+.tip .r span:first-child { display: inline-flex; align-items: center; gap: 6px }
+.tip .sw { width: 10px; height: 10px; border-radius: 2px; background: var(--sw) }
+.tip .r span:last-child { font-variant-numeric: tabular-nums }
+.bars { margin: 6px 0 0; padding: 0; list-style: none; max-width: 760px }
+.bars li { display: grid; grid-template-columns: minmax(9rem, 15rem) 1fr 7.5rem; align-items: center; gap: 10px; padding: 3px 0 }
+@media (max-width: 560px) { .bars li { grid-template-columns: minmax(7rem, 9rem) 1fr 5.5rem; gap: 8px; font-size: .92rem } }
+.bars .bl { overflow-wrap: anywhere; line-height: 1.25 }
+.bars .bt { height: 14px; background: color-mix(in srgb, var(--subtle) 60%, transparent); border-radius: 0 4px 4px 0 }
+.bars .bf { display: block; height: 100%; background: var(--brand); border-radius: 0 4px 4px 0; min-width: 2px }
+.bars .bv { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap }
+.bars .bv small { color: var(--muted); font-size: .85em }
+details { margin: 14px 0 0 }
+summary { cursor: pointer; color: var(--link); font-weight: 600 }
+.tabla { width: 100%; border-collapse: collapse; margin: 10px 0 0; font-size: .92rem }
+.tabla caption { text-align: left; color: var(--muted); padding: 0 0 6px }
+.tabla th, .tabla td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top }
+.tabla th { font-weight: 600; background: var(--subtle) }
+.tabla td.n, .tabla th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap }
+.tabla td .sub { display: block; color: var(--muted); font-size: .88em }
+.scroll { overflow-x: auto; max-width: 100% }
+.filtro { width: min(420px, 100%); font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; margin: 10px 0 0 }
+.filtro:focus-visible { border-color: var(--brand) }
+blockquote { margin: 10px 0; padding: 4px 0 4px 14px; border-left: 3px double var(--brand); max-width: 70ch }
+</style>
+<script src="/theme.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
+    <nav class="site-nav" aria-label="Secciones">
+      <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg>¿Hay agua?</a>
+      <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exige</a>
+      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Avisos</a>
+      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg>Noticias</a>
+      <a href="/fotos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#video"/></svg>Fotos</a>
+      <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg>Cuentas</a>
+      <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Contaminación</a>
+      <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#heart"/></svg>Antisionismo</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Reportes de falta de agua en Zapopan</h1>
+    <p class="lede">Con una solicitud de transparencia, el Gobierno de Zapopan nos entregó su lista de reportes de «Falta de agua en casa habitación» del 15 de octubre al 4 de noviembre de 2026. Son 9,828 y todos tienen al SIAPA como dependencia. Aquí están por colonia, por día, por canal y por estatus.</p>
+
+    <ul class="boxes" aria-label="Las cifras principales">
+      <li><span class="fig" data-n="total">9,828</span><span class="what">reportes en <span data-n="dias">21</span> días</span></li>
+      <li><span class="fig" data-n="en_proceso">8,857</span><span class="what">aparecen «En proceso» en la lista (<span data-n="en_proceso_pct">90</span> %)</span></li>
+      <li><span class="fig" data-n="colonias_mapa">167</span><span class="what">nombres de colonias del mapa del SIAPA aparecen en la lista</span></li>
+      <li><span class="fig" data-n="sin_colonia">1,936</span><span class="what">reportes sin colonia: dicen «No disponible» o están en blanco</span></li>
+    </ul>
+    <p class="note" id="estado" aria-live="polite">Cargando los datos…</p>
+    <noscript><p class="note">Las gráficas y el mapa necesitan JavaScript. Los datos están en el <a href="/datos/zapopan-reportes.csv">CSV</a>.</p></noscript>
+
+    <section aria-labelledby="h-mapa">
+      <h2 id="h-mapa" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg></span>Reportes por colonia</h2>
+      <div id="mapa" class="bigmap" role="region" aria-label="Mapa de Zapopan con el número de reportes de falta de agua por colonia" tabindex="0"></div>
+      <ul class="keys" id="clases" aria-label="Número de reportes"></ul>
+      <p class="note">El color es cuántos reportes nombran a la colonia. Solo se ven las colonias de Zapopan que están en el mapa de la rotación del SIAPA: ahí caen <span data-n="en_mapa">5,988</span> de los <span data-n="con_colonia">7,892</span> reportes que dicen colonia. Los demás traen nombres que no encontramos tal cual en ese mapa, como EXITMEX, Residencial La Estancia o «Guadalupe Inn Condominio Uno», y están en la tabla de abajo. Una colonia sin color no aparece con ese nombre en la lista: puede tener reportes con otro nombre o entre los que no dicen colonia. Eso no quiere decir que haya tenido agua.</p>
+    </section>
+
+    <section aria-labelledby="h-dias">
+      <h2 id="h-dias" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg></span>Reportes por día de registro</h2>
+      <ul class="keys" id="canales" aria-label="Canal"></ul>
+      <div class="chart" id="dias"></div>
+      <p class="note">La lista no dice qué fecha es; parece la del registro en el sistema. Los reportes del canal «SIAPA» aparecen solo en <span data-n="siapa_dias">9</span> de los <span data-n="dias">21</span> días, y <span data-n="siapa_hora_n">758</span> de ellos entre las 7 y las 8 de la noche, <span data-n="tanda_n">604</span> solo el 1 de noviembre, hasta <span data-n="tanda_min">30</span> en un minuto, lo que sugiere que se capturaron por tandas. Por eso esta gráfica dice cuándo se registraron los reportes, no qué día faltó el agua.</p>
+      <details>
+        <summary>Ver la tabla por día</summary>
+        <div class="scroll"><table class="tabla" id="tabla-dias"><caption>Reportes por día de registro y canal</caption></table></div>
+      </details>
+    </section>
+
+    <section aria-labelledby="h-estatus">
+      <h2 id="h-estatus" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#info"/></svg></span>Estatus en la lista</h2>
+      <ul class="bars" id="estatus"></ul>
+      <p class="note">Es el estatus que trae la lista, que no dice en qué fecha se tomó. «Concluido» o «Resuelto» no dicen si el agua regresó ni cuándo.</p>
+    </section>
+
+    <section aria-labelledby="h-origen">
+      <h2 id="h-origen" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg></span>Por dónde llegaron</h2>
+      <ul class="bars" id="origen"></ul>
+      <p class="note">Así vienen en la columna «Origen» de la lista, que no explica cada canal.</p>
+    </section>
+
+    <section aria-labelledby="h-zona">
+      <h2 id="h-zona" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg></span>Por zona de la rotación</h2>
+      <ul class="bars" id="zonas"></ul>
+      <p class="note">Solo los <span data-n="en_mapa">5,988</span> reportes de colonias que están en el mapa del SIAPA, con la zona que ese mapa les da. Casi todas las colonias de Zapopan a las que el mapa del SIAPA da zona son de la zona 6 (210 de 227).</p>
+    </section>
+
+    <section aria-labelledby="h-colonias">
+      <h2 id="h-colonias" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg></span>Las 20 colonias con más reportes</h2>
+      <ul class="bars" id="top"></ul>
+      <details id="todas">
+        <summary>Ver todas las colonias (<span data-n="colonias">305</span>)</summary>
+        <label class="filtro-l"><span class="note">Buscar una colonia</span><br><input class="filtro" id="filtro" type="search" autocomplete="off" placeholder="Por ejemplo, Ciudad Granja"></label>
+        <div class="scroll"><table class="tabla" id="tabla-colonias"><caption>Reportes por colonia, como vienen escritas en la lista</caption></table></div>
+      </details>
+    </section>
+
+    <section aria-labelledby="h-ojo">
+      <h2 id="h-ojo" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#info"/></svg></span>Ten en cuenta</h2>
+      <ul class="plain">
+        <li><strong>Solo es Zapopan.</strong> Es lo que respondió el Gobierno de Zapopan a nuestra solicitud. Guadalajara, Tlaquepaque y Tonalá no están aquí, así que esta página no compara municipios.</li>
+        <li><strong>Un reporte no es una casa ni una colonia entera.</strong> Una casa puede reportar varias veces, y la lista no dice cuántas casas se quedaron sin agua. Que una colonia tenga más reportes quiere decir que ahí se reportó más, no que estuvo peor que otra.</li>
+        <li><strong>Los nombres de colonia vienen como los escribió el sistema.</strong> Los unimos al mapa del SIAPA por nombre, sin importar acentos ni mayúsculas, y unimos a mano <span data-n="alias">29</span> nombres escritos de otra forma, como «CHAPLITA INN» o «BRISAS DE LA PIMAVERA»; la tabla muestra cómo venía cada uno. Si un nombre está en varias colonias del mapa, se pintan todas.</li>
+        <li><strong>La lista llegó en PDF y con la ubicación tachada.</strong> La Coordinación General de Cercanía Ciudadana dijo que la mandaría en Excel al correo transparencia@zapopan.gob.mx; a nosotros nos llegó un PDF de 166 páginas con la columna «Ubicacion» tachada. Lo pasamos a CSV.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="h-fuente">
+      <h2 id="h-fuente" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg></span>De dónde salen los datos</h2>
+      <p>De la respuesta del Gobierno de Zapopan a la solicitud 140292426004981 de la Plataforma Nacional de Transparencia: el oficio 02050000/2026/7942 de su Dirección de Transparencia y Buenas Prácticas, del 17 de noviembre de 2026, y el oficio 11000000/CER.CIU/2026/0878 de la Coordinación General de Cercanía Ciudadana, del 6 de noviembre, que dice que encontró</p>
+      <blockquote>«un total de 9,828 reportes por falta de agua, con corte al 04 de noviembre de la presente anualidad, mismos que fueron recibidos por los distintos mecanismos de reporte»</blockquote>
+      <p><a href="/datos/zapopan-respuesta-140292426004981.pdf#page=5">Ver el oficio (página 5)</a> · <a href="/datos/zapopan-respuesta-140292426004981.pdf">Descargar la respuesta completa (PDF, 166 páginas, 4 MB)</a> · <a href="/datos/zapopan-reportes.csv">Descargar la lista en CSV</a> (nuestra transcripción del PDF, un reporte por fila)</p>
+      <p class="note">Colonias y zonas: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa de la rotación del SIAPA</a>. Calles: <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>. Agua GDL no es del Gobierno de Zapopan ni del SIAPA.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA, con el Gobierno de Zapopan ni con el Gobierno de Jalisco.</p>
+    <p><a href="/">Inicio</a> · <a href="/reportes">¿Hay agua en tu colonia?</a> · <a href="/avisos">¿Qué zona me toca?</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="/terminos">Términos de uso</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
+  </footer>
+</div>
+<script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script src="/mapa.js"></script>
+<script>
+(() => {
+  "use strict";
+  const $ = (id) => document.getElementById(id);
+  const fmt = (n) => n.toLocaleString("es-MX");
+  const pct = (a, b) => Math.round((100 * a) / b);
+  const status = $("estado");
+  const el = (tag, attrs, text) => {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs || {})) n.setAttribute(k, v);
+    if (text != null) n.textContent = text;
+    return n;
+  };
+  const NS = "http://www.w3.org/2000/svg";
+  const svgEl = (tag, attrs) => {
+    const n = document.createElementNS(NS, tag);
+    for (const [k, v] of Object.entries(attrs || {})) n.setAttribute(k, v);
+    return n;
+  };
+  const CANAL = { "24/7": "24/7", SIAPA: "SIAPA", Otros: "Otros: Visores Zapopan, GuaZap, áreas de Cercanía, Contacto y Participación Ciudadana, y Delegaciones" };
+  const SERIE = { "24/7": "var(--s1)", SIAPA: "var(--s2)", Otros: "var(--s3)" };
+  const fecha = (iso, opts) => new Date(iso + "T12:00:00Z").toLocaleDateString("es-MX", { timeZone: "UTC", ...opts });
+
+  // Five classes of reports per colonia, one blue ramp; dark mode runs it the other way round.
+  const CORTES = [1, 5, 25, 100, 250];
+  const RAMPA = { light: ["#b7d3f6", "#6da7ec", "#2a78d6", "#1c5cab", "#0d366b"], dark: ["#184f95", "#256abf", "#3987e5", "#6da7ec", "#b7d3f6"] };
+  const clase = (n) => CORTES.reduce((c, x, i) => (n >= x ? i : c), 0);
+  const rampa = () => RAMPA[aguaDark() ? "dark" : "light"];
+  const rango = (i) => i === CORTES.length - 1 ? `${CORTES[i]} o más` : `${CORTES[i]} a ${CORTES[i + 1] - 1}`;
+
+  function numeros(d) {
+    const enProceso = (d.estatus.find(([e]) => e === "En proceso") || [, 0])[1];
+    const v = {
+      total: d.total, dias: d.dias.length, en_proceso: enProceso, en_proceso_pct: pct(enProceso, d.total),
+      colonias_mapa: d.colonias.filter((c) => c.clave).length, colonias: d.colonias.length,
+      sin_colonia: d.sin_colonia, en_mapa: d.en_mapa, con_colonia: d.total - d.sin_colonia, alias: d.alias,
+      siapa_dias: d.canal_dias.SIAPA, siapa_hora_n: d.canal_hora.SIAPA[1], tanda_n: d.tanda.n, tanda_min: d.tanda.max_minuto,
+    };
+    for (const n of document.querySelectorAll("[data-n]")) if (v[n.dataset.n] != null) n.textContent = fmt(v[n.dataset.n]);
+  }
+
+  function barras(ul, filas, total) {
+    const max = Math.max(...filas.map((f) => f[1]));
+    ul.replaceChildren(...filas.map(([nombre, n]) => {
+      const li = el("li");
+      const t = el("span", { class: "bt" });
+      t.append(el("span", { class: "bf", style: `width:${((100 * n) / max).toFixed(1)}%` }));
+      const v = el("span", { class: "bv" }, fmt(n) + " ");
+      v.append(el("small", {}, `${pct(n, total)} %`));
+      li.append(el("span", { class: "bl" }, nombre), t, v);
+      return li;
+    }));
+  }
+
+  function leyendaCanales(d) {
+    $("canales").replaceChildren(...d.canales.map((c) => {
+      const li = el("li");
+      li.append(el("span", { class: "sw", style: `--sw:${SERIE[c]}` }), document.createTextNode(CANAL[c]));
+      return li;
+    }));
+  }
+
+  // The round step whose top gridline sits closest above the maximum, with at most six steps.
+  function paso(max) {
+    if (!(max > 0)) return 1;
+    const mag = 10 ** Math.floor(Math.log10(max / 6));
+    const pasos = [1, 2, 2.5, 5, 10, 20].map((m) => m * mag).filter((s) => Math.ceil(max / s) <= 6);
+    return pasos.reduce((a, s) => (Math.ceil(max / s) * s < Math.ceil(max / a) * a ? s : a));
+  }
+  // A bar segment with its top corners rounded when it ends the stack.
+  const seg = (x, y, w, h, r) => r && h > r
+    ? `M${x},${y + h}V${y + r}Q${x},${y} ${x + r},${y}H${x + w - r}Q${x + w},${y} ${x + w},${y + r}V${y + h}Z`
+    : `M${x},${y}h${w}v${h}h${-w}Z`;
+
+  function graficaDias(d) {
+    const box = $("dias");
+    const W = Math.max(300, Math.round(box.clientWidth)), H = W < 560 ? 230 : 290;
+    const m = { t: 12, r: 6, b: 28, l: 44 };
+    const tot = (x) => d.canales.reduce((s, c) => s + x[c], 0);
+    const st = paso(Math.max(...d.dias.map(tot)));
+    const top = Math.ceil(Math.max(...d.dias.map(tot)) / st) * st;
+    const iw = W - m.l - m.r, ih = H - m.t - m.b, bw = iw / d.dias.length, gap = Math.max(2, bw * 0.22);
+    const y = (v) => m.t + ih - (v / top) * ih;
+    const svg = svgEl("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Reportes por día de registro, apilados por canal; la tabla por día tiene los mismos números" });
+    for (let v = 0; v <= top; v += st) {
+      svg.append(svgEl("line", { class: v ? "gl" : "base", x1: m.l, x2: W - m.r, y1: y(v), y2: y(v) }));
+      const t = svgEl("text", { x: m.l - 6, y: y(v) + 4, "text-anchor": "end" });
+      t.textContent = fmt(v);
+      svg.append(t);
+    }
+    const every = W < 560 ? 4 : 2;
+    const tip = box.querySelector(".tip") || el("div", { class: "tip", hidden: "" });
+    d.dias.forEach((x, i) => {
+      const g = svgEl("g", { class: "col" });
+      const x0 = m.l + i * bw + gap / 2, w = bw - gap;
+      g.append(svgEl("rect", { class: "hit", x: m.l + i * bw, y: m.t, width: bw, height: ih, fill: "transparent" }));
+      let acc = 0;
+      const last = [...d.canales].reverse().find((c) => x[c] > 0);
+      for (const c of d.canales) {
+        if (!x[c]) continue;
+        const y1 = y(acc + x[c]), h = y(acc) - y1 - (c === last ? 0 : 2);
+        g.append(svgEl("path", { d: seg(x0, y1, w, Math.max(0, h), c === last ? Math.min(4, w / 2) : 0), fill: SERIE[c] }));
+        acc += x[c];
+      }
+      const show = () => {
+        tip.replaceChildren(el("b", {}, fecha(x.dia, { weekday: "long", day: "numeric", month: "long" })));
+        const r0 = el("div", { class: "r" });
+        r0.append(el("span", {}, "Total"), el("span", {}, fmt(tot(x))));
+        tip.append(r0);
+        for (const c of [...d.canales].reverse()) {
+          const r = el("div", { class: "r" }), k = el("span");
+          k.append(el("span", { class: "sw", style: `--sw:${SERIE[c]}` }), document.createTextNode(c));
+          r.append(k, el("span", {}, fmt(x[c])));
+          tip.append(r);
+        }
+        tip.hidden = false;
+        const cx = ((m.l + i * bw + bw / 2) / W) * box.clientWidth;
+        const tw = tip.offsetWidth;
+        tip.style.left = Math.min(Math.max(0, cx - tw / 2), box.clientWidth - tw) + "px";
+        tip.style.top = Math.max(0, (y(tot(x)) / H) * box.clientHeight - tip.offsetHeight - 10) + "px";
+        for (const o of svg.querySelectorAll(".col.on")) o.classList.remove("on");
+        g.classList.add("on");
+      };
+      g.addEventListener("pointerenter", show);
+      g.addEventListener("click", show);
+      svg.append(g);
+    });
+    // Day labels: the first, the last and each month's first day, then every few days where they fit.
+    const n = d.dias.length, puestas = [];
+    const mes = d.dias.flatMap((x, i) => (x.dia.endsWith("-01") ? [i] : []));
+    for (const i of [0, n - 1, ...mes, ...d.dias.keys()]) {
+      if (puestas.some((p) => p.i === i) || (i % every && i !== n - 1 && !mes.includes(i))) continue;
+      const x = d.dias[i], day = Number(x.dia.slice(8));
+      const s = i === 0 || day === 1 ? fecha(x.dia, { day: "numeric", month: "short" }).replace(".", "") : String(day);
+      const cx = m.l + i * bw + bw / 2, half = s.length * 3.4 + 4;
+      if (puestas.some((p) => Math.abs(p.cx - cx) < p.half + half)) continue;
+      puestas.push({ i, cx, half });
+      const t = svgEl("text", { x: cx, y: H - 8, "text-anchor": "middle" });
+      t.textContent = s;
+      svg.append(t);
+    }
+    // A lifted finger leaves the chart too: on touch, keep the tapped day's numbers open.
+    svg.addEventListener("pointerleave", (e) => {
+      if (e.pointerType === "touch") return;
+      tip.hidden = true;
+      for (const o of svg.querySelectorAll(".col.on")) o.classList.remove("on");
+    });
+    box.replaceChildren(svg, tip);
+  }
+
+  function tablaDias(d) {
+    const t = $("tabla-dias");
+    const head = el("tr");
+    head.append(el("th", { scope: "col" }, "Día"), ...d.canales.map((c) => el("th", { scope: "col", class: "n" }, c)), el("th", { scope: "col", class: "n" }, "Total"));
+    const thead = el("thead"); thead.append(head);
+    const tbody = el("tbody");
+    for (const x of d.dias) {
+      const tr = el("tr");
+      tr.append(el("td", {}, fecha(x.dia, { weekday: "short", day: "numeric", month: "short" })), ...d.canales.map((c) => el("td", { class: "n" }, fmt(x[c]))), el("td", { class: "n" }, fmt(d.canales.reduce((s, c) => s + x[c], 0))));
+      tbody.append(tr);
+    }
+    t.append(thead, tbody);
+  }
+
+  const zonaTexto = (zs) => zs.length ? (zs.length > 1 ? "Zonas " : "Zona ") + zs.join(" y ") : "Sin zona en el mapa";
+
+  function tablaColonias(d) {
+    const t = $("tabla-colonias");
+    const head = el("tr");
+    head.append(el("th", { scope: "col" }, "Colonia"), el("th", { scope: "col", class: "n" }, "Reportes"), el("th", { scope: "col", class: "n" }, "«En proceso»"), el("th", { scope: "col" }, "En el mapa del SIAPA"));
+    const thead = el("thead"); thead.append(head);
+    const tbody = el("tbody");
+    const filas = d.colonias.map((c) => {
+      const tr = el("tr");
+      const td = el("td", {}, c.colonia);
+      const otras = c.escrito.filter((e) => e !== c.colonia);
+      if (otras.length) td.append(el("span", { class: "sub" }, "En la lista: " + c.escrito.join(" · ")));
+      const mapa = c.clave ? zonaTexto(c.zonas) + (c.poligonos > 1 ? ` · ${c.poligonos} colonias con este nombre` : "") : "No está";
+      tr.append(td, el("td", { class: "n" }, fmt(c.reportes)), el("td", { class: "n" }, fmt(c.en_proceso)), el("td", {}, mapa));
+      tbody.append(tr);
+      return [tr, window.aguaMapa.fold([c.colonia, ...c.escrito].join(" | "))];
+    });
+    t.append(thead, tbody);
+    $("filtro").addEventListener("input", (e) => {
+      const q = window.aguaMapa.fold(e.target.value);
+      for (const [tr, k] of filas) tr.hidden = !!q && !k.includes(q);
+    });
+  }
+
+  function mapa(d) {
+    const M = window.aguaMapa;
+    const porClave = new Map(d.colonias.filter((c) => c.clave).map((c) => [c.clave, c]));
+    const map = L.map("mapa", { preferCanvas: true, zoomSnap: 0.25, scrollWheelZoom: false });
+    M.tiles(L, map);
+    map.setView([20.68, -103.42], 12);
+    if (M.pinch) M.pinch(map);
+    $("clases").replaceChildren(...CORTES.map((_, i) => {
+      const li = el("li");
+      li.append(el("span", { class: "sw", "data-clase": i }), document.createTextNode(rango(i)));
+      return li;
+    }), (() => { const li = el("li"); li.append(el("span", { class: "sw none" }), document.createTextNode("Ningún reporte la nombra así")); return li; })());
+    const pintaLeyenda = () => { for (const s of $("clases").querySelectorAll("[data-clase]")) s.style.setProperty("--sw", rampa()[s.dataset.clase]); };
+    pintaLeyenda();
+    const estilo = (f) => {
+      const c = porClave.get(M.fold(f.properties.n));
+      if (!c) return { color: aguaDark() ? "#6b7aa6" : "#8a94ad", weight: 0.6, opacity: 0.7, fill: false };
+      return { color: aguaDark() ? "#0c1328" : "#ffffff", weight: 0.8, opacity: 0.9, fillColor: rampa()[clase(c.reportes)], fillOpacity: 0.82 };
+    };
+    const texto = (f) => {
+      const c = porClave.get(M.fold(f.properties.n));
+      const wrap = el("div");
+      wrap.append(document.createTextNode(f.properties.n));
+      const lines = c
+        ? [`${fmt(c.reportes)} ${c.reportes === 1 ? "reporte" : "reportes"} · ${fmt(c.en_proceso)} «En proceso»`, zonaTexto(c.zonas)]
+        : ["Ningún reporte la nombra así", "(no quiere decir que haya tenido agua)"];
+      if (c && c.poligonos > 1) lines.push(`El mapa tiene ${c.poligonos} colonias con este nombre en Zapopan y la lista no dice cuál, así que se pintan todas.`);
+      for (const l of lines) wrap.append(el("span", { class: "sub" }, l));
+      return wrap;
+    };
+    const touch = matchMedia("(hover: none)").matches;
+    M.load().then(({ colonias }) => {
+      const zap = colonias.filter((f) => (f.properties.m || "").includes("Zapopan"));
+      const capa = L.geoJSON(zap, {
+        style: estilo,
+        onEachFeature: (f, l) => touch ? l.bindPopup(() => texto(f)) : l.bindTooltip(() => texto(f), { sticky: true, className: "map-label", direction: "top" }),
+      }).addTo(map);
+      const conReportes = L.featureGroup(capa.getLayers().filter((l) => porClave.has(M.fold(l.feature.properties.n))));
+      map.fitBounds(conReportes.getBounds(), { padding: [12, 12] });
+      document.addEventListener("tema", () => { capa.setStyle(estilo); pintaLeyenda(); });
+    }).catch(() => { status.textContent = "No pudimos cargar el mapa. Intenta de nuevo en unos minutos."; });
+  }
+
+  fetch("/datos/zapopan-reportes.json")
+    .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then((d) => {
+      status.textContent = "";
+      // Each part on its own, so one that fails (say mapa.js didn't load) doesn't take the rest with it.
+      const partes = [numeros, leyendaCanales, graficaDias, tablaDias,
+        () => barras($("estatus"), d.estatus, d.total),
+        () => barras($("origen"), d.origen, d.total),
+        () => barras($("zonas"), d.por_zona.map(([z, n]) => [z === "sin zona" ? "Sin zona en el mapa" : z === "varias" ? "Nombres de varias colonias del mapa, en zonas distintas" : zonaTexto(z.split(" y ")), n]), d.en_mapa),
+        () => barras($("top"), d.colonias.slice(0, 20).map((c) => [c.colonia, c.reportes]), d.total),
+        tablaColonias, mapa];
+      for (const f of partes) try { f(d); } catch (e) { console.error(e); }
+      let w = $("dias").clientWidth;
+      new ResizeObserver(() => { const n = $("dias").clientWidth; if (Math.abs(n - w) > 4) { w = n; graficaDias(d); } }).observe($("dias"));
+    })
+    .catch(() => { status.textContent = "No pudimos cargar los datos. Intenta de nuevo en unos minutos."; });
+})();
+</script>
+</body>
+</html>

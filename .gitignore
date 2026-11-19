@@ -1,6 +1,7 @@
 .env
 pipelines/.venv/
 *.pdf
+!web/datos/*.pdf
 .DS_Store
 *.kml
 /aguagdl_nowhite.png
