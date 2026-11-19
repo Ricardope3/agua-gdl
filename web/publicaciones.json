@@ -62033,7 +62033,8 @@
    },
    "cita": "me di cuenta que era agua puerca 🫠\na mí me llenaron un tambo y me arrepentí muchísimo. Primera vez que en mi calle pasa una pipa y jamás volveré a pedir agua de ellas... colonia Beatriz Hernández",
    "video": true,
-   "calidad": true
+   "calidad": true,
+   "vista": "fuentes/2d13a97257cd.jpg"
   },
   {
    "fuente": "vecinos",
@@ -62060,7 +62061,8 @@
    "cita": "también en la Colonia monumental distribuyeron el sábado agua sucia",
    "video": true,
    "calidad": true,
-   "captura": "fuentes/3eda2fffb71b-t.jpg"
+   "captura": "fuentes/3eda2fffb71b-t.jpg",
+   "vista": "fuentes/2d13a97257cd.jpg"
   },
   {
    "fuente": "medio",
@@ -62427,6 +62429,30 @@
    },
    "dias": null,
    "vista": "fuentes/8e8d80ab2861.jpg"
+  },
+  {
+   "fuente": "vecinos",
+   "red": "x",
+   "quien": "",
+   "url": "https://x.com/PerrySombr27/status/2123186166128427117",
+   "fecha": "2026-11-18",
+   "colonias": [
+    "BOSQUES DEL CENTINELA|Zapopan|45132"
+   ],
+   "lugar": "Bosques del Centinela, Zapopan",
+   "cita": "Bosques del centinela Zapopan NO es de las colonias afectadas por los tandeos y ahora tiene 48 horas sin agua.",
+   "dias": null,
+   "tipo": "comentario",
+   "en": {
+    "quien": "Cuenta personal en X",
+    "url": "https://x.com/PabloLemusN/status/2123174560946413879",
+    "eco": {
+     "reacciones": 42,
+     "comentarios": 13,
+     "al": "2026-11-18"
+    }
+   },
+   "vista": "fuentes/a5e618c62583.jpg"
   }
  ]
 }
