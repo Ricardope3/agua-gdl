@@ -54,7 +54,7 @@ RECORTES = {
     "cercania-0876-linea-1.png": ("r6785", 8, 113, 619, 676, 50),      # «en los archivos que obran en la Coordinación General,»
     "cercania-0876-linea-2.png": ("r6785", 8, 790, 619, 779, 50),      # «no se localizaron bitácoras, hojas de servicio, vales o registros»
     "cercania-0876-linea-3.png": ("r6785", 8, 113, 666, 592, 48),      # «de viaje de las pipas que llenaron las cisternas»
-    "cercania-0876-lista-46-48.png": ("r6785", 11, 50, 418, 425, 207), # the list's last page, columns No. and COLONIA
+    "cercania-0876-lista-47-48.png": ("r6785", 11, 50, 483, 425, 142), # the list's last page, columns No. and COLONIA
     "cercania-0876-lista-49.png": ("r6785", 11, 50, 625, 425, 66),     # its last row, 49 LOS CAJETES
     # Oficio 02050000/2026/7939 (Dirección de Transparencia y Buenas Prácticas, 17 Nov 2026), the same answer, p. 2.
     "transparencia-7939-logo.png": ("r6785", 2, 150, 82, 535, 275),

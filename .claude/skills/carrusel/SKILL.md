@@ -37,6 +37,8 @@ Arguments: the topic, a colonia, or the facts to show. If the ask is vague, prop
 - A scanned chart's labels are ~8 px at 200 dpi, unreadable on a phone: circle the values and write them as our own tags, read from the image at 300 dpi and matched against the document's transcription.
 - The `url` must be a PDF people can open. Research PDFs are gitignored; publishing one in `web/datos/` needs his OK after a check for names and personal data.
 - Announced vs registered: «anunció» and «registró», never «mintieron»; the limit slide gives the innocent readings (a planned fleet, an undated list).
+- Mark skipped text with a `"…"` between cuts (the card shows «[…]»); the build fails when the `dice` skips and the card doesn't. Carousel 22's limit slide joined a plan's lead-in to its third bullet as if one passage.
+- Name a document as it names itself (19 Nov review of carousel 22): a chart sent «con base en los registros de seguimiento», after the daily records were declared inexistent, is «la gráfica», not «su registro diario»; a list headed «listado de cisternas instaladas» is that, not «la lista». An absence in a table says what was asked («Pedimos los registros de… centros de salud»), and a «no se localizó» names the office and its archives, never a passive «no se localizaron».
 
 ## Our own analysis
 

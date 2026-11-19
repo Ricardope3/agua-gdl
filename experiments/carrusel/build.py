@@ -145,6 +145,8 @@ def check(c, fotos_ok, temas):
             for part in (p.strip() for p in d["dice"].split("…")):
                 if part and part not in c["fuentes"][d["fuente"]]["cita"]:
                     fail(f"{where}: the documento's dice «{part}» is not word for word in its fuente's cita")
+            if d["dice"].strip(" …").count("…") > d["recortes"].count("…"):
+                fail(f"{where}: the dice skips text («…») that the card doesn't: put a \"…\" in recortes where it does")
         if s["tipo"] == "cita" and not s.get("fuentes"):
             fail(f"{where}: a quote needs its fuente")
         if s["tipo"] == "cita":
@@ -195,20 +197,25 @@ def documentos(s):
 
 
 def recortes(d):
-    return [r if isinstance(r, dict) else {"img": r} for r in d.get("recortes", [])]
+    return [r if isinstance(r, dict) else {"img": r} for r in d.get("recortes", []) if r != "…"]
 
 
 def documento(d):
     """A paper card with cuts of an official document: its letterhead, then the cited lines, one cut per line, highlighted
     unless "marca" is false. A cut's "circulos" ring points of it (x, y, r in the cut's pixels) and label each with our own
-    tag, centred dx, dy CSS px from the point: a scanned chart's labels are too small to read on a phone."""
+    tag, centred dx, dy CSS px from the point: a scanned chart's labels are too small to read on a phone. A "…" between
+    cuts shows «[…]» where the document's text was skipped."""
     def img(n, k):
         p = HERE / "documentos" / n
         w, h = png_size(p)
         return f'<img src="{p.as_uri()}" style="width:{w * k:.0f}px;height:{h * k:.0f}px">'
     head = "".join(img(n, d.get("escala_membrete", .65)) for n in d.get("membrete", []))
     lines = ""
-    for r in recortes(d):
+    for r in d.get("recortes", []):
+        if r == "…":
+            lines += '<span class="salto">[…]</span>'
+            continue
+        r = r if isinstance(r, dict) else {"img": r}
         k = r.get("escala", min(1, 872 / png_size(HERE / "documentos" / r["img"])[0]))
         rings = "".join(
             f'<span class="circulo" style="left:{c["x"] * k:.0f}px;top:{c["y"] * k:.0f}px;width:{2 * c["r"] * k:.0f}px;height:{2 * c["r"] * k:.0f}px"></span>'
@@ -228,7 +235,7 @@ def render_body(s):
         if s.get("kicker"):
             parts.append(f'<div class="kicker">{md(s["kicker"])}</div>')
         if s.get("cifra"):
-            parts.append(f'<div class="cifra">{md(s["cifra"])}</div>')
+            parts.append(f'<div class="cifra{" long" if len(s["cifra"]) > 8 else ""}">{md(s["cifra"])}</div>')
         if s.get("titular"):
             parts.append(f'<div class="titular">{md(s["titular"])}</div>')
         if t == "texto":
@@ -365,7 +372,7 @@ def render_body(s):
     if t == "cierre":
         acts = "".join(f'<li>{md(a)}</li>' for a in s.get("acciones", []))
         return (f'<div class="stack cierre">{logo()}<div class="titular">{md(s["titular"])}</div>'
-                f'<ul class="acts">{acts}</ul><div class="url">{md(s.get("url", "aguagdl.com"))}</div>'
+                f'<ul class="acts">{acts}</ul><div class="url{" long" if len(s.get("url", "")) > 22 else ""}">{md(s.get("url", "aguagdl.com"))}</div>'
                 f'<div class="pie">Agua GDL es un proyecto ciudadano, sin partido ni afiliación oficial. Cada dato lleva su fuente; si ves un error, escríbenos a soporte@aguagdl.com.</div></div>')
     fail(f"tipo {t}")
 
@@ -444,6 +451,7 @@ blockquote{font-family:"Avenir Next Condensed";font-weight:800;font-size:82px;li
 .cierre .logo{width:110px;height:160px}
 .acts{list-style:none;display:flex;flex-direction:column;gap:16px;font-size:36px;font-weight:600}
 .acts li:before{content:"→ ";color:#3ea6ff}
+.url.long{font-size:62px}
 .url{font-family:"Avenir Next Condensed";font-weight:800;font-size:84px;color:#3ea6ff}
 .sitio{position:relative;width:100%;height:100%;display:flex;align-items:center}
 .scol{width:560px;display:flex;flex-direction:column;gap:22px;position:relative;z-index:2}
@@ -476,6 +484,7 @@ blockquote{font-family:"Avenir Next Condensed";font-weight:800;font-size:82px;li
 .recorte{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
 .hl,.pl{display:inline-block;position:relative;border-radius:4px}
 .hl{background:rgba(62,166,255,.4)}
+.salto{font-size:20px;line-height:1;color:#6b6b6b;padding-left:4px;margin:-2px 0}
 .docs{width:100%;display:flex;flex-direction:column;gap:26px}
 .docw:nth-child(2) .doc{transform:rotate(.9deg)}
 .docet{font-size:24px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7cc4ff;margin:0 0 10px 4px}
