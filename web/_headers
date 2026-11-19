@@ -24,6 +24,9 @@
 /publicaciones.json
   Cache-Control: public, max-age=300
   X-Robots-Tag: noindex
+/datos/*
+  Cache-Control: public, max-age=300
+  X-Robots-Tag: noindex
 /colonias_siapa.topo.json
   Cache-Control: public, max-age=300
 /fuentes/*
