@@ -52,7 +52,10 @@ def foto_path(rel):
 def slide_texts(s):
     out = []
     for k, v in s.items():
-        if k in ("tipo", "foto", "fuentes", "calculo", "nota", "posicion", "propio", "captura", "bins", "alturas", "color", "x", "y", "documento"):
+        if k in ("documento", "documentos"):  # the cuts' words are checked as dice; our labels on them as slide text
+            out += [x for d in documentos(s) for x in [d.get("etiqueta", "")] + [ci["texto"] for r in recortes(d) for ci in r.get("circulos", [])] if x]
+            continue
+        if k in ("tipo", "foto", "fuentes", "calculo", "nota", "posicion", "propio", "captura", "bins", "alturas", "color", "x", "y"):
             continue
         if isinstance(v, str):
             out.append(v)
@@ -125,19 +128,23 @@ def check(c, fotos_ok, temas):
             for part in (p.strip(" .,") for p in re.split(r"\[…\]|…", q.replace("*", ""))):
                 if part and part not in pool_q:
                     fail(f"{where}: «{part}» is not word for word (capitals and accents included) in the cited citas")
-        if s.get("documento"):
-            d = s["documento"]
-            if s["tipo"] not in ("portada", "texto"):
-                fail(f"{where}: a documento goes on a portada or texto slide")
+        if documentos(s) and s["tipo"] not in ("portada", "texto"):
+            fail(f"{where}: a documento goes on a portada or texto slide")
+        for d in documentos(s):
             if d.get("fuente") not in s.get("fuentes", []):
                 fail(f"{where}: the documento's fuente must be one the slide cites")
-            for n in d.get("membrete", []) + d.get("recortes", []):
+            if not recortes(d) or not d.get("dice"):
+                fail(f"{where}: a documento needs recortes and dice (the words they show)")
+            for n in d.get("membrete", []) + [r["img"] for r in recortes(d)]:
                 if not (HERE / "documentos" / n).is_file():
                     fail(f"{where}: no documentos/{n} (python3 experiments/carrusel/documentos/recortes.py)")
-            if not d.get("recortes") or not d.get("dice"):
-                fail(f"{where}: a documento needs recortes and dice (the words they show)")
-            if d["dice"] not in c["fuentes"][d["fuente"]]["cita"]:
-                fail(f"{where}: the documento's dice is not word for word in its fuente's cita")
+            for r in recortes(d):
+                for ci in r.get("circulos", []):
+                    if not all(k in ci for k in ("x", "y", "r", "texto")):
+                        fail(f"{where}: a circulo needs x, y, r (pixels in {r['img']}) and texto")
+            for part in (p.strip() for p in d["dice"].split("…")):
+                if part and part not in c["fuentes"][d["fuente"]]["cita"]:
+                    fail(f"{where}: the documento's dice «{part}» is not word for word in its fuente's cita")
         if s["tipo"] == "cita" and not s.get("fuentes"):
             fail(f"{where}: a quote needs its fuente")
         if s["tipo"] == "cita":
@@ -183,28 +190,49 @@ def png_size(p):
     return int.from_bytes(b[:4], "big"), int.from_bytes(b[4:], "big")
 
 
+def documentos(s):
+    return s.get("documentos") or ([s["documento"]] if s.get("documento") else [])
+
+
+def recortes(d):
+    return [r if isinstance(r, dict) else {"img": r} for r in d.get("recortes", [])]
+
+
 def documento(d):
-    """A paper card with cuts of an official document: its letterhead, then the cited lines highlighted, one cut per line."""
+    """A paper card with cuts of an official document: its letterhead, then the cited lines, one cut per line, highlighted
+    unless "marca" is false. A cut's "circulos" ring points of it (x, y, r in the cut's pixels) and label each with our own
+    tag, centred dx, dy CSS px from the point: a scanned chart's labels are too small to read on a phone."""
     def img(n, k):
         p = HERE / "documentos" / n
         w, h = png_size(p)
         return f'<img src="{p.as_uri()}" style="width:{w * k:.0f}px;height:{h * k:.0f}px">'
-    k = min(1, 872 / max(png_size(HERE / "documentos" / n)[0] for n in d["recortes"]))
-    head = "".join(img(n, .65) for n in d.get("membrete", []))
-    lines = "".join(f'<span class="hl">{img(n, k)}</span>' for n in d["recortes"])
-    return f'<div class="doc">' + (f'<div class="membrete">{head}</div>' if head else "") + f'<div class="recorte">{lines}</div></div>'
+    head = "".join(img(n, d.get("escala_membrete", .65)) for n in d.get("membrete", []))
+    lines = ""
+    for r in recortes(d):
+        k = r.get("escala", min(1, 872 / png_size(HERE / "documentos" / r["img"])[0]))
+        rings = "".join(
+            f'<span class="circulo" style="left:{c["x"] * k:.0f}px;top:{c["y"] * k:.0f}px;width:{2 * c["r"] * k:.0f}px;height:{2 * c["r"] * k:.0f}px"></span>'
+            f'<span class="ctag" style="left:{c["x"] * k + c.get("dx", 0):.0f}px;top:{c["y"] * k + c.get("dy", 0):.0f}px">{md(c["texto"])}</span>'
+            for c in r.get("circulos", []))
+        lines += f'<span class="{"hl" if r.get("marca", True) else "pl"}">{img(r["img"], k)}{rings}</span>'
+    return ('<div class="docw">' + (f'<div class="docet">{md(d["etiqueta"])}</div>' if d.get("etiqueta") else "")
+            + '<div class="doc">' + (f'<div class="membrete">{head}</div>' if head else "") + f'<div class="recorte">{lines}</div></div></div>')
 
 
 def render_body(s):
     t = s["tipo"]
     if t in ("portada", "texto"):
-        parts = [documento(s["documento"])] if s.get("documento") else []
+        docs = "".join(documento(d) for d in documentos(s))
+        docs = [f'<div class="docs">{docs}</div>'] if docs else []
+        parts = docs if t == "portada" else []  # the cover shows the document first; a texto slide after its headline
         if s.get("kicker"):
             parts.append(f'<div class="kicker">{md(s["kicker"])}</div>')
         if s.get("cifra"):
             parts.append(f'<div class="cifra">{md(s["cifra"])}</div>')
         if s.get("titular"):
             parts.append(f'<div class="titular">{md(s["titular"])}</div>')
+        if t == "texto":
+            parts += docs
         if s.get("texto"):
             parts.append(f'<div class="texto">{md(s["texto"])}</div>')
         if s.get("pie"):
@@ -446,7 +474,13 @@ blockquote{font-family:"Avenir Next Condensed";font-weight:800;font-size:82px;li
 .doc img{display:block;mix-blend-mode:multiply}
 .membrete{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:2px dashed rgba(0,0,0,.22)}
 .recorte{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
-.hl{display:inline-block;background:rgba(62,166,255,.4);border-radius:4px}
+.hl,.pl{display:inline-block;position:relative;border-radius:4px}
+.hl{background:rgba(62,166,255,.4)}
+.docs{width:100%;display:flex;flex-direction:column;gap:26px}
+.docw:nth-child(2) .doc{transform:rotate(.9deg)}
+.docet{font-size:24px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7cc4ff;margin:0 0 10px 4px}
+.circulo{position:absolute;transform:translate(-50%,-50%);border:5px solid #ff7a66;border-radius:50%;box-sizing:border-box}
+.ctag{position:absolute;transform:translate(-50%,-50%);background:#ff7a66;color:#0b0f14;font-family:"Avenir Next Condensed";font-weight:800;font-size:32px;line-height:1;padding:6px 12px;border-radius:8px;white-space:nowrap}
 .foot{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;font-size:18px;line-height:1.35;opacity:.62;padding-top:14px}
 .foot .src{max-width:760px}
 .foot .site{font-weight:700;font-size:24px;white-space:nowrap}
@@ -565,7 +599,7 @@ def fuentes_md(c):
                      + (f" · cálculo: {s['calculo']}" if s.get("calculo") else "")
                      + (f" · sin fuente: {s['propio']}" if s.get("propio") else "")
                      + (f" · foto: {s['foto']}" if s.get("foto") else "")
-                     + (f" · documento ({s['documento']['fuente']}): «{s['documento']['dice']}»" if s.get("documento") else ""))
+                     + "".join(f" · documento ({d['fuente']}): «{d['dice']}»" for d in documentos(s)))
     return "\n".join(lines) + "\n"
 
 
