@@ -37,9 +37,18 @@ ESTATUS = {"En proceso", "Concluido", "Resuelto", "Cancelado"}
 FECHA = re.compile(r"2026/(10|11)/\d\d \d\d:\d\d:\d\d")
 
 # Name as written (folded) -> name on SIAPA's map (folded). Only plain misspellings or a missing
-# «de»/«el»/plural, and only where the map has one such colonia in Zapopan. Sub-sections
-# («NORTE», «2DA. SECCIÓN», «CONDOMINIO UNO») stay unjoined. A name SIAPA's PDF list gives
-# beside the map's name may be another colonia (PUERTA DE ROBLE, PUERTA DEL ROBLE): never joined.
+# «de»/«el»/plural, and only where the map has one such colonia in Zapopan. An ALIAS never joins a
+# section («NORTE», «2DA. SECCIÓN», «CONDOMINIO UNO») to its colonia or «RESIDENCIAL X» to X: either
+# may be its own development (18 Nov: joining RESIDENCIAL LA ESTANCIA would put LA ESTANCIA in the
+# top five). separa() enforces it for the words in SEPARA and ORDINAL, which are not every such word.
+# A name SIAPA's PDF list gives beside the map's name may be another colonia (PUERTA DE ROBLE,
+# PUERTA DEL ROBLE): never joined.
+SEPARA = [("RESIDENCIAL", r"RES|RE\w*[SD]EN[CS]IAL\w*"), ("SECCION", r"SEC\w*"), ("CONDOMINIO", r"CONDO\w*"),
+          ("NORTE", r"NORTE|NTE"), ("SUR", r"SUR"), ("ORIENTE", r"ORIENTE|OTE"), ("PONIENTE", r"PONIENTE|PTE"),
+          ("ETAPA", r"ETAPA"), ("MANZANA", r"MANZANA|MZA?"), ("UNIDAD", r"UNIDAD|U"), ("SECTOR", r"SECTOR")]
+ORDINAL = {"PRIMERA": 1, "PRIMER": 1, "PRIMERO": 1, "UNO": 1, "I": 1, "SEGUNDA": 2, "SEGUNDO": 2, "DOS": 2, "II": 2,
+           "TERCERA": 3, "TERCER": 3, "TERCERO": 3, "TRES": 3, "III": 3, "CUARTA": 4, "CUARTO": 4, "CUATRO": 4, "IV": 4,
+           "QUINTA": 5, "QUINTO": 5, "CINCO": 5, "V": 5, "SEXTA": 6, "SEXTO": 6, "SEIS": 6, "VI": 6}
 ALIAS = {
     "ARCOS GUADALUPE": "ARCOS DE GUADALUPE",
     "BOSQUES DE LAS LOMAS": "BOSQUE DE LAS LOMAS",
@@ -85,6 +94,20 @@ def fold(s):
     return n
 
 
+def separa(name):
+    """The words of a folded name that make it a section or a development of its own, in one spelling each
+    («RESINDENCIAL» is RESIDENCIAL, «2DA», «SEGUNDA» and «II» are 2), so a join may fix their typos but not add,
+    drop or change one."""
+    out = []
+    for w in name.split():
+        n = re.fullmatch(r"(\d+)(?:A|RA|ERA|ER|DA|DO|TA|TO|O|AVA|NA)?", w)
+        if n or w in ORDINAL:
+            out.append(str(int(n.group(1)) if n else ORDINAL[w]))
+            continue
+        out += [c for c, rx in SEPARA if re.fullmatch(rx, w)][:1]
+    return sorted(out)
+
+
 def main_zones(props):
     """mapa.js's zonesOf().main: the largest share, and any other at BORDER or more."""
     zs = [z for z in props.get("z", "").split(",") if z]
@@ -124,6 +147,8 @@ def build():
     lista = {fold(c["name"]) for c in json.loads(LISTA.read_text()) if c["municipio"] == "ZAPOPAN"}
     if not lista:
         sys.exit(f"{LISTA.name}: no Zapopan colonias")
+    if not ALIAS:
+        sys.exit("ALIAS is empty: the spelling-join checks examined nothing")
     for k, v in ALIAS.items():
         if v not in mapa:
             sys.exit(f"ALIAS {k!r} -> {v!r}: not a Zapopan colonia on SIAPA's map")
@@ -131,6 +156,9 @@ def build():
             sys.exit(f"ALIAS {k!r}: already a Zapopan colonia on SIAPA's map")
         if k in lista and v in lista:
             sys.exit(f"ALIAS {k!r} -> {v!r}: SIAPA's list names both in Zapopan, they may be two colonias")
+        if separa(k) != separa(v):
+            sys.exit(f"ALIAS {k!r} -> {v!r}: adds, drops or changes a section, number or «residencial» "
+                     f"({separa(k)} vs {separa(v)}), it may be another place")
 
     dias = collections.defaultdict(lambda: collections.Counter())
     estatus, origen = collections.Counter(), collections.Counter()
@@ -223,7 +251,8 @@ def main():
     text = json.dumps(out, ensure_ascii=False, separators=(",", ":")) + "\n"
     n_col = len(out["colonias"])
     on_map = sum(1 for c in out["colonias"] if c["clave"])
-    summary = f"{out['total']} reports, {len(out['dias'])} days, {n_col} colonias ({on_map} on SIAPA's map, {out['en_mapa']} reports)"
+    summary = (f"{out['total']} reports, {len(out['dias'])} days, {n_col} colonias ({on_map} on SIAPA's map, {out['en_mapa']} reports), "
+               f"{out['alias']} spelling joins checked")
     if n_col == 0 or on_map == 0 or out["en_mapa"] == 0:
         sys.exit("zapopan_reportes: no colonias joined")
     if "--check" in sys.argv:
