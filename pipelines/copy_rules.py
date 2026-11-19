@@ -78,6 +78,16 @@ KNOWN_ERRORS = [
          wrong=r"atribuid\w* publicamente", near=r"728|director general", ok=r"uncredited\(",
          msg="name the outlet: Siker and Quadratín (19 Oct) carry «baja presión o suspensión»; Jalisco TV says only «baja presión»",
          found="5 Nov 2026 (legal review of P2)"),
+    dict(id="zapopan-otros-canales",
+         bad='Otros: Visores Zapopan, GuaZap, áreas de Cercanía, Contacto y Participación Ciudadana, y Delegaciones', good='Otros: Visores Zapopan, GuaZap, Coordinación y Agentes de Cercanía Ciudadana, Dirección de Contacto Ciudadano, Participación Ciudadana y Delegaciones',
+         wrong=r"contacto y participacion ciudadana", near=r"cercania",
+         msg="Zapopan's list (folio 140292426004981) has «Dirección De Contacto Ciudadano», masculine, and «Agentes De Cercanía Ciudadana» are agents, not an área",
+         found="18 Nov 2026 (re-review of /reportes-zapopan)"),
+    dict(id="zapopan-fecha-registro",
+         bad='Reportes por día de registro', good='Reportes por fecha de la lista',
+         wrong=r"dia de registro|cuando se registraron", near=r"reporte|grafica",
+         msg="Zapopan's list (folio 140292426004981) doesn't say what its «Fecha» is; it only looks like the registration time: say «fecha de la lista»",
+         found="18 Nov 2026 (re-review of /reportes-zapopan)"),
 ]
 
 

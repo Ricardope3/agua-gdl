@@ -23,6 +23,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 SRC = ROOT / "web/datos/zapopan-reportes.csv"
 DEST = ROOT / "web/datos/zapopan-reportes.json"
 TOPO = ROOT / "web/colonias_siapa.topo.json"
+LISTA = ROOT / "api/data/colonias.json"  # SIAPA's PDF list of colonias by zone
 TOTAL = 9828  # the oficio's own count (PDF p. 5)
 DESDE, HASTA = "2026-10-15", "2026-11-04"  # first and last day in the list; the oficio's «corte»
 BORDER = 15  # mapa.js: below this share of its area a colonia only borders a zone
@@ -37,7 +38,8 @@ FECHA = re.compile(r"2026/(10|11)/\d\d \d\d:\d\d:\d\d")
 
 # Name as written (folded) -> name on SIAPA's map (folded). Only plain misspellings or a missing
 # «de»/«el»/plural, and only where the map has one such colonia in Zapopan. Sub-sections
-# («NORTE», «2DA. SECCIÓN», «CONDOMINIO UNO») stay unjoined.
+# («NORTE», «2DA. SECCIÓN», «CONDOMINIO UNO») stay unjoined. A name SIAPA's PDF list gives
+# beside the map's name may be another colonia (PUERTA DE ROBLE, PUERTA DEL ROBLE): never joined.
 ALIAS = {
     "ARCOS GUADALUPE": "ARCOS DE GUADALUPE",
     "BOSQUES DE LAS LOMAS": "BOSQUE DE LAS LOMAS",
@@ -60,7 +62,6 @@ ALIAS = {
     "PARQUES DEL TEPEYAC": "PARQUES TEPEYAC",
     "PATRIA UNIVERSIDAD": "LA PATRIA UNIVERSIDAD",
     "PRADOS DE GUADALUPE": "PRADOS GUADALUPE",
-    "PUERTA DE ROBLE": "PUERTA DEL ROBLE",
     "PUERTAS DEL TULE": "PUERTA DEL TULE",
     "RINCONADA DEL BOSQUE": "RINCONADAS DEL BOSQUE",
     "VALLARTA PATRIA": "VALLARTA LA PATRIA",
@@ -120,11 +121,16 @@ def build():
         p = g["properties"]
         if "Zapopan" in p.get("m", ""):
             mapa[fold(p["n"])].append(p)
+    lista = {fold(c["name"]) for c in json.loads(LISTA.read_text()) if c["municipio"] == "ZAPOPAN"}
+    if not lista:
+        sys.exit(f"{LISTA.name}: no Zapopan colonias")
     for k, v in ALIAS.items():
         if v not in mapa:
             sys.exit(f"ALIAS {k!r} -> {v!r}: not a Zapopan colonia on SIAPA's map")
         if k in mapa:
             sys.exit(f"ALIAS {k!r}: already a Zapopan colonia on SIAPA's map")
+        if k in lista and v in lista:
+            sys.exit(f"ALIAS {k!r} -> {v!r}: SIAPA's list names both in Zapopan, they may be two colonias")
 
     dias = collections.defaultdict(lambda: collections.Counter())
     estatus, origen = collections.Counter(), collections.Counter()
@@ -158,7 +164,8 @@ def build():
         polys = mapa.get(k, [])
         zonas = sorted({z for p in polys for z in main_zones(p)}, key=int)
         # A name the map gives to several colonias in different zones: its reports can't go to one zone.
-        varias = len({tuple(main_zones(p)) for p in polys}) > 1
+        por_poligono = sorted({tuple(sorted(main_zones(p), key=int)) for p in polys}, key=lambda zs: [int(z) for z in zs] or [99])
+        varias = len(por_poligono) > 1
         escrito = [e for e, _ in sorted(g["escrito"].items(), key=lambda x: (-x[1], x[0]))]
         colonias.append({
             "colonia": polys[0]["n"] if polys else escrito[0],
@@ -167,6 +174,8 @@ def build():
             "en_proceso": g["proceso"],
             "zonas": zonas,
             "varias_zonas": varias,
+            # Each polygon's own zones, once per distinct set: what the table shows for a repeated name.
+            "zonas_poligonos": [list(zs) for zs in por_poligono],
             "poligonos": len(polys),
             "escrito": escrito,
         })

@@ -174,17 +174,17 @@ blockquote { margin: 10px 0; padding: 4px 0 4px 14px; border-left: 3px double va
       <h2 id="h-mapa" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg></span>Reportes por colonia</h2>
       <div id="mapa" class="bigmap" role="region" aria-label="Mapa de Zapopan con el número de reportes de falta de agua por colonia" tabindex="0"></div>
       <ul class="keys" id="clases" aria-label="Número de reportes"></ul>
-      <p class="note">El color es cuántos reportes nombran a la colonia. Solo se ven las colonias de Zapopan que están en el mapa de la rotación del SIAPA: ahí caen <span data-n="en_mapa">5,988</span> de los <span data-n="con_colonia">7,892</span> reportes que dicen colonia. Los demás traen nombres que no encontramos tal cual en ese mapa, como EXITMEX, Residencial La Estancia o «Guadalupe Inn Condominio Uno», y están en la tabla de abajo. Una colonia sin color no aparece con ese nombre en la lista: puede tener reportes con otro nombre o entre los que no dicen colonia. Eso no quiere decir que haya tenido agua.</p>
+      <p class="note">El color es cuántos reportes nombran a la colonia. Solo se ven las colonias de Zapopan que están en el mapa de la rotación del SIAPA: ahí caen <span data-n="en_mapa">5,986</span> de los <span data-n="con_colonia">7,892</span> reportes que dicen colonia. Los demás traen nombres que no encontramos tal cual en ese mapa, como EXITMEX, RESIDENCIAL LA ESTANCIA o GUADALUPE INN CONDOMINIO UNO, y están en la tabla de abajo. Una colonia sin color no aparece con ese nombre en la lista: puede tener reportes con otro nombre o entre los que no dicen colonia. Eso no quiere decir que haya tenido agua.</p>
     </section>
 
     <section aria-labelledby="h-dias">
-      <h2 id="h-dias" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg></span>Reportes por día de registro</h2>
+      <h2 id="h-dias" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg></span>Reportes por fecha de la lista</h2>
       <ul class="keys" id="canales" aria-label="Canal"></ul>
       <div class="chart" id="dias"></div>
-      <p class="note">La lista no dice qué fecha es; parece la del registro en el sistema. Los reportes del canal «SIAPA» aparecen solo en <span data-n="siapa_dias">9</span> de los <span data-n="dias">21</span> días, y <span data-n="siapa_hora_n">758</span> de ellos entre las 7 y las 8 de la noche, <span data-n="tanda_n">604</span> solo el 1 de noviembre, hasta <span data-n="tanda_min">30</span> en un minuto, lo que sugiere que se capturaron por tandas. Por eso esta gráfica dice cuándo se registraron los reportes, no qué día faltó el agua.</p>
+      <p class="note">La lista no dice qué fecha es; parece la del registro en el sistema. Los reportes del canal «SIAPA» aparecen solo en <span data-n="siapa_dias">9</span> de los <span data-n="dias">21</span> días, y <span data-n="siapa_hora_n">758</span> de ellos entre las 7 y las 8 de la noche, <span data-n="tanda_n">604</span> solo el 1 de noviembre, hasta <span data-n="tanda_min">30</span> en un minuto, lo que sugiere que se capturaron por tandas. Por eso esta gráfica muestra la fecha que trae la lista, no qué día faltó el agua.</p>
       <details>
         <summary>Ver la tabla por día</summary>
-        <div class="scroll"><table class="tabla" id="tabla-dias"><caption>Reportes por día de registro y canal</caption></table></div>
+        <div class="scroll"><table class="tabla" id="tabla-dias"><caption>Reportes por fecha de la lista y canal</caption></table></div>
       </details>
     </section>
 
@@ -203,14 +203,14 @@ blockquote { margin: 10px 0; padding: 4px 0 4px 14px; border-left: 3px double va
     <section aria-labelledby="h-zona">
       <h2 id="h-zona" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg></span>Por zona de la rotación</h2>
       <ul class="bars" id="zonas"></ul>
-      <p class="note">Solo los <span data-n="en_mapa">5,988</span> reportes de colonias que están en el mapa del SIAPA, con la zona que ese mapa les da. Casi todas las colonias de Zapopan a las que el mapa del SIAPA da zona son de la zona 6 (210 de 227).</p>
+      <p class="note">Solo los <span data-n="en_mapa">5,986</span> reportes de colonias que están en el mapa del SIAPA, con la zona que ese mapa les da. Casi todas las colonias de Zapopan a las que el mapa del SIAPA da zona son de la zona 6 (210 de 227).</p>
     </section>
 
     <section aria-labelledby="h-colonias">
       <h2 id="h-colonias" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg></span>Las 20 colonias con más reportes</h2>
       <ul class="bars" id="top"></ul>
       <details id="todas">
-        <summary>Ver todas las colonias (<span data-n="colonias">305</span>)</summary>
+        <summary>Ver todas las colonias (<span data-n="colonias">306</span>)</summary>
         <label class="filtro-l"><span class="note">Buscar una colonia</span><br><input class="filtro" id="filtro" type="search" autocomplete="off" placeholder="Por ejemplo, Ciudad Granja"></label>
         <div class="scroll"><table class="tabla" id="tabla-colonias"><caption>Reportes por colonia, como vienen escritas en la lista</caption></table></div>
       </details>
@@ -221,7 +221,7 @@ blockquote { margin: 10px 0; padding: 4px 0 4px 14px; border-left: 3px double va
       <ul class="plain">
         <li><strong>Solo es Zapopan.</strong> Es lo que respondió el Gobierno de Zapopan a nuestra solicitud. Guadalajara, Tlaquepaque y Tonalá no están aquí, así que esta página no compara municipios.</li>
         <li><strong>Un reporte no es una casa ni una colonia entera.</strong> Una casa puede reportar varias veces, y la lista no dice cuántas casas se quedaron sin agua. Que una colonia tenga más reportes quiere decir que ahí se reportó más, no que estuvo peor que otra.</li>
-        <li><strong>Los nombres de colonia vienen como los escribió el sistema.</strong> Los unimos al mapa del SIAPA por nombre, sin importar acentos ni mayúsculas, y unimos a mano <span data-n="alias">29</span> nombres escritos de otra forma, como «CHAPLITA INN» o «BRISAS DE LA PIMAVERA»; la tabla muestra cómo venía cada uno. Si un nombre está en varias colonias del mapa, se pintan todas.</li>
+        <li><strong>Los nombres de colonia vienen como los escribió el sistema.</strong> Los unimos al mapa del SIAPA por nombre, sin importar acentos ni mayúsculas, y unimos a mano <span data-n="alias">28</span> nombres escritos de otra forma, como «CHAPLITA INN» o «BRISAS DE LA PIMAVERA»; la tabla muestra cómo venía cada uno. Si un nombre está en varias colonias del mapa, se pintan todas.</li>
         <li><strong>La lista llegó en PDF y con la ubicación tachada.</strong> La Coordinación General de Cercanía Ciudadana dijo que la mandaría en Excel al correo transparencia@zapopan.gob.mx; a nosotros nos llegó un PDF de 166 páginas con la columna «Ubicacion» tachada. Lo pasamos a CSV.</li>
       </ul>
     </section>
@@ -261,7 +261,7 @@ blockquote { margin: 10px 0; padding: 4px 0 4px 14px; border-left: 3px double va
     for (const [k, v] of Object.entries(attrs || {})) n.setAttribute(k, v);
     return n;
   };
-  const CANAL = { "24/7": "24/7", SIAPA: "SIAPA", Otros: "Otros: Visores Zapopan, GuaZap, áreas de Cercanía, Contacto y Participación Ciudadana, y Delegaciones" };
+  const CANAL = { "24/7": "24/7", SIAPA: "SIAPA", Otros: "Otros: Visores Zapopan, GuaZap, Coordinación y Agentes de Cercanía Ciudadana, Dirección de Contacto Ciudadano, Participación Ciudadana y Delegaciones" };
   const SERIE = { "24/7": "var(--s1)", SIAPA: "var(--s2)", Otros: "var(--s3)" };
   const fecha = (iso, opts) => new Date(iso + "T12:00:00Z").toLocaleDateString("es-MX", { timeZone: "UTC", ...opts });
 
@@ -325,7 +325,7 @@ blockquote { margin: 10px 0; padding: 4px 0 4px 14px; border-left: 3px double va
     const top = Math.ceil(Math.max(...d.dias.map(tot)) / st) * st;
     const iw = W - m.l - m.r, ih = H - m.t - m.b, bw = iw / d.dias.length, gap = Math.max(2, bw * 0.22);
     const y = (v) => m.t + ih - (v / top) * ih;
-    const svg = svgEl("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Reportes por día de registro, apilados por canal; la tabla por día tiene los mismos números" });
+    const svg = svgEl("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Reportes por fecha de la lista, apilados por canal; la tabla por día tiene los mismos números" });
     for (let v = 0; v <= top; v += st) {
       svg.append(svgEl("line", { class: v ? "gl" : "base", x1: m.l, x2: W - m.r, y1: y(v), y2: y(v) }));
       const t = svgEl("text", { x: m.l - 6, y: y(v) + 4, "text-anchor": "end" });
@@ -419,7 +419,8 @@ blockquote { margin: 10px 0; padding: 4px 0 4px 14px; border-left: 3px double va
       const td = el("td", {}, c.colonia);
       const otras = c.escrito.filter((e) => e !== c.colonia);
       if (otras.length) td.append(el("span", { class: "sub" }, "En la lista: " + c.escrito.join(" · ")));
-      const mapa = c.clave ? zonaTexto(c.zonas) + (c.poligonos > 1 ? ` · ${c.poligonos} colonias con este nombre` : "") : "No está";
+      const mapa = !c.clave ? "No está" : c.poligonos < 2 ? zonaTexto(c.zonas)
+        : `${c.poligonos} colonias con este nombre: ` + c.zonas_poligonos.map((zs) => zonaTexto(zs).toLowerCase()).join(" · ");
       tr.append(td, el("td", { class: "n" }, fmt(c.reportes)), el("td", { class: "n" }, fmt(c.en_proceso)), el("td", {}, mapa));
       tbody.append(tr);
       return [tr, window.aguaMapa.fold([c.colonia, ...c.escrito].join(" | "))];
@@ -455,7 +456,7 @@ blockquote { margin: 10px 0; padding: 4px 0 4px 14px; border-left: 3px double va
       const wrap = el("div");
       wrap.append(document.createTextNode(f.properties.n));
       const lines = c
-        ? [`${fmt(c.reportes)} ${c.reportes === 1 ? "reporte" : "reportes"} · ${fmt(c.en_proceso)} «En proceso»`, zonaTexto(c.zonas)]
+        ? [`${fmt(c.reportes)} ${c.reportes === 1 ? "reporte" : "reportes"} · ${fmt(c.en_proceso)} «En proceso»`, zonaTexto([...M.zones(f.properties).main].sort((a, b) => a - b))]
         : ["Ningún reporte la nombra así", "(no quiere decir que haya tenido agua)"];
       if (c && c.poligonos > 1) lines.push(`El mapa tiene ${c.poligonos} colonias con este nombre en Zapopan y la lista no dice cuál, así que se pintan todas.`);
       for (const l of lines) wrap.append(el("span", { class: "sub" }, l));
@@ -482,7 +483,7 @@ blockquote { margin: 10px 0; padding: 4px 0 4px 14px; border-left: 3px double va
       const partes = [numeros, leyendaCanales, graficaDias, tablaDias,
         () => barras($("estatus"), d.estatus, d.total),
         () => barras($("origen"), d.origen, d.total),
-        () => barras($("zonas"), d.por_zona.map(([z, n]) => [z === "sin zona" ? "Sin zona en el mapa" : z === "varias" ? "Nombres de varias colonias del mapa, en zonas distintas" : zonaTexto(z.split(" y ")), n]), d.en_mapa),
+        () => barras($("zonas"), d.por_zona.map(([z, n]) => [z === "sin zona" ? "Sin zona en el mapa" : z === "varias" ? "Nombres de varias colonias del mapa que no tienen las mismas zonas" : zonaTexto(z.split(" y ")), n]), d.en_mapa),
         () => barras($("top"), d.colonias.slice(0, 20).map((c) => [c.colonia, c.reportes]), d.total),
         tablaColonias, mapa];
       for (const f of partes) try { f(d); } catch (e) { console.error(e); }
