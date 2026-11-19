@@ -23,11 +23,13 @@ Every carousel has a `sitio` slide before the `cierre`, so each figure leads to 
 
 A carousel is `carruseles/<id>.json`: `id` (the file name), `titulo`, `caption`, `fuentes` (key → `url`, `medio`, `fecha`, `revisado`, `cita`, optional `consultada`) and `slides`. Each slide has `tipo`, optional `foto`, `fuentes` (keys), `calculo` (how a derived number was computed) or `propio` (why it has no source), plus its type's fields. In text, `*…*` is blue and `**…**` red. Our own analyses live in `datos/` (`elevacion.py` → `elevacion.json`, `stats.json`).
 
+A `portada` or `texto` slide can show an official document as a paper card above its text: `documento` gives `fuente` (a key the slide cites), `membrete` (cuts of the letterhead, side by side), `recortes` (the cited lines, one cut per line, highlighted) and `dice` (the words those lines show). The cuts are PNGs in `documentos/`, made from the PDF aguagdl.com publishes by `documentos/recortes.py` (boxes in pixels at 200 dpi). Leave out stamps, handwriting, signatures and names; carousel 22's cover shows Zapopan's letterhead this way rather than its logo on its own, which would read as the government's post.
+
 ## Rules the build enforces
 
 - Every number written on a slide appears in the `cita` of a source the slide cites, in the source's own date, or in the slide's `calculo`, which says how it was derived.
 - A slide with no source (other than the `cierre`) says why in `propio`: our own question, proposal, method or service. Every factual claim needs a source.
-- A `cita` slide's quote is word for word in its source's `cita`.
+- A `cita` slide's quote is word for word in its source's `cita`, and so is a `documento`'s `dice`; its cuts exist.
 - Every source has `url`, `medio`, `fecha`, `cita` and `revisado`; `consultada: true` for undated pages (the footer says «consultada el …»).
 - Every background is in `fotos.json`, reviewed by eye: no close face, no legible private name, no outlet watermark or burned-in caption. Three were dropped on 5 Nov for showing faces.
 - Each entry in `creditos.json` is a photo in `fotos.json` with `credito`, `porque` and `revisado`.

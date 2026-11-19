@@ -23,14 +23,27 @@
   {
    "tipo": "portada",
    "foto": "fuentes/7147fa92d9a6.jpg",
-   "kicker": "Zapopan, del 15 de octubre al 4 de noviembre",
+   "documento": {
+    "fuente": "zap",
+    "membrete": [
+     "zapopan-0878-logo.png",
+     "zapopan-0878-oficio.png"
+    ],
+    "recortes": [
+     "zapopan-0878-linea-1.png",
+     "zapopan-0878-linea-2.png"
+    ],
+    "dice": "se encontró un total de 9,828 reportes por falta de agua, con corte al 04 de noviembre de la presente anualidad"
+   },
+   "kicker": "Cifra oficial del Gobierno de Zapopan, por transparencia",
    "cifra": "9,828",
    "titular": "reportes de falta de agua en 21 días",
-   "texto": "¿Está tu colonia en la lista?",
+   "texto": "Del 15 de octubre al 4 de noviembre.\n¿Está tu colonia en la lista?",
    "fuentes": [
     "zap",
     "web"
    ],
+   "nota": "Recorte: p. 5 de la respuesta.",
    "calculo": "Primer y último día con reportes en la lista: 15 de octubre y 4 de noviembre de 2026; 21 días."
   },
   {
@@ -86,7 +99,7 @@
    "fuentes": [
     "web"
    ],
-   "calculo": "Conteo de Agua GDL por colonia, sumando las formas de escribir el mismo nombre (pipelines/zapopan_reportes.py): LOMAS DE LA PRIMAVERA 520 + 13 en minúsculas = 533; CIUDAD GRANJA 470 + 2 = 472; SANTA ANA TEPETITLAN 294 + 80 con acento = 374; GUADALUPE INN 350 + 12 con FRACCIONAMIENTO delante = 362; CHAPALITA INN 255 + 2 en minúsculas + 1 escrito CHAPLITA INN = 258. Las secciones, como GUADALUPE INN CONDOMINIO UNO, van aparte."
+   "calculo": "Conteo de Agua GDL por colonia, sumando las formas de escribir el mismo nombre (pipelines/zapopan_reportes.py): LOMAS DE LA PRIMAVERA 520 + 13 en minúsculas = 533; CIUDAD GRANJA 470 + 2 = 472; SANTA ANA TEPETITLAN 294 + 80 con acento = 374; GUADALUPE INN 350 + 12 con FRACCIONAMIENTO delante = 362; CHAPALITA INN 255 + 2 en minúsculas + 1 escrito CHAPLITA INN = 258. Las secciones, como GUADALUPE INN CONDOMINIO UNO, van aparte, y también los «RESIDENCIAL»: RESIDENCIAL LA ESTANCIA (173) no se suma a LA ESTANCIA (115), porque puede ser otro lugar."
   },
   {
    "tipo": "barras",

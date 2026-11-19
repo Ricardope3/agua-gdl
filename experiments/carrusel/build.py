@@ -52,7 +52,7 @@ def foto_path(rel):
 def slide_texts(s):
     out = []
     for k, v in s.items():
-        if k in ("tipo", "foto", "fuentes", "calculo", "nota", "posicion", "propio", "captura", "bins", "alturas", "color", "x", "y"):
+        if k in ("tipo", "foto", "fuentes", "calculo", "nota", "posicion", "propio", "captura", "bins", "alturas", "color", "x", "y", "documento"):
             continue
         if isinstance(v, str):
             out.append(v)
@@ -125,6 +125,19 @@ def check(c, fotos_ok, temas):
             for part in (p.strip(" .,") for p in re.split(r"\[…\]|…", q.replace("*", ""))):
                 if part and part not in pool_q:
                     fail(f"{where}: «{part}» is not word for word (capitals and accents included) in the cited citas")
+        if s.get("documento"):
+            d = s["documento"]
+            if s["tipo"] not in ("portada", "texto"):
+                fail(f"{where}: a documento goes on a portada or texto slide")
+            if d.get("fuente") not in s.get("fuentes", []):
+                fail(f"{where}: the documento's fuente must be one the slide cites")
+            for n in d.get("membrete", []) + d.get("recortes", []):
+                if not (HERE / "documentos" / n).is_file():
+                    fail(f"{where}: no documentos/{n} (python3 experiments/carrusel/documentos/recortes.py)")
+            if not d.get("recortes") or not d.get("dice"):
+                fail(f"{where}: a documento needs recortes and dice (the words they show)")
+            if d["dice"] not in c["fuentes"][d["fuente"]]["cita"]:
+                fail(f"{where}: the documento's dice is not word for word in its fuente's cita")
         if s["tipo"] == "cita" and not s.get("fuentes"):
             fail(f"{where}: a quote needs its fuente")
         if s["tipo"] == "cita":
@@ -165,10 +178,27 @@ def logo():
     return LOGO
 
 
+def png_size(p):
+    b = p.read_bytes()[16:24]
+    return int.from_bytes(b[:4], "big"), int.from_bytes(b[4:], "big")
+
+
+def documento(d):
+    """A paper card with cuts of an official document: its letterhead, then the cited lines highlighted, one cut per line."""
+    def img(n, k):
+        p = HERE / "documentos" / n
+        w, h = png_size(p)
+        return f'<img src="{p.as_uri()}" style="width:{w * k:.0f}px;height:{h * k:.0f}px">'
+    k = min(1, 872 / max(png_size(HERE / "documentos" / n)[0] for n in d["recortes"]))
+    head = "".join(img(n, .65) for n in d.get("membrete", []))
+    lines = "".join(f'<span class="hl">{img(n, k)}</span>' for n in d["recortes"])
+    return f'<div class="doc">' + (f'<div class="membrete">{head}</div>' if head else "") + f'<div class="recorte">{lines}</div></div>'
+
+
 def render_body(s):
     t = s["tipo"]
     if t in ("portada", "texto"):
-        parts = []
+        parts = [documento(s["documento"])] if s.get("documento") else []
         if s.get("kicker"):
             parts.append(f'<div class="kicker">{md(s["kicker"])}</div>')
         if s.get("cifra"):
@@ -412,6 +442,11 @@ blockquote{font-family:"Avenir Next Condensed";font-weight:800;font-size:82px;li
 .tag.lab{background:transparent;box-shadow:none;font-size:56px;text-shadow:0 2px 16px rgba(0,0,0,.7)}
 .split{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#06141d}
 .split .half{position:relative;background-size:cover;background-position:center;filter:saturate(.9) brightness(.8)}
+.doc{width:100%;background:#fbfaf6;border-radius:6px;padding:24px 28px 28px;transform:rotate(-1.2deg);box-shadow:0 24px 60px rgba(0,0,0,.55);display:flex;flex-direction:column;gap:18px;margin-bottom:8px}
+.doc img{display:block;mix-blend-mode:multiply}
+.membrete{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:2px dashed rgba(0,0,0,.22)}
+.recorte{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.hl{display:inline-block;background:rgba(62,166,255,.4);border-radius:4px}
 .foot{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;font-size:18px;line-height:1.35;opacity:.62;padding-top:14px}
 .foot .src{max-width:760px}
 .foot .site{font-weight:700;font-size:24px;white-space:nowrap}
@@ -529,7 +564,8 @@ def fuentes_md(c):
                      + (f" · cifras: {', '.join(nums)}" if nums else "")
                      + (f" · cálculo: {s['calculo']}" if s.get("calculo") else "")
                      + (f" · sin fuente: {s['propio']}" if s.get("propio") else "")
-                     + (f" · foto: {s['foto']}" if s.get("foto") else ""))
+                     + (f" · foto: {s['foto']}" if s.get("foto") else "")
+                     + (f" · documento ({s['documento']['fuente']}): «{s['documento']['dice']}»" if s.get("documento") else ""))
     return "\n".join(lines) + "\n"
 
 
