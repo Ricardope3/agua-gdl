@@ -28,6 +28,16 @@ Arguments: the topic, a colonia, or the facts to show. If the ask is vague, prop
 - The build checks every «…» on slides (against the slide's cited `cita`s) and in captions (against any `cita`), capitals included; it can't check paraphrase, so still read each caption against the `cita`s.
 - When a photo is shown sharp, re-check it at full size: a faint outlet watermark or a banner naming another colonia can surface (6 Nov: 0e61b3ddde0a dropped for a Mural watermark).
 
+## Official documents (learned on carousel 22, 18 Nov)
+
+- To show a number is the government's, cut its document onto the slide (a `documento`: letterhead plus the highlighted lines), not its logo alone, which reads as the government's own post. He chose «document cutout plus the new line».
+- Find each cut's box with `documentos/boxes.swift` (macOS's built-in text recognition), not by eye or with ink thresholds: those merged lines on noisy scans and missed light chart labels. Pad the tight boxes about 8 px.
+- Cut a wrapped sentence line by line at word boundaries, each line at most ~870 px wide at 200 dpi, so it shows at full size; the `dice` is those words, word for word.
+- Leave out stamps, handwriting, signatures and every name (the official's and the requester's). Open each cut at full size before using it.
+- A scanned chart's labels are ~8 px at 200 dpi, unreadable on a phone: circle the values and write them as our own tags, read from the image at 300 dpi and matched against the document's transcription.
+- The `url` must be a PDF people can open. Research PDFs are gitignored; publishing one in `web/datos/` needs his OK after a check for names and personal data.
+- Announced vs registered: «anunció» and «registró», never «mintieron»; the limit slide gives the innocent readings (a planned fleet, an undated list).
+
 ## Our own analysis
 
 - A ranking, percentile or correlation goes in a script in `experiments/carrusel/datos/` with its output committed (see `elevacion.py`, `stats.json`), cited as «cálculo de Agua GDL» with the data source.
