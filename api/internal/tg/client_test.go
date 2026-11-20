@@ -8,6 +8,7 @@ import (
 	"net"
 	"net/http"
 	"net/http/httptest"
+	"slices"
 	"strings"
 	"testing"
 	"time"
@@ -87,6 +88,56 @@ func TestUnreachableIsNotSent(t *testing.T) {
 	var refused interface{ Rejected() bool }
 	if err == nil || !errors.As(err, &refused) || !refused.Rejected() || strings.Contains(err.Error(), "SECRET") {
 		t.Fatalf("a refused connection sends nothing, so it can be retried: %v", err)
+	}
+}
+
+func TestRetry(t *testing.T) {
+	tooMany := &APIError{Status: 429, Description: "Too Many Requests", RetryAfter: 3}
+	permanent := &APIError{Status: 400, Description: "Bad Request"}
+	other := errors.New("tg: decode failed")
+	notSent := &NotSentError{Err: errors.New("connection refused")}
+	for _, tc := range []struct {
+		name    string
+		errs    []error // returned by send on each call, one per attempt
+		wait    []time.Duration
+		sleepErr error
+		wantErr error
+	}{
+		{"success on first call", []error{nil}, nil, nil, nil},
+		{"429 waits retry_after", []error{tooMany, nil}, []time.Duration{3 * time.Second}, nil, nil},
+		{"429 without retry_after waits the 1s floor", []error{&APIError{Status: 429}, nil}, []time.Duration{time.Second}, nil, nil},
+		{"not sent waits 5s", []error{notSent, nil}, []time.Duration{5 * time.Second}, nil, nil},
+		{"gives up after three waits", []error{tooMany, tooMany, tooMany, tooMany}, []time.Duration{3 * time.Second, 3 * time.Second, 3 * time.Second}, nil, tooMany},
+		{"permanent error returns at once", []error{permanent}, nil, nil, permanent},
+		{"other error returns at once", []error{other}, nil, nil, other},
+		{"sleep error aborts", []error{tooMany}, []time.Duration{3 * time.Second}, errors.New("shutdown"), tooMany},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			var calls int
+			var waits []time.Duration
+			send := func() error {
+				err := tc.errs[min(calls, len(tc.errs)-1)]
+				calls++
+				return err
+			}
+			sleep := func(d time.Duration) error {
+				waits = append(waits, d)
+				return tc.sleepErr
+			}
+			err := Retry(send, sleep)
+			if calls != len(tc.errs) {
+				t.Errorf("send called %d times, want %d", calls, len(tc.errs))
+			}
+			if !slices.Equal(waits, tc.wait) {
+				t.Errorf("waits %v, want %v", waits, tc.wait)
+			}
+			if tc.wantErr == nil && err != nil || tc.wantErr != nil && !errors.Is(err, tc.wantErr) {
+				t.Errorf("err %v, want %v", err, tc.wantErr)
+			}
+			if tc.sleepErr != nil && (!errors.Is(err, tooMany) || !errors.Is(err, tc.sleepErr)) {
+				t.Errorf("sleep error must join the send error: %v", err)
+			}
+		})
 	}
 }
 
