@@ -1,6 +1,7 @@
 // Command notify sends the cambio_rotacion template to one zone's subscribers after
 // SIAPA changes that zone's days. Update api/data/rotation.json and deploy first, so
 // the reminders follow the new days; the days in the message come from that file.
+// Telegram is the default channel; WhatsApp ran until 15 Oct 2026 and needs -channel wa.
 //
 // It only reports what it would send, without changing the database, unless -send is
 // given. Re-running with the same -zone and -from reaches only the subscribers who
@@ -8,25 +9,27 @@
 //
 //	cd api
 //	DATABASE_URL='…' go run ./cmd/notify -zone 4 -from 2026-11-02
-//	DATABASE_URL='…' WA_TOKEN='…' WA_PHONE_NUMBER_ID=… go run ./cmd/notify -zone 4 -from 2026-11-02 -send
+//	DATABASE_URL='…' TG_TOKEN='…' go run ./cmd/notify -zone 4 -from 2026-11-02 -send
 //
 // With -tomorrow it instead sends tomorrow's reminder for the zone as a normal text, for
-// nights the aviso_corte template can't be used. WhatsApp delivers normal texts only to
-// people who wrote in the last 24 hours, so it reaches subscribers whose last change is
-// under 23 hours old, and the nightly run won't send them that cut's reminder again:
+// nights the aviso_corte template can't be used. It always uses WhatsApp (ignores
+// -channel): WhatsApp delivers normal texts only to people who wrote in the last 24
+// hours, so it reaches subscribers whose last change is under 23 hours old, and the
+// nightly run won't send them that cut's reminder again:
 //
 //	DATABASE_URL='…' go run ./cmd/notify -zone 6 -tomorrow
 //	DATABASE_URL='…' WA_TOKEN='…' WA_PHONE_NUMBER_ID=… go run ./cmd/notify -zone 6 -tomorrow -send
 //
-// With -channel tg the schedule change goes to Telegram subscribers as a normal message
-// (Telegram has no templates, no 24-hour window and no daily cap):
+// With -channel wa the schedule change goes to the WhatsApp subscribers instead
+// (Telegram is the default; it has no templates, no 24-hour window and no daily cap):
 //
-//	DATABASE_URL='…' TG_TOKEN='…' go run ./cmd/notify -channel tg -zone 4 -from 2026-11-02 -send
+//	DATABASE_URL='…' WA_TOKEN='…' WA_PHONE_NUMBER_ID=… go run ./cmd/notify -channel wa -zone 4 -from 2026-11-02 -send
 //
 // With -avisos it tells every Telegram subscriber, once, that the reminders now also come two
 // days before each block of cuts, with their zone's cuts for the coming week (bot.AvisosChange).
 // Run it right after deploying that change and before that evening's 8 p.m. run: a block already
 // under way got the old reminder, and the new run sends nothing for the block's later days.
+// -key sets the idempotency key; change it when the message changes, so subscribers get it again.
 //
 //	DATABASE_URL='…' TG_TOKEN='…' go run ./cmd/notify -avisos -send
 package main
@@ -61,19 +64,19 @@ func main() {
 	from := flag.String("from", "", "cambio_rotacion: first day of the new schedule, YYYY-MM-DD")
 	tomorrow := flag.Bool("tomorrow", false, "send tomorrow's reminder for -zone as a normal text instead of cambio_rotacion")
 	send := flag.Bool("send", false, "send the messages; without it, only report")
-	channel := flag.String("channel", store.WhatsApp, "wa (WhatsApp) or tg (Telegram)")
+	channel := flag.String("channel", store.Telegram, "wa (WhatsApp) or tg (Telegram); default tg")
 	avisos := flag.Bool("avisos", false, "tell every Telegram subscriber, once, about the notice two days before each cut")
+	key := flag.String("key", avisosKey, "avisos: idempotency key; change it when the message changes, so subscribers get it again")
 	flag.Parse()
 	var err error
 	switch {
 	case *avisos:
-		err = runAvisos(*send)
+		err = runAvisos(*key, *send)
+	case *tomorrow:
+		// -tomorrow always uses WhatsApp, whatever -channel says.
+		err = runTomorrow(*zone, *send)
 	case *channel != store.WhatsApp && *channel != store.Telegram:
 		err = fmt.Errorf("-channel must be %s or %s", store.WhatsApp, store.Telegram)
-	case *tomorrow && *channel == store.Telegram:
-		err = errors.New("-tomorrow is for WhatsApp only: Telegram reminders need no fallback")
-	case *tomorrow:
-		err = runTomorrow(*zone, *send)
 	default:
 		err = run(*channel, *zone, *from, *send)
 	}
@@ -98,6 +101,12 @@ func run(channel string, zone int, from string, send bool) error {
 	start, err := sched.ParseDate(from)
 	if err != nil {
 		return fmt.Errorf("-from: %w", err)
+	}
+	if !sched.IsCut(zone, start) {
+		return fmt.Errorf("-from %s is not a cut day for zone %d in rotation.json", from, zone)
+	}
+	if start.Before(sched.Day(now())) {
+		fmt.Fprintf(os.Stderr, "WARNING: -from %s is in the past; the notice still reaches whoever hasn't received it (expected when re-running after a cap stopped it).\n", from)
 	}
 	n := notices.Notice{
 		Zone: zone, Key: fmt.Sprintf("cambio_rotacion/%d/%s", zone, from),
@@ -129,7 +138,7 @@ func run(channel string, zone int, from string, send bool) error {
 		client := &tg.Client{BaseURL: "https://api.telegram.org", Token: token, HTTP: &http.Client{Timeout: 15 * time.Second}}
 		sent, err := notices.SendTelegram(ctx, db, client, n, text, 100*time.Millisecond, slog.New(slog.NewTextHandler(os.Stderr, nil)))
 		fmt.Printf("sent %d\n", sent)
-		return err
+		return errors.Join(err, reportUnresolved(ctx, db, channel, n.Key))
 	}
 	if !send {
 		fmt.Println("Dry run. Check the days against SIAPA's calendar, then add -send.")
@@ -154,7 +163,21 @@ func run(channel string, zone int, from string, send bool) error {
 	if errors.Is(err, notices.ErrCapped) {
 		fmt.Println("A send cap stopped the run; run the same command again later for the rest.")
 	}
-	return err
+	return errors.Join(err, reportUnresolved(ctx, db, channel, n.Key))
+}
+
+// reportUnresolved warns about notices whose delivery is still open (stuck sending,
+// uncertain, rejected or failed), so a re-run doesn't paper over a message that needs
+// a decision. It returns the count query's error, never hides it.
+func reportUnresolved(ctx context.Context, db *store.DB, channel, key string) error {
+	n, err := db.UnresolvedNotices(ctx, channel, key)
+	if err != nil {
+		return err
+	}
+	if n > 0 {
+		fmt.Printf("WARNING: %d notices for %s are unresolved (sending, uncertain, rejected or failed); check them before re-running.\n", n, key)
+	}
+	return nil
 }
 
 // runTomorrow sends tomorrow's reminder to zone's subscribers inside WhatsApp's 24-hour
@@ -211,11 +234,13 @@ func runTomorrow(zone int, send bool) error {
 	return err
 }
 
-// avisosKey makes the change message idempotent: a re-run reaches only whoever hasn't got it.
+// avisosKey is the default -key: it makes the change message idempotent, so a re-run
+// reaches only whoever hasn't got it.
 const avisosKey = "avisos/2026-10"
 
-// runAvisos sends bot.AvisosChange to every Telegram subscriber who hasn't received it.
-func runAvisos(send bool) error {
+// runAvisos sends bot.AvisosChange to every Telegram subscriber who hasn't received it
+// under key; a new key reaches everyone again.
+func runAvisos(key string, send bool) error {
 	loc, err := time.LoadLocation("America/Mexico_City")
 	if err != nil {
 		return err
@@ -242,7 +267,7 @@ func runAvisos(send bool) error {
 			}
 		}
 		texts[zone] = bot.AvisosChange(env("PUBLIC_BASE_URL", "https://aguagdl.com"), zone, next)
-		subs, err := db.NoticeRecipients(ctx, store.Telegram, zone, avisosKey)
+		subs, err := db.NoticeRecipients(ctx, store.Telegram, zone, key)
 		if err != nil {
 			return err
 		}
@@ -262,12 +287,12 @@ func runAvisos(send bool) error {
 	log := slog.New(slog.NewTextHandler(os.Stderr, nil))
 	total := 0
 	for _, zone := range sched.Zones() {
-		sent, sendErr := notices.SendTelegram(ctx, db, client, notices.Notice{Zone: zone, Key: avisosKey}, texts[zone], 100*time.Millisecond, log)
+		sent, sendErr := notices.SendTelegram(ctx, db, client, notices.Notice{Zone: zone, Key: key}, texts[zone], 100*time.Millisecond, log)
 		total += sent
 		err = errors.Join(err, sendErr)
 	}
 	fmt.Printf("sent %d\n", total)
-	return err
+	return errors.Join(err, reportUnresolved(ctx, db, store.Telegram, key))
 }
 
 // connect opens DATABASE_URL. Only a run that sends migrates it: a dry run, perhaps from a
