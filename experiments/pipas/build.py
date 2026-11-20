@@ -5,6 +5,7 @@ Reuses web/pipas.html's <style>, header and footer so the variants keep the site
 import json
 import pathlib
 import re
+import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 WEB = ROOT / "web"
@@ -622,6 +623,9 @@ def index():
 
 
 def main():
+    if "--force" not in sys.argv:
+        sys.exit("pipas: /pipas-v1…/pipas-v5 and /pipas-variantes were retired and redirect to /pipas; "
+                 "pass --force to write them anyway")
     (WEB / "pipas-variantes.html").write_text(index())
     for k, fn in (("v1", v1), ("v2", v2), ("v3", v3), ("v4", v4), ("v5", v5)):
         (WEB / f"pipas-{k}.html").write_text(fn())
