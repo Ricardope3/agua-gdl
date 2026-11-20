@@ -734,3 +734,129 @@ func TestColoniaListMatchesTheMap(t *testing.T) {
 		t.Fatalf("api/data/colonias_mapa.json is out of date: run python3 pipelines/mapa_colonias.py (%d colonias, the map has %d)", len(got), len(want))
 	}
 }
+
+func TestThresholdNeedsDistinctReporters(t *testing.T) {
+	clock := start(t)
+	b := board(t, &fakeStore{}, clock) // minShown 3
+	for range 2 {
+		if _, err := b.Add("1.1.1.1", "1 DE MAYO", "Guadalajara", "44940", "con_agua", false, false, false); err != nil {
+			t.Fatal(err)
+		}
+	}
+	*clock = clock.Add(5 * time.Minute)
+	c, err := b.Add("9.9.9.9", "1 DE MAYO", "Guadalajara", "44940", "con_agua", true, false, false)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for what, c := range map[string]Colonia{"POST reply": c, "GET": b.Summary().Reports[0]} {
+		if c.ConAgua != 3 || c.Turbia != 0 || c.LastStatus != "" || c.Last != "2026-10-18T00:00:00-06:00" {
+			t.Fatalf("%s: three reports from two networks must stay coarsened: %+v", what, c)
+		}
+	}
+	*clock = clock.Add(time.Minute)
+	if _, err := b.Add("5.5.5.5", "1 DE MAYO", "Guadalajara", "44940", "baja", false, false, false); err != nil {
+		t.Fatal(err)
+	}
+	if c := b.Summary().Reports[0]; c.Turbia != 1 || c.LastStatus != "baja" || c.Last != "2026-10-18T20:06:00-06:00" {
+		t.Fatalf("three networks reach the threshold: %+v", c)
+	}
+}
+
+func TestThresholdRestoresTheDetailsForDistinctReporters(t *testing.T) {
+	const name, mun, cp = "1 DE MAYO", "Guadalajara", "44940"
+	clock := start(t)
+	b := board(t, &fakeStore{}, clock) // minShown 3
+	// Two /64s of one /48 are one network, as coloniaFull counts them.
+	for _, addr := range []string{"2001:db8:1:1::/64", "2001:db8:1:2::/64"} {
+		if _, err := b.Add(addr, name, mun, cp, "sin_agua", false, false, false); err != nil {
+			t.Fatal(err)
+		}
+	}
+	c, err := b.Add("1.1.1.1", name, mun, cp, "con_agua", true, false, false)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if c.SinAgua != 2 || c.ConAgua != 1 || c.Turbia != 0 || c.LastStatus != "" || c.Last != "2026-10-18T00:00:00-06:00" {
+		t.Fatalf("three reports from two networks stay coarsened: %+v", c)
+	}
+	*clock = clock.Add(time.Minute)
+	if c, err = b.Add("2001:db8:2:1::/64", name, mun, cp, "baja", false, false, false); err != nil {
+		t.Fatal(err)
+	}
+	for what, c := range map[string]Colonia{"POST reply": c, "GET": b.Summary().Reports[0]} {
+		if c.SinAgua != 2 || c.Baja != 1 || c.ConAgua != 1 || c.Turbia != 1 || c.LastStatus != "baja" || c.Last != "2026-10-18T20:01:00-06:00" {
+			t.Fatalf("%s: three networks restore the flags, the latest answer and the minute: %+v", what, c)
+		}
+	}
+}
+
+func TestReloadedReportsCountAsDistinctReporters(t *testing.T) {
+	clock := start(t)
+	st := &fakeStore{}
+	path := filepath.Join(t.TempDir(), "reports.wal")
+	log := slog.New(slog.NewTextHandler(io.Discard, nil))
+	loc, _ := time.LoadLocation("America/Mexico_City")
+	now := func() time.Time { return *clock }
+	b, err := NewWithWAL(st, data.ColoniasMapa, 3, loc, now, log, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer b.journal.close()
+	for _, addr := range []string{"1.1.1.1", "2.2.2.2"} {
+		if _, err := b.Add(addr, "1 DE MAYO", "Guadalajara", "44940", "con_agua", true, false, false); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if err := b.Flush(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	// The third stays in the WAL only: after the restart two come from Postgres and one from the replay.
+	if _, err := b.Add("3.3.3.3", "1 DE MAYO", "Guadalajara", "44940", "con_agua", true, false, false); err != nil {
+		t.Fatal(err)
+	}
+	restarted, err := NewWithWAL(st, data.ColoniasMapa, 3, loc, now, log, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer restarted.journal.close()
+	if err := restarted.Load(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	if c := restarted.Summary().Reports[0]; c.ConAgua != 3 || c.Turbia != 3 || c.LastStatus != "con_agua" || c.Last != "2026-10-18T20:00:00-06:00" {
+		t.Fatalf("reloaded reports count by receipt, so a restart doesn't coarsen the map: %+v", c)
+	}
+}
+
+func TestReporterTagsLastTheStaleWindowNotTheHour(t *testing.T) {
+	clock := start(t)
+	b := board(t, &fakeStore{}, clock)
+	for _, addr := range []string{"1.1.1.1", "2.2.2.2", "3.3.3.3"} {
+		if _, err := b.Add(addr, "1 DE MAYO", "Guadalajara", "44940", "con_agua", true, false, false); err != nil {
+			t.Fatal(err)
+		}
+	}
+	held := func() (limits, tags int) {
+		b.mu.Lock()
+		defer b.mu.Unlock()
+		return len(b.hits) + len(b.nets), len(b.reporters["1 DE MAYO|Guadalajara|44940"])
+	}
+	*clock = clock.Add(2 * time.Hour)
+	b.forget()
+	if limits, tags := held(); limits != 0 || tags != 3 {
+		t.Fatalf("two hours on, the limits forgot the addresses but the tags stay: %d limit keys, %d tags", limits, tags)
+	}
+	if c := b.Summary().Reports[0]; c.Turbia != 3 || c.LastStatus != "con_agua" {
+		t.Fatalf("still current and shown in full: %+v", c)
+	}
+	*clock = clock.Add(28 * time.Hour) // 30 hours after the reports: stale
+	b.forget()
+	s := b.Summary()
+	if len(s.Reports) != 0 || len(s.Stale) != 1 || s.Stale[0].Turbia != 3 || s.Stale[0].LastStatus != "con_agua" || s.Stale[0].Last != "2026-10-18T20:00:00-06:00" {
+		t.Fatalf("a stale colonia with three reporters keeps its latest answer: %+v", s.Stale)
+	}
+	*clock = clock.Add(42 * time.Hour) // 72 hours: expired
+	b.forget()
+	if _, tags := held(); tags != 0 {
+		t.Fatalf("the tags go with the stale window: %d left", tags)
+	}
+}

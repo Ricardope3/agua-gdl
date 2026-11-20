@@ -89,13 +89,14 @@ func (db *DB) reserve(ctx context.Context, budget *Budget, insert string, args .
 func (db *DB) sendReserved(ctx context.Context, table string, id, subscriberID int64, zones []int, send func(Subscriber) (string, error)) (attempted bool, err error) {
 	var sendErr error
 	err = pgx.BeginFunc(ctx, db.pool, func(tx pgx.Tx) error {
-		// Serialize the actual send with BAJA and zone changes. Once BAJA commits,
-		// no queued message can start sending to that subscription.
+		// Serialize the actual send with BAJA and zone changes (no key update: the
+		// subscriber's own answers, foreign-key inserts, go through meanwhile). Once BAJA
+		// commits, no queued message can start sending to that subscription.
 		var current Subscriber
 		err := tx.QueryRow(ctx, `select s.id, s.channel, s.user_id, coalesce(s.phone, ''), z.zone
 			from subscriber s join lateral (select z.zone from subscriber_zone z
 			where z.subscriber_id = s.id and z.zone = any($2::int[]) order by z.zone limit 1) z on true
-			where s.id = $1 for update of s`, subscriberID, zones).
+			where s.id = $1 for no key update of s`, subscriberID, zones).
 			Scan(&current.ID, &current.Channel, &current.UserID, &current.Phone, &current.Zone)
 		if errors.Is(err, pgx.ErrNoRows) {
 			// BAJA or removing this zone won before the send: no HTTP request was made.

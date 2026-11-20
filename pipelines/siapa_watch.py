@@ -142,7 +142,7 @@ def days_report(body):
         # silence them: otherwise residents can keep receiving reminders for the wrong zone.
         return f"Los días de corte de `{AJUSTES}` son iguales a `api/data/rotation.json` en las {len(live)} zonas.{moved}", moved != ""
     names = lambda days: ", ".join(DIAS[d] for d in days) or "ninguno"  # noqa: E731
-    parts = [f"zona {z}: SIAPA {names(live.get(z, []))}; rotation.json {names(repo.get(z, []))}" for z in diff]
+    parts = [f"zona {code(z, 60)}: SIAPA {names(live.get(z, []))}; rotation.json {names(repo.get(z, []))}" for z in diff]
     return f"**Los días de corte de `{AJUSTES}` difieren de `api/data/rotation.json`:** {'; '.join(parts)}.{moved}", True
 
 

@@ -39,6 +39,13 @@ func signed(data, chat, kind string, zone int, date, answer string) string {
 	return data
 }
 
+// signatureValid reports whether sig is the signature the bot issued for exactly this
+// chat, kind, zone, date and answer; false without a key or a signature.
+func signatureValid(chat, kind string, zone int, date, answer, sig string) bool {
+	want := signature(chat, kind, zone, date, answer)
+	return sig != "" && want != "" && hmac.Equal([]byte(sig), []byte(want))
+}
+
 // zoneTrusted reports whether to believe a button's zone and answer: the zone is the
 // subscriber's own (the answer is theirs to give), or the bot signed exactly this
 // combination for this chat (a report keeps the zone it was asked about after a zone
@@ -48,6 +55,5 @@ func zoneTrusted(chat, kind string, zone int, date, answer, sig string, current 
 	if slices.Contains(current, zone) {
 		return true
 	}
-	want := signature(chat, kind, zone, date, answer)
-	return sig != "" && want != "" && hmac.Equal([]byte(sig), []byte(want))
+	return signatureValid(chat, kind, zone, date, answer, sig)
 }

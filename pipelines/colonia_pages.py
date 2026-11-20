@@ -76,7 +76,7 @@ def slugs(rows):
     out = {}
     for base, keys in groups.items():
         for k in keys:
-            out[k] = base if len(keys) == 1 else f"{base}-{k[2] or 'sin-cp'}"
+            out[k] = base if len(keys) == 1 else f"{base}-{slug(k[2]) or 'sin-cp'}"
     if len(set(out.values())) != len(out):
         sys.exit("colonia_pages: two colonias share a slug; extend the scheme")
     return out
@@ -190,7 +190,7 @@ def build():
             by_mun[x].append((mapa_colonias.fold(n), n, cp, s, [z["zone"] for z in zones]))
     index.sort()
     e = html.escape
-    li = "".join(f'<li><a href="/colonia/{s}">{e(n)}</a> <small>{e(m)}{" " + cp if cp else ""}</small></li>'
+    li = "".join(f'<li><a href="/colonia/{s}">{e(n)}</a> <small>{e(m)}{" " + e(cp) if cp else ""}</small></li>'
                  for _, m, cp, s, n in index)
     mun_nav = " · ".join(f'<a href="/colonia/municipio-{slug(x)}">{e(x)}</a>' for x in sorted(by_mun))
     files["index.html"] = page("Colonias A–Z · Agua GDL", "Días de corte de agua (tandeo) por colonia según la rotación del SIAPA.",
@@ -212,12 +212,12 @@ def build():
             days = ", ".join(DAYS[d] for d in rot["zones"][z])
             sections.append(f'<h2 id="zona-{z}">Zona {z}: días de corte {days}</h2><p class="enlaces"><a href="/calendario/zona-{z}.ics">Calendario</a> · '
                             f'<a href="https://t.me/AvisoAguaGDLbot?start=z{z}" rel="noopener">Avisos por Telegram</a></p><ul>'
-                            + "".join(f'<li><a href="/colonia/{s}">{e(n)}</a>' + (f" <small>{cp}</small>" if cp else "") + "</li>" for _, n, cp, s, _ in here)
+                            + "".join(f'<li><a href="/colonia/{s}">{e(n)}</a>' + (f" <small>{e(cp)}</small>" if cp else "") + "</li>" for _, n, cp, s, _ in here)
                             + "</ul>")
         if sin:
             sections.append('<h2 id="sin-zona">Sin zona en el mapa del SIAPA</h2><p>El mapa de la rotación no les da zona a estas colonias. '
                             'Eso no confirma que tengan agua.</p><ul>'
-                            + "".join(f'<li><a href="/colonia/{s}">{e(n)}</a>' + (f" <small>{cp}</small>" if cp else "") + "</li>" for _, n, cp, s, _ in sin)
+                            + "".join(f'<li><a href="/colonia/{s}">{e(n)}</a>' + (f" <small>{e(cp)}</small>" if cp else "") + "</li>" for _, n, cp, s, _ in sin)
                             + "</ul>")
         summary = (f"De las {len(cols)} colonias de {e(x)} en el mapa de la rotación del SIAPA, "
                    + (f"{len(con)} tienen zona" if con else "ninguna tiene zona")

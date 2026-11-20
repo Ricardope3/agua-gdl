@@ -272,3 +272,41 @@ func day(t *testing.T, v string) time.Time {
 	}
 	return d
 }
+
+// timedStore measures the runner's clock inside each reservation.
+type timedStore struct {
+	*fake.Store
+	now    func() time.Time
+	inside []time.Duration
+}
+
+func (s *timedStore) SendReminder(ctx context.Context, sub store.Subscriber, d time.Time, zones []int, b *store.Budget, send func(store.Subscriber) (string, error)) (bool, error) {
+	t0 := s.now()
+	defer func() { s.inside = append(s.inside, s.now().Sub(t0)) }()
+	return s.Store.SendReminder(ctx, sub, d, zones, b, send)
+}
+
+func TestTooManyRequestsIsWaitedOutBetweenReservations(t *testing.T) {
+	st := fake.NewStore()
+	ctx := context.Background()
+	st.Subscribe(ctx, store.Telegram, "777", "", 4)
+	busy := &tg.APIError{Status: 429, RetryAfter: 30}
+	tel := &flakyTelegram{errs: []error{busy, busy, busy}}
+	r := runner(t, "2026-10-18 20:00", st, nil)
+	r.Sender, r.Telegram = nil, tel
+	now := r.Now()
+	r.Now = func() time.Time { return now }
+	r.Sleep = func(_ context.Context, d time.Duration) error { now = now.Add(d); return nil }
+	ts := &timedStore{Store: st, now: r.Now}
+	r.Store = ts
+	start := now
+	if err := r.SendTonight(ctx); err != nil || len(tel.Sent) != 1 {
+		t.Fatalf("err=%v sent=%d", err, len(tel.Sent))
+	}
+	if len(ts.inside) != 4 || slices.ContainsFunc(ts.inside, func(d time.Duration) bool { return d != 0 }) {
+		t.Fatalf("each attempt is its own reservation and no wait happens inside one: %v", ts.inside)
+	}
+	if now.Sub(start) != 90*time.Second {
+		t.Fatalf("the runner waits out the three retry_after seconds itself: %s", now.Sub(start))
+	}
+}

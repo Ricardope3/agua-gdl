@@ -57,7 +57,7 @@ func Send(ctx context.Context, st Store, snd Sender, n Notice, dailyCap, monthly
 
 // SendTelegram reaches every pending Telegram subscriber of n.Zone with text, which may use
 // WhatsApp-style *bold*, and a button to SIAPA's map. Telegram has no caps, and its "too many
-// requests" is waited out (tg.Retry), as the nightly run does.
+// requests" is waited out between reservations (tg.Retry in send), as the nightly run does.
 func SendTelegram(ctx context.Context, st Store, tel TelegramSender, n Notice, text string, interval time.Duration, log *slog.Logger) (int, error) {
 	return send(ctx, st, store.Telegram, n, interval, func() *store.Budget { return nil }, log, func(current store.Subscriber) (string, error) {
 		m, err := bot.TelegramMessage(current.UserID, bot.Reply{Text: text})
@@ -65,10 +65,8 @@ func SendTelegram(ctx context.Context, st Store, tel TelegramSender, n Notice, t
 			return "", err
 		}
 		m.ReplyMarkup = tg.InlineKeyboard{InlineKeyboard: [][]tg.InlineButton{{{Text: "🗺️ Mapa del SIAPA", URL: bot.MapURL}}}}
-		return "", tg.Retry(func() error {
-			_, err := tel.Send(ctx, m)
-			return err
-		}, func(d time.Duration) error { return sleep(ctx, d) })
+		_, err = tel.Send(ctx, m)
+		return "", err
 	})
 }
 
@@ -96,7 +94,14 @@ func send(ctx context.Context, st Store, channel string, n Notice, interval time
 			case <-time.After(interval):
 			}
 		}
-		attempted, sendErr := st.SendNotice(ctx, s, n.Key, budget(), deliver)
+		// One request per reservation: a refused attempt is recorded 'rejected' and
+		// retried with the subscriber's row unlocked (Telegram's 429 is waited out here).
+		var attempted bool
+		var sendErr error
+		sendErr = tg.Retry(func() error {
+			attempted, sendErr = st.SendNotice(ctx, s, n.Key, budget(), deliver)
+			return sendErr
+		}, func(d time.Duration) error { return sleep(ctx, d) })
 		if errors.Is(sendErr, store.ErrOverBudget) {
 			log.Warn("send cap reached; run again later for the rest", "pending", len(subs)-i)
 			return sent, errors.Join(err, ErrCapped)

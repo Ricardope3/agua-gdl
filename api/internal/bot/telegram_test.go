@@ -23,6 +23,7 @@ func newTGHarness(t *testing.T, now string) *tgHarness {
 	h := &tgHarness{harness: newHarness(t, now), tg: &fake.Telegram{}}
 	h.bot.Telegram, h.bot.TelegramOn = h.tg, true
 	SignButtons("test")
+	chats = chatBudget{} // per process, like the key
 	return h
 }
 
@@ -295,6 +296,20 @@ func TestZoneChangeDoesNotAuthorizeAnUnsignedOldCutReport(t *testing.T) {
 	}
 }
 
+func TestZoneChangeDoesNotAuthorizeAJunkSignedOldCutReport(t *testing.T) {
+	h := newTGHarness(t, "2026-10-18 09:00")
+	h.say(t, "/start z3")
+	h.store.Now = h.bot.Now
+	h.say(t, "zona 5")
+	if sig := signature("777", "R", 3, "2026-10-17", "normal"); sig == "" || sig == "AAAAAAAA" {
+		t.Fatalf("the junk segment must not be the real signature: %q", sig)
+	}
+	m := h.press(t, "R:3:2026-10-17:normal:AAAAAAAA") // own zone, a made-up signature
+	if m.Text != msgReportClosed || len(h.store.Reports) != 0 {
+		t.Fatalf("a made-up signature authorized a cut from before the zone change: %q %+v", m.Text, h.store.Reports)
+	}
+}
+
 func TestReportKeepsTheZoneOfTheCut(t *testing.T) {
 	h := newTGHarness(t, "2026-10-18 09:00")
 	h.say(t, "zona 4")
@@ -332,6 +347,53 @@ func TestTelegramIgnoresGroupsAndDuplicates(t *testing.T) {
 	}
 	if len(h.tg.Sent) != 1 {
 		t.Fatalf("a redelivered update must be ignored: %d replies", len(h.tg.Sent))
+	}
+}
+
+func TestChatBudgetDropsAChatsExtraUpdates(t *testing.T) {
+	h := newTGHarness(t, "2026-10-14 10:00")
+	for range ChatBudget {
+		h.say(t, "/ayuda")
+	}
+	u := tg.Update{UpdateID: 9999, Message: &tg.InboundMessage{Chat: tg.Chat{ID: 777, Type: "private"}, Text: "/ayuda"}}
+	if err := h.bot.HandleTelegram(context.Background(), u); err != nil {
+		t.Fatal("an over-budget update is acknowledged, not retried:", err)
+	}
+	if len(h.store.SeenIDs) != ChatBudget || len(h.tg.Sent) != ChatBudget {
+		t.Fatalf("over budget: %d transactions, %d sends; want %d each", len(h.store.SeenIDs), len(h.tg.Sent), ChatBudget)
+	}
+	other := tg.Update{UpdateID: 10000, Message: &tg.InboundMessage{Chat: tg.Chat{ID: 778, Type: "private"}, Text: "/ayuda"}}
+	if err := h.bot.HandleTelegram(context.Background(), other); err != nil || len(h.tg.Sent) != ChatBudget+1 {
+		t.Fatal("another chat is still served")
+	}
+	// Telegram redelivering an update it already counted (its reply was refused) is served.
+	again := tg.Update{UpdateID: 3, Message: u.Message}
+	if err := h.bot.HandleTelegram(context.Background(), again); err != nil || len(h.store.SeenIDs) != ChatBudget+1 {
+		t.Fatalf("a redelivered update is served over budget: %d transactions, want %d", len(h.store.SeenIDs), ChatBudget+1)
+	}
+	if h.say(t, "BAJA"); len(h.tg.Sent) != ChatBudget+2 {
+		t.Fatal("BAJA is served over budget")
+	}
+	loc := h.bot.Now().Location()
+	h.bot.Now = func() time.Time { return time.Date(2026, 10, 15, 10, 0, 0, 0, loc) }
+	if err := h.bot.HandleTelegram(context.Background(), tg.Update{UpdateID: 10001, Message: u.Message}); err != nil || len(h.tg.Sent) != ChatBudget+3 {
+		t.Fatal("the budget resets with Guadalajara's day")
+	}
+}
+
+func TestChatBudgetLogsTheFirstDropOnly(t *testing.T) {
+	var c chatBudget
+	day := time.Date(2026, 10, 14, 0, 0, 0, 0, time.UTC)
+	for i := range int64(ChatBudget) {
+		if ok, first := c.allow(1, i+1, day); !ok || first {
+			t.Fatalf("update %d within the budget was dropped", i+1)
+		}
+	}
+	if ok, first := c.allow(1, ChatBudget+1, day); ok || !first {
+		t.Fatal("the first drop must be reported once")
+	}
+	if ok, first := c.allow(1, ChatBudget+2, day); ok || first {
+		t.Fatal("later drops are silent")
 	}
 }
 

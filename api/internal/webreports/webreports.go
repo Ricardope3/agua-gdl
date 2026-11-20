@@ -3,12 +3,18 @@
 // and reach Postgres in batches, so a busy map doesn't keep Neon awake. Repeats are limited per
 // client address, which is held in memory for an hour and never stored, and everyone's reports
 // together are capped per hour, which bounds memory and the database however many addresses send.
+// A colonia's details show only once enough different networks reported it, which a keyed
+// one-way tag per network remembers, in memory only, for as long as the reports it counts.
 package webreports
 
 import (
 	"bytes"
 	"compress/gzip"
 	"context"
+	"crypto/hmac"
+	"crypto/rand"
+	"crypto/sha256"
+	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -55,8 +61,8 @@ const (
 	// hour without reporting it, so no single network can fill a colonia and lock its neighbours out.
 	perColoniaAllPerHour = 30
 	// maxPerHour caps everyone's reports together. Each report adds at most five keys to the
-	// limits and one network to its colonia, which Run forgets after the hour, so it also bounds
-	// the memory they use.
+	// limits and one network to its colonia, which Run forgets after the hour, and one reporter
+	// tag, which it forgets after the stale window, so it also bounds the memory they use.
 	maxPerHour = 5_000
 	// maxPending bounds the reports held while the database is unreachable.
 	maxPending = 20_000
@@ -208,13 +214,19 @@ type Board struct {
 	colonias    map[string]colonia
 	forgetEvery time.Duration
 	journal     *journal
+	tagKey      [32]byte // keys the reporter tags; random per process, never stored or logged
 
-	mu        sync.Mutex
-	recent    []store.WebReport // the window's reports, oldest first
-	pending   []store.WebReport // not yet in Postgres
-	allTime   int
-	hits      map[string][]time.Time
-	nets      map[string]map[string]time.Time // by colonia: the networks that reported it, and when they last did
+	mu      sync.Mutex
+	recent  []store.WebReport // the window's reports, oldest first
+	pending []store.WebReport // not yet in Postgres
+	allTime int
+	// hits and nets serve the hourly limits and forget an address an hour after its last report.
+	hits map[string][]time.Time
+	nets map[string]map[string]time.Time // by colonia: the networks that reported it, and when they last did
+	// reporters serves coarsenSmall: by colonia, a one-way tag of each network that reported it
+	// (tag; a receipt for a report reloaded after a restart) and when it last did. Unlike nets it
+	// lasts as long as the reports it counts, the stale window; nothing in it maps back to an address.
+	reporters map[string]map[string]time.Time
 	cached    *Summary
 	cachedAt  time.Time
 	raw, gz   []byte // cached encoded, plain and gzipped
@@ -243,7 +255,11 @@ func newBoard(st Store, coloniasJSON []byte, minShown int, loc *time.Location, n
 		return nil, fmt.Errorf("colonias_mapa.json: %w", err)
 	}
 	b := &Board{store: st, minShown: minShown, loc: loc, now: now, log: log, colonias: map[string]colonia{},
-		forgetEvery: forgetEvery, hits: map[string][]time.Time{}, nets: map[string]map[string]time.Time{}}
+		forgetEvery: forgetEvery, hits: map[string][]time.Time{}, nets: map[string]map[string]time.Time{},
+		reporters: map[string]map[string]time.Time{}}
+	if _, err := rand.Read(b.tagKey[:]); err != nil {
+		return nil, fmt.Errorf("reporter tag key: %w", err)
+	}
 	for _, r := range rows {
 		zone, _ := strconv.Atoi(strings.Split(r[3], ",")[0])
 		b.colonias[Key(r[0], r[1], r[2])] = colonia{r[0], r[1], r[2], zone}
@@ -301,6 +317,12 @@ func (b *Board) Load(ctx context.Context) error {
 	}
 	b.pending = pending
 	slices.SortFunc(recent, func(a, b store.WebReport) int { return a.At.Compare(b.At) })
+	// A reloaded report's address is unknown: each counts as its own reporter, by its receipt.
+	for _, r := range recent {
+		if r.RequestID != "" {
+			b.tagReporter(r.Colonia, r.RequestID, r.At)
+		}
+	}
 	b.recent, b.allTime, b.bot, b.week, b.botAt, b.cached = recent, all+len(b.pending), bot, week, now, nil
 	if b.journal != nil {
 		if err := b.journal.rewrite(b.pending); err != nil {
@@ -345,6 +367,7 @@ func (b *Board) Add(addr, name, municipio, cp, status string, turbia, olor, sedi
 		b.nets[key] = map[string]time.Time{}
 	}
 	b.nets[key][net] = now
+	b.tagReporter(key, b.tag(net), now)
 	b.recent = append(b.recent, r)
 	b.pending = append(b.pending, r)
 	b.allTime++
@@ -352,7 +375,34 @@ func (b *Board) Add(addr, name, municipio, cp, status string, turbia, olor, sedi
 	b.trim(now)
 	// The response is public like GET's: a small colonia's latest answer, exact recency
 	// and quality flags are withheld the same way.
-	return b.coarsenSmall(b.coloniaCounts(key, now)), nil
+	return b.coarsenSmall(b.coloniaCounts(key, now), now, Window), nil
+}
+
+// tag is the name a network goes by in reporters: an HMAC under tagKey, so what memory holds
+// can't be turned back into an address.
+func (b *Board) tag(net string) string {
+	m := hmac.New(sha256.New, b.tagKey[:])
+	m.Write([]byte(net))
+	return base64.RawStdEncoding.EncodeToString(m.Sum(nil)[:12])
+}
+
+// tagReporter records that the reporter tagged tag reported key at now. Called with mu held.
+func (b *Board) tagReporter(key, tag string, now time.Time) {
+	if b.reporters[key] == nil {
+		b.reporters[key] = map[string]time.Time{}
+	}
+	b.reporters[key][tag] = now
+}
+
+// reporterCount is how many different networks reported key within window. Called with mu held.
+func (b *Board) reporterCount(key string, now time.Time, window time.Duration) int {
+	n := 0
+	for _, at := range b.reporters[key] {
+		if now.Sub(at) < window {
+			n++
+		}
+	}
+	return n
 }
 
 // lastHour counts everyone's reports in the last hour. Called with mu held.
@@ -396,7 +446,8 @@ func inLastHour(ts []time.Time, now time.Time) []time.Time {
 }
 
 // forget drops what the limits hold from over an hour ago, so no address, nor the colonias it
-// reported, stays in memory much longer than that.
+// reported, stays in memory much longer than that, and the reporter tags whose reports left
+// the stale window.
 func (b *Board) forget() {
 	b.mu.Lock()
 	defer b.mu.Unlock()
@@ -416,6 +467,16 @@ func (b *Board) forget() {
 		}
 		if len(nets) == 0 {
 			delete(b.nets, key)
+		}
+	}
+	for key, tags := range b.reporters {
+		for tag, last := range tags {
+			if now.Sub(last) >= StaleWindow {
+				delete(tags, tag)
+			}
+		}
+		if len(tags) == 0 {
+			delete(b.reporters, key)
 		}
 	}
 }
@@ -499,9 +560,11 @@ func (c *Colonia) tally(r store.WebReport, loc *time.Location) {
 
 // coarsenSmall keeps a small colonia's useful no-water counts while withholding details
 // that would make one person's report easy to isolate: exact recency, latest answer and
-// water-quality flags. Its last-public-report date remains available at day precision.
-func (b *Board) coarsenSmall(c Colonia) Colonia {
-	if c.total() >= b.minShown {
+// water-quality flags. Its last-public-report date remains available at day precision. A
+// colonia is small until minShown reports from minShown different networks are in its window
+// (Window when current, StaleWindow when stale), so one client's own reports can't uncover another's.
+func (b *Board) coarsenSmall(c Colonia, now time.Time, window time.Duration) Colonia {
+	if c.total() >= b.minShown && b.reporterCount(Key(c.Name, c.Municipio, c.CP), now, window) >= b.minShown {
 		return c
 	}
 	c.Turbia, c.Olor, c.Sedimento, c.LastStatus = 0, 0, 0, ""
@@ -573,14 +636,14 @@ func (b *Board) summary(now time.Time) *Summary {
 		}
 	}
 	for _, c := range byKey {
-		s.Reports = append(s.Reports, b.coarsenSmall(*c))
+		s.Reports = append(s.Reports, b.coarsenSmall(*c, now, Window))
 		if 2*c.SinAgua > c.total() {
 			s.MostlyDry++
 		}
 	}
 	for key, c := range staleByKey {
 		if byKey[key] == nil {
-			s.Stale = append(s.Stale, b.coarsenSmall(*c))
+			s.Stale = append(s.Stale, b.coarsenSmall(*c, now, StaleWindow))
 		}
 	}
 	byCount := func(x, y Colonia) int {
