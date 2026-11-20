@@ -379,7 +379,8 @@ window.aguaMapa = (() => {
   // cisternas puts the community water points from /cisternas.json on map, in a pane above the colonias,
   // with a «Cisternas» switch at position: a drop where an official map gives the spot, and at the
   // colonia's centre where a source names only the colonia (a hollow drop).
-  function cisternas(L, map, position = "topright") {
+  // opts.control false (the /cisternas page) skips the switch: the drops are the page's content.
+  function cisternas(L, map, position = "topright", opts = {}) {
     map.createPane("cisternas").style.zIndex = 590;
     // Below CERCA the drops shrink, so a cluster of them doesn't hide the colonias and badges beneath.
     const CERCA = 13;
@@ -434,6 +435,7 @@ window.aguaMapa = (() => {
           .addTo(layer);
       }
       layer.addTo(map);
+      if (opts.control === false) return;
       const Ctl = L.Control.extend({
         onAdd() {
           const bar = L.DomUtil.create("div", "leaflet-bar leaflet-control-cisternas");

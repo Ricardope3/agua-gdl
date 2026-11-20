@@ -14,6 +14,10 @@
   "ton": {
    "url": "https://www.milenio.com/comunidad/instalan-cisternas-tlaquepaque-tonala-apoyar-afectados",
    "titulo": "Milenio, 15 de octubre"
+  },
+  "zap": {
+   "url": "https://aguagdl.com/datos/zapopan-respuesta-140292426004978.pdf",
+   "titulo": "Gobierno de Zapopan, respuesta a la solicitud 140292426004978, 17 nov 2026"
   }
  },
  "puntos": [
@@ -296,6 +300,398 @@
    "lat": 20.606193,
    "lon": -103.308594,
    "capa": "SIAPA"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "CALLE PUERTO TAMPICO, ESQUINA CALLE VIÑA DEL MAR (MIRAMAR)",
+   "lat": 20.64183650585429,
+   "lon": -103.45872867698895,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "CRUCE DE CALLE TORONJA Y CALLE PIRUL (BALCONES DEL SOL)",
+   "lat": 20.65006888606227,
+   "lon": -103.4596446468258,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "CRUCE DE AV. DEL TESORO Y AV. TABACHINES (LOMA BONITA EJIDAL)",
+   "lat": 20.621274252426645,
+   "lon": -103.40833926821199,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "CALLE ARENALES SIN NUMERO, ENTRE BORONCE Y URANIO (ARENALES TAPATIOS)",
+   "lat": 20.63249691298252,
+   "lon": -103.46699621607866,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "CRUCE DE CALZADA CENTRAL Y CALZADA DE LOS ANGELES (CIUDAD GRANJA)",
+   "lat": 20.674830872217886,
+   "lon": -103.45108435658409,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "GUALADUPE VICTORIS SIN NUMERO, PLAZA PUBLICA SANTA ANA TEPETITLAN, FRENTE AL TEMPLO (SANTA ANA TEPETITLAN)",
+   "lat": 20.619607515384992,
+   "lon": -103.45730071094587,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "CALLE FELIPE CARRILLO PUERTO 5408, COLLI CTM, 45050 ZAPOPAN, JAL. (EL COLLI - CTM)",
+   "lat": 20.647656234927606,
+   "lon": -103.42898513915688,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "JUSTO SIERRA 1125B ESQUINA FELIPE ANGELES (AGUA BLANCA INDUSTRIAL)",
+   "lat": 20.601836723048685,
+   "lon": -103.42384052441575,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "VOLCAN PARICUTIN Y AVENIDA ENRIQUE LADRÓN DE GUEVARA (COLLI URBANO)",
+   "lat": 20.643065473397332,
+   "lon": -103.43246981171444,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "SAN FERNANDO S/N PARQUE A UN COSTADO DE LA CAPILLA (EL CAMPANARIO)",
+   "lat": 20.59146432209321,
+   "lon": -103.43223832955074,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "AV. MONTEVERDE #3021 (EL FORTIN)",
+   "lat": 20.626141374265206,
+   "lon": -103.47825021094339,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "CRUCE DE LAS CALLES VIOLETA Y ROSA (LA FLORESTA DEL COLLI)",
+   "lat": 20.647864763385197,
+   "lon": -103.46550903678835,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "CRUCE DE LAS CALLES RIO VERDE Y FLOR DE SAN JUAN (LA NORIA)",
+   "lat": 20.64764122038965,
+   "lon": -103.47114920663782,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "CALLE SIENITA ENTRE TURMALINA Y BELISARIO DOMINGUEZ (MARIANO OTERO)",
+   "lat": 20.631256204988514,
+   "lon": -103.45075868387751,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "NOCHE BUENA Y MIGUEL DE LA MADRID (LOMAS DE LA PRIMAVERA)",
+   "lat": 20.638906510065937,
+   "lon": -103.47212802331333,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "AVENIDA EL COLLI 1000-S (PARAISOS DEL COLLI)",
+   "lat": 20.64960297802856,
+   "lon": -103.45307907100046,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "CALLE BUGAMBILIAS #2126 (DOCE DE DICIEMBRE)",
+   "lat": 20.646444268983654,
+   "lon": -103.46182211617871,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "CALLE SUBCOLECTORA 2 ESQUINA LOCAL B (VALLE DE SAN NICOLAS)",
+   "lat": 20.627863315541887,
+   "lon": -103.46169717360148,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "TLATELOLCO S/N, DIAZ ORDAZ, 45080 ZAPOPAN, JAL. (GUSTAVO DIAZ ORDAZ)",
+   "lat": 20.61944445939931,
+   "lon": -103.42044465587244,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "C. SONORA, EL MANTE, 45235 ZAPOPAN, JAL. (EL MANTE)",
+   "lat": 20.607879655020938,
+   "lon": -103.42020470064894,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "CALLE ORO Y CENTENARIO (CARLOS RIVERA ACEVES)",
+   "lat": 20.643107679973696,
+   "lon": -103.46593155390096,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "ROBLE S/N ENTRE LUCERO (COLINAS DE LA PRIMAVERA)",
+   "lat": 20.636694,
+   "lon": -103.471,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "CEDRO ESQUINA GUAMUCHIL (EL REHILETE)",
+   "lat": 20.64271176063574,
+   "lon": -103.4619292558182,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "ARNICA ESQUINA TOLOACHE (EL TIZATE)",
+   "lat": 20.636427736707688,
+   "lon": -103.47519708618273,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "SAYIL, EL ZAPOTE, 45050 ZAPOPAN, JAL. (EL ZAPOTE)",
+   "lat": 20.65411899591046,
+   "lon": -103.41546354232727,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "BENITO JUAREZ 5614, SANTA MARIA DEL PUEBLITO, 45018 ZAPOPAN, JAL. (SANTA MARIA DEL PUEBLITO)",
+   "lat": 20.67998758978407,
+   "lon": -103.43697775380055,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "AV. LAS TORRES, LA GLORIA DEL COLLI, 45010 ZAPOPAN, JAL. (VOLCAN DEL COLLI)",
+   "lat": 20.659298599910983,
+   "lon": -103.45417911034835,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "AV DEL PINAR Y AV. SIERRA DE MAZAMITLA (PINAR DE LA CALMA)",
+   "lat": 20.620303769353622,
+   "lon": -103.41765133859082,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "AV MOCTEZUMA ENTRE DEL MATADOR Y MONTERA (HACIENDAS TEPEYAC)",
+   "lat": 20.651177662169,
+   "lon": -103.44160607694037,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "CALLE LOPEZ COTILLA ESQUINA CON CORONA (JOCOTAN)",
+   "lat": 20.684615929600056,
+   "lon": -103.43849872650291,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "CALLE GUADALUPE VICTORIA ESQUINA CON CALLE LIRIO (SANTA ANA TEPETITLAN)",
+   "lat": 20.621499401202634,
+   "lon": -103.46205637695326,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "ENTRE SIERRA DE PIHUAMO Y SIERRA DE PEROTE (LAS AGUILAS)",
+   "lat": 20.629167314830898,
+   "lon": -103.41172389800708,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "FRANCISCO Y MADERO Y AVENIDA VALLARTA (EL TULE)",
+   "lat": 20.689816,
+   "lon": -103.447659,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "CALZ DE LOS PARAISOS 1000, ESQUINA PASEO DE LOS CEDROS (CIUDAD GRANJA)",
+   "lat": 20.68557627292388,
+   "lon": -103.45426265622487,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "FRANZ LISZT ESQUINA CON JOHANNES BRAHMS (LA ESTANCIA)",
+   "lat": 20.67163262618649,
+   "lon": -103.4333942644177,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "FRANCISCO JAVIER MINA ESQUINA JUAREZ (SANTA ANA TEPETITLAN)",
+   "lat": 20.62222345517054,
+   "lon": -103.45896951779116,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "JUAREZ 129 (SANTA ANA TEPETITLAN)",
+   "lat": 20.62547250884651,
+   "lon": -103.45874158244744,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "AV LAS TORRES ESQUINA CALLE PALMITAS (LA FLORIDA)",
+   "lat": 20.597468433876593,
+   "lon": -103.42511780552285,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "CALLE PALMA SOLA ESQUINA CON CALLE JARDIN (PALMIRA)",
+   "lat": 20.593301833773673,
+   "lon": -103.42387048773199,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "AV DEL COLLI ENTRE COLON Y MELCHOR OCAMPO (COLLI EJIDAL)",
+   "lat": 20.647998792487638,
+   "lon": -103.4401662662641,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "PLAYA DEL TESORO 6015, MOCTEZUMA PONIENTE, 45059 ZAPOPAN, JAL. (COLLI POBLADO)",
+   "lat": 20.649198769008425,
+   "lon": -103.43469194948706,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "TLALPAN, CON MEXICAS S/N, EL BRISEÑO, 45236 ZAPOPAN, JAL. (JARDINES DEL IXTEPETE)",
+   "lat": 20.62583228876944,
+   "lon": -103.43999024394518,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "AV. MOCTEZUMA ESQUINA CON PLAYA DE HORNOS (NUEVA PRIMAVERA)",
+   "lat": 20.650638840864087,
+   "lon": -103.42942505204056,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "CALLE GUERRERO Y CUATRO DE FEBRERO (COLLI SITIO)",
+   "lat": 20.653481008139444,
+   "lon": -103.43945320998992,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "AV DEL ARROYO Y MANGO (LOMAS DEL TIZATE)",
+   "lat": 20.637694300860822,
+   "lon": -103.47786394659626,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "UNIDAD DEPORTIVA MOCTEZUMA (RESIDENCIAL MOCTEZUMA)",
+   "lat": 20.652514976104502,
+   "lon": -103.43120108006082,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "PUERTO SOTO LA MARINA AL CRUCE CON PUERTO SAN JUAN (MIRAMAR)",
+   "lat": 20.6363883839693,
+   "lon": -103.44525060831843,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "GEORGE HAENDEL S/N (CORDILLERAS)",
+   "lat": 20.671028907008605,
+   "lon": -103.42020292130215,
+   "capa": "Cercanía Ciudadana"
+  },
+  {
+   "municipio": "Zapopan",
+   "fuente": "zap",
+   "lugar": "LOS CAJETES E ING. RUBIO (LOS CAJETES)",
+   "lat": 20.58963659254235,
+   "lon": -103.42400448970636,
+   "capa": "Cercanía Ciudadana"
   }
  ],
  "sin_coordenadas": [
