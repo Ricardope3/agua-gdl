@@ -879,7 +879,7 @@ if (window.top !== window.self) {
   const zonaDe = (p) => { const M = window.aguaMapa, ls = M.zonesOf(p.l || ""); return ls.length ? ls : M.zones(p).main; };
   // What the publications say about now; silence never means the water came back.
   const ahora = (e) => !e ? ["calma", "Nadie ha publicado que falte el agua aquí. Eso no significa que haya agua."]
-    : e.regreso && e.regreso.fecha >= e.ultima ? ["calma", `Una publicación del ${fecha(e.regreso.fecha)} dice que el agua regresó el ${fecha(e.regreso.regreso)}.`]
+    : e.regreso && e.regreso.fecha > e.ultima ? ["calma", `Una publicación del ${fecha(e.regreso.fecha)} dice que el agua regresó el ${fecha(e.regreso.regreso)}.`]
     : edad(e.ultima) <= 3 ? ["activa", `Hay quejas de los últimos 3 días: la más reciente del ${fecha(e.ultima)}.`]
     : edad(e.ultima) <= 7 ? ["reciente", `La última queja es del ${fecha(e.ultima)}, hace ${edad(e.ultima)} días.`]
     : ["vieja", `Sin quejas nuevas desde el ${fecha(e.ultima)}. No sabemos si el agua regresó: si no tienes, repórtalo.`];
@@ -1537,8 +1537,8 @@ if (window.top !== window.self) {
       }
       return { color: COLORS.muted, weight: 0.4, opacity: 0.5, dashArray: null, fillColor: COLORS.none, fillOpacity: 0.06 };
     };
-    // The water is back when the newest publication says so; the older days stay as history.
-    const back = (e) => e.regreso && e.regreso.fecha >= e.ultima;
+    // The water is back when a newer publication says so (strictly after the latest complaint).
+    const back = (e) => e.regreso && e.regreso.fecha > e.ultima;
     const evLine = (e) => back(e) ? `El agua regresó el ${dateES(e.regreso.regreso)}, según una publicación · ${plural(e.fuentes, "fuente", "fuentes")}` : stateOf(e) === "vieja" ? `Sin publicaciones nuevas desde el ${dateES(e.ultima)} · ${plural(e.fuentes, "fuente", "fuentes")}` : e.dias != null ? `Hasta ${daysWord(e.dias)} sin agua · ${plural(e.fuentes, "fuente", "fuentes")}` : `Sin agua, sin días contados · ${plural(e.fuentes, "fuente", "fuentes")}`;
     let closedAt = 0;
     // One canvas for the colonias and the dots over them: a second canvas on top would take their clicks.
@@ -2212,9 +2212,9 @@ if (window.top !== window.self) {
     // quoted with who published it, where, when and its reactions (none of it names a private person).
     function evidenceBlock(e) {
       const s = sevOf(e.dias);
-      // The water is back when the newest publication says so: the headline names the return,
-      // and the older days stay below as history.
-      const back = e.regreso && e.regreso.fecha >= e.ultima;
+      // The water is back when a newer publication says so (strictly after the latest
+      // complaint: same-day reports stay unresolved); older days stay below as history.
+      const back = e.regreso && e.regreso.fecha > e.ultima;
       const badge = back ? el("span", { class: "sevb", style: "--c:var(--ok);--k:var(--ok-ink)" }, "regresó")
         : el("span", { class: s ? "sevb" : "sevb nodays", style: sevVars(s) }, s ? daysWord(e.dias) : "sin días");
       // Once a week has passed without new publications, the days are told in the past.

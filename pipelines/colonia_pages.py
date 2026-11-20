@@ -141,6 +141,7 @@ def build():
         differs = lz is not None and sorted(lz) != sorted(z["zone"] for z in zones)
         q = urlencode({"q": n, "m": m, "cp": cp})
         data = {"name": n, "municipio": m, "cp": cp, "zones": zones, **({"list_zones": lz, "list_differs": True} if differs else {}), "rotation_end": end,
+                "rotation_end_note": "Proyección de Agua GDL: el SIAPA dice «hasta marzo de 2027» sin fecha exacta.",
                 "checked": checked, "source": source, "unofficial": True, "note": NOTE,
                 "page": f"{ORIGIN}/colonia/{s}", "map": f"{ORIGIN}/avisos?{q}"}
         files[f"{s}.json"] = json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n"
@@ -165,7 +166,7 @@ def build():
         mlinks = " · ".join(f'<a href="/colonia/municipio-{slug(x)}">{e(x)}</a>' for x in ms)
         body = (f'<p><a href="/">Agua GDL</a> · <a href="/colonia/">Colonias</a>' + (f" · {mlinks}" if ms else "") + f'</p><h1>¿Cuándo cortan el agua en {e(n)}?</h1>'
                 f'<p>{where}</p>{items}'
-                f'<p><small>{e(NOTE)} Calendario del SIAPA verificado el {fecha(checked)}; la rotación sigue hasta {fecha(end).split(" de ", 1)[1]}. '
+                f'<p><small>{e(NOTE)} Calendario del SIAPA verificado el {fecha(checked)}; la rotación sigue hasta {fecha(end).split(" de ", 1)[1]} (proyección: el SIAPA dice «hasta marzo de 2027» sin fecha exacta). '
                 f'Fuente: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">SIAPA</a>.</small></p>'
                 f'<p class="acciones"><a href="/avisos?{e(q)}">Ver en el mapa y próximas fechas</a> · <a href="/reportes?{e(q)}">¿Hay agua? Reporta</a> · '
                 f'<a href="/pipas">¿Sin agua? Pide una pipa</a> · <a href="/colonia/{s}.json">Datos (JSON)</a></p>')
