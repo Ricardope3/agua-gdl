@@ -103,9 +103,9 @@ footer p { margin: 0 0 8px; max-width: 70ch }
 @media (max-width: 760px) { .duo { grid-template-columns: 1fr } .duo .entregado { border-left: 0; border-top: 1px solid var(--line) } .duo .diferencia { display: block } .duo .diferencia strong { display: block; margin-bottom: 4px } }
 
 /* Document cutout: a piece of the actual transparency response. */
-.doc { margin: 6px 0 18px }
-.doc .recorte { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 6px; background: #fff; box-shadow: var(--shadow) }
-.doc figcaption { margin-top: 8px; font-size: .88rem; color: var(--muted); max-width: 80ch }
+.doc { max-width: 760px; margin: 10px auto 18px }
+.doc .recorte { display: block; width: auto; max-width: 100%; max-height: 320px; object-fit: contain; height: auto; margin: auto; border: 1px solid var(--line); border-radius: 6px; background: #fff; box-shadow: var(--shadow) }
+.doc figcaption { margin-top: 8px; font-size: .8rem; color: var(--muted); max-width: 80ch }
 .doc .arch { display: inline-block; margin-top: 6px; font-size: .85rem }
 .sigue { margin: 0 0 6px; font-size: .95rem }
 </style>
