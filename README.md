@@ -111,12 +111,12 @@ Todo lo que está en `web/` es público: las notas, los datos que no se usan y l
 
 ## Datos
 
-Si el SIAPA cambia los días, edita `api/data/rotation.json` (`skip`/`extra` para fechas sueltas; actualiza `checked` y `checked_by`), regenera los calendarios con `cd api && go run ./cmd/calendars` (la prueba de `internal/calendar` falla si no) y despliega. Luego avisa a los suscriptores de cada zona que cambió (los días salen de `rotation.json`; sin `-channel tg`, `notify` usa WhatsApp):
+Si el SIAPA cambia los días, edita `api/data/rotation.json` (`skip`/`extra` para fechas sueltas; actualiza `checked` y `checked_by`), regenera los calendarios con `cd api && go run ./cmd/calendars` (la prueba de `internal/calendar` falla si no) y despliega. Luego avisa a los suscriptores de cada zona que cambió (los días salen de `rotation.json`; `notify` usa Telegram por defecto, `-channel wa` para WhatsApp, y `-from` debe ser un día de corte de la zona según el `rotation.json` nuevo):
 
 ```sh
 cd api
-DATABASE_URL='…' go run ./cmd/notify -channel tg -zone 4 -from 2026-11-02          # solo muestra a cuántos y qué dice
-DATABASE_URL='…' TG_TOKEN='…' go run ./cmd/notify -channel tg -zone 4 -from 2026-11-02 -send
+DATABASE_URL='…' go run ./cmd/notify -zone 4 -from 2026-11-02          # solo muestra a cuántos y qué dice
+DATABASE_URL='…' TG_TOKEN='…' go run ./cmd/notify -zone 4 -from 2026-11-02 -send
 ```
 
 Volver a correr el mismo comando no repite a quien ya lo recibió. En WhatsApp cuenta para el tope diario igual que los avisos: si el tope lo detiene, vuelve a correrlo más tarde. (`-avisos` avisaba una vez del cambio a los avisos por tandas; no se mandó.)

@@ -449,7 +449,8 @@ def build(k, name, desc, kind, fn):
 
 def main():
     if "--force" not in sys.argv:
-        sys.exit("historias: writes public pages into web/; rerun with --force")
+        sys.exit("historias: /historias-1…/historias-mapa-5 were retired and redirect to / and /reportes; "
+                 "pass --force to write them anyway")
     for f in WEB.glob("historias-*.html"):
         f.unlink()
     for k, (name, desc, kind, fn) in enumerate(VARIANTS, 1):

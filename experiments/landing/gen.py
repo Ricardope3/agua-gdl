@@ -1,4 +1,8 @@
 import re, sys, pathlib
+
+if "--force" not in sys.argv:
+    sys.exit("/v1…/v5 were retired and redirect to /; pass --force to write them anyway")
+
 web = pathlib.Path(sys.argv[1])
 src = (web / "index.html").read_text()
 head, rest = src.split("<body>", 1)

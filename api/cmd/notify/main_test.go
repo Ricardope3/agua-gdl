@@ -63,7 +63,7 @@ func TestDryRunsDontMigrate(t *testing.T) {
 	dry := map[string]func() error{
 		"cambio_rotacion": func() error { return run(store.WhatsApp, 4, "2026-11-02", false) },
 		"telegram":        func() error { return run(store.Telegram, 4, "2026-11-02", false) },
-		"avisos":          func() error { return runAvisos(false) },
+		"avisos":          func() error { return runAvisos(avisosKey, false) },
 	}
 	loc, _ := time.LoadLocation("America/Mexico_City")
 	sched, err := rotation.Load(data.Rotation, loc)

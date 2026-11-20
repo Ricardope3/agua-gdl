@@ -13,3 +13,12 @@ __pycache__/
 .claude/scheduled_tasks.lock
 .claude/settings.local.json
 .claude/skills/*/evals
+
+# Local-only tooling and agent workspaces (never shared)
+.agents/
+.worktrees/
+unslop/
+exports/
+skills-lock.json
+aguagdl_logo.png
+.claude/skills/security-audit
