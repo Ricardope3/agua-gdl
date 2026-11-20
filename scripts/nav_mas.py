@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""One-off: reorder the top nav to Hay agua / Lo anunciado / Avisos / Cisternas /
+"""One-off: reorder the top nav to Hay agua / No cuadra / Avisos / Cisternas /
 Noticias and collapse the rest into a 'Más' dropdown (<details>, no JS)."""
 import re
 import sys
@@ -7,7 +7,7 @@ from pathlib import Path
 
 WEB = Path(__file__).resolve().parent.parent / "web"
 
-PRIMARY = ["/reportes", "/anunciado", "/avisos", "/cisternas", "/noticias"]
+PRIMARY = ["/reportes", "/nocuadra", "/avisos", "/cisternas", "/noticias"]
 
 CSS = (
     ".site-nav details { position: relative; flex: 0 0 auto }\n"

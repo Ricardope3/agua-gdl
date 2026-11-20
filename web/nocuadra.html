@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="facebook-domain-verification" content="li0vsm7edv0afccxodm5t0jvyiw0za">
-<title>Lo anunciado y lo registrado: Zapopan · Agua GDL</title>
-<meta name="description" content="Zapopan anunció 45 pipas, 100 cisternas y prioridad a escuelas y hospitales. Esto es lo que sus propios documentos registran, solicitud de transparencia por solicitud, con el recorte del oficio.">
-<link rel="canonical" href="https://aguagdl.com/anunciado">
+<title>No cuadra: lo prometido y lo entregado en Zapopan · Agua GDL</title>
+<meta name="description" content="Zapopan prometió 45 pipas, 100 cisternas y prioridad a escuelas y hospitales. Sus propios documentos registran otra cosa, solicitud de transparencia por solicitud, con el recorte del oficio.">
+<link rel="canonical" href="https://aguagdl.com/nocuadra">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://aguagdl.com/anunciado">
-<meta property="og:title" content="Lo anunciado y lo registrado: Zapopan">
-<meta property="og:description" content="Anuncios del Gobierno de Zapopan frente a los registros que el propio ayuntamiento entregó por transparencia, con recorte del documento oficial.">
+<meta property="og:url" content="https://aguagdl.com/nocuadra">
+<meta property="og:title" content="No cuadra: lo prometido y lo entregado en Zapopan">
+<meta property="og:description" content="Promesas del Gobierno de Zapopan frente a los registros que el propio ayuntamiento entregó por transparencia, con recorte del documento oficial.">
 <meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary">
@@ -86,15 +86,21 @@ footer p { margin: 0 0 8px; max-width: 70ch }
 @media (min-width: 1100px) { .wrap:has(> header.top) { max-width: 1320px } }
 .wrap:has(> header.top) > :not(header.top) { max-width: 1068px; margin-left: auto; margin-right: auto }
 
-/* Pairs: what they announced vs what their own documents register. */
-.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 0 14px }
-@media (max-width: 760px) { .duo { grid-template-columns: 1fr } }
-.duo > div { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; box-shadow: var(--shadow) }
-.duo h3 { margin: 0 0 8px; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 700 }
-.duo .cifra { display: block; font-size: 2rem; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; margin: 0 0 6px; color: var(--fg) }
-.duo .de { font-size: .95rem; color: var(--muted); margin: 0 }
-.duo blockquote { margin: 0 0 8px; padding: 0 0 0 12px; border-left: 3px solid var(--line); font-size: .95rem }
-.duo .via { margin: 8px 0 0; font-size: .82rem; color: var(--muted) }
+/* Every comparison has the same three parts: promise, delivered record, and the gap. */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin: 0 0 18px; border: 3px double var(--brand); border-radius: 4px; overflow: hidden; background: var(--surface) }
+.duo > div { padding: 18px 20px }
+.duo .prometido { background: var(--subtle) }
+.duo .entregado { border-left: 1px solid var(--line) }
+.duo h3 { display: flex; align-items: center; gap: 8px; margin: 0 0 12px; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 700; font-style: normal }
+.duo h3::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--brand) }
+.duo .entregado h3::before { background: var(--warn) }
+.duo .cifra { display: block; font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 400; letter-spacing: -.04em; line-height: 1.05; margin: 0 0 12px; color: var(--fg) }
+.duo .de { font-size: .95rem; color: var(--muted); margin: 10px 0 0 }
+.duo blockquote { margin: 0; font-size: 1rem }
+.duo .diferencia { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 12px; padding: 10px 20px; border-top: 1px solid var(--line); background: var(--warn-bg); color: var(--warn) }
+.duo .diferencia strong { font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap }
+.duo .diferencia span { font-size: .95rem }
+@media (max-width: 760px) { .duo { grid-template-columns: 1fr } .duo .entregado { border-left: 0; border-top: 1px solid var(--line) } .duo .diferencia { display: block } .duo .diferencia strong { display: block; margin-bottom: 4px } }
 
 /* Document cutout: a piece of the actual transparency response. */
 .doc { margin: 6px 0 18px }
@@ -124,7 +130,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
     <nav class="site-nav" aria-label="Secciones">
       <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg>¿Hay agua?</a>
-      <a href="/anunciado"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Lo anunciado</a>
+      <a href="/nocuadra" aria-current="page"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>No cuadra</a>
       <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Avisos</a>
       <a href="/cisternas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Cisternas</a>
       <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg>Noticias</a>
@@ -140,8 +146,8 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   </header>
 
   <main>
-    <h1>Lo anunciado y lo registrado: Zapopan</h1>
-    <p class="lede">El 19 de octubre el Gobierno de Zapopan anunció un operativo de suministro de agua con «45 pipas y 100 cisternas comunitarias» para 211 colonias. Pedimos por la Plataforma Nacional de Transparencia los registros de lo anunciado — pipas, cisternas, bitácoras, escuelas y hospitales — y esto es lo que sus propios documentos registran. Cifra de partida: en la lista que el propio ayuntamiento entregó hay <strong>9,828 reportes por falta de agua del 15 de octubre al 4 de noviembre</strong>.</p>
+    <h1>No cuadra: Zapopan</h1>
+    <p class="lede">Lo prometido por el Gobierno de Zapopan frente a lo entregado en sus propias respuestas de transparencia. El 19 de octubre anunció «45 pipas y 100 cisternas comunitarias» para 211 colonias. Pedimos los registros — pipas, cisternas, bitácoras, escuelas y hospitales — y cada comparación muestra la diferencia. Cifra de partida: en la lista que el propio ayuntamiento entregó hay <strong>9,828 reportes por falta de agua del 15 de octubre al 4 de noviembre</strong>.</p>
 
     <ul class="contador" aria-label="Cifras de partida">
       <li><span class="n">9,828</span><span class="t">reportes por falta de agua en 21 días, según la lista oficial entregada el 17 de noviembre</span></li>
@@ -160,19 +166,20 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     </section>
 
     <section aria-labelledby="pipas">
-      <h2 id="pipas" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg></span>Pipas: 45 anunciadas, 34 como máximo registrado</h2>
+      <h2 id="pipas" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg></span>Pipas</h2>
       <div class="duo">
-        <div>
-          <h3>Lo anunciado</h3>
+        <div class="prometido">
+          <h3>Lo prometido</h3>
           <span class="cifra">45 pipas</span>
           <blockquote>«Zapopan contará con 45 pipas y 100 cisternas comunitarias con capacidad de 10 mil litros cada una.»</blockquote>
           <p class="de">Boletín del Gobierno de Zapopan, 19 de octubre de 2026. El 27 de octubre, otro boletín encabezó que la ciudad «lleva 840 mil litros diarios».</p>
         </div>
-        <div>
-          <h3>Lo registrado</h3>
+        <div class="entregado">
+          <h3>Lo entregado</h3>
           <span class="cifra">34 pipas, el máximo</span>
           <p class="de">En la gráfica de «pipas participantes durante cada jornada» que entregó la Unidad Municipal de Protección Civil y Bomberos (oficio 011300/2026/0150), el día con más pipas fue el 27 de octubre, con 34. El 19 de octubre —el día del anuncio— registran 11. La línea de litros marca 840,000 solo el 25 de octubre; los días siguientes baja a 680,000 y 710,000.</p>
         </div>
+        <div class="diferencia"><strong>La diferencia</strong><span>11 pipas por debajo del anuncio, incluso en la jornada con más pipas registradas.</span></div>
       </div>
       <figure class="doc">
         <img class="recorte" src="/img/anunciado/corte-pipas.jpg" alt="Recorte de la gráfica oficial de pipas por día y litros distribuidos, del 15 de octubre al 3 de noviembre" loading="lazy">
@@ -181,19 +188,20 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     </section>
 
     <section aria-labelledby="cisternas">
-      <h2 id="cisternas" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg></span>Cisternas: 100 anunciadas, una lista que termina en la 49</h2>
+      <h2 id="cisternas" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg></span>Cisternas</h2>
       <div class="duo">
-        <div>
-          <h3>Lo anunciado</h3>
+        <div class="prometido">
+          <h3>Lo prometido</h3>
           <span class="cifra">100 cisternas</span>
           <blockquote>«100 cisternas comunitarias con capacidad de 10 mil litros cada una, destinadas a apoyar a las colonias contempladas en el programa.»</blockquote>
           <p class="de">Boletín del Gobierno de Zapopan, 19 de octubre de 2026.</p>
         </div>
-        <div>
-          <h3>Lo registrado</h3>
+        <div class="entregado">
+          <h3>Lo entregado</h3>
           <span class="cifra">49 en la lista</span>
           <p class="de">La lista de «cisternas instaladas» que entregó Cercanía Ciudadana el 6 de noviembre (oficio 11000000/CER.CIU/2026/0876) termina en la número 49: «47 MIRAMAR 48 CORDILLERAS 49 LOS CAJETES». Las bitácoras de las pipas que las llenaron «no se localizaron» en los archivos de esa Coordinación.</p>
         </div>
+        <div class="diferencia"><strong>La diferencia</strong><span>51 cisternas del anuncio no aparecen en la lista entregada; esto no demuestra que no estén instaladas.</span></div>
       </div>
       <figure class="doc">
         <img class="recorte" src="/img/anunciado/corte-cisternas.jpg" alt="Recorte del encabezado del listado oficial de cisternas instaladas, con las columnas de número, domicilio, colonia y coordenadas" loading="lazy">
@@ -202,18 +210,20 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     </section>
 
     <section aria-labelledby="hospitales">
-      <h2 id="hospitales" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#heart"/></svg></span>Escuelas, centros de salud y hospitales: la «prioridad» sin registro</h2>
+      <h2 id="hospitales" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#heart"/></svg></span>Escuelas, centros de salud y hospitales</h2>
       <div class="duo">
-        <div>
-          <h3>Lo anunciado</h3>
+        <div class="prometido">
+          <h3>Lo prometido</h3>
+          <span class="cifra">Atención prioritaria</span>
           <blockquote>«También se dará prioridad a escuelas y centros de salud municipales.»</blockquote>
           <p class="de">Boletín del Gobierno de Zapopan, 19 de octubre de 2026. El de 27 de octubre añadió «una vertiente de atención para servicios estratégicos como hospitales».</p>
         </div>
-        <div>
-          <h3>Lo registrado</h3>
+        <div class="entregado">
+          <h3>Lo entregado</h3>
           <span class="cifra">Hospitales: 0</span>
           <p class="de">En la tabla de inmuebles atendidos que entregó Protección Civil y Bomberos (oficio 011300/2026/0148), la fila de hospitales dice «Sin atenciones registradas». No aparece ningún centro de salud, y la primera escuela de la tabla tiene fecha del 20 de octubre.</p>
         </div>
+        <div class="diferencia"><strong>La diferencia</strong><span>La prioridad anunciada para hospitales no tiene ninguna atención en la tabla entregada.</span></div>
       </div>
       <figure class="doc">
         <img class="recorte" src="/img/anunciado/corte-hospitales.jpg" alt="Recorte de la tabla oficial de inmuebles atendidos: la fila de hospitales dice «Sin atenciones registradas»" loading="lazy">
@@ -222,13 +232,22 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     </section>
 
     <section aria-labelledby="colonias75">
-      <h2 id="colonias75" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#info"/></svg></span>Las 75 colonias más afectadas: nadie tiene la lista</h2>
-      <p>El boletín del 27 de octubre dice que, de las 211 colonias afectadas, «75 han sido identificadas como las más afectadas por encontrarse en zonas de topografía elevada». Pedimos el listado por las dos vías que los propios documentos señalan:</p>
-      <ul class="plain">
-        <li>Protección Civil y Bomberos (oficio 011300/2026/0148) entregó una relación de 75 colonias, pero advierte que «dicha información fue generada por la Coordinación de Cercanía Ciudadana del Gobierno Municipal de Zapopan, en el ámbito de sus atribuciones, siendo esta la dependencia responsable de su elaboración, integración y actualización».</li>
-        <li>Cercanía Ciudadana (oficio 11000000/CER.CIU/2026/0907, 17 de noviembre), a la que Protección Civil atribuye la lista, respondió: tras «una búsqueda exhaustiva en los archivos», «no se localizó información respecto a los puntos señalados y descritos anteriormente al no tratarse de funciones inherentes a esta Coordinación General».</li>
-      </ul>
-      <p class="note">Es decir: la dependencia que entregó la lista dice que la hizo otra, y la otra dice que no consta en sus archivos. La relación que entregó Protección Civil la publicamos con su atribución en <a href="/datos/pcyb-respuesta-ut-089-2026.pdf">su respuesta completa</a>.</p>
+      <h2 id="colonias75" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#info"/></svg></span>Las 75 colonias más afectadas</h2>
+      <div class="duo">
+        <div class="prometido">
+          <h3>Lo prometido</h3>
+          <span class="cifra">75 identificadas</span>
+          <p class="de">El boletín del 27 de octubre dice que, de las 211 colonias afectadas, «75 han sido identificadas como las más afectadas por encontrarse en zonas de topografía elevada».</p>
+        </div>
+        <div class="entregado">
+          <h3>Lo entregado</h3>
+          <span class="cifra">Una lista sin responsable</span>
+          <p class="de">Protección Civil y Bomberos (oficio 011300/2026/0148) entregó una relación de 75 colonias, pero advierte que «dicha información fue generada por la Coordinación de Cercanía Ciudadana del Gobierno Municipal de Zapopan, en el ámbito de sus atribuciones, siendo esta la dependencia responsable de su elaboración, integración y actualización».</p>
+          <p class="de">Cercanía Ciudadana (oficio 11000000/CER.CIU/2026/0907, 17 de noviembre), a la que Protección Civil atribuye la lista, respondió: tras «una búsqueda exhaustiva en los archivos», «no se localizó información respecto a los puntos señalados y descritos anteriormente al no tratarse de funciones inherentes a esta Coordinación General».</p>
+        </div>
+        <div class="diferencia"><strong>La diferencia</strong><span>La dependencia que entregó la lista dice que la hizo otra, y la otra dice que no consta en sus archivos.</span></div>
+      </div>
+      <p class="note">La relación que entregó Protección Civil la publicamos con su atribución en <a href="/datos/pcyb-respuesta-ut-089-2026.pdf">su respuesta completa</a>.</p>
     </section>
 
     <section aria-labelledby="logistica">
@@ -239,7 +258,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
 
     <section aria-labelledby="cierre">
       <h2 id="cierre" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg></span>Qué decimos y qué no</h2>
-      <p><q>No decimos que mintieron</q>: su propia respuesta describe las 45 pipas y 100 cisternas como la logística planteada «en una primera fase», con «gestiones correspondientes para lograr materializar» ese sistema. Lo que mostramos es más sencillo: <strong>lo anunciado no cuadra con lo registrado</strong>, y Cercanía Ciudadana respondió que en sus archivos no se localizaron varios de los registros que pedimos.</p>
+      <p><q>No decimos que mintieron</q>: su propia respuesta describe las 45 pipas y 100 cisternas como la logística planteada «en una primera fase», con «gestiones correspondientes para lograr materializar» ese sistema. Lo que mostramos es más sencillo: <strong>lo prometido no cuadra con lo entregado</strong>, y Cercanía Ciudadana respondió que en sus archivos no se localizaron varios de los registros que pedimos.</p>
       <p>Cada cifra de esta página sale de un documento entregado por el propio Gobierno de Zapopan en respuesta a solicitudes de la Plataforma Nacional de Transparencia (folios 140292426004978 a 140292426004984, respondidas entre el 12 y el 17 de noviembre de 2026). Los recortes son fotografías de esos documentos; los enlaces llevan al PDF completo. Las lecturas de las gráficas y bitácoras se hicieron sobre la imagen de cada página, con verificación a dos lecturas.</p>
       <ul class="plain">
         <li>Boletín del 19 de octubre: <a href="https://www.zapopan.gob.mx/v3/noticias/zapopan-pone-en-marcha-operativo-de-suministro-de-agua-con-45-pipas-y-100-cisternas" rel="noopener">Zapopan pone en marcha Operativo de Suministro de Agua con 45 pipas y 100 cisternas comunitarias</a>.</li>

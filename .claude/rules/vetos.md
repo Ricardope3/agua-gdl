@@ -7,5 +7,6 @@ Read before proposing designs, copy or features. Add a line (dated, with what wa
 - 2026-10-28: auto-scrolling to the map on desktop. The landing still scrolls to the frame after 3 s (`.claude/rules/web.md`): unresolved whether he later changed his mind — ask before touching it.
 - Relying on bot answers or «regresó el agua» posts as proof that water is back.
 - Styles that drift from the shared look: keep pages standardized.
+- 2026-11-19: five off-brand /anunciado prototypes. Keep the shared style; change only how the information is presented, with a consistent «Lo prometido / Lo entregado / La diferencia» comparison.
 - 2026-11-03: a correction message to subscribers when SIAPA changed the cut days. «The least amount of messages the better»: fix the schedule silently and let the next reminder carry the new days.
 - 2026-11-05: the landing photo wall packed in each photo's own proportions (like /fotos); he asked to revert to the even grid with big 2×2 sign tiles.
