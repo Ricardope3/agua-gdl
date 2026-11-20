@@ -103,8 +103,12 @@ footer p { margin: 0 0 8px; max-width: 70ch }
 @media (max-width: 760px) { .duo { grid-template-columns: 1fr } .duo > div { padding: 20px 0 } .duo .entregado { border-left: 0; border-top: 1px solid var(--line) } .duo .diferencia { display: block; padding: 12px } .duo .diferencia strong { display: block; margin-bottom: 4px } }
 
 /* Document cutout: a piece of the actual transparency response. */
-.doc { max-width: 760px; margin: 10px auto 18px }
-.doc .recorte { display: block; width: auto; max-width: 100%; max-height: 320px; object-fit: contain; height: auto; margin: auto; border: 1px solid var(--line); border-radius: 6px; background: #fff; box-shadow: var(--shadow) }
+.doc { max-width: 900px; margin: 16px auto 24px }
+.doc .lectura { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 0 0 12px; padding: 12px 16px; border-left: 4px solid var(--mark); background: var(--warn-bg); color: var(--fg) }
+.doc .lectura .dato { display: flex; align-items: baseline; gap: 8px }
+.doc .lectura strong { font-size: 1.2rem; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap }
+.doc .lectura .dato span { font-size: .95rem }
+.doc .recorte { display: block; width: auto; max-width: 100%; max-height: 520px; object-fit: contain; height: auto; margin: auto; border: 1px solid var(--line); border-radius: 6px; background: #fff; box-shadow: var(--shadow) }
 .doc figcaption { margin-top: 8px; font-size: .8rem; color: var(--muted); max-width: 80ch }
 .doc .arch { display: inline-block; margin-top: 6px; font-size: .85rem }
 .sigue { margin: 0 0 6px; font-size: .95rem }
@@ -159,6 +163,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
       <h2 id="reportes" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg></span>El registro de partida: 9,828 reportes</h2>
       <p>La Coordinación General de Cercanía Ciudadana respondió a la solicitud 140292426004981 con una lista de reportes por falta de agua. En el oficio consta el total:</p>
       <figure class="doc">
+        <p class="lectura"><span class="dato"><strong>9,828 reportes</strong><span>por falta de agua · corte al 4 de noviembre</span></span></p>
         <img class="recorte" src="/img/anunciado/corte-reportes-destacado.jpg" alt="Recorte del oficio de respuesta: «se encontró un total de 9,828 reportes por falta de agua, con corte al 04 de noviembre de la presente anualidad»" loading="lazy">
         <figcaption>Recorte del oficio 11000000/CER.CIU/2026/0878 (respuesta a la solicitud 140292426004981, 17 de noviembre de 2026). El documento completo está en <a href="/datos/zapopan-respuesta-140292426004981.pdf">aguagdl.com/datos/zapopan-respuesta-140292426004981.pdf</a>. La lista llegó en un PDF de 166 páginas con la columna «Ubicacion» tachada; la pasamos a CSV y la exploramos en <a href="/reportes-zapopan">/reportes-zapopan</a>.</figcaption>
       </figure>
@@ -182,6 +187,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
         <div class="diferencia"><strong>La diferencia</strong><span>11 pipas por debajo del anuncio, incluso en la jornada con más pipas registradas.</span></div>
       </div>
       <figure class="doc">
+        <p class="lectura"><span class="dato"><strong>34 pipas</strong><span>máximo diario</span></span><span class="dato"><strong>11 pipas</strong><span>19 de octubre</span></span><span class="dato"><strong>840,000 litros</strong><span>25 de octubre</span></span></p>
         <img class="recorte" src="/img/anunciado/corte-pipas-destacado.jpg" alt="Recorte de la gráfica oficial de pipas por día y litros distribuidos, del 15 de octubre al 3 de noviembre" loading="lazy">
         <figcaption>Recorte de la gráfica anexa al oficio 011300/2026/0150 de Protección Civil y Bomberos (respuesta UT-091/2026, 12 de noviembre de 2026). Documento completo: <a href="/datos/pcyb-respuesta-ut-091-2026.pdf">aguagdl.com/datos/pcyb-respuesta-ut-091-2026.pdf</a>. El propio oficio dice que «se determina la inexistencia de la información tal cual como se solicita» y remite «la información disponible».</figcaption>
       </figure>
@@ -204,6 +210,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
         <div class="diferencia"><strong>La diferencia</strong><span>51 cisternas del anuncio no aparecen en la lista entregada; esto no demuestra que no estén instaladas.</span></div>
       </div>
       <figure class="doc">
+        <p class="lectura"><span class="dato"><strong>49 cisternas</strong><span>en la lista entregada · 51 del anuncio no aparecen</span></span></p>
         <img class="recorte" src="/img/anunciado/corte-cisternas-destacado.jpg" alt="Recorte del encabezado del listado oficial de cisternas instaladas, con las columnas de número, domicilio, colonia y coordenadas" loading="lazy">
         <figcaption>Recorte del encabezado del listado de cisternas, en la respuesta a la solicitud 140292426004978 (17 de noviembre de 2026): cada cisterna trae domicilio, colonia y coordenadas. Documento completo: <a href="/datos/zapopan-respuesta-140292426004978.pdf">aguagdl.com/datos/zapopan-respuesta-140292426004978.pdf</a>. Las 49, con su fuente, están en nuestro <a href="/cisternas">mapa de cisternas comunitarias</a>.</figcaption>
       </figure>
@@ -226,6 +233,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
         <div class="diferencia"><strong>La diferencia</strong><span>La prioridad anunciada para hospitales no tiene ninguna atención en la tabla entregada.</span></div>
       </div>
       <figure class="doc">
+        <p class="lectura"><span class="dato"><strong>0 atenciones</strong><span>hospitales · «Sin atenciones registradas»</span></span><span class="dato"><strong>20 de octubre</strong><span>primera escuela en la tabla</span></span></p>
         <img class="recorte" src="/img/anunciado/corte-hospitales-destacado.jpg" alt="Recorte de la tabla oficial de inmuebles atendidos: la fila de hospitales dice «Sin atenciones registradas»" loading="lazy">
         <figcaption>Recorte de la tabla de escuelas y espacios públicos atendidos, anexa al oficio 011300/2026/0148 de Protección Civil y Bomberos (respuesta UT-089/2026, 12 de noviembre de 2026). Documento completo: <a href="/datos/pcyb-respuesta-ut-089-2026.pdf">aguagdl.com/datos/pcyb-respuesta-ut-089-2026.pdf</a>.</figcaption>
       </figure>
