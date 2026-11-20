@@ -136,6 +136,22 @@ if not limit:
 elif len(vetos.splitlines()) >= int(limit.group(1)):
     errors.append(f".claude/rules/vetos.md: {len(vetos.splitlines())} lines, its own limit is under {limit.group(1)}")
 
+# Workflow-level keys are top-level siblings of on:/jobs:, never nested under on:: YAML parses either
+# shape, but GitHub reads a nested `concurrency:` as an unknown trigger and every run fails at once with
+# a workflow file issue and no jobs (19 Nov 2026). yaml.safe_load can't tell the two apart, so this is
+# a plain indent check with no PyYAML dependency.
+TOPLEVEL_ONLY = {"concurrency", "permissions", "defaults", "env", "jobs"}
+for wf in sorted((root / ".github/workflows").glob("*.y*ml")):
+    top = None
+    for n, line in enumerate(wf.read_text(encoding="utf-8").splitlines(), 1):
+        if re.match(r"^\S[^:]*:\s*$", line):
+            top = line.split(":")[0].strip()
+        elif top == "on":
+            m = re.match(r"^  (\w+):", line)
+            if m and m.group(1) in TOPLEVEL_ONLY:
+                errors.append(f"{wf.relative_to(root)}:{n}: `{m.group(1)}:` is nested under `on:`; "
+                              f"it must be a top-level sibling of on:/jobs:")
+
 for e in errors:
     print(e)
 if len(PROSE) < 15 or prose_lines < 300:
