@@ -30,6 +30,7 @@ def build():
         "source": raw["source"],
         "start": raw["start"],
         "end": raw.get("end", ""),
+        "end_note": "Proyección de Agua GDL: el SIAPA dice «hasta marzo de 2027» sin fecha exacta.",
         "static": True,
     }, ensure_ascii=False, separators=(",", ":")) + "\n"
 

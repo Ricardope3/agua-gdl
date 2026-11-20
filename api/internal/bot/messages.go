@@ -157,7 +157,7 @@ const msgPickZoneAtPoint = "Tu ubicación queda en el límite entre zonas 🤔 E
 // msgPipa gives SIAPA's own line for a free pipa (siapa.gob.mx/medios-para-solicitar-una-pipa,
 // checked 20 Oct 2026); the municipios' lines, with their sources, are on /pipas.
 func msgPipa(base string) string {
-	return `🚚 Para pedir una *pipa* gratis, llama al SIAPATEL: *33 3668 2482* o *073*, las 24 horas. Ten a la mano tu domicilio y tu número de cuenta del SIAPA.
+	return `🚚 Para pedir una *pipa*, llama al SIAPATEL: *33 3668 2482* o *073*. El SIAPA la ofrece gratis (llena tinacos o aljibes a nivel de calle) y dice atender las 24 horas. Ten a la mano tu domicilio y tu número de cuenta del SIAPA.
 
 Zapopan, Tlaquepaque y Tonalá también tienen líneas propias: ` + base + `/pipas
 
@@ -209,7 +209,7 @@ const msgReportClosed = "Ese reporte ya cerró. ¡Gracias de todos modos! 🙏"
 const msgReportBeforeJoin = "Solo contamos reportes de cortes que empezaron después de tu suscripción. Podrás reportar el próximo 🙏"
 
 func msgRotationOver(base string) string {
-	return `🗓️ La rotación de agua del SIAPA ya terminó, así que ya no mandamos avisos ni guardamos suscripciones.
+	return `🗓️ La rotación de agua del SIAPA ya terminó según el calendario vigente (revisado el 3 de noviembre de 2026), así que ya no mandamos avisos ni guardamos suscripciones. Si el SIAPA anuncia una extensión, avísanos y la seguimos.
 
 Novedades: ` + base
 }
@@ -390,7 +390,7 @@ Vecinos nos contaron que el agua se va desde antes del corte y tarda más en vol
 func msgTelegramReminder(days []time.Time, zone int) string {
 	return fmt.Sprintf(`💧 La *Zona %d* tiene corte *mañana %s*%s, según el calendario del SIAPA.
 
-El Gobierno de Jalisco dice que los racionamientos son «por máximo un día» y que «no serán cortes totales», pero vecinos nos cuentan que el agua se va desde antes y tarda más en volver.
+El Gobierno de Jalisco prometió el 14 de octubre racionamientos «por máximo un día» y «sin cortes totales»; el 1 de noviembre, operadores del propio SIAPA admitieron que «el esquema actual no alcanza para cumplir con 1 día sin agua». Vecinos nos cuentan que el agua se va desde antes y tarda más en volver.
 
 🪣 Si todavía tienes agua, llena tu tinaco, cubetas y garrafones, y tápalos bien.
 
@@ -439,9 +439,12 @@ func zoneList(zones []int) string {
 	return strings.Join(s[:len(s)-1], ", ") + " y " + s[len(s)-1]
 }
 
-// reminderBody is the text of WhatsApp's approved aviso_corte template.
+// reminderBody is the text of WhatsApp's approved aviso_corte template. NOTE: this
+// wording differs from the approved template (it now attributes the "hasta por un día"
+// promise to the SIAPA instead of repeating it as fact); if WhatsApp ever restarts,
+// the template must be re-submitted to Meta before sending.
 func reminderBody(date string, zone int) string {
-	return fmt.Sprintf(`💧 *Mañana %s* hay racionamiento de agua en la *Zona %d* por la rotación del SIAPA: puede bajar la presión o faltar el agua hasta por un día.
+	return fmt.Sprintf(`💧 *Mañana %s* hay racionamiento de agua en la *Zona %d* por la rotación del SIAPA: el SIAPA dice que puede bajar la presión o faltar el agua hasta por un día.
 
 🪣 Llena hoy tu tinaco, cubetas y garrafones.
 🔒 Tapa bien los recipientes para que el agua no se ensucie.`, date, zone)

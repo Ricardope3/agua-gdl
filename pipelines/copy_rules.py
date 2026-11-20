@@ -88,6 +88,18 @@ KNOWN_ERRORS = [
          wrong=r"dia de registro|cuando se registraron", near=r"reporte|grafica",
          msg="Zapopan's list (folio 140292426004981) doesn't say what its «Fecha» is; it only looks like the registration time: say «fecha de la lista»",
          found="18 Nov 2026 (re-review of /reportes-zapopan)"),
+    dict(id="retc-tabla-rt",
+         bad='Tabla compilada por RT en Español con datos del RETC.', good='Tabla elaborada por Agua GDL: los kilos del RETC son cifras autorreportadas que RT difundió en 2020 y estamos cotejando contra el RETC público.',
+         wrong=r"compilad\w* por rt|tabla de rt", near=r"retc|emisiones",
+         ok=r"elaborada por agua gdl|cotejando",
+         msg="the RETC kg figures come from company self-reports (2004–2018); RT (2020) only published Zoltek's — attribute the table to Agua GDL and say the rest is being verified",
+         found="19 Nov 2026 (audit E1)"),
+    dict(id="2500-hasta-stat",
+         bad='<span><b>2,500</b> litros por segundo menos: una cuarta parte de la demanda habitual de la ciudad</span>',
+         good='<span>hasta 2,500 litros por segundo menos, cerca de una cuarta parte de la demanda habitual de la ciudad</span>',
+         wrong=r"2,?500.{0,20}litros por segundo menos", near=r"cuarta parte|publimetro|demanda", ok=r"hasta",
+         msg="the 2,500 L/s shortfall is a ceiling («hasta»), not a fixed figure, per the Publimetro piece",
+         found="19 Nov 2026 (audit)"),
 ]
 
 
