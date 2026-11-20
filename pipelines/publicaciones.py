@@ -643,7 +643,7 @@ def assign(p, path, raw):
 
 def write(path, doc):
     tmp = path.with_name(path.name + ".tmp")
-    tmp.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
+    tmp.write_text(json.dumps(doc, ensure_ascii=False, separators=(",", ":")) + "\n")
     tmp.replace(path)
 
 
