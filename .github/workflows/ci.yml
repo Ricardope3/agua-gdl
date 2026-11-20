@@ -4,11 +4,11 @@ on:
     branches:
       - main
   pull_request:
-  concurrency:
-    group: ci-${{ github.ref }}
-    cancel-in-progress: true
   schedule:
     - cron: "17 13 * * 1"  # Mondays, so new Go or pgx vulnerabilities surface while the repo is quiet
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
