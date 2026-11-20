@@ -3,9 +3,11 @@
 
     python3 scripts/stale_dates.py [--days N] [--count]
 
-Copy: «al 19 de octubre», «revisado el…», «Revisamos… el», «consultada el…», «Actualizado el…» in web/*.html (date ranges like
+Copy: «al 19 de octubre», «revisado el…», «Revisamos… el», «consultada el…», «Actualizado el…», «Última actualización:…» in web/*.html (date ranges like
 «del 15 al 26» and /noticias' dated cards don't count). Data: `checked` in rotation.json and
-zones.json, `actualizado` and each `veredicto_fecha` in promesas.json. Warn-only: always exits 0,
+zones.json, `actualizado` in promesas.json, publicaciones.json and videos.json, `revisado` in
+cisternas.json, `hasta` in datos/zapopan-reportes.json and `meta.fetched` in colonias_siapa.topo.json
+(dotted keys walk nested objects), plus each `veredicto_fecha` in promesas.json. Warn-only: always exits 0,
 since a date ages without any change and CI must not go red for it. Recheck the fact, then update
 its date (promesas.html is generated from promesas.json).
 """
@@ -24,11 +26,22 @@ MONTHS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agost
           "octubre", "noviembre", "diciembre"]
 M = "|".join(MONTHS)
 AS_OF = re.compile(
-    rf"(?:\b[Aa]l|\b(?:[Aa]ctualizad|[Rr]evisad|[Cc]onsultad|[Vv]erificad)[oa]s?(?: de nuevo)? el|\b(?:[Ss]e )?[Rr]evis(?:amos|aron|ó)\b[^.;«»<]{{0,40}}? el) (\d{{1,2}}) de ({M})(?: de (\d{{4}}))?")
+    rf"(?:\b[Aa]l|\b[Úu]ltima actualización:|\b(?:[Aa]ctualizad|[Rr]evisad|[Cc]onsultad|[Vv]erificad)[oa]s?(?: de nuevo)? el|\b(?:[Ss]e )?[Rr]evis(?:amos|aron|ó)\b[^.;«»<]{{0,40}}? el) (\d{{1,2}}) de ({M})(?: de (\d{{4}}))?")
 RANGE = re.compile(rf"\d(?: de (?:{M}))?\s*$")
 ARTICLE = re.compile(r"<article\b.*?</article\s*>", re.S | re.I)
 DATA = [("api/data/rotation.json", "checked"), ("web/zones.json", "checked"),
-        ("web/promesas.json", "actualizado")]
+        ("web/promesas.json", "actualizado"), ("web/publicaciones.json", "actualizado"),
+        ("web/videos.json", "actualizado"), ("web/cisternas.json", "revisado"),
+        ("web/datos/zapopan-reportes.json", "hasta"),
+        ("web/colonias_siapa.topo.json", "meta.fetched")]
+
+
+def dig(doc, path):
+    for part in path.split("."):
+        if not isinstance(doc, dict):
+            return None
+        doc = doc.get(part)
+    return doc
 
 
 def as_of(day, month, year, today):
@@ -55,8 +68,8 @@ def scan_data(today, days):
     out = []
     for path, key in DATA:
         doc = json.loads((root / path).read_text(encoding="utf-8"))
-        if doc.get(key):
-            out.append((path, key, doc[key]))
+        if dig(doc, key):
+            out.append((path, key, dig(doc, key)))
         if path.endswith("promesas.json"):
             out += [(path, f"{p['codigo']}.veredicto_fecha", p["veredicto_fecha"])
                     for p in doc.get("promesas", []) if p.get("veredicto_fecha")]
