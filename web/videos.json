@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-18",
+ "actualizado": "2026-11-21",
  "videos": [
   {
    "url": "https://www.facebook.com/reel/1600459298762122/",
@@ -3857,6 +3857,72 @@
    ],
    "lugar": "Fraccionamiento Altus Pinar, Rancho de la Cruz (Tonalá)",
    "cita": "en el fraccionamiento Altus pinar rancho de la cruz estamos en las mismas condiciones tenemos un mes y una semana sin agua en nuestras llaves de agua",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.tiktok.com/@gabycardenasjal/video/7709948661488225556?comment_id=7710321592329863942",
+   "red": "web",
+   "quien": "",
+   "fecha": "2026-11-20",
+   "colonias": [
+    "LOS MANGUITOS|Tonalá|45405"
+   ],
+   "lugar": "los manguitos",
+   "cita": "Ya tenemos en los manguitos 3 meses sin agua",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/818564158018859?comment_id=1160617086926875",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-21",
+   "colonias": [
+    "GUADALUPE JARDIN|Zapopan|45030"
+   ],
+   "lugar": "Guadalupe Jardín, Zapopan",
+   "cita": "Colonia Guadalupe Jardin , Zapopan , zona 6 , un mes sin agua",
+   "dias": 30,
+   "video": null
+  },
+  {
+   "url": "https://x.com/juncalssolano/status/2124217598883586535",
+   "red": "x",
+   "quien": "",
+   "fecha": "2026-11-21",
+   "colonias": [
+    "ALTUS PINAR|Tonalá|45410"
+   ],
+   "lugar": "Altus Pinar, en Rancho de la Cruz, Tonalá",
+   "cita": "¡UN MES SIN AGUA EN TONALÁ Y LOS RECIBOS SIGUEN LLEGANDO! […] Vecinos de Altus Pinar, en Rancho de la Cruz, denuncian desabasto, apoyos insuficientes y cobros cada vez más altos del SIAPA.",
+   "dias": 30,
+   "video": null
+  },
+  {
+   "url": "https://www.youtube.com/watch?v=N1H9qBtmSQo",
+   "red": "web",
+   "quien": "Meganoticias",
+   "fecha": "2026-11-20",
+   "colonias": [
+    "NUEVA VIZCAYA|El Salto|45680",
+    "LAURELES|El Salto|45680"
+   ],
+   "lugar": "fraccionamiento Nueva Vizcaya, en la colonia Laureles de El Salto",
+   "cita": "22 días sin agua potable Vecinos del fraccionamiento Nueva Vizcaya, en la colonia Laureles de El Salto, denuncian la falta de suministro en sus viviendas debido a una falla en la bomba de un pozo que abastece la zona.",
+   "dias": 22,
+   "video": null
+  },
+  {
+   "url": "https://www.youtube.com/watch?v=qdCAwDa-17Y",
+   "red": "web",
+   "quien": "Meganoticias",
+   "fecha": "2026-11-18",
+   "colonias": [
+    "CENTRO|San Pedro Tlaquepaque|45500"
+   ],
+   "lugar": "una vecindad en la colonia Tlaquepaque Centro, cerca del Parián",
+   "cita": "Habitantes de una vecindad en la colonia Tlaquepaque Centro denuncian que llevan más de dos meses sin suministro de agua, sin recibir respuesta del SIAPA.",
    "dias": null,
    "video": null
   }

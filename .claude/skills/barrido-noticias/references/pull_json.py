@@ -1,43 +1,69 @@
 """Save an agent's JSON reply without retyping it.
 
 Usage: python3 -I pull_json.py TASK_OUTPUT_FILE OUT.json
-Takes the agent's final reply (the last message in its task output that holds a ```json block; it
-stops if that message isn't among the file's last lines, since an earlier block may be an example
-from the prompt), merges every ```json block in it, writes OUT.json and, for a verifier's
+Takes the agent's final reply (its last text or hand-back message in the task output; it stops if
+that message isn't among the file's last lines), merges every ```json block in it, writes OUT.json and, for a verifier's
 {"verified": [...], "rejected": [...]}, lists the entries whose cita (split on «[…]» or «[...]»)
 is not in captura.texto, whitespace normalised. An entry with no captura is listed too.
+A reply with no ```json block (21 Nov: an agent sent a bare array) falls back to the first JSON array
+or object that starts a line of that same final reply, and only when it has the shape of a reply
+(a list of objects with `url`, or an object with `verified` or `items`): tool results and the prompt
+are never read (21 Nov review: a page's JSON in a tool result passed as the agent's reply).
 """
 import json
 import re
 import sys
 
 lines = open(sys.argv[1]).read().splitlines()
-last = None  # (line number, text)
+last = None  # (line number, text) of the agent's final reply
 
 
-def walk(x, n):
-    global last
-    if isinstance(x, str):
-        if "```json" in x:
-            last = (n, x)
-    elif isinstance(x, dict):
-        for v in x.values():
-            walk(v, n)
-    elif isinstance(x, list):
-        for v in x:
-            walk(v, n)
+def replies(d):
+    """The agent's own words in one transcript line: its text, or its hand-back message."""
+    if d.get("type") != "assistant":
+        return []
+    out = []
+    for b in (d.get("message") or {}).get("content") or []:
+        if b.get("type") == "text":
+            out.append(b.get("text") or "")
+        elif b.get("type") == "tool_use" and "andback" in (b.get("name") or ""):
+            out += [v for v in (b.get("input") or {}).values() if isinstance(v, str)]
+    return [t for t in out if t.strip()]
+
+
+def first_json(t):
+    for m in re.finditer(r"^[\[{]", t, re.M):
+        try:
+            return json.JSONDecoder().raw_decode(t[m.start():])[0]
+        except ValueError:
+            pass
+
+
+def shaped(j):
+    if isinstance(j, list):
+        return all(isinstance(x, dict) and "url" in x for x in j)
+    return isinstance(j, dict) and any(isinstance(j.get(k), list) for k in ("verified", "items"))
 
 
 for n, line in enumerate(lines):
     try:
-        walk(json.loads(line), n)
+        d = json.loads(line)
     except ValueError:
-        pass
+        continue
+    for t in replies(d) if isinstance(d, dict) else []:
+        last = (n, t)
 if not last:
-    sys.exit("no ```json block in " + sys.argv[1])
+    sys.exit("no reply from the agent in " + sys.argv[1])
 if last[0] < len(lines) - 6:
-    sys.exit(f"the last ```json block is on line {last[0] + 1} of {len(lines)}: not the final reply; ask the agent to resend its reply in a ```json block")
-blocks = [json.loads(b) for b in re.findall(r"```json\s*(.*?)```", last[1], re.S)]
+    sys.exit(f"the agent's last reply is on line {last[0] + 1} of {len(lines)}: not the final reply; ask the agent to resend it in a ```json block")
+if "```json" in last[1]:
+    blocks = [json.loads(b) for b in re.findall(r"```json\s*(.*?)```", last[1], re.S)]
+else:
+    j = first_json(last[1])
+    if j is None or not shaped(j):
+        sys.exit("the final reply has no ```json block and no bare JSON shaped like a reply: ask the agent to resend it in a ```json block")
+    blocks = [j]
+    print(f"bare JSON taken from the final reply (line {last[0] + 1})")
 if len(blocks) == 1:
     data = blocks[0]
 elif all(isinstance(b, dict) for b in blocks):

@@ -5,7 +5,7 @@ You gather candidates for /reportes. You never decide what gets published and ne
 ## What counts
 
 - A person or outlet saying a colonia of the Guadalajara metro (Guadalajara, Zapopan, Tlaquepaque, Tonalá, Tlajomulco, El Salto, Juanacatlán, Ixtlahuacán) has no water, N days without water, low or intermittent supply, dirty water, a pipa, a blockade over water, or that water came back.
-- Not: schedule questions, future-dated protest flyers, partisan posts without a colonia, «sí hay agua» replies, «Zapopan» alone.
+- Not: schedule questions, future-dated protest flyers, partisan posts without a colonia, «sí hay agua» replies, «Zapopan» alone, and lists of colonias in SIAPA's rotation or on a municipio's pipa route (a programme, not a report: 22 of 22 outlet-site leads on 21 Nov were these).
 - Window: the since-date to today, by the Guadalajara day.
 
 ## Dedupe
@@ -25,7 +25,7 @@ You gather candidates for /reportes. You never decide what gets published and ne
 
 ## X, TikTok, YouTube
 
-- X: the Latest tab; a reply links its own status URL and answers a post (`en`). Counts from the aria-labels. A neighbour's own post needs ≥5 reactions and ≥1 reply like any other.
+- X: the Latest tab; a reply links its own status URL and answers a post (`en`). Counts from the aria-labels. A neighbour's own post needs ≥5 reactions and ≥1 reply like any other. Quote only the post's own text: words inside an image or a screenshot can't be checked against X's embed endpoint, so put «texto en imagen» in `nota` (two such replies were dropped on 21 Nov).
 - TikTok: caption, date and counts from the page's `__UNIVERSAL_DATA_FOR_REHYDRATION__`; comment ids (cid) from the `comment/list` network request (`read_network_requests`). A TikTok comment without a cid stays out.
 - YouTube: search YouTube itself sorted by date; read `publishDate` and `shortDescription` on the watch page.
 
@@ -33,7 +33,7 @@ You gather candidates for /reportes. You never decide what gets published and ne
 
 - Quote VERBATIM, typos and accents kept, ≤300 characters, to the end of the clause; cut before insults, slogans or names (a quote may start mid-sentence to leave a name out).
 - Never a private person's name: «Cuenta de vecinos», «Cuenta personal en X», «Grupo «…»» (public groups), or the page or outlet name.
-- `dias` only for a plain count. From `docs/GLOSARIO.md`: «un mes» and «más de un mes» = 30, «más de 40 días» and «hasta 15 días» = the number, «más de 3 semanas» and «hasta 3 semanas» = 21, «más de un mes y medio» = 45, a range takes its low end, «dos meses», «meses» (also «hasta dos meses») and a count from a date («desde el lunes») are null, «casi N» and «vamos para N» are null. The skill's own rules (the glossary doesn't cover them; flag each in the report): «desde hace 20 días» = 20, «3 semanas» = 21, and null for «alrededor de», «aproximadamente» and «pasadito de».
+- `dias` only for a plain count. From `docs/GLOSARIO.md`: «un mes» and «más de un mes» = 30, «más de 40 días» and «hasta 15 días» = the number, «más de 3 semanas» and «hasta 3 semanas» = 21, «más de un mes y medio» = 45, a range takes its low end, «dos meses», «meses» (also «hasta dos meses») and a count from a date («desde el lunes») are null, «casi N» and «vamos para N» are null. The skill's own rules (the glossary doesn't cover them; flag each in the report): «desde hace 20 días» = 20, «desde hace un mes» = 30, «N semanas» = N×7 («2 semanas» = 14, «3 semanas» = 21), counts in hours («48 horas») and «N meses» null, and null for «alrededor de», «aproximadamente» and «pasadito de».
 - Colonia keys from `api/data/colonias_mapa.json` (`NAME|Municipio|CP`). When a name exists in several municipios:
   - the text names the municipio: use it;
   - the thread is one municipio's (a Tlaquepaque neighbourhood page, a post about one protest) and the name exists there: use it and say so in `nota`;
@@ -44,4 +44,4 @@ You gather candidates for /reportes. You never decide what gets published and ne
 
 ## Output
 
-Reply with a JSON array (at most 20 items, most informative first): `{url, fuente, red, quien, fecha, colonia_key, lugar, cita, dias, bloqueo, parcial, calidad, regreso, video, comment_id, parent_url, parent_eco, eco, nota}`, then one line `no_alcanzado: …`.
+Reply with one ```json block holding the array (at most 20 items, most informative first): `{url, fuente, red, quien, fecha, colonia_key, lugar, cita, dias, bloqueo, parcial, calidad, regreso, video, comment_id, parent_url, parent_eco, eco, nota}`, then one line `no_alcanzado: …`.
