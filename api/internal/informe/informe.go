@@ -289,7 +289,7 @@ var page = template.Must(template.New("week").Funcs(template.FuncMap{
         <li>No son datos oficiales ni una muestra representativa: participa más quien tiene internet, conoce el proyecto y decide reportar. Los porcentajes tienen como denominador solo los testimonios recibidos, no las viviendas ni toda la colonia.</li>
         <li>Estos conteos no demuestran que un aviso, una autoridad o Agua GDL haya causado que el agua regrese. Tampoco prueban calidad del agua: turbia, olor y sedimento son percepciones vecinales, no análisis de laboratorio. Pedimos al SIAPA que publique cuánta agua llega a cada zona y cuándo.</li>
       </ul>
-      <a class="button glow" href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Reportar mi colonia</a>
+      <a class="button glow" href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#map-pin"/></svg>Reportar mi colonia</a>
     </section>
   </main>
 `))

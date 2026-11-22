@@ -12,6 +12,7 @@
 <link rel="icon" href="/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="/menu.css">
 <style>
 :root {
   --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
@@ -35,9 +36,6 @@ body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 var(--
 a { color: var(--link); overflow-wrap: anywhere }
 a:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; border-radius: 4px }
 .wrap { max-width: 960px; margin: 0 auto; padding: 0 20px }
-header.top { padding: 20px 0 }
-.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; font-weight: 800; font-size: 1.25rem; letter-spacing: -.01em }
-.brand img { width: 30px; height: auto }
 h1 { font-size: clamp(2rem, 6vw, 2.8rem); line-height: 1.1; letter-spacing: -.02em; margin: 20px 0 8px }
 .updated { color: var(--muted); margin: 0 0 24px }
 .summary { background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--brand); border-radius: 10px; padding: 18px 20px; margin: 0 0 12px }
@@ -56,9 +54,6 @@ body { font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased }
 a { text-underline-offset: 3px }
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); border-radius: 6px }
 .wrap { padding: 0 16px }
-header.top { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); margin: 0 -16px 20px; padding: 12px 16px }
-.brand { gap: 8px; font-weight: 600; font-size: 1rem }
-.brand img { width: 20px }
 h1 { letter-spacing: -.03em; font-weight: 700 }
 h2 { font-weight: 600; letter-spacing: -.02em }
 .lede { font-size: 1.05rem }
@@ -69,31 +64,11 @@ h2 { font-weight: 600; letter-spacing: -.02em }
 .search input, .filter select { border: 1px solid var(--line); box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s }
 .search input:focus-visible, .filter select:focus-visible { border-color: var(--brand) }
 footer { font-size: .85rem }
-header.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px }
 .i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
-.site-nav { display: flex; gap: 2px; flex-wrap: wrap; margin: 0 -6px }
-.site-nav a { display: inline-flex; align-items: center; gap: 4px; padding: 6px 6px; border-radius: 8px; color: var(--muted); font-size: .9rem; font-weight: 500; text-decoration: none; white-space: nowrap }
-.site-nav a:hover { color: var(--fg); background: var(--subtle) }
-.site-nav a[aria-current="page"] { color: var(--link); background: var(--subtle) }
-.site-nav details { position: relative; flex: 0 0 auto }
-.site-nav summary { list-style: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px; border-radius: 8px; color: var(--muted); font-size: .9rem; font-weight: 500; cursor: pointer; white-space: nowrap }
-.site-nav summary::-webkit-details-marker { display: none }
-.site-nav summary::after { content: ""; width: 7px; height: 7px; margin-left: 2px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg) translateY(-2px) }
-.site-nav summary:hover, .site-nav details[open] summary { color: var(--fg); background: var(--subtle) }
-.site-nav details[open] summary::after { transform: rotate(225deg) translate(-2px, -1px) }
-.site-nav .mas-panel { position: absolute; right: 0; top: calc(100% + 6px); display: flex; flex-direction: column; min-width: 210px; padding: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.16); z-index: 60 }
-.site-nav .mas-panel a { display: flex; padding: 8px 10px }
-@media (max-width: 760px) { .site-nav details { flex: 1 1 22% } .site-nav summary { width: 100%; justify-content: center; padding: 6px 4px } }
-@media (max-width: 560px) { .site-nav summary { padding: 4px; font-size: .82rem; line-height: 1.35 } }
-@media (max-width: 980px) { .site-nav .i { display: none } }
-@media (max-width: 760px) { .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center } .site-nav a { flex: 1 1 22%; justify-content: center } }
-@media (max-width: 560px) { header.top { position: static; padding: 8px 16px } .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center; gap: 2px } .site-nav a { flex: 1 1 22%; justify-content: center; padding: 4px; font-size: .82rem; line-height: 1.35 } .site-nav .i { display: none } }
 .ih .i-badge { background: var(--subtle); color: var(--brand) }
-.site-nav .i { color: var(--brand) }
-.site-nav a[aria-current="page"] .i { color: inherit }
 li > .i, p > .i, summary > .i, h3 > .i { color: var(--brand) }
 .i { --ic: currentColor }
-.site-nav .i, li > .i, p > .i, summary > .i, h3 > .i { color: var(--ic) }
+li > .i, p > .i, summary > .i, h3 > .i { color: var(--ic) }
 .lede { color: var(--muted); max-width: 60ch }
 .links { list-style: none; padding: 0; margin: 22px 0 26px; display: grid; gap: 10px; max-width: 520px }
 .links li { margin: 0 }
@@ -126,18 +101,18 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   <header class="top">
     <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
     <nav class="site-nav" aria-label="Secciones">
-      <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg>¿Hay agua?</a>
-      <a href="/nocuadra"><span class="i" aria-hidden="true">¿?</span>No cuadra</a>
-      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Avisos</a>
-      <a href="/cisternas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Cisternas</a>
-      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg>Noticias</a>
+      <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#users"/></svg>¿Hay agua?</a>
+      <a href="/nocuadra"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#question-marks"/></svg>No cuadra</a>
+      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#map-pin"/></svg>Avisos</a>
+      <a href="/cisternas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#droplet"/></svg>Cisternas</a>
+      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#newspaper"/></svg>Noticias</a>
       <details class="nav-more"><summary>Más</summary>
         <div class="mas-panel">
-          <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exige</a>
-          <a href="/fotos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#video"/></svg>Fotos</a>
-          <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg>Cuentas</a>
-          <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Contaminación</a>
-          <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#heart"/></svg>Antisionismo</a>
+          <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#megaphone"/></svg>Exige</a>
+          <a href="/fotos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#video"/></svg>Fotos</a>
+          <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#bar-chart"/></svg>Cuentas</a>
+          <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#droplet"/></svg>Contaminación</a>
+          <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#heart"/></svg>Antisionismo</a>
         </div></details>
     </nav>
   </header>
@@ -146,10 +121,10 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     <h1>No encontramos esta página</h1>
     <p class="lede">Puede que el enlace esté mal escrito o que la página ya no exista. Sigue por aquí:</p>
     <ul class="links">
-      <li><a href="/"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Inicio</a></li>
-      <li><a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg>¿Hay agua en tu colonia?</a></li>
-      <li><a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exígele a quien le toca</a></li>
-      <li><a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>¿Qué zona me toca?</a></li>
+      <li><a href="/"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#droplet"/></svg>Inicio</a></li>
+      <li><a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#users"/></svg>¿Hay agua en tu colonia?</a></li>
+      <li><a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#megaphone"/></svg>Exígele a quien le toca</a></li>
+      <li><a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#map-pin"/></svg>¿Qué zona me toca?</a></li>
     </ul>
     <p>Si llegaste aquí desde un enlace de Agua GDL, avísanos a <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>.</p>
   </main>

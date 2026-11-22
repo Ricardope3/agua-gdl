@@ -48,7 +48,7 @@
     const header = document.querySelector("header.top");
     if (!header) return;
     const style = document.createElement("style");
-    style.textContent = ".theme-btn{display:inline-grid;place-items:center;width:34px;height:34px;padding:0;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--muted);cursor:pointer;order:3}.theme-btn:hover{color:var(--fg);background:var(--subtle)}.theme-btn:focus-visible{outline:none;box-shadow:0 0 0 3px var(--ring)}@media (max-width:760px){.theme-btn{order:1;margin-left:auto}header.top .site-nav{order:2}}";
+    style.textContent = ".theme-btn{display:inline-grid;place-items:center;width:36px;height:36px;padding:0;border:0;border-radius:4px;background:none;color:var(--muted);cursor:pointer;transition:color .15s ease-out}.theme-btn:hover{color:var(--fg)}.theme-btn:focus-visible{outline:none;box-shadow:0 0 0 3px var(--ring)}";
     document.head.append(style);
     const btn = document.createElement("button");
     btn.type = "button";

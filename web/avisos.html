@@ -23,6 +23,7 @@
 <link rel="manifest" href="/site.webmanifest">
 <link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
 <!-- == SECTION: styles == -->
+<link rel="stylesheet" href="/menu.css">
 <style>
 :root {
   --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
@@ -55,30 +56,10 @@ body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 var(--
 a { color: var(--link); text-underline-offset: 3px }
 a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); border-radius: 6px }
 .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px }
-header.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px; background: var(--bg); border-bottom: 1px solid var(--line); margin: 0 -16px; padding: 12px 16px }
-.brand { display: inline-flex; align-items: center; gap: 8px; color: var(--fg); text-decoration: none; font-weight: 600; font-size: 1rem; letter-spacing: -.01em }
-.brand img { width: 20px; height: auto }
-.site-nav { display: flex; gap: 2px; flex-wrap: wrap; margin: 0 -6px }
-.site-nav a { display: inline-flex; align-items: center; gap: 4px; padding: 6px 6px; border-radius: 8px; color: var(--muted); font-size: .9rem; font-weight: 500; text-decoration: none; white-space: nowrap }
-.site-nav a:hover { color: var(--fg); background: var(--subtle) }
-.site-nav a[aria-current="page"] { color: var(--link); background: var(--subtle) }
-.site-nav details { position: relative; flex: 0 0 auto }
-.site-nav summary { list-style: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px; border-radius: 8px; color: var(--muted); font-size: .9rem; font-weight: 500; cursor: pointer; white-space: nowrap }
-.site-nav summary::-webkit-details-marker { display: none }
-.site-nav summary::after { content: ""; width: 7px; height: 7px; margin-left: 2px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg) translateY(-2px) }
-.site-nav summary:hover, .site-nav details[open] summary { color: var(--fg); background: var(--subtle) }
-.site-nav details[open] summary::after { transform: rotate(225deg) translate(-2px, -1px) }
-.site-nav .mas-panel { position: absolute; right: 0; top: calc(100% + 6px); display: flex; flex-direction: column; min-width: 210px; padding: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.16); z-index: 60 }
-.site-nav .mas-panel a { display: flex; padding: 8px 10px }
-@media (max-width: 760px) { .site-nav details { flex: 1 1 22% } .site-nav summary { width: 100%; justify-content: center; padding: 6px 4px } }
-@media (max-width: 560px) { .site-nav summary { padding: 4px; font-size: .82rem; line-height: 1.35 } }
-@media (max-width: 980px) { .site-nav .i { display: none } }
-@media (max-width: 760px) { .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center } .site-nav a { flex: 1 1 22%; justify-content: center } }
-@media (max-width: 560px) { header.top { padding: 8px 16px } .site-nav { width: calc(100% + 12px); flex-wrap: wrap; justify-content: center; gap: 2px } .site-nav a { flex: 1 1 22%; justify-content: center; padding: 4px; font-size: .82rem; line-height: 1.35 } .site-nav .i { display: none } }
+header.top { margin-bottom: 0; z-index: auto }
 .i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
 .i { --ic: currentColor }
-.site-nav .i, li > .i, p > .i, summary > .i, h2 > .i, h3 > .i { color: var(--ic) }
-.site-nav a[aria-current="page"] .i { color: inherit }
+li > .i, p > .i, summary > .i, h2 > .i, h3 > .i { color: var(--ic) }
 .button { display: inline-flex; align-items: center; gap: 6px; background: var(--primary); color: var(--on-primary); font: inherit; font-weight: 500; font-size: .95rem; text-decoration: none; padding: 10px 16px; border: 1px solid transparent; border-radius: 8px; box-shadow: var(--shadow); cursor: pointer; transition: background .15s }
 .button:hover { background: var(--brand-deep) }
 .button:disabled { opacity: .6; cursor: progress }
@@ -314,18 +295,18 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   <header class="top">
     <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
     <nav class="site-nav" aria-label="Secciones">
-      <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#users"/></svg>¿Hay agua?</a>
-      <a href="/nocuadra"><span class="i" aria-hidden="true">¿?</span>No cuadra</a>
-      <a href="/avisos" aria-current="page"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bell"/></svg>Avisos</a>
-      <a href="/cisternas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Cisternas</a>
-      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#newspaper"/></svg>Noticias</a>
+      <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#users"/></svg>¿Hay agua?</a>
+      <a href="/nocuadra"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#question-marks"/></svg>No cuadra</a>
+      <a href="/avisos" aria-current="page"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#bell"/></svg>Avisos</a>
+      <a href="/cisternas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#droplet"/></svg>Cisternas</a>
+      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#newspaper"/></svg>Noticias</a>
       <details class="nav-more"><summary>Más</summary>
         <div class="mas-panel">
-          <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#megaphone"/></svg>Exige</a>
-          <a href="/fotos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#video"/></svg>Fotos</a>
-          <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#bar-chart"/></svg>Cuentas</a>
-          <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#droplet"/></svg>Contaminación</a>
-          <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#heart"/></svg>Antisionismo</a>
+          <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#megaphone"/></svg>Exige</a>
+          <a href="/fotos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#video"/></svg>Fotos</a>
+          <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#bar-chart"/></svg>Cuentas</a>
+          <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#droplet"/></svg>Contaminación</a>
+          <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#heart"/></svg>Antisionismo</a>
         </div></details>
     </nav>
   </header>
@@ -340,7 +321,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
       <form class="search" id="buscar" role="search">
         <div class="field">
           <label for="colonia" class="sr">Busca tu colonia, municipio o código postal</label>
-          <svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#search"/></svg>
+          <svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#search"/></svg>
           <input id="colonia" name="q" type="search" maxlength="80" autocomplete="off" spellcheck="false" placeholder="Busca tu colonia o C.P." role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugerencias">
           <button class="clear" type="button" id="limpiar" aria-label="Borrar la búsqueda" hidden><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
           <ul class="suggest" id="sugerencias" role="listbox" aria-label="Colonias encontradas" hidden></ul>
@@ -348,11 +329,11 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
         <button class="button go" type="submit">Buscar</button>
       </form>
       <div class="locrow">
-        <button class="button alt" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#map-pin"/></svg>Usar mi ubicación</button>
+        <button class="button alt" type="button" id="ubicacion"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#map-pin"/></svg>Usar mi ubicación</button>
         <p><strong>Recomendado:</strong> usa el mapa de zonas del SIAPA, no los nombres. No guardamos tu ubicación. <a href="#lista">Por qué</a></p>
       </div>
       <p class="note" id="calendario-fuente"></p>
-      <a class="button tgcta" href="https://t.me/AvisoAguaGDLbot?start=hola" rel="noopener"><svg class="tgi" aria-hidden="true"><use href="/icons.svg?v=5#telegram"/></svg><span><strong>Avisos gratis por Telegram</strong><small>Te avisa dos días antes de cada corte y la noche anterior. Abre el bot y manda tu ubicación, tu colonia o tu zona.</small></span></a>
+      <a class="button tgcta" href="https://t.me/AvisoAguaGDLbot?start=hola" rel="noopener"><svg class="tgi" aria-hidden="true"><use href="/icons.svg?v=6#telegram"/></svg><span><strong>Avisos gratis por Telegram</strong><small>Te avisa dos días antes de cada corte y la noche anterior. Abre el bot y manda tu ubicación, tu colonia o tu zona.</small></span></a>
       <p class="note tgnote">¿Sin Telegram? Busca tu colonia o toca tu zona y usa el botón «Calendario» para recibir los cortes en tu calendario.</p>
       <p class="status" id="estado" aria-live="polite">Cargando el mapa de colonias…</p>
       <noscript><p class="status">Consulta la <a href="/simple">versión sencilla</a> o el <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa oficial del SIAPA</a>.</p></noscript>
@@ -362,7 +343,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
 
   <div class="wrap">
     <section aria-labelledby="ojo">
-      <h2 id="ojo" class="sec ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=5#info"/></svg></span>Ten en cuenta</h2>
+      <h2 id="ojo" class="sec ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#info"/></svg></span>Ten en cuenta</h2>
       <div class="warn callout" id="lista">
         <svg class="trace" aria-hidden="true"><rect width="100%" height="100%" rx="10" pathLength="1"/></svg>
         <h3>La lista de colonias del SIAPA y su mapa no siempre coinciden</h3>
