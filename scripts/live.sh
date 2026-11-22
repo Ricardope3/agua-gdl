@@ -15,9 +15,10 @@ else
 fi
 
 # Site: Pages exposes no commit, so compare live bytes of the web/ files that
-# changed in origin/main's last 30 commits. HTML is fetched at its pretty URL.
+# changed in origin/main's last 30 commits, newest first (an alphabetical cut
+# skipped the last push's files, 21 Nov 2026). HTML is fetched at its pretty URL.
 diff=() n=0
-for f in $(git log -30 --format= --name-only --diff-filter=AM "$main" -- web | grep -v "^web/_" | sort -u | head -20); do
+for f in $(git log -30 --format= --name-only --diff-filter=AM "$main" -- web | grep -v "^web/_" | grep . | awk '!seen[$0]++' | head -20); do
   git cat-file -e "$main:$f" 2>/dev/null || continue
   p=${f#web/}; p=${p%.html}; [ "$p" = index ] && p=; p=${p%/index}
   live=$(curl -fsSL -m 10 "https://aguagdl.com/$p" 2>/dev/null | shasum | cut -c1-40)
