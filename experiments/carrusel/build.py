@@ -4,7 +4,7 @@
     python3 experiments/carrusel/build.py               check every carousel, render all, write FUENTES.md and contact sheets
     python3 experiments/carrusel/build.py 01-maximo     only carousels whose id starts with this
     python3 experiments/carrusel/build.py --check       validate only (no Chrome)
-    python3 experiments/carrusel/build.py --capturas    retake the aguagdl.com phone screenshots in capturas/
+    python3 experiments/carrusel/build.py --capturas    retake the aguagdl.com phone screenshots in capturas/ (or only the pages named)
 
 Checks before rendering: every number written on a slide appears in the "cita" of a source the slide cites
 (or in the slide's "calculo", which says how it was computed); every source has url, medio, fecha, cita and
@@ -615,18 +615,24 @@ def fuentes_md(c):
 PAGINAS = {"reportes": "reportes", "promesas": "promesas", "pipas": "pipas", "exige": "exige", "avisos": "avisos",
            "ciudad-granja": "reportes?q=CIUDAD%20GRANJA&m=Zapopan&cp=45010", "reportes-zapopan": "reportes-zapopan"}
 DESDE = {"promesas": 520, "ciudad-granja": 75}  # CSS px to skip at the top (/promesas starts at its meter, not its opening stance)
+PANEO = {"reportes-zapopan": 250}  # CSS px to drag the map up (pan south) when its fit leaves the reports below the frame (mapa.mjs)
 
 
-def capturas():
+def capturas(solo):
     """Retake the phone screenshots of aguagdl.com used by the sitio slides (500 CSS px wide, 2x)."""
     (HERE / "capturas").mkdir(exist_ok=True)
     for p, path in PAGINAS.items():
+        if solo and p not in solo:
+            continue
         png = HERE / "capturas" / f"{p}.png"
         top = DESDE.get(p, 0)
-        subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--force-device-scale-factor=2",
-                        "--virtual-time-budget=10000", f"--window-size=500,{1080 + top + CHROME_BAR}", f"--screenshot={png}",
-                        f"https://aguagdl.com/{path}"], check=True, capture_output=True)
-        subprocess.run(["sips", "-c", "2160", "1000", "--cropOffset", str(2 * top + 1), "1", str(png)], check=True, capture_output=True)
+        if p in PANEO:
+            subprocess.run(["node", str(HERE / "mapa.mjs"), f"https://aguagdl.com/{path}", str(png), str(top), str(PANEO[p])], check=True)
+        else:
+            subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--force-device-scale-factor=2",
+                            "--virtual-time-budget=10000", f"--window-size=500,{1080 + top + CHROME_BAR}", f"--screenshot={png}",
+                            f"https://aguagdl.com/{path}"], check=True, capture_output=True)
+            subprocess.run(["sips", "-c", "2160", "1000", "--cropOffset", str(2 * top + 1), "1", str(png)], check=True, capture_output=True)
         jpg = png.with_suffix(".jpg")
         subprocess.run(["sips", "-s", "format", "jpeg", "-s", "formatOptions", "80", "-Z", "1512", str(png), "--out", str(jpg)],
                        check=True, capture_output=True)
@@ -636,7 +642,7 @@ def capturas():
 
 def main():
     if "--capturas" in sys.argv:
-        return capturas()
+        return capturas([a for a in sys.argv[1:] if not a.startswith("--")])
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     only_check = "--check" in sys.argv
     fotos_ok = set(json.loads((HERE / "fotos.json").read_text())["fotos"])
