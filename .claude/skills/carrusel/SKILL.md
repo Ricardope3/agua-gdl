@@ -49,7 +49,7 @@ Arguments: the topic, a colonia, or the facts to show. If the ask is vague, prop
 ## Shape
 
 - 5–8 slides: a cover that asks the reader's own question («¿Te toca corte mañana?»), one fact per slide (the same map or frame, one new layer each), the evidence, the honest limit, a `sitio` slide, then the `cierre`. Numbers that make people want to check their own colonia beat abstract totals. Guides people save (how to ask for a pipa, the discount, a letter to a diputación) show the real form or message with the explained part highlighted. The caption tells the whole story, numbers included.
-- The `sitio` slide shows the matching aguagdl.com page with that page's own number and «link en la bio». Run `python3 experiments/carrusel/build.py --capturas` first and copy the live numbers into its `cita`. Screenshots skip pages showing faces, the caricature, or the /promesas stance line (`DESDE` crops it).
+- The `sitio` slide shows the matching aguagdl.com page with that page's own number and «link en la bio». Run `python3 experiments/carrusel/build.py --capturas` first and copy the live numbers into its `cita`. Screenshots skip pages showing faces, the caricature, or the /promesas stance line (`DESDE` crops it). Look at the capture before building: a map that fits more than the phone frame shows its empty edge, so set the page's drag in `PANEO` (`mapa.mjs`) and retake only that page with `--capturas <página>`.
 - Backgrounds only from `experiments/carrusel/fotos.json`. To add one, open it first: no close face, no legible private name, no outlet watermark or burned-in text.
 
 ## Look and words (learned from @ecosia, 6 Nov)
