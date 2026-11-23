@@ -49,7 +49,7 @@ News and neighbours' posts since 12 Oct 2026 about colonias without water, each 
 - A repost is its original outlet's story: labcsa.org's reprints of Mural, El Informador or Tráfico ZMG carry the original outlet as `quien`, and one story with its retellings counts as one source.
 - `fecha` is the day in Guadalajara: convert a UTC upload time, and don't derive it from Facebook's relative ages («2 sem», «3 d»).
 - A post its author deleted or made private comes out of the file. `--eco` flags only X posts («doesn't show it any more» on stderr; a network error is not deletion); Facebook ones are noticed only when someone opens the link.
-- Query and edit through the script, not ad-hoc Python: `q colonia~ARCOS fecha>=2026-10-20 --fields url,dias` (TSV with index, `--count`, `--all`), `schema`, `add FILE.json` and `set INDEX field=value` (`field=` removes) validate the whole file and write only if it passes; `--data PATH` works on a copy.
+- Query and edit through the script, not ad-hoc Python: `q colonia~ARCOS 'fecha>=2026-10-20' --fields url,dias` (TSV with index, `--count`, `--all`; quote a filter with `>` or `<`, which the shell otherwise takes as a redirect, writing a file named `=2026-…`), `schema`, `add FILE.json` and `set INDEX field=value` (`field=` removes) validate the whole file and write only if it passes; `--data PATH` works on a copy.
 
 ## Pages
 

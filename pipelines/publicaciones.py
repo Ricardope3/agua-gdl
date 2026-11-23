@@ -18,7 +18,7 @@
                                                   video, so a future run can download the evidence; then
                                                   validate and write. Facebook needs a browser session, so its
                                                   posts are tagged by hand when added.
-    python3 pipelines/publicaciones.py q colonia~ARCOS fuente=medio fecha>=2026-10-20 dias>7 [--fields url,fecha,dias] [--count] [--all]
+    python3 pipelines/publicaciones.py q colonia~ARCOS fuente=medio 'fecha>=2026-10-20' 'dias>7' [--fields url,fecha,dias] [--count] [--all]
                                                   list matching entries as TSV with their index (50 rows unless
                                                   --all); ops = != ~ (contains) > >= < <=, dotted fields (eco.reacciones)
     python3 pipelines/publicaciones.py schema     (or --schema) each field: type, required, values, meaning
