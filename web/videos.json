@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-22",
+ "actualizado": "2026-11-24",
  "videos": [
   {
    "url": "https://www.facebook.com/reel/1600459298762122/",
@@ -4080,6 +4080,32 @@
    ],
    "lugar": "Colonia la penal",
    "cita": "Colonia la penal sigue saliendo con tierra",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.facebook.com/reel/1663178591965432?comment_id=1184000564311202",
+   "red": "facebook",
+   "quien": "",
+   "fecha": "2026-11-23",
+   "colonias": [
+    "RESIDENCIAL DE LA BARRANCA|Guadalajara|44720"
+   ],
+   "lugar": "Residencial de la Barranca",
+   "cita": "Se solicita reestablecer el servicio en la col Residencial de la Barranca, se reporto una fuga y solo cortaron el flujo del agua dejando sin el servicio a toda la colonia",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.tiktok.com/@marco_fuentes1/video/7711173281600064775?comment_id=7711405664896549650",
+   "red": "web",
+   "quien": "",
+   "fecha": "2026-11-23",
+   "colonias": [
+    "PARQUES DE LA VICTORIA|San Pedro Tlaquepaque|45620"
+   ],
+   "lugar": "parques de la Victoria",
+   "cita": "Ayúdenos a resolver el problema de falta de agua en parques de la Victoria tenemos más de 11 años aquí y no aviamos tenido problemas por la falta de agua y este año emos estado batallando mucho con la falta de agua",
    "dias": null,
    "video": null
   }

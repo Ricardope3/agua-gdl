@@ -1,5 +1,5 @@
 {
- "revisado": "2026-11-22",
+ "revisado": "2026-11-24",
  "nota": "Fotos revisadas a mano para /fotos. temas: las que entran (protesta, sin-agua, calidad). fuera: revisadas y excluidas (tarjetas de solo texto, avisos y fotos oficiales, mapas, entrevistas, nombres de personas, duplicados: se queda la foto más clara de cada escena). carteles: fotos donde se lee el cartel o la manta de una protesta; se muestran más grandes. Una vista que no está en ninguna de las dos listas queda fuera hasta revisarla. extra: publicaciones revisadas que no están en publicaciones.json ni en /noticias (su foto o cuadro guardado en img/fotos/).",
  "temas": {
   "fuentes/001e7819f876.jpg": "sin-agua",
@@ -209,6 +209,7 @@
   "img/videos/x-2109367473552437311.webp": "protesta",
   "img/videos/x-2109372356779200729.webp": "protesta",
   "img/videos/x-2109374694897975516.webp": "protesta",
+  "img/videos/x-2125046750725468582.webp": "protesta",
   "img/videos/x-2109377244892209329.webp": "protesta",
   "img/videos/x-2109380709584425429.webp": "protesta",
   "img/videos/x-2109389377801486675.webp": "protesta",
@@ -597,7 +598,13 @@
   "fuentes/c2770cbd9a3f.jpg",
   "fuentes/e8b41591717e.jpg",
   "fuentes/6ab1c76015af.jpg",
-  "fuentes/dc7cbcf5779d.jpg"
+  "fuentes/dc7cbcf5779d.jpg",
+  "fuentes/13054ce72bb8.jpg",
+  "fuentes/1e844c21d5de.jpg",
+  "fuentes/2ace57c7ae91.jpg",
+  "fuentes/71e9e8d992e9.jpg",
+  "fuentes/b6cf1c45848a.jpg",
+  "fuentes/f25bd421e0c3.jpg"
  ],
  "carteles": [
   "fuentes/00fd155d5d8f.jpg",
