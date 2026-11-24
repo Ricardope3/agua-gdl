@@ -1,0 +1,343 @@
+{
+ "id": "23-siapa-las-pintas",
+ "titulo": "Lo que el SIAPA le escribió a Tlajomulco",
+ "caption": "El 6 de marzo de 2026, el SIAPA le escribió a Tlajomulco sobre el canal Las Pintas, que según el SIAPA lleva agua de Chapala a la planta de Miravalle. Nos lo dio Tlajomulco por transparencia.\n\n🧪 Según el SIAPA, el nitrógeno amoniacal del agua cruda que llega a la planta «ha alcanzado más de 3.50 mg/l». El límite que cita, de la norma para agua de uso y consumo humano, es 0.5 mg/L.\n📈 En su gráfica, el promedio mensual pasa de unos 0.1 mg/L en 2020 y 2021 a unos 3.6 en enero de 2026; en julio de 2024 y de 2025 hubo picos de unos 2.2, y en diciembre de 2025, unos 2.3 (lectura nuestra, ±0.05).\n📍 Dice que por el canal pasan aguas residuales de descargas que «se encuentran dentro del municipio de Tlajomulco de Zúñiga», y nombra 10 puntos principales.\n🔎 Según la CEDHJ, Tlajomulco informó que en 3 recorridos con el SIAPA a 10 puntos «se constató que no existen estas descargas», y que sí se detectaron en el arroyo El Seco, junto a Tlaquepaque.\n📨 El oficio responde a un aviso de Tlajomulco sobre una línea sanitaria que descargaba al Arroyo Seco: el SIAPA dice que está fuera de su cobertura, pero la inspeccionó.\n⚖️ El 30 de abril, la CEDHJ le recomendó al SIAPA informar el «Estado de cumplimiento del oficio DG-135/2026».\n\nLo que no sabemos: si son los mismos 10 puntos y cuándo fueron los recorridos; si las descargas estaban cuando pasaron; cómo siguió después de inicios de 2026; y cómo está el agua ya potabilizada: el oficio no trae esos datos.\n\nEl oficio completo y el CSV: aguagdl.com/contamina (link en la bio).\n\n¿Qué le preguntarías al SIAPA? Escríbelo en los comentarios.",
+ "fuentes": {
+  "dg135": {
+   "url": "https://aguagdl.com/datos/siapa-dg-135-2026.pdf",
+   "medio": "SIAPA, oficio DG-135/2026 (por transparencia, folio 140290426001765)",
+   "fecha": "2026-03-06",
+   "revisado": "2026-11-24",
+   "cita": "[encabezado de cada página, leído de la imagen] Oficio no. DG-135/2026 Guadalajara, Jalisco a 06 de marzo del 2026 [p. 1, leído de la imagen] en respuesta a su amable similar no. DAPIH/0127-01/2026 medio por el que informa que personal de la Dirección de Agua Potable e Infraestructura Hidráulica, identificó una línea sanitaria en estado de deterioro avanzado, la cual se encuentra expuesta y descargando aguas residuales sin tratamiento al cauce conocido como Arroyo Seco, solicita que se considere que se implementen las acciones correctivas pertinentes … SIAPA desde 1978 opera el Canal Las Pintas, es un sistema de abastecimiento de agua construido en 1956 para hacer llegar el vital líquido desde Chapala a la presa Las Pintas y a la planta potabilizadora no. 1 ubicada en Miravalle … por el Canal Las Pintas transitan aguas residuales provenientes de descargas de aguas sanitarias y/o residuales que se encuentran dentro del municipio de Tlajomulco de Zúñiga … [p. 2] un indicador clave de contaminación en el agua, a considerar, es el nivel de nitrógeno amoniacal aportado por estas descargas que han ocasionado un incremento perjudicial en el influente que es enviado a la planta potabilizadora no. 1, cabe señalar que el límite permisible establecido por la norma es de 0.5 mg/l, sin embargo, ha alcanzado más de 3.50 mg/l. (ver figura 1). … Figura 1. Gráfico elaborado por las Subdirecciones de Laboratorios y Potabilización (corte enero 2020 a enero 2026). [p. 3] … no obstante que este punto se encuentra fuera de la cobertura institucional, la Subdirección de Alcantarillado realizó una inspección técnica, encontrando que el tubo presenta derrames, por lo que se están realizando las gestiones con el municipio de San Pedro Tlaquepaque para subsanar la falla … [Anexo 01, p. 1; p. 4 del PDF] … conducir y suministrar los volúmenes complementarios de agua cruda a la Planta Potabilizadora 1 (PP1) Miravalle … se han identificado los ingresos de caudales hacia el Canal Las Pintas con olor y color característico del agua residual, siendo los puntos principales en: El Capulín 1, 2 y 3, El Guayabo, El Zapote, La Carreta, El Edén, La Teja, Vaso Regulador Adolf Horn y 1°. De Mayo. Cabe señalar que, en estos sitios se han observado descargas abundantes, en algunas de manera permanente y otras de forma intermitente … Típicamente, durante el temporal de lluvias el deterioro en la calidad del agua es mayor que el resto del año. Sin embargo, desde el mes de diciembre de 2025 se ha observado un deterioro significativo y mucho mayor al registrado durante el propio temporal de lluvias. Esta condición rebasa la capacidad operativa de la planta potabilizadora, ya que no fue diseñada para tratar agua con estas características de calidad. … El nitrógeno amoniacal, es uno de los parámetros más representativos del deterioro de la calidad del agua, este proviene de aguas residuales domésticas e industriales, y de procesos agrícolas. Su presencia dificulta el proceso de desinfección del agua. La Norma Oficial Mexicana NOM-127-SSA1-2021, que establece los límites permisibles de la calidad del agua para uso y consumo humano, indica como límite permisible 0.5 mg/L. [Anexo 01, p. 2; p. 5 del PDF] A continuación, se presentan los valores promedio mensuales de nitrógeno amoniacal del agua cruda que ingresa a la PP1: Nitrógeno amoniacal (mg/L) - Valor promedio mensual Influente PP1 … Gráfico 1. Comparativo de valores promedio de concentración de nitrógeno amoniacal en miligramos por litro (mg/l) en el influente de la planta potabilizadora no. 1 Miravalle."
+  },
+  "csv": {
+   "url": "https://aguagdl.com/datos/siapa-dg-135-2026-amoniacal.csv",
+   "medio": "Agua GDL, lectura de la gráfica (CSV)",
+   "fecha": "2026-11-24",
+   "revisado": "2026-11-24",
+   "cita": "mes,lectura_agua_gdl_grafico_1_pag_5_mg_l,lectura_agua_gdl_figura_1_pag_2_mg_l 2020-01,0.11,0.10 … 2021-12,0.11,0.12 … 2024-07,2.18,2.15 … 2025-07,2.14,2.15 … 2025-12,2.28,2.30 2026-01,3.62,3.64 2026-02,3.01,3.03 [74 filas, de 2020-01 a 2026-02; en 2020 y 2021 la columna del gráfico 1 marca de 0.10 a 0.11 cada mes; de 2020-01 a 2025-11 el valor más alto de esa columna es 2.18, en 2024-07, y el que le sigue, 2.14, en 2025-07. Son lecturas de Agua GDL sobre las gráficas del oficio, que no traen la tabla, con un margen de ±0.05 mg/L; no son cifras del SIAPA.]"
+  },
+  "cedhj": {
+   "url": "https://cedhj.org.mx/assets_web/doc/recomendaciones/emitidas/2026/20260430150739/recomendacion_1777583259457.pdf",
+   "medio": "CEDHJ, Recomendación 10/2026",
+   "fecha": "2026-04-30",
+   "revisado": "2026-11-24",
+   "cita": "[p. 1] Recomendación 10/2026 Guadalajara, Jalisco, 30 de abril de 2026 … [p. 52, párrafo 74] 74. El 15 de abril de 2026, se recibió el oficio DDHH/026/2026 firmado por la Directora de Derechos Humanos del Ayuntamiento de Tlajomulco de Zúñiga, al que anexó el oficio DAPIH/0331-01/2026, suscrito por el Director de Agua Potable e Infraestructura Hidráulica, en el que informó que … Señaló que el SIAPA informó al municipio respecto de 10 puntos de descarga de aguas residuales hacia el sistema antiguo de abastecimiento de Chapala, en específico en el canal de Las Pintas, por lo que se realizaron 3 recorridos en campo junto con el SIAPA para visitar estos 10 puntos y se constató que no existen estas descargas; también se visitaron varios puntos del arroyo El Seco, en los que se detectó la existencia de descargas de aguas residuales hacia el cauce de este arroyo, en zonas colindantes con el municipio de San Pedro Tlaquepaque, donde el municipio de Tlajomulco de Zúñiga no tiene infraestructura. … [p. 183] Al Sistema Intermunicipal de Agua Potable y Alcantarillado: … [p. 184] Cuarta. Con la finalidad de garantizar los derechos de acceso que contempla el Acuerdo de Escazú, se le solicita hacer público en sus medios y portales oficiales lo siguiente: … II- Haga públicos los resultados de los análisis de calidad de agua que se generaron por laboratorios externos certificados durante el 2026. … [p. 185] Séptima. Gire instrucciones para efecto de que, en un plazo razonable, informe el seguimiento que se le otorgó a lo siguiente: a) Estado de cumplimiento del oficio DG-135/2026, relativo a la descarga de aguas residuales sin tratamiento detectada en el Canal Las Pintas y sus zonas aledañas, señalado por el municipio de Tlajomulco de Zúñiga, en la presente Recomendación. b) Avances de oficio DG-159/2026, dirigido a Organismo de Cuenca Lerma Santiago Pacífico de la Conagua, relativo a la existencia de descargas irregulares en las riberas del Canal Las Pintas, encauzando las acciones correspondientes a dicha autoridad y solicitando su intervención para la supervisión de los canales. c) Seguimiento al oficio DG-128/2026, dirigido al Director de Agua Potable e Infraestructura Hidráulica del Gobierno Municipal de San Pedro Tlaquepaque, relativo a la identificación de aportaciones de origen sanitario provenientes de su jurisdicción que descargaban hacía el Arroyo Seco y el Canal Las Pintas."
+  },
+  "web_contamina": {
+   "url": "https://aguagdl.com/contamina",
+   "medio": "Agua GDL, aguagdl.com/contamina",
+   "fecha": "2026-11-24",
+   "consultada": true,
+   "revisado": "2026-11-24",
+   "cita": "Lo que el SIAPA le escribió a Tlajomulco. En su oficio DG-135/2026, del 6 de marzo de 2026, dirigido al director de Agua Potable e Infraestructura Hidráulica de Tlajomulco, el SIAPA dice que su personal ha documentado que por el canal Las Pintas «transitan aguas residuales provenientes de descargas de aguas sanitarias y/o residuales que se encuentran dentro del municipio de Tlajomulco de Zúñiga». … Son mediciones del agua cruda que entra a la planta: el oficio no trae resultados del agua ya potabilizada ni de la que llega a las casas. Tlajomulco nos entregó el oficio por transparencia el 24 de noviembre de 2026 (folio 140290426001765): el oficio completo (PDF, 16 páginas) y los valores mensuales de las gráficas (CSV). Los valores del CSV los leímos nosotros en las dos gráficas del oficio (pp. 2 y 5), que no traen la tabla, con un margen de ±0.05 mg/L."
+  },
+  "web_exige": {
+   "url": "https://aguagdl.com/exige",
+   "medio": "Agua GDL, aguagdl.com/exige",
+   "fecha": "2026-11-24",
+   "consultada": true,
+   "revisado": "2026-11-24",
+   "cita": "Pídele al gobernador Pablo Lemus y a las 38 diputaciones del Congreso de Jalisco que saneen los ríos, que el agua llegue limpia y suficiente, que rindan cuentas y que el agua siga siendo pública. Escríbeles por correo, X o Messenger desde tu propia cuenta, o llámales. Agua GDL no ve ni guarda nada. … Son 39 correos: uno para el gobernador y uno para cada diputación, con su nombre."
+  }
+ },
+ "slides": [
+  {
+   "tipo": "portada",
+   "documento": {
+    "fuente": "dg135",
+    "membrete": [
+     "siapa-dg135-logo.png",
+     "siapa-dg135-oficio.png"
+    ],
+    "recortes": [
+     "…",
+     "siapa-dg135-limite-1.png",
+     "siapa-dg135-limite-2.png",
+     "siapa-dg135-limite-3.png"
+    ],
+    "dice": "… cabe señalar que el límite permisible establecido por la norma es de 0.5 mg/l, sin embargo, ha alcanzado más de 3.50 mg/l."
+   },
+   "kicker": "Lo que el SIAPA le escribió a Tlajomulco el 6 de marzo",
+   "cifra": "más de 3.50",
+   "titular": "mg/L de nitrógeno amoniacal en el agua cruda que llega a la planta de Miravalle",
+   "texto": "El límite que cita, de la norma para agua de uso y consumo humano: **0.5** mg/L. El oficio no trae datos del agua ya potabilizada.",
+   "fuentes": [
+    "dg135"
+   ],
+   "nota": "Recorte: p. 2 del oficio DG-135/2026."
+  },
+  {
+   "tipo": "texto",
+   "kicker": "Promedio de cada mes en la gráfica del SIAPA, leído por nosotros",
+   "titular": "De unos 0.1 mg/L en 2020 y 2021 a unos **3.6** en enero de 2026",
+   "documento": {
+    "fuente": "dg135",
+    "etiqueta": "SIAPA, oficio DG-135/2026",
+    "recortes": [
+     {
+      "img": "siapa-dg135-grafica.png",
+      "marca": false,
+      "circulos": [
+       {
+        "x": 152,
+        "y": 915,
+        "r": 36,
+        "texto": "≈0.1 · ene 2020",
+        "dx": 130,
+        "dy": -60
+       },
+       {
+        "x": 1286,
+        "y": 170,
+        "r": 40,
+        "texto": "≈3.6 · ene 2026",
+        "dx": -190,
+        "dy": 0
+       }
+      ],
+      "escala": 0.5
+     }
+    ],
+    "dice": "Valor promedio mensual Influente PP1"
+   },
+   "texto": "Los picos de julio de 2024 y de 2025 fueron de unos 2.2; diciembre de 2025, unos 2.3.",
+   "fuentes": [
+    "dg135",
+    "csv"
+   ],
+   "nota": "Recorte: p. 5. Círculos: lectura nuestra (±0.05 mg/L).",
+   "calculo": "Lecturas de Agua GDL sobre el gráfico 1 (p. 5), en el CSV: de 0.10 a 0.11 mg/L cada mes de 2020 y 2021, unos 0.1 mg/L; enero de 2026, 3.62, unos 3.6. Los círculos marcan los puntos de ene-20 y ene-26 del eje. Antes de diciembre de 2025, los valores más altos del gráfico 1 en el CSV son 2.18 (julio de 2024) y 2.14 (julio de 2025): unos 2.2. Diciembre de 2025: 2.28 en el CSV, unos 2.3."
+  },
+  {
+   "tipo": "texto",
+   "kicker": "Según el SIAPA, desde diciembre de 2025",
+   "titular": "un deterioro «mucho mayor» que en lluvias, que «rebasa la capacidad operativa» de la planta",
+   "documento": {
+    "fuente": "dg135",
+    "membrete": [
+     "siapa-dg135-logo.png",
+     "siapa-dg135-oficio.png"
+    ],
+    "escala_membrete": 0.4,
+    "recortes": [
+     "siapa-dg135-diciembre-1.png",
+     "siapa-dg135-diciembre-2.png",
+     "siapa-dg135-diciembre-3.png",
+     "siapa-dg135-diciembre-4.png",
+     "siapa-dg135-rebasa.png",
+     "siapa-dg135-disenada.png",
+     "siapa-dg135-calidad.png"
+    ],
+    "dice": "desde el mes de diciembre de 2025 se ha observado un deterioro significativo y mucho mayor al registrado durante el propio temporal de lluvias. Esta condición rebasa la capacidad operativa de la planta potabilizadora, ya que no fue diseñada para tratar agua con estas características de calidad."
+   },
+   "texto": "El nitrógeno amoniacal, dice, viene de aguas residuales domésticas e industriales y de procesos agrícolas, y dificulta la desinfección.",
+   "fuentes": [
+    "dg135"
+   ],
+   "nota": "Recorte: p. 4 del PDF (Anexo 01 del oficio)."
+  },
+  {
+   "tipo": "texto",
+   "kicker": "El oficio del SIAPA nombra como principales",
+   "cifra": "10 puntos",
+   "titular": "donde entra al canal agua «con olor y color característico del agua residual»",
+   "documento": {
+    "fuente": "dg135",
+    "membrete": [
+     "siapa-dg135-logo.png",
+     "siapa-dg135-oficio.png"
+    ],
+    "escala_membrete": 0.4,
+    "recortes": [
+     {
+      "img": "siapa-dg135-puntos-1.png",
+      "escala": 0.82
+     },
+     {
+      "img": "siapa-dg135-puntos-2.png",
+      "escala": 0.82
+     },
+     {
+      "img": "siapa-dg135-puntos-3.png",
+      "escala": 0.82
+     },
+     {
+      "img": "siapa-dg135-puntos-4.png",
+      "escala": 0.82
+     },
+     {
+      "img": "siapa-dg135-puntos-5.png",
+      "escala": 0.82
+     },
+     {
+      "img": "siapa-dg135-puntos-6.png",
+      "escala": 0.82
+     }
+    ],
+    "dice": "se han identificado los ingresos de caudales hacia el Canal Las Pintas con olor y color característico del agua residual, siendo los puntos principales en: El Capulín 1, 2 y 3, El Guayabo, El Zapote, La Carreta, El Edén, La Teja, Vaso Regulador Adolf Horn y 1°. De Mayo."
+   },
+   "texto": "Según el SIAPA, por el canal Las Pintas pasan aguas residuales de descargas que «se encuentran dentro del municipio de Tlajomulco de Zúñiga».",
+   "fuentes": [
+    "dg135"
+   ],
+   "nota": "Recorte: p. 4 del PDF (Anexo 01 del oficio).",
+   "calculo": "El Capulín 1, 2 y 3 son tres puntos; con El Guayabo, El Zapote, La Carreta, El Edén, La Teja, Vaso Regulador Adolf Horn y 1° de Mayo, siete más: 10 puntos."
+  },
+  {
+   "tipo": "texto",
+   "kicker": "Según la CEDHJ, Tlajomulco le informó que tras",
+   "titular": "3 recorridos con el SIAPA a 10 puntos, «no existen estas descargas»",
+   "documento": {
+    "fuente": "cedhj",
+    "membrete": [
+     "cedhj-logo.png",
+     "cedhj-titulo.png"
+    ],
+    "escala_membrete": 0.35,
+    "recortes": [
+     {
+      "img": "cedhj-74-anexo.png",
+      "escala": 0.9
+     },
+     "…",
+     {
+      "img": "cedhj-74-senalo.png",
+      "escala": 0.9
+     },
+     {
+      "img": "cedhj-74-respecto.png",
+      "escala": 0.9
+     },
+     "…",
+     {
+      "img": "cedhj-74-linea-1.png",
+      "escala": 0.9
+     },
+     {
+      "img": "cedhj-74-linea-2.png",
+      "escala": 0.9
+     },
+     {
+      "img": "cedhj-74-linea-3.png",
+      "escala": 0.9
+     },
+     {
+      "img": "cedhj-74-linea-4.png",
+      "escala": 0.9
+     }
+    ],
+    "dice": "al que anexó el oficio DAPIH/0331-01/2026, … Señaló que el SIAPA informó al municipio respecto de 10 puntos de descarga … por lo que se realizaron 3 recorridos en campo junto con el SIAPA para visitar estos 10 puntos y se constató que no existen estas descargas;"
+   },
+   "texto": "Y que en varios puntos del arroyo El Seco se detectaron descargas, junto a Tlaquepaque, donde Tlajomulco «no tiene infraestructura».",
+   "fuentes": [
+    "cedhj"
+   ],
+   "nota": "Recorte: Recomendación 10/2026 de la CEDHJ, p. 52."
+  },
+  {
+   "tipo": "texto",
+   "kicker": "El 30 de abril, la CEDHJ le recomendó al SIAPA que informe",
+   "titular": "el «Estado de cumplimiento del oficio DG-135/2026»",
+   "documento": {
+    "fuente": "cedhj",
+    "membrete": [
+     "cedhj-logo.png",
+     "cedhj-titulo.png"
+    ],
+    "escala_membrete": 0.35,
+    "recortes": [
+     {
+      "img": "cedhj-septima-1.png",
+      "escala": 0.76
+     },
+     {
+      "img": "cedhj-septima-2.png",
+      "escala": 0.76
+     },
+     {
+      "img": "cedhj-septima-3.png",
+      "escala": 0.76
+     },
+     {
+      "img": "cedhj-septima-4.png",
+      "escala": 0.76
+     },
+     {
+      "img": "cedhj-septima-5.png",
+      "escala": 0.76
+     },
+     {
+      "img": "cedhj-septima-6.png",
+      "escala": 0.76
+     },
+     {
+      "img": "cedhj-septima-7.png",
+      "escala": 0.76
+     },
+     {
+      "img": "cedhj-septima-8.png",
+      "escala": 0.76
+     },
+     {
+      "img": "cedhj-septima-9.png",
+      "escala": 0.76
+     },
+     {
+      "img": "cedhj-septima-10.png",
+      "escala": 0.76
+     }
+    ],
+    "dice": "Séptima. Gire instrucciones para efecto de que, en un plazo razonable, informe el seguimiento que se le otorgó a lo siguiente: a) Estado de cumplimiento del oficio DG-135/2026, relativo a la descarga de aguas residuales sin tratamiento detectada en el Canal Las Pintas y sus zonas aledañas, señalado por el municipio de Tlajomulco de Zúñiga, en la presente Recomendación."
+   },
+   "texto": "También pide el seguimiento de otros dos oficios sobre descargas al canal: a la Conagua y a Tlaquepaque.",
+   "fuentes": [
+    "cedhj"
+   ],
+   "nota": "Recorte: Recomendación 10/2026 de la CEDHJ, p. 185."
+  },
+  {
+   "tipo": "lista",
+   "kicker": "Preguntas que estos documentos no responden",
+   "titular": "Lo que no sabemos",
+   "marca": "num",
+   "items": [
+    "Si los 10 puntos que visitó Tlajomulco son los del oficio del SIAPA: la CEDHJ no dice cuáles fueron ni cuándo los visitó",
+    "Si las descargas estaban cuando pasaron: según el SIAPA, unas son permanentes y otras «de forma intermitente»",
+    "Cómo siguió el agua del canal: la gráfica del SIAPA termina a inicios de 2026",
+    "Cómo está el agua ya potabilizada: el oficio no trae esos datos"
+   ],
+   "fuentes": [
+    "cedhj",
+    "dg135"
+   ]
+  },
+  {
+   "tipo": "sitio",
+   "captura": "contamina-dg135",
+   "kicker": "En aguagdl.com/contamina",
+   "cifra": "16 páginas",
+   "titular": "el oficio completo del SIAPA, para que lo leas tú",
+   "items": [
+    "Y los valores que leímos de su gráfica, en CSV",
+    "Con un margen de ±0.05 mg/L"
+   ],
+   "url": "aguagdl.com/contamina",
+   "fuentes": [
+    "web_contamina"
+   ]
+  },
+  {
+   "tipo": "cierre",
+   "titular": "¿Qué le preguntarías al SIAPA?",
+   "acciones": [
+    "Escríbelo en los comentarios",
+    "Pídele al gobernador y a tu diputación que saneen los ríos:"
+   ],
+   "url": "aguagdl.com/exige",
+   "fuentes": [
+    "web_exige"
+   ]
+  }
+ ]
+}

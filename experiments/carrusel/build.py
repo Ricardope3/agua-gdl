@@ -613,8 +613,14 @@ def fuentes_md(c):
 
 
 PAGINAS = {"reportes": "reportes", "promesas": "promesas", "pipas": "pipas", "exige": "exige", "avisos": "avisos",
-           "ciudad-granja": "reportes?q=CIUDAD%20GRANJA&m=Zapopan&cp=45010", "reportes-zapopan": "reportes-zapopan"}
-DESDE = {"promesas": 520, "ciudad-granja": 75}  # CSS px to skip at the top (/promesas starts at its meter, not its opening stance)
+           "ciudad-granja": "reportes?q=CIUDAD%20GRANJA&m=Zapopan&cp=45010", "reportes-zapopan": "reportes-zapopan",
+           "contamina-dg135": "contamina"}
+# CSS px to skip at the top (/promesas starts at its meter, not its opening stance; /contamina at its DG-135/2026 paragraph,
+# below the caricature at the top, measured on 24 Nov 2026 at 500 px: look at the capture, the offset moves when the page does)
+DESDE = {"promesas": 520, "ciudad-granja": 75, "contamina-dg135": 2316}
+# CSS px to keep below DESDE when the next section would show something off topic (/contamina's «El daño a la salud»
+# follows the DG-135/2026 paragraph); the phone shows paper below the cut
+HASTA = {"contamina-dg135": 935}
 PANEO = {"reportes-zapopan": 250}  # CSS px to drag the map up (pan south) when its fit leaves the reports below the frame (mapa.mjs)
 
 
@@ -632,7 +638,8 @@ def capturas(solo):
             subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--force-device-scale-factor=2",
                             "--virtual-time-budget=10000", f"--window-size=500,{1080 + top + CHROME_BAR}", f"--screenshot={png}",
                             f"https://aguagdl.com/{path}"], check=True, capture_output=True)
-            subprocess.run(["sips", "-c", "2160", "1000", "--cropOffset", str(2 * top + 1), "1", str(png)], check=True, capture_output=True)
+            subprocess.run(["sips", "-c", str(2 * HASTA.get(p, 1080)), "1000", "--cropOffset", str(2 * top + 1), "1", str(png)],
+                           check=True, capture_output=True)
         jpg = png.with_suffix(".jpg")
         subprocess.run(["sips", "-s", "format", "jpeg", "-s", "formatOptions", "80", "-Z", "1512", str(png), "--out", str(jpg)],
                        check=True, capture_output=True)

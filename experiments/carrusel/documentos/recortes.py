@@ -2,7 +2,7 @@
 """Cut the pieces of official documents that slides show (a slide's "documento"), from the PDFs aguagdl.com publishes
 (or will: see PDFS).
 
-    python3 experiments/carrusel/documentos/recortes.py
+    python3 experiments/carrusel/documentos/recortes.py [prefix ...]   # all cuts, or only names starting with a prefix
 
 Needs poppler's pdftoppm. Boxes are pixels at 200 dpi, measured on the page image. Each cut leaves out stamps,
 handwriting, signatures and people's names; a sentence that wraps is cut line by line, in order, so it can be shown
@@ -24,6 +24,10 @@ PDFS = {
     "pcyb-ut089": "research/transparency/extracted/pcyb-UT-089-2026/010400-2026-0284 UT-089.pdf",
     "r6785": "research/transparency/extracted/140292426004978/r6785.pdf",
     "r6787": "research/transparency/extracted/140292426004980/r6787.pdf",
+    # SIAPA's DG-135/2026, delivered by Tlajomulco for folio 140290426001765; on aguagdl.com once /contamina's update is pushed.
+    "siapa-dg135": "web/datos/siapa-dg-135-2026.pdf",
+    # The CEDHJ's public PDF (research/transparency/public-sources/README.md gives its cedhj.org.mx address).
+    "cedhj-10-2026": "research/transparency/public-sources/cedhj-recomendacion-10-2026.pdf",
 }
 
 # name: (pdf, page, x, y, w, h)
@@ -71,6 +75,48 @@ RECORTES = {
     "cercania-0907-linea-1.png": ("r6787", 6, 509, 1831, 584, 50),     # «no se localizó información respecto a los puntos»
     "cercania-0907-linea-2.png": ("r6787", 6, 1092, 1831, 484, 50),    # «señalados y descritos anteriormente al»
     "cercania-0907-linea-3.png": ("r6787", 6, 116, 1873, 812, 47),     # «no tratarse de funciones inherentes a esta Coordinación General»
+    # Oficio DG-135/2026 (SIAPA to Tlajomulco, 6 Mar 2026). The addressee's name is on p. 1, the signers' on p. 3, and
+    # Tlajomulco's receipt stamp crosses the left of p. 1's lines from y 1626: none of them is cut.
+    "siapa-dg135-logo.png": ("siapa-dg135", 2, 679, 72, 324, 85),
+    "siapa-dg135-oficio.png": ("siapa-dg135", 2, 891, 162, 588, 80),        # oficio number and date
+    "siapa-dg135-limite-1.png": ("siapa-dg135", 2, 125, 700, 723, 44),      # «cabe señalar que el límite permisible establecido»
+    "siapa-dg135-limite-2.png": ("siapa-dg135", 2, 848, 700, 674, 44),      # «por la norma es de 0.5 mg/l, sin embargo, ha»
+    "siapa-dg135-limite-3.png": ("siapa-dg135", 2, 128, 740, 410, 40),      # «alcanzado más de 3.50 mg/l.»
+    "siapa-dg135-grafica.png": ("siapa-dg135", 5, 160, 372, 1355, 1040),    # Gráfico 1 (Anexo 01, p. 2), title and month axis
+    "siapa-dg135-puntos-1.png": ("siapa-dg135", 4, 561, 1075, 676, 42),     # «se han identificado los ingresos de caudales»
+    "siapa-dg135-puntos-2.png": ("siapa-dg135", 4, 1236, 1075, 282, 42),    # «hacia el Canal Las»
+    "siapa-dg135-puntos-3.png": ("siapa-dg135", 4, 109, 1115, 788, 42),     # «Pintas con olor y color característico del agua residual,»
+    "siapa-dg135-puntos-4.png": ("siapa-dg135", 4, 895, 1113, 622, 42),     # «siendo los puntos principales en: El Capulín»
+    "siapa-dg135-puntos-5.png": ("siapa-dg135", 4, 103, 1157, 715, 41),     # «1, 2 y 3, El Guayabo, El Zapote, La Carreta, El Edén,»
+    "siapa-dg135-puntos-6.png": ("siapa-dg135", 4, 816, 1157, 704, 41),     # «La Teja, Vaso Regulador Adolf Horn y 1°. De Mayo.»
+    "siapa-dg135-diciembre-1.png": ("siapa-dg135", 4, 526, 1474, 547, 38),  # «desde el mes de diciembre de 2025»
+    "siapa-dg135-diciembre-2.png": ("siapa-dg135", 4, 1066, 1468, 454, 44), # «se ha observado un deterioro»
+    "siapa-dg135-diciembre-3.png": ("siapa-dg135", 4, 110, 1513, 627, 40),  # «significativo y mucho mayor al registrado»
+    "siapa-dg135-diciembre-4.png": ("siapa-dg135", 4, 725, 1513, 794, 40),  # «durante el propio temporal de lluvias. Esta condición»
+    "siapa-dg135-rebasa.png": ("siapa-dg135", 4, 106, 1553, 836, 42),      # «rebasa la capacidad operativa de la planta potabilizadora,»
+    "siapa-dg135-disenada.png": ("siapa-dg135", 4, 944, 1551, 576, 42),    # «ya que no fue diseñada para tratar agua»
+    "siapa-dg135-calidad.png": ("siapa-dg135", 4, 110, 1592, 556, 42),     # «con estas características de calidad.»
+    # CEDHJ, Recomendación 10/2026 (30 Apr 2026), a typeset PDF: its letterhead (p. 1), Tlajomulco's report (p. 52, ¶ 74),
+    # the heading of the points to the SIAPA (p. 183) and its seventh point (p. 185).
+    "cedhj-logo.png": ("cedhj-10-2026", 1, 1435, 35, 200, 328),
+    "cedhj-titulo.png": ("cedhj-10-2026", 1, 790, 340, 652, 155),           # «Recomendación 10/2026», «Guadalajara, Jalisco, 30 de abril de 2026»
+    "cedhj-74-anexo.png": ("cedhj-10-2026", 52, 359, 443, 713, 49),         # «al que anexó el oficio DAPIH/0331-01/2026,»
+    "cedhj-74-senalo.png": ("cedhj-10-2026", 52, 225, 1216, 677, 49),       # «Señaló que el SIAPA informó al municipio»
+    "cedhj-74-respecto.png": ("cedhj-10-2026", 52, 901, 1216, 539, 49),     # «respecto de 10 puntos de descarga»
+    "cedhj-74-linea-1.png": ("cedhj-10-2026", 52, 806, 1318, 632, 49),      # «por lo que se realizaron 3 recorridos en»
+    "cedhj-74-linea-2.png": ("cedhj-10-2026", 52, 225, 1370, 440, 49),      # «campo junto con el SIAPA»
+    "cedhj-74-linea-3.png": ("cedhj-10-2026", 52, 666, 1370, 774, 49),      # «para visitar estos 10 puntos y se constató que no»
+    "cedhj-74-linea-4.png": ("cedhj-10-2026", 52, 225, 1421, 382, 49),      # «existen estas descargas;»
+    "cedhj-septima-1.png": ("cedhj-10-2026", 185, 225, 877, 748, 49),       # «Séptima. Gire instrucciones para efecto de que,»
+    "cedhj-septima-2.png": ("cedhj-10-2026", 185, 972, 877, 498, 49),       # «en un plazo razonable, informe»
+    "cedhj-septima-3.png": ("cedhj-10-2026", 185, 225, 922, 730, 49),       # «el seguimiento que se le otorgó a lo siguiente:»
+    "cedhj-septima-4.png": ("cedhj-10-2026", 185, 276, 1011, 846, 49),      # «a) Estado de cumplimiento del oficio DG-135/2026,»
+    "cedhj-septima-5.png": ("cedhj-10-2026", 185, 1118, 1011, 351, 49),     # «relativo a la descarga»
+    "cedhj-septima-6.png": ("cedhj-10-2026", 185, 326, 1057, 704, 47),      # «de aguas residuales sin tratamiento detectada»
+    "cedhj-septima-7.png": ("cedhj-10-2026", 185, 1031, 1057, 438, 47),     # «en el Canal Las Pintas y sus»
+    "cedhj-septima-8.png": ("cedhj-10-2026", 185, 326, 1102, 258, 47),      # «zonas aledañas,»
+    "cedhj-septima-9.png": ("cedhj-10-2026", 185, 584, 1102, 878, 47),      # «señalado por el municipio de Tlajomulco de Zúñiga, en»
+    "cedhj-septima-10.png": ("cedhj-10-2026", 185, 326, 1147, 462, 47),     # «la presente Recomendación.»
 }
 
 
@@ -83,7 +129,10 @@ def pdf(key):
 
 
 def main():
+    solo = sys.argv[1:]  # name prefixes: cut only those
     for name, (key, page, x, y, w, h) in RECORTES.items():
+        if solo and not name.startswith(tuple(solo)):
+            continue
         out = HERE / name
         subprocess.run(["pdftoppm", "-f", str(page), "-l", str(page), "-r", str(DPI), "-x", str(x), "-y", str(y),
                         "-W", str(w), "-H", str(h), "-png", "-singlefile", str(pdf(key)), str(out.with_suffix(""))], check=True)
