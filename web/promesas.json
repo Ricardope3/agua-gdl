@@ -574,14 +574,16 @@
         "citas": [
           {"ref": "Crónica, 13 de julio", "texto": "cuatro módulos de sedimentación para un nuevo módulo con capacidad de distribuir 2 mil litros de agua por segundo, cuya conclusión está proyectada para marzo de 2027"},
           {"ref": "Crónica, 9 de octubre, sobre lo que dijo el gobernador", "texto": "mencionó que los trabajos se realizan en 3 partes y que la primera empezará a operar en abril de 2027, con una capacidad de procesamiento de 2 mil litros por segundo"},
-          {"ref": "Milenio, 28 de octubre, palabras del gobernador", "texto": "La primera etapa de ella, para potabilizar 3 mil litros por segundo, quedará lista dentro de 6 meses"}
+          {"ref": "Milenio, 28 de octubre, palabras del gobernador", "texto": "La primera etapa de ella, para potabilizar 3 mil litros por segundo, quedará lista dentro de 6 meses"},
+          {"ref": "Plan Integral del Agua, ficha de la planta de Miravalle", "texto": "En el 2026 se da inicio al nuevo tren de 2 m3/s, con una inversión de $2,500 millones de pesos."}
         ],
-        "texto": "La ficha del Plan Integral del Agua pone la estación de bombeo de La Calera y su conexión con el acueducto en 2026, con 756 millones de pesos. La capacidad anunciada de la primera etapa también cambió: 2 mil litros por segundo en octubre, 3 mil el 28 de octubre.",
+        "texto": "La ficha del Plan Integral del Agua pone la estación de bombeo de La Calera y su conexión con el acueducto en 2026, con 756 millones de pesos. La capacidad anunciada de la primera etapa también cambió: 2 mil litros por segundo en octubre, 3 mil el 28 de octubre. La ficha de la planta 1 calcula el proyecto completo en 6,563 millones de pesos, un monto que, según la misma ficha, «no constituye presupuesto definitivo»; el 9 de octubre, Crónica reportó que el gobierno de Jalisco destinará 7 mil 500 millones a la modernización y ampliación de la planta.",
         "fuentes": [
           {"url": "https://www.cronica.com.mx/jalisco/guadalajara/2026/07/13/jalisco-anuncia-acciones-inmediatas-para-mejorar-la-calidad-del-agua-en-la-metropoli/", "archive": "https://web.archive.org/web/20261017133918/https://www.cronica.com.mx/jalisco/guadalajara/2026/07/13/jalisco-anuncia-acciones-inmediatas-para-mejorar-la-calidad-del-agua-en-la-metropoli/", "medio": "Crónica Jalisco", "fecha": "2026-07-13", "tipo": "prensa"},
           {"url": "https://www.cronica.com.mx/jalisco/guadalajara/2026/10/09/invertiran-7-mil-500-mdp-en-modernizacion-de-planta-potabilizadora-de-miravalle/", "archive": "https://web.archive.org/web/20261017134028/https://www.cronica.com.mx/jalisco/guadalajara/2026/10/09/invertiran-7-mil-500-mdp-en-modernizacion-de-planta-potabilizadora-de-miravalle/", "medio": "Crónica Jalisco", "fecha": "2026-10-09", "tipo": "prensa"},
           {"url": "https://planintegraldelagua.jalisco.gob.mx/pdf/an-0014.pdf", "archive": "https://web.archive.org/web/20261017132754/https://planintegraldelagua.jalisco.gob.mx/pdf/an-0014.pdf", "medio": "Plan Integral del Agua, ficha de La Calera", "fecha": "2026-10-16", "tipo": "primaria"},
-          {"url": "https://www.milenio.com/politica/sheinbaum-y-lemus-anuncian-proyecto-garantizar-abasto-agua-guadalajara", "archive": null, "medio": "Milenio", "fecha": "2026-10-28", "tipo": "prensa", "captura": "privada"}
+          {"url": "https://www.milenio.com/politica/sheinbaum-y-lemus-anuncian-proyecto-garantizar-abasto-agua-guadalajara", "archive": null, "medio": "Milenio", "fecha": "2026-10-28", "tipo": "prensa", "captura": "privada"},
+          {"url": "https://planintegraldelagua.jalisco.gob.mx/pdf/an-0021.pdf", "archive": null, "medio": "Plan Integral del Agua, ficha de la planta de Miravalle", "fecha": "2026-07-16", "tipo": "primaria", "captura": "privada"}
         ]
       },
       "plazo": {"fecha": "2027-04-06", "tipo": "lectura", "texto": "«Seis meses» desde el 6 de octubre: tomamos el 6 de abril de 2027."},
