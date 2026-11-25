@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="facebook-domain-verification" content="li0vsm7edv0afccxodm5t0jvyiw0za">
+<title>No cuadra · propuesta 3: Recorrido · Agua GDL</title>
+<meta name="description" content="Lo que los gobiernos anunciaron sobre el agua en Guadalajara, junto a lo que dicen sus propios documentos de transparencia, municipio por municipio: Zapopan y Tlajomulco.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="No cuadra: lo que anunciaron y lo que dicen sus documentos">
+<meta property="og:description" content="Municipio por municipio, lo que anunciaron sobre el agua junto a sus propios documentos: Zapopan y Tlajomulco.">
+<meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="/menu.css">
+<link rel="stylesheet" href="/nocuadra.css">
+<link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
+<style>
+:root {
+  --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
+  --brand: #0284c7; --brand-deep: #0369a1; --link: #0369a1; --on-brand: #ffffff;
+  --primary: #0284c7; --on-primary: #ffffff; --ring: #0284c766;
+  --shadow: 0 1px 2px rgb(3 105 161 / .08);
+  --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --warn: #8a5a00; --warn-bg: #fff3d6;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #06141d; --surface: #0a1c28; --subtle: #0c3149; --fg: #f0f9ff; --muted: #9bb8ca; --line: #18384d;
+    --link: #7dd3fc; --primary: #0ea5e9; --on-primary: #ffffff; --ring: #38bdf866; --brand: #0ea5e9; --brand-deep: #0284c7;
+    --warn: #ffd27a; --warn-bg: #3a2c10;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+[hidden] { display: none !important }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased }
+a { color: var(--link); text-underline-offset: 3px }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); border-radius: 6px }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px }
+h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.08; letter-spacing: -.03em; font-weight: 700; margin: 8px 0 12px; text-wrap: balance; max-width: 26ch }
+.lede { font-size: 1.1rem; margin: 0 0 16px; max-width: 64ch }
+.i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
+.i { --ic: currentColor }
+p > .i, h2 > .i { color: var(--ic) }
+.note { margin: 10px 0 0; font-size: .92rem; color: var(--muted); max-width: 80ch }
+section { padding: 32px 0 16px }
+h2.ih { display: flex; align-items: center; gap: 12px; font-size: 1.4rem; line-height: 1.2; margin: 0 0 16px; letter-spacing: -.02em; font-weight: 500 }
+.ih .i-badge { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--subtle); color: var(--brand); flex-shrink: 0 }
+section h3 { margin: 28px 0 8px; font-size: 1.1rem; line-height: 1.3 }
+section p, section li { max-width: 70ch }
+ul.plain { padding-left: 1.3em; margin: 0 0 14px }
+ul.plain li { margin: 0 0 8px }
+footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .85rem }
+footer p { margin: 0 0 8px; max-width: 70ch }
+/* The top menu as on the landing: its frame is 960 px wide, and 1320 px from 1100 px, so it sits on one row. */
+.wrap:has(> header.top) { max-width: 960px }
+@media (min-width: 1100px) { .wrap:has(> header.top) { max-width: 1320px } }
+.wrap:has(> header.top) > :not(header.top) { max-width: 1068px; margin-left: auto; margin-right: auto }
+</style>
+<style>/* Talavera */
+:root { --bg:#fbfaf6; --surface:#ffffff; --subtle:#e4eaf8; --fg:#14213d; --muted:#4f5b7a; --line:#c4cfe9;
+ --brand:#1d3f9e; --brand-deep:#142d75; --link:#1d3f9e; --primary:#1d3f9e; --on-primary:#fff; --ring:#1d3f9e55; --alarm:#1d3f9e; --mark:#f2c84b; --mark-fg:#14213d;
+ --font: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; --serif: Baskerville, "Baskerville Old Face", "Libre Baskerville", Georgia, serif; --shadow:none;
+ --tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M12 2l4 10-4 10-4-10z M2 12l10-4 10 4-10 4z' fill='%231d3f9e'/%3E%3C/svg%3E") }
+@media (prefers-color-scheme: dark) { :root { --bg:#0c1328; --surface:#121b36; --subtle:#1a2850; --fg:#eef1fb; --muted:#a6b1d6; --line:#2a3a6e; --brand:#7f9cf5; --brand-deep:#5b7be8; --link:#a9bdfa; --primary:#5b7be8; --alarm:#9fb4ff; --mark:#c9a12f; --tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M12 2l4 10-4 10-4-10z M2 12l10-4 10 4-10 4z' fill='%237f9cf5'/%3E%3C/svg%3E") } }
+header.top { position: relative; border-bottom: 0 } html { overflow-x: clip } header.top::after { content: ""; position: absolute; left: calc(50% - 50vw); width: 100vw; bottom: -6px; height: 12px; background: var(--tile) center/12px 12px repeat-x; transition: opacity .2s }
+main h1, main h2 { font-weight: 400; font-style: italic }
+.card, .congreso, .signup, .finder, .summary, .boxes > * { border-radius: 4px !important; border: 3px double var(--brand) !important; box-shadow: none !important }
+.posts li { border-left: 3px double var(--brand) }
+.button { border-radius: 4px }
+footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-top: 34px }
+</style>
+<style>
+/* Propuesta 3: scrollytelling. The graphic stays put while the text scrolls past it; each step swaps the layer shown.
+   Without the script every layer simply follows its step. */
+.relato { margin: 28px 0 0 }
+.relato.vivo { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 32px }
+.relato.vivo .escena { grid-column: 2; grid-row: 1; position: sticky; top: 8vh; height: 84vh; align-self: start }
+.relato.vivo .pasos { grid-column: 1; grid-row: 1 }
+.escena { position: relative }
+.capa { margin: 0 0 20px }
+.relato.vivo .capa { position: absolute; inset: 0; margin: 0; display: flex; flex-direction: column; justify-content: center; opacity: 0; visibility: hidden; transition: opacity .45s, visibility 0s .45s; overflow: hidden }
+.relato.vivo .capa.on { opacity: 1; visibility: visible; transition: opacity .45s }
+.capa .documento { margin: 0; max-width: none }
+.capa .puntos-mapa { height: 100%; min-height: 300px }
+.relato.vivo .capa.mapa { justify-content: stretch }
+.capa .serie { width: 100% }
+.capa h3 { margin: 0 0 6px; font-size: 1rem; color: var(--muted); font-weight: 500 }
+.recorte { padding: 28px 30px; background: #fbfaf6; border: 1px solid #ddd7c6; border-radius: 4px; color: #14213d; box-shadow: 0 14px 30px -22px rgb(20 33 61 / .55); transform: rotate(-1deg); margin: 12px 14px }
+.recorte .q { margin: 0; font: italic 400 clamp(1.6rem, 3.4vw, 2.6rem)/1.15 var(--serif) }
+.recorte .q mark { background: rgb(242 200 75 / .6); color: inherit; padding: 0 4px }
+.recorte .de { margin: 14px 0 0; font-size: .9rem; color: #4f5b7a }
+.cien.grande { width: min(100%, 420px); gap: 5px; margin: 0 auto }
+.cien span { transition: background .3s }
+.cuenta-cien { text-align: center; margin: 14px 0 0; font: 400 1.4rem var(--serif) }
+.cuenta-cien b { font-size: 2.4rem; font-weight: 400; color: var(--s1) }
+.foto-flota { position: absolute; right: 10px; bottom: 10px; z-index: 500; width: min(44%, 230px); margin: 0 }
+.foto-flota .foto { padding: 6px }
+.foto-flota figcaption { margin-top: 4px; padding: 4px 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; font-size: .8rem; font-weight: 600; line-height: 1.3 }
+.foto-flota figcaption .sub { display: block; font-weight: 400; color: var(--muted) }
+.final { display: grid; gap: 14px }
+.final .duo { margin: 0 }
+.paso { min-height: 70vh; display: flex; align-items: center }
+.paso:first-child { min-height: 50vh; align-items: flex-start }
+.paso:last-child { min-height: 60vh }
+.paso .tarjeta { padding: 18px 20px; background: var(--surface); border: 3px double var(--brand); border-radius: 4px; max-width: 46ch }
+.paso .tarjeta p { margin: 0 0 8px; max-width: none }
+.paso .tarjeta p:last-child { margin-bottom: 0 }
+.paso .tarjeta .fuente { font-size: .85rem; color: var(--muted) }
+.paso .tarjeta .grande { font: italic 400 1.5rem/1.2 var(--serif) }
+.paso .tarjeta .dif { padding: 10px 12px; background: var(--warn-bg); color: var(--warn); font-size: .95rem }
+.paso .mun { margin: 0 0 6px; font-size: .85rem; font-weight: 600; color: var(--brand-deep) }
+.relato:not(.vivo) .paso { min-height: 0; margin: 0 0 12px }
+@media (prefers-reduced-motion: reduce) { .relato.vivo .capa, .relato.vivo .capa.on { transition: none } }
+@media (max-width: 860px) {
+  .relato.vivo { display: block }
+  .relato.vivo .escena { position: sticky; top: 0; height: 52vh; z-index: 2; background: var(--bg); padding: 8px 0; border-bottom: 1px solid var(--line) }
+  .relato.vivo .capa { inset: 8px 0 }
+  .paso, .paso:first-child { min-height: 80vh; align-items: center; position: relative; z-index: 3 }
+  .paso .tarjeta { box-shadow: 0 10px 24px -14px rgb(20 33 61 / .5) }
+  .recorte { padding: 18px }
+  .foto-flota { width: 42% }
+}
+</style>
+<script src="/theme.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
+    <nav class="site-nav" aria-label="Secciones">
+      <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#users"/></svg>¿Hay agua?</a>
+      <a href="/nocuadra" aria-current="page"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#question-marks"/></svg>No cuadra</a>
+      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#map-pin"/></svg>Avisos</a>
+      <a href="/cisternas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#droplet"/></svg>Cisternas</a>
+      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#newspaper"/></svg>Noticias</a>
+      <details class="nav-more"><summary>Más</summary>
+        <div class="mas-panel">
+          <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#megaphone"/></svg>Exige</a>
+          <a href="/fotos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#video"/></svg>Fotos</a>
+          <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#bar-chart"/></svg>Cuentas</a>
+          <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#droplet"/></svg>Contaminación</a>
+          <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#heart"/></svg>Antisionismo</a>
+        </div></details>
+    </nav>
+  </header>
+
+  <main>
+    <p class="kicker">No cuadra</p>
+    <h1>Lo que anunciaron, contra los documentos oficiales. Baja y compara</h1>
+    <p class="lede">Baja despacio: cada paso pone una cifra anunciada al lado del documento que la contradice o la matiza. Primero Zapopan, luego Tlajomulco.</p>
+
+    <div class="relato" id="relato">
+      <div class="escena" id="escena">
+        <div class="capa" data-c="boletin">
+          <div class="recorte"><p class="q">«Zapopan contará con <mark>45 pipas</mark> y <mark>100 cisternas comunitarias</mark> con capacidad de 10 mil litros cada una»</p><p class="de">Boletín del Gobierno de Zapopan, 19 de octubre de 2026</p></div>
+        </div>
+        <div class="capa" data-c="pipas">
+          <h3>Pipas por jornada, según su Protección Civil</h3>
+          <div class="serie" id="serie-pipas"></div>
+        </div>
+        <div class="capa" data-c="cien">
+          <div class="cien grande" id="cien" role="img" aria-label="Cien cuadros, uno por cisterna anunciada; 49 en azul, las de la lista"></div>
+          <p class="cuenta-cien"><b id="n-cien">49</b> de 100</p>
+        </div>
+        <div class="capa mapa" data-c="cisternas">
+          <div class="puntos-mapa" id="mapa-cisternas" role="region" aria-label="Mapa de las 49 cisternas de la lista de Zapopan"></div>
+        </div>
+        <div class="capa" data-c="hospitales"><figure class="documento">
+        <div class="hoja">
+          <div class="renglones">
+            <span class="renglon marca" style="width:100%"><img src="/img/documentos/zapopan-hospitales-1.png" width="995" height="43" alt="Hospitales: Sin atenciones registradas" loading="lazy"></span>
+            <span class="renglon" style="width:100%"><img src="/img/documentos/zapopan-hospitales-2.png" width="995" height="38" alt="Espacios Públicos: Centro Comunitario N°3 - 09/11/2026" loading="lazy"></span>
+            <span class="renglon" style="width:100%"><img src="/img/documentos/zapopan-hospitales-3.png" width="995" height="35" alt="Escuelas: Centro Escolar Juan Mateo - 20/10/2026" loading="lazy"></span>
+          </div>
+        </div>
+        <figcaption>La tabla de inmuebles atendidos: oficio 011300/2026/0148, p. 6 de la respuesta UT-089/2026 (<a href="/datos/pcyb-respuesta-ut-089-2026.pdf#page=6">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure></div>
+        <div class="capa" data-c="siapa"><figure class="documento">
+<div class="hoja">
+<div class="membrete"><img src="/img/documentos/tlaj-transitan-m1.png" width="425" height="135" style="width:18.32%" alt="" loading="lazy"><img src="/img/documentos/tlaj-transitan-m2.png" width="588" height="82" style="width:25.34%" alt="Oficio no. DG-135/2026. Guadalajara, Jalisco a 06 de marzo del 2026" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon" style="width:99.93%"><img src="/img/documentos/tlaj-transitan-1.png" width="1391" height="32" alt="Del mismo modo, le informo que, personal de las Subdirecciones de Abastecimiento, Potabilización" loading="lazy"></span>
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-transitan-2.png" width="1392" height="46" alt="y Laboratorios han documentado que en los últimos tiempos, por el Canal Las Pintas transitan aguas" loading="lazy"></span>
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-transitan-3.png" width="1392" height="35" alt="residuales provenientes de descargas de aguas sanitarias y/o residuales que se encuentran dentro" loading="lazy"></span>
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-transitan-4.png" width="1392" height="35" alt="del municipio de Tlajomulco de Zúñiga, son aguas residuales sin control, al parecer, principalmente," loading="lazy"></span>
+<span class="renglon" style="width:99.93%"><img src="/img/documentos/tlaj-transitan-5.png" width="1391" height="35" alt="son aportaciones de origen diverso que descargan hacia el canal &quot;Las Pintas&quot; cauce a cielo abierto," loading="lazy"></span>
+</div></div>
+        <figcaption>Oficio DG-135/2026, p. 1 (<a href="/datos/siapa-dg-135-2026.pdf#page=1">PDF</a>). El sello de recibido y el trazo azul son del original. Resaltado de Agua GDL.</figcaption>
+      </figure></div>
+        <div class="capa" data-c="amoniaco">
+          <h3>Nitrógeno amoniacal, promedio mensual, agua que entra a la Planta 1</h3>
+          <div class="serie" id="serie-amoniaco"></div>
+        </div>
+        <div class="capa mapa" data-c="puntos">
+          <div class="puntos-mapa" id="mapa-puntos" role="region" aria-label="Mapa de los puntos con fotografías del oficio DG-135/2026"></div>
+          <figure class="foto-flota" id="foto-flota" aria-live="polite"></figure>
+        </div>
+        <div class="capa" data-c="recorridos"><figure class="documento">
+        <div class="hoja">
+          <div class="renglones">
+            <span class="renglon" style="width:99.92%"><img src="/img/documentos/tlaj-recorridos-1.png" width="1307" height="47" alt="Respecto a lo requerido, se manifiesta que el SIAPA informó al Municipio de Tlajomulco" loading="lazy"></span>
+            <span class="renglon" style="width:100%"><img src="/img/documentos/tlaj-recorridos-2.png" width="1308" height="39" alt="de Zúñiga, respecto a 10 (diez) presuntos puntos de descarga de aguas residuales" loading="lazy"></span>
+            <span class="renglon" style="width:99.92%"><img src="/img/documentos/tlaj-recorridos-3.png" width="1307" height="44" alt="hacia el sistema antiguo de abastecimiento de Chapala, en específico en el Canal Las" loading="lazy"></span>
+            <span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-recorridos-4.png" width="1308" height="44" alt="Pintas, por lo cual se realizaron tres recorridos en campo en conjunto con el SIAPA" loading="lazy"></span>
+            <span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-recorridos-5.png" width="1308" height="44" alt="para visitar estos 10 puntos, constatando que no existen descargas de aguas" loading="lazy"></span>
+            <span class="renglon marca" style="width:36.77%"><img src="/img/documentos/tlaj-recorridos-6.png" width="481" height="41" alt="residuales al canal &quot;Las pintas&quot;." loading="lazy"></span>
+          </div>
+        </div>
+        <figcaption>Oficio DAPIH/0331-01/2026 de Tlajomulco, marzo de 2026, p. 3 (<a href="/datos/tlajomulco-dapih-0331-01-2026.pdf#page=3">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure></div>
+      </div>
+
+      <ol class="pasos" id="pasos" style="list-style:none;margin:0;padding:0">
+        <li class="paso" data-c="boletin"><div class="tarjeta">
+          <p class="mun">Zapopan · el operativo de pipas</p>
+          <p class="grande">El 19 de octubre, Zapopan anunció 45 pipas y 100 cisternas comunitarias.</p>
+          <p>Anunció también que daría «prioridad a escuelas y centros de salud municipales».</p>
+          <p class="fuente"><a href="https://www.zapopan.gob.mx/v3/noticias/zapopan-pone-en-marcha-operativo-de-suministro-de-agua-con-45-pipas-y-100-cisternas" rel="noopener">Boletín del Gobierno de Zapopan</a></p>
+        </div></li>
+        <li class="paso" data-c="pipas"><div class="tarjeta">
+          <p class="grande">Ningún día de la gráfica llega a 45.</p>
+          <p>En la gráfica de pipas por jornada de su Protección Civil, el día con más, el 27 de octubre, tuvo 34. El 19 de octubre, el día del boletín, tuvo 11. Pasa o toca una barra para ver el día.</p>
+          <p class="fuente">Oficio 011300/2026/0150 (<a href="/datos/pcyb-respuesta-ut-091-2026.pdf#page=4">p. 4 del PDF</a>); los números son nuestra lectura de sus etiquetas (<a href="/datos/zapopan-pipas-por-dia.csv">CSV</a>).</p>
+        </div></li>
+        <li class="paso" data-c="cien"><div class="tarjeta">
+          <p class="grande">La lista de cisternas termina en la número 49.</p>
+          <p>El «listado de cisternas instaladas» de Cercanía Ciudadana termina en la número 49, LOS CAJETES. 51 de las 100 anunciadas no están en la lista; eso no prueba que no existan.</p>
+          <p class="fuente">Oficio 11000000/CER.CIU/2026/0876 (<a href="/datos/zapopan-respuesta-140292426004978.pdf#page=9">la lista, desde la p. 9 del PDF</a>).</p>
+        </div></li>
+        <li class="paso" data-c="cisternas"><div class="tarjeta">
+          <p class="grande">Dónde están las 49 de la lista.</p>
+          <p>Cada punto es una cisterna del listado, en las coordenadas que trae; pasa o toca uno para ver su domicilio y su colonia como vienen en la lista.</p>
+          <p class="fuente">La lista completa está en el <a href="/cisternas">mapa de cisternas comunitarias</a>. Mapa: © colaboradores de OpenStreetMap.</p>
+        </div></li>
+        <li class="paso" data-c="hospitales"><div class="tarjeta">
+          <p class="grande">Hospitales: «Sin atenciones registradas».</p>
+          <p>Así dice la fila de hospitales en la tabla de inmuebles atendidos. La tabla no registra ninguna atención a hospitales ni a centros de salud.</p>
+          <p class="fuente">Oficio 011300/2026/0148 (<a href="/datos/pcyb-respuesta-ut-089-2026.pdf#page=6">p. 6 del PDF</a>).</p>
+        </div></li>
+        <li class="paso" data-c="hospitales"><div class="tarjeta">
+          <p class="dif"><strong>La diferencia.</strong> La gráfica de pipas por jornada nunca llega a 45. 51 de las 100 cisternas anunciadas no están en la lista entregada; eso no prueba que no existan. La tabla no registra ninguna atención a hospitales ni a centros de salud. Zapopan respondió después que las 45 pipas y las 100 cisternas eran una meta por «materializar»; el boletín dijo «contará con».</p>
+          <p class="ir"><a class="button" href="/zapopan">Todo Zapopan →</a></p>
+        </div></li>
+
+        <li class="paso" data-c="siapa"><div class="tarjeta">
+          <p class="mun">Tlajomulco · el canal de Las Pintas</p>
+          <p class="grande">El 6 de marzo, el SIAPA le escribió a Tlajomulco.</p>
+          <p>«por el Canal Las Pintas transitan aguas residuales provenientes de descargas de aguas sanitarias y/o residuales que se encuentran dentro del municipio de Tlajomulco de Zúñiga»</p>
+          <p class="fuente">Oficio DG-135/2026, p. 1 (<a href="/datos/siapa-dg-135-2026.pdf">PDF</a>).</p>
+        </div></li>
+        <li class="paso" data-c="amoniaco"><div class="tarjeta">
+          <p class="grande">3.62 mg/L en enero de 2026; el límite que cita es 0.5.</p>
+          <p>En nuestra lectura de su gráfica, el nitrógeno amoniacal del agua que entra a la Planta 1 fue de 0.10 a 0.27 mg/L de 2020 a 2022, estuvo por encima del límite la mayoría de los meses desde julio de 2023 y llegó a 3.62 en enero de 2026: 7.2 veces el límite.</p>
+          <p class="fuente">Gráfico 1 del oficio DG-135/2026 (<a href="/datos/siapa-dg-135-2026.pdf#page=5">p. 5 del PDF</a>, <a href="/datos/siapa-dg-135-2026-amoniacal.csv">CSV</a>); el límite, de la NOM-127-SSA1-2021, en la p. 4.</p>
+        </div></li>
+        <li class="paso" data-c="puntos"><div class="tarjeta">
+          <p class="grande">Diez puntos de descarga; siete con fotografías.</p>
+          <p>El SIAPA señaló diez puntos. Siete traen fotografías y coordenadas en el anexo del oficio; los puntos 3, 4 y 5 no, así que no están en el mapa. Toca un punto para ver su foto.</p>
+          <p class="fuente">Nombre y coordenadas como los escribió el SIAPA. Mapa: © colaboradores de OpenStreetMap.</p>
+        </div></li>
+        <li class="paso" data-c="recorridos"><div class="tarjeta">
+          <p class="grande">Tlajomulco: «no existen descargas».</p>
+          <p>A finales de marzo, en un oficio para la CEDHJ, Tlajomulco informó que en tres recorridos con el SIAPA constató que no existen descargas de aguas residuales al canal.</p>
+          <p class="fuente">Oficio DAPIH/0331-01/2026, p. 3 (<a href="/datos/tlajomulco-dapih-0331-01-2026.pdf#page=3">PDF</a>).</p>
+        </div></li>
+        <li class="paso" data-c="recorridos"><div class="tarjeta">
+          <p class="dif"><strong>La diferencia.</strong> Tlajomulco no dice cuándo fueron los recorridos ni entregó actas. El propio SIAPA escribió que en esos sitios «se han observado descargas abundantes, en algunas de manera permanente y otras de forma intermitente»: un recorrido sin descargas no prueba que no las haya otros días.</p>
+          <p class="ir"><a class="button" href="/tlajomulco">Todo Tlajomulco →</a></p>
+        </div></li>
+      </ol>
+    </div>
+
+    <ul class="municipios">
+      <li class="pendiente">
+        <h2>Guadalajara, Tlaquepaque y Tonalá</h2>
+        <p>Todavía no tenemos documentos suficientes para una página. Publicaremos cuando lleguen.</p>
+      </li>
+    </ul>
+    <section aria-labelledby="como">
+      <h2 id="como" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#info"/></svg></span>Cómo lo hacemos</h2>
+      <ul class="plain">
+        <li>Cada cifra sale de un documento oficial (una respuesta por la Plataforma Nacional de Transparencia, un oficio o un boletín del propio gobierno) o de nuestro conteo o lectura de él, y lo decimos. Enlazamos los documentos que publicamos completos.</li>
+        <li>Los recortes son de los documentos tal como los entregaron; el resaltado y los círculos son nuestros.</li>
+        <li>Citamos como está escrito. Lo que afirma una autoridad lo presentamos como su dicho, no como un hecho.</li>
+        <li>Cuando un documento no existe o no lo entregan, lo decimos.</li>
+      </ul>
+      <p class="note">¿Ves un error? Escríbenos a <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>.</p>
+    </section>
+  </main>
+
+
+  <footer>
+    <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con los gobiernos de Jalisco, Guadalajara, Zapopan, Tlaquepaque, Tonalá o Tlajomulco.</p>
+    <p><a href="/">Inicio</a> · <a href="/reportes">¿Hay agua?</a> · <a href="/cisternas">Cisternas comunitarias</a> · <a href="/pipas">Cómo pedir pipa</a> · <a href="/transparencia">Transparencia</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
+  </footer>
+</div>
+<script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script src="/mapa.js"></script>
+<script src="/nocuadra-lab.js"></script>
+<script>
+(() => {
+  const relato = document.getElementById("relato");
+  const capas = [...document.querySelectorAll(".capa")];
+  const pasos = [...document.querySelectorAll(".paso")];
+  relato.classList.add("vivo");
+  NC.seriePipas(document.getElementById("serie-pipas"));
+  NC.serieAmoniaco(document.getElementById("serie-amoniaco"));
+  const cien = document.getElementById("cien");
+  NC.waffle(cien, 0);
+
+  // The maps are made when their layer first shows, so Leaflet measures a box that has its size.
+  const mapas = {};
+  const hazMapa = {
+    cisternas: () => {
+      const map = NC.mapa(document.getElementById("mapa-cisternas"));
+      if (!map) return null;
+      map.setView([20.70, -103.42], 11);
+      NC.cisternas().then((ps) => {
+        const g = L.featureGroup(ps.map(NC.marcaCisterna)).addTo(map);
+        if (ps.length) map.fitBounds(g.getBounds(), { padding: [24, 24] });
+      }).catch(() => {});
+      return map;
+    },
+    puntos: () => {
+      const map = NC.mapa(document.getElementById("mapa-puntos"));
+      if (!map) return null;
+      const flota = document.getElementById("foto-flota");
+      const elige = (p) => { flota.innerHTML = NC.foto(p) + `<figcaption>${NC.pie(p)}</figcaption>`; };
+      const g = L.featureGroup(NC.PUNTOS.map((p) => NC.marcaPunto(p, elige))).addTo(map);
+      map.fitBounds(g.getBounds(), { padding: [30, 30] });
+      elige(NC.PUNTOS[3]);
+      return map;
+    },
+  };
+
+  let actual = null;
+  const muestra = (c) => {
+    if (c === actual) return;
+    actual = c;
+    for (const k of capas) k.classList.toggle("on", k.dataset.c === c);
+    if (hazMapa[c]) {
+      if (!(c in mapas)) mapas[c] = hazMapa[c]();
+      else if (mapas[c]) mapas[c].invalidateSize();
+    }
+    if (c === "cien") {
+      // The squares fill one by one up to 49, or at once with reduced motion.
+      const sq = [...cien.children], n = document.getElementById("n-cien");
+      if (NC.quieto()) { NC.waffle(cien, 49); n.textContent = "49"; return; }
+      let i = 0;
+      sq.forEach((s) => s.classList.remove("si"));
+      const t = setInterval(() => { if (i >= 49 || actual !== "cien") return clearInterval(t); sq[i++].classList.add("si"); n.textContent = i; }, 22);
+    }
+  };
+  // The step whose card crosses a line (the middle of the screen, lower on phones, under the graphic) picks the layer.
+  const elige = () => {
+    const linea = innerHeight * (innerWidth <= 860 ? 0.72 : 0.5);
+    let c = pasos[0].dataset.c;
+    for (const p of pasos) if (p.getBoundingClientRect().top < linea) c = p.dataset.c;
+    muestra(c);
+  };
+  let pend = false;
+  addEventListener("scroll", () => { if (!pend) { pend = true; requestAnimationFrame(() => { pend = false; elige(); }); } }, { passive: true });
+  addEventListener("resize", elige);
+  elige();
+})();
+</script>
+</body>
+</html>
