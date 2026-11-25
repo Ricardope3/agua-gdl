@@ -170,7 +170,7 @@ def check(c, fotos_ok, temas):
 
 # [[name]] in a slide's text: an organisation's logo (logos/<file>, the logo as served by its own site, cut only to drop
 # a slogan) or, for a government body, a name badge: an official emblem on our graphics could read as endorsement.
-LOGOS = {"nestle": "nestle-marca.svg"}
+LOGOS = {"nestle": "nestle-marca.svg", "ocotlan": "ocotlan-escudo.png"}
 SELLOS = {"conagua": "CONAGUA"}
 
 

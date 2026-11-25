@@ -56,19 +56,9 @@
  },
  "slides": [
   {
-   "tipo": "portada",
-   "marca_grande": "nestle",
-   "kicker": "Ocotlán, Jalisco",
-   "titular": "¿Quién tiene permiso de sacar más agua de pozo: *el municipio* o *Nestlé*?",
-   "texto": "Según el registro de la [[conagua]], con corte al 16 de noviembre de 2026.",
-   "fuentes": [
-    "repda_ocot"
-   ]
-  },
-  {
    "tipo": "barras",
    "kicker": "2026 · Ocotlán · permisos de agua de pozo, m³ al año",
-   "titular": "Una sola empresa: **2.4 veces** el agua de pozo que el municipio tiene para todos",
+   "titular": "Nestlé, una sola empresa: **2.4 veces** el agua de pozo que el municipio tiene para todos",
    "barras": [
     {
      "etiqueta": "[[nestle]] uso industrial, 5 permisos",
@@ -77,7 +67,7 @@
      "color": "alarm"
     },
     {
-     "etiqueta": "Municipio, uso público, 15 permisos",
+     "etiqueta": "[[ocotlan]] Municipio, uso público, 15 permisos",
      "valor": 964091,
      "texto": "964,091"
     }
