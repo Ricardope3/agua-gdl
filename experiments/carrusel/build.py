@@ -4,6 +4,7 @@
     python3 experiments/carrusel/build.py               check every carousel, render all, write FUENTES.md and contact sheets
     python3 experiments/carrusel/build.py 01-maximo     only carousels whose id starts with this
     python3 experiments/carrusel/build.py --check       validate only (no Chrome)
+    python3 experiments/carrusel/build.py 23 --estilo=talavera   render in a style theme from estilos.py, to out/<id>-<estilo>/
     python3 experiments/carrusel/build.py --capturas    retake the aguagdl.com phone screenshots in capturas/ (or only the pages named)
 
 Checks before rendering: every number written on a slide appears in the "cita" of a source the slide cites
@@ -21,11 +22,14 @@ import subprocess
 import sys
 import tempfile
 
+import estilos
+
 HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 OUT = HERE / "out"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 W, H = 1080, 1350
+ESTILO = None
 CHROME_BAR = 87  # headless Chrome's viewport is the window minus this; screenshots are cropped back
 TYPES = {"foto", "dividido", "perfil", "altura", "desnivel", "sitio", "portada", "texto", "cita", "barras", "iconos", "calendario", "versus", "lista", "linea", "pregunta", "cierre"}
 DIAS = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"]
@@ -564,10 +568,13 @@ def slide_html(c, i, s):
     if s.get("etiquetas"):
         bg += '<div class="tags">' + "".join(
             f'<div class="tag {e.get("color", "")}" style="left:{e["x"]}%;top:{e["y"]}%">{md(e["texto"])}</div>' for e in s["etiquetas"]) + "</div>"
-    return f"""<!doctype html><html lang="es"><head><meta charset="utf-8"><style>{CSS}</style></head>
-<body class="{plain}">{bg}<div class="tint"></div><div class="frame">
+    body = render_body(s)
+    if ESTILO:
+        body = re.sub(r'<div class="kicker">(.+?)</div>', r'<div class="kicker"><span class="k">\1</span></div>', body)
+    return f"""<!doctype html><html lang="es"><head><meta charset="utf-8"><style>{CSS}{estilos.css(ESTILO)}</style></head>
+<body class="{plain} t-{s['tipo']}">{bg}<div class="tint"></div>{estilos.deco(ESTILO, i, total)}<div class="frame">
 <div class="top">{logo()}<span>Agua GDL</span><span class="n">{i}/{total}</span></div>
-<div class="main">{render_body(s)}</div>
+<div class="main">{body}</div>
 <div class="foot"><div class="src">{html.escape(" · ".join(x for x in (credito(s), footer(c, s)) if x))}</div><div class="site">aguagdl.com</div></div>
 </div></body></html>"""
 
@@ -651,6 +658,12 @@ def main():
     if "--capturas" in sys.argv:
         return capturas([a for a in sys.argv[1:] if not a.startswith("--")])
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    global ESTILO
+    for a in sys.argv[1:]:
+        if a.startswith("--estilo="):
+            ESTILO = a.split("=", 1)[1]
+            if ESTILO not in estilos.nombres():
+                fail(f"--estilo: one of {', '.join(estilos.nombres())}")
     only_check = "--check" in sys.argv
     fotos_ok = set(json.loads((HERE / "fotos.json").read_text())["fotos"])
     temas = set(json.loads((ROOT / "pipelines/fotos_temas.json").read_text())["temas"])
@@ -678,7 +691,7 @@ def main():
     tmp = pathlib.Path(tempfile.mkdtemp())
     try:
         for c in carr:
-            d = OUT / c["id"]
+            d = OUT / (c["id"] + (f"-{ESTILO}" if ESTILO else ""))
             if d.exists():
                 shutil.rmtree(d)
             d.mkdir()
