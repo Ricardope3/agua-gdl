@@ -52,6 +52,14 @@ Arguments: the topic, a colonia, or the facts to show. If the ask is vague, prop
 - The `sitio` slide shows the matching aguagdl.com page with that page's own number and «link en la bio». Run `python3 experiments/carrusel/build.py --capturas` first and copy the live numbers into its `cita`. Screenshots skip pages showing faces, the caricature, or the /promesas stance line (`DESDE` crops it). Look at the capture before building: a map that fits more than the phone frame shows its empty edge, so set the page's drag in `PANEO` (`mapa.mjs`) and retake only that page with `--capturas <página>`.
 - Backgrounds only from `experiments/carrusel/fotos.json`. To add one, open it first: no close face, no legible private name, no outlet watermark or burned-in text.
 
+## Style with soul (learned on carousels 22–23, 24–25 Nov)
+
+- «The carousels have no soul»: he wants a look with a hand behind it, not the flat dark template. Set `"estilo": "talavera"` on every new carousel (he picked it over `expediente` and `cartel` on 25 Nov and applied it to 22 and 23): the site's cream, cobalt and yellow, italic serif headlines, the tile band and a double frame, from `web/contamina.html`, so it keeps the shared look (`vetos.md`). To offer him a change of look, render each option with `build.py <id> --estilo=X` (side copies in `out/<id>-X/`) and show the same slides side by side.
+- On a photo slide Talavera keeps the dark tint and light text: dark ink on a photo couldn't be read, and a cream wash hid the scene.
+- A style change moves every line: check every slide of every carousel that uses it for text running into the footer (carousel 23's slide 2 footer already ran off the edge before the change, and nobody had seen it).
+- Show the damage instead of saying it: faded round close-ups (`zoom`) of the cited document's own photos, in the free space beside a headline, behind the text. Only photos from a source the carousel cites, of the place they show (SIAPA's photos of the discharges into Las Pintas are those discharges, not the Miravalle plant); the footer credits each one from its `pagina` and `lugar`. Look at each one at slide size: foam in a small crop can read as snow, so crop where it sits on dark water.
+- Bold, not fence-sitting (24 Nov: «too much of a fence sitter… be more bold»): name who said what and when, and put their own words side by side so the contradiction is the headline («A Tlajomulco, que su planta ya no podía. A la CEDHJ, que operaba conforme a su diseño»). Bold doesn't loosen the evidence rules: the quote is word for word, a claim stays its speaker's, and no «mintieron» (`vetos.md`, 25 Nov): show the mismatch, not intent.
+
 ## Look and words (learned from @ecosia, 6 Nov)
 
 - One idea per slide, one sentence of at most ~15 words; the punchline bold, any context smaller. Cut the kicker when the headline says it.

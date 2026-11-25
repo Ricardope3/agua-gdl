@@ -60,7 +60,7 @@ def slide_texts(s):
         if k in ("documento", "documentos"):  # the cuts' words are checked as dice; our labels on them as slide text
             out += [x for d in documentos(s) for x in [d.get("etiqueta", "")] + [ci["texto"] for r in recortes(d) for ci in r.get("circulos", [])] if x]
             continue
-        if k in ("tipo", "foto", "fuentes", "calculo", "nota", "posicion", "propio", "captura", "bins", "alturas", "color", "x", "y"):
+        if k in ("tipo", "foto", "fuentes", "calculo", "nota", "posicion", "propio", "captura", "bins", "alturas", "color", "x", "y", "zoom"):
             continue
         if isinstance(v, str):
             out.append(v)
@@ -109,6 +109,9 @@ def check(c, fotos_ok, temas):
         where = f"{cid} slide {i}"
         if s.get("tipo") not in TYPES:
             fail(f"{where}: tipo {s.get('tipo')!r}")
+        z = s.get("zoom")
+        if z and not (all(z.get(k) for k in ("img", "x", "y", "d", "pagina", "lugar")) and (HERE / "documentos" / z["img"]).is_file()):
+            fail(f"{where}: zoom needs img (a cut in documentos/), x, y, d, pagina and lugar")
         if s.get("foto") and s["foto"] not in fotos_ok:
             fail(f"{where}: {s['foto']} is not in fotos.json (review it for faces, names and watermarks first)")
         if s.get("foto") and s["foto"] not in temas:
@@ -497,6 +500,8 @@ blockquote{font-family:"Avenir Next Condensed";font-weight:800;font-size:82px;li
 .docet{font-size:24px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7cc4ff;margin:0 0 10px 4px}
 .circulo{position:absolute;transform:translate(-50%,-50%);border:5px solid #ff7a66;border-radius:50%;box-sizing:border-box}
 .ctag{position:absolute;transform:translate(-50%,-50%);background:#ff7a66;color:#0b0f14;font-family:"Avenir Next Condensed";font-weight:800;font-size:32px;line-height:1;padding:6px 12px;border-radius:8px;white-space:nowrap}
+.zoom{position:absolute;border-radius:50%;background-size:cover;background-position:center;opacity:.5;filter:saturate(.85);
+ -webkit-mask:radial-gradient(circle closest-side,#000 62%,transparent 100%)}
 .foot{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;font-size:18px;line-height:1.35;opacity:.62;padding-top:14px}
 .foot .src{max-width:760px}
 .foot .site{font-weight:700;font-size:24px;white-space:nowrap}
@@ -546,6 +551,12 @@ def credito(s):
     return "; ".join(dict.fromkeys(_VISTAS[f] for f in fotos if f in _VISTAS))
 
 
+def zoom_credito(s):
+    """A faded close-up names where it is: the oficio's own caption for the photo, and its page."""
+    z = s.get("zoom")
+    return f'Foto al fondo: SIAPA, oficio DG-135/2026, p. {z["pagina"]} del PDF («{z["lugar"]}»)' if z else ""
+
+
 MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
 
 
@@ -568,6 +579,11 @@ def slide_html(c, i, s):
             *({"x": x, "y": 13, "texto": h["etiqueta"], "color": "lab"} for x, h in ((25, s["izq"]), (75, s["der"]))),
             *({"x": x, "y": 46, "texto": h["cifra"], "color": h.get("color", "")} for x, h in ((25, s["izq"]), (75, s["der"])))])
         plain = " conf"
+    zoom = ""
+    if s.get("zoom"):  # above the tint (Talavera's plain tint is opaque cream), below the text
+        z = s["zoom"]
+        zoom = (f'<div class="zoom" style="left:{z["x"] - z["d"] / 2:.0f}px;top:{z["y"] - z["d"] / 2:.0f}px;width:{z["d"]}px;height:{z["d"]}px;'
+               f'background-image:url(\'{(HERE / "documentos" / z["img"]).as_uri()}\')"></div>')
     if s.get("etiquetas"):
         bg += '<div class="tags">' + "".join(
             f'<div class="tag {e.get("color", "")}" style="left:{e["x"]}%;top:{e["y"]}%">{md(e["texto"])}</div>' for e in s["etiquetas"]) + "</div>"
@@ -575,10 +591,10 @@ def slide_html(c, i, s):
     if ESTILO:
         body = re.sub(r'<div class="kicker">(.+?)</div>', r'<div class="kicker"><span class="k">\1</span></div>', body)
     return f"""<!doctype html><html lang="es"><head><meta charset="utf-8"><style>{CSS}{estilos.css(ESTILO)}</style></head>
-<body class="{plain} t-{s['tipo']}">{bg}<div class="tint"></div>{estilos.deco(ESTILO, i, total)}<div class="frame">
+<body class="{plain} t-{s['tipo']}">{bg}<div class="tint"></div>{zoom}{estilos.deco(ESTILO, i, total)}<div class="frame">
 <div class="top">{logo()}<span>Agua GDL</span><span class="n">{i}/{total}</span></div>
 <div class="main">{body}</div>
-<div class="foot"><div class="src">{html.escape(" · ".join(x for x in (credito(s), footer(c, s)) if x))}</div><div class="site">aguagdl.com</div></div>
+<div class="foot"><div class="src">{html.escape(" · ".join(x for x in (credito(s), zoom_credito(s), footer(c, s)) if x))}</div><div class="site">aguagdl.com</div></div>
 </div></body></html>"""
 
 

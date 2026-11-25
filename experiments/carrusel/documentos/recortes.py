@@ -86,6 +86,13 @@ RECORTES = {
     "siapa-dg135-puntos-1.png": ("siapa-dg135", 4, 561, 1075, 676, 42),     # «se han identificado los ingresos de caudales»
     "siapa-dg135-puntos-2.png": ("siapa-dg135", 4, 1236, 1075, 282, 42),    # «hacia el Canal Las»
     "siapa-dg135-puntos-3.png": ("siapa-dg135", 4, 109, 1115, 788, 42),     # «Pintas con olor y color característico del agua residual,»
+    # The oficio's own photos of the discharges into the canal (Anexo 01, PDF pp. 8, 11, 13, 14), square close-ups for the
+    # faded insets ("zoom"); no people in any of them.
+    "siapa-dg135-foto-eden.png": ("siapa-dg135", 11, 700, 685, 440, 440),        # «Descarga El Edén», upper photo: foam
+    "siapa-dg135-foto-eden-cortina.png": ("siapa-dg135", 11, 520, 1400, 480, 480),  # «Descarga El Edén», lower photo: the weir
+    "siapa-dg135-foto-adolf-horn.png": ("siapa-dg135", 13, 900, 1120, 440, 440),  # «Descarga Vaso Regulador Adolf Horn»: foam on the dark water
+    "siapa-dg135-foto-capulin.png": ("siapa-dg135", 8, 230, 640, 520, 520),       # «Descarga Capulín 1», left photo: the pipe
+    "siapa-dg135-foto-km4.png": ("siapa-dg135", 14, 960, 560, 460, 460),          # «Descarga km 4 - Arroyo Seco», right photo
     "siapa-dg135-puntos-4.png": ("siapa-dg135", 4, 895, 1113, 622, 42),     # «siendo los puntos principales en: El Capulín»
     "siapa-dg135-puntos-5.png": ("siapa-dg135", 4, 103, 1157, 715, 41),     # «1, 2 y 3, El Guayabo, El Zapote, La Carreta, El Edén,»
     "siapa-dg135-puntos-6.png": ("siapa-dg135", 4, 816, 1157, 704, 41),     # «La Teja, Vaso Regulador Adolf Horn y 1°. De Mayo.»

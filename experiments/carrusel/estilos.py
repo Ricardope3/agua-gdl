@@ -48,6 +48,7 @@ body{{color:{TINTA};font-family:"Iowan Old Style",Palatino,Georgia,serif}}
 .bio{{background:{COBALTO};color:#fff;border-radius:4px;font-family:"Avenir Next"}}
 .bio b{{font-family:"Iowan Old Style";font-style:italic}}
 .pie{{color:#4f5b7a;opacity:1}}
+.zoom{{opacity:.62;mix-blend-mode:multiply;filter:saturate(.8) contrast(1.05)}}
 .phone{{box-shadow:0 30px 70px rgba(20,33,61,.35)}}
 .conf .tint,.heavy .tint{{background:linear-gradient(180deg,rgba(12,19,40,.55) 0%,rgba(12,19,40,.2) 25%,rgba(12,19,40,.35) 45%,rgba(12,19,40,.88) 68%,rgba(12,19,40,.96) 100%)}}
 .conf,.heavy{{color:#fff}}

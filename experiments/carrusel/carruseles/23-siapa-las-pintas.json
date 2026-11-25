@@ -66,7 +66,15 @@
     "dg135"
    ],
    "calculo": "3.50 ÷ 0.5 = 7. El oficio dice que el límite «es de 0.5 mg/l» y que «ha alcanzado más de 3.50 mg/l»: más de 7 veces ese límite. Lo que significa el amoniaco: Anexo 01, p. 4 del PDF, leído de la imagen.",
-   "nota": "Recorte: p. 2 del oficio DG-135/2026."
+   "nota": "Recorte: p. 2 del oficio DG-135/2026.",
+   "zoom": {
+    "img": "siapa-dg135-foto-eden.png",
+    "x": 860,
+    "y": 820,
+    "d": 320,
+    "pagina": 11,
+    "lugar": "Descarga El Edén"
+   }
   },
   {
    "tipo": "texto",
@@ -137,7 +145,15 @@
    "fuentes": [
     "dg135"
    ],
-   "nota": "Recorte: p. 4 del PDF (Anexo 01 del oficio)."
+   "nota": "Recorte: p. 4 del PDF (Anexo 01 del oficio).",
+   "zoom": {
+    "img": "siapa-dg135-foto-eden-cortina.png",
+    "x": 900,
+    "y": 320,
+    "d": 240,
+    "pagina": 11,
+    "lugar": "Descarga El Edén"
+   }
   },
   {
    "tipo": "texto",
@@ -185,7 +201,15 @@
     "cedhj",
     "dg135"
    ],
-   "nota": "Recorte: Recomendación 10/2026 de la CEDHJ, pp. 45, 49 y 50."
+   "nota": "Recorte: Recomendación 10/2026 de la CEDHJ, pp. 45, 49 y 50.",
+   "zoom": {
+    "img": "siapa-dg135-foto-adolf-horn.png",
+    "x": 890,
+    "y": 380,
+    "d": 240,
+    "pagina": 13,
+    "lugar": "Descarga Vaso Regulador Adolf Horn"
+   }
   },
   {
    "tipo": "texto",
@@ -282,7 +306,15 @@
     "dg135"
    ],
    "nota": "Recorte: p. 4 del PDF (Anexo 01 del oficio).",
-   "calculo": "El Capulín 1, 2 y 3 son tres puntos; con El Guayabo, El Zapote, La Carreta, El Edén, La Teja, Vaso Regulador Adolf Horn y 1° de Mayo, siete más: 10 puntos."
+   "calculo": "El Capulín 1, 2 y 3 son tres puntos; con El Guayabo, El Zapote, La Carreta, El Edén, La Teja, Vaso Regulador Adolf Horn y 1° de Mayo, siete más: 10 puntos.",
+   "zoom": {
+    "img": "siapa-dg135-foto-capulin.png",
+    "x": 905,
+    "y": 320,
+    "d": 260,
+    "pagina": 8,
+    "lugar": "Descarga Capulín 1"
+   }
   },
   {
    "tipo": "texto",
@@ -421,7 +453,15 @@
     "Escríbelo en los comentarios",
     "Pídele al gobernador y a tu diputación que saneen los ríos:"
    ],
-   "url": "aguagdl.com/exige"
+   "url": "aguagdl.com/exige",
+   "zoom": {
+    "img": "siapa-dg135-foto-km4.png",
+    "x": 830,
+    "y": 400,
+    "d": 340,
+    "pagina": 14,
+    "lugar": "Descarga km 4 - Arroyo Seco"
+   }
   }
  ]
 }
