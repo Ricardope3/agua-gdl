@@ -5,6 +5,7 @@
     python3 experiments/carrusel/build.py 01-maximo     only carousels whose id starts with this
     python3 experiments/carrusel/build.py --check       validate only (no Chrome)
     python3 experiments/carrusel/build.py 23 --estilo=talavera   render in a style theme from estilos.py, to out/<id>-<estilo>/
+A carousel's "estilo" sets the theme of its plain render (out/<id>/); --estilo overrides it.
     python3 experiments/carrusel/build.py --capturas    retake the aguagdl.com phone screenshots in capturas/ (or only the pages named)
 
 Checks before rendering: every number written on a slide appears in the "cita" of a source the slide cites
@@ -91,6 +92,8 @@ def check(c, fotos_ok, temas):
                 fail(f"{cid}: fuente {key} missing {k}")
         if not f["url"].startswith("https://"):
             fail(f"{cid}: fuente {key} url must be https")
+    if c.get("estilo") and c["estilo"] not in estilos.nombres():
+        fail(f"{cid}: estilo must be one of {', '.join(estilos.nombres())}")
     if not 3 <= len(c["slides"]) <= 10:
         fail(f"{cid}: 3 to 10 slides")
     allq = " ".join(f["cita"] for f in c["fuentes"].values()).replace("“", "").replace("”", "").replace('"', "")
@@ -659,10 +662,11 @@ def main():
         return capturas([a for a in sys.argv[1:] if not a.startswith("--")])
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     global ESTILO
+    pedido = None
     for a in sys.argv[1:]:
         if a.startswith("--estilo="):
-            ESTILO = a.split("=", 1)[1]
-            if ESTILO not in estilos.nombres():
+            pedido = a.split("=", 1)[1]
+            if pedido not in estilos.nombres():
                 fail(f"--estilo: one of {', '.join(estilos.nombres())}")
     only_check = "--check" in sys.argv
     fotos_ok = set(json.loads((HERE / "fotos.json").read_text())["fotos"])
@@ -691,7 +695,8 @@ def main():
     tmp = pathlib.Path(tempfile.mkdtemp())
     try:
         for c in carr:
-            d = OUT / (c["id"] + (f"-{ESTILO}" if ESTILO else ""))
+            ESTILO = pedido or c.get("estilo")
+            d = OUT / (c["id"] + (f"-{pedido}" if pedido else ""))
             if d.exists():
                 shutil.rmtree(d)
             d.mkdir()

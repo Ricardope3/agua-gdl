@@ -49,6 +49,14 @@ body{{color:{TINTA};font-family:"Iowan Old Style",Palatino,Georgia,serif}}
 .bio b{{font-family:"Iowan Old Style";font-style:italic}}
 .pie{{color:#4f5b7a;opacity:1}}
 .phone{{box-shadow:0 30px 70px rgba(20,33,61,.35)}}
+.conf .tint,.heavy .tint{{background:linear-gradient(180deg,rgba(12,19,40,.55) 0%,rgba(12,19,40,.2) 25%,rgba(12,19,40,.35) 45%,rgba(12,19,40,.88) 68%,rgba(12,19,40,.96) 100%)}}
+.conf,.heavy{{color:#fff}}
+.conf .titular,.heavy .titular,.conf .texto,.heavy .texto{{color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.5)}}
+.conf .kicker,.heavy .kicker,.conf .foot,.heavy .foot,.conf .top .n,.heavy .top .n{{color:#dfe5f7}}
+.conf .cifra,.heavy .cifra{{color:{AMARILLO}}}
+.conf .top,.heavy .top,.conf .foot .site,.heavy .foot .site{{color:#fff}}
+.conf .marco,.heavy .marco{{border-color:#fbfaf6}}
+.conf .banda,.heavy .banda{{background-color:{CREMA}}}
 """,
     "expediente": f"""
 html,body{{background:#d5ba85}}
