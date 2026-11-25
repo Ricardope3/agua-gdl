@@ -34,6 +34,7 @@ A `portada` or `texto` slide can show an official document as a paper card above
 - A `cita` slide's quote is word for word in its source's `cita`, and so is a `documento`'s `dice`; its cuts exist, and each «…» inside the `dice` has a `"…"` in `recortes`, so the card never shows two distant lines as one passage.
 - Every source has `url`, `medio`, `fecha`, `cita` and `revisado`; `consultada: true` for undated pages (the footer says «consultada el …»).
 - Every background is in `fotos.json`, reviewed by eye: no close face, no legible private name, no outlet watermark or burned-in caption. Three were dropped on 5 Nov for showing faces.
+- `caption.txt`, the caption plus the source list the build appends, stays within Instagram's 2,200 characters, counted as Instagram does (an emoji is 2).
 - Each entry in `creditos.json` is a photo in `fotos.json` with `credito`, `porque` and `revisado`.
 
 ## Photo credits

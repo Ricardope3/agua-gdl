@@ -86,6 +86,9 @@ def check(c, fotos_ok, temas):
     for k in ("id", "titulo", "caption", "fuentes", "slides"):
         if k not in c:
             fail(f"{cid}: missing {k}")
+    largo = len(caption(c).encode("utf-16-le")) // 2  # Instagram counts UTF-16 units: an emoji is 2
+    if largo > 2200:
+        fail(f"{cid}: caption.txt is {largo} characters with its source list; Instagram's limit is 2,200")
     for k in re.findall(r"\[\[(\w*)\]\]", json.dumps(c["slides"], ensure_ascii=False)) + [s["marca_grande"] for s in c["slides"] if s.get("marca_grande")]:
         if k not in LOGOS and k not in SELLOS:
             fail(f"{cid}: [[{k}]] is neither in LOGOS nor in SELLOS")

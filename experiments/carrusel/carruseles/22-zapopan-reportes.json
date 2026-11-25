@@ -2,7 +2,7 @@
  "id": "22-zapopan-reportes",
  "titulo": "Zapopan: lo anunciado y lo registrado",
  "estilo": "talavera",
- "caption": "Hicimos solicitudes de transparencia para pedirle cuentas al Gobierno de Zapopan, y lo que anunció no cuadra con lo que registró.\n\n🚚 El 19 de octubre anunció que «contará con 45 pipas y 100 cisternas comunitarias». En la gráfica de Protección Civil, el día con más pipas fueron 34.\n💧 La lista de cisternas instaladas de Cercanía Ciudadana termina en la 49. De las pipas que las llenaron, Cercanía respondió que en sus archivos «no se localizaron bitácoras».\n🏥 Pedimos los registros de atención a hospitales y centros de salud. Hospitales: «Sin atenciones registradas». Centros de salud: ninguno.\n📋 Las 75 colonias más afectadas: Protección Civil dice que la lista la generó Cercanía; Cercanía dice que «no se localizó información».\n\nNo decimos que mintieron: su respuesta describe las 45 pipas y 100 cisternas como el plan de una «primera fase».\n\nSu lista suma 9,828 reportes de falta de agua del 15 de octubre al 4 de noviembre. Busca tu colonia en aguagdl.com/reportes-zapopan (link en la bio).\n\n¿Tu colonia está entre las 75? Escríbela en los comentarios.",
+ "caption": "Hicimos solicitudes de transparencia para pedirle cuentas al Gobierno de Zapopan, y lo que anunció no cuadra con lo que registró.\n\n🚚 El 19 de octubre anunció que «contará con 45 pipas y 100 cisternas comunitarias». En la gráfica de Protección Civil, el día con más pipas fueron 34.\n💧 La lista de cisternas instaladas de Cercanía Ciudadana termina en la 49. De las pipas que las llenaron, Cercanía respondió que en sus archivos «no se localizaron bitácoras».\n🏥 Pedimos los registros de atención a hospitales y centros de salud. Hospitales: «Sin atenciones registradas». Centros de salud: ninguno.\n📋 Las 75 colonias más afectadas: Protección Civil dice que la lista la generó Cercanía; Cercanía dice que «no se localizó información».\n\nSu respuesta describe las 45 pipas y 100 cisternas como el plan de una «primera fase».\n\nSu lista suma 9,828 reportes de falta de agua del 15 de octubre al 4 de noviembre. Busca tu colonia en aguagdl.com/reportes-zapopan (link en la bio).\n\n¿Tu colonia está entre las 75? Escríbela en los comentarios.",
  "fuentes": {
   "zap": {
    "url": "https://aguagdl.com/datos/zapopan-respuesta-140292426004981.pdf",
@@ -254,8 +254,8 @@
   },
   {
    "tipo": "texto",
-   "kicker": "Lo que no decimos",
-   "titular": "No decimos que mintieron. Lo anunciado no cuadra con lo registrado.",
+   "kicker": "Lo que dice su respuesta",
+   "titular": "Anunciaron 45 pipas y 100 cisternas. Su respuesta habla de «gestiones» para lograrlo.",
    "documento": {
     "fuente": "r6785",
     "membrete": [

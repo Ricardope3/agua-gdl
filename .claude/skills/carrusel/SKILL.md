@@ -82,7 +82,7 @@ Arguments: the topic, a colonia, or the facts to show. If the ask is vague, prop
 - The opening slide names its subject in words, not only with a logo: with the cover gone, «Una sola empresa…» became «Nestlé, una sola empresa…».
 - One idea per slide, one sentence of at most ~15 words; the punchline bold, any context smaller. Cut the kicker when the headline says it.
 - Let a sharp photo carry the point: put the number on the photo (a tag on the empty tinaco, the turbid glass, the pipa line), and compare with split slides of the same frame in two states (promised vs calendar, before vs now). Only photos with no close faces or names.
-- Keep the source credit on each slide short and quiet; put the full source list in the caption («📚 Fuentes: medio, fecha, enlace»). `build.py` appends that list, with links, to `caption.txt`: don't write it in the JSON `caption`, and keep that caption near 1,100 characters so the whole stays under Instagram's 2,200.
+- Keep the source credit on each slide short and quiet; put the full source list in the caption («📚 Fuentes: medio, fecha, enlace»). `build.py` appends that list, with links, to `caption.txt`: don't write it in the JSON `caption`, and keep that caption near 1,100 characters so the whole stays under Instagram's 2,200 (`--check` fails above it).
 - Pair every alarm with agency: what helped, what came back, what one person can do that works (a report on the map, a letter to the diputación, the discount claimed).
 - End the caption with a question people can answer in the comments («¿Cuántos días lleva tu colonia?»).
 
