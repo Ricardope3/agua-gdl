@@ -78,8 +78,8 @@ main h1, main h2 { font-weight: 400; font-style: italic }
 footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-top: 34px }
 </style>
 <style>
-/* Propuesta 1: a front page. Two stories, one per municipio, set like a broadsheet: masthead, a lead with its chart as
-   the photograph, a side column with the document cut, and a box for the difference. */
+/* Propuesta 1: a front page. Two stories, one per municipio, set like a broadsheet: masthead, Tlajomulco as the lead
+   with its chart as the photograph and its contradictions spelled out, Zapopan in the side column, a box for each difference. */
 .cabezal { margin: 22px 0 0; text-align: center; border-top: 3px double var(--brand); border-bottom: 3px double var(--brand); padding: 14px 0 10px }
 .cabezal .nombre { margin: 0; font: italic 400 clamp(2.6rem, 9vw, 5.2rem)/1 var(--serif); letter-spacing: -.02em; color: var(--fg); max-width: none }
 .cabezal .linea { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 10px 0 0; padding-top: 8px; border-top: 1px solid var(--line); font-size: .85rem; color: var(--muted) }
@@ -109,10 +109,32 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
 .tira p { margin: 0; font-size: .95rem }
 .plana .documento { margin: 12px 0 0 }
 .plana .hoja { padding: 12px 14px }
-.plana .contador { --cols: 1; margin: 14px 0 0 }
-.plana .contador li { padding: 10px 0 }
-.plana .contador li + li { border-left: 0; border-top: 1px solid var(--line) }
+.plana .contador { margin: 16px 0 0 }
 .plana .contador .n { font: 400 2.2rem/1.1 var(--serif) }
+.cifras.dos { flex-wrap: wrap; row-gap: 4px }
+.cifras.dos .flecha { font: italic .32em/1 var(--serif); align-self: center }
+/* The lead's contradictions: one row per question, both sides quoted, and why they can't both stand. */
+.choque { margin: 20px 0 0; padding: 14px 0 0; border-top: 3px double var(--brand) }
+.choque h3 { margin: 0 0 6px; font: italic 400 clamp(1.5rem, 3vw, 2rem)/1.1 var(--serif) }
+.choque ol { margin: 0; padding: 0; list-style: none; counter-reset: c }
+.choque li { counter-increment: c; padding: 14px 0; border-bottom: 1px solid var(--line) }
+.choque h4 { margin: 0 0 8px; font: 600 1rem/1.3 var(--font) }
+.choque h4::before { content: counter(c) "  "; font: italic 400 1.6rem/1 var(--serif); color: var(--brand); margin-right: 6px }
+.lados { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px }
+.plana .lados blockquote { margin: 0; padding: 10px 12px; border: 1px solid var(--line); border-left: 3px double var(--brand); background: var(--surface); font: italic 400 1.08rem/1.35 var(--serif) }
+.lados blockquote b { display: block; margin-bottom: 4px; font: 600 .8rem/1.2 var(--font); font-style: normal; color: var(--muted) }
+.lados cite { display: block; margin-top: 6px; font: .8rem/1.3 var(--font); font-style: normal; color: var(--muted) }
+.choca { margin: 10px 0 0; padding: 8px 12px; background: var(--warn-bg); color: var(--warn); font-size: .98rem; max-width: none }
+.cierre { margin: 12px 0 0; font-size: 1.02rem; max-width: none }
+/* The side story, smaller. */
+.plana article + article .cifras { font-size: clamp(2.4rem, 5vw, 3.4rem) }
+.plana article + article .balazo { font-size: 1rem }
+.sub-choque { margin: 16px 0 6px; font: italic 400 1.3rem/1.15 var(--serif) }
+.choque-z { margin: 0; padding: 0; list-style: none }
+.choque-z li { padding: 8px 0; border-bottom: 1px solid var(--line); font-size: .93rem }
+.choque-z b { display: block; font: italic 400 1.02rem/1.3 var(--serif) }
+.plana article + article .tira { grid-template-columns: 110px minmax(0, 1fr) }
+.plana article + article .tira .cien { width: 110px; gap: 2px }
 .mas { margin: 26px 0 0; padding: 14px 0 0; border-top: 3px double var(--brand) }
 .mas h2 { margin: 0 0 10px; font: italic 400 1.4rem var(--serif) }
 @media (max-width: 860px) {
@@ -120,6 +142,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   .plana > article { padding: 0 }
   .plana > article + article { padding: 20px 0 0; margin-top: 22px; border-left: 0; border-top: 3px double var(--brand) }
   .tira { grid-template-columns: 1fr }
+  .lados { grid-template-columns: 1fr }
 }
 </style>
 <script src="/theme.js"></script>
@@ -148,44 +171,60 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   <main>
     <div class="cabezal">
       <h1 class="nombre">No cuadra</h1>
-      <p class="linea"><span>Lo que anunciaron o afirmaron, junto a los documentos oficiales</span><span>Zapopan · Tlajomulco</span><span>Documentos obtenidos por transparencia</span></p>
+      <p class="linea"><span>Lo que anunciaron o afirmaron, junto a los documentos oficiales</span><span>Tlajomulco · Zapopan</span><span>Documentos obtenidos por transparencia</span></p>
     </div>
 
     <div class="plana">
-      <article aria-labelledby="zapopan">
-        <p class="antetitulo">Zapopan · el operativo de pipas</p>
-        <h2 id="zapopan">Prometieron 45 pipas. Del 15 de octubre al 3 de noviembre, su propia gráfica nunca llega a 45</h2>
-        <div class="cifras" aria-hidden="true"><s>45</s><span class="flecha">→</span><span>34</span><small>pipas, el día con más</small></div>
-        <p class="balazo">El boletín del 19 de octubre prometió 45 pipas y 100 cisternas comunitarias. Sus propios oficios, entregados por transparencia, dicen otra cosa.</p>
-
-        <figure class="foto-plana grafica">
-          <div class="serie" id="serie-pipas"><noscript><p class="note">La gráfica necesita JavaScript. Los 20 días están en el <a href="/datos/zapopan-pipas-por-dia.csv">CSV</a>.</p></noscript></div>
-          <figcaption>Del 15 de octubre al 3 de noviembre de 2026. Fuente: gráfica anexa al oficio 011300/2026/0150 de la Dirección de Planificación de Protección Civil y Bomberos de Zapopan (<a href="/datos/pcyb-respuesta-ut-091-2026.pdf#page=4">p. 4 del PDF</a>); los números son nuestra lectura de sus etiquetas (<a href="/datos/zapopan-pipas-por-dia.csv">CSV</a>).</figcaption>
-        </figure>
-
-        <div class="texto">
-          <blockquote>«Zapopan contará con 45 pipas y 100 cisternas comunitarias con capacidad de 10 mil litros cada una»</blockquote>
-          <p>Eso dijo el <a href="https://www.zapopan.gob.mx/v3/noticias/zapopan-pone-en-marcha-operativo-de-suministro-de-agua-con-45-pipas-y-100-cisternas" rel="noopener">boletín del Gobierno de Zapopan</a> el 19 de octubre, que anunció también que daría «prioridad a escuelas y centros de salud municipales».</p>
-          <p>En la gráfica de su Protección Civil, el día con más tuvo 34 pipas (oficio 011300/2026/0150, que dice también que al 3 de noviembre había «36 pipas en servicio»). Ningún día de la gráfica llega a 45.</p>
-          <p>En la tabla de inmuebles atendidos, la fila de hospitales dice «Sin atenciones registradas» (oficio 011300/2026/0148).</p>
-          <p>Zapopan respondió después que las 45 pipas y las 100 cisternas eran una meta por «materializar»; el boletín dijo «contará con».</p>
-        </div>
-
-        <div class="tira">
-          <div class="cien" role="img" aria-label="Cien cuadros, uno por cisterna anunciada; 49 en azul, las de la lista" id="cien"></div>
-          <div>
-            <h3>La lista de cisternas termina en la número 49</h3>
-            <p>El «listado de cisternas instaladas» de Cercanía Ciudadana termina en la número 49, LOS CAJETES (oficio 11000000/CER.CIU/2026/0876). 51 de las 100 anunciadas no están en la lista; eso no prueba que no existan. <a href="/cisternas">Míralas en el mapa</a>.</p>
-          </div>
-        </div>
-
-        <div class="recuadro"><strong>La diferencia</strong><p>La gráfica de pipas por jornada nunca llega a 45. 51 de las 100 cisternas anunciadas no están en la lista entregada; eso no prueba que no existan. La tabla no registra ninguna atención a hospitales ni a centros de salud. Zapopan respondió después que las 45 pipas y las 100 cisternas eran una meta por «materializar»; el boletín dijo «contará con».</p></div>
-        <p class="ir"><a class="button" href="/zapopan">Todo Zapopan →</a></p>
-      </article>
-
       <article aria-labelledby="tlajomulco">
         <p class="antetitulo">Tlajomulco · el canal de Las Pintas</p>
-        <h2 id="tlajomulco">El SIAPA señaló diez descargas y fotografió siete. Tlajomulco: «no existen descargas»</h2>
+        <h2 id="tlajomulco">El SIAPA vio descargas «abundantes», algunas «de manera permanente». Tlajomulco: «no existen descargas»</h2>
+        <div class="cifras dos" aria-hidden="true"><span>10</span><small>puntos de descarga, según el SIAPA</small><span class="flecha">contra</span><span>0</span><small>descargas al canal, según Tlajomulco</small></div>
+        <p class="balazo">El 6 de marzo, el SIAPA le escribió a Tlajomulco que el agua que llega a su Planta 1 traía nitrógeno amoniacal de «más de 3.50 mg/l», más de siete veces el límite que cita, y le señaló diez puntos de descarga al canal de Las Pintas. Tlajomulco no le contestó. A la CEDHJ le informó que al canal «no existen descargas».</p>
+
+        <figure class="foto-plana grafica">
+          <div class="serie" id="serie-amon"><noscript><p class="note">La gráfica necesita JavaScript. Los 74 meses están en el <a href="/datos/siapa-dg-135-2026-amoniacal.csv">CSV</a>.</p></noscript></div>
+          <figcaption>Nitrógeno amoniacal, promedio mensual en el agua que entra a la Planta 1 Miravalle, de enero de 2020 a febrero de 2026, en mg/L. Fuente: Gráfico 1 del oficio DG-135/2026 del SIAPA (<a href="/datos/siapa-dg-135-2026.pdf#page=5">p. 5 del PDF</a>); lectura de Agua GDL, ±0.05 mg/L (<a href="/datos/siapa-dg-135-2026-amoniacal.csv">CSV</a>). La Figura 1 dice «corte enero 2020 a enero 2026», pero su línea llega a febrero.</figcaption>
+        </figure>
+
+        <section class="choque" aria-labelledby="choque">
+          <h3 id="choque">Cómo se contradicen</h3>
+          <ol>
+            <li>
+              <h4>¿Hay descargas?</h4>
+              <div class="lados">
+                <blockquote><b>El SIAPA</b>«se han observado descargas abundantes, en algunas de manera permanente y otras de forma intermitente»<cite>Oficio DG-135/2026, anexo, <a href="/datos/siapa-dg-135-2026.pdf#page=4">p. 4 del PDF</a></cite></blockquote>
+                <blockquote><b>Tlajomulco</b>«constatando que no existen descargas de aguas residuales al canal»<cite>Oficio DAPIH/0331-01/2026, <a href="/datos/tlajomulco-dapih-0331-01-2026.pdf#page=3">p. 3</a></cite></blockquote>
+              </div>
+              <p class="choca"><b>Por qué choca:</b> si alguna descarga era permanente, las dos frases no pueden ser ciertas a la vez. O el recorrido no la registró, o el SIAPA describió algo que no estaba, o se cerró entre una visita y otra. Las actas que lo dirían no se han entregado.</p>
+            </li>
+            <li>
+              <h4>¿De quién son?</h4>
+              <div class="lados">
+                <blockquote><b>El SIAPA</b>descargas «que se encuentran dentro del municipio de Tlajomulco de Zúñiga»<cite>Oficio DG-135/2026, <a href="/datos/siapa-dg-135-2026.pdf#page=1">p. 1</a></cite></blockquote>
+                <blockquote><b>Tlajomulco</b>de los diez puntos, cuatro «se ubican fuera del municipio»<cite><a href="https://tlajomulco.gob.mx/comunicacion-institucional/tlajomulco-descarta-descargas-irregulares-en-canal-de-las-pintas" rel="noopener">Boletín del 10 de marzo</a></cite></blockquote>
+              </div>
+              <p class="choca"><b>Por qué choca:</b> el SIAPA pone las descargas dentro de Tlajomulco; Tlajomulco saca cuatro de los diez puntos de su territorio. El boletín no dice cuáles.</p>
+            </li>
+            <li>
+              <h4>¿Existen los puntos?</h4>
+              <div class="lados">
+                <blockquote><b>El SIAPA</b>fotografías y coordenadas de siete de los diez puntos<cite>Oficio DG-135/2026, anexo, <a href="/datos/siapa-dg-135-2026.pdf#page=8">pp. 8 a 13 y 15</a></cite></blockquote>
+                <blockquote><b>Tlajomulco</b>«de los diez puntos señalados por el SIAPA, cinco actualmente no existen desde hace muchos años»<cite><a href="https://tlajomulco.gob.mx/comunicacion-institucional/tlajomulco-descarta-descargas-irregulares-en-canal-de-las-pintas" rel="noopener">Boletín del 10 de marzo</a></cite></blockquote>
+              </div>
+              <p class="choca"><b>Por qué choca:</b> son diez puntos. Si cinco no existen y el SIAPA fotografió siete, al menos dos de las fotografías serían de puntos que, según el boletín, no existen. El boletín no dice cuáles son los cinco.</p>
+            </li>
+            <li>
+              <h4>Tlajomulco contra Tlajomulco</h4>
+              <div class="lados">
+                <blockquote><b>10 de marzo</b>tras «la visita física», cinco puntos «ya no existen y cuatro se ubican fuera del municipio»<cite><a href="https://tlajomulco.gob.mx/comunicacion-institucional/tlajomulco-descarta-descargas-irregulares-en-canal-de-las-pintas" rel="noopener">Boletín del 10 de marzo</a></cite></blockquote>
+                <blockquote><b>Finales de marzo</b>«se realizaron tres recorridos en campo en conjunto con el SIAPA para visitar estos 10 puntos»<cite>Oficio DAPIH/0331-01/2026, <a href="/datos/tlajomulco-dapih-0331-01-2026.pdf#page=3">p. 3</a></cite></blockquote>
+              </div>
+              <p class="choca"><b>Por qué choca:</b> la primera versión deja fuera nueve de los diez puntos, porque no existen o no son de Tlajomulco. La segunda dice que se visitaron los diez y que no hay descargas al canal. Ninguna de las dos dice qué se vio en cada punto.</p>
+            </li>
+          </ol>
+          <p class="cierre">Y al SIAPA, que le mandó el oficio, no le respondió: «el municipio no emitió respuesta al referido oficio» (oficio DTRC/1740/2026, <a href="/datos/tlajomulco-respuesta-140290426001765.pdf#page=4">p. 4</a>).</p>
+        </section>
+
         <figure class="documento">
         <div class="hoja">
           <div class="renglones">
@@ -199,10 +238,6 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
         </div>
         <figcaption>Oficio DAPIH/0331-01/2026 de Tlajomulco, marzo de 2026, p. 3 (<a href="/datos/tlajomulco-dapih-0331-01-2026.pdf#page=3">PDF</a>). Resaltado de Agua GDL.</figcaption>
       </figure>
-        <div class="texto" style="columns:1">
-          <p>El 6 de marzo, el SIAPA le escribió a Tlajomulco que «por el Canal Las Pintas transitan aguas residuales provenientes de descargas de aguas sanitarias y/o residuales que se encuentran dentro del municipio de Tlajomulco de Zúñiga» (oficio DG-135/2026, <a href="/datos/siapa-dg-135-2026.pdf">PDF</a>), y le señaló diez puntos.</p>
-          <p>A finales de marzo, en un oficio para la CEDHJ, Tlajomulco informó que en tres recorridos con el SIAPA constató que «no existen descargas».</p>
-        </div>
         <ul class="contador" style="--cols:3">
         <li><span class="n sobre">3.62 mg/L</span><span class="t">de nitrógeno amoniacal, en promedio, en el agua que entró a la Planta 1 en enero de 2026, en nuestra lectura de la gráfica del SIAPA</span></li>
         <li><span class="n">0.5 mg/L</span><span class="t">es el límite de la NOM-127-SSA1-2021, la norma del agua para uso y consumo humano, que cita el SIAPA</span></li>
@@ -211,6 +246,34 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
         <p class="note">El promedio de enero es nuestra lectura del Gráfico 1 del oficio DG-135/2026 del SIAPA (<a href="/datos/siapa-dg-135-2026.pdf#page=5">p. 5 del PDF</a>, <a href="/datos/siapa-dg-135-2026-amoniacal.csv">CSV</a>); el límite lo cita el mismo oficio (<a href="/datos/siapa-dg-135-2026.pdf#page=4">p. 4</a>); las 655 colonias, la Recomendación 10/2026 de la CEDHJ, que resume lo que le informó el SIAPA (<a href="https://cedhj.org.mx/assets_web/doc/recomendaciones/emitidas/2026/20260430150739/recomendacion_1777583259457.pdf#page=50" rel="noopener">p. 50</a>).</p>
         <div class="recuadro"><strong>La diferencia</strong><p>Tlajomulco no dice cuándo fueron los recorridos ni entregó actas. El propio SIAPA escribió que en esos sitios «se han observado descargas abundantes, en algunas de manera permanente y otras de forma intermitente»: un recorrido sin descargas no prueba que no las haya otros días.</p></div>
         <p class="ir"><a class="button" href="/tlajomulco">Todo Tlajomulco →</a></p>
+      </article>
+
+      <article aria-labelledby="zapopan">
+        <p class="antetitulo">Zapopan · el operativo de pipas</p>
+        <h2 id="zapopan">Anunció 45 pipas y 100 cisternas. Sus oficios: 34 y 49</h2>
+        <div class="cifras" aria-hidden="true"><s>45</s><span class="flecha">→</span><span>34</span><small>pipas, el día con más</small></div>
+        <p class="balazo">El boletín del 19 de octubre: «Zapopan contará con 45 pipas y 100 cisternas comunitarias con capacidad de 10 mil litros cada una».</p>
+
+        <figure class="foto-plana grafica">
+          <div class="serie" id="serie-pipas"><noscript><p class="note">La gráfica necesita JavaScript. Los 20 días están en el <a href="/datos/zapopan-pipas-por-dia.csv">CSV</a>.</p></noscript></div>
+          <figcaption>Del 15 de octubre al 3 de noviembre de 2026. Fuente: gráfica anexa al oficio 011300/2026/0150 de la Dirección de Planificación de Protección Civil y Bomberos de Zapopan (<a href="/datos/pcyb-respuesta-ut-091-2026.pdf#page=4">p. 4 del PDF</a>); los números son nuestra lectura de sus etiquetas (<a href="/datos/zapopan-pipas-por-dia.csv">CSV</a>).</figcaption>
+        </figure>
+
+        <h3 class="sub-choque">Cómo no cuadra</h3>
+        <ul class="choque-z">
+          <li><b>«contará con 45 pipas»</b>El día con más de la gráfica de su Protección Civil, del 15 de octubre al 3 de noviembre, tuvo 34 (oficio 011300/2026/0150).</li>
+          <li><b>«100 cisternas comunitarias»</b>El «listado de cisternas instaladas» termina en la número 49, LOS CAJETES (oficio 11000000/CER.CIU/2026/0876). Que 51 no estén no prueba que no existan.</li>
+          <li><b>«prioridad a escuelas y centros de salud municipales»</b>En la tabla de inmuebles atendidos, la fila de hospitales dice «Sin atenciones registradas» (oficio 011300/2026/0148).</li>
+          <li><b>«contará con»</b>Después, Zapopan respondió que eran una meta por «materializar» (oficio 02050000/2026/7939).</li>
+        </ul>
+
+        <div class="tira">
+          <div class="cien" role="img" aria-label="Cien cuadros, uno por cisterna anunciada; 49 en azul, las de la lista" id="cien"></div>
+          <p><a href="/cisternas">Las 49 cisternas en el mapa</a>.</p>
+        </div>
+
+        <div class="recuadro"><strong>La diferencia</strong><p>La gráfica de pipas por jornada nunca llega a 45. 51 de las 100 cisternas anunciadas no están en la lista entregada; eso no prueba que no existan. La tabla no registra ninguna atención a hospitales ni a centros de salud. Zapopan respondió después que las 45 pipas y las 100 cisternas eran una meta por «materializar»; el boletín dijo «contará con».</p></div>
+        <p class="ir"><a class="button" href="/zapopan">Todo Zapopan →</a></p>
       </article>
     </div>
 
@@ -242,7 +305,8 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
 </div>
 <script src="/nocuadra-lab.js"></script>
 <script>
-NC.seriePipas(document.getElementById("serie-pipas"));
+NC.serieAmoniaco(document.getElementById("serie-amon"));
+NC.seriePipas(document.getElementById("serie-pipas"), { alto: () => 190 });
 NC.waffle(document.getElementById("cien"), 49);
 </script>
 </body>
