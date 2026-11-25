@@ -500,8 +500,7 @@ blockquote{font-family:"Avenir Next Condensed";font-weight:800;font-size:82px;li
 .docet{font-size:24px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7cc4ff;margin:0 0 10px 4px}
 .circulo{position:absolute;transform:translate(-50%,-50%);border:5px solid #ff7a66;border-radius:50%;box-sizing:border-box}
 .ctag{position:absolute;transform:translate(-50%,-50%);background:#ff7a66;color:#0b0f14;font-family:"Avenir Next Condensed";font-weight:800;font-size:32px;line-height:1;padding:6px 12px;border-radius:8px;white-space:nowrap}
-.zoom{position:absolute;border-radius:50%;background-size:cover;background-position:center;opacity:.5;filter:saturate(.85);
- -webkit-mask:radial-gradient(circle closest-side,#000 62%,transparent 100%)}
+.zoom{position:absolute;border-radius:50%;background-size:cover;background-position:center;border:6px solid #fff;box-shadow:0 6px 18px rgba(0,0,0,.35)}
 .foot{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;font-size:18px;line-height:1.35;opacity:.62;padding-top:14px}
 .foot .src{max-width:760px}
 .foot .site{font-weight:700;font-size:24px;white-space:nowrap}
@@ -552,9 +551,9 @@ def credito(s):
 
 
 def zoom_credito(s):
-    """A faded close-up names where it is: the oficio's own caption for the photo, and its page."""
+    """A round close-up names where it is: the oficio's own caption for the photo, and its page."""
     z = s.get("zoom")
-    return f'Foto al fondo: SIAPA, oficio DG-135/2026, p. {z["pagina"]} del PDF («{z["lugar"]}»)' if z else ""
+    return f'Foto: SIAPA, oficio DG-135/2026, p. {z["pagina"]} del PDF («{z["lugar"]}»)' if z else ""
 
 
 MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
