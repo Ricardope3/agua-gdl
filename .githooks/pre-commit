@@ -22,6 +22,11 @@ fi
 # the private research archive, and its unpinned citations may not grow (6 Nov audit: skill edits here skipped that
 # check). Checks the staged version; in a worktree, uses the main checkout's research/.
 skill=.claude/skills/transparencia/SKILL.md
+# 25 Nov: it had grown to 66 KB, one rule per incident; its rules now live in research/transparency/WORKING-RULES.md.
+if git diff --cached --name-only | grep -qx "$skill" && [ "$(git show ":$skill" | wc -c)" -gt 16384 ]; then
+  echo "pre-commit: $skill is over 16 KB; put the rule in a check or in research/transparency/WORKING-RULES.md (the skill's «Keeping this page short»)." >&2
+  exit 1
+fi
 if git diff --cached --name-only | grep -qx "$skill"; then
   checker=research/transparency/check_cites.py
   [ -f "$checker" ] || checker="$(cd "$(git rev-parse --git-common-dir)/.." && pwd)/research/transparency/check_cites.py"
