@@ -100,6 +100,13 @@ RECORTES = {
     # ¶ 73), Tlajomulco's report (p. 52, ¶ 74), the heading of the points to the SIAPA (p. 183) and its seventh point (p. 185).
     "cedhj-logo.png": ("cedhj-10-2026", 1, 1435, 35, 200, 328),
     "cedhj-titulo.png": ("cedhj-10-2026", 1, 790, 340, 652, 155),           # «Recomendación 10/2026», «Guadalajara, Jalisco, 30 de abril de 2026»
+    "cedhj-71-recibio.png": ("cedhj-10-2026", 43, 227, 1471, 1210, 52),     # «71. El 31 de marzo de 2026, se recibió el oficio OFC.SGIA/0086/2026»
+    "cedhj-71-firmado.png": ("cedhj-10-2026", 43, 227, 1522, 1210, 52),     # «firmado por el titular de la SEGIA, en el que informó que el SIAPA, es quien»
+    "cedhj-71-concesion.png": ("cedhj-10-2026", 43, 224, 1574, 1216, 51),   # «tenía la concesión de la presa Las Pintas, por lo que la SEGIA no tenía»
+    "cedhj-71-competencia.png": ("cedhj-10-2026", 43, 227, 1625, 1210, 51), # «competencia ni atribuciones que se pudieran ejercer sobre la referida presa y»
+    "cedhj-71-senalo.png": ("cedhj-10-2026", 43, 227, 1782, 1210, 48),      # «Señaló que la COPRISJAL había realizado diversos muestreos y constató que»
+    "cedhj-71-agua.png": ("cedhj-10-2026", 43, 227, 1833, 1210, 48),        # «el agua que salía de las plantas de tratamiento cumplía con todas las»
+    "cedhj-71-calidad.png": ("cedhj-10-2026", 43, 227, 1884, 382, 48),      # «condiciones de calidad,»
     "cedhj-73-recibio.png": ("cedhj-10-2026", 45, 227, 957, 1210, 50),      # «73. El 7 de abril de 2026, se recibió correo electrónico con el oficio adjunto»
     "cedhj-73-dj.png": ("cedhj-10-2026", 45, 227, 1010, 948, 49),           # «DJ/0108/2026, firmado por la Directora Jurídica del SIAPA,»
     "cedhj-73-asi.png": ("cedhj-10-2026", 49, 228, 1728, 1210, 52),         # «Así también, informó que la Planta Potabilizadora Miravalle por su»
