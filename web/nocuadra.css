@@ -155,3 +155,38 @@
 .punto.otro { background: var(--brand); color: #fff }
 .punto.sin { background: transparent; color: var(--fg); border: 2px dashed var(--muted); box-shadow: none }
 .leaflet-div-icon.marca-punto { background: none; border: 0 }
+
+/* The hub (/nocuadra): each municipio's main contrast, its chart or map and a document, then a button to its page.
+   The buttons are the landing's. */
+.button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--primary); color: var(--on-primary); font: inherit; font-size: .95rem; font-weight: 500; line-height: 1.5; text-decoration: none; padding: 10px 16px; border: 1px solid transparent; border-radius: 4px; cursor: pointer }
+.button:hover { background: var(--brand-deep) }
+.button.alt { background: color-mix(in srgb, var(--brand) 12%, var(--surface)); color: var(--link); border: 1.5px solid var(--brand) }
+.button.alt:hover { background: color-mix(in srgb, var(--brand) 22%, var(--surface)) }
+.buttons { display: flex; flex-wrap: wrap; gap: 8px }
+.saltos { margin: 20px 0 0 }
+.caso { margin-top: 36px; padding: 28px 0 8px; border-top: 3px double var(--brand) }
+.caso > .kicker { margin-top: 0 }
+.caso > h2 { margin: 6px 0 20px; max-width: 34ch; font-size: clamp(1.45rem, 3vw, 2rem); line-height: 1.2; text-wrap: balance }
+.caso > h3 { margin: 28px 0 0 }
+.vistas { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 32px; align-items: start }
+.vistas > .grafica { margin-top: 0 }
+.vistas h3 { margin: 0 0 4px; font-size: 1.05rem }
+.puntos-mapa.chico { height: clamp(300px, 46vh, 440px) }
+.visor-mapa { margin-top: 14px }
+.visor { margin: 0 }
+.visor .foto { display: flex; align-items: center; justify-content: center; box-sizing: border-box; height: 440px }
+.visor .foto img { width: auto; max-width: 100%; height: auto; max-height: 100% }
+.visor figcaption { margin-top: 10px; font-weight: 600 }
+.visor figcaption .sub { display: block; font-weight: 400; font-size: .85rem; color: var(--muted); font-variant-numeric: tabular-nums }
+.miniaturas { display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0 0; padding: 0; list-style: none }
+.miniaturas button { position: relative; display: block; width: 72px; height: 72px; padding: 4px; background: #fbfaf6; border: 1px solid #ddd7c6; border-radius: 4px; cursor: pointer }
+.miniaturas img { display: block; width: 100%; height: 100%; object-fit: cover }
+.miniaturas .punto { position: absolute; top: -8px; left: -8px; width: 22px; height: 22px; font-size: 11px }
+.miniaturas button[aria-pressed="true"] { outline: 3px solid var(--brand); outline-offset: 2px }
+.miniaturas button:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px }
+.marca-punto.activa .punto { outline: 3px solid var(--brand); outline-offset: 1px }
+.ir { margin: 24px 0 0 }
+.ir .button { text-align: left }
+@media (prefers-color-scheme: dark) { .miniaturas button { border-color: #3a4670 } }
+@media (max-width: 760px) { .vistas { grid-template-columns: 1fr; gap: 24px } .visor .foto { height: 380px } .miniaturas button { width: 60px; height: 60px } }
+@media (min-width: 761px) { .visor-mapa .puntos-mapa.chico { height: 440px } }

@@ -21,6 +21,7 @@
 <link rel="manifest" href="/site.webmanifest">
 <link rel="stylesheet" href="/menu.css">
 <link rel="stylesheet" href="/nocuadra.css">
+<link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
 <style>
 :root {
   --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
@@ -104,19 +105,124 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   <main>
     <p class="kicker">No cuadra</p>
     <h1>Lo que anunciaron, junto a lo que dicen sus propios documentos</h1>
-    <p class="lede">Pedimos por transparencia los papeles que respaldan lo que los gobiernos anuncian sobre el agua, y los ponemos al lado de sus palabras. Cada página es un municipio; cada cifra lleva el documento del que sale.</p>
+    <p class="lede">Pedimos por transparencia los papeles que respaldan lo que los gobiernos anuncian sobre el agua, y los ponemos al lado de sus palabras. Aquí está lo principal de cada municipio; en su página está todo, con cada documento.</p>
+    <nav class="saltos buttons" aria-label="Municipios">
+      <a class="button alt" href="#zapopan">Zapopan: el operativo de pipas</a>
+      <a class="button alt" href="#tlajomulco">Tlajomulco: el canal de Las Pintas</a>
+    </nav>
+
+    <section class="caso" aria-labelledby="zapopan">
+      <p class="kicker">Zapopan · el operativo de pipas</p>
+      <h2 id="zapopan">Zapopan anunció 45 pipas y 100 cisternas. En la gráfica de su Protección Civil, el día con más tuvo 34 pipas, y la lista de cisternas que entregó termina en la número 49</h2>
+      <div class="duo">
+        <div class="prometido">
+          <h3>Lo prometido, 19 de octubre</h3>
+          <span class="cifra">45 pipas · 100 cisternas</span>
+          <blockquote>«Zapopan contará con 45 pipas y 100 cisternas comunitarias con capacidad de 10 mil litros cada una»</blockquote>
+          <p class="de"><a href="https://www.zapopan.gob.mx/v3/noticias/zapopan-pone-en-marcha-operativo-de-suministro-de-agua-con-45-pipas-y-100-cisternas" rel="noopener">Boletín del Gobierno de Zapopan</a>. Anunció también que daría «prioridad a escuelas y centros de salud municipales».</p>
+        </div>
+        <div class="entregado">
+          <h3>Lo entregado, oficios del 6 y 12 de noviembre</h3>
+          <span class="cifra">34 pipas · 49 cisternas</span>
+          <p class="de">En la gráfica de su Protección Civil, el día con más tuvo 34 pipas (oficio 011300/2026/0150, que dice también que al 3 de noviembre había «36 pipas en servicio»). El «listado de cisternas instaladas» de Cercanía Ciudadana termina en la número 49, LOS CAJETES (oficio 11000000/CER.CIU/2026/0876). En la tabla de inmuebles atendidos, la fila de hospitales dice «Sin atenciones registradas» (oficio 011300/2026/0148).</p>
+        </div>
+        <div class="diferencia"><strong>La diferencia</strong><span>La gráfica de pipas por jornada nunca llega a 45. 51 de las 100 cisternas anunciadas no están en la lista entregada; eso no prueba que no existan. La tabla no registra ninguna atención a hospitales ni a centros de salud. Zapopan respondió después que las 45 pipas y las 100 cisternas eran una meta por «materializar»; el boletín dijo «contará con».</span></div>
+      </div>
+
+      <div class="vistas">
+        <figure class="grafica">
+          <h3>Pipas por jornada, según su Protección Civil</h3>
+          <div class="serie" id="serie-pipas"><noscript><p class="note">La gráfica necesita JavaScript. Los 20 días están en el <a href="/datos/zapopan-pipas-por-dia.csv">CSV</a>.</p></noscript></div>
+          <ul class="keys">
+            <li><span class="sw" style="--sw:var(--s1)"></span>Pipas en la jornada</li>
+            <li><span class="sw linea"></span>Las 45 anunciadas</li>
+          </ul>
+          <figcaption>Del 15 de octubre al 3 de noviembre de 2026. Fuente: gráfica anexa al oficio 011300/2026/0150 de la Dirección de Planificación de Protección Civil y Bomberos de Zapopan (<a href="/datos/pcyb-respuesta-ut-091-2026.pdf#page=4">p. 4 del PDF</a>); los números son nuestra lectura de sus etiquetas (<a href="/datos/zapopan-pipas-por-dia.csv">CSV</a>).</figcaption>
+        </figure>
+        <figure class="grafica">
+          <h3>Las 100 cisternas anunciadas</h3>
+          <div class="cien" role="img" aria-label="Cien cuadros, uno por cisterna anunciada; 49 en azul, las de la lista" id="cien"></div>
+          <ul class="keys">
+            <li><span class="sw" style="--sw:var(--s1)"></span>Las 49 de la lista</li>
+            <li><span class="sw" style="--sw:var(--grid)"></span>Las otras 51</li>
+          </ul>
+        </figure>
+      </div>
+
+      <figure class="grafica">
+        <h3>Dónde están las 49 de la lista</h3>
+        <div class="puntos-mapa chico" id="mapa-cisternas" role="region" aria-label="Mapa de las 49 cisternas de la lista de Zapopan"></div>
+        <figcaption>Cada punto es una cisterna del listado de Cercanía Ciudadana, en las coordenadas que trae; pasa o toca uno para ver su domicilio y su colonia como vienen en la lista. La lista completa, con cada domicilio, está en el <a href="/cisternas">mapa de cisternas comunitarias</a>. Oficio 11000000/CER.CIU/2026/0876, en la respuesta a la solicitud 140292426004978 (<a href="/datos/zapopan-respuesta-140292426004978.pdf#page=9">la lista, desde la p. 9 del PDF</a>). Mapa: © colaboradores de OpenStreetMap.</figcaption>
+      </figure>
+
+      <figure class="documento">
+        <div class="hoja">
+          <div class="renglones">
+            <span class="renglon marca" style="width:100%"><img src="/img/documentos/zapopan-hospitales-1.png" width="995" height="43" alt="Hospitales: Sin atenciones registradas" loading="lazy"></span>
+            <span class="renglon" style="width:100%"><img src="/img/documentos/zapopan-hospitales-2.png" width="995" height="38" alt="Espacios Públicos: Centro Comunitario N°3 - 09/11/2026" loading="lazy"></span>
+            <span class="renglon" style="width:100%"><img src="/img/documentos/zapopan-hospitales-3.png" width="995" height="35" alt="Escuelas: Centro Escolar Juan Mateo - 20/10/2026" loading="lazy"></span>
+          </div>
+        </div>
+        <figcaption>La tabla de inmuebles atendidos: oficio 011300/2026/0148, p. 6 de la respuesta UT-089/2026 (<a href="/datos/pcyb-respuesta-ut-089-2026.pdf#page=6">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure>
+
+      <p class="ir"><a class="button" href="/zapopan">Todo Zapopan: pipas, litros, cisternas, hospitales, las 75 colonias y los 9,828 reportes por falta de agua →</a></p>
+    </section>
+
+    <section class="caso" aria-labelledby="tlajomulco">
+      <p class="kicker">Tlajomulco · el canal de Las Pintas</p>
+      <h2 id="tlajomulco">Diez puntos de descarga, según el SIAPA; «no existen descargas», según Tlajomulco</h2>
+      <ul class="contador" style="--cols:3">
+        <li><span class="n sobre">3.62 mg/L</span><span class="t">de nitrógeno amoniacal, en promedio, en el agua que entró a la Planta 1 en enero de 2026, en nuestra lectura de la gráfica del SIAPA</span></li>
+        <li><span class="n">0.5 mg/L</span><span class="t">es el límite de la NOM-127-SSA1-2021, la norma del agua para uso y consumo humano, que cita el SIAPA</span></li>
+        <li><span class="n">655</span><span class="t">colonias y fraccionamientos de Tonalá, Tlaquepaque, Guadalajara y Zapopan abastecía esa planta, según el SIAPA a la CEDHJ</span></li>
+      </ul>
+      <p class="note">El promedio de enero es nuestra lectura del Gráfico 1 del oficio DG-135/2026 del SIAPA (<a href="/datos/siapa-dg-135-2026.pdf#page=5">p. 5 del PDF</a>, <a href="/datos/siapa-dg-135-2026-amoniacal.csv">CSV</a>); el límite lo cita el mismo oficio (<a href="/datos/siapa-dg-135-2026.pdf#page=4">p. 4</a>); las 655 colonias, la Recomendación 10/2026 de la CEDHJ, que resume lo que le informó el SIAPA (<a href="https://cedhj.org.mx/assets_web/doc/recomendaciones/emitidas/2026/20260430150739/recomendacion_1777583259457.pdf#page=50" rel="noopener">p. 50</a>).</p>
+      <div class="duo">
+        <div class="prometido">
+          <h3>Lo que dice el SIAPA, 6 de marzo</h3>
+          <span class="cifra">10 puntos</span>
+          <blockquote>«por el Canal Las Pintas transitan aguas residuales provenientes de descargas de aguas sanitarias y/o residuales que se encuentran dentro del municipio de Tlajomulco de Zúñiga»</blockquote>
+          <p class="de">Oficio DG-135/2026, p. 1 (<a href="/datos/siapa-dg-135-2026.pdf">PDF</a>); los puntos, en la p. 4 del PDF.</p>
+        </div>
+        <div class="entregado">
+          <h3>Lo que dice Tlajomulco, finales de marzo</h3>
+          <span class="cifra">«no existen descargas»</span>
+          <blockquote>«se realizaron tres recorridos en campo en conjunto con el SIAPA para visitar estos 10 puntos, constatando que no existen descargas de aguas residuales al canal "Las pintas"»</blockquote>
+          <p class="de">Oficio DAPIH/0331-01/2026, p. 3 (<a href="/datos/tlajomulco-dapih-0331-01-2026.pdf#page=3">PDF</a>), que Tlajomulco dice haber hecho del conocimiento de la CEDHJ.</p>
+        </div>
+        <div class="diferencia"><strong>La diferencia</strong><span>Tlajomulco no dice cuándo fueron los recorridos ni entregó actas. El propio SIAPA escribió que en esos sitios «se han observado descargas abundantes, en algunas de manera permanente y otras de forma intermitente»: un recorrido sin descargas no prueba que no las haya otros días.</span></div>
+      </div>
+
+      <h3>Siete de los diez puntos, en las fotografías del SIAPA</h3>
+      <div class="vistas visor-mapa">
+        <div class="puntos-mapa chico" id="mapa-puntos" role="region" aria-label="Mapa de los puntos con fotografías del oficio DG-135/2026"></div>
+        <figure class="visor" id="visor" aria-live="polite">
+          <a class="foto" href="/img/documentos/dg135-eden.webp"><span class="punto" aria-hidden="true">7</span><img src="/img/documentos/dg135-eden-mini.webp" width="543" height="770" alt="Dos fotografías: una capa de espuma blanca que cubre el canal al pie de una caída de agua, y un sillón atorado en el borde de una caída, con espuma abajo." decoding="async"></a>
+          <figcaption>Descarga El Edén<span class="sub">20°31'59.9"N 103°21'50.1"W · <a href="/datos/siapa-dg-135-2026.pdf#page=11">p. 11</a></span></figcaption>
+        </figure>
+      </div>
+      <ul class="miniaturas" id="miniaturas" aria-label="Fotografías de los puntos"></ul>
+      <p class="note">Siete de los diez puntos traen fotografías y coordenadas en el anexo del oficio DG-135/2026; los puntos 3, 4 y 5 no, así que no están en el mapa. Nombre y coordenadas como los escribió el SIAPA. Toca un punto o una foto para verla. Mapa: © colaboradores de OpenStreetMap.</p>
+
+      <figure class="documento">
+        <div class="hoja">
+          <div class="renglones">
+            <span class="renglon" style="width:99.92%"><img src="/img/documentos/tlaj-recorridos-1.png" width="1307" height="47" alt="Respecto a lo requerido, se manifiesta que el SIAPA informó al Municipio de Tlajomulco" loading="lazy"></span>
+            <span class="renglon" style="width:100%"><img src="/img/documentos/tlaj-recorridos-2.png" width="1308" height="39" alt="de Zúñiga, respecto a 10 (diez) presuntos puntos de descarga de aguas residuales" loading="lazy"></span>
+            <span class="renglon" style="width:99.92%"><img src="/img/documentos/tlaj-recorridos-3.png" width="1307" height="44" alt="hacia el sistema antiguo de abastecimiento de Chapala, en específico en el Canal Las" loading="lazy"></span>
+            <span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-recorridos-4.png" width="1308" height="44" alt="Pintas, por lo cual se realizaron tres recorridos en campo en conjunto con el SIAPA" loading="lazy"></span>
+            <span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-recorridos-5.png" width="1308" height="44" alt="para visitar estos 10 puntos, constatando que no existen descargas de aguas" loading="lazy"></span>
+            <span class="renglon marca" style="width:36.77%"><img src="/img/documentos/tlaj-recorridos-6.png" width="481" height="41" alt="residuales al canal &quot;Las pintas&quot;." loading="lazy"></span>
+          </div>
+        </div>
+        <figcaption>Oficio DAPIH/0331-01/2026 de Tlajomulco, marzo de 2026, p. 3 (<a href="/datos/tlajomulco-dapih-0331-01-2026.pdf#page=3">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure>
+
+      <p class="ir"><a class="button" href="/tlajomulco">Todo Tlajomulco: seis años de amoniaco, el oficio del SIAPA, sus fotografías y lo que se le dijo a la CEDHJ →</a></p>
+    </section>
 
     <ul class="municipios">
-      <li>
-        <h2><a href="/zapopan">Zapopan: el operativo de pipas</a></h2>
-        <span class="n">45 anunciadas · 34 el día con más</span>
-        <p>Zapopan anunció 45 pipas y 100 cisternas comunitarias. En la gráfica de su Protección Civil, el día con más pipas tuvo 34; su lista de cisternas llega a 49. Con los 9,828 reportes por falta de agua que nos entregó, en mapa y tabla.</p>
-      </li>
-      <li>
-        <h2><a href="/tlajomulco">Tlajomulco: el amoniaco de Las Pintas</a></h2>
-        <span class="n">Más de 3.50 mg/l · límite 0.5</span>
-        <p>El SIAPA le escribió a Tlajomulco que el nitrógeno amoniacal del agua que llega a la Planta 1 «ha alcanzado más de 3.50 mg/l», más de siete veces el límite de la norma que cita. Lo que respondió Tlajomulco.</p>
-      </li>
       <li class="pendiente">
         <h2>Guadalajara, Tlaquepaque y Tonalá</h2>
         <p>Todavía no tenemos documentos suficientes para una página. Publicaremos cuando lleguen.</p>
@@ -140,5 +246,199 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     <p><a href="/">Inicio</a> · <a href="/reportes">¿Hay agua?</a> · <a href="/cisternas">Cisternas comunitarias</a> · <a href="/pipas">Cómo pedir pipa</a> · <a href="/transparencia">Transparencia</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
   </footer>
 </div>
+<script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script src="/mapa.js"></script>
+<script>
+// Pipas per jornada, 15 October to 3 November 2026: Agua GDL's reading of the chart annexed to oficio
+// 011300/2026/0150 (UT-091/2026, PDF p. 4), the same numbers as /zapopan and /datos/zapopan-pipas-por-dia.csv.
+const PIPAS = [5, 12, 7, 7, 11, 11, 13, 13, 15, 21, 25, 33, 34, 32, 31, 32, 30, 30, 27, 31];
+const DUDA = { 1: "la etiqueta 12 puede ser del 17 de octubre", 2: "la etiqueta 7 puede ser del 16 de octubre" };
+
+// The seven of DG-135/2026's ten points with a page of photographs and coordinates (pp. 8-13 and 15), as /tlajomulco
+// lists them; 3, 4 and 5 have neither.
+const PUNTOS = [
+  ["1", "Capulín 1", `20°28'40.4"N`, `103°15'56.5"W`, "dg135-capulin-1", 612, 530, 8, "Dos fotografías: agua gris que sale con fuerza de un tubo roto entre el pasto, bajo un puente de barandal amarillo, y un tubo blanco que termina en un charco de agua gris, junto a un canal cubierto de plantas."],
+  ["2", "El Guayabo", `20°28'40.9"N`, `103°16'29.1"W`, "dg135-guayabo", 562, 739, 9, "Agua oscura y quieta bajo árboles y matorrales, junto a un muro de concreto, con una casa al fondo."],
+  ["6", "La Carreta", `20°31'25.4"N`, `103°21'28.9"W`, "dg135-carreta", 618, 454, 10, "Un puente de tres arcos sobre agua oscura, con basura en la ladera de atrás."],
+  ["7", "El Edén", `20°31'59.9"N`, `103°21'50.1"W`, "dg135-eden", 543, 770, 11, "Dos fotografías: una capa de espuma blanca que cubre el canal al pie de una caída de agua, y un sillón atorado en el borde de una caída, con espuma abajo."],
+  ["8", "La Teja", `20°32'10.6"N`, `103°21'46.3"W`, "dg135-teja", 516, 671, 12, "Un flujo de agua que entra a un cuerpo de agua turbia, bajo un cielo nublado."],
+  ["9", "Vaso Regulador Adolf Horn", `20°32'40.4"N`, `103°21'14.5"W`, "dg135-adolf-horn", 574, 647, 13, "Agua verdosa que sale de un tubo azul y baja por un muro de piedra, bajo una cerca de lámina azul, hacia agua cubierta de espuma blanca, entre la maleza."],
+  ["10", "1º de Mayo", `20°32'49.1"N`, `103°21'05.2"W`, "dg135-1-mayo", 606, 522, 15, "Dos fotografías: el canal con agua oscura bajo una barda blanca, y la boca de un tubo de concreto en la orilla, entre plantas."],
+];
+
+(() => {
+  const NS = "http://www.w3.org/2000/svg";
+  const DIA0 = Date.UTC(2026, 9, 15);
+  const fecha = (i) => new Date(DIA0 + i * 864e5);
+  const largo = (i) => fecha(i).toLocaleDateString("es-MX", { timeZone: "UTC", weekday: "long", day: "numeric", month: "long" });
+  const corto = (i) => `${fecha(i).getUTCDate()} ${fecha(i).getUTCMonth() === 9 ? "oct." : "nov."}`;
+  const el = (name, attrs = {}, text) => {
+    const e = document.createElementNS(NS, name);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    return e;
+  };
+
+  // The bars, as on /zapopan: hover or arrow keys show a day.
+  const caja = document.getElementById("serie-pipas");
+  if (caja) {
+    const V = PIPAS, TOPE = 50, LIMITE = 45;
+    const tip = document.createElement("div");
+    tip.className = "tip";
+    tip.hidden = true;
+    let actual = 12, geo = null;
+    const muestra = (i) => {
+      if (!geo) return;
+      actual = i;
+      for (const g of geo.cols) g.classList.toggle("on", +g.dataset.i === i);
+      tip.innerHTML = `<b>${largo(i)}</b>${V[i]} pipas<br>${LIMITE - V[i]} menos que las 45 anunciadas${DUDA[i] ? `<br><small>Lectura dudosa: ${DUDA[i]}</small>` : ""}`;
+      tip.hidden = false;
+      const cx = geo.x(i) + geo.ancho / 2, cy = geo.y(V[i]);
+      const w = tip.offsetWidth, izq = cx + 14 + w > geo.W ? cx - 14 - w : cx + 14;
+      tip.style.left = `${Math.max(0, izq)}px`;
+      tip.style.top = `${Math.max(0, Math.min(cy - 30, geo.H - tip.offsetHeight - geo.m.b))}px`;
+    };
+    const oculta = () => { tip.hidden = true; if (geo) for (const g of geo.cols) g.classList.remove("on"); };
+    const dibuja = () => {
+      const W = Math.max(280, Math.round(caja.clientWidth)), angosto = W < 520;
+      const H = angosto ? 220 : 260, m = { l: 26, r: 6, t: 24, b: 24 };
+      const pw = W - m.l - m.r, ph = H - m.t - m.b, paso = pw / V.length;
+      const hueco = paso >= 6 ? Math.min(6, Math.round(paso * 0.2)) : 1, ancho = Math.max(1, paso - hueco);
+      const y = (v) => m.t + ph - (v / TOPE) * ph;
+      const x = (i) => m.l + i * paso + hueco / 2;
+      const centro = (i) => x(i) + ancho / 2;
+      const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: "img", tabindex: 0,
+        "aria-label": "Gráfica de barras de las pipas por jornada en Zapopan, del 15 de octubre al 3 de noviembre de 2026, según Protección Civil: de 5 a 34, nunca las 45 anunciadas; 11 el 19 de octubre y 34 el 27. Con las flechas se recorren los días." });
+      svg.append(el("text", { x: 0, y: 12 }, "pipas"));
+      for (let t = 0; t <= TOPE; t += 10) {
+        svg.append(el("line", { class: t ? "gl" : "base", x1: m.l, x2: W - m.r, y1: y(t), y2: y(t) }));
+        svg.append(el("text", { x: m.l - 6, y: y(t) + 4, "text-anchor": "end" }, String(t)));
+      }
+      for (const i of angosto ? [0, 9, 19] : [0, 5, 9, 14, 19]) {
+        const ancla = i === 0 ? "start" : i === V.length - 1 ? "end" : "middle";
+        svg.append(el("text", { x: ancla === "start" ? x(i) : ancla === "end" ? x(i) + ancho : centro(i), y: H - 6, "text-anchor": ancla }, corto(i)));
+      }
+      const cols = [];
+      V.forEach((v, i) => {
+        const g = el("g", { class: "col", "data-i": i });
+        g.append(el("rect", { class: "hit", x: m.l + i * paso, y: m.t, width: paso, height: ph, fill: "transparent" }));
+        const top = y(v), h = m.t + ph - top, r = Math.min(4, ancho / 2, h), x0 = x(i);
+        g.append(el("path", { class: "uno",
+          d: `M${x0},${top + h}V${top + r}Q${x0},${top} ${x0 + r},${top}H${x0 + ancho - r}Q${x0 + ancho},${top} ${x0 + ancho},${top + r}V${top + h}Z` }));
+        svg.append(g);
+        cols.push(g);
+      });
+      svg.append(el("line", { class: "limite", x1: m.l, x2: W - m.r, y1: y(LIMITE), y2: y(LIMITE) }));
+      svg.append(el("text", { class: "limite-t", x: m.l + 4, y: y(LIMITE) - 6 }, angosto ? "Anunciadas: 45" : "Anunciadas el 19 de octubre: 45"));
+      for (const n of [{ i: 4, en: 24, t: "19 oct.: 11" }, { i: 12, en: 40, t: "27 oct.: 34" }]) {
+        const cx = centro(n.i);
+        svg.append(el("line", { class: "nota-l", x1: cx, x2: cx, y1: y(V[n.i]) - 3, y2: y(n.en) + 4 }));
+        svg.append(el("text", { class: "nota", x: cx, y: y(n.en), "text-anchor": "middle" }, n.t));
+      }
+      const indice = (ev) => {
+        const r = svg.getBoundingClientRect();
+        const i = Math.floor(((ev.clientX - r.left) * (W / r.width) - m.l) / paso);
+        return i >= 0 && i < V.length ? i : -1;
+      };
+      svg.addEventListener("pointermove", (ev) => { const i = indice(ev); if (i < 0) oculta(); else muestra(i); });
+      svg.addEventListener("pointerleave", oculta);
+      svg.addEventListener("focus", () => muestra(actual));
+      svg.addEventListener("blur", oculta);
+      svg.addEventListener("keydown", (ev) => {
+        const salto = { ArrowLeft: -1, ArrowRight: 1, Home: -V.length, End: V.length }[ev.key];
+        if (ev.key === "Escape") return oculta();
+        if (salto == null) return;
+        ev.preventDefault();
+        muestra(Math.max(0, Math.min(V.length - 1, actual + salto)));
+      });
+      caja.replaceChildren(svg, tip);
+      geo = { W, H, m, x, y, ancho, cols };
+    };
+    dibuja();
+    let w = caja.clientWidth;
+    new ResizeObserver(() => { if (Math.abs(caja.clientWidth - w) > 1) { w = caja.clientWidth; dibuja(); } }).observe(caja);
+  }
+
+  // One square per announced cisterna; the first 49 are those the list names.
+  const cien = document.getElementById("cien");
+  if (cien) cien.append(...Array.from({ length: 100 }, (_, i) => { const s = document.createElement("span"); if (i < 49) s.className = "si"; return s; }));
+})();
+
+(() => {
+  const hayMapa = !!window.L;
+  if (!hayMapa) for (const id of ["mapa-cisternas", "mapa-puntos"]) { const c = document.getElementById(id); if (c) c.hidden = true; }
+  const M = window.aguaMapa;
+  const touch = matchMedia("(hover: none)").matches;
+  const quieto = matchMedia("(prefers-reduced-motion: reduce)");
+  const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  const base = (caja) => {
+    const map = L.map(caja, { scrollWheelZoom: false, zoomSnap: 0.25 });
+    if (M && M.tiles) M.tiles(L, map);
+    else L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: "© OpenStreetMap" }).addTo(map);
+    if (M && M.pinch) M.pinch(map);
+    return map;
+  };
+
+  // Zapopan's 49 cisternas, from /cisternas.json (the list delivered for folio 140292426004978).
+  const cajaC = document.getElementById("mapa-cisternas");
+  if (cajaC && hayMapa) {
+    fetch("/cisternas.json")
+      .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then((d) => {
+        const zap = d.puntos.filter((p) => p.municipio === "Zapopan" && isFinite(p.lat) && isFinite(p.lon));
+        if (!zap.length) throw new Error("sin puntos");
+        const map = base(cajaC);
+        const color = () => getComputedStyle(document.documentElement).getPropertyValue("--s1").trim() || "#2a78d6";
+        const marcas = zap.map((p) => L.circleMarker([p.lat, p.lon], { radius: 7, weight: 2, color: "#ffffff", fillColor: color(), fillOpacity: 0.95 })
+          [touch ? "bindPopup" : "bindTooltip"](`${esc(p.lugar || "Sin domicilio en la lista")}<span class="sub">Cisterna de la lista de Cercanía Ciudadana</span>`,
+            touch ? {} : { className: "map-label", direction: "top", offset: [0, -6] }));
+        const grupo = L.featureGroup(marcas).addTo(map);
+        map.fitBounds(grupo.getBounds(), { padding: [24, 24] });
+        document.addEventListener("tema", () => marcas.forEach((m) => m.setStyle({ fillColor: color() })));
+      })
+      .catch(() => { cajaC.hidden = true; });
+  }
+
+  // The SIAPA's photographed points: a click on a point or a thumbnail shows its photographs beside the map.
+  const cajaP = document.getElementById("mapa-puntos"), visor = document.getElementById("visor"), lista = document.getElementById("miniaturas");
+  if (!cajaP || !visor || !lista) return;
+  const grados = (s) => {
+    const [, g, mi, se, h] = s.match(/(\d+)°(\d+)'([\d.]+)"([NSEW])/);
+    const v = +g + mi / 60 + se / 3600;
+    return h === "S" || h === "W" ? -v : v;
+  };
+  const map = hayMapa ? base(cajaP) : null;
+  const marcas = [], botones = [];
+  const elige = (i, mover) => {
+    const [n, nombre, lat, lon, foto, w, h, pag, alt] = PUNTOS[i];
+    visor.innerHTML = `<a class="foto" href="/img/documentos/${foto}.webp"><span class="punto" aria-hidden="true">${n}</span><img src="/img/documentos/${foto}-mini.webp" width="${w}" height="${h}" alt="${esc(alt)}" decoding="async"></a>`
+      + `<figcaption>Descarga ${esc(nombre)}<span class="sub">${esc(lat)} ${esc(lon)} · <a href="/datos/siapa-dg-135-2026.pdf#page=${pag}">p. ${pag}</a></span></figcaption>`;
+    botones.forEach((b, j) => b.setAttribute("aria-pressed", String(j === i)));
+    marcas.forEach((m, j) => m.getElement() && m.getElement().classList.toggle("activa", j === i));
+    if (map && mover && !map.getBounds().pad(-0.1).contains(marcas[i].getLatLng())) map.panTo(marcas[i].getLatLng(), { animate: !quieto.matches });
+  };
+  PUNTOS.forEach(([n, nombre, lat, lon, foto], i) => {
+    if (map) {
+      const m = L.marker([grados(lat), grados(lon)], {
+        icon: L.divIcon({ className: "marca-punto", html: `<span class="punto">${n}</span>`, iconSize: [24, 24], iconAnchor: [12, 12] }),
+        keyboard: true,
+      }).bindTooltip(`${esc(nombre)}<span class="sub">${esc(lat)} ${esc(lon)}</span>`, { className: "map-label", direction: "top", offset: [0, -12] });
+      m.on("click", () => elige(i, false));
+      m.on("add", () => m.getElement().setAttribute("aria-label", `Punto ${n}, ${nombre}`));
+      marcas.push(m);
+    }
+    const li = document.createElement("li"), b = document.createElement("button");
+    b.type = "button";
+    b.innerHTML = `<img src="/img/documentos/${foto}-mini.webp" alt="" loading="lazy"><span class="punto" aria-hidden="true">${n}</span>`;
+    b.setAttribute("aria-label", `Punto ${n}, ${nombre}`);
+    b.addEventListener("click", () => elige(i, true));
+    li.append(b);
+    lista.append(li);
+    botones.push(b);
+  });
+  if (map) map.fitBounds(L.featureGroup(marcas).addTo(map).getBounds(), { padding: [28, 28] });
+  elige(3, false);
+})();
+</script>
 </body>
 </html>
