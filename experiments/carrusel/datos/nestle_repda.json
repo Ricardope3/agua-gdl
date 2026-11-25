@@ -1,0 +1,59 @@
+{
+ "fuente": "CONAGUA, REPDA, exportación de aguas subterráneas de Ocotlán, Jalisco; corte 16 nov 2026; descargada 25 nov 2026",
+ "filas": 154,
+ "total_m3_anio": 15380219.5,
+ "por_uso": {
+  "AGRICOLA": {
+   "titulos": 103,
+   "m3_anio": 10054936.0
+  },
+  "INDUSTRIAL (NESTLE)": {
+   "titulos": 5,
+   "m3_anio": 2330753.0
+  },
+  "DIFERENTES USOS": {
+   "titulos": 24,
+   "m3_anio": 1781333.5
+  },
+  "PUBLICO URBANO": {
+   "titulos": 15,
+   "m3_anio": 964091.0
+  },
+  "SERVICIOS": {
+   "titulos": 4,
+   "m3_anio": 185012.0
+  },
+  "PECUARIO": {
+   "titulos": 2,
+   "m3_anio": 63875.0
+  },
+  "DOMÉSTICO": {
+   "titulos": 1,
+   "m3_anio": 219.0
+  }
+ },
+ "nestle": [
+  {
+   "titulo": "JAL105897",
+   "m3_anio": 874753.0
+  },
+  {
+   "titulo": "JAL152037",
+   "m3_anio": 570000.0
+  },
+  {
+   "titulo": "08JAL152038/12FMDA26",
+   "m3_anio": 410000.0
+  },
+  {
+   "titulo": "08JAL156258",
+   "m3_anio": 260000.0
+  },
+  {
+   "titulo": "08JAL117536/12FMOC15",
+   "m3_anio": 216000.0
+  }
+ ],
+ "nestle_entre_publico_urbano": 2.42,
+ "mayor_titulo_del_municipio_es_de_nestle": true
+}

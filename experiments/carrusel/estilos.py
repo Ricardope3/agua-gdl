@@ -57,6 +57,16 @@ body{{color:{TINTA};font-family:"Iowan Old Style",Palatino,Georgia,serif}}
 .conf .top,.heavy .top,.conf .foot .site,.heavy .foot .site{{color:#fff}}
 .conf .marco,.heavy .marco{{border-color:#fbfaf6}}
 .conf .banda,.heavy .banda{{background-color:{CREMA}}}
+.track{{background:rgba(29,63,158,.08);border-radius:3px}}
+.fill{{background:#9fb0d8;border-radius:3px}}.fill.alarm{{background:{COBALTO}}}
+.bl b{{font-family:"Iowan Old Style";font-weight:900;color:#4f5b7a}}.bl b.alarm{{background:none;color:{COBALTO}}}
+.vs{{min-width:0;background:#fff;border:5px double {COBALTO};border-radius:2px}}.vs.a,.vs.b{{border-color:{COBALTO}}}
+.vk{{font-style:italic;color:#4f5b7a;opacity:1}}
+.vc{{font-family:"Iowan Old Style";font-weight:900;font-size:76px;letter-spacing:-.03em;white-space:nowrap}}
+.vs.a .vc{{color:#4f5b7a}}.vs.b .vc{{color:{COBALTO}}}
+.vsx{{font-family:"Iowan Old Style";font-style:italic;font-weight:400;color:{COBALTO};opacity:1}}
+.marca{{filter:none}}.sello{{background:{COBALTO};color:#fff;border-color:{COBALTO}}}
+.m{{background:{COBALTO};color:#fff;font-family:"Iowan Old Style"}}.m.check{{background:transparent;border-color:{COBALTO}}}
 """,
     "expediente": f"""
 html,body{{background:#d5ba85}}
