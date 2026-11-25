@@ -107,8 +107,27 @@ def fill(t):
     return re.sub(r"\{\{([\w:-]+)\}\}", rep, t)
 
 
+FRAGS = sorted(HERE.glob("p*.html"), key=lambda p: int(re.sub(r"\D", "", p.stem)))
+TITULOS = {int(re.sub(r"\D", "", f.stem)): re.match(r"<!-- titulo: (.*?)( \| mapa)? -->", f.read_text(encoding="utf8")).group(1) for f in FRAGS}
+
+
+def barra(actual):
+    """The row of version links under the site header; the page itself is marked as the site menu marks it."""
+    def a(k):
+        href = f"/nocuadra-p{k}" if k else "/nocuadra-propuestas"
+        cur = ' aria-current="page"' if k == actual else ""
+        txt = "Todas" if not k else f'<b>{k}</b><span>{TITULOS[k]}</span>'
+        return f'<a href="{href}"{cur}>{txt}</a>'
+    links = "".join(a(k) for k in sorted(TITULOS))
+    return f'  <nav class="versiones" aria-label="Versiones de No cuadra"><span class="et">Versiones</span>{links}</nav>\n'
+
+
+# On a narrow screen the row scrolls sideways: bring the current version into it.
+BARRA_JS = '<script>(() => { const b = document.querySelector(".versiones"), a = b && b.querySelector("[aria-current]"); if (a) b.scrollLeft = a.offsetLeft - (b.clientWidth - a.offsetWidth) / 2; })();</script>\n'
+
+
 n_written = 0
-for frag in sorted(HERE.glob("p*.html"), key=lambda p: int(re.sub(r"\D", "", p.stem))):
+for frag in FRAGS:
     n = int(re.sub(r"\D", "", frag.stem))
     src = frag.read_text(encoding="utf8")
     meta = re.match(r"<!-- titulo: (.*?)( \| mapa)? -->\n", src)
@@ -125,17 +144,16 @@ for frag in sorted(HERE.glob("p*.html"), key=lambda p: int(re.sub(r"\D", "", p.s
     h = head.replace("<title>No cuadra · Agua GDL</title>", f"<title>{t}</title>")
     if not mapa:
         h = h.replace('<link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">\n', "")
-    if n:
-        css = '<link rel="stylesheet" href="/nocuadra.css">\n'
-        assert css in h
-        h = h.replace(css, css + '<link rel="stylesheet" href="/nocuadra-lab.css">\n', 1)
-    out = h + style.group() + body_top + main.group() + foot
+    css = '<link rel="stylesheet" href="/nocuadra.css">\n'
+    assert css in h
+    h = h.replace(css, css + '<link rel="stylesheet" href="/nocuadra-lab.css">\n', 1)
+    out = h + style.group() + body_top + barra(n) + main.group() + foot
     if mapa:
         out += '<script src="/vendor/leaflet-1.9.4/leaflet.js"></script>\n<script src="/mapa.js"></script>\n'
     out += '<script src="/nocuadra-lab.js"></script>\n'
     if script:
         out += script.group()
-    out += "</body>\n</html>\n"
+    out += BARRA_JS + "</body>\n</html>\n"
     if not n:
         out = out.replace('<script src="/nocuadra-lab.js"></script>\n', "")
     (WEB / nombre).write_text(out, encoding="utf8")

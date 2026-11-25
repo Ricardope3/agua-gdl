@@ -1,9 +1,24 @@
+/* The row of version links (gen.py writes it on every prototype): it stays at the top, and the sticky scenes below
+   sit under it. */
+:root { --barra-v: 40px }
+html { scroll-padding-top: calc(var(--barra-v) + 8px) }
+.versiones { position: sticky; top: 0; z-index: 1100; display: flex; align-items: center; gap: 0; height: var(--barra-v); box-sizing: border-box; margin: 0 0 8px; overflow-x: auto; scrollbar-width: none; background: var(--bg); border-bottom: 1px solid var(--line); white-space: nowrap }
+.versiones::-webkit-scrollbar { display: none }
+.versiones .et { margin-right: 4px; font-size: .8rem; color: var(--muted) }
+.versiones a { position: relative; display: inline-flex; align-items: center; gap: 4px; height: 100%; padding: 0 6px; color: var(--muted); font-size: .8rem; text-decoration: none }
+.versiones a b { font-weight: 600; font-variant-numeric: tabular-nums }
+.versiones a:hover { color: var(--fg) }
+.versiones a[aria-current="page"] { color: var(--fg) }
+.versiones a[aria-current="page"]::after { content: ""; position: absolute; left: 6px; right: 6px; bottom: 0; height: 2px; background: var(--brand) }
+@media (max-width: 1080px) { .versiones a:not([aria-current]) span { display: none } }
+.versiones a:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px }
+
 /* Shared by the /nocuadra-pN prototypes (noindex). The scrolling story: a scene that stays put while the steps scroll
    past it; NC.relato() in nocuadra-lab.js adds .vivo and switches the scene's layers. Without the script every layer
    simply follows in the page. */
 .relato { margin: 28px 0 0 }
 .relato.vivo { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 32px }
-.relato.vivo .escena { grid-column: 2; grid-row: 1; position: sticky; top: 8vh; height: 84vh; align-self: start }
+.relato.vivo .escena { grid-column: 2; grid-row: 1; position: sticky; top: max(8vh, calc(var(--barra-v) + 12px)); height: 84vh; align-self: start }
 .relato.vivo .pasos { grid-column: 1; grid-row: 1 }
 .pasos { margin: 0; padding: 0; list-style: none }
 .escena { position: relative }
@@ -105,7 +120,7 @@
 }
 @media (max-width: 860px) {
   .relato.vivo { display: block }
-  .relato.vivo .escena { position: sticky; top: 0; z-index: 2; height: 52vh; padding: 8px 0; background: var(--bg); border-bottom: 1px solid var(--line) }
+  .relato.vivo .escena { position: sticky; top: var(--barra-v); z-index: 2; height: 52vh; padding: 8px 0; background: var(--bg); border-bottom: 1px solid var(--line) }
   .relato.vivo .capa { inset: 8px 0 }
   /* The cards slide under the scene, so it's never covered. */
   .paso, .paso:first-child { min-height: 80vh; align-items: center; position: relative; z-index: 1 }

@@ -3,7 +3,7 @@
 /* Propuesta 10: stories. One fact per screen, snapping as you scroll or tap, with a progress bar and arrows. Every
    card carries its source. Number cards are set in reverse (ink background) to land harder. */
 .carrete-caja { position: relative; margin: 18px 0 0 }
-.carrete { height: min(calc(100svh - 120px), 760px); min-height: 480px; overflow-y: auto; scroll-snap-type: y mandatory; overscroll-behavior: contain; border: 3px double var(--brand); border-radius: 4px; background: var(--surface); scrollbar-width: none }
+.carrete { height: min(calc(100svh - 120px - var(--barra-v)), 760px); min-height: 480px; overflow-y: auto; scroll-snap-type: y mandatory; overscroll-behavior: contain; border: 3px double var(--brand); border-radius: 4px; background: var(--surface); scrollbar-width: none }
 .carrete::-webkit-scrollbar { display: none }
 .carrete:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px }
 .tarjeta-h { position: relative; min-height: 100%; scroll-snap-align: start; scroll-snap-stop: always; display: flex; flex-direction: column; justify-content: safe center; gap: 14px; padding: 56px clamp(20px, 6vw, 72px) 40px; overflow: hidden }
@@ -45,7 +45,7 @@
 .desliza { font-size: .9rem; color: color-mix(in srgb, var(--bg) 75%, transparent) }
 @media (prefers-reduced-motion: reduce) { .carrete { scroll-behavior: auto } }
 @media (max-width: 760px) {
-  .carrete { height: calc(100svh - 90px) }
+  .carrete { height: calc(100svh - 90px - var(--barra-v)) }
   .tarjeta-h { padding: 44px 18px 64px; gap: 10px }
   .galeria { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px }
   .tarjeta-h .hoja { padding: 8px }

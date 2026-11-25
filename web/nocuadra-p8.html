@@ -136,6 +136,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     </nav>
   </header>
 
+  <nav class="versiones" aria-label="Versiones de No cuadra"><span class="et">Versiones</span><a href="/nocuadra-propuestas">Todas</a><a href="/nocuadra-p1"><b>1</b><span>Primera plana</span></a><a href="/nocuadra-p2"><b>2</b><span>Marcador</span></a><a href="/nocuadra-p3"><b>3</b><span>Recorrido</span></a><a href="/nocuadra-p4"><b>4</b><span>Expediente</span></a><a href="/nocuadra-p5"><b>5</b><span>Antes y después</span></a><a href="/nocuadra-p6"><b>6</b><span>Calendario</span></a><a href="/nocuadra-p7"><b>7</b><span>Mapa</span></a><a href="/nocuadra-p8" aria-current="page"><b>8</b><span>Adivina</span></a><a href="/nocuadra-p9"><b>9</b><span>Pictogramas</span></a><a href="/nocuadra-p10"><b>10</b><span>Historias</span></a></nav>
   <main>
     <p class="kicker">No cuadra</p>
     <h1>¿Qué dicen sus documentos? Adivina antes de verlos</h1>
@@ -369,5 +370,6 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   });
 })();
 </script>
+<script>(() => { const b = document.querySelector(".versiones"), a = b && b.querySelector("[aria-current]"); if (a) b.scrollLeft = a.offsetLeft - (b.clientWidth - a.offsetWidth) / 2; })();</script>
 </body>
 </html>
