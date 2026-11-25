@@ -2,7 +2,7 @@
  "id": "24-nestle-agua",
  "titulo": "Nestlé y el agua de Jalisco",
  "estilo": "talavera",
- "caption": "Lo que dicen los registros públicos sobre Nestlé y el agua en Jalisco, de lo más reciente a lo más antiguo.\n\n2026 · En Ocotlán, los 5 permisos de pozo de Nestlé suman 2,330,753 m³ al año: 2.4 veces los 15 permisos de pozo del municipio para uso público urbano. Solo cuenta agua de pozo.\n\n2025 · Nestlé cedió temporalmente a la CONAGUA 250,000 m³ al año de un permiso de 3 pozos en Lagos de Moreno, hasta 2030.\n\n2016 · Expansión publicó que en la planta nueva de Ocotlán «100% del agua utilizada será reciclada». Ese año la CONAGUA registró un permiso de Nestlé para descargar agua a un río en Ocotlán. Otra nota habla de «100% waste water treatment»: el agua tratada sí se puede descargar.\n\n2014 · Según The Food Tech, que cita a Nestlé, la planta «Cero agua» de Lagos de Moreno «operará sin extraer el líquido del subsuelo». En el registro sigue un permiso de Nestlé de 599,600 m³ al año, de 3 pozos ahí.\n\nUn permiso es un límite, no lo que se saca. Cuánto se extrae de verdad lo mide la CONAGUA.\n\n¿Vives en Ocotlán o Lagos de Moreno? ¿Cómo te llega el agua?",
+ "caption": "Lo que dicen los registros públicos sobre Nestlé y el agua en Jalisco, de lo más reciente a lo más antiguo.\n\n2026 · En Ocotlán, los 5 permisos de pozo de Nestlé, de uso industrial para su negocio, suman 2,330,753 m³ al año: 2.4 veces los 15 permisos de pozo del municipio para uso público urbano. Solo cuenta agua de pozo; la agricultura tiene más.\n\n2025 · Nestlé cedió temporalmente a la CONAGUA 250,000 m³ al año de un permiso de 3 pozos en Lagos de Moreno, hasta 2030.\n\n2016 · Expansión publicó que en la planta nueva de Ocotlán «100% del agua utilizada será reciclada». Ese año la CONAGUA registró un permiso de Nestlé para descargar agua a un río en Ocotlán. Otra nota habla de «100% waste water treatment»: el agua tratada sí se puede descargar.\n\n2014 · Según The Food Tech, que cita a Nestlé, la planta «Cero agua» de Lagos de Moreno «operará sin extraer el líquido del subsuelo». En el registro sigue un permiso de Nestlé de 599,600 m³ al año, de 3 pozos ahí.\n\nUn permiso es un límite, no lo que se saca. Cuánto se extrae de verdad lo mide la CONAGUA.\n\n¿Vives en Ocotlán o Lagos de Moreno? ¿Cómo te llega el agua?",
  "fuentes": {
   "repda_ocot": {
    "url": "https://app.conagua.gob.mx/consultarepda.aspx",
@@ -57,7 +57,8 @@
  "slides": [
   {
    "tipo": "portada",
-   "kicker": "Ocotlán, Jalisco · [[nestle]]",
+   "marca_grande": "nestle",
+   "kicker": "Ocotlán, Jalisco",
    "titular": "¿Quién tiene permiso de sacar más agua de pozo: *el municipio* o *Nestlé*?",
    "texto": "Según el registro de la [[conagua]], con corte al 16 de noviembre de 2026.",
    "fuentes": [
@@ -67,30 +68,25 @@
   {
    "tipo": "barras",
    "kicker": "2026 · Ocotlán · permisos de agua de pozo, m³ al año",
-   "titular": "Nestlé: **2.4 veces** lo de los pozos del municipio",
+   "titular": "Nestlé, para su negocio: **2.4 veces** el agua de pozo del municipio",
    "barras": [
     {
-     "etiqueta": "[[nestle]] (5 permisos)",
+     "etiqueta": "[[nestle]] uso industrial, 5 permisos",
      "valor": 2330753,
      "texto": "2,330,753",
      "color": "alarm"
     },
     {
-     "etiqueta": "Municipio, uso público urbano (15 permisos)",
+     "etiqueta": "Municipio, uso público, 15 permisos",
      "valor": 964091,
      "texto": "964,091"
-    },
-    {
-     "etiqueta": "Uso agrícola (103 permisos)",
-     "valor": 10054936,
-     "texto": "10,054,936"
     }
    ],
-   "texto": "Solo agua de pozo. Son límites que autoriza la [[conagua]], no lo que se extrae. El permiso de pozo más grande del municipio es de Nestlé.",
+   "texto": "Son límites que autoriza la [[conagua]], no lo que se extrae. El permiso de pozo más grande del municipio es de Nestlé. La agricultura tiene más: 103 permisos, 10,054,936 m³.",
    "fuentes": [
     "repda_ocot"
    ],
-   "calculo": "Cálculo de Agua GDL (datos/nestle_repda.py) sobre la exportación del REPDA de Ocotlán, aguas subterráneas: Nestlé 5 títulos, 874,753 + 570,000 + 410,000 + 260,000 + 216,000 = 2,330,753; PUBLICO URBANO 15 títulos = 964,091; AGRICOLA 103 títulos = 10,054,936; 2,330,753 ÷ 964,091 = 2.42 ≈ 2.4. Los 15 títulos de uso público urbano son del Municipio de Ocotlán. No cuenta el agua superficial. La exportación trae 154 filas; la página decía «Total de Registros: 151» (sin conciliar)."
+   "calculo": "Cálculo de Agua GDL (datos/nestle_repda.py) sobre la exportación del REPDA de Ocotlán, aguas subterráneas: Nestlé 5 títulos, los 5 de uso INDUSTRIAL, 874,753 + 570,000 + 410,000 + 260,000 + 216,000 = 2,330,753; PUBLICO URBANO 15 títulos = 964,091; AGRICOLA 103 títulos = 10,054,936; 2,330,753 ÷ 964,091 = 2.42 ≈ 2.4. Los 15 títulos de uso público urbano son del Municipio de Ocotlán. No cuenta el agua superficial. La exportación trae 154 filas; la página decía «Total de Registros: 151» (sin conciliar)."
   },
   {
    "tipo": "texto",

@@ -86,7 +86,7 @@ def check(c, fotos_ok, temas):
     for k in ("id", "titulo", "caption", "fuentes", "slides"):
         if k not in c:
             fail(f"{cid}: missing {k}")
-    for k in re.findall(r"\[\[(\w*)\]\]", json.dumps(c["slides"], ensure_ascii=False)):
+    for k in re.findall(r"\[\[(\w*)\]\]", json.dumps(c["slides"], ensure_ascii=False)) + [s["marca_grande"] for s in c["slides"] if s.get("marca_grande")]:
         if k not in LOGOS and k not in SELLOS:
             fail(f"{cid}: [[{k}]] is neither in LOGOS nor in SELLOS")
         elif k in LOGOS and not (HERE / "logos" / LOGOS[k]).exists():
@@ -258,6 +258,8 @@ def render_body(s):
         docs = "".join(documento(d) for d in documentos(s))
         docs = [f'<div class="docs">{docs}</div>'] if docs else []
         parts = docs if t == "portada" else []  # the cover shows the document first; a texto slide after its headline
+        if s.get("marca_grande"):
+            parts.append(f'<div class="marcag">{md("[[" + s["marca_grande"] + "]]")}</div>')
         if s.get("kicker"):
             parts.append(f'<div class="kicker">{md(s["kicker"])}</div>')
         if s.get("cifra"):
@@ -417,6 +419,7 @@ body{font-family:"Avenir Next",Avenir,"Helvetica Neue",sans-serif;color:#fff;pos
 .marca{height:2.2em;width:auto;vertical-align:middle;margin:0 .25em 0 0;filter:brightness(0) invert(1)}
 .sello{display:inline-block;font-family:"Avenir Next";font-style:normal;font-weight:800;font-size:.7em;letter-spacing:.06em;line-height:1;padding:.22em .4em .16em;border:2px solid currentColor;border-radius:4px;vertical-align:.12em}
 .vk .marca{height:2.6em}
+.marcag{margin-bottom:28px}.marcag .marca{height:230px;margin:0}
 .top .n{margin-left:auto;font-size:26px;font-weight:600;opacity:.7}
 .main{flex:1;display:flex;align-items:center}
 .conf .main{align-items:flex-end;padding-bottom:10px}
