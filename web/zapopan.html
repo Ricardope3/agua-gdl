@@ -1,0 +1,994 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="facebook-domain-verification" content="li0vsm7edv0afccxodm5t0jvyiw0za">
+<title>No cuadra: Zapopan y el operativo de pipas · Agua GDL</title>
+<meta name="description" content="Zapopan anunció 45 pipas y 100 cisternas comunitarias. En la gráfica de su Protección Civil, el día con más pipas tuvo 34, y su Coordinación de Cercanía Ciudadana entregó una lista de 49 cisternas. Los documentos, uno junto al otro.">
+<link rel="canonical" href="https://aguagdl.com/zapopan">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aguagdl.com/zapopan">
+<meta property="og:title" content="No cuadra: Zapopan y el operativo de pipas">
+<meta property="og:description" content="45 pipas anunciadas; 34 el día con más en la gráfica de Protección Civil. 100 cisternas anunciadas; 49 en la lista. Y en hospitales, «Sin atenciones registradas».">
+<meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="/menu.css">
+<link rel="stylesheet" href="/nocuadra.css">
+<link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
+<style>
+:root {
+  --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
+  --brand: #0284c7; --brand-deep: #0369a1; --link: #0369a1; --on-brand: #ffffff;
+  --primary: #0284c7; --on-primary: #ffffff; --ring: #0284c766;
+  --shadow: 0 1px 2px rgb(3 105 161 / .08);
+  --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --warn: #8a5a00; --warn-bg: #fff3d6;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #06141d; --surface: #0a1c28; --subtle: #0c3149; --fg: #f0f9ff; --muted: #9bb8ca; --line: #18384d;
+    --link: #7dd3fc; --primary: #0ea5e9; --on-primary: #ffffff; --ring: #38bdf866; --brand: #0ea5e9; --brand-deep: #0284c7;
+    --warn: #ffd27a; --warn-bg: #3a2c10;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+[hidden] { display: none !important }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased }
+a { color: var(--link); text-underline-offset: 3px }
+a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); border-radius: 6px }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px }
+h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.08; letter-spacing: -.03em; font-weight: 700; margin: 8px 0 12px; text-wrap: balance; max-width: 26ch }
+.lede { font-size: 1.1rem; margin: 0 0 16px; max-width: 64ch }
+.i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
+.i { --ic: currentColor }
+p > .i, h2 > .i { color: var(--ic) }
+.note { margin: 10px 0 0; font-size: .92rem; color: var(--muted); max-width: 80ch }
+section { padding: 32px 0 16px }
+h2.ih { display: flex; align-items: center; gap: 12px; font-size: 1.4rem; line-height: 1.2; margin: 0 0 16px; letter-spacing: -.02em; font-weight: 500 }
+.ih .i-badge { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--subtle); color: var(--brand); flex-shrink: 0 }
+section h3 { margin: 28px 0 8px; font-size: 1.1rem; line-height: 1.3 }
+section p, section li { max-width: 70ch }
+ul.plain { padding-left: 1.3em; margin: 0 0 14px }
+ul.plain li { margin: 0 0 8px }
+footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .85rem }
+footer p { margin: 0 0 8px; max-width: 70ch }
+/* The top menu as on the landing: its frame is 960 px wide, and 1320 px from 1100 px, so it sits on one row. */
+.wrap:has(> header.top) { max-width: 960px }
+@media (min-width: 1100px) { .wrap:has(> header.top) { max-width: 1320px } }
+.wrap:has(> header.top) > :not(header.top) { max-width: 1068px; margin-left: auto; margin-right: auto }
+</style>
+<style>/* Talavera */
+:root { --bg:#fbfaf6; --surface:#ffffff; --subtle:#e4eaf8; --fg:#14213d; --muted:#4f5b7a; --line:#c4cfe9;
+ --brand:#1d3f9e; --brand-deep:#142d75; --link:#1d3f9e; --primary:#1d3f9e; --on-primary:#fff; --ring:#1d3f9e55; --alarm:#1d3f9e; --mark:#f2c84b; --mark-fg:#14213d;
+ --font: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; --serif: Baskerville, "Baskerville Old Face", "Libre Baskerville", Georgia, serif; --shadow:none;
+ --tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M12 2l4 10-4 10-4-10z M2 12l10-4 10 4-10 4z' fill='%231d3f9e'/%3E%3C/svg%3E") }
+@media (prefers-color-scheme: dark) { :root { --bg:#0c1328; --surface:#121b36; --subtle:#1a2850; --fg:#eef1fb; --muted:#a6b1d6; --line:#2a3a6e; --brand:#7f9cf5; --brand-deep:#5b7be8; --link:#a9bdfa; --primary:#5b7be8; --alarm:#9fb4ff; --mark:#c9a12f; --tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M12 2l4 10-4 10-4-10z M2 12l10-4 10 4-10 4z' fill='%237f9cf5'/%3E%3C/svg%3E") } }
+header.top { position: relative; border-bottom: 0 } html { overflow-x: clip } header.top::after { content: ""; position: absolute; left: calc(50% - 50vw); width: 100vw; bottom: -6px; height: 12px; background: var(--tile) center/12px 12px repeat-x; transition: opacity .2s }
+main h1, main h2 { font-weight: 400; font-style: italic }
+.card, .congreso, .signup, .finder, .summary, .boxes > * { border-radius: 4px !important; border: 3px double var(--brand) !important; box-shadow: none !important }
+.posts li { border-left: 3px double var(--brand) }
+.button { border-radius: 4px }
+footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-top: 34px }
+</style>
+<style>
+/* The reports list: map, stacked chart by day, bars and tables (once a page of their own). */
+.bigmap { height: clamp(420px, 70vh, 720px); border-radius: 4px; border: 1px solid var(--line); background: var(--subtle); margin: 8px 0 0 }
+.bigmap:focus-visible { outline: 3px solid var(--brand) }
+@media (prefers-color-scheme: dark) { .bigmap .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) } .bigmap.leaflet-container { background: #0c1e2c } }
+.keys .sw.none { background: transparent; border: 1.5px solid var(--muted) }
+.chart { position: relative; margin: 6px 0 0 }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible }
+.chart text { font: 12px var(--font); fill: var(--muted); font-variant-numeric: tabular-nums }
+.chart .gl { stroke: var(--grid); stroke-width: 1 }
+.chart .base { stroke: var(--axis); stroke-width: 1 }
+.chart .col:hover .hit, .chart .col.on .hit { fill: var(--subtle); opacity: .6 }
+.chart .tip { position: absolute; z-index: 5; pointer-events: none; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; font-size: .88rem; line-height: 1.35; box-shadow: 0 6px 18px rgb(3 14 22 / .16); min-width: 170px }
+.chart .tip b { display: block; margin-bottom: 2px }
+.chart .tip .r { display: flex; align-items: center; gap: 6px; justify-content: space-between }
+.chart .tip .r span:first-child { display: inline-flex; align-items: center; gap: 6px }
+.chart .tip .sw { width: 10px; height: 10px; border-radius: 2px; background: var(--sw) }
+.chart .tip .r span:last-child { font-variant-numeric: tabular-nums }
+.bars { margin: 6px 0 0; padding: 0; list-style: none; max-width: 760px }
+.bars li { display: grid; grid-template-columns: minmax(9rem, 15rem) 1fr 7.5rem; align-items: center; gap: 10px; padding: 3px 0 }
+@media (max-width: 560px) { .bars li { grid-template-columns: minmax(7rem, 9rem) 1fr 5.5rem; gap: 8px; font-size: .92rem } }
+.bars .bl { overflow-wrap: anywhere; line-height: 1.25 }
+.bars .bt { height: 14px; background: color-mix(in srgb, var(--subtle) 60%, transparent); border-radius: 0 4px 4px 0 }
+.bars .bf { display: block; height: 100%; background: var(--brand); border-radius: 0 4px 4px 0; min-width: 2px }
+.bars .bv { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap }
+.bars .bv small { color: var(--muted); font-size: .85em }
+section details:not(.tabla) { margin: 14px 0 0 }
+section details:not(.tabla) > summary { cursor: pointer; color: var(--link) }
+table.datos { width: 100%; border-collapse: collapse; margin: 10px 0 0; font-size: .92rem }
+table.datos caption { text-align: left; color: var(--muted); padding: 0 0 6px }
+table.datos th, table.datos td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top }
+table.datos th { font-weight: 600; background: var(--subtle) }
+table.datos td.n, table.datos th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap }
+table.datos td .sub { display: block; color: var(--muted); font-size: .88em }
+.scroll { overflow-x: auto; max-width: 100% }
+.filtro { width: min(420px, 100%); font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; margin: 10px 0 0 }
+.filtro:focus-visible { border-color: var(--brand) }
+/* The divider between the chart's two stages. */
+.serie .fase { stroke: var(--axis); stroke-width: 1; stroke-dasharray: 3 3 }
+.serie .fase-t { fill: var(--muted) }
+.tabla caption { text-align: left; padding: 0 0 6px }
+</style>
+<script src="/theme.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
+    <nav class="site-nav" aria-label="Secciones">
+      <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#users"/></svg>¿Hay agua?</a>
+      <a href="/nocuadra" aria-current="page"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#question-marks"/></svg>No cuadra</a>
+      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#map-pin"/></svg>Avisos</a>
+      <a href="/cisternas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#droplet"/></svg>Cisternas</a>
+      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#newspaper"/></svg>Noticias</a>
+      <details class="nav-more"><summary>Más</summary>
+        <div class="mas-panel">
+          <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#megaphone"/></svg>Exige</a>
+          <a href="/fotos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#video"/></svg>Fotos</a>
+          <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#bar-chart"/></svg>Cuentas</a>
+          <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#droplet"/></svg>Contaminación</a>
+          <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#heart"/></svg>Antisionismo</a>
+        </div></details>
+    </nav>
+  </header>
+
+  <main>
+    <p class="kicker"><a href="/nocuadra">No cuadra</a> · Zapopan y el operativo de pipas</p>
+    <h1>Zapopan anunció 45 pipas. En la gráfica de su Protección Civil, el día con más tuvo 34</h1>
+    <p class="lede">El 19 de octubre de 2026 el Gobierno de Zapopan anunció que contaría con «45 pipas y 100 cisternas comunitarias» para 211 colonias, y que daría «prioridad a escuelas y centros de salud municipales». Pedimos por transparencia los registros del operativo. En lo que entregaron, la gráfica de pipas por día nunca llega a 45, la lista de cisternas termina en la número 49 y la fila de hospitales dice «Sin atenciones registradas».</p>
+
+    <ul class="contador" style="--cols:4" aria-label="Las cifras principales">
+      <li><span class="n">34</span><span class="t">pipas el día con más, en la gráfica de Protección Civil; se anunciaron 45</span></li>
+      <li><span class="n">49</span><span class="t">cisternas en la lista que entregó Zapopan; se anunciaron 100</span></li>
+      <li><span class="n sobre">0</span><span class="t">atenciones a hospitales en la tabla entregada: «Sin atenciones registradas»</span></li>
+      <li><span class="n">9,828</span><span class="t">reportes por falta de agua del 15 de octubre al 4 de noviembre, en la lista del propio Zapopan</span></li>
+    </ul>
+    <p class="note">Estado al 24 de noviembre de 2026. Todo sale de documentos que entregaron el Gobierno de Zapopan y su Coordinación Municipal de Protección Civil y Bomberos, un organismo del municipio, y de sus boletines. Las fuentes están <a href="#fuentes">al final</a>.</p>
+
+    <section aria-labelledby="pipas">
+      <h2 id="pipas" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#bar-chart"/></svg></span>45 pipas anunciadas; 34 el día con más</h2>
+      <blockquote class="cita">«Como parte del operativo, Zapopan contará con 45 pipas y 100 cisternas comunitarias con capacidad de 10 mil litros cada una, destinadas a apoyar a las colonias contempladas en el programa, especialmente a las familias que no cuentan con tinaco, aljibe u otro espacio para almacenar agua.»<cite><a href="https://www.zapopan.gob.mx/v3/noticias/zapopan-pone-en-marcha-operativo-de-suministro-de-agua-con-45-pipas-y-100-cisternas" rel="noopener">Boletín del Gobierno de Zapopan</a>, 19 de octubre de 2026</cite></blockquote>
+      <p>Pedimos los partes diarios de unidades en servicio y de litros repartidos. La Dirección de Planificación de Protección Civil y Bomberos respondió que «se determina la inexistencia de la información tal cual como se solicita» y entregó, en su lugar, una gráfica con los litros y «la cantidad de pipas participantes durante cada jornada». Esta es esa gráfica, día por día:</p>
+      <figure class="grafica">
+        <div class="serie" id="serie-pipas"><noscript><p class="note">La gráfica necesita JavaScript. Los 20 días están en el <a href="/datos/zapopan-pipas-por-dia.csv">CSV</a>.</p></noscript></div>
+        <ul class="keys">
+          <li><span class="sw" style="--sw:var(--s1)"></span>Pipas en la jornada, según la gráfica de Protección Civil</li>
+          <li><span class="sw linea"></span>Las 45 anunciadas el 19 de octubre</li>
+        </ul>
+        <figcaption>Pipas participantes por jornada, del 15 de octubre al 3 de noviembre de 2026. Fuente: gráfica anexa al oficio 011300/2026/0150 de la Dirección de Planificación de Protección Civil y Bomberos de Zapopan, 12 de noviembre de 2026 (<a href="/datos/pcyb-respuesta-ut-091-2026.pdf#page=4">p. 4 del PDF</a>); los números son nuestra lectura de las etiquetas de la gráfica (<a href="/datos/zapopan-pipas-por-dia.csv">CSV</a>). La gráfica divide el operativo en dos etapas: atención de reportes generalizados, hasta el 23 de octubre, y atención por polígonos, desde el 24. Las etiquetas del 16 y el 17 de octubre (12 y 7) pueden estar cambiadas entre sí.</figcaption>
+        <details class="tabla"><summary>Ver los 20 días en una tabla</summary><div id="tabla-pipas"></div></details>
+      </figure>
+      <figure class="documento">
+<!-- documento:zapopan-pipas -->
+<div class="hoja" data-documento="zapopan-pipas">
+<div class="membrete"><img src="/img/documentos/zapopan-pipas-m1.png" width="280" height="295" style="width:13.86%" alt="" loading="lazy"><img src="/img/documentos/zapopan-pipas-m2.png" width="318" height="98" style="width:15.74%" alt="Dirección de Planificación, oficio 011300/2026/0150" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon marca" style="width:77.13%"><img src="/img/documentos/zapopan-pipas-1.png" width="779" height="51" alt="la cantidad de pipas participantes durante cada jornada," loading="lazy"></span>
+<span class="renglon" style="width:100%"><img src="/img/documentos/zapopan-pipas-2.png" width="1010" height="126" alt="La línea de pipas por día de la gráfica oficial, del 15 de octubre al 3 de noviembre: 11 el 19 de octubre, 34 el 27 de octubre" loading="lazy"><span class="anillo" style="left:25.45%;top:65.08%;width:5.15%"></span><span class="etiqueta" style="left:25.45%;top:22.22%">11 · 19 oct</span><span class="anillo" style="left:62.77%;top:19.05%;width:4.75%"></span><span class="etiqueta" style="left:62.77%;top:66.67%">34 · 27 oct</span></span>
+</div></div>
+<!-- /documento:zapopan-pipas -->
+        <figcaption>Oficio 011300/2026/0150, p. 4 (<a href="/datos/pcyb-respuesta-ut-091-2026.pdf#page=4">PDF</a>): el texto que presenta la gráfica y su línea de pipas por día. Resaltado y círculos de Agua GDL.</figcaption>
+      </figure>
+
+      <h3>Cuántas pipas, según quién</h3>
+      <ul class="bars" aria-label="Cifras de pipas dadas por el Gobierno de Zapopan y su Protección Civil">
+        <li><span class="bl">Boletín del 19 de octubre: «contará con»</span><span class="bt"><span class="bf" style="width:100%"></span></span><span class="bv">45</span></li>
+        <li><span class="bl">Boletín del 27 de octubre: «estado de fuerza»</span><span class="bt"><span class="bf" style="width:44.4%"></span></span><span class="bv">20</span></li>
+        <li><span class="bl">Gráfica de Protección Civil, 27 de octubre</span><span class="bt"><span class="bf" style="width:75.6%"></span></span><span class="bv">34</span></li>
+        <li><span class="bl">Gráfica de Protección Civil, 3 de noviembre</span><span class="bt"><span class="bf" style="width:68.9%"></span></span><span class="bv">31</span></li>
+        <li><span class="bl">Oficio 0150: «en servicio» al 3 de noviembre</span><span class="bt"><span class="bf" style="width:80%"></span></span><span class="bv">36</span></li>
+      </ul>
+      <p>Las mismas autoridades dan otras cifras sobre las pipas, y cada una cuenta algo distinto. El boletín del 27 de octubre dice que el municipio «opera con un estado de fuerza de 20 pipas, entre unidades del Gobierno de Zapopan y SIAPA»; la gráfica de Protección Civil registra 33 el día anterior y 34 ese día. El oficio 0150 dice que al 3 de noviembre había «36 pipas en servicio»; su gráfica marca 31 ese día. La relación de pipas del mismo oficio, «conforme a los registros generales de seguimiento del operativo», suma también 36: 25 del SIAPA y 11 de Protección Civil y Bomberos Zapopan (2), Agua Potable y Alcantarillado (3) y Parques y Jardines (6).</p>
+      <figure class="documento">
+<!-- documento:zapopan-36-pipas -->
+<div class="hoja" data-documento="zapopan-36-pipas">
+<div class="membrete"><img src="/img/documentos/zapopan-36-pipas-m1.png" width="280" height="295" style="width:10.18%" alt="" loading="lazy"><img src="/img/documentos/zapopan-36-pipas-m2.png" width="318" height="98" style="width:11.56%" alt="Dirección de Planificación, oficio 011300/2026/0150" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon" style="width:99.71%"><img src="/img/documentos/zapopan-36-pipas-1.png" width="1371" height="42" alt="Asimismo, se proporciona la relación de pipas participantes, desglosada por dependencia u" loading="lazy"></span>
+<span class="renglon" style="width:94.33%"><img src="/img/documentos/zapopan-36-pipas-2.png" width="1297" height="42" alt="organismo de procedencia, conforme a los registros generales de seguimiento del operativo." loading="lazy"></span>
+<span class="renglon" style="width:92.8%"><img src="/img/documentos/zapopan-36-pipas-3.png" width="1276" height="317" alt="Tabla: dependencia y cantidad de pipas. Protección Civil y Bomberos Zapopan, 2; Agua Potable y Alcantarillado, 3; Parques y Jardines, 6; SIAPA, 25" loading="lazy"></span>
+<span class="salto" aria-hidden="true">[…]</span>
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/zapopan-36-pipas-4.png" width="1375" height="43" alt="Al corte de 3 de noviembre del presente, se cuenta con 36 pipas en servicio, bajo un esquema de" loading="lazy"></span>
+</div></div>
+<!-- /documento:zapopan-36-pipas -->
+        <figcaption>Oficio 011300/2026/0150, p. 5 (<a href="/datos/pcyb-respuesta-ut-091-2026.pdf#page=5">PDF</a>): la relación de pipas por dependencia y las 36 «en servicio». Resaltado de Agua GDL.</figcaption>
+      </figure>
+
+      <h3>«840 mil litros diarios»</h3>
+      <div class="duo">
+        <div class="prometido">
+          <h3>Lo que dijo el boletín, 27 de octubre</h3>
+          <span class="cifra">840 mil al día</span>
+          <blockquote>«A través de la Coordinación de Protección Civil y Bomberos, el municipio lleva 840 mil litros diarios a zonas afectadas.»</blockquote>
+          <p class="de">Es la entrada del boletín. Más abajo, el coordinador de Protección Civil habla de un día: «Iniciamos con cerca de 200 mil litros al día. Hoy, al día de ayer, logramos 840 mil.»</p>
+        </div>
+        <div class="entregado">
+          <h3>Lo que registra su gráfica</h3>
+          <span class="cifra">3 de 20 días</span>
+          <p class="de">En la línea de litros de la misma gráfica, solo el 25 de octubre, el 2 y el 3 de noviembre llegan a 840,000 o más. El 26 de octubre, el día antes del boletín, marca 680,000, y el 27, 710,000.</p>
+        </div>
+        <div class="diferencia"><strong>La diferencia</strong><span>En las palabras que el boletín le cita, el coordinador habla de lo que se logró «al día de ayer»; el boletín lo resume como «840 mil litros diarios». En la gráfica, los diez días anteriores al 25 de octubre quedan todos por debajo de 840,000.</span></div>
+      </div>
+      <figure class="grafica">
+        <div class="serie" id="serie-litros"><noscript><p class="note">La gráfica necesita JavaScript. Los 20 días están en el <a href="/datos/zapopan-pipas-por-dia.csv">CSV</a>.</p></noscript></div>
+        <ul class="keys">
+          <li><span class="sw" style="--sw:var(--s2)"></span>840,000 litros o más</li>
+          <li><span class="sw" style="--sw:var(--axis)"></span>Menos de 840,000</li>
+          <li><span class="sw linea"></span>Los 840 mil del boletín del 27 de octubre</li>
+        </ul>
+        <figcaption>Litros de agua distribuidos por jornada, del 15 de octubre al 3 de noviembre de 2026, según la misma gráfica (<a href="/datos/pcyb-respuesta-ut-091-2026.pdf#page=4">p. 4 del PDF</a>); nuestra lectura de sus etiquetas (<a href="/datos/zapopan-pipas-por-dia.csv">CSV</a>). La etiqueta del 15 de octubre puede ser 68,000 u 88,000, y la del 20, 360,000 o 350,000. En la gráfica, el punto del 3 de noviembre está dibujado más abajo que el del 2 aunque su etiqueta es mayor; usamos las etiquetas.</figcaption>
+        <details class="tabla"><summary>Ver los 20 días en una tabla</summary><div id="tabla-litros"></div></details>
+      </figure>
+
+      <h3>El combustible: tres unidades</h3>
+      <p>La Dirección de Logística de Protección Civil y Bomberos entregó las bitácoras de combustible y los tickets de tres unidades del operativo, los económicos 3125, 3104 y 4706: 27 tickets del 15 de octubre al 7 de noviembre, por <strong>1,780.269 litros de combustible y $48,049.47</strong>, a $26.99 el litro. Las bitácoras no tienen columna de destino ni de colonia, y el campo «Resguardante» está en blanco en todas. Hay huecos: no hay bitácora de la 3125 antes del 26 de octubre, ni de la 3104 después del 25, ni de la 4706 del 19 al 25 de octubre. Es el combustible de tres unidades, mientras la gráfica llega a 34 pipas en un día.</p>
+      <p class="note">Esta respuesta (UT-093/2026, oficio 011207/2026/0243, 10 de noviembre) no la publicamos completa porque los tickets traen nombres, firmas y datos del personal. Las cifras salen de nuestra transcripción del documento.</p>
+    </section>
+
+    <section aria-labelledby="cisternas">
+      <h2 id="cisternas" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#droplet"/></svg></span>100 cisternas anunciadas; 49 en la lista</h2>
+      <div class="duo">
+        <div class="prometido">
+          <h3>Lo prometido, 19 de octubre</h3>
+          <span class="cifra">100 cisternas</span>
+          <blockquote>«Zapopan contará con 45 pipas y 100 cisternas comunitarias con capacidad de 10 mil litros cada una»</blockquote>
+          <p class="de">Boletín del Gobierno de Zapopan. Añade que «Las cisternas serán administradas de manera conjunta por el Gobierno de Zapopan y los consejos vecinales».</p>
+        </div>
+        <div class="entregado">
+          <h3>Lo entregado, 6 de noviembre</h3>
+          <span class="cifra">49 en la lista</span>
+          <p class="de">El «listado de cisternas instaladas» de la Coordinación General de Cercanía Ciudadana (oficio 11000000/CER.CIU/2026/0876) termina en la número 49, LOS CAJETES. En los archivos de esa Coordinación «no se localizaron bitácoras, hojas de servicio, vales o registros de viaje de las pipas que llenaron las cisternas».</p>
+        </div>
+        <div class="diferencia"><strong>La diferencia</strong><span>51 de las 100 anunciadas no están en la lista entregada. Eso no prueba que no existan; sí que la lista oficial tiene 49 y que no se localizaron los registros de cómo se llenaron.</span></div>
+      </div>
+      <figure class="grafica">
+        <div class="cien" role="img" aria-label="Cien cuadros, uno por cisterna anunciada; 49 en azul, las de la lista"><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span class="si"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <figcaption>Cada cuadro es una de las 100 cisternas anunciadas; en azul, las 49 de la lista. Están, con su domicilio y su fuente, en nuestro <a href="/cisternas">mapa de cisternas comunitarias</a>.</figcaption>
+      </figure>
+      <figure class="documento">
+<!-- documento:zapopan-cisternas -->
+<div class="hoja" data-documento="zapopan-cisternas">
+<div class="membrete"><img src="/img/documentos/zapopan-cisternas-m1.png" width="335" height="225" style="width:21.5%" alt="" loading="lazy"><img src="/img/documentos/zapopan-cisternas-m2.png" width="590" height="90" style="width:37.87%" alt="Oficio 11000000/CER.CIU/2026/0876" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon marca" style="width:50.19%"><img src="/img/documentos/zapopan-cisternas-1.png" width="391" height="43" alt="listado de cisternas instaladas," loading="lazy"></span>
+<span class="salto" aria-hidden="true">[…]</span>
+<span class="renglon" style="width:43.65%"><img src="/img/documentos/zapopan-cisternas-2.png" width="425" height="142" alt="47 MIRAMAR, 48 CORDILLERAS" loading="lazy"></span>
+<span class="renglon marca" style="width:43.65%"><img src="/img/documentos/zapopan-cisternas-3.png" width="425" height="66" alt="49 LOS CAJETES" loading="lazy"></span>
+<span class="salto" aria-hidden="true">[…]</span>
+<span class="renglon marca" style="width:86.78%"><img src="/img/documentos/zapopan-cisternas-4.png" width="676" height="50" alt="en los archivos que obran en la Coordinación General," loading="lazy"></span>
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/zapopan-cisternas-5.png" width="779" height="50" alt="no se localizaron bitácoras, hojas de servicio, vales o registros" loading="lazy"></span>
+<span class="renglon marca" style="width:75.99%"><img src="/img/documentos/zapopan-cisternas-6.png" width="592" height="48" alt="de viaje de las pipas que llenaron las cisternas" loading="lazy"></span>
+</div></div>
+<!-- /documento:zapopan-cisternas -->
+        <figcaption>Oficio 11000000/CER.CIU/2026/0876, pp. 7, 11 y 8 de la respuesta a la solicitud 140292426004978 (<a href="/datos/zapopan-respuesta-140292426004978.pdf#page=7">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure>
+
+      <h3>Una «primera fase»</h3>
+      <p>La Dirección de Transparencia de Zapopan no describe las 45 pipas y las 100 cisternas como el boletín. En su respuesta, la logística del operativo es la que «se plantea que en una primera fase sea la siguiente», y entre sus puntos: «Se llevarán a cabo las gestiones correspondientes para lograr materializar un sistema de 45 pipas y 100 cisternas comunitarias». El boletín decía «contará con».</p>
+      <figure class="documento">
+<!-- documento:zapopan-primera-fase -->
+<div class="hoja" data-documento="zapopan-primera-fase">
+<div class="membrete"><img src="/img/documentos/zapopan-primera-fase-m1.png" width="535" height="275" style="width:27.96%" alt="" loading="lazy"><img src="/img/documentos/zapopan-primera-fase-m2.png" width="790" height="158" style="width:41.29%" alt="Oficio 02050000/2026/7939" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/zapopan-primera-fase-1.png" width="861" height="43" alt="cuya logística se plantea que en una primera fase sea la siguiente:" loading="lazy"></span>
+<span class="salto" aria-hidden="true">[…]</span>
+<span class="renglon marca" style="width:74.91%"><img src="/img/documentos/zapopan-primera-fase-2.png" width="645" height="43" alt="Se llevarán a cabo las gestiones correspondientes" loading="lazy"></span>
+<span class="renglon marca" style="width:53.19%"><img src="/img/documentos/zapopan-primera-fase-3.png" width="458" height="43" alt="para lograr materializar un sistema" loading="lazy"></span>
+<span class="renglon marca" style="width:62.02%"><img src="/img/documentos/zapopan-primera-fase-4.png" width="534" height="41" alt="de 45 pipas y 100 cisternas comunitarias" loading="lazy"></span>
+</div></div>
+<!-- /documento:zapopan-primera-fase -->
+        <figcaption>Oficio 02050000/2026/7939, 17 de noviembre de 2026, p. 2 de la respuesta a la solicitud 140292426004978 (<a href="/datos/zapopan-respuesta-140292426004978.pdf#page=2">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure>
+      <p>¿De dónde salió esa logística? En otra respuesta de la misma Dirección (<a href="/datos/zapopan-respuesta-140292426004980.pdf#page=4">oficio 02050000/2026/7941</a>, p. 4), la Jefatura de Gabinete dice que el martes 13 de octubre hubo una mesa de trabajo con diversas dependencias municipales, cuyos acuerdos «se asentaron en la minuta correspondiente y sirvieron como base para la generación del “Operativo Suministro de Agua de Zapopan”». La minuta no la entregaron.</p>
+    </section>
+
+    <section aria-labelledby="hospitales">
+      <h2 id="hospitales" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#heart"/></svg></span>Hospitales: «Sin atenciones registradas»</h2>
+      <div class="duo">
+        <div class="prometido">
+          <h3>Lo prometido, 19 y 27 de octubre</h3>
+          <span class="cifra">Prioridad</span>
+          <blockquote>«También se dará prioridad a escuelas y centros de salud municipales.»</blockquote>
+          <p class="de">Boletín del 19 de octubre. El del 27 dijo que la operación tiene «dos vertientes de atención: una para servicios estratégicos como hospitales y otra para la atención directa a la población».</p>
+        </div>
+        <div class="entregado">
+          <h3>Lo entregado, 12 de noviembre</h3>
+          <span class="cifra">«Sin atenciones registradas»</span>
+          <p class="de">Es lo que dice la fila de hospitales en la tabla de inmuebles atendidos «a partir del 15 de octubre de 2026» que entregó Protección Civil (oficio 011300/2026/0148). En la tabla no hay ningún centro de salud: hay diez escuelas y un centro comunitario.</p>
+        </div>
+        <div class="diferencia"><strong>La diferencia</strong><span>La tabla no registra ninguna atención a hospitales ni a centros de salud. La primera escuela tiene fecha del 20 de octubre, y cinco de las diez, del 9 al 11 de noviembre.</span></div>
+      </div>
+      <figure class="documento">
+<!-- documento:zapopan-hospitales -->
+<div class="hoja" data-documento="zapopan-hospitales">
+<div class="membrete"><img src="/img/documentos/zapopan-hospitales-m1.png" width="295" height="298" style="width:14.82%" alt="" loading="lazy"><img src="/img/documentos/zapopan-hospitales-m2.png" width="320" height="95" style="width:16.08%" alt="Dirección de Planificación, oficio 011300/2026/0148" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/zapopan-hospitales-1.png" width="995" height="43" alt="Hospitales: Sin atenciones registradas" loading="lazy"></span>
+<span class="renglon" style="width:100%"><img src="/img/documentos/zapopan-hospitales-2.png" width="995" height="38" alt="Espacios Públicos: Centro Comunitario N°3 - 09/11/2026" loading="lazy"></span>
+<span class="renglon" style="width:100%"><img src="/img/documentos/zapopan-hospitales-3.png" width="995" height="35" alt="Escuelas: Centro Escolar Juan Mateo - 20/10/2026" loading="lazy"></span>
+</div></div>
+<!-- /documento:zapopan-hospitales -->
+        <figcaption>Oficio 011300/2026/0148, p. 6 de la respuesta UT-089/2026 (<a href="/datos/pcyb-respuesta-ut-089-2026.pdf#page=6">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure>
+      <details class="tabla"><summary>Ver la tabla completa</summary>
+        <table>
+          <caption class="note">La tabla del oficio 0148, como viene escrita</caption>
+          <thead><tr><th>Tipo</th><th>Inmueble</th><th>Fecha</th></tr></thead>
+          <tbody>
+            <tr><td>Hospitales</td><td>Sin atenciones registradas</td><td></td></tr>
+            <tr><td>Espacios Públicos</td><td>Centro Comunitario N°3</td><td>09/11/2026</td></tr>
+            <tr><td>Escuelas</td><td>Centro Escolar Juan Mateo</td><td>20/10/2026</td></tr>
+            <tr><td>Escuelas</td><td>Escuela Primaria José Martiniano Hernández M.</td><td>20/10/2026</td></tr>
+            <tr><td>Escuelas</td><td>Escuela Secundaria Mixta 18</td><td>21/10/2026</td></tr>
+            <tr><td>Escuelas</td><td>Kínder Guillermo Chávez Vega</td><td>27/10/2026</td></tr>
+            <tr><td>Escuelas</td><td>Escuela Alfredo V Bonfil</td><td>09/11/2026</td></tr>
+            <tr><td>Escuelas</td><td>Primaria y Preescolar Tlaloc Patria</td><td>09/11/2026</td></tr>
+            <tr><td>Escuelas</td><td>Colegio Bilingüe José Vasconcelos</td><td>28/10/2026 - 10/11/2026</td></tr>
+            <tr><td>Escuelas</td><td>Escuela Secundaria Mixta 13</td><td>11/11/2026</td></tr>
+            <tr><td>Escuelas</td><td>Guardería el Rehilete</td><td>11/11/2026</td></tr>
+            <tr><td>Escuelas</td><td>Preparatoria N°20 UDG</td><td>11/11/2026</td></tr>
+          </tbody>
+        </table>
+      </details>
+    </section>
+
+    <section aria-labelledby="colonias75">
+      <h2 id="colonias75" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#map-pin"/></svg></span>Las 75 colonias «más afectadas»: una lista que nadie dice haber hecho</h2>
+      <blockquote class="cita">«El Gobierno de Zapopan, a través de la Unidad Municipal de Protección Civil y Bomberos, mantiene una estrategia de atención integral para mitigar el desabasto de agua que afecta a 211 colonias del municipio, de las cuales 75 han sido identificadas como las más afectadas por encontrarse en zonas de topografía elevada.»<cite><a href="https://www.zapopan.gob.mx/v3/noticias/zapopan-refuerza-operativo-de-atencion-con-pipas-de-agua" rel="noopener">Boletín del Gobierno de Zapopan</a>, 27 de octubre de 2026</cite></blockquote>
+      <div class="duo">
+        <div class="prometido">
+          <h3>Lo que dice Protección Civil, 12 de noviembre</h3>
+          <span class="cifra">«generada por» Cercanía</span>
+          <p class="de">Su Dirección de Planificación entregó una relación de 75 colonias (oficio 011300/2026/0148) y precisó que «dicha información fue generada por la Coordinación de Cercanía Ciudadana del Gobierno Municipal de Zapopan, en el ámbito de sus atribuciones, siendo esta la dependencia responsable de su elaboración, integración y actualización».</p>
+        </div>
+        <div class="entregado">
+          <h3>Lo que dice Cercanía Ciudadana, 17 de noviembre</h3>
+          <span class="cifra">«no se localizó»</span>
+          <p class="de">Le pedimos el listado de las 211 colonias y las 75 más afectadas. Su oficio 11000000/CER.CIU/2026/0907 responde que «no se localizó información respecto a los puntos señalados y descritos anteriormente al no tratarse de funciones inherentes a esta Coordinación General».</p>
+        </div>
+        <div class="diferencia"><strong>La diferencia</strong><span>Protección Civil entregó la lista y dice que la hizo Cercanía; Cercanía dice que no la encontró y que no es su función. Ninguna entregó cómo se eligieron las 75; el boletín habla de «topografía elevada».</span></div>
+      </div>
+      <figure class="documento">
+<!-- documento:zapopan-75-pcyb -->
+<div class="hoja" data-documento="zapopan-75-pcyb">
+<div class="membrete"><img src="/img/documentos/zapopan-75-pcyb-m1.png" width="295" height="298" style="width:12.5%" alt="" loading="lazy"><img src="/img/documentos/zapopan-75-pcyb-m2.png" width="320" height="95" style="width:13.56%" alt="Dirección de Planificación, oficio 011300/2026/0148" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon marca" style="width:79.49%"><img src="/img/documentos/zapopan-75-pcyb-1.png" width="938" height="41" alt="de las 75 colonias identificadas con mayor afectación, precisando que" loading="lazy"></span>
+<span class="renglon marca" style="width:36.36%"><img src="/img/documentos/zapopan-75-pcyb-2.png" width="429" height="40" alt="dicha información fue generada" loading="lazy"></span>
+<span class="renglon marca" style="width:50.42%"><img src="/img/documentos/zapopan-75-pcyb-3.png" width="595" height="47" alt="por la Coordinación de Cercanía Ciudadana" loading="lazy"></span>
+<span class="salto" aria-hidden="true">[…]</span>
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/zapopan-75-pcyb-4.png" width="1180" height="42" alt="siendo esta la dependencia responsable de su elaboración, integración y actualización." loading="lazy"></span>
+</div></div>
+<!-- /documento:zapopan-75-pcyb -->
+        <figcaption>Oficio 011300/2026/0148, p. 5 de la respuesta UT-089/2026 (<a href="/datos/pcyb-respuesta-ut-089-2026.pdf#page=5">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure>
+      <figure class="documento">
+<!-- documento:zapopan-75-cercania -->
+<div class="hoja" data-documento="zapopan-75-cercania">
+<div class="membrete"><img src="/img/documentos/zapopan-75-cercania-m1.png" width="165" height="225" style="width:7.6%" alt="" loading="lazy"><img src="/img/documentos/zapopan-75-cercania-m2.png" width="575" height="135" style="width:26.47%" alt="Oficio 11000000/CER.CIU/2026/0907" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon" style="width:100%"><img src="/img/documentos/zapopan-75-cercania-1.png" width="1086" height="50" alt="1. El listado o los documentos en que consten las 211 colonias y las 75 más afectadas" loading="lazy"></span>
+<span class="salto" aria-hidden="true">[…]</span>
+<span class="renglon marca" style="width:53.78%"><img src="/img/documentos/zapopan-75-cercania-2.png" width="584" height="50" alt="no se localizó información respecto a los puntos" loading="lazy"></span>
+<span class="renglon marca" style="width:44.57%"><img src="/img/documentos/zapopan-75-cercania-3.png" width="484" height="50" alt="señalados y descritos anteriormente al" loading="lazy"></span>
+<span class="renglon marca" style="width:74.77%"><img src="/img/documentos/zapopan-75-cercania-4.png" width="812" height="47" alt="no tratarse de funciones inherentes a esta Coordinación General" loading="lazy"></span>
+</div></div>
+<!-- /documento:zapopan-75-cercania -->
+        <figcaption>Oficio 11000000/CER.CIU/2026/0907, p. 6 de la respuesta a la solicitud 140292426004980 (<a href="/datos/zapopan-respuesta-140292426004980.pdf#page=6">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure>
+
+      <h3>La lista de 75 y la lista de reportes</h3>
+      <p>Pusimos la relación de 75 colonias junto a la lista de 9,828 reportes por falta de agua que entregó el propio Zapopan (<a href="#reportes">más abajo</a>). Las diez primeras de la relación están entre las 20 colonias con más reportes, y 17 de esas 20 aparecen en la relación con el mismo nombre, sin contar acentos. Las otras tres son CIUDAD EL TEPEYAC, con 119 reportes (la relación trae «CIUDAD DEL TEPEYAC», que puede ser la misma), LA ESTANCIA, con 115, y PARQUE VIRREYES, con 110. La relación no dice cómo se hizo ni en qué orden está; esto no lo dice tampoco.</p>
+      <div class="scroll">
+        <table class="datos">
+          <caption>Las diez primeras de la relación de 75, con sus reportes en la lista de Zapopan</caption>
+          <thead><tr><th class="n">En la relación</th><th>Colonia</th><th class="n">Reportes</th><th class="n">Lugar por reportes</th></tr></thead>
+          <tbody>
+            <tr><td class="n">1</td><td>LOMAS DE LA PRIMAVERA</td><td class="n">533</td><td class="n">1</td></tr>
+            <tr><td class="n">2</td><td>CIUDAD GRANJA</td><td class="n">472</td><td class="n">2</td></tr>
+            <tr><td class="n">3</td><td>GUADALUPE INN</td><td class="n">362</td><td class="n">4</td></tr>
+            <tr><td class="n">4</td><td>MIRAMAR</td><td class="n">247</td><td class="n">6</td></tr>
+            <tr><td class="n">5</td><td>GUADALUPE JARDIN</td><td class="n">200</td><td class="n">8</td></tr>
+            <tr><td class="n">6</td><td>SANTA ANA TEPETITLAN</td><td class="n">374</td><td class="n">3</td></tr>
+            <tr><td class="n">7</td><td>EXITMEX</td><td class="n">202</td><td class="n">7</td></tr>
+            <tr><td class="n">8</td><td>RESIDENCIAL LA ESTANCIA</td><td class="n">173</td><td class="n">11</td></tr>
+            <tr><td class="n">9</td><td>VIRREYES RESIDENCIAL</td><td class="n">114</td><td class="n">19</td></tr>
+            <tr><td class="n">10</td><td>CHAPALITA INN</td><td class="n">258</td><td class="n">5</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">«Lugar por reportes» es el lugar de la colonia entre los 306 nombres de colonia de la lista de reportes, con los nombres mal escritos que unimos a mano y sin «Colonia» ni «Fraccionamiento» delante: GUADALUPE INN suma los 350 reportes escritos así y los 12 escritos «FRACCIONAMIENTO GUADALUPE INN», que la relación pone aparte, en el lugar 17. Un reporte no es una casa: que una colonia tenga más reportes quiere decir que ahí se reportó más.</p>
+
+      <h3>El calendario de los polígonos</h3>
+      <p>En el mismo oficio, Protección Civil entrega «el calendario de polígonos de distribución de agua potable vigente», siete polígonos con su día de atención, y unas líneas después dice que la «calendarización del reparto» no es de su competencia y que quien podría tener la información «es el SIAPA». El boletín del 27 de octubre había dicho que la calendarización «se socializará a través de los comités vecinales y personal de Participación Ciudadana».</p>
+      <figure class="documento">
+<!-- documento:zapopan-calendario -->
+<div class="hoja" data-documento="zapopan-calendario">
+<div class="membrete"><img src="/img/documentos/zapopan-calendario-m1.png" width="295" height="298" style="width:11.36%" alt="" loading="lazy"><img src="/img/documentos/zapopan-calendario-m2.png" width="320" height="95" style="width:12.33%" alt="Dirección de Planificación, oficio 011300/2026/0148" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon marca" style="width:48.54%"><img src="/img/documentos/zapopan-calendario-1.png" width="630" height="40" alt="se proporciona el calendario de polígonos de" loading="lazy"></span>
+<span class="renglon marca" style="width:39.06%"><img src="/img/documentos/zapopan-calendario-2.png" width="507" height="34" alt="distribución de agua potable vigente:" loading="lazy"></span>
+<span class="renglon" style="width:99.85%"><img src="/img/documentos/zapopan-calendario-3.png" width="1296" height="592" alt="Tabla con las columnas «Día de atención», «Polígono» y «Principales colonias de referencia por polígono». Sábado, A: Ciudad Granja, Santa María del Pueblito. Domingo, B: Vallarta Patria, Camino Real, Prados Vallarta, Jardines de San Ignacio, Residencial Cordilleras, la Estancia. Lunes, C: Arcos de Guadalupe, Plaza Guadalupe, Tepeyac Casino, Mirador del Sol, Haciendas del Tepeyac. Martes, D: Jardines del Sol, Colli Urbano, Paseos del Sol, Victoria, Loma Bonita. Miércoles, E: Las Águilas, Pinar de la Calma, Agua Blanca Industrial, El Campanario. Jueves, F: La Floresta del Colli, Lomas de la Primavera, Arenales Tapatíos, Villas de la Primavera, Fracc. Citala, El Fortín, Monte Verde, Puerta del Bosque, Misión Floresta, Misión Santa Ana, La Haciendita, Los Pinos Campestre. Viernes, G: Lomas del Colli, La Gloria del Colli, Paseos del Colli, Arenales Tapatíos, Miramar" loading="lazy"></span>
+<span class="salto" aria-hidden="true">[…]</span>
+<span class="renglon" style="width:73.04%"><img src="/img/documentos/zapopan-calendario-4.png" width="948" height="33" alt="la información de su interés en lo relativo a criterios de prioridad," loading="lazy"></span>
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/zapopan-calendario-5.png" width="1298" height="35" alt="calendarización del reparto y la duración del operativo no forma parte de nuestras competencias, por" loading="lazy"></span>
+<span class="renglon marca" style="width:85.98%"><img src="/img/documentos/zapopan-calendario-6.png" width="1116" height="36" alt="lo que se estima que quien pudiera contar con información al respecto es el SIAPA," loading="lazy"></span>
+</div></div>
+<!-- /documento:zapopan-calendario -->
+        <figcaption>Oficio 011300/2026/0148, p. 6 de la respuesta UT-089/2026 (<a href="/datos/pcyb-respuesta-ut-089-2026.pdf#page=6">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure>
+      <details class="tabla"><summary>Ver el calendario en texto</summary>
+        <table>
+          <thead><tr><th>Día de atención</th><th>Polígono</th><th>Principales colonias de referencia por polígono</th></tr></thead>
+          <tbody>
+            <tr><td>Sábado</td><td>A</td><td>Ciudad Granja, Santa María del Pueblito</td></tr>
+            <tr><td>Domingo</td><td>B</td><td>Vallarta Patria, Camino Real, Prados Vallarta, Jardines de San Ignacio, Residencial Cordilleras, la Estancia</td></tr>
+            <tr><td>Lunes</td><td>C</td><td>Arcos de Guadalupe, Plaza Guadalupe, Tepeyac Casino, Mirador del Sol, Haciendas del Tepeyac</td></tr>
+            <tr><td>Martes</td><td>D</td><td>Jardines del Sol, Colli Urbano, Paseos del Sol, Victoria, Loma Bonita</td></tr>
+            <tr><td>Miércoles</td><td>E</td><td>Las Águilas, Pinar de la Calma, Agua Blanca Industrial, El Campanario</td></tr>
+            <tr><td>Jueves</td><td>F</td><td>La Floresta del Colli, Lomas de la Primavera, Arenales Tapatíos, Villas de la Primavera, Fracc. Citala, El Fortín, Monte Verde, Puerta del Bosque, Misión Floresta, Misión Santa Ana, La Haciendita, Los Pinos Campestre</td></tr>
+            <tr><td>Viernes</td><td>G</td><td>Lomas del Colli, La Gloria del Colli, Paseos del Colli, Arenales Tapatíos, Miramar</td></tr>
+          </tbody>
+        </table>
+      </details>
+    </section>
+
+    <section aria-labelledby="reportes">
+      <h2 id="reportes" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#users"/></svg></span>9,828 reportes en 21 días</h2>
+      <p>La Coordinación General de Cercanía Ciudadana entregó su lista de reportes de «Falta de agua en casa habitación» del 15 de octubre al 4 de noviembre de 2026 (oficio 11000000/CER.CIU/2026/0878, 6 de noviembre, entregado el 17 con el oficio 02050000/2026/7942). Todos tienen al SIAPA como dependencia. Llegó en un PDF de 166 páginas con la columna «Ubicacion» tachada; la pasamos a CSV.</p>
+      <figure class="documento">
+<!-- documento:zapopan-reportes -->
+<div class="hoja" data-documento="zapopan-reportes">
+<div class="membrete"><img src="/img/documentos/zapopan-reportes-m1.png" width="325" height="215" style="width:20.36%" alt="" loading="lazy"><img src="/img/documentos/zapopan-reportes-m2.png" width="575" height="135" style="width:36.02%" alt="Oficio 11000000/CER.CIU/2026/0878" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon marca" style="width:61.39%"><img src="/img/documentos/zapopan-reportes-1.png" width="539" height="44" alt="se encontró un total de 9,828 reportes por" loading="lazy"></span>
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/zapopan-reportes-2.png" width="878" height="46" alt="falta de agua, con corte al 04 de noviembre de la presente anualidad," loading="lazy"></span>
+</div></div>
+<!-- /documento:zapopan-reportes -->
+        <figcaption>Oficio 11000000/CER.CIU/2026/0878, p. 5 de la respuesta a la solicitud 140292426004981 (<a href="/datos/zapopan-respuesta-140292426004981.pdf#page=5">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure>
+      <ul class="contador" style="--cols:4" aria-label="La lista de reportes">
+        <li><span class="n" data-n="total">9,828</span><span class="t">reportes en <span data-n="dias">21</span> días</span></li>
+        <li><span class="n" data-n="en_proceso">8,857</span><span class="t">aparecen «En proceso» en la lista (<span data-n="en_proceso_pct">90</span> %)</span></li>
+        <li><span class="n" data-n="colonias_mapa">167</span><span class="t">nombres de colonias del mapa del SIAPA aparecen en la lista</span></li>
+        <li><span class="n" data-n="sin_colonia">1,936</span><span class="t">reportes sin colonia: dicen «No disponible» o están en blanco</span></li>
+      </ul>
+      <p class="note" id="estado" aria-live="polite">Cargando los datos…</p>
+      <noscript><p class="note">Las gráficas y el mapa necesitan JavaScript. Los datos están en el <a href="/datos/zapopan-reportes.csv">CSV</a>.</p></noscript>
+
+      <h3 id="h-mapa">Reportes por colonia</h3>
+      <div id="mapa" class="bigmap" role="region" aria-label="Mapa de Zapopan con el número de reportes de falta de agua por colonia" tabindex="0"></div>
+      <ul class="keys" id="clases" aria-label="Número de reportes"></ul>
+      <p class="note">El color es cuántos reportes nombran a la colonia. Solo se ven las colonias de Zapopan que están en el mapa de la rotación del SIAPA: ahí caen <span data-n="en_mapa">5,986</span> de los <span data-n="con_colonia">7,892</span> reportes que dicen colonia. Los demás traen nombres que no encontramos tal cual en ese mapa, como EXITMEX, RESIDENCIAL LA ESTANCIA o GUADALUPE INN CONDOMINIO UNO, y están en la tabla de abajo. Una colonia sin color no aparece con ese nombre en la lista: puede tener reportes con otro nombre o entre los que no dicen colonia. Eso no quiere decir que haya tenido agua.</p>
+
+      <h3 id="h-dias">Reportes por fecha de la lista</h3>
+      <ul class="keys" id="canales" aria-label="Canal"></ul>
+      <div class="chart" id="dias"></div>
+      <p class="note">La lista no dice qué fecha es; parece la del registro en el sistema. Los reportes del canal «SIAPA» aparecen solo en <span data-n="siapa_dias">9</span> de los <span data-n="dias">21</span> días, y <span data-n="siapa_hora_n">758</span> de ellos entre las 7 y las 8 de la noche, <span data-n="tanda_n">604</span> solo el 1 de noviembre, hasta <span data-n="tanda_min">30</span> en un minuto, lo que sugiere que se capturaron por tandas. Por eso esta gráfica muestra la fecha que trae la lista, no qué día faltó el agua.</p>
+      <details>
+        <summary>Ver la tabla por día</summary>
+        <div class="scroll"><table class="datos" id="tabla-dias"><caption>Reportes por fecha de la lista y canal</caption></table></div>
+      </details>
+
+      <h3 id="h-estatus">Estatus en la lista</h3>
+      <ul class="bars" id="estatus"></ul>
+      <p class="note">Es el estatus que trae la lista, que no dice en qué fecha se tomó. «Concluido» o «Resuelto» no dicen si el agua regresó ni cuándo.</p>
+
+      <h3 id="h-origen">Por dónde llegaron</h3>
+      <ul class="bars" id="origen"></ul>
+      <p class="note">Así vienen en la columna «Origen» de la lista, que no explica cada canal.</p>
+
+      <h3 id="h-zona">Por zona de la rotación</h3>
+      <ul class="bars" id="zonas"></ul>
+      <p class="note">Solo los <span data-n="en_mapa">5,986</span> reportes de colonias que están en el mapa del SIAPA, con la zona que ese mapa les da. Casi todas las colonias de Zapopan a las que el mapa del SIAPA da zona son de la zona 6 (210 de 227).</p>
+
+      <h3 id="h-colonias">Las 20 colonias con más reportes</h3>
+      <ul class="bars" id="top"></ul>
+      <details id="todas">
+        <summary>Ver todas las colonias (<span data-n="colonias">306</span>)</summary>
+        <label class="filtro-l"><span class="note">Buscar una colonia</span><br><input class="filtro" id="filtro" type="search" autocomplete="off" placeholder="Por ejemplo, Ciudad Granja"></label>
+        <div class="scroll"><table class="datos" id="tabla-colonias"><caption>Reportes por colonia, como vienen escritas en la lista</caption></table></div>
+      </details>
+
+      <h3 id="h-ojo">Ten en cuenta</h3>
+      <ul class="plain">
+        <li><strong>Solo es Zapopan.</strong> Es lo que respondió el Gobierno de Zapopan a nuestra solicitud. Guadalajara, Tlaquepaque y Tonalá no están aquí, así que esta lista no compara municipios.</li>
+        <li><strong>Un reporte no es una casa ni una colonia entera.</strong> Una casa puede reportar varias veces, y la lista no dice cuántas casas se quedaron sin agua. Que una colonia tenga más reportes quiere decir que ahí se reportó más, no que estuvo peor que otra.</li>
+        <li><strong>Los nombres de colonia vienen como los escribió el sistema.</strong> Los unimos al mapa del SIAPA por nombre, sin importar acentos ni mayúsculas, y unimos a mano <span data-n="alias">28</span> nombres escritos de otra forma, como «CHAPLITA INN» o «BRISAS DE LA PIMAVERA»; la tabla muestra cómo venía cada uno. Si un nombre está en varias colonias del mapa, se pintan todas.</li>
+        <li><strong>La lista llegó en PDF y con la ubicación tachada.</strong> La Coordinación General de Cercanía Ciudadana dijo que la mandaría en Excel al correo transparencia@zapopan.gob.mx; a nosotros nos llegó un PDF de 166 páginas con la columna «Ubicacion» tachada. Lo pasamos a CSV.</li>
+      </ul>
+      <blockquote class="cita">«un total de 9,828 reportes por falta de agua, con corte al 04 de noviembre de la presente anualidad, mismos que fueron recibidos por los distintos mecanismos de reporte»<cite>Oficio 11000000/CER.CIU/2026/0878: <a href="/datos/zapopan-respuesta-140292426004981.pdf#page=5">página 5</a> · <a href="/datos/zapopan-respuesta-140292426004981.pdf">la respuesta completa</a> (PDF, 166 páginas, 4 MB) · <a href="/datos/zapopan-reportes.csv">la lista en CSV</a> (nuestra transcripción, un reporte por fila)</cite></blockquote>
+    </section>
+
+    <section aria-labelledby="quien">
+      <h2 id="quien" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#search"/></svg></span>¿Quién tiene los registros?</h2>
+      <p>Cada oficina a la que llegaron nuestras preguntas señala a otra:</p>
+      <ol class="cronologia">
+        <li><span class="dia">Transparencia</span><p>El 5 de noviembre, la Dirección de Transparencia de Zapopan turnó parte de nuestras solicitudes a Protección Civil y Bomberos, un organismo aparte del Ayuntamiento.<span class="quien">Oficios 02050000/2026/7653 a 7658</span></p></li>
+        <li><span class="dia">Centro de operaciones</span><p>«esta Dirección se hace cargo de la ejecución del programa del abastecimiento de Agua en nuestro municipio, sin embargo toda información oficial es administrada por la Dirección de Planificación.»<span class="quien">Protección Civil y Bomberos, oficio del 10 de noviembre en la respuesta UT-089/2026, <a href="/datos/pcyb-respuesta-ut-089-2026.pdf#page=8">p. 8</a></span></p></li>
+        <li><span class="dia">Planificación</span><p>Los partes diarios no existen «tal cual como se solicita»; lo que hay son «registros de seguimiento del operativo», de los que entregó una gráfica, no los registros.<span class="quien">Oficio 011300/2026/0150, <a href="/datos/pcyb-respuesta-ut-091-2026.pdf#page=4">p. 4</a></span></p></li>
+        <li><span class="dia">Planificación</span><p>La lista de las 75 «fue generada por la Coordinación de Cercanía Ciudadana»; la calendarización, quien la tendría «es el SIAPA».<span class="quien">Oficio 011300/2026/0148, <a href="/datos/pcyb-respuesta-ut-089-2026.pdf#page=5">pp. 5</a> y <a href="/datos/pcyb-respuesta-ut-089-2026.pdf#page=6">6</a></span></p></li>
+        <li><span class="dia">Cercanía Ciudadana</span><p>Sobre las 211 y las 75: «no se localizó información», por no ser funciones de esa Coordinación.<span class="quien">Oficio 11000000/CER.CIU/2026/0907, <a href="/datos/zapopan-respuesta-140292426004980.pdf#page=6">p. 6</a></span></p></li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="cronologia">
+      <h2 id="cronologia" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#calendar"/></svg></span>Día por día</h2>
+      <ol class="cronologia">
+        <li><time datetime="2026-10-13">13 de octubre</time><p>Mesa de trabajo con dependencias municipales; según la Jefatura de Gabinete, sus acuerdos «se asentaron en la minuta correspondiente» y fueron la base del operativo.<span class="quien"><a href="/datos/zapopan-respuesta-140292426004980.pdf#page=4">Oficio 02050000/2026/7941, p. 4</a></span></p></li>
+        <li><time datetime="2026-10-15">15 de octubre</time><p>Primer día de la gráfica de Protección Civil: 5 pipas. Primer día de la lista de reportes y del primer ticket de combustible.<span class="quien">Oficio 011300/2026/0150; oficio 0878; oficio 011207/2026/0243</span></p></li>
+        <li><time datetime="2026-10-17">17 de octubre</time><p>«El operativo se implementó el pasado 17 de octubre por instrucción del Presidente Municipal de Zapopan», según el boletín del 27.<span class="quien">Boletín del 27 de octubre</span></p></li>
+        <li><time datetime="2026-10-19">19 de octubre</time><p>Boletín: «45 pipas y 100 cisternas comunitarias». La gráfica registra 11 pipas y 270,000 litros ese día.<span class="quien">Boletín del 19 de octubre; oficio 0150</span></p></li>
+        <li><time datetime="2026-10-20">20 de octubre</time><p>Primeras escuelas en la tabla de inmuebles atendidos.<span class="quien">Oficio 011300/2026/0148</span></p></li>
+        <li><time datetime="2026-10-24">24 de octubre</time><p>La gráfica pasa de la atención de reportes generalizados a la atención por polígonos.<span class="quien">Oficio 0150</span></p></li>
+        <li><time datetime="2026-10-25">25 de octubre</time><p>Primer día de la gráfica con 840,000 litros: 25 pipas.<span class="quien">Oficio 0150</span></p></li>
+        <li><time datetime="2026-10-27">27 de octubre</time><p>Boletín: «840 mil litros diarios» y «un estado de fuerza de 20 pipas». La gráfica registra 34 pipas, su máximo, y 710,000 litros.<span class="quien">Boletín del 27 de octubre; oficio 0150</span></p></li>
+        <li><time datetime="2026-11-03">3 de noviembre</time><p>«36 pipas en servicio», según el oficio 0150; su gráfica marca 31 y 1,010,000 litros. Esa noche presentamos las siete solicitudes a Zapopan.<span class="quien">Oficio 0150; folios 140292426004978 a 140292426004984</span></p></li>
+        <li><time datetime="2026-11-04">4 de noviembre</time><p>Corte de la lista de reportes: 9,828.<span class="quien">Oficio 0878</span></p></li>
+        <li><time datetime="2026-11-06">6 de noviembre</time><p>Fecha de los oficios de Cercanía Ciudadana con la lista de 49 cisternas (0876) y la de reportes (0878).</p></li>
+        <li><time datetime="2026-11-09">9 a 11 de noviembre</time><p>Fechas de cinco de las diez escuelas y del centro comunitario en la tabla de inmuebles atendidos.<span class="quien">Oficio 0148</span></p></li>
+        <li><time datetime="2026-11-12">12 de noviembre</time><p>Fecha de los oficios 0148 (las 75, los inmuebles, el calendario) y 0150 (la gráfica, las 36 pipas) de Planificación de Protección Civil.</p></li>
+        <li><time datetime="2026-11-17">17 de noviembre</time><p>Zapopan y Protección Civil entregan las respuestas. Cercanía Ciudadana responde que sobre las 75 «no se localizó información» (oficio 0907).</p></li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="falta">
+      <h2 id="falta" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#pen-line"/></svg></span>Lo que falta</h2>
+      <p>Lo que diría cuántas pipas hubo, a dónde fueron y por qué, no lo han entregado. Al 24 de noviembre de 2026:</p>
+      <table class="ausencias">
+        <thead><tr><th>Documento</th><th>Lo que dicen las autoridades</th><th>Estado</th></tr></thead>
+        <tbody>
+          <tr><td>Partes diarios de pipas en servicio y litros repartidos</td><td>Protección Civil: «se determina la inexistencia de la información tal cual como se solicita».</td><td class="estado falta"><strong>No entregados</strong></td></tr>
+          <tr><td>Los registros de seguimiento de los que sale la gráfica</td><td>Protección Civil dice que la gráfica y la relación de pipas salen de ellos.</td><td class="estado falta"><strong>No entregados:</strong> solo la gráfica</td></tr>
+          <tr><td>Bitácoras del llenado de las cisternas</td><td>Cercanía Ciudadana: «no se localizaron».</td><td class="estado falta"><strong>No localizadas</strong></td></tr>
+          <tr><td>La minuta de la mesa del 13 de octubre</td><td>Jefatura de Gabinete, en la respuesta de Transparencia de Zapopan: los acuerdos «se asentaron en la minuta correspondiente».</td><td class="estado falta"><strong>No entregada</strong></td></tr>
+          <tr><td>Cómo se eligieron las 75 colonias</td><td>Protección Civil: la lista la hizo Cercanía. Cercanía: «no se localizó información».</td><td class="estado falta"><strong>No entregado</strong></td></tr>
+          <tr><td>Criterios de prioridad, calendarización y duración del operativo</td><td>Protección Civil: no es de su competencia; quien podría tenerlos «es el SIAPA».</td><td class="estado falta"><strong>No entregados</strong></td></tr>
+          <tr><td>Rutas y GPS de las pipas</td><td>Zapopan: esa información «es susceptible de clasificarse como reservada por conexidad», porque permitiría ubicar los pozos (<a href="/datos/zapopan-respuesta-140292426004982.pdf">oficio 7943</a>, p. 3). Protección Civil: «se sugiere que dicha información sea solicitada a las dependencias correspondientes en su carácter de resguardantes de las unidades que forman parte de este operativo» (<a href="/datos/pcyb-respuesta-ut-091-2026.pdf">UT-091</a>, p. 5).</td><td class="estado falta"><strong>No entregados</strong></td></tr>
+          <tr><td>Combustible de las demás pipas</td><td>Protección Civil entregó el de tres unidades.</td><td class="estado falta"><strong>No entregado</strong></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section aria-labelledby="cierre">
+      <h2 id="cierre" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#info"/></svg></span>Qué decimos y qué no</h2>
+      <ul class="plain">
+        <li><strong>No decimos que no hubo pipas.</strong> Las hubo: la propia gráfica de Protección Civil registra entre 5 y 34 al día. Decimos que sus documentos no llegan a las 45 que se anunciaron.</li>
+        <li><strong>Las cifras de las gráficas son nuestra lectura.</strong> Protección Civil entregó una imagen, no una tabla; leímos sus etiquetas y dejamos nuestras dudas en cada pie de gráfica y en el CSV.</li>
+        <li><strong>49 es lo que tiene la lista.</strong> Que una cisterna no esté en la lista no prueba que no exista.</li>
+        <li><strong>Zapopan llamó a esa logística una «primera fase».</strong> Su respuesta dice que las 45 pipas y las 100 cisternas eran una meta por «materializar»; el boletín dijo «contará con».</li>
+        <li><strong>Un reporte no es una casa.</strong> La lista de 9,828 dice dónde se reportó, no cuántas casas se quedaron sin agua.</li>
+      </ul>
+
+      <h3 id="fuentes">Fuentes</h3>
+      <ul class="plain">
+        <li>Boletines del Gobierno de Zapopan: <a href="https://www.zapopan.gob.mx/v3/noticias/zapopan-pone-en-marcha-operativo-de-suministro-de-agua-con-45-pipas-y-100-cisternas" rel="noopener">19 de octubre de 2026</a> y <a href="https://www.zapopan.gob.mx/v3/noticias/zapopan-refuerza-operativo-de-atencion-con-pipas-de-agua" rel="noopener">27 de octubre de 2026</a>.</li>
+        <li>Respuesta a la solicitud 140292426004978: oficio 02050000/2026/7939 de la Dirección de Transparencia y Buenas Prácticas, 17 de noviembre, y oficio 11000000/CER.CIU/2026/0876 de Cercanía Ciudadana, 6 de noviembre (la lista de 49 cisternas): <a href="/datos/zapopan-respuesta-140292426004978.pdf">PDF</a>.</li>
+        <li>Respuesta a la solicitud 140292426004980: oficio 02050000/2026/7941, 17 de noviembre, y oficio 11000000/CER.CIU/2026/0907 de Cercanía Ciudadana, 17 de noviembre: <a href="/datos/zapopan-respuesta-140292426004980.pdf">PDF</a>.</li>
+        <li>Respuesta a la solicitud 140292426004981: oficio 02050000/2026/7942, 17 de noviembre, y oficio 11000000/CER.CIU/2026/0878, 6 de noviembre (la lista de 9,828 reportes): <a href="/datos/zapopan-respuesta-140292426004981.pdf">PDF</a> · <a href="/datos/zapopan-reportes.csv">CSV</a>.</li>
+        <li>Respuesta a la solicitud 140292426004982: oficio 02050000/2026/7943, 17 de noviembre, con el oficio 06040000/2026/1759 de la Dirección de Gestión Integral del Agua y Drenaje, 6 de noviembre (rutas y GPS): <a href="/datos/zapopan-respuesta-140292426004982.pdf">PDF</a>.</li>
+        <li>Protección Civil y Bomberos de Zapopan, respuesta UT-089/2026 (solicitud turnada desde la 140292426004980), 17 de noviembre, con el oficio 011300/2026/0148 de su Dirección de Planificación, 12 de noviembre: <a href="/datos/pcyb-respuesta-ut-089-2026.pdf">PDF</a>.</li>
+        <li>Protección Civil y Bomberos de Zapopan, respuesta UT-091/2026 (turnada desde la 140292426004982), 17 de noviembre, con el oficio 011300/2026/0150, 12 de noviembre (la gráfica de pipas y litros): <a href="/datos/pcyb-respuesta-ut-091-2026.pdf">PDF</a> · <a href="/datos/zapopan-pipas-por-dia.csv">CSV</a>.</li>
+        <li>Protección Civil y Bomberos de Zapopan, respuesta UT-093/2026 (turnada desde la 140292426004984), con el oficio 011207/2026/0243 de su Dirección de Logística, 10 de noviembre (bitácoras y tickets de combustible). No la publicamos completa: trae datos del personal.</li>
+        <li>Colonias y zonas: <a href="https://rotaciondeserviciosiapa.jalisco.gob.mx/" rel="noopener">mapa de la rotación del SIAPA</a>. Calles: <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>.</li>
+      </ul>
+      <p class="note">En los PDF que publicamos difuminamos los nombres escritos a mano en los sellos de «Recibió». Los recortes son de los documentos tal como los entregaron; el resaltado, los círculos y las cifras en azul son nuestros. ¿Ves un error? Escríbenos a <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>. Otros municipios: <a href="/nocuadra">No cuadra</a>.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con los gobiernos de Jalisco, Guadalajara, Zapopan, Tlaquepaque, Tonalá o Tlajomulco.</p>
+    <p><a href="/">Inicio</a> · <a href="/reportes">¿Hay agua?</a> · <a href="/cisternas">Cisternas comunitarias</a> · <a href="/pipas">Cómo pedir pipa</a> · <a href="/transparencia">Transparencia</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
+  </footer>
+</div>
+<script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script src="/mapa.js"></script>
+<script>
+// Agua GDL's reading of the chart annexed to oficio 011300/2026/0150 (UT-091/2026, PDF p. 4), 15 October to
+// 3 November 2026: pipas and litres per jornada, the same numbers as /datos/zapopan-pipas-por-dia.csv.
+const PIPAS = [5, 12, 7, 7, 11, 11, 13, 13, 15, 21, 25, 33, 34, 32, 31, 32, 30, 30, 27, 31];
+const LITROS = [68000, 42000, 220000, 220000, 270000, 360000, 330000, 450000, 450000, 600000, 840000, 680000, 710000, 600000, 820000, 760000, 760000, 800000, 1000000, 1010000];
+const DUDA = {
+  0: "litros: 68,000 u 88,000 (la etiqueta no se distingue bien)",
+  1: "pipas: la etiqueta 12 puede ser del 17 de octubre",
+  2: "pipas: la etiqueta 7 puede ser del 16 de octubre",
+  5: "litros: 360,000 o 350,000 (la etiqueta no se distingue bien)",
+};
+
+(() => {
+  const NS = "http://www.w3.org/2000/svg";
+  const DIA0 = Date.UTC(2026, 9, 15), POLIGONOS = 9;
+  const fmt = (n) => n.toLocaleString("es-MX");
+  const fecha = (i) => new Date(DIA0 + i * 864e5);
+  const largo = (i) => fecha(i).toLocaleDateString("es-MX", { timeZone: "UTC", weekday: "long", day: "numeric", month: "long" });
+  const corto = (i) => `${fecha(i).getUTCDate()} ${fecha(i).getUTCMonth() === 9 ? "oct." : "nov."}`;
+  const etapa = (i) => i < POLIGONOS ? "Atención de reportes generalizados" : "Atención por polígonos";
+  const el = (name, attrs = {}, text) => {
+    const e = document.createElementNS(NS, name);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    return e;
+  };
+
+  function serie(caja, o) {
+    if (!caja) return;
+    const V = o.V;
+    const tip = document.createElement("div");
+    tip.className = "tip";
+    tip.hidden = true;
+    let actual = o.inicio, geo = null;
+
+    function muestra(i) {
+      if (!geo) return;
+      actual = i;
+      for (const g of geo.cols) g.classList.toggle("on", +g.dataset.i === i);
+      tip.innerHTML = `<b>${largo(i)}</b>${o.tip(V[i])}<br>${etapa(i)}${DUDA[i] ? `<br><small>Lectura dudosa, ${DUDA[i]}</small>` : ""}`;
+      tip.hidden = false;
+      const cx = geo.x(i) + geo.ancho / 2, cy = geo.y(V[i]);
+      const w = tip.offsetWidth, izq = cx + 14 + w > geo.W ? cx - 14 - w : cx + 14;
+      tip.style.left = `${Math.max(0, izq)}px`;
+      tip.style.top = `${Math.max(0, Math.min(cy - 30, geo.H - tip.offsetHeight - geo.m.b))}px`;
+    }
+    const oculta = () => { tip.hidden = true; if (geo) for (const g of geo.cols) g.classList.remove("on"); };
+
+    function dibuja() {
+      const W = Math.max(300, Math.round(caja.clientWidth)), angosto = W < 560;
+      const H = angosto ? 240 : 300, m = { l: o.izquierda, r: 6, t: 24, b: 24 };
+      const pw = W - m.l - m.r, ph = H - m.t - m.b, paso = pw / V.length;
+      const hueco = paso >= 6 ? Math.min(6, Math.round(paso * 0.2)) : 1, ancho = Math.max(1, paso - hueco);
+      const y = (v) => m.t + ph - (v / o.tope) * ph;
+      const x = (i) => m.l + i * paso + hueco / 2;
+      const centro = (i) => x(i) + ancho / 2;
+      const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: "img", tabindex: 0, "aria-label": o.aria });
+      svg.append(el("text", { x: 0, y: 12 }, o.unidad));
+      for (let t = 0; t <= o.tope; t += o.cada) {
+        svg.append(el("line", { class: t ? "gl" : "base", x1: m.l, x2: W - m.r, y1: y(t), y2: y(t) }));
+        svg.append(el("text", { x: m.l - 6, y: y(t) + 4, "text-anchor": "end" }, o.eje(t)));
+      }
+      const xs = angosto ? [0, 9, 19] : [0, 5, 9, 14, 19];
+      for (const i of xs) {
+        const ancla = i === 0 ? "start" : i === V.length - 1 ? "end" : "middle";
+        svg.append(el("text", { x: ancla === "start" ? x(i) : ancla === "end" ? x(i) + ancho : centro(i), y: H - 6, "text-anchor": ancla }, corto(i)));
+      }
+      const xf = m.l + POLIGONOS * paso;
+      svg.append(el("line", { class: "fase", x1: xf, x2: xf, y1: m.t - 6, y2: m.t + ph }));
+      if (!angosto) {
+        svg.append(el("text", { class: "fase-t", x: xf - 6, y: 12, "text-anchor": "end" }, "← Reportes generalizados"));
+        svg.append(el("text", { class: "fase-t", x: xf + 6, y: 12 }, "Por polígonos →"));
+      }
+      const cols = [];
+      V.forEach((v, i) => {
+        const g = el("g", { class: "col", "data-i": i });
+        g.append(el("rect", { class: "hit", x: m.l + i * paso, y: m.t, width: paso, height: ph, fill: "transparent" }));
+        const top = y(v), h = m.t + ph - top, r = Math.min(4, ancho / 2, h), x0 = x(i);
+        g.append(el("path", { class: o.clase(v),
+          d: `M${x0},${top + h}V${top + r}Q${x0},${top} ${x0 + r},${top}H${x0 + ancho - r}Q${x0 + ancho},${top} ${x0 + ancho},${top + r}V${top + h}Z` }));
+        svg.append(g);
+        cols.push(g);
+      });
+      svg.append(el("line", { class: "limite", x1: m.l, x2: W - m.r, y1: y(o.limite), y2: y(o.limite) }));
+      svg.append(el("text", { class: "limite-t", x: m.l + 4, y: y(o.limite) - 6 }, o.limiteT(angosto)));
+      for (const n of o.notas) {
+        const cx = centro(n.i), ancla = n.ancla || "middle";
+        svg.append(el("line", { class: "nota-l", x1: cx, x2: cx, y1: y(V[n.i]) - 3, y2: y(n.en) + 4 }));
+        svg.append(el("text", { class: "nota", x: ancla === "end" ? cx + ancho / 2 : cx, y: y(n.en), "text-anchor": ancla }, n.texto(angosto)));
+      }
+
+      const indice = (ev) => {
+        const r = svg.getBoundingClientRect();
+        const i = Math.floor(((ev.clientX - r.left) * (W / r.width) - m.l) / paso);
+        return i >= 0 && i < V.length ? i : -1;
+      };
+      svg.addEventListener("pointermove", (ev) => { const i = indice(ev); if (i < 0) oculta(); else muestra(i); });
+      svg.addEventListener("pointerleave", oculta);
+      svg.addEventListener("focus", () => muestra(actual));
+      svg.addEventListener("blur", oculta);
+      svg.addEventListener("keydown", (ev) => {
+        const salto = { ArrowLeft: -1, ArrowRight: 1, Home: -V.length, End: V.length }[ev.key];
+        if (ev.key === "Escape") return oculta();
+        if (salto == null) return;
+        ev.preventDefault();
+        muestra(Math.max(0, Math.min(V.length - 1, actual + salto)));
+      });
+      caja.replaceChildren(svg, tip);
+      geo = { W, H, m, x, y, ancho, cols };
+    }
+
+    dibuja();
+    let ancho = caja.clientWidth;
+    new ResizeObserver(() => { if (Math.abs(caja.clientWidth - ancho) > 1) { ancho = caja.clientWidth; dibuja(); } }).observe(caja);
+  }
+
+  serie(document.getElementById("serie-pipas"), {
+    V: PIPAS, tope: 50, cada: 10, limite: 45, izquierda: 26, unidad: "pipas", inicio: 12,
+    eje: String, clase: () => "uno",
+    tip: (v) => `${v} pipas<br>${45 - v} menos que las 45 anunciadas`,
+    limiteT: (a) => a ? "Anunciadas: 45" : "Anunciadas el 19 de octubre: 45",
+    notas: [
+      { i: 4, en: 24, texto: (a) => a ? "19 oct.: 11" : "19 oct., día del boletín: 11" },
+      { i: 12, en: 40, texto: () => "27 oct.: 34" },
+    ],
+    aria: "Gráfica de barras de las pipas por jornada en Zapopan, del 15 de octubre al 3 de noviembre de 2026, según Protección Civil: de 5 a 34, nunca las 45 anunciadas; 11 el 19 de octubre y 34 el 27. Con las flechas se recorren los días.",
+  });
+
+  serie(document.getElementById("serie-litros"), {
+    V: LITROS, tope: 1200000, cada: 200000, limite: 840000, izquierda: 38, unidad: "miles de litros", inicio: 10,
+    eje: (t) => fmt(t / 1000), clase: (v) => v >= 840000 ? "sobre" : "bajo",
+    tip: (v) => `${fmt(v)} litros<br>${v >= 840000 ? "840 mil o más" : `${fmt(840000 - v)} menos que 840 mil`}`,
+    limiteT: (a) => a ? "840 mil" : "840 mil «diarios», boletín del 27 de octubre",
+    notas: [
+      { i: 10, en: 960000, texto: () => "25 oct.: 840,000" },
+      { i: 19, en: 1120000, ancla: "end", texto: () => "3 nov.: 1,010,000" },
+    ],
+    aria: "Gráfica de barras de los litros distribuidos por jornada en Zapopan, del 15 de octubre al 3 de noviembre de 2026, según Protección Civil: llegan a 840,000 o más solo el 25 de octubre, el 2 y el 3 de noviembre. Con las flechas se recorren los días.",
+  });
+
+  const tabla = `<table><thead><tr><th>Día</th><th>Pipas</th><th>Litros</th><th>Lectura dudosa</th></tr></thead><tbody>${
+    PIPAS.map((p, i) => `<tr><td>${largo(i)}</td><td class="v">${p}</td><td class="v">${fmt(LITROS[i])}</td><td>${DUDA[i] || ""}</td></tr>`).join("")}</tbody></table>`;
+  for (const id of ["tabla-pipas", "tabla-litros"]) { const t = document.getElementById(id); if (t) t.innerHTML = tabla; }
+})();
+
+(() => {
+  "use strict";
+  const $ = (id) => document.getElementById(id);
+  const fmt = (n) => n.toLocaleString("es-MX");
+  const pct = (a, b) => Math.round((100 * a) / b);
+  const status = $("estado");
+  const el = (tag, attrs, text) => {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs || {})) n.setAttribute(k, v);
+    if (text != null) n.textContent = text;
+    return n;
+  };
+  const NS = "http://www.w3.org/2000/svg";
+  const svgEl = (tag, attrs) => {
+    const n = document.createElementNS(NS, tag);
+    for (const [k, v] of Object.entries(attrs || {})) n.setAttribute(k, v);
+    return n;
+  };
+  const CANAL = { "24/7": "24/7", SIAPA: "SIAPA", Otros: "Otros: Visores Zapopan, GuaZap, Coordinación y Agentes de Cercanía Ciudadana, Dirección de Contacto Ciudadano, Participación Ciudadana y Delegaciones" };
+  const SERIE = { "24/7": "var(--s1)", SIAPA: "var(--s2)", Otros: "var(--s3)" };
+  const fecha = (iso, opts) => new Date(iso + "T12:00:00Z").toLocaleDateString("es-MX", { timeZone: "UTC", ...opts });
+
+  // Five classes of reports per colonia, one blue ramp; dark mode runs it the other way round.
+  const CORTES = [1, 5, 25, 100, 250];
+  const RAMPA = { light: ["#b7d3f6", "#6da7ec", "#2a78d6", "#1c5cab", "#0d366b"], dark: ["#184f95", "#256abf", "#3987e5", "#6da7ec", "#b7d3f6"] };
+  const clase = (n) => CORTES.reduce((c, x, i) => (n >= x ? i : c), 0);
+  const rampa = () => RAMPA[aguaDark() ? "dark" : "light"];
+  const rango = (i) => i === CORTES.length - 1 ? `${CORTES[i]} o más` : `${CORTES[i]} a ${CORTES[i + 1] - 1}`;
+
+  function numeros(d) {
+    const enProceso = (d.estatus.find(([e]) => e === "En proceso") || [, 0])[1];
+    const v = {
+      total: d.total, dias: d.dias.length, en_proceso: enProceso, en_proceso_pct: pct(enProceso, d.total),
+      colonias_mapa: d.colonias.filter((c) => c.clave).length, colonias: d.colonias.length,
+      sin_colonia: d.sin_colonia, en_mapa: d.en_mapa, con_colonia: d.total - d.sin_colonia, alias: d.alias,
+      siapa_dias: d.canal_dias.SIAPA, siapa_hora_n: d.canal_hora.SIAPA[1], tanda_n: d.tanda.n, tanda_min: d.tanda.max_minuto,
+    };
+    for (const n of document.querySelectorAll("[data-n]")) if (v[n.dataset.n] != null) n.textContent = fmt(v[n.dataset.n]);
+  }
+
+  function barras(ul, filas, total) {
+    const max = Math.max(...filas.map((f) => f[1]));
+    ul.replaceChildren(...filas.map(([nombre, n]) => {
+      const li = el("li");
+      const t = el("span", { class: "bt" });
+      t.append(el("span", { class: "bf", style: `width:${((100 * n) / max).toFixed(1)}%` }));
+      const v = el("span", { class: "bv" }, fmt(n) + " ");
+      v.append(el("small", {}, `${pct(n, total)} %`));
+      li.append(el("span", { class: "bl" }, nombre), t, v);
+      return li;
+    }));
+  }
+
+  function leyendaCanales(d) {
+    $("canales").replaceChildren(...d.canales.map((c) => {
+      const li = el("li");
+      li.append(el("span", { class: "sw", style: `--sw:${SERIE[c]}` }), document.createTextNode(CANAL[c]));
+      return li;
+    }));
+  }
+
+  // The round step whose top gridline sits closest above the maximum, with at most six steps.
+  function paso(max) {
+    if (!(max > 0)) return 1;
+    const mag = 10 ** Math.floor(Math.log10(max / 6));
+    const pasos = [1, 2, 2.5, 5, 10, 20].map((m) => m * mag).filter((s) => Math.ceil(max / s) <= 6);
+    return pasos.reduce((a, s) => (Math.ceil(max / s) * s < Math.ceil(max / a) * a ? s : a));
+  }
+  // A bar segment with its top corners rounded when it ends the stack.
+  const seg = (x, y, w, h, r) => r && h > r
+    ? `M${x},${y + h}V${y + r}Q${x},${y} ${x + r},${y}H${x + w - r}Q${x + w},${y} ${x + w},${y + r}V${y + h}Z`
+    : `M${x},${y}h${w}v${h}h${-w}Z`;
+
+  function graficaDias(d) {
+    const box = $("dias");
+    const W = Math.max(300, Math.round(box.clientWidth)), H = W < 560 ? 230 : 290;
+    const m = { t: 12, r: 6, b: 28, l: 44 };
+    const tot = (x) => d.canales.reduce((s, c) => s + x[c], 0);
+    const st = paso(Math.max(...d.dias.map(tot)));
+    const top = Math.ceil(Math.max(...d.dias.map(tot)) / st) * st;
+    const iw = W - m.l - m.r, ih = H - m.t - m.b, bw = iw / d.dias.length, gap = Math.max(2, bw * 0.22);
+    const y = (v) => m.t + ih - (v / top) * ih;
+    const svg = svgEl("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Reportes por fecha de la lista, apilados por canal; la tabla por día tiene los mismos números" });
+    for (let v = 0; v <= top; v += st) {
+      svg.append(svgEl("line", { class: v ? "gl" : "base", x1: m.l, x2: W - m.r, y1: y(v), y2: y(v) }));
+      const t = svgEl("text", { x: m.l - 6, y: y(v) + 4, "text-anchor": "end" });
+      t.textContent = fmt(v);
+      svg.append(t);
+    }
+    const every = W < 560 ? 4 : 2;
+    const tip = box.querySelector(".tip") || el("div", { class: "tip", hidden: "" });
+    d.dias.forEach((x, i) => {
+      const g = svgEl("g", { class: "col" });
+      const x0 = m.l + i * bw + gap / 2, w = bw - gap;
+      g.append(svgEl("rect", { class: "hit", x: m.l + i * bw, y: m.t, width: bw, height: ih, fill: "transparent" }));
+      let acc = 0;
+      const last = [...d.canales].reverse().find((c) => x[c] > 0);
+      for (const c of d.canales) {
+        if (!x[c]) continue;
+        const y1 = y(acc + x[c]), h = y(acc) - y1 - (c === last ? 0 : 2);
+        g.append(svgEl("path", { d: seg(x0, y1, w, Math.max(0, h), c === last ? Math.min(4, w / 2) : 0), fill: SERIE[c] }));
+        acc += x[c];
+      }
+      const show = () => {
+        tip.replaceChildren(el("b", {}, fecha(x.dia, { weekday: "long", day: "numeric", month: "long" })));
+        const r0 = el("div", { class: "r" });
+        r0.append(el("span", {}, "Total"), el("span", {}, fmt(tot(x))));
+        tip.append(r0);
+        for (const c of [...d.canales].reverse()) {
+          const r = el("div", { class: "r" }), k = el("span");
+          k.append(el("span", { class: "sw", style: `--sw:${SERIE[c]}` }), document.createTextNode(c));
+          r.append(k, el("span", {}, fmt(x[c])));
+          tip.append(r);
+        }
+        tip.hidden = false;
+        const cx = ((m.l + i * bw + bw / 2) / W) * box.clientWidth;
+        const tw = tip.offsetWidth;
+        tip.style.left = Math.min(Math.max(0, cx - tw / 2), box.clientWidth - tw) + "px";
+        tip.style.top = Math.max(0, (y(tot(x)) / H) * box.clientHeight - tip.offsetHeight - 10) + "px";
+        for (const o of svg.querySelectorAll(".col.on")) o.classList.remove("on");
+        g.classList.add("on");
+      };
+      g.addEventListener("pointerenter", show);
+      g.addEventListener("click", show);
+      svg.append(g);
+    });
+    // Day labels: the first, the last and each month's first day, then every few days where they fit.
+    const n = d.dias.length, puestas = [];
+    const mes = d.dias.flatMap((x, i) => (x.dia.endsWith("-01") ? [i] : []));
+    for (const i of [0, n - 1, ...mes, ...d.dias.keys()]) {
+      if (puestas.some((p) => p.i === i) || (i % every && i !== n - 1 && !mes.includes(i))) continue;
+      const x = d.dias[i], day = Number(x.dia.slice(8));
+      const s = i === 0 || day === 1 ? fecha(x.dia, { day: "numeric", month: "short" }).replace(".", "") : String(day);
+      const cx = m.l + i * bw + bw / 2, half = s.length * 3.4 + 4;
+      if (puestas.some((p) => Math.abs(p.cx - cx) < p.half + half)) continue;
+      puestas.push({ i, cx, half });
+      const t = svgEl("text", { x: cx, y: H - 8, "text-anchor": "middle" });
+      t.textContent = s;
+      svg.append(t);
+    }
+    // A lifted finger leaves the chart too: on touch, keep the tapped day's numbers open.
+    svg.addEventListener("pointerleave", (e) => {
+      if (e.pointerType === "touch") return;
+      tip.hidden = true;
+      for (const o of svg.querySelectorAll(".col.on")) o.classList.remove("on");
+    });
+    box.replaceChildren(svg, tip);
+  }
+
+  function tablaDias(d) {
+    const t = $("tabla-dias");
+    const head = el("tr");
+    head.append(el("th", { scope: "col" }, "Día"), ...d.canales.map((c) => el("th", { scope: "col", class: "n" }, c)), el("th", { scope: "col", class: "n" }, "Total"));
+    const thead = el("thead"); thead.append(head);
+    const tbody = el("tbody");
+    for (const x of d.dias) {
+      const tr = el("tr");
+      tr.append(el("td", {}, fecha(x.dia, { weekday: "short", day: "numeric", month: "short" })), ...d.canales.map((c) => el("td", { class: "n" }, fmt(x[c]))), el("td", { class: "n" }, fmt(d.canales.reduce((s, c) => s + x[c], 0))));
+      tbody.append(tr);
+    }
+    t.append(thead, tbody);
+  }
+
+  const zonaTexto = (zs) => zs.length ? (zs.length > 1 ? "Zonas " : "Zona ") + zs.join(" y ") : "Sin zona en el mapa";
+
+  function tablaColonias(d) {
+    const t = $("tabla-colonias");
+    const head = el("tr");
+    head.append(el("th", { scope: "col" }, "Colonia"), el("th", { scope: "col", class: "n" }, "Reportes"), el("th", { scope: "col", class: "n" }, "«En proceso»"), el("th", { scope: "col" }, "En el mapa del SIAPA"));
+    const thead = el("thead"); thead.append(head);
+    const tbody = el("tbody");
+    const filas = d.colonias.map((c) => {
+      const tr = el("tr");
+      const td = el("td", {}, c.colonia);
+      const otras = c.escrito.filter((e) => e !== c.colonia);
+      if (otras.length) td.append(el("span", { class: "sub" }, "En la lista: " + c.escrito.join(" · ")));
+      const mapa = !c.clave ? "No está" : c.poligonos < 2 ? zonaTexto(c.zonas)
+        : `${c.poligonos} colonias con este nombre: ` + c.zonas_poligonos.map((zs) => zonaTexto(zs).toLowerCase()).join(" · ");
+      tr.append(td, el("td", { class: "n" }, fmt(c.reportes)), el("td", { class: "n" }, fmt(c.en_proceso)), el("td", {}, mapa));
+      tbody.append(tr);
+      return [tr, window.aguaMapa.fold([c.colonia, ...c.escrito].join(" | "))];
+    });
+    t.append(thead, tbody);
+    $("filtro").addEventListener("input", (e) => {
+      const q = window.aguaMapa.fold(e.target.value);
+      for (const [tr, k] of filas) tr.hidden = !!q && !k.includes(q);
+    });
+  }
+
+  function mapa(d) {
+    const M = window.aguaMapa;
+    const porClave = new Map(d.colonias.filter((c) => c.clave).map((c) => [c.clave, c]));
+    const map = L.map("mapa", { preferCanvas: true, zoomSnap: 0.25, scrollWheelZoom: false });
+    M.tiles(L, map);
+    map.setView([20.68, -103.42], 12);
+    if (M.pinch) M.pinch(map);
+    $("clases").replaceChildren(...CORTES.map((_, i) => {
+      const li = el("li");
+      li.append(el("span", { class: "sw", "data-clase": i }), document.createTextNode(rango(i)));
+      return li;
+    }), (() => { const li = el("li"); li.append(el("span", { class: "sw none" }), document.createTextNode("Ningún reporte la nombra así")); return li; })());
+    const pintaLeyenda = () => { for (const s of $("clases").querySelectorAll("[data-clase]")) s.style.setProperty("--sw", rampa()[s.dataset.clase]); };
+    pintaLeyenda();
+    const estilo = (f) => {
+      const c = porClave.get(M.fold(f.properties.n));
+      if (!c) return { color: aguaDark() ? "#6b7aa6" : "#8a94ad", weight: 0.6, opacity: 0.7, fill: false };
+      return { color: aguaDark() ? "#0c1328" : "#ffffff", weight: 0.8, opacity: 0.9, fillColor: rampa()[clase(c.reportes)], fillOpacity: 0.82 };
+    };
+    const texto = (f) => {
+      const c = porClave.get(M.fold(f.properties.n));
+      const wrap = el("div");
+      wrap.append(document.createTextNode(f.properties.n));
+      const lines = c
+        ? [`${fmt(c.reportes)} ${c.reportes === 1 ? "reporte" : "reportes"} · ${fmt(c.en_proceso)} «En proceso»`, zonaTexto([...M.zones(f.properties).main].sort((a, b) => a - b))]
+        : ["Ningún reporte la nombra así", "(no quiere decir que haya tenido agua)"];
+      if (c && c.poligonos > 1) lines.push(`El mapa tiene ${c.poligonos} colonias con este nombre en Zapopan y la lista no dice cuál, así que se pintan todas.`);
+      for (const l of lines) wrap.append(el("span", { class: "sub" }, l));
+      return wrap;
+    };
+    const touch = matchMedia("(hover: none)").matches;
+    M.load().then(({ colonias }) => {
+      const zap = colonias.filter((f) => (f.properties.m || "").includes("Zapopan"));
+      const capa = L.geoJSON(zap, {
+        style: estilo,
+        onEachFeature: (f, l) => touch ? l.bindPopup(() => texto(f)) : l.bindTooltip(() => texto(f), { sticky: true, className: "map-label", direction: "top" }),
+      }).addTo(map);
+      const conReportes = L.featureGroup(capa.getLayers().filter((l) => porClave.has(M.fold(l.feature.properties.n))));
+      map.fitBounds(conReportes.getBounds(), { padding: [12, 12] });
+      document.addEventListener("tema", () => { capa.setStyle(estilo); pintaLeyenda(); });
+    }).catch(() => { status.textContent = "No pudimos cargar el mapa. Intenta de nuevo en unos minutos."; });
+  }
+
+  fetch("/datos/zapopan-reportes.json")
+    .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then((d) => {
+      status.textContent = "";
+      // Each part on its own, so one that fails (say mapa.js didn't load) doesn't take the rest with it.
+      const partes = [numeros, leyendaCanales, graficaDias, tablaDias,
+        () => barras($("estatus"), d.estatus, d.total),
+        () => barras($("origen"), d.origen, d.total),
+        () => barras($("zonas"), d.por_zona.map(([z, n]) => [z === "sin zona" ? "Sin zona en el mapa" : z === "varias" ? "Nombres de varias colonias del mapa que no tienen las mismas zonas" : zonaTexto(z.split(" y ")), n]), d.en_mapa),
+        () => barras($("top"), d.colonias.slice(0, 20).map((c) => [c.colonia, c.reportes]), d.total),
+        tablaColonias, mapa];
+      for (const f of partes) try { f(d); } catch (e) { console.error(e); }
+      let w = $("dias").clientWidth;
+      new ResizeObserver(() => { const n = $("dias").clientWidth; if (Math.abs(n - w) > 4) { w = n; graficaDias(d); } }).observe($("dias"));
+    })
+    .catch(() => { status.textContent = "No pudimos cargar los datos. Intenta de nuevo en unos minutos."; });
+})();
+</script>
+</body>
+</html>

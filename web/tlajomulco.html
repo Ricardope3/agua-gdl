@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="facebook-domain-verification" content="li0vsm7edv0afccxodm5t0jvyiw0za">
+<title>No cuadra: Tlajomulco y el amoniaco de Las Pintas · Agua GDL</title>
+<meta name="description" content="El SIAPA escribió a Tlajomulco que el nitrógeno amoniacal del agua cruda que llega a la Planta 1 alcanzó más de 3.50 mg/l, siete veces el límite de la norma que cita. Sus documentos, los de Tlajomulco y lo que se le dijo a la CEDHJ, uno junto al otro.">
+<link rel="canonical" href="https://aguagdl.com/tlajomulco">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aguagdl.com/tlajomulco">
+<meta property="og:title" content="No cuadra: Tlajomulco y el amoniaco de Las Pintas">
+<meta property="og:description" content="Más de siete veces el límite: el amoniaco del agua que llegaba a la Planta 1, según el propio SIAPA, y lo que respondió Tlajomulco.">
+<meta property="og:image" content="https://aguagdl.com/android-chrome-512x512.png">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="/menu.css">
+<link rel="stylesheet" href="/nocuadra.css">
+<link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
+<style>
+:root {
+  --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
+  --brand: #0284c7; --brand-deep: #0369a1; --link: #0369a1; --on-brand: #ffffff;
+  --primary: #0284c7; --on-primary: #ffffff; --ring: #0284c766;
+  --shadow: 0 1px 2px rgb(3 105 161 / .08);
+  --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --warn: #8a5a00; --warn-bg: #fff3d6;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #06141d; --surface: #0a1c28; --subtle: #0c3149; --fg: #f0f9ff; --muted: #9bb8ca; --line: #18384d;
+    --link: #7dd3fc; --primary: #0ea5e9; --on-primary: #ffffff; --ring: #38bdf866; --brand: #0ea5e9; --brand-deep: #0284c7;
+    --warn: #ffd27a; --warn-bg: #3a2c10;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+[hidden] { display: none !important }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased }
+a { color: var(--link); text-underline-offset: 3px }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); border-radius: 6px }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px }
+h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.08; letter-spacing: -.03em; font-weight: 700; margin: 8px 0 12px; text-wrap: balance; max-width: 26ch }
+.lede { font-size: 1.1rem; margin: 0 0 16px; max-width: 64ch }
+.i { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.17em; flex-shrink: 0 }
+.i { --ic: currentColor }
+p > .i, h2 > .i { color: var(--ic) }
+.note { margin: 10px 0 0; font-size: .92rem; color: var(--muted); max-width: 80ch }
+section { padding: 32px 0 16px }
+h2.ih { display: flex; align-items: center; gap: 12px; font-size: 1.4rem; line-height: 1.2; margin: 0 0 16px; letter-spacing: -.02em; font-weight: 500 }
+.ih .i-badge { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--subtle); color: var(--brand); flex-shrink: 0 }
+section h3 { margin: 28px 0 8px; font-size: 1.1rem; line-height: 1.3 }
+section p, section li { max-width: 70ch }
+ul.plain { padding-left: 1.3em; margin: 0 0 14px }
+ul.plain li { margin: 0 0 8px }
+footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 48px; color: var(--muted); font-size: .85rem }
+footer p { margin: 0 0 8px; max-width: 70ch }
+/* The top menu as on the landing: its frame is 960 px wide, and 1320 px from 1100 px, so it sits on one row. */
+.wrap:has(> header.top) { max-width: 960px }
+@media (min-width: 1100px) { .wrap:has(> header.top) { max-width: 1320px } }
+.wrap:has(> header.top) > :not(header.top) { max-width: 1068px; margin-left: auto; margin-right: auto }
+</style>
+<style>/* Talavera */
+:root { --bg:#fbfaf6; --surface:#ffffff; --subtle:#e4eaf8; --fg:#14213d; --muted:#4f5b7a; --line:#c4cfe9;
+ --brand:#1d3f9e; --brand-deep:#142d75; --link:#1d3f9e; --primary:#1d3f9e; --on-primary:#fff; --ring:#1d3f9e55; --alarm:#1d3f9e; --mark:#f2c84b; --mark-fg:#14213d;
+ --font: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; --serif: Baskerville, "Baskerville Old Face", "Libre Baskerville", Georgia, serif; --shadow:none;
+ --tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M12 2l4 10-4 10-4-10z M2 12l10-4 10 4-10 4z' fill='%231d3f9e'/%3E%3C/svg%3E") }
+@media (prefers-color-scheme: dark) { :root { --bg:#0c1328; --surface:#121b36; --subtle:#1a2850; --fg:#eef1fb; --muted:#a6b1d6; --line:#2a3a6e; --brand:#7f9cf5; --brand-deep:#5b7be8; --link:#a9bdfa; --primary:#5b7be8; --alarm:#9fb4ff; --mark:#c9a12f; --tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M12 2l4 10-4 10-4-10z M2 12l10-4 10 4-10 4z' fill='%237f9cf5'/%3E%3C/svg%3E") } }
+header.top { position: relative; border-bottom: 0 } html { overflow-x: clip } header.top::after { content: ""; position: absolute; left: calc(50% - 50vw); width: 100vw; bottom: -6px; height: 12px; background: var(--tile) center/12px 12px repeat-x; transition: opacity .2s }
+main h1, main h2 { font-weight: 400; font-style: italic }
+.card, .congreso, .signup, .finder, .summary, .boxes > * { border-radius: 4px !important; border: 3px double var(--brand) !important; box-shadow: none !important }
+.posts li { border-left: 3px double var(--brand) }
+.button { border-radius: 4px }
+footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-top: 34px }
+</style>
+<script src="/theme.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/"><img src="/logo.svg" alt="" width="30" height="44">Agua GDL</a>
+    <nav class="site-nav" aria-label="Secciones">
+      <a href="/reportes"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#users"/></svg>¿Hay agua?</a>
+      <a href="/nocuadra" aria-current="page"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#question-marks"/></svg>No cuadra</a>
+      <a href="/avisos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#map-pin"/></svg>Avisos</a>
+      <a href="/cisternas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#droplet"/></svg>Cisternas</a>
+      <a href="/noticias"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#newspaper"/></svg>Noticias</a>
+      <details class="nav-more"><summary>Más</summary>
+        <div class="mas-panel">
+          <a href="/exige"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#megaphone"/></svg>Exige</a>
+          <a href="/fotos"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#video"/></svg>Fotos</a>
+          <a href="/promesas"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#bar-chart"/></svg>Cuentas</a>
+          <a href="/contamina"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#droplet"/></svg>Contaminación</a>
+          <a href="/antisionismo"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#heart"/></svg>Antisionismo</a>
+        </div></details>
+    </nav>
+  </header>
+
+  <main>
+    <p class="kicker"><a href="/nocuadra">No cuadra</a> · Tlajomulco y el canal de Las Pintas</p>
+    <h1>Más de siete veces el límite: el amoniaco del agua que llegaba a la Planta 1</h1>
+    <p class="lede">El 6 de marzo de 2026 el SIAPA le escribió al Ayuntamiento de Tlajomulco que el nitrógeno amoniacal del agua cruda que llega a su Planta Potabilizadora 1, en Miravalle, «ha alcanzado más de 3.50 mg/l», cuando el límite de la norma que cita es de 0.5. Escribió que por el canal de Las Pintas pasan aguas residuales de descargas «que se encuentran dentro del municipio de Tlajomulco de Zúñiga». Tlajomulco no le contestó el oficio, según su propia respuesta de transparencia: hizo tres recorridos con el SIAPA y le informó a la CEDHJ que en el canal «no existen descargas de aguas residuales».</p>
+
+    <ul class="contador" style="--cols:4">
+      <li><span class="n sobre">3.62 mg/L</span><span class="t">de nitrógeno amoniacal en el agua que entró a la Planta 1 en enero de 2026, en nuestra lectura de la gráfica del SIAPA</span></li>
+      <li><span class="n">0.5 mg/L</span><span class="t">es el límite de la NOM-127-SSA1-2021, la norma del agua para uso y consumo humano, que cita el SIAPA</span></li>
+      <li><span class="n">655</span><span class="t">colonias y fraccionamientos de Tonalá, Tlaquepaque, Guadalajara y Zapopan abastecía esa planta, según el SIAPA a la CEDHJ</span></li>
+      <li><span class="n">10</span><span class="t">puntos de descarga le señaló el SIAPA a Tlajomulco; Tlajomulco dice que en tres recorridos no encontró descargas al canal</span></li>
+    </ul>
+    <p class="note">Estado al 24 de noviembre de 2026. Todo sale de documentos oficiales: el oficio del SIAPA y los de Tlajomulco, que Tlajomulco nos entregó por la solicitud de transparencia 140290426001765, la Recomendación 10/2026 de la CEDHJ y dos respuestas a solicitudes nuestras. Las fuentes están <a href="#fuentes">al final</a>.</p>
+
+    <section aria-labelledby="amoniaco">
+      <h2 id="amoniaco" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#bar-chart"/></svg></span>Seis años de amoniaco, mes por mes</h2>
+      <p>El SIAPA puso la misma serie dos veces en su oficio: en la Figura 1, un gráfico «elaborado por las Subdirecciones de Laboratorios y Potabilización», y en el Gráfico 1 del anexo. Cada punto es el promedio de un mes del nitrógeno amoniacal en el agua cruda que entra a la Planta 1, antes de potabilizarse. El pie de la Figura 1 dice «corte enero 2020 a enero 2026», pero las dos gráficas tienen un punto más después de la marca «ene-26»: son 74 meses, hasta febrero de 2026. El SIAPA no ha entregado los números: los leímos sobre su gráfica, con un margen de ±0.05 mg/L.</p>
+      <figure class="grafica">
+        <div class="serie" id="serie"><noscript><p class="note">La gráfica necesita JavaScript. Los 74 meses están en el <a href="/datos/siapa-dg-135-2026-amoniacal.csv">CSV</a>.</p></noscript></div>
+        <ul class="keys">
+          <li><span class="sw" style="--sw:var(--s2)"></span>Mes por encima del límite, aun con nuestro margen de lectura</li>
+          <li><span class="sw" style="--sw:var(--axis)"></span>Mes por debajo del límite o a menos de 0.05 de él</li>
+          <li><span class="sw linea"></span>Límite que cita el SIAPA: 0.5 mg/L</li>
+        </ul>
+        <figcaption>Nitrógeno amoniacal, promedio mensual en el agua que entra a la Planta 1 Miravalle, de enero de 2020 a febrero de 2026, en mg/L. Fuente: Gráfico 1 del oficio DG-135/2026 del SIAPA (<a href="/datos/siapa-dg-135-2026.pdf#page=5">p. 5 del PDF</a>); lectura de Agua GDL, ±0.05 mg/L (<a href="/datos/siapa-dg-135-2026-amoniacal.csv">CSV</a>). La Figura 1 dice «corte enero 2020 a enero 2026», pero su línea llega a febrero.</figcaption>
+        <details class="tabla"><summary>Ver los 74 meses en una tabla</summary><div id="tabla-meses"></div></details>
+      </figure>
+      <p>Hasta 2022 el promedio no pasó de 0.27 mg/L. Desde julio de 2023 rebasó el límite en al menos 22 de 32 meses, aun con nuestro margen de lectura, y en julio de 2024 llegó a 2.18. Luego pasó lo que el propio SIAPA describe:</p>
+      <blockquote class="cita">«Típicamente, durante el temporal de lluvias el deterioro en la calidad del agua es mayor que el resto del año. Sin embargo, desde el mes de diciembre de 2025 se ha observado un deterioro significativo y mucho mayor al registrado durante el propio temporal de lluvias.»<cite>SIAPA, oficio DG-135/2026, anexo (<a href="/datos/siapa-dg-135-2026.pdf#page=4">p. 4 del PDF</a>)</cite></blockquote>
+
+      <h3>Cada enero</h3>
+      <p>Antes de 2026 ningún enero llegó a 0.65 mg/L; el de 2026 llegó a 3.62, más que cualquier otro mes de la serie, los de lluvias incluidos. En nuestra lectura, diciembre de 2025, enero y febrero de 2026 son los tres meses más altos de los 74.</p>
+      <ul class="anios" aria-label="Promedio de enero de cada año, en mg/L">
+        <li><span class="v">0.11</span><span class="b" style="--h:4px"></span><span class="a">2020</span></li>
+        <li><span class="v">0.10</span><span class="b" style="--h:3px"></span><span class="a">2021</span></li>
+        <li><span class="v">0.12</span><span class="b" style="--h:4px"></span><span class="a">2022</span></li>
+        <li><span class="v">0.12</span><span class="b" style="--h:4px"></span><span class="a">2023</span></li>
+        <li><span class="v">0.60</span><span class="b sobre" style="--h:19px"></span><span class="a">2024</span></li>
+        <li><span class="v">0.27</span><span class="b" style="--h:9px"></span><span class="a">2025</span></li>
+        <li><span class="v">3.62</span><span class="b sobre" style="--h:116px"></span><span class="a">2026</span></li>
+      </ul>
+      <p class="note">Promedio de enero de cada año, en mg/L, todos en la misma escala. Lectura de Agua GDL sobre el Gráfico 1 del SIAPA.</p>
+
+      <h3>Lo que escribió el SIAPA</h3>
+      <figure class="documento">
+<!-- documento:tlaj-limite -->
+<div class="hoja" data-documento="tlaj-limite">
+<div class="membrete"><img src="/img/documentos/tlaj-limite-m1.png" width="425" height="135" style="width:18.32%" alt="" loading="lazy"><img src="/img/documentos/tlaj-limite-m2.png" width="588" height="82" style="width:25.34%" alt="Oficio no. DG-135/2026. Guadalajara, Jalisco a 06 de marzo del 2026" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon" style="width:37.14%"><img src="/img/documentos/tlaj-limite-1.png" width="517" height="40" alt="un indicador clave de contaminación" loading="lazy"></span>
+<span class="renglon" style="width:99.93%"><img src="/img/documentos/tlaj-limite-2.png" width="1391" height="36" alt="en el agua, a considerar, es el nivel de nitrógeno amoniacal aportado por estas descargas que han" loading="lazy"></span>
+<span class="renglon" style="width:100%"><img src="/img/documentos/tlaj-limite-3.png" width="1392" height="37" alt="ocasionado un incremento perjudicial en el influente que es enviado a la planta potabilizadora no. 1," loading="lazy"></span>
+<span class="renglon marca" style="width:99.93%"><img src="/img/documentos/tlaj-limite-4.png" width="1391" height="42" alt="cabe señalar que el límite permisible establecido por la norma es de 0.5 mg/l, sin embargo, ha" loading="lazy"></span>
+<span class="renglon marca" style="width:42.53%"><img src="/img/documentos/tlaj-limite-5.png" width="592" height="40" alt="alcanzado más de 3.50 mg/l. (ver figura 1)." loading="lazy"></span>
+</div></div>
+<!-- /documento:tlaj-limite -->
+        <figcaption>Oficio DG-135/2026 del SIAPA a Tlajomulco, 6 de marzo de 2026, p. 2 (<a href="/datos/siapa-dg-135-2026.pdf#page=2">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure>
+      <figure class="documento">
+<!-- documento:tlaj-grafica -->
+<div class="hoja" data-documento="tlaj-grafica">
+<div class="membrete"><img src="/img/documentos/tlaj-grafica-m1.png" width="425" height="135" style="width:18.07%" alt="" loading="lazy"><img src="/img/documentos/tlaj-grafica-m2.png" width="588" height="82" style="width:25%" alt="Oficio no. DG-135/2026. Guadalajara, Jalisco a 06 de marzo del 2026" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon" style="width:100%"><img src="/img/documentos/tlaj-grafica-1.png" width="1411" height="42" alt="A continuación, se presentan los valores promedio mensuales de nitrógeno amoniacal del agua" loading="lazy"></span>
+<span class="renglon" style="width:27.71%"><img src="/img/documentos/tlaj-grafica-2.png" width="391" height="41" alt="cruda que ingresa a la PP1:" loading="lazy"></span>
+<span class="renglon" style="width:99.57%"><img src="/img/documentos/tlaj-grafica-3.png" width="1405" height="1080" alt="Gráfico 1 del oficio: nitrógeno amoniacal, valor promedio mensual en el influente de la planta 1, de enero de 2020 a febrero de 2026. En nuestra lectura, de 0.10 a 0.27 mg/L de 2020 a 2022, 2.18 en julio de 2024 y 3.62 en enero de 2026" loading="lazy"><span class="anillo" style="left:74.88%;top:44.54%;width:4.27%"></span><span class="etiqueta" style="left:74.88%;top:38.43%">2.18 · julio de 2024</span><span class="anillo" style="left:95.09%;top:16.3%;width:4.27%"></span><span class="etiqueta" style="left:75.87%;top:16.3%">3.62 · enero de 2026</span></span>
+<span class="renglon" style="width:98.09%"><img src="/img/documentos/tlaj-grafica-4.png" width="1384" height="39" alt="Gráfico 1. Comparativo de valores promedio de concentración de nitrógeno amoniacal en miligramos por" loading="lazy"></span>
+<span class="renglon" style="width:62.79%"><img src="/img/documentos/tlaj-grafica-5.png" width="886" height="35" alt="litro (mg/l) en el influente de la planta potabilizadora no. 1 Miravalle." loading="lazy"></span>
+</div></div>
+<!-- /documento:tlaj-grafica -->
+        <figcaption>El Gráfico 1 del SIAPA (<a href="/datos/siapa-dg-135-2026.pdf#page=5">p. 5 del PDF</a>). Los círculos y las cifras en azul son nuestros: el valor que leemos en ese punto.</figcaption>
+      </figure>
+      <p>Y escribió lo que eso significa para la planta, cuya infraestructura «data de 1956»:</p>
+      <figure class="documento">
+<!-- documento:tlaj-planta -->
+<div class="hoja" data-documento="tlaj-planta">
+<div class="membrete"><img src="/img/documentos/tlaj-planta-m1.png" width="425" height="135" style="width:18.07%" alt="" loading="lazy"><img src="/img/documentos/tlaj-planta-m2.png" width="588" height="82" style="width:25%" alt="Oficio no. DG-135/2026. Guadalajara, Jalisco a 06 de marzo del 2026" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon" style="width:100%"><img src="/img/documentos/tlaj-planta-1.png" width="1411" height="43" alt="Típicamente, durante el temporal de lluvias el deterioro en la calidad del agua es mayor que el" loading="lazy"></span>
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-planta-2.png" width="1411" height="41" alt="resto del año. Sin embargo, desde el mes de diciembre de 2025 se ha observado un deterioro" loading="lazy"></span>
+<span class="renglon marca" style="width:99.93%"><img src="/img/documentos/tlaj-planta-3.png" width="1410" height="38" alt="significativo y mucho mayor al registrado durante el propio temporal de lluvias. Esta condición" loading="lazy"></span>
+<span class="renglon marca" style="width:99.93%"><img src="/img/documentos/tlaj-planta-4.png" width="1410" height="40" alt="rebasa la capacidad operativa de la planta potabilizadora, ya que no fue diseñada para tratar agua" loading="lazy"></span>
+<span class="renglon marca" style="width:99.93%"><img src="/img/documentos/tlaj-planta-5.png" width="1410" height="39" alt="con estas características de calidad. A ello se suma la antigüedad de la infraestructura, la cual" loading="lazy"></span>
+<span class="renglon" style="width:80.3%"><img src="/img/documentos/tlaj-planta-6.png" width="1133" height="48" alt="data de 1956, lo que limita aún más la eficiencia del proceso de potabilización." loading="lazy"></span>
+<span class="salto" aria-hidden="true">[…]</span>
+<span class="renglon" style="width:15.95%"><img src="/img/documentos/tlaj-planta-7.png" width="225" height="38" alt="la calidad de la" loading="lazy"></span>
+<span class="renglon marca" style="width:99.86%"><img src="/img/documentos/tlaj-planta-8.png" width="1409" height="44" alt="misma impacta directamente en nuestros procesos de potabilización, los cuales no son los" loading="lazy"></span>
+<span class="renglon marca" style="width:68.75%"><img src="/img/documentos/tlaj-planta-9.png" width="970" height="36" alt="adecuados para tratar agua con una alta carga de contaminantes." loading="lazy"></span>
+</div></div>
+<!-- /documento:tlaj-planta -->
+        <figcaption>Anexo del oficio DG-135/2026, pp. 4 y 6 (<a href="/datos/siapa-dg-135-2026.pdf#page=4">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure>
+    </section>
+
+    <section aria-labelledby="oficio">
+      <h2 id="oficio" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#landmark"/></svg></span>Lo que el SIAPA le escribió a Tlajomulco</h2>
+      <p>El oficio DG-135/2026 va a nombre del director general del SIAPA; al pie aparecen también el director de Abastecimiento y Operación y los subdirectores de Alcantarillado, Potabilización y Laboratorios. Tlajomulco lo recibió el 11 de marzo de 2026. Dice que personal de las subdirecciones de Abastecimiento, Potabilización y Laboratorios «han documentado» esto:</p>
+      <figure class="documento">
+<!-- documento:tlaj-transitan -->
+<div class="hoja" data-documento="tlaj-transitan">
+<div class="membrete"><img src="/img/documentos/tlaj-transitan-m1.png" width="425" height="135" style="width:18.32%" alt="" loading="lazy"><img src="/img/documentos/tlaj-transitan-m2.png" width="588" height="82" style="width:25.34%" alt="Oficio no. DG-135/2026. Guadalajara, Jalisco a 06 de marzo del 2026" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon" style="width:99.93%"><img src="/img/documentos/tlaj-transitan-1.png" width="1391" height="32" alt="Del mismo modo, le informo que, personal de las Subdirecciones de Abastecimiento, Potabilización" loading="lazy"></span>
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-transitan-2.png" width="1392" height="46" alt="y Laboratorios han documentado que en los últimos tiempos, por el Canal Las Pintas transitan aguas" loading="lazy"></span>
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-transitan-3.png" width="1392" height="35" alt="residuales provenientes de descargas de aguas sanitarias y/o residuales que se encuentran dentro" loading="lazy"></span>
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-transitan-4.png" width="1392" height="35" alt="del municipio de Tlajomulco de Zúñiga, son aguas residuales sin control, al parecer, principalmente," loading="lazy"></span>
+<span class="renglon" style="width:99.93%"><img src="/img/documentos/tlaj-transitan-5.png" width="1391" height="35" alt="son aportaciones de origen diverso que descargan hacia el canal &quot;Las Pintas&quot; cauce a cielo abierto," loading="lazy"></span>
+</div></div>
+<!-- /documento:tlaj-transitan -->
+        <figcaption>Oficio DG-135/2026, p. 1 (<a href="/datos/siapa-dg-135-2026.pdf#page=1">PDF</a>). El sello de recibido y el trazo azul son del original. Resaltado de Agua GDL.</figcaption>
+      </figure>
+      <p>Y nombró los lugares:</p>
+      <figure class="documento">
+<!-- documento:tlaj-puntos -->
+<div class="hoja" data-documento="tlaj-puntos">
+<div class="membrete"><img src="/img/documentos/tlaj-puntos-m1.png" width="425" height="135" style="width:18.06%" alt="" loading="lazy"><img src="/img/documentos/tlaj-puntos-m2.png" width="588" height="82" style="width:24.99%" alt="Oficio no. DG-135/2026. Guadalajara, Jalisco a 06 de marzo del 2026" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon marca" style="width:67.42%"><img src="/img/documentos/tlaj-puntos-1.png" width="952" height="39" alt="se han identificado los ingresos de caudales hacia el Canal Las" loading="lazy"></span>
+<span class="renglon marca" style="width:99.79%"><img src="/img/documentos/tlaj-puntos-2.png" width="1409" height="41" alt="Pintas con olor y color característico del agua residual, siendo los puntos principales en: El Capulín" loading="lazy"></span>
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-puntos-3.png" width="1412" height="42" alt="1, 2 y 3, El Guayabo, El Zapote, La Carreta, El Edén, La Teja, Vaso Regulador Adolf Horn y 1°. De Mayo." loading="lazy"></span>
+<span class="renglon" style="width:99.86%"><img src="/img/documentos/tlaj-puntos-4.png" width="1410" height="38" alt="Cabe señalar que, en estos sitios se han observado descargas abundantes, en algunas de manera" loading="lazy"></span>
+<span class="renglon" style="width:99.79%"><img src="/img/documentos/tlaj-puntos-5.png" width="1409" height="37" alt="permanente y otras de forma intermitente, que de cualquier manera afectan considerablemente," loading="lazy"></span>
+</div></div>
+<!-- /documento:tlaj-puntos -->
+        <figcaption>Anexo del oficio DG-135/2026, p. 4 del PDF (<a href="/datos/siapa-dg-135-2026.pdf#page=4">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure>
+
+      <h3>Los puntos de las fotografías</h3>
+      <p>El anexo trae un plano con los diez puntos numerados del 1 al 10 (<a href="/datos/siapa-dg-135-2026.pdf#page=7">p. 7 del PDF</a>) y ocho páginas de fotografías, doce en total, cada página con el nombre de una descarga y sus coordenadas: siete de los diez puntos y una más en el kilómetro 4 del Arroyo Seco, la B. Capulín 2, Capulín 3 y El Zapote no traen coordenadas ni fotografías, así que no están en el mapa. La A es la descarga que Tlajomulco le había reportado al SIAPA el 27 de enero; en un segundo anexo, con dos fotografías más, el SIAPA dice haber encontrado ahí dos descargas sanitarias de una infraestructura que «corresponde al H. Ayuntamiento de San Pedro Tlaquepaque». Usamos los números del plano del SIAPA y las coordenadas tal como las escribió; no verificamos los puntos en campo. Cada punto del mapa lleva a sus fotografías.</p>
+      <div class="puntos-mapa" id="mapa-puntos" role="region" aria-label="Mapa de los puntos del oficio DG-135/2026"></div>
+      <p class="note">El nombre de la A es el que le da Tlajomulco. Mapa: © colaboradores de OpenStreetMap.</p>
+      <div class="fotos">
+        <figure id="foto-1">
+          <a class="foto" href="/img/documentos/dg135-capulin-1.webp"><span class="punto" aria-hidden="true">1</span>
+<!-- foto:dg135-capulin-1 -->
+<img src="/img/documentos/dg135-capulin-1-mini.webp" width="612" height="530" alt="Dos fotografías: agua gris que sale con fuerza de un tubo roto entre el pasto, bajo un puente de barandal amarillo, y un tubo blanco que termina en un charco de agua gris, junto a un canal cubierto de plantas." loading="lazy" decoding="async">
+<!-- /foto:dg135-capulin-1 -->
+</a>
+          <figcaption>Descarga Capulín 1<span class="sub">20°28'40.4"N 103°15'56.5"W · <a href="/datos/siapa-dg-135-2026.pdf#page=8">p. 8</a></span></figcaption>
+        </figure>
+        <figure id="foto-2">
+          <a class="foto" href="/img/documentos/dg135-guayabo.webp"><span class="punto" aria-hidden="true">2</span>
+<!-- foto:dg135-guayabo -->
+<img src="/img/documentos/dg135-guayabo-mini.webp" width="562" height="739" alt="Agua oscura y quieta bajo árboles y matorrales, junto a un muro de concreto, con una casa al fondo." loading="lazy" decoding="async">
+<!-- /foto:dg135-guayabo -->
+</a>
+          <figcaption>Descarga El Guayabo<span class="sub">20°28'40.9"N 103°16'29.1"W · <a href="/datos/siapa-dg-135-2026.pdf#page=9">p. 9</a></span></figcaption>
+        </figure>
+        <figure id="foto-6">
+          <a class="foto" href="/img/documentos/dg135-carreta.webp"><span class="punto" aria-hidden="true">6</span>
+<!-- foto:dg135-carreta -->
+<img src="/img/documentos/dg135-carreta-mini.webp" width="618" height="454" alt="Un puente de tres arcos sobre agua oscura, con basura en la ladera de atrás." loading="lazy" decoding="async">
+<!-- /foto:dg135-carreta -->
+</a>
+          <figcaption>Descarga La Carreta<span class="sub">20°31'25.4"N 103°21'28.9"W · <a href="/datos/siapa-dg-135-2026.pdf#page=10">p. 10</a></span></figcaption>
+        </figure>
+        <figure id="foto-7">
+          <a class="foto" href="/img/documentos/dg135-eden.webp"><span class="punto" aria-hidden="true">7</span>
+<!-- foto:dg135-eden -->
+<img src="/img/documentos/dg135-eden-mini.webp" width="543" height="770" alt="Dos fotografías: una capa de espuma blanca que cubre el canal al pie de una caída de agua, y un sillón atorado en el borde de una caída, con espuma abajo." loading="lazy" decoding="async">
+<!-- /foto:dg135-eden -->
+</a>
+          <figcaption>Descarga El Edén<span class="sub">20°31'59.9"N 103°21'50.1"W · <a href="/datos/siapa-dg-135-2026.pdf#page=11">p. 11</a></span></figcaption>
+        </figure>
+        <figure id="foto-8">
+          <a class="foto" href="/img/documentos/dg135-teja.webp"><span class="punto" aria-hidden="true">8</span>
+<!-- foto:dg135-teja -->
+<img src="/img/documentos/dg135-teja-mini.webp" width="516" height="671" alt="Un flujo de agua que entra a un cuerpo de agua turbia, bajo un cielo nublado." loading="lazy" decoding="async">
+<!-- /foto:dg135-teja -->
+</a>
+          <figcaption>Descarga La Teja<span class="sub">20°32'10.6"N 103°21'46.3"W · <a href="/datos/siapa-dg-135-2026.pdf#page=12">p. 12</a></span></figcaption>
+        </figure>
+        <figure id="foto-9">
+          <a class="foto" href="/img/documentos/dg135-adolf-horn.webp"><span class="punto" aria-hidden="true">9</span>
+<!-- foto:dg135-adolf-horn -->
+<img src="/img/documentos/dg135-adolf-horn-mini.webp" width="574" height="647" alt="Agua verdosa que sale de un tubo azul y baja por un muro de piedra, bajo una cerca de lámina azul, hacia agua cubierta de espuma blanca, entre la maleza." loading="lazy" decoding="async">
+<!-- /foto:dg135-adolf-horn -->
+</a>
+          <figcaption>Descarga Vaso Regulador Adolf Horn<span class="sub">20°32'40.4"N 103°21'14.5"W · <a href="/datos/siapa-dg-135-2026.pdf#page=13">p. 13</a></span></figcaption>
+        </figure>
+        <figure id="foto-10">
+          <a class="foto" href="/img/documentos/dg135-1-mayo.webp"><span class="punto" aria-hidden="true">10</span>
+<!-- foto:dg135-1-mayo -->
+<img src="/img/documentos/dg135-1-mayo-mini.webp" width="606" height="522" alt="Dos fotografías: el canal con agua oscura bajo una barda blanca, y la boca de un tubo de concreto en la orilla, entre plantas." loading="lazy" decoding="async">
+<!-- /foto:dg135-1-mayo -->
+</a>
+          <figcaption>Descarga 1º de Mayo<span class="sub">20°32'49.1"N 103°21'05.2"W · <a href="/datos/siapa-dg-135-2026.pdf#page=15">p. 15</a></span></figcaption>
+        </figure>
+        <figure id="foto-B">
+          <a class="foto" href="/img/documentos/dg135-km4.webp"><span class="punto otro" aria-hidden="true">B</span>
+<!-- foto:dg135-km4 -->
+<img src="/img/documentos/dg135-km4-mini.webp" width="623" height="474" alt="Dos fotografías: un puente de concreto sobre el agua, y una alcantarilla de concreto con grafiti por la que sale agua con espuma hacia agua turbia color café." loading="lazy" decoding="async">
+<!-- /foto:dg135-km4 -->
+</a>
+          <figcaption>Descarga km 4- Arroyo Seco<span class="sub">20°32'58.3"N 103°20'12.2"W · <a href="/datos/siapa-dg-135-2026.pdf#page=14">p. 14</a>; no es uno de los diez</span></figcaption>
+        </figure>
+      </div>
+      <p class="note">Nombre y coordenadas como los escribió el SIAPA arriba de cada página de fotografías (pp. 8 a 15 del PDF); recortamos cada página a sus fotografías. Toca una para verla completa.</p>
+      <p>Capulín 2, Capulín 3 y El Zapote, los puntos 3, 4 y 5, no tienen página de fotografías ni coordenadas: sólo el plano del SIAPA los ubica.</p>
+      <figure class="documento plano" id="plano">
+        <a class="foto" href="/img/documentos/dg135-plano.webp">
+<!-- foto:dg135-plano -->
+<img src="/img/documentos/dg135-plano.webp" width="1588" height="1066" alt="Plano general de localización de las descargas del SIAPA: una imagen de satélite con el trazo del canal, los puntos del 1 al 10 en círculos rojos, varios con una foto pequeña al lado, y la tabla de los diez puntos." loading="lazy" decoding="async">
+<!-- /foto:dg135-plano -->
+</a>
+        <figcaption>El plano de las descargas que el SIAPA puso en el anexo del oficio DG-135/2026, p. 7 del PDF (<a href="/datos/siapa-dg-135-2026.pdf#page=7">PDF</a>). En el PDF está de lado; aquí lo giramos para leerlo.</figcaption>
+      </figure>
+    </section>
+
+    <section aria-labelledby="recorridos">
+      <h2 id="recorridos" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#question-marks"/></svg></span>Diez puntos contra «no existen descargas»</h2>
+      <div class="duo">
+        <div class="prometido">
+          <h3>Lo que dice el SIAPA, 6 de marzo</h3>
+          <span class="cifra">10 puntos</span>
+          <blockquote>«por el Canal Las Pintas transitan aguas residuales provenientes de descargas de aguas sanitarias y/o residuales que se encuentran dentro del municipio de Tlajomulco de Zúñiga»</blockquote>
+          <p class="de">Oficio DG-135/2026, p. 1; los puntos, en la p. 4 del PDF.</p>
+        </div>
+        <div class="entregado">
+          <h3>Lo que dice Tlajomulco, finales de marzo</h3>
+          <span class="cifra">«no existen descargas»</span>
+          <blockquote>«se realizaron tres recorridos en campo en conjunto con el SIAPA para visitar estos 10 puntos, constatando que no existen descargas de aguas residuales al canal "Las pintas"»</blockquote>
+          <p class="de">Oficio DAPIH/0331-01/2026, p. 3, que Tlajomulco dice haber hecho del conocimiento de la CEDHJ.</p>
+        </div>
+        <div class="diferencia"><strong>La diferencia</strong><span>Tlajomulco no dice cuándo fueron los recorridos ni entregó actas. El propio SIAPA escribió que en esos sitios hay descargas «en algunas de manera permanente y otras de forma intermitente»: un recorrido sin descargas no prueba que no las haya otros días.</span></div>
+      </div>
+      <figure class="documento">
+<!-- documento:tlaj-recorridos -->
+<div class="hoja" data-documento="tlaj-recorridos">
+<div class="membrete"><img src="/img/documentos/tlaj-recorridos-m1.png" width="325" height="105" style="width:17.39%" alt="" loading="lazy"><img src="/img/documentos/tlaj-recorridos-m2.png" width="448" height="46" style="width:23.98%" alt="Oficio: DAPIH/0331-01/2026" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon" style="width:99.92%"><img src="/img/documentos/tlaj-recorridos-1.png" width="1307" height="47" alt="Respecto a lo requerido, se manifiesta que el SIAPA informó al Municipio de Tlajomulco" loading="lazy"></span>
+<span class="renglon" style="width:100%"><img src="/img/documentos/tlaj-recorridos-2.png" width="1308" height="39" alt="de Zúñiga, respecto a 10 (diez) presuntos puntos de descarga de aguas residuales" loading="lazy"></span>
+<span class="renglon" style="width:99.92%"><img src="/img/documentos/tlaj-recorridos-3.png" width="1307" height="44" alt="hacia el sistema antiguo de abastecimiento de Chapala, en específico en el Canal Las" loading="lazy"></span>
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-recorridos-4.png" width="1308" height="44" alt="Pintas, por lo cual se realizaron tres recorridos en campo en conjunto con el SIAPA" loading="lazy"></span>
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-recorridos-5.png" width="1308" height="44" alt="para visitar estos 10 puntos, constatando que no existen descargas de aguas" loading="lazy"></span>
+<span class="renglon marca" style="width:36.77%"><img src="/img/documentos/tlaj-recorridos-6.png" width="481" height="41" alt="residuales al canal &quot;Las pintas&quot;." loading="lazy"></span>
+</div></div>
+<!-- /documento:tlaj-recorridos -->
+        <figcaption>Oficio DAPIH/0331-01/2026 de Tlajomulco, marzo de 2026, p. 3 (<a href="/datos/tlajomulco-dapih-0331-01-2026.pdf#page=3">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure>
+      <p>No era la primera versión de Tlajomulco. Su <a href="https://tlajomulco.gob.mx/comunicacion-institucional/tlajomulco-descarta-descargas-irregulares-en-canal-de-las-pintas" rel="noopener">boletín del 10 de marzo</a>, un día antes de que recibiera el oficio, cuenta que el lunes 9 el presidente municipal se reunió con funcionarios del SIAPA en la Secretaría General de Gobierno y que ahí se acordó recorrer los puntos. En el boletín, su director de Infraestructura Hidráulica dice que «de los diez puntos señalados por el SIAPA, cinco actualmente no existen desde hace muchos años»; según el mismo boletín, otros cuatro «se ubican fuera del municipio». No dice cuáles son ni qué pasa con el décimo. El SIAPA había escrito que las descargas que identificó «actualmente están encauzadas al Canal Las Pintas» (<a href="/datos/siapa-dg-135-2026.pdf#page=2">p. 2 del PDF</a>), y su anexo trae fotografías de siete de los diez puntos. A finales de marzo, en el oficio de arriba, la versión ya era que en los diez «no existen descargas».</p>
+      <p>Ocho meses después, a nuestra solicitud de transparencia, Tlajomulco confirmó que no contestó el oficio y dijo dónde estarían las minutas:</p>
+      <figure class="documento">
+<!-- documento:tlaj-sin-respuesta -->
+<div class="hoja" data-documento="tlaj-sin-respuesta">
+<div class="membrete"><img src="/img/documentos/tlaj-sin-respuesta-m1.png" width="335" height="112" style="width:17.93%" alt="" loading="lazy"><img src="/img/documentos/tlaj-sin-respuesta-m2.png" width="385" height="52" style="width:20.6%" alt="Oficio DTRC/1740/2026" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon marca" style="width:99.69%"><img src="/img/documentos/tlaj-sin-respuesta-1.png" width="1304" height="62" alt="En este tenor, se informa que el municipio no emitió respuesta al referido oficio," loading="lazy"></span>
+<span class="renglon" style="width:100%"><img src="/img/documentos/tlaj-sin-respuesta-2.png" width="1308" height="50" alt="sino que se procedió a realizar los tres recorridos informados a la Comisión Estatal" loading="lazy"></span>
+<span class="renglon" style="width:100%"><img src="/img/documentos/tlaj-sin-respuesta-3.png" width="1308" height="58" alt="de Derechos Humanos Jalisco (CEDHJ), los cuales fueron coordinados por el" loading="lazy"></span>
+<span class="renglon" style="width:57.11%"><img src="/img/documentos/tlaj-sin-respuesta-4.png" width="747" height="54" alt="SIAPA en seguimiento al oficio DG-135/2026." loading="lazy"></span>
+<span class="salto" aria-hidden="true">[…]</span>
+<span class="renglon marca" style="width:13.91%"><img src="/img/documentos/tlaj-sin-respuesta-5.png" width="182" height="55" alt="las listas y" loading="lazy"></span>
+<span class="renglon marca" style="width:99.62%"><img src="/img/documentos/tlaj-sin-respuesta-6.png" width="1303" height="61" alt="minutas que, en su caso, se hubieren levantado con motivo de dichos recorridos," loading="lazy"></span>
+<span class="renglon marca" style="width:99.77%"><img src="/img/documentos/tlaj-sin-respuesta-7.png" width="1305" height="61" alt="obran en los archivos del Sistema Intermunicipal de los Servicios de Agua Potable" loading="lazy"></span>
+<span class="renglon marca" style="width:30.96%"><img src="/img/documentos/tlaj-sin-respuesta-8.png" width="405" height="55" alt="y Alcantarillado (SIAPA)." loading="lazy"></span>
+</div></div>
+<!-- /documento:tlaj-sin-respuesta -->
+        <figcaption>Oficio DTRC/1740/2026, respuesta de Tlajomulco a la solicitud 140290426001765, 20 de noviembre de 2026, p. 4 (<a href="/datos/tlajomulco-respuesta-140290426001765.pdf#page=4">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure>
+      <p>Y cuando le pedimos sus propias inspecciones, procedimientos y sanciones por descargas al canal o al Arroyo Seco, respondió:</p>
+      <figure class="documento">
+<!-- documento:tlaj-punto5 -->
+<div class="hoja" data-documento="tlaj-punto5">
+<div class="membrete"><img src="/img/documentos/tlaj-punto5-m1.png" width="335" height="112" style="width:17.97%" alt="" loading="lazy"><img src="/img/documentos/tlaj-punto5-m2.png" width="385" height="52" style="width:20.65%" alt="Oficio DTRC/1740/2026" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-punto5-1.png" width="1305" height="66" alt="Por último, con relación a lo solicitado en el punto 5, no se cuenta con" loading="lazy"></span>
+<span class="renglon marca" style="width:31.03%"><img src="/img/documentos/tlaj-punto5-2.png" width="405" height="56" alt="información al respecto." loading="lazy"></span>
+</div></div>
+<!-- /documento:tlaj-punto5 -->
+        <figcaption>Oficio DTRC/1740/2026, p. 5 (<a href="/datos/tlajomulco-respuesta-140290426001765.pdf#page=5">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure>
+    </section>
+
+    <section aria-labelledby="version">
+      <h2 id="version" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#info"/></svg></span>La versión de Tlajomulco</h2>
+      <p>Tlajomulco sostiene que el agua residual viene de otro lado. En el mismo boletín del 10 de marzo, su presidente municipal dijo que «quedó claro dónde está, digamos, la responsabilidad más elevada de las descargas, que tiene que ver con responsabilidades del propio SIAPA y esas están en Tlaquepaque». El 27 de enero, cinco semanas antes del oficio del SIAPA, le había reportado una línea sanitaria deteriorada que descarga aguas residuales sin tratamiento al Arroyo Seco:</p>
+      <figure class="documento">
+<!-- documento:tlaj-tlaquepaque -->
+<div class="hoja" data-documento="tlaj-tlaquepaque">
+<div class="membrete"><img src="/img/documentos/tlaj-tlaquepaque-m1.png" width="338" height="103" style="width:17.68%" alt="" loading="lazy"><img src="/img/documentos/tlaj-tlaquepaque-m2.png" width="456" height="48" style="width:23.86%" alt="Oficio: DAPIH/0127-01/2026" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon" style="width:66.29%"><img src="/img/documentos/tlaj-tlaquepaque-1.png" width="887" height="39" alt="se identificó una línea sanitaria en estado de deterioro" loading="lazy"></span>
+<span class="renglon" style="width:99.93%"><img src="/img/documentos/tlaj-tlaquepaque-2.png" width="1337" height="38" alt="avanzado, la cual se encuentra expuesta y descargando aguas residuales sin tratamiento" loading="lazy"></span>
+<span class="renglon" style="width:43.27%"><img src="/img/documentos/tlaj-tlaquepaque-3.png" width="579" height="45" alt="al cauce conocido como Arroyo Seco." loading="lazy"></span>
+<span class="salto" aria-hidden="true">[…]</span>
+<span class="renglon marca" style="width:86.77%"><img src="/img/documentos/tlaj-tlaquepaque-4.png" width="1161" height="39" alt="generando un impacto negativo en la calidad del agua que se incorpora al" loading="lazy"></span>
+<span class="renglon marca" style="width:99.85%"><img src="/img/documentos/tlaj-tlaquepaque-5.png" width="1336" height="41" alt="sistema de escurrimientos naturales, particularmente en la zona del Canal de Las Pintas," loading="lazy"></span>
+<span class="salto" aria-hidden="true">[…]</span>
+<span class="renglon marca" style="width:99.93%"><img src="/img/documentos/tlaj-tlaquepaque-6.png" width="1337" height="49" alt="Con base en la ubicación y el trazo de los sistemas de alcantarillado, se determinó que" loading="lazy"></span>
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-tlaquepaque-7.png" width="1338" height="40" alt="esta descarga proviene del municipio de San Pedro Tlaquepaque, por lo que se" loading="lazy"></span>
+</div></div>
+<!-- /documento:tlaj-tlaquepaque -->
+        <figcaption>Oficio DAPIH/0127-01/2026 de Tlajomulco al SIAPA, 27 de enero de 2026, p. 1 (<a href="/datos/tlajomulco-dapih-0127-01-2026.pdf">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure>
+      <p>En ese punto el SIAPA le dio la razón. En su oficio escribió que su Subdirección de Alcantarillado encontró que «el tubo presenta derrames» y que gestiona con Tlaquepaque «para subsanar la falla»; en su anexo, que esa infraestructura «corresponde al H. Ayuntamiento de San Pedro Tlaquepaque en cuanto a su operación y/o administración». Tlajomulco dice que, después de ese oficio, no ha recibido «comunicación adicional por parte del SIAPA».</p>
+      <figure class="foto-a" id="foto-A">
+        <a class="foto" href="/img/documentos/dg135-anexo02.webp"><span class="punto otro" aria-hidden="true">A</span>
+<!-- foto:dg135-anexo02 -->
+<img src="/img/documentos/dg135-anexo02.webp" width="1414" height="550" alt="Dos fotografías: agua con espuma que corre por una pendiente de concreto, entre la vegetación." loading="lazy" decoding="async">
+<!-- /foto:dg135-anexo02 -->
+</a>
+        <figcaption>Anexo 02 del oficio DG-135/2026, p. 16 del PDF (<a href="/datos/siapa-dg-135-2026.pdf#page=16">PDF</a>): las dos fotografías que el SIAPA puso bajo su párrafo «se verificó la existencia de dos descargas sanitarias, una de 10" y otra de 12" pulgadas», en las coordenadas 20°34'18.9"N, 103°22'02.8"W, la A del mapa. Más abajo escribió que «se llevarán a cabo las acciones correspondientes para la reparación de la infraestructura».</figcaption>
+      </figure>
+      <p>Tlajomulco también dice que no tiene conexiones al colector del Arroyo Seco donde se detectaron descargas:</p>
+      <figure class="documento">
+<!-- documento:tlaj-conexiones -->
+<div class="hoja" data-documento="tlaj-conexiones">
+<div class="membrete"><img src="/img/documentos/tlaj-conexiones-m1.png" width="325" height="105" style="width:17.37%" alt="" loading="lazy"><img src="/img/documentos/tlaj-conexiones-m2.png" width="448" height="46" style="width:23.94%" alt="Oficio: DAPIH/0331-01/2026" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon" style="width:99.92%"><img src="/img/documentos/tlaj-conexiones-1.png" width="1309" height="46" alt="Arroyo Seco, y tiene una longitud aproximada de 23 kilómetros, de los cuales" loading="lazy"></span>
+<span class="renglon" style="width:99.85%"><img src="/img/documentos/tlaj-conexiones-2.png" width="1308" height="40" alt="solamente 2.4 kilómetros se encuentran dentro del territorio del municipio de" loading="lazy"></span>
+<span class="renglon" style="width:99.85%"><img src="/img/documentos/tlaj-conexiones-3.png" width="1308" height="45" alt="Tlajomulco de Zúñiga, sin embargo, es de vital importancia aclarar que este Municipio" loading="lazy"></span>
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-conexiones-4.png" width="1310" height="42" alt="no tiene conexiones al colector Arroyo Seco en la zona donde se han detectado" loading="lazy"></span>
+<span class="renglon marca" style="width:76.56%"><img src="/img/documentos/tlaj-conexiones-5.png" width="1003" height="49" alt="descargas de aguas residuales hacia el cauce del mismo;" loading="lazy"></span>
+</div></div>
+<!-- /documento:tlaj-conexiones -->
+        <figcaption>Oficio DAPIH/0331-01/2026, p. 4 (<a href="/datos/tlajomulco-dapih-0331-01-2026.pdf#page=4">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure>
+      <p>Pero la línea de Tlaquepaque es un solo sitio, la A del mapa y de las fotografías de arriba, en el Arroyo Seco. Los diez puntos del SIAPA son ingresos de agua residual al canal de Las Pintas, y para ellos la respuesta de Tlajomulco es que no encontró descargas al canal. En esos mismos recorridos, escribió Tlajomulco, sí se detectaron descargas de aguas residuales al Arroyo Seco, «en las zonas colindantes con el municipio de San Pedro Tlaquepaque», donde dice no tener infraestructura.</p>
+    </section>
+
+    <section aria-labelledby="cedhj">
+      <h2 id="cedhj" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#shield-check"/></svg></span>Lo que se le dijo a la CEDHJ</h2>
+      <p>En esas mismas semanas, la Comisión Estatal de Derechos Humanos Jalisco (CEDHJ) preparaba su Recomendación 10/2026, por violaciones a los derechos al agua potable y saneamiento, a un medio ambiente sano y a la protección de la salud, entre otros. Lo que le informaron las autoridades, según la propia Comisión, suena distinto:</p>
+      <div class="duo">
+        <div class="prometido">
+          <h3>El SIAPA a Tlajomulco, 6 de marzo</h3>
+          <blockquote>«Esta condición rebasa la capacidad operativa de la planta potabilizadora, ya que no fue diseñada para tratar agua con estas características de calidad.»</blockquote>
+          <p class="de">Oficio DG-135/2026, anexo, p. 4 del PDF.</p>
+        </div>
+        <div class="entregado">
+          <h3>La SGIA a la CEDHJ, recibido el 31 de marzo</h3>
+          <blockquote>«la COPRISJAL había realizado diversos muestreos y constató que el agua que salía de las plantas de tratamiento cumplía con todas las condiciones de calidad»</blockquote>
+          <p class="de">Así lo resume la CEDHJ: oficio OFC.SGIA/0086/2026, Recomendación 10/2026, p. 43.</p>
+        </div>
+        <div class="diferencia"><strong>La diferencia</strong><span>Las dos cosas pueden ser ciertas: una habla del agua que entra a la planta y la otra de la que sale. Pero nadie ha entregado los análisis del agua que salió de la Planta 1 en esos meses.</span></div>
+      </div>
+      <ul class="plain">
+        <li>La COPRISJAL le informó a la CEDHJ (recibido el 30 de marzo) que «durante su administración» hizo tres verificaciones sanitarias a plantas potabilizadoras del SIAPA, una de ellas en la colonia Miravalle, y que «los resultados se habían encontrado dentro de la norma» (p. 41). No da fechas.</li>
+        <li>El SIAPA le informó (recibido el 7 de abril) que la planta de Miravalle «había quedado en desfase» por su antigüedad, pero que «se encontraba operando conforme a su edad y diseño», y que con sus acciones buscaba «mantener la calidad del agua potable dentro de norma» (pp. 46, 49 y 50).</li>
+        <li>También le contó que el 20 de marzo hubo una reunión en las oficinas de la SEMADET «convocada por el titular de la PROEPA» (p. 46). Le preguntamos a la PROEPA por esa reunión, y nos respondió el 23 de noviembre que no tiene minutas ni listas de asistencia «toda vez que, esta autoridad no fue la convocante».</li>
+        <li>En el texto de las 191 páginas de la recomendación, fechada el 30 de abril, no aparece la palabra amoniaco.</li>
+      </ul>
+      <figure class="documento">
+<!-- documento:tlaj-convocante -->
+<div class="hoja" data-documento="tlaj-convocante">
+<div class="membrete"><img src="/img/documentos/tlaj-convocante-m1.png" width="560" height="165" style="width:26.23%" alt="" loading="lazy"><img src="/img/documentos/tlaj-convocante-m2.png" width="775" height="56" style="width:36.3%" alt="Oficio PROEPA DJPA/ UT/ 3292 / 0162 /2026" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon" style="width:100%"><img src="/img/documentos/tlaj-convocante-1.png" width="1281" height="52" alt="Aunado a lo anterior, y relativo al punto 4 cuatro de su solicitud, se le" loading="lazy"></span>
+<span class="renglon marca" style="width:99.69%"><img src="/img/documentos/tlaj-convocante-2.png" width="1277" height="47" alt="informa que esta autoridad no cuenta con minutas o listas de asistencia, ni" loading="lazy"></span>
+<span class="renglon marca" style="width:99.84%"><img src="/img/documentos/tlaj-convocante-3.png" width="1279" height="46" alt="documentos relacionados con lo que refiere en este punto, toda vez que," loading="lazy"></span>
+<span class="renglon marca" style="width:49.02%"><img src="/img/documentos/tlaj-convocante-4.png" width="628" height="42" alt="esta autoridad no fue la convocante." loading="lazy"></span>
+</div></div>
+<!-- /documento:tlaj-convocante -->
+        <figcaption>Oficio DJPA/UT/3292/0162/2026 de la PROEPA, respuesta a la solicitud 140276526000172, 23 de noviembre de 2026, p. 5. El punto 4 de la solicitud era la reunión del 20 de marzo en la SEMADET. Resaltado de Agua GDL.</figcaption>
+      </figure>
+    </section>
+
+    <section aria-labelledby="mide">
+      <h2 id="mide" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#search"/></svg></span>El SIAPA mide; a nosotros no nos entregó sus análisis</h2>
+      <p>La gráfica muestra que el SIAPA lleva un promedio mensual del amoniaco a la entrada de la Planta 1, al menos de enero de 2020 a febrero de 2026. Le pedimos los reportes de laboratorio del agua cruda que entró a esa planta y de la tratada a su salida, del 1 de julio al 31 de octubre de 2026 (solicitud 140279226001178). El 13 de noviembre respondió con lo que le informó su Dirección de Abastecimiento y Operación, cuyo director aparece al pie del oficio a Tlajomulco:</p>
+      <figure class="documento">
+<!-- documento:tlaj-sin-registros -->
+<div class="hoja" data-documento="tlaj-sin-registros">
+<div class="membrete"><img src="/img/documentos/tlaj-sin-registros-m1.png" width="425" height="105" style="width:20.6%" alt="" loading="lazy"><img src="/img/documentos/tlaj-sin-registros-m2.png" width="340" height="46" style="width:16.48%" alt="Oficio UT/2475/2026" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon" style="width:99.84%"><img src="/img/documentos/tlaj-sin-registros-1.png" width="1236" height="45" alt="PRIMERO. Se comunica que, la Unidad de Transparencia realizó las gestiones" loading="lazy"></span>
+<span class="renglon" style="width:99.68%"><img src="/img/documentos/tlaj-sin-registros-2.png" width="1234" height="40" alt="necesarias para obtener la información de su solicitud de acceso a la información con" loading="lazy"></span>
+<span class="renglon marca" style="width:54.2%"><img src="/img/documentos/tlaj-sin-registros-3.png" width="671" height="41" alt="la Dirección de Abastecimiento y Operación," loading="lazy"></span>
+<span class="salto" aria-hidden="true">[…]</span>
+<span class="renglon" style="width:37.96%"><img src="/img/documentos/tlaj-sin-registros-4.png" width="470" height="42" alt="misma que informo lo siguiente:" loading="lazy"></span>
+<span class="renglon marca" style="width:99.68%"><img src="/img/documentos/tlaj-sin-registros-5.png" width="1234" height="48" alt="Se hace de su conocimiento que, en esta área operativa, no se cuenta con" loading="lazy"></span>
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-sin-registros-6.png" width="1238" height="42" alt="documentales o archivos que contengan la información con la desagregación y" loading="lazy"></span>
+<span class="renglon marca" style="width:32.47%"><img src="/img/documentos/tlaj-sin-registros-7.png" width="402" height="44" alt="especificación pretendida." loading="lazy"></span>
+</div></div>
+<!-- /documento:tlaj-sin-registros -->
+        <figcaption>Oficio UT/2475/2026 del SIAPA, respuesta a la solicitud 140279226001178, 13 de noviembre de 2026, p. 2. Resaltado de Agua GDL.</figcaption>
+      </figure>
+      <p>En su lugar nos remitió a una página de su sitio que, según el oficio, contiene los resultados de los análisis «realizados en las fuentes de abastecimiento».</p>
+    </section>
+
+    <section aria-labelledby="cronologia">
+      <h2 id="cronologia" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#calendar"/></svg></span>Cronología</h2>
+      <ol class="cronologia">
+        <li><span class="dia">Diciembre de 2025</span><p>Empieza, según el SIAPA, un deterioro del agua «mucho mayor al registrado durante el propio temporal de lluvias».<span class="quien">SIAPA, oficio DG-135/2026, anexo</span></p></li>
+        <li><time datetime="2026-01-27">27 de enero</time><p>Tlajomulco le reporta al SIAPA una línea sanitaria dañada que descarga al Arroyo Seco y que, dice, viene de Tlaquepaque.<span class="quien">Oficio DAPIH/0127-01/2026, notificado al SIAPA el 29 de enero</span></p></li>
+        <li><time datetime="2026-03-06">6 de marzo</time><p>El SIAPA le escribe a Tlajomulco: nitrógeno amoniacal de «más de 3.50 mg/l» y diez puntos de descarga. Tlajomulco lo recibe el 11 de marzo.<span class="quien">Oficio DG-135/2026</span></p></li>
+        <li><time datetime="2026-03-09">9 y 10 de marzo</time><p>El presidente municipal de Tlajomulco se reúne con funcionarios del SIAPA en la Secretaría General de Gobierno. Al día siguiente, el boletín del municipio dice que de los diez puntos «cinco actualmente no existen desde hace muchos años» y que cuatro «se ubican fuera del municipio».<span class="quien">Boletín del Gobierno de Tlajomulco, 10 de marzo</span></p></li>
+        <li><time datetime="2026-03-20">20 de marzo</time><p>Reunión en la SEMADET. El SIAPA dice que la convocó el titular de la PROEPA; la PROEPA dice que no fue la convocante.<span class="quien">CEDHJ, Recomendación 10/2026, p. 46; respuesta de la PROEPA del 23 de noviembre</span></p></li>
+        <li><span class="dia">Finales de marzo</span><p>Tlajomulco informa que en tres recorridos con el SIAPA constató que «no existen descargas» al canal.<span class="quien">Oficio DAPIH/0331-01/2026; el día no se lee en la copia</span></p></li>
+        <li><time datetime="2026-03-30">30 y 31 de marzo</time><p>La COPRISJAL y la SGIA le informan a la CEDHJ resultados «dentro de la norma» y agua que «cumplía con todas las condiciones de calidad».<span class="quien">CEDHJ, Recomendación 10/2026, pp. 41 y 43</span></p></li>
+        <li><time datetime="2026-04-07">7 de abril</time><p>El SIAPA le informa a la CEDHJ que la planta de Miravalle opera «conforme a su edad y diseño».<span class="quien">CEDHJ, Recomendación 10/2026, p. 50</span></p></li>
+        <li><time datetime="2026-04-30">30 de abril</time><p>La CEDHJ emite su Recomendación 10/2026. No menciona el amoniaco.</p></li>
+        <li><time datetime="2026-11-10">10 de noviembre</time><p>Le pedimos a Tlajomulco el oficio del SIAPA, las actas de los recorridos y sus inspecciones y sanciones.<span class="quien">Solicitud 140290426001765</span></p></li>
+        <li><time datetime="2026-11-13">13 de noviembre</time><p>El SIAPA responde que su Dirección de Abastecimiento y Operación no tiene documentos con los análisis de la Planta 1 «con la desagregación y especificación pretendida». Ese día le pedimos las actas de los recorridos y la minuta del 20 de marzo.<span class="quien">Oficio UT/2475/2026, solicitud 140279226001178; solicitud 140279226001270</span></p></li>
+        <li><time datetime="2026-11-23">23 de noviembre</time><p>Tlajomulco responde que no contestó el oficio del SIAPA, que las minutas estarían en archivos de otras autoridades y que no tiene información de inspecciones o sanciones. Ese día la PROEPA responde que no convocó la reunión del 20 de marzo.<span class="quien">Oficio DTRC/1740/2026, fechado el 20 de noviembre; solicitud 140276526000172</span></p></li>
+        <li><time datetime="2026-11-24">24 de noviembre</time><p>Tlajomulco entrega los anexos que faltaban en su respuesta, entre ellos el oficio del SIAPA con la gráfica.<span class="quien">Solicitud 140290426001765, anexos</span></p></li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="falta">
+      <h2 id="falta" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#pen-line"/></svg></span>Lo que falta</h2>
+      <p>Los documentos que dirían quién tiene razón existen, según las propias autoridades, pero nadie los ha entregado. Al 24 de noviembre de 2026:</p>
+      <table class="ausencias">
+        <thead><tr><th>Documento</th><th>Lo que dicen las autoridades</th><th>Estado</th></tr></thead>
+        <tbody>
+          <tr><td>Actas o minutas de los tres recorridos: fechas, participantes y lo que se vio en cada punto</td><td>Tlajomulco: las listas y minutas «que, en su caso, se hubieren levantado» están en los archivos del SIAPA.</td><td class="estado pedido"><strong>Pedidas</strong> al SIAPA el 13 de noviembre (solicitud 140279226001270)</td></tr>
+          <tr><td>La respuesta de Tlajomulco al oficio del SIAPA</td><td>Tlajomulco: «el municipio no emitió respuesta al referido oficio».</td><td class="estado falta"><strong>No existe</strong></td></tr>
+          <tr><td>Inspecciones, procedimientos o sanciones de Tlajomulco por descargas al canal o al Arroyo Seco</td><td>Tlajomulco: «no se cuenta con información al respecto».</td><td class="estado falta"><strong>No entregadas</strong></td></tr>
+          <tr><td>Minutas de las reuniones entre autoridades: las que menciona Tlajomulco y la del 20 de marzo en la SEMADET</td><td>Tlajomulco: se reunió con la PROEPA, la SEMADET, la Secretaría General de Gobierno, la CEA, la SGIA y el SIAPA, y las listas y minutas «que, en su caso se hubieren levantado» están en los archivos de esas autoridades. Sobre el 20 de marzo, el SIAPA le dijo a la CEDHJ que la reunión la convocó el titular de la PROEPA; la PROEPA: «esta autoridad no fue la convocante».</td><td class="estado pedido">La del 20 de marzo, <strong>pedida</strong> al SIAPA el 13 de noviembre (solicitud 140279226001270)</td></tr>
+          <tr><td>La tabla de valores de la gráfica del amoniaco</td><td>La gráfica dice que la elaboraron las Subdirecciones de Laboratorios y Potabilización del SIAPA.</td><td class="estado falta"><strong>No entregada:</strong> las cifras de esta página son nuestra lectura</td></tr>
+          <tr><td>Análisis del agua cruda y tratada de la Planta 1, de julio a octubre de 2026</td><td>SIAPA: «no se cuenta con documentales o archivos que contengan la información con la desagregación y especificación pretendida».</td><td class="estado falta"><strong>No entregados</strong> el 13 de noviembre (solicitud 140279226001178)</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section aria-labelledby="cierre">
+      <h2 id="cierre" class="ih"><span class="i-badge"><svg class="i" aria-hidden="true"><use href="/icons.svg?v=6#check"/></svg></span>Qué decimos y qué no</h2>
+      <ul class="plain">
+        <li><strong>Es agua cruda.</strong> Las cifras son del agua que entra a la Planta 1, antes de potabilizarse. No dicen cómo salió el agua de la planta ni cómo llegó a las casas: esos análisis nadie los ha entregado.</li>
+        <li><strong>La norma es la que cita el SIAPA.</strong> La NOM-127-SSA1-2021 fija los límites del agua para uso y consumo humano; el SIAPA la usa como referencia para el agua cruda.</li>
+        <li><strong>Los números mensuales son nuestra lectura</strong> de la gráfica del SIAPA, con un margen de ±0.05 mg/L. La cifra del SIAPA es «más de 3.50 mg/l»; su tabla no se ha entregado.</li>
+        <li><strong>No decimos de dónde sale cada descarga.</strong> El SIAPA dice que de Tlajomulco; Tlajomulco, que no las encontró en el canal y que la que reportó viene de Tlaquepaque. Mostramos lo que escribió cada uno.</li>
+        <li><strong>Un recorrido sin descargas no prueba que no las haya</strong>, y una descarga vista no dice cuánto amoniaco aporta: en lo que tenemos no hay análisis por punto.</li>
+      </ul>
+      <h3 id="fuentes">Fuentes</h3>
+      <ul class="plain">
+        <li>SIAPA, oficio DG-135/2026 a Tlajomulco, 6 de marzo de 2026, con su anexo y fotografías: <a href="/datos/siapa-dg-135-2026.pdf">PDF</a> (difuminamos un nombre escrito a mano junto al sello de recibido de la primera página). Nuestra lectura de sus gráficas: <a href="/datos/siapa-dg-135-2026-amoniacal.csv">CSV</a>.</li>
+        <li>Tlajomulco, oficio DTRC/1740/2026, respuesta a la solicitud 140290426001765, 20 de noviembre de 2026: <a href="/datos/tlajomulco-respuesta-140290426001765.pdf">PDF</a>.</li>
+        <li>Tlajomulco, oficio DAPIH/0331-01/2026, marzo de 2026: <a href="/datos/tlajomulco-dapih-0331-01-2026.pdf">PDF</a> (difuminamos un nombre escrito a mano junto al sello de recibido de la primera página).</li>
+        <li>Tlajomulco, oficio DAPIH/0127-01/2026 al SIAPA, 27 de enero de 2026: <a href="/datos/tlajomulco-dapih-0127-01-2026.pdf">PDF</a>.</li>
+        <li>Gobierno de Tlajomulco, boletín «Tlajomulco descarta descargas irregulares en canal de Las Pintas», 10 de marzo de 2026: <a href="https://tlajomulco.gob.mx/comunicacion-institucional/tlajomulco-descarta-descargas-irregulares-en-canal-de-las-pintas" rel="noopener">tlajomulco.gob.mx</a>.</li>
+        <li>CEDHJ, Recomendación 10/2026, 30 de abril de 2026: <a href="https://cedhj.org.mx/assets_web/doc/recomendaciones/emitidas/2026/20260430150739/recomendacion_1777583259457.pdf" rel="noopener">PDF en cedhj.org.mx</a>.</li>
+        <li>SIAPA, oficio UT/2475/2026, respuesta a la solicitud 140279226001178, 13 de noviembre de 2026. El documento completo lleva los datos de quien hizo la solicitud; por eso aquí se muestra solo el recorte.</li>
+        <li>PROEPA, oficio DJPA/UT/3292/0162/2026, respuesta a la solicitud 140276526000172, 23 de noviembre de 2026. Se muestra el recorte de la p. 5.</li>
+      </ul>
+      <p class="note">Los recortes son de los documentos tal como los entregaron; el resaltado, los círculos y las cifras en azul son nuestros. ¿Ves un error? Escríbenos a <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a>. Otros municipios: <a href="/nocuadra">No cuadra</a>.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Agua GDL es una iniciativa ciudadana, no oficial y sin partido. No tiene relación con el SIAPA ni con los gobiernos de Jalisco, Guadalajara, Zapopan, Tlaquepaque, Tonalá o Tlajomulco.</p>
+    <p><a href="/">Inicio</a> · <a href="/reportes">¿Hay agua?</a> · <a href="/cisternas">Cisternas comunitarias</a> · <a href="/pipas">Cómo pedir pipa</a> · <a href="/transparencia">Transparencia</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
+  </footer>
+</div>
+<script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script src="/mapa.js"></script>
+<script>
+// Agua GDL's reading of the SIAPA's Gráfico 1 (oficio DG-135/2026, PDF p. 5), mg/L, January 2020 to February 2026,
+// the same numbers as /datos/siapa-dg-135-2026-amoniacal.csv.
+const AMONIACO = [
+  0.11, 0.10, 0.10, 0.10, 0.10, 0.10, 0.10, 0.11, 0.10, 0.11, 0.10, 0.10,
+  0.10, 0.11, 0.10, 0.10, 0.10, 0.10, 0.11, 0.10, 0.11, 0.11, 0.11, 0.11,
+  0.12, 0.12, 0.12, 0.11, 0.12, 0.13, 0.23, 0.13, 0.27, 0.22, 0.12, 0.13,
+  0.12, 0.13, 0.14, 0.18, 0.11, 0.18, 1.37, 1.11, 0.29, 1.28, 1.31, 0.86,
+  0.60, 0.34, 0.13, 0.49, 0.44, 1.07, 2.18, 1.57, 0.56, 0.92, 0.60, 0.74,
+  0.27, 0.27, 0.26, 0.52, 0.58, 0.90, 2.14, 1.35, 0.66, 1.42, 1.19, 2.28,
+  3.62, 3.01];
+
+(() => {
+  const V = AMONIACO, LIMITE = 0.5, MARGEN = 0.05, TOPE = 4;
+  const MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+  const mes = (i) => `${MESES[i % 12]} de ${2020 + Math.floor(i / 12)}`;
+  const sobre = (v) => v > LIMITE + MARGEN;
+  const NS = "http://www.w3.org/2000/svg";
+  const caja = document.getElementById("serie");
+  const el = (name, attrs = {}, text) => {
+    const e = document.createElementNS(NS, name);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    return e;
+  };
+  const describe = (v) => sobre(v) ? `${(v / LIMITE).toFixed(1)} veces el límite` : v < LIMITE - MARGEN ? "por debajo del límite" : "cerca del límite";
+  const tip = document.createElement("div");
+  tip.className = "tip";
+  tip.hidden = true;
+  let actual = V.length - 2, geo = null;
+
+  function muestra(i) {
+    if (!geo) return;
+    actual = i;
+    for (const g of geo.cols) g.classList.toggle("on", +g.dataset.i === i);
+    tip.innerHTML = `<b>${mes(i)}</b>${V[i].toFixed(2)} mg/L<br>${describe(V[i])}`;
+    tip.hidden = false;
+    const cx = geo.x(i) + geo.ancho / 2, cy = geo.y(V[i]);
+    const w = tip.offsetWidth, izq = cx + 14 + w > geo.W ? cx - 14 - w : cx + 14;
+    tip.style.left = `${Math.max(0, izq)}px`;
+    tip.style.top = `${Math.max(0, Math.min(cy - 30, geo.H - tip.offsetHeight - geo.m.b))}px`;
+  }
+  const oculta = () => { tip.hidden = true; if (geo) for (const g of geo.cols) g.classList.remove("on"); };
+
+  function dibuja() {
+    const W = Math.max(300, Math.round(caja.clientWidth)), angosto = W < 560;
+    const H = angosto ? 260 : 340, m = { l: 30, r: 6, t: 24, b: 24 };
+    const pw = W - m.l - m.r, ph = H - m.t - m.b, paso = pw / V.length;
+    const hueco = paso >= 6 ? 2 : 1, ancho = Math.max(1, paso - hueco);
+    const y = (v) => m.t + ph - (v / TOPE) * ph;
+    const x = (i) => m.l + i * paso + hueco / 2;
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: "img", tabindex: 0,
+      "aria-label": "Gráfica de barras del nitrógeno amoniacal, promedio mensual en el agua que entra a la Planta 1, de enero de 2020 a febrero de 2026: de 0.10 a 0.27 mg/L de 2020 a 2022, por encima del límite la mayoría de los meses desde julio de 2023 y 3.62 mg/L en enero de 2026. Con las flechas se recorren los meses." });
+    svg.append(el("text", { x: 0, y: 12 }, "mg/L"));
+    for (let t = 0; t <= TOPE; t++) {
+      svg.append(el("line", { class: t ? "gl" : "base", x1: m.l, x2: W - m.r, y1: y(t), y2: y(t) }));
+      svg.append(el("text", { x: m.l - 6, y: y(t) + 4, "text-anchor": "end" }, String(t)));
+    }
+    for (let a = 0; a * 12 < V.length; a++) {
+      const ultimo = (a + 1) * 12 >= V.length;
+      svg.append(el("text", ultimo ? { x: W - m.r, y: H - 6, "text-anchor": "end" } : { x: x(a * 12), y: H - 6 }, String(2020 + a)));
+    }
+    const cols = [];
+    V.forEach((v, i) => {
+      const g = el("g", { class: "col", "data-i": i });
+      g.append(el("rect", { class: "hit", x: m.l + i * paso, y: m.t, width: paso, height: ph, fill: "transparent" }));
+      const top = y(v), h = m.t + ph - top, r = Math.min(2, ancho / 2, h), x0 = x(i);
+      g.append(el("path", { class: sobre(v) ? "sobre" : "bajo",
+        d: `M${x0},${top + h}V${top + r}Q${x0},${top} ${x0 + r},${top}H${x0 + ancho - r}Q${x0 + ancho},${top} ${x0 + ancho},${top + r}V${top + h}Z` }));
+      svg.append(g);
+      cols.push(g);
+    });
+    svg.append(el("line", { class: "limite", x1: m.l, x2: W - m.r, y1: y(LIMITE), y2: y(LIMITE) }));
+    svg.append(el("text", { class: "limite-t", x: m.l + 4, y: y(LIMITE) - 6 }, angosto ? "Límite: 0.5" : "Límite que cita el SIAPA: 0.5"));
+    const centro = (i) => x(i) + ancho / 2;
+    svg.append(el("text", { class: "nota", x: (centro(0) + centro(35)) / 2, y: y(1.05), "text-anchor": "middle" }, angosto ? "2020–22: 0.10 a 0.27" : "2020 a 2022: de 0.10 a 0.27"));
+    const julio = 54, enero = 72;
+    svg.append(el("line", { class: "nota-l", x1: centro(julio), x2: centro(julio), y1: y(V[julio]) - 3, y2: y(V[julio]) - 9 }));
+    svg.append(el("text", { class: "nota", x: centro(julio), y: y(V[julio]) - 13, "text-anchor": "middle" }, angosto ? "Jul. 2024: 2.18" : "Julio de 2024: 2.18"));
+    svg.append(el("line", { class: "nota-l", x1: x(enero) - 3, x2: x(enero) - 10, y1: y(V[enero]) + 5, y2: y(V[enero]) + 5 }));
+    svg.append(el("text", { class: "nota", x: x(enero) - 13, y: y(V[enero]) + 9, "text-anchor": "end" }, angosto ? "Ene. 2026: 3.62" : "Enero de 2026: 3.62"));
+
+    const indice = (ev) => {
+      const r = svg.getBoundingClientRect();
+      const i = Math.floor(((ev.clientX - r.left) * (W / r.width) - m.l) / paso);
+      return i >= 0 && i < V.length ? i : -1;
+    };
+    svg.addEventListener("pointermove", (ev) => { const i = indice(ev); if (i < 0) oculta(); else muestra(i); });
+    svg.addEventListener("pointerleave", oculta);
+    svg.addEventListener("focus", () => muestra(actual));
+    svg.addEventListener("blur", oculta);
+    svg.addEventListener("keydown", (ev) => {
+      const paso = { ArrowLeft: -1, ArrowRight: 1, Home: -V.length, End: V.length }[ev.key];
+      if (ev.key === "Escape") return oculta();
+      if (paso == null) return;
+      ev.preventDefault();
+      muestra(Math.max(0, Math.min(V.length - 1, actual + paso)));
+    });
+    caja.replaceChildren(svg, tip);
+    geo = { W, H, m, x, y, ancho, cols };
+  }
+
+  if (caja) {
+    dibuja();
+    let ancho = caja.clientWidth;
+    new ResizeObserver(() => { if (Math.abs(caja.clientWidth - ancho) > 1) { ancho = caja.clientWidth; dibuja(); } }).observe(caja);
+  }
+
+  const tabla = document.getElementById("tabla-meses");
+  if (tabla) {
+    const filas = V.map((v, i) => `<tr><td>${mes(i)}</td><td class="v">${v.toFixed(2)}</td><td>${sobre(v) ? "sí" : v < LIMITE - MARGEN ? "no" : "a menos de 0.05"}</td></tr>`);
+    tabla.innerHTML = `<table><thead><tr><th>Mes</th><th>mg/L</th><th>¿Encima de 0.5?</th></tr></thead><tbody>${filas.join("")}</tbody></table>`;
+  }
+})();
+
+(() => {
+  // The coordinates the SIAPA wrote atop each page of photographs (oficio DG-135/2026, PDF pp. 8–15) and, for A, in
+  // the text of p. 16, as written, numbered as on its plano (p. 7); 3, 4 and 5 have none. B and A are not among the
+  // ten. A click on a point scrolls to its photographs (#foto-N).
+  const PUNTOS = [
+    ["1", "Capulín 1", `20°28'40.4"N`, `103°15'56.5"W`],
+    ["2", "El Guayabo", `20°28'40.9"N`, `103°16'29.1"W`],
+    ["6", "La Carreta", `20°31'25.4"N`, `103°21'28.9"W`],
+    ["7", "El Edén", `20°31'59.9"N`, `103°21'50.1"W`],
+    ["8", "La Teja", `20°32'10.6"N`, `103°21'46.3"W`],
+    ["9", "Vaso Regulador Adolf Horn", `20°32'40.4"N`, `103°21'14.5"W`],
+    ["10", "1º de Mayo", `20°32'49.1"N`, `103°21'05.2"W`],
+    ["B", "Kilómetro 4, Arroyo Seco", `20°32'58.3"N`, `103°20'12.2"W`],
+    ["A", "Confluencia del río Toluquilla con el Arroyo Seco", `20°34'18.9"N`, `103°22'02.8"W`],
+  ];
+  const grados = (s) => {
+    const [, g, mi, se, h] = s.match(/(\d+)°(\d+)'([\d.]+)"([NSEW])/);
+    const v = +g + mi / 60 + se / 3600;
+    return h === "S" || h === "W" ? -v : v;
+  };
+  const caja = document.getElementById("mapa-puntos");
+  if (!caja || !window.L) { if (caja) caja.hidden = true; return; }
+  const M = window.aguaMapa;
+  const map = L.map(caja, { scrollWheelZoom: false, zoomSnap: 0.25 });
+  if (M && M.tiles) M.tiles(L, map);
+  else L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: "© OpenStreetMap" }).addTo(map);
+  if (M && M.pinch) M.pinch(map);
+  const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  const marcas = PUNTOS.map(([n, nombre, lat, lon]) => L.marker([grados(lat), grados(lon)], {
+    icon: L.divIcon({ className: "marca-punto", html: `<span class="punto${/^[AB]$/.test(n) ? " otro" : ""}">${n}</span>`, iconSize: [24, 24], iconAnchor: [12, 12] }),
+    alt: nombre,
+  }).bindTooltip(`${esc(nombre)}<span class="sub">${esc(lat)} ${esc(lon)}</span>`, { className: "map-label", direction: "top", offset: [0, -12] }));
+  const grupo = L.featureGroup(marcas).addTo(map);
+  map.fitBounds(grupo.getBounds(), { padding: [36, 36] });
+  const quieto = matchMedia("(prefers-reduced-motion: reduce)");
+  marcas.forEach((m, i) => m.on("click", () => {
+    const f = document.getElementById(`foto-${PUNTOS[i][0]}`);
+    if (!f) return;
+    document.querySelectorAll("figure.activa").forEach((e) => e.classList.remove("activa"));
+    f.classList.add("activa");
+    f.scrollIntoView({ behavior: quieto.matches ? "auto" : "smooth", block: "center" });
+    f.querySelector("a").focus({ preventScroll: true });
+  }));
+})();
+</script>
+</body>
+</html>

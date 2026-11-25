@@ -1,4 +1,4 @@
-"""Writes web/datos/zapopan-reportes.json, the counts behind /reportes-zapopan, from web/datos/zapopan-reportes.csv.
+"""Writes web/datos/zapopan-reportes.json, the counts behind /zapopan's reports section, from web/datos/zapopan-reportes.csv.
 
 --check fails when the JSON is out of date or the CSV no longer adds up to the oficio's total.
 
