@@ -1,7 +1,7 @@
 {
  "id": "23-siapa-las-pintas",
  "titulo": "Lo que el SIAPA le escribió a Tlajomulco",
- "caption": "El 6 de marzo de 2026, el SIAPA le escribió a Tlajomulco sobre el canal Las Pintas, que según el SIAPA lleva agua de Chapala a la planta de Miravalle. Nos lo dio Tlajomulco por transparencia.\n\n🧪 Según el SIAPA, el nitrógeno amoniacal del agua cruda que llega a la planta «ha alcanzado más de 3.50 mg/l». El límite que cita, de la norma para agua de uso y consumo humano, es 0.5 mg/L.\n📈 En su gráfica, el promedio mensual pasa de unos 0.1 mg/L en 2020 y 2021 a unos 3.6 en enero de 2026; en julio de 2024 y de 2025 hubo picos de unos 2.2, y en diciembre de 2025, unos 2.3 (lectura nuestra, ±0.05).\n📍 Dice que por el canal pasan aguas residuales de descargas que «se encuentran dentro del municipio de Tlajomulco de Zúñiga», y nombra 10 puntos principales.\n🔎 Según la CEDHJ, Tlajomulco informó que en 3 recorridos con el SIAPA a 10 puntos «se constató que no existen estas descargas», y que sí se detectaron en el arroyo El Seco, junto a Tlaquepaque.\n📨 El oficio responde a un aviso de Tlajomulco sobre una descarga al Arroyo Seco: el SIAPA dice que no es de su cobertura, pero la inspeccionó.\n⚖️ El 30 de abril, la CEDHJ le recomendó al SIAPA informar el «Estado de cumplimiento del oficio DG-135/2026».\n\nLo que no sabemos: si son los mismos 10 puntos y cuándo fueron los recorridos; si las descargas estaban cuando pasaron; cómo siguió después de inicios de 2026; y cómo está el agua ya potabilizada.\n\nEl oficio completo y el CSV: aguagdl.com/contamina (link en la bio).\n\n¿Qué le preguntarías al SIAPA? Escríbelo en los comentarios.",
+ "caption": "Investigación revela: el SIAPA admite que el agua que llega a su planta de Miravalle alcanzó más de 7 veces el límite de amoniaco de la norma. Está en un oficio del 6 de marzo de 2026 a Tlajomulco, que nos lo dio por transparencia.\n\n🧪 ¿Qué significa? Según el SIAPA, ese amoniaco viene de aguas residuales de casas, industrias y la agricultura, y hace más difícil desinfectar el agua. Dice que «ha alcanzado más de 3.50 mg/l»; el límite de la norma para agua de uso y consumo humano es 0.5.\n⚠️ Ojo: es agua cruda, antes de potabilizarla. El oficio no trae datos del agua ya potabilizada.\n📈 En su gráfica, en 2020 estaba debajo del límite (unos 0.1 mg/L); en enero de 2026, a más de 7 veces (unos 3.6; lectura nuestra, ±0.05).\n🏭 Desde diciembre de 2025, dice, esto «rebasa la capacidad operativa» de la planta, que «no fue diseñada para tratar agua con estas características de calidad».\n📍 Dice que por el canal Las Pintas, que lleva agua de Chapala a esa planta, pasan aguas residuales de descargas que «se encuentran dentro del municipio de Tlajomulco de Zúñiga».\n🔎 Según la CEDHJ, Tlajomulco informó que tras 3 recorridos con el SIAPA «se constató que no existen estas descargas».\n⚖️ La CEDHJ le recomendó al SIAPA informar el «Estado de cumplimiento del oficio DG-135/2026». Sus nueve puntos, según la CEDHJ: «En vías de cumplimiento».\n\nNo sabemos si las descargas estaban cuando pasaron ni cómo siguió el agua después de inicios de 2026.\n\nLéelo completo en aguagdl.com/contamina (link en la bio).\n\n¿Qué le preguntarías al SIAPA?",
  "fuentes": {
   "dg135": {
    "url": "https://aguagdl.com/datos/siapa-dg-135-2026.pdf",
@@ -57,19 +57,20 @@
     ],
     "dice": "… cabe señalar que el límite permisible establecido por la norma es de 0.5 mg/l, sin embargo, ha alcanzado más de 3.50 mg/l."
    },
-   "kicker": "Lo que el SIAPA le escribió a Tlajomulco el 6 de marzo",
-   "cifra": "más de 3.50",
-   "titular": "mg/L de nitrógeno amoniacal en el agua cruda que llega a la planta de Miravalle",
-   "texto": "El límite que cita, de la norma para agua de uso y consumo humano: **0.5** mg/L. El oficio no trae datos del agua ya potabilizada.",
+   "kicker": "Investigación revela: el SIAPA admite que el agua que llega a su planta de Miravalle alcanzó",
+   "cifra": "más de 7 veces",
+   "titular": "el límite de amoniaco de la norma",
+   "texto": "Según el SIAPA, ese amoniaco viene de aguas residuales de casas, industrias y la agricultura, y hace más difícil desinfectar el agua. Ojo: es el agua antes de potabilizarla.",
    "fuentes": [
     "dg135"
    ],
+   "calculo": "3.50 ÷ 0.5 = 7. El oficio dice que el límite «es de 0.5 mg/l» y que «ha alcanzado más de 3.50 mg/l»: más de 7 veces ese límite. Lo que significa el amoniaco: Anexo 01, p. 4 del PDF, leído de la imagen.",
    "nota": "Recorte: p. 2 del oficio DG-135/2026."
   },
   {
    "tipo": "texto",
    "kicker": "Promedio de cada mes en la gráfica del SIAPA, leído por nosotros",
-   "titular": "De unos 0.1 mg/L en 2020 y 2021 a unos **3.6** en enero de 2026",
+   "titular": "De *por debajo* del límite en 2020 a **más de 7 veces** en enero de 2026",
    "documento": {
     "fuente": "dg135",
     "etiqueta": "SIAPA, oficio DG-135/2026",
@@ -100,13 +101,13 @@
     ],
     "dice": "Valor promedio mensual Influente PP1"
    },
-   "texto": "Los picos de julio de 2024 y de 2025 fueron de unos 2.2; diciembre de 2025, unos 2.3.",
+   "texto": "El límite es 0.5 mg/L. Los picos de julio de 2024 y de 2025 ya eran más de 4 veces el límite.",
    "fuentes": [
     "dg135",
     "csv"
    ],
    "nota": "Recorte: p. 5. Círculos: lectura nuestra (±0.05 mg/L).",
-   "calculo": "Lecturas de Agua GDL sobre el gráfico 1 (p. 5), en el CSV: de 0.10 a 0.11 mg/L cada mes de 2020 y 2021, unos 0.1 mg/L; enero de 2026, 3.62, unos 3.6. Los círculos marcan los puntos de ene-20 y ene-26 del eje. Antes de diciembre de 2025, los valores más altos del gráfico 1 en el CSV son 2.18 (julio de 2024) y 2.14 (julio de 2025): unos 2.2. Diciembre de 2025: 2.28 en el CSV, unos 2.3."
+   "calculo": "Lecturas de Agua GDL sobre el gráfico 1 (p. 5), en el CSV: de 0.10 a 0.11 mg/L cada mes de 2020 y 2021, unos 0.1 mg/L; enero de 2026, 3.62, unos 3.6. Los círculos marcan los puntos de ene-20 y ene-26 del eje. Antes de diciembre de 2025, los valores más altos del gráfico 1 en el CSV son 2.18 (julio de 2024) y 2.14 (julio de 2025): unos 2.2. Diciembre de 2025: 2.28 en el CSV, unos 2.3. Contra el límite de 0.5 mg/L que cita el oficio: 0.10 y 0.11 están por debajo; 3.62 ÷ 0.5 = 7.24 (con ±0.05, de 7.14 a 7.34): más de 7 veces; 2.14 ÷ 0.5 = 4.28 y 2.18 ÷ 0.5 = 4.36 (con ±0.05, desde 4.18): más de 4 veces."
   },
   {
    "tipo": "texto",
@@ -130,7 +131,7 @@
     ],
     "dice": "desde el mes de diciembre de 2025 se ha observado un deterioro significativo y mucho mayor al registrado durante el propio temporal de lluvias. Esta condición rebasa la capacidad operativa de la planta potabilizadora, ya que no fue diseñada para tratar agua con estas características de calidad."
    },
-   "texto": "El nitrógeno amoniacal, dice, viene de aguas residuales domésticas e industriales y de procesos agrícolas, y dificulta la desinfección.",
+   "texto": "En corto: según el SIAPA, la planta de Miravalle no fue hecha para tratar agua así.",
    "fuentes": [
     "dg135"
    ],
