@@ -11,6 +11,13 @@ A reference is a model for the form. The subject is always Guadalajara's water a
 
 Before anything else (studying a reference, a prompt, a still), write the script and have Ricardo review it (his rule, 25 Nov 2026). The script is every line that will be on screen or spoken, in order, each with its source and pin, and one sentence on what the picture does meanwhile. Nothing is built or handed off until he has approved it; a change to the wording afterwards goes back through him.
 
+Review it on a page, not in chat (Ricardo, 25 Nov 2026). Copy `experiments/animacion/tlajomulco-amoniaco/guion.html` beside the film and change only its `VERSION`, `BEATS` (one row per line: time, text, source and pin, what the picture does) and `SUGS` (your suggestions or open questions, each with Sí / No / Sí, con cambios). Publish it with `capabilities: {comments: {}}`. Ricardo writes a note under each line and presses «Enviar a Claude», which sends every note as one comment to this session. «Copiar notas» gives the same text to paste in chat, for the other org or a local copy. Each round:
+- read the thread, apply the notes, bump `VERSION`, and publish to the same URL with `edits`;
+- mark every changed line «cambio vN» in its source field, and keep facts you could not check marked «sin verificar»;
+- when a note conflicts with `evidence.md` or a rule in this skill, ask on the page as a question rather than applying it silently, and write his answer into the rule;
+- resolve the thread once applied;
+- end with an approval question; approval is a «Sí» there or his word in chat.
+
 ## 1. Study the reference
 
 Never describe motion from the post's text or from memory: measure it.
@@ -45,7 +52,7 @@ The beats and timings are set on the script Ricardo approved in step 0; show him
 - Check with `npm run dev` and `node scripts/shot.mjs <path>` at both widths.
 
 **As a video** (outside `web/`; working files in `experiments/` or the notes repo):
-- Script first: one short sentence per beat, every date, number and place tied to its source. No real person's likeness, no logos.
+- Script first: one short sentence per beat, every date, number and place tied to its source. No real person's likeness. Logos only of the public bodies the film names (SIAPA, municipios), from their official sites or Ricardo's files (Ricardo, 25 Nov 2026); no other logos.
 - Geography from the repo's data (`web/zones.json`, `web/colonias_siapa.topo.json`), never drawn by hand.
 - Write the timing first: one list of beats with frame numbers, from the voice-over's words, and read every cue from it. Give every element an end frame.
 - Every frame is a function of its frame number alone (no clocks, no random without a seed, no state carried over), so any frame can be drawn by itself and checked.

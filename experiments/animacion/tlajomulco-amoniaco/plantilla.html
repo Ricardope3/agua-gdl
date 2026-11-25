@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="es-MX">
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>Tlajomulco y el amoniaco · animación</title>
+<style>
+  :root { --bg: #fbfaf6; --ink: #0c1328; --brand: #1d3f9e; --deep: #142d75; --muted: #4f5b7a; --line: #c4cfe9; --alto: #d95926; --hoja: #ddd7c6;
+    --serif: Baskerville, "Baskerville Old Face", "Libre Baskerville", Georgia, serif; --sans: -apple-system, "Helvetica Neue", Arial, sans-serif }
+  html, body { margin: 0; height: 100%; background: #e9e7df; overflow: hidden }
+  #lienzo { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; background: var(--bg); color: var(--ink); font-family: var(--sans); transform-origin: 0 0; overflow: hidden }
+  #lienzo > * { position: absolute; margin: 0 }
+  .doble { left: 72px; right: 72px; top: 120px; height: 8px; border-top: 3px solid var(--deep); border-bottom: 1px solid var(--deep) }
+  .antetitulo { left: 72px; top: 156px; font: 600 34px/1 var(--sans); letter-spacing: .02em; color: var(--brand) }
+  .titulo { left: 72px; right: 72px; top: 220px; font: italic 82px/1.08 var(--serif); color: var(--deep) }
+  .bajada { left: 72px; right: 72px; top: 520px; font: 36px/1.3 var(--sans); color: var(--muted) }
+  svg { left: 0; top: 690px; width: 1080px; height: 720px; overflow: visible }
+  svg text { font: 30px var(--sans); fill: var(--muted) }
+  .pie { left: 72px; right: 72px; top: 1775px; font: 26px/1.35 var(--sans); color: var(--muted) }
+  .nota { left: 72px; right: 72px; top: 1470px; font: 46px/1.25 var(--sans) }
+  .nota b { font: italic 54px/1.1 var(--serif); color: var(--deep) }
+  .pico { left: 72px; right: 72px; top: 1440px }
+  .pico .cifra { font: italic 190px/1 var(--serif); color: var(--alto) }
+  .pico .cifra small { font: 44px var(--sans); color: var(--muted); margin-left: 12px }
+  .pico p { margin: 14px 0 0; font: 46px/1.25 var(--sans) }
+  .hoja { left: 72px; right: 72px; padding: 36px 40px 40px; background: #fff; border: 1px solid var(--hoja); border-radius: 4px; box-sizing: border-box }
+  .hoja .quien { font: 600 30px/1.2 var(--sans); color: var(--brand); letter-spacing: .02em }
+  .hoja .grande { margin-top: 14px; font: italic 80px/1.05 var(--serif); color: var(--deep) }
+  .hoja .cita { margin-top: 20px; font: 40px/1.4 var(--serif) }
+  .hoja .cita span { background: linear-gradient(rgb(242 200 75 / .55), rgb(242 200 75 / .55)) no-repeat; background-size: 0% 100% }
+  .hoja .fuente { margin-top: 20px; font: 26px/1.3 var(--sans); color: var(--muted) }
+  .cierre { left: 72px; right: 72px; top: 1420px }
+  .cierre h2 { margin: 0; font: italic 60px/1.1 var(--serif); color: var(--deep) }
+  .cierre p { margin: 18px 0 0; font: 38px/1.35 var(--serif) }
+  .cierre .fuente { font: 26px/1.3 var(--sans); color: var(--muted) }
+  .firma { left: 72px; right: 72px; top: 1820px; font: 600 34px/1 var(--sans); color: var(--brand) }
+</style>
+<div id="lienzo">
+  <div class="doble"></div>
+  <p class="antetitulo">No cuadra · Tlajomulco y el canal de Las Pintas</p>
+  <h1 class="titulo" id="t1">El amoniaco del agua que entra a la Planta 1</h1>
+  <h1 class="titulo" id="t2">Diez puntos contra «no existen descargas»</h1>
+  <p class="bajada" id="bajada">Nitrógeno amoniacal en el agua cruda que llega a la Planta Potabilizadora 1 del SIAPA, en Miravalle, antes de potabilizarse. Promedio de cada mes, en mg/L.</p>
+  <svg id="grafica" viewBox="0 0 1080 720">
+    <defs><clipPath id="arriba"><rect id="recorte" x="0" y="-40" width="1080" height="0"/></clipPath></defs>
+    <g id="ejes"></g>
+    <g id="limite"><line id="lim" stroke="#0c1328" stroke-width="3" stroke-dasharray="14 10"/><text id="limtxt" style="fill:#0c1328;font:600 27px var(--sans)">Límite que cita el SIAPA: 0.5 mg/L</text></g>
+    <path id="azul" fill="none" stroke="#1d3f9e" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" pathLength="1" stroke-dasharray="1 1"/>
+    <path id="naranja" fill="none" stroke="#d95926" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" pathLength="1" stroke-dasharray="1 1" clip-path="url(#arriba)"/>
+    <circle id="aro1" r="16" fill="none" stroke="#0c1328" stroke-width="3"/>
+    <circle id="aro2" r="16" fill="none" stroke="#0c1328" stroke-width="3"/>
+    <g id="cabeza"><circle r="10" fill="#1d3f9e"/></g>
+    <text id="mes" x="150" y="10" style="fill:#0c1328;font:600 38px var(--sans)"></text>
+  </svg>
+  <p class="nota" id="n1"><b>Hasta 2022</b><br>el promedio no pasó de 0.27 mg/L</p>
+  <p class="nota" id="n2"><b>Julio de 2024</b><br>llegó a 2.18 mg/L</p>
+  <div class="pico" id="pico"><div class="cifra">3.62<small>mg/L</small></div><p><b>Enero de 2026.</b> Más de siete veces el límite</p></div>
+  <p class="pie" id="pie1">Lectura de Agua GDL (±0.05 mg/L) sobre el Gráfico 1 del oficio DG-135/2026 del SIAPA, p. 5 del PDF. El SIAPA no ha entregado los números.</p>
+
+  <div class="hoja" id="h1" style="top:480px">
+    <div class="quien">Lo que dice el SIAPA · 6 de marzo de 2026</div>
+    <div class="grande">10 puntos de descarga</div>
+    <div class="cita">«por el Canal Las Pintas transitan aguas residuales provenientes de <span id="m1">descargas de aguas sanitarias y/o residuales que se encuentran dentro del municipio de Tlajomulco de Zúñiga</span>»</div>
+    <div class="fuente">Oficio DG-135/2026, p. 1</div>
+  </div>
+  <div class="hoja" id="h2" style="top:980px">
+    <div class="quien">Lo que dice Tlajomulco · finales de marzo</div>
+    <div class="grande">«no existen descargas»</div>
+    <div class="cita">«se realizaron tres recorridos en campo en conjunto con el SIAPA para visitar estos 10 puntos, <span id="m2">constatando que no existen descargas de aguas residuales al canal "Las pintas"</span>»</div>
+    <div class="fuente">Oficio DAPIH/0331-01/2026, p. 3</div>
+  </div>
+  <div class="cierre" id="cierre">
+    <h2>Tlajomulco no le contestó el oficio al SIAPA</h2>
+    <p>«el municipio no emitió respuesta al referido oficio»</p>
+    <p class="fuente">Oficio DTRC/1740/2026 de Tlajomulco, 20 de noviembre de 2026, p. 4</p>
+  </div>
+  <p class="firma" id="firma">Los documentos: aguagdl.com/tlajomulco</p>
+</div>
+<script>
+const SERIE = /*SERIE*/[];
+const FPS = 30, DUR = 37.5;
+// Guion: cada entrada es [inicio, fin] en segundos. Todo lo que se mueve lee de aquí.
+const G = {
+  titulo: [0.3, 17.4], bajada: [1.4, 17.4], ejes: [2.6, 17.4], limite: [3.0, 3.8],
+  linea: [4.6, 12.6], n1: [7.0, 9.8], n2: [10.5, 12.3], pico: [12.7, 17.4], pie1: [3.0, 17.4],
+  titulo2: [17.8, DUR], h1: [18.4, DUR], m1: [19.4, 20.8], h2: [25.0, DUR], m2: [26.0, 27.2],
+  cierre: [31.5, DUR], firma: [33.0, DUR],
+};
+const $ = id => document.getElementById(id);
+const clamp = x => Math.max(0, Math.min(1, x));
+const suave = x => 1 - Math.pow(1 - clamp(x), 3);
+// Opacidad y subida de 16 px al entrar (0.4 s); salida en 0.25 s, sin moverse.
+function entra(el, [a, b], t, sube = 16) {
+  const e = suave((t - a) / 0.4), s = b >= DUR ? 1 : 1 - clamp((t - b) / 0.25);
+  el.style.opacity = (e * s).toFixed(3);
+  el.style.transform = `translateY(${((1 - e) * sube).toFixed(2)}px)`;
+}
+const X0 = 150, X1 = 1010, Y0 = 640, Y1 = 40, MAX = 4;
+const px = i => X0 + (X1 - X0) * i / (SERIE.length - 1), py = v => Y0 - (Y0 - Y1) * v / MAX;
+const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+(function arma() {
+  let ejes = "";
+  for (let v = 0; v <= MAX; v++) ejes += `<line x1="${X0}" x2="${X1}" y1="${py(v)}" y2="${py(v)}" stroke="#c4cfe9" stroke-width="2"/><text x="${X0 - 18}" y="${py(v) + 10}" text-anchor="end">${v}</text>`;
+  SERIE.forEach(([m], i) => { if (m.endsWith("-01")) ejes += `<line x1="${px(i)}" x2="${px(i)}" y1="${Y0}" y2="${Y0 + 12}" stroke="#4f5b7a" stroke-width="2"/><text x="${px(i)}" y="${Y0 + 50}" text-anchor="middle">${m.slice(0, 4)}</text>`; });
+  $("ejes").innerHTML = ejes;
+  const d = SERIE.map(([, v], i) => (i ? "L" : "M") + px(i).toFixed(1) + " " + py(v).toFixed(1)).join(" ");
+  $("azul").setAttribute("d", d); $("naranja").setAttribute("d", d);
+  $("recorte").setAttribute("height", py(0.5) + 40);
+  $("lim").setAttribute("y1", py(0.5)); $("lim").setAttribute("y2", py(0.5)); $("lim").setAttribute("x1", X0);
+  $("limtxt").setAttribute("x", X0 + 8); $("limtxt").setAttribute("y", py(0.5) - 16);
+  const pon = (id, mes) => { const i = SERIE.findIndex(r => r[0] === mes); $(id).setAttribute("cx", px(i)); $(id).setAttribute("cy", py(SERIE[i][1])); return i; };
+  // La segunda escena se apila según la altura real de cada hoja.
+  const bajo = (el, arriba, hueco) => { el.style.top = arriba.offsetTop + arriba.offsetHeight + hueco + "px"; };
+  bajo($("h2"), $("h1"), 28); bajo($("cierre"), $("h2"), 44); bajo($("firma"), $("cierre"), 36);
+  window.I2 = pon("aro1", "2024-07"); window.I3 = pon("aro2", "2026-01");
+})();
+// Largo acumulado de la línea, para que el trazo avance un mes por unidad de tiempo.
+const LARGO = (() => { const a = [0]; for (let i = 1; i < SERIE.length; i++) a.push(a[i - 1] + Math.hypot(px(i) - px(i - 1), py(SERIE[i][1]) - py(SERIE[i - 1][1]))); return a; })();
+
+window.renderAt = t => {
+  entra($("t1"), G.titulo, t); entra($("bajada"), G.bajada, t); entra($("grafica"), G.ejes, t, 0); entra($("pie1"), G.pie1, t, 0);
+  const l = suave((t - G.limite[0]) / (G.limite[1] - G.limite[0]));
+  $("lim").setAttribute("x2", X0 + (X1 - X0) * l); $("limtxt").style.opacity = l;
+  // La línea avanza a ritmo constante: el tiempo de pantalla es el tiempo del calendario.
+  const k = clamp((t - G.linea[0]) / (G.linea[1] - G.linea[0])) * (SERIE.length - 1), i = Math.min(SERIE.length - 2, Math.floor(k)), f = k - i;
+  const frac = (LARGO[i] + (LARGO[i + 1] - LARGO[i]) * f) / LARGO[LARGO.length - 1];
+  for (const id of ["azul", "naranja"]) $(id).setAttribute("stroke-dashoffset", (1 - frac).toFixed(5));
+  const v = SERIE[i][1] + (SERIE[i + 1][1] - SERIE[i][1]) * f, mi = Math.round(k);
+  $("cabeza").setAttribute("transform", `translate(${(px(i) + (px(i + 1) - px(i)) * f).toFixed(1)} ${py(v).toFixed(1)})`);
+  $("cabeza").style.opacity = t >= G.linea[0] ? 1 : 0;
+  $("cabeza").firstChild.setAttribute("fill", v > 0.5 ? "#d95926" : "#1d3f9e");
+  $("mes").textContent = t >= G.linea[0] ? MESES[+SERIE[mi][0].slice(5) - 1] + " " + SERIE[mi][0].slice(0, 4) + " · " + SERIE[mi][1].toFixed(2) + " mg/L" : "";
+  $("aro1").style.opacity = k >= I2 ? 1 : 0; $("aro2").style.opacity = k >= I3 ? 1 : 0;
+  entra($("n1"), G.n1, t); entra($("n2"), G.n2, t); entra($("pico"), G.pico, t);
+  entra($("t2"), G.titulo2, t); entra($("h1"), G.h1, t); entra($("h2"), G.h2, t); entra($("cierre"), G.cierre, t); entra($("firma"), G.firma, t, 0);
+  for (const m of ["m1", "m2"]) $(m).style.backgroundSize = (100 * suave((t - G[m][0]) / (G[m][1] - G[m][0]))).toFixed(1) + "% 100%";
+};
+const q = new URLSearchParams(location.search);
+function ajusta() { const s = q.has("f") || q.has("t") ? +(q.get("s") || 1) : Math.min(innerWidth / 1080, innerHeight / 1920); $("lienzo").style.transform = `scale(${s})`; }
+ajusta(); addEventListener("resize", ajusta);
+if (q.has("f")) renderAt(+q.get("f") / FPS);
+else if (q.has("t")) renderAt(+q.get("t"));
+else { const t0 = performance.now(); (function paso(ms) { renderAt(((ms - t0) / 1000) % (DUR + 1.5)); requestAnimationFrame(paso); })(t0); }
+</script>
+</html>

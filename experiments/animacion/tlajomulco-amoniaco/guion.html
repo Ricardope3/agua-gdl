@@ -1,0 +1,127 @@
+<title>Guion Tlajomulco amoniaco</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="robots" content="noindex">
+<style>
+/* Script sheet in the No cuadra look: one column of beats, a note box under each. */
+:root { --bg: #fbfaf6; --card: #ffffff; --ink: #0c1328; --brand: #1d3f9e; --deep: #142d75; --muted: #4f5b7a; --line: #c4cfe9; --alto: #d95926; --mark: rgb(242 200 75 / .45);
+  --serif: Baskerville, "Libre Baskerville", Georgia, serif; --sans: -apple-system, "Helvetica Neue", Arial, sans-serif }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #10162a; --card: #182040; --ink: #eef0f7; --brand: #8fa8ff; --deep: #b9c8ff; --muted: #a6b0cc; --line: #34406a; --alto: #ff8a5c; --mark: rgb(242 200 75 / .25); color-scheme: dark } }
+:root[data-theme="dark"] { --bg: #10162a; --card: #182040; --ink: #eef0f7; --brand: #8fa8ff; --deep: #b9c8ff; --muted: #a6b0cc; --line: #34406a; --alto: #ff8a5c; --mark: rgb(242 200 75 / .25); color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font: 17px/1.5 var(--sans) }
+main { max-width: 760px; margin: 0 auto; padding-block: 32px 80px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 20px }
+.doble { height: 6px; border-top: 3px solid var(--deep); border-bottom: 1px solid var(--deep) }
+.ante { font: 600 14px/1 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--brand) }
+h1 { margin: 0; font: italic 40px/1.1 var(--serif); color: var(--deep); text-wrap: balance }
+h2 { margin: 24px 0 0; font: italic 28px/1.15 var(--serif); color: var(--deep) }
+.intro { color: var(--muted); margin: 0 }
+.beat { background: var(--card); border: 1px solid var(--line); border-radius: 4px; padding: 18px 20px; display: grid; gap: 10px; min-width: 0 }
+.cab { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap }
+.t { font: 600 14px/1 var(--sans); font-variant-numeric: tabular-nums; color: var(--alto) }
+.que { font: 13px/1.3 var(--sans); color: var(--muted) }
+.texto { font: 21px/1.4 var(--serif) }
+.texto b { color: var(--deep) }
+.fuente { font-size: 14px; color: var(--muted) }
+.fuente .nc { color: var(--alto); font-weight: 600 }
+label { font: 600 13px/1 var(--sans); color: var(--brand) }
+textarea { width: 100%; box-sizing: border-box; min-height: 64px; padding: 10px 12px; font: 16px/1.4 var(--sans); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; resize: vertical }
+textarea:focus { outline: 2px solid var(--brand); outline-offset: 1px }
+.sug .texto { font: 18px/1.45 var(--sans) }
+.opc { display: flex; gap: 16px; flex-wrap: wrap; font-size: 15px }
+.opc label { font: 15px/1.3 var(--sans); color: var(--ink); display: flex; gap: 6px; align-items: center }
+.envio { position: sticky; bottom: 0; background: var(--bg); border-top: 1px solid var(--line); padding-block: 14px calc(14px + env(safe-area-inset-bottom, 0px)); display: flex; gap: 12px; align-items: center; flex-wrap: wrap }
+button { font: 600 16px/1 var(--sans); padding: 12px 18px; border-radius: 4px; border: 1px solid var(--brand); background: var(--brand); color: var(--bg); cursor: pointer }
+button.sec { background: transparent; color: var(--brand) }
+button:focus-visible { outline: 2px solid var(--alto); outline-offset: 2px }
+#estado { font-size: 14px; color: var(--muted); flex: 1 1 200px }
+#copia { width: 100%; min-height: 160px; font: 13px/1.4 ui-monospace, Menlo, monospace }
+.ver { font-size: 13px; color: var(--muted) }
+</style>
+
+<main>
+  <div class="doble"></div>
+  <div class="ante">Guion · película 1 · para revisión</div>
+  <h1>Tlajomulco y el amoniaco</h1>
+  <p class="intro">~45 s (v1 duraba 37.5 s), vertical 1080×1920, solo texto (tú pones la voz). Escribe bajo cada línea lo que quieras cambiar y deja vacío lo que está bien. «Enviar a Claude» me manda todas tus notas y yo actualizo esta página con la versión nueva.</p>
+  <p class="ver" id="ver"></p>
+
+  <h2>El guion</h2>
+  <div id="beats"></div>
+
+  <h2>Aprobación</h2><p class="intro">Las preguntas p1 a p4 ya están contestadas; quedan abajo como registro.</p>
+  <div id="sugs"></div>
+
+  <h2>Otra cosa</h2>
+  <div class="beat"><label for="n-general">Notas generales</label><textarea id="n-general" placeholder="Ritmo, tono, duración, lo que sea"></textarea></div>
+
+  <div class="envio">
+    <button id="enviar">Enviar a Claude</button>
+    <button class="sec" id="copiar">Copiar notas</button>
+    <span id="estado" role="status"></span>
+  </div>
+  <textarea id="copia" hidden readonly aria-label="Notas para pegar en el chat"></textarea>
+</main>
+
+<script>
+const VERSION = "v4 · 25 nov 2026";
+const BEATS = [
+  { id: "b1", t: "0.3 s", texto: "<span class='que'>Antetítulo:</span> [logo de Tlajomulco] Tlajomulco y el canal de Las Pintas<br><b>El amoniaco del agua que entra a la Planta 1</b>", fuente: "— · <span class='nc'>cambio v2: sin «No cuadra», logo antes del texto</span>", que: "Aparece bajo la doble raya" },
+  { id: "b2", t: "1.4 s", texto: "«Nitrógeno amoniacal 💩 en el agua cruda que llega a la Planta Potabilizadora 1 del SIAPA, en Miravalle, antes de potabilizarse. Promedio de cada mes, en mg/L.»", fuente: "Oficio DG-135/2026, Gráfico 1, p. 5 del PDF · <span class='nc'>cambio v2: ícono de popó (ver pregunta p2)</span>", que: "Bajada" },
+  { id: "b3", t: "3.0 s", texto: "<b>Límite que cita el SIAPA: 0.5 mg/L</b><br>Pie: «Lectura de Agua GDL (±0.05 mg/L) sobre el Gráfico 1 del oficio DG-135/2026 del SIAPA, p. 5 del PDF. El SIAPA no ha entregado los números.»", fuente: "CSV web/datos/siapa-dg-135-2026-amoniacal.csv · <span class='nc'>«no ha entregado los números»: sin verificar (dijiste que no a s7; lo dejo tal cual)</span>", que: "Se dibujan los ejes y la línea del límite" },
+  { id: "b4", t: "4.6–12.6 s", texto: "La línea corre de enero de 2020 a febrero de 2026, con un contador de mes y mg/L", fuente: "CSV, 74 meses (lo comprueba build.py)", que: "Azul bajo 0.5, naranja arriba" },
+  { id: "b5", t: "7.0 s", texto: "<b>Hasta 2022</b> el promedio no pasó de 0.27 mg/L", fuente: "CSV (comprobado en build.py)", que: "" },
+  { id: "b6", t: "10.5 s", texto: "<b>Julio de 2024</b> llegó a 2.18 mg/L", fuente: "CSV (comprobado en build.py)", que: "Círculo sobre el punto" },
+  { id: "b7", t: "12.7 s", texto: "<b>3.62</b> mg/L · <b>Enero de 2026.</b> Más de siete veces el límite", fuente: "CSV (comprobado: 3.62/0.5 > 7)", que: "Círculo sobre el pico" },
+  { id: "b7m", t: "~17.5–25 s (nuevo)", texto: "<b>Esta agua llega a 655 colonias</b><br>de Guadalajara, Zapopan, Tlaquepaque y Tonalá, según el SIAPA", fuente: "SIAPA a la CEDHJ, citado en web/tlajomulco.html · <span class='nc'>pin del documento: sin verificar todavía</span> · mapa de web/colonias_siapa.topo.json", que: "Mapa estilo Vox: la gráfica se encoge y aparecen solo los cuatro municipios que abastece la planta. Cada uno se pinta de su color, uno tras otro, con su contorno en ese mismo color y, encima, su logo y su nombre. Logos tomados de los sitios oficiales" },
+  { id: "b8", t: "~25.5 s", texto: "<b>Se echan la culpa entre ellos</b>", fuente: "— · <span class='nc'>cambio v2</span>", que: "Se va el mapa; empieza la escena 2" },
+  { id: "b9", t: "~26 s", texto: "<b>Según el [logo SIAPA]</b><br><span class='que'>6 de marzo de 2026</span><br><b>10 puntos de descarga</b><br>«por el Canal Las Pintas transitan aguas residuales provenientes de descargas de aguas sanitarias y/o residuales que se encuentran dentro del municipio de Tlajomulco de Zúñiga»", fuente: "Oficio DG-135/2026, p. 1 · <span class='nc'>cambio v3: título «Según el [logo]», con tu siapalogo.png</span>", que: "Tarjeta; el marcador subraya el final de la cita" },
+  { id: "b10", t: "~33 s", texto: "<b>Según [logo de Tlajomulco] el gobierno de Tlajomulco</b><br><span class='que'>finales de marzo</span><br><b>«no existen descargas»</b><br>«se realizaron tres recorridos en campo en conjunto con el SIAPA para visitar estos 10 puntos, constatando que no existen descargas de aguas residuales al canal \"Las pintas\"»", fuente: "Oficio DAPIH/0331-01/2026, p. 3 · <span class='nc'>cambio v3: título «Según [logo] el gobierno de Tlajomulco»</span>", que: "Segunda tarjeta, marcador" },
+  { id: "b11", t: "~39.5 s", texto: "<b>Tlajomulco nunca le respondió al SIAPA</b><br>«el municipio no emitió respuesta al referido oficio»", fuente: "Respuesta de Tlajomulco a nuestra solicitud de transparencia (DTRC/1740/2026), 20 de noviembre de 2026, p. 4 · <span class='nc'>cambio v4: «nunca le respondió», decisión de Ricardo; la cita textual va debajo</span>", que: "Cierre" },
+  { id: "b12", t: "~41 s", texto: "Los documentos: aguagdl.com/tlajomulco", fuente: "—", que: "Firma. Duración total ~45 s" },
+];
+const SUGS = [
+  { id: "ok", texto: "<b>¿Apruebas este guion?</b> Respuestas v3: logos de los sitios oficiales; el 💩 se queda en la gráfica; mapa solo con los cuatro municipios; «nunca le respondió». Si dices sí, escribo el prompt para construir la película en otra sesión." },
+  { id: "p1", texto: "<b>Logos.</b> La regla del skill dice «no logos» en los videos. Tú los pides; ¿la cambiamos para escudos oficiales de municipios y del SIAPA? ¿Tienes los de Tlajomulco, Guadalajara, Zapopan, Tlaquepaque y Tonalá, o los tomo de sus sitios oficiales?" },
+  { id: "p2", texto: "<b>El ícono de popó.</b> Junto a «nitrógeno amoniacal» dice que viene de aguas residuales. El SIAPA lo afirma; Tlajomulco lo niega (b10). ¿Lo dejamos, o va junto a la cita del SIAPA en b9 en lugar de en la gráfica?" },
+  { id: "p3", texto: "<b>El mapa.</b> ¿Solo los cuatro municipios que abastece la planta, más Tlajomulco marcado aparte? ¿O toda la zona metropolitana?" },
+  { id: "p4", texto: "<b>«Por escrito».</b> La respuesta solo dice que no contestó el oficio. «Nunca le respondió por escrito» se queda en lo que dice; «nunca le respondió» a secas iría más allá. ¿Te sirve así?" },
+];
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+$("ver").textContent = "Versión " + VERSION;
+$("beats").innerHTML = BEATS.map(b => `<div class="beat" id="row-${b.id}"><div class="cab"><span class="t">${b.t}</span><span class="que">${b.que}</span></div><div class="texto">${b.texto}</div><div class="fuente">${b.fuente}</div><label for="n-${b.id}">Tu nota</label><textarea id="n-${b.id}"></textarea></div>`).join("");
+$("sugs").innerHTML = SUGS.map(s => `<div class="beat sug"><div class="texto">${s.texto}</div><div class="opc" role="radiogroup"><label><input type="radio" name="d-${s.id}" value="sí"> Sí</label><label><input type="radio" name="d-${s.id}" value="no"> No</label><label><input type="radio" name="d-${s.id}" value="cambiar"> Sí, con cambios</label></div><label for="n-${s.id}">Tu nota</label><textarea id="n-${s.id}"></textarea></div>`).join("");
+$("beats").style.cssText = $("sugs").style.cssText = "display:grid;gap:14px";
+
+const KEY = "guion-tlajo-" + VERSION;
+const campos = () => [...document.querySelectorAll("textarea[id^='n-'], input[type=radio]")];
+function guarda() { const o = {}; for (const el of campos()) o[el.id || el.name + el.value] = el.type === "radio" ? el.checked : el.value; try { localStorage.setItem(KEY, JSON.stringify(o)); } catch {} }
+try { const o = JSON.parse(localStorage.getItem(KEY) || "{}"); for (const el of campos()) { const k = el.id || el.name + el.value; if (k in o) el.type === "radio" ? (el.checked = o[k]) : (el.value = o[k]); } } catch {}
+document.addEventListener("input", guarda);
+
+function notas() {
+  const l = [`Notas de Ricardo sobre el guion (${VERSION}):`];
+  for (const b of BEATS) { const v = $("n-" + b.id).value.trim(); if (v) l.push(`- ${b.id} (${b.t}): ${v}`); }
+  for (const s of SUGS) { const d = document.querySelector(`input[name='d-${s.id}']:checked`)?.value, v = $("n-" + s.id).value.trim(); if (d || v) l.push(`- ${s.id}: ${d || "sin decidir"}${v ? " — " + v : ""}`); }
+  const g = $("n-general").value.trim(); if (g) l.push(`- General: ${g}`);
+  return l.length > 1 ? l.join("\n") : "";
+}
+function copia(texto) {
+  $("copia").hidden = false; $("copia").value = texto; $("copia").select();
+  navigator.clipboard?.writeText(texto).then(() => $("estado").textContent = "Copiado. Pégalo en el chat con Claude.", () => $("estado").textContent = "Selecciona el texto de abajo y cópialo al chat.");
+}
+$("copiar").onclick = () => { const t = notas(); if (!t) return $("estado").textContent = "No hay notas todavía."; copia(t); };
+
+let com = null;
+$("enviar").hidden = true;
+(async () => {
+  try { com = await window.claude?.use?.("comments"); } catch {}
+  if (!com) return;
+  try { if ((await com.canSendToClaude()) === "available") $("enviar").hidden = false; } catch {}
+})();
+$("enviar").onclick = async () => {
+  const t = notas(); if (!t) return $("estado").textContent = "No hay notas todavía.";
+  $("estado").textContent = "Enviando…";
+  try { const anchor = await com.anchorFor($("enviar")); await com.sendToClaude({ anchor, text: t }); $("estado").textContent = "Enviado. Claude aplica los cambios y actualiza esta página."; }
+  catch (e) { $("estado").textContent = "No se pudo enviar (" + esc(String(e?.code || e)) + "). Usa «Copiar notas»."; copia(t); }
+};
+</script>
