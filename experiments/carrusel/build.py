@@ -86,6 +86,11 @@ def check(c, fotos_ok, temas):
     for k in ("id", "titulo", "caption", "fuentes", "slides"):
         if k not in c:
             fail(f"{cid}: missing {k}")
+    for k in re.findall(r"\[\[(\w*)\]\]", json.dumps(c["slides"], ensure_ascii=False)) + [s["marca_grande"] for s in c["slides"] if s.get("marca_grande")]:
+        if k not in LOGOS and k not in SELLOS:
+            fail(f"{cid}: [[{k}]] is neither in LOGOS nor in SELLOS")
+        elif k in LOGOS and not (HERE / "logos" / LOGOS[k]).exists():
+            fail(f"{cid}: logos/{LOGOS[k]} is missing")
     for key, f in c["fuentes"].items():
         for k in ("url", "medio", "fecha", "cita", "revisado"):
             if not f.get(k):
@@ -166,8 +171,22 @@ def check(c, fotos_ok, temas):
                 fail(f"{where}: the quote is not word for word in its fuente's cita")
 
 
+# [[name]] in a slide's text: an organisation's logo (logos/<file>, the logo as served by its own site, cut only to drop
+# a slogan) or, for a government body, a name badge: an official emblem on our graphics could read as endorsement.
+LOGOS = {"nestle": "nestle-marca.svg", "ocotlan": "ocotlan-escudo.png"}
+SELLOS = {"conagua": "CONAGUA"}
+
+
+def marca(m):
+    k = m.group(1)
+    if k in LOGOS:
+        return f'<img class="marca" src="{(HERE / "logos" / LOGOS[k]).as_uri()}" alt="">'
+    return f'<span class="sello">{SELLOS[k]}</span>'
+
+
 def md(text):
     t = html.escape(text)
+    t = re.sub(r"\[\[(\w+)\]\]", marca, t)
     t = re.sub(r"\*\*(.+?)\*\*", r'<span class="alarm">\1</span>', t)
     t = re.sub(r"\*(.+?)\*", r'<span class="acc">\1</span>', t)
     return t.replace("\n", "<br>")
@@ -242,6 +261,8 @@ def render_body(s):
         docs = "".join(documento(d) for d in documentos(s))
         docs = [f'<div class="docs">{docs}</div>'] if docs else []
         parts = docs if t == "portada" else []  # the cover shows the document first; a texto slide after its headline
+        if s.get("marca_grande"):
+            parts.append(f'<div class="marcag">{md("[[" + s["marca_grande"] + "]]")}</div>')
         if s.get("kicker"):
             parts.append(f'<div class="kicker">{md(s["kicker"])}</div>')
         if s.get("cifra"):
@@ -398,6 +419,10 @@ body{font-family:"Avenir Next",Avenir,"Helvetica Neue",sans-serif;color:#fff;pos
 .frame{position:absolute;inset:0;padding:72px 76px 64px;display:flex;flex-direction:column}
 .top{display:flex;align-items:center;gap:16px;font-weight:700;font-size:30px;letter-spacing:.01em}
 .top .logo{width:40px;height:58px}
+.marca{height:2.2em;width:auto;vertical-align:middle;margin:0 .25em 0 0;filter:brightness(0) invert(1)}
+.sello{display:inline-block;font-family:"Avenir Next";font-style:normal;font-weight:800;font-size:.7em;letter-spacing:.06em;line-height:1;padding:.22em .4em .16em;border:2px solid currentColor;border-radius:4px;vertical-align:.12em}
+.vk .marca{height:2.6em}
+.marcag{margin-bottom:28px}.marcag .marca{height:230px;margin:0}
 .top .n{margin-left:auto;font-size:26px;font-weight:600;opacity:.7}
 .main{flex:1;display:flex;align-items:center}
 .conf .main{align-items:flex-end;padding-bottom:10px}

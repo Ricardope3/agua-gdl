@@ -1,6 +1,6 @@
 """Style themes for build.py (--estilo=NAME): CSS laid over the base look plus a few decorations, same copy and checks.
 
-talavera    the site's Talavera look (web/contamina.html): cream paper, cobalt double rules and tile bands, Iowan italic
+talavera    the site's Talavera look (web/contamina.html): cream paper, cobalt, Iowan italic; no tile bands or frame (he found them busy, 25 Nov 2026)
 expediente  an investigator's folder: manila background, taped and clipped oficios, typed notes, red marker
 cartel      a street poster: the site's yellow (--mark) and cobalt, Futura condensed, pasted-up documents, halftone
 """
@@ -21,9 +21,6 @@ CSS = {
 html,body{{background:{CREMA}}}
 body{{color:{TINTA};font-family:"Iowan Old Style",Palatino,Georgia,serif}}
 .plain .tint{{background:radial-gradient(130% 90% at 50% 0%,#fffdf8 0%,{CREMA} 55%,#f1eee4 100%)}}
-.banda{{position:absolute;left:0;right:0;height:30px;background:{TILE} center/30px 30px repeat-x}}
-.banda.arriba{{top:0}}.banda.abajo{{bottom:0}}
-.marco{{position:absolute;inset:44px 30px;border:7px double {COBALTO};pointer-events:none}}
 .frame{{padding:84px 82px 76px}}
 .top{{font-family:"Iowan Old Style";font-style:italic;font-weight:400;font-size:32px;color:{COBALTO}}}
 .top .n{{font-style:normal;font-variant:small-caps;letter-spacing:.08em;opacity:1;color:#4f5b7a}}
@@ -48,7 +45,7 @@ body{{color:{TINTA};font-family:"Iowan Old Style",Palatino,Georgia,serif}}
 .bio{{background:{COBALTO};color:#fff;border-radius:4px;font-family:"Avenir Next"}}
 .bio b{{font-family:"Iowan Old Style";font-style:italic}}
 .pie{{color:#4f5b7a;opacity:1}}
-.zoom{{border:6px solid #fff;box-shadow:0 0 0 3px {COBALTO},0 8px 20px rgba(20,33,61,.3)}}
+.zoom{{border:6px solid #fff;box-shadow:0 8px 20px rgba(20,33,61,.3)}}
 .phone{{box-shadow:0 30px 70px rgba(20,33,61,.35)}}
 .conf .tint,.heavy .tint{{background:linear-gradient(180deg,rgba(12,19,40,.55) 0%,rgba(12,19,40,.2) 25%,rgba(12,19,40,.35) 45%,rgba(12,19,40,.88) 68%,rgba(12,19,40,.96) 100%)}}
 .conf,.heavy{{color:#fff}}
@@ -56,8 +53,16 @@ body{{color:{TINTA};font-family:"Iowan Old Style",Palatino,Georgia,serif}}
 .conf .kicker,.heavy .kicker,.conf .foot,.heavy .foot,.conf .top .n,.heavy .top .n{{color:#dfe5f7}}
 .conf .cifra,.heavy .cifra{{color:{AMARILLO}}}
 .conf .top,.heavy .top,.conf .foot .site,.heavy .foot .site{{color:#fff}}
-.conf .marco,.heavy .marco{{border-color:#fbfaf6}}
-.conf .banda,.heavy .banda{{background-color:{CREMA}}}
+.track{{background:rgba(29,63,158,.08);border-radius:3px}}
+.fill{{background:#9fb0d8;border-radius:3px}}.fill.alarm{{background:#b3231a}}
+.bl b{{font-family:"Iowan Old Style";font-weight:900;color:#4f5b7a}}.bl b.alarm{{background:none;color:#b3231a}}
+.vs{{min-width:0;background:#fff;border:5px double {COBALTO};border-radius:2px}}.vs.a,.vs.b{{border-color:{COBALTO}}}
+.vk{{font-style:italic;color:#4f5b7a;opacity:1}}
+.vc{{font-family:"Iowan Old Style";font-weight:900;font-size:76px;letter-spacing:-.03em;white-space:nowrap}}
+.vs.a .vc{{color:#4f5b7a}}.vs.b .vc{{color:{COBALTO}}}
+.vsx{{font-family:"Iowan Old Style";font-style:italic;font-weight:400;color:{COBALTO};opacity:1}}
+.marca{{filter:none}}.sello{{background:{COBALTO};color:#fff;border-color:{COBALTO}}}
+.m{{background:{COBALTO};color:#fff;font-family:"Iowan Old Style"}}.m.check{{background:transparent;border-color:{COBALTO}}}
 """,
     "expediente": f"""
 html,body{{background:#d5ba85}}
@@ -150,8 +155,6 @@ def css(estilo):
 
 
 def deco(estilo, i, total):
-    if estilo == "talavera":
-        return '<div class="banda arriba"></div><div class="banda abajo"></div><div class="marco"></div>'
     if estilo == "expediente":
         return f'<div class="pestana">EXPEDIENTE · HOJA {i}/{total}</div>'
     if estilo == "cartel":

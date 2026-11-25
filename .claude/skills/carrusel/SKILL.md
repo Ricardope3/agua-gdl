@@ -8,7 +8,7 @@ Arguments: the topic, a colonia, or the facts to show. If the ask is vague, prop
 
 ## Before writing
 
-- Read `experiments/carrusel/REFERENCIAS.md` (what the carousels he admires do) and `experiments/carrusel/README.md` (slide types, fields, what the build checks), `.claude/rules/evidence.md`, `docs/EDITORIAL.md`, `.claude/rules/vetos.md`, and the closest carousel in `experiments/carrusel/carruseles/`.
+- Read `experiments/carrusel/REFERENCIAS.md` (what the carousels he admires do) and `experiments/carrusel/README.md` (slide types, fields, what the build checks), `.claude/rules/evidence.md`, `docs/EDITORIAL.md`, `~/agua-gdl/.claude/rules/vetos.md` (main's copy: a worktree's can be older), and the closest carousel in `experiments/carrusel/carruseles/`.
 - Read `experiments/carrusel/PUBLICADOS.md` and ask which cards he has already posted on Instagram; don't repeat them (he cut a top-5 bar chart and a protest timeline on 6 Nov for that reason).
 
 ## Facts
@@ -25,8 +25,18 @@ Arguments: the topic, a colonia, or the facts to show. If the ask is vague, prop
 - No cause without a source that states it, and no juxtaposition that implies one (an official promise next to a headline about a colonia without water).
 - Name official programmes and figures as the government's claim, not ours («según el Gobierno de Jalisco, 4 de 10 hogares…»).
 - Don't add conditions or omit them: the 80% discount always carries «hasta 25 m³» and «afectados por la calidad del agua».
+- Name the place, not its category: «Ocotlán», not «el municipio» (25 Nov), on slides, labels and the caption. Quotes and `calculo` notes keep their own words.
+- «2.4 veces más» means 3.4 times: write «2.4 veces». «Todo el municipio» is wrong when another holder or use has more (Ocotlán's farms hold more well water than Nestlé).
 - The build checks every «…» on slides (against the slide's cited `cita`s) and in captions (against any `cita`), capitals included; it can't check paraphrase, so still read each caption against the `cita`s.
 - When a photo is shown sharp, re-check it at full size: a faint outlet watermark or a banner naming another colonia can surface (6 Nov: 0e61b3ddde0a dropped for a Mural watermark).
+
+## Scope and records (learned on carousel 24, Nestlé, 25 Nov)
+
+- Scope every comparison to what the data covers, in the headline and the labels, not only the kicker. A REPDA export by water type isn't the municipality's water: «el permiso más grande del municipio» was wrong because the CEA holds a 324,820,800 m³ surface title in Ocotlán; it became «el permiso de pozo más grande». Check the other water types before any «el más grande».
+- Name who holds a permit as the register does («Municipio de Ocotlán», «uso industrial»), not a reading of it («el servicio público»). REPDA volumes are ceilings: say «permiso» or «límite», never «saca» or «consume».
+- A figure your own research notes flag as a possible reporting error (a README's outliers, the same value in two years) stays off the slides until the agency confirms it. Carousel 24's RETC metals slide was dropped for that.
+- Date and credit a quote by the page that carries it: a 2020 page that cites nestle.com.mx is «Nestlé, según The Food Tech», not «Nestlé, 2014».
+- When he asks to cut context (the agriculture bar), keep the limit as one line of text and tell him you did.
 
 ## Official documents (learned on carousel 22, 18 Nov)
 
@@ -48,33 +58,41 @@ Arguments: the topic, a colonia, or the facts to show. If the ask is vague, prop
 
 ## Shape
 
-- 5–8 slides: a cover that asks the reader's own question («¿Te toca corte mañana?»), one fact per slide (the same map or frame, one new layer each), the evidence, the honest limit, a `sitio` slide, then the `cierre`. Numbers that make people want to check their own colonia beat abstract totals. Guides people save (how to ask for a pipa, the discount, a letter to a diputación) show the real form or message with the explained part highlighted. The caption tells the whole story, numbers included.
-- The `sitio` slide shows the matching aguagdl.com page with that page's own number and «link en la bio». Run `python3 experiments/carrusel/build.py --capturas` first and copy the live numbers into its `cita`. Screenshots skip pages showing faces, the caricature, or the /promesas stance line (`DESDE` crops it). Look at the capture before building: a map that fits more than the phone frame shows its empty edge, so set the page's drag in `PANEO` (`mapa.mjs`) and retake only that page with `--capturas <página>`.
+- 5–8 slides: a cover that asks the reader's own question («¿Te toca corte mañana?») or, when one comparison is the story, that comparison itself (carousel 24 opens on its bar slide: he dropped the question cover to catch attention, 25 Nov), one fact per slide (the same map or frame, one new layer each), the evidence, the honest limit, a `sitio` slide, then the `cierre`. Numbers that make people want to check their own colonia beat abstract totals. Guides people save (how to ask for a pipa, the discount, a letter to a diputación) show the real form or message with the explained part highlighted. The caption tells the whole story, numbers included.
+- Every slide earns its place by what it adds to the story; a fact that only matters next to another goes on that slide (25 Nov: he asked why the 2025 cession mattered, and it moved under the 2014 «sin extraer» claim). He cut carousel 24 from 8 slides to 5: fewer, stronger slides beat a full timeline.
+- When he drops a slide that carried a limit, move the limit onto a slide that stays (a `versus` takes a `texto` line under its boxes) and keep it in the caption; check that the `lista` items still point to something shown. When the slides leave date order, reorder the caption to match and drop any «de lo más reciente a lo más antiguo».
+- Say which body a carousel is about: SIAPA serves only the Guadalajara metro area; permits are the CONAGUA's.
+- The `sitio` slide shows the matching aguagdl.com page with that page's own number and «link en la bio». Skip it, and say why, when the page's number for this subject isn't confirmed (carousel 24: /contamina's Nestlé 82.60 kg). Run `python3 experiments/carrusel/build.py --capturas` first and copy the live numbers into its `cita`. Screenshots skip pages showing faces, the caricature, or the /promesas stance line (`DESDE` crops it). Look at the capture before building: a map that fits more than the phone frame shows its empty edge, so set the page's drag in `PANEO` (`mapa.mjs`) and retake only that page with `--capturas <página>`.
 - Backgrounds only from `experiments/carrusel/fotos.json`. To add one, open it first: no close face, no legible private name, no outlet watermark or burned-in text.
+- New carousels use `"estilo": "talavera"` (25 Nov: he asked for it after a draft came out in the old dark look). Look at every slide type in it: a type the theme has no rules for renders in the dark theme's colours. Bars, versus and lists got Talavera rules on 25 Nov; add rules in `estilos.py` for any other type you use. The tile bands and double frame came out on 25 Nov: he found them busy beside highlighted text, so keep decoration off the slides. An `alarm` bar and its figure are deep red (#b3231a, from the «expediente» theme), the other bars pale blue: he chose red on the data over a red logo (25 Nov).
+- Logos: a company's logo with `[[name]]` (`LOGOS` in build.py), from the file its own site serves, cut only to drop a slogan; a government body as a name badge (`SELLOS`) unless he picks its emblem: ask, since an emblem can read as endorsement (25 Nov: a badge for CONAGUA, Ocotlán's shield for the municipio's bar). Never recolour or alter a logo to pass judgement: when he asked for Nestlé's letters in red «to show they are evil» (25 Nov), the answer was that the slides show records, not intent (the «mintieron» veto), that a doctored logo hands critics an easy rebuttal and may raise a trademark complaint, and that red on the company's bar and figure makes the point from the data. Explain that and do what he decides. Put logos in labels and kickers, not inside a headline; `"marca_grande"` puts one large on the cover. Use the version that reads at label size (Ocotlán's shield alone, not the lockup whose words turn to specks) and look at it on cream before building. Downloading a logo needs his OK; a site that refuses plain requests is fetched in the built-in browser, never with a spoofed user agent; either way compare the saved file's hash with the copy the browser loaded, and note the source and hash in the README.
+- A theme change reaches every carousel that uses it (`grep -l '"estilo": "talavera"' experiments/carrusel/carruseles/*.json`): tell him which ones, and rebuild one he may already have posted only when he asks.
 
 ## Style with soul (learned on carousels 22–23, 24–25 Nov)
 
-- «The carousels have no soul»: he wants a look with a hand behind it, not the flat dark template. Set `"estilo": "talavera"` on every new carousel (he picked it over `expediente` and `cartel` on 25 Nov and applied it to 22 and 23): the site's cream, cobalt and yellow, italic serif headlines, the tile band and a double frame, from `web/contamina.html`, so it keeps the shared look (`vetos.md`). To offer him a change of look, render each option with `build.py <id> --estilo=X` (side copies in `out/<id>-X/`) and show the same slides side by side.
+- «The carousels have no soul»: he wants a look with a hand behind it, not the flat dark template. He picked Talavera over `expediente` and `cartel` on 25 Nov: the site's cream, cobalt and yellow and italic serif headlines, from `web/contamina.html`, so it keeps the shared look (`vetos.md`); its tile bands and frame came out the same day (see «Shape»). To offer him a change of look, render each option with `build.py <id> --estilo=X` (side copies in `out/<id>-X/`) and show the same slides side by side.
 - On a photo slide Talavera keeps the dark tint and light text: dark ink on a photo couldn't be read, and a cream wash hid the scene.
 - A style change moves every line: check every slide of every carousel that uses it for text running into the footer (carousel 23's slide 2 footer already ran off the edge before the change, and nobody had seen it).
-- Show the damage instead of saying it: round close-ups (`zoom`) of the cited document's own photos in the free space beside a headline, sharp and framed, never over a word (25 Nov: faded ones «you can't barely see»). Only photos from a source the carousel cites, of the place they show (SIAPA's photos of the discharges into Las Pintas are those discharges, not the Miravalle plant); the footer credits each one from its `pagina` and `lugar`. Look at each one at slide size: foam in a small crop can read as snow, so crop where it sits on dark water.
+- Show the damage instead of saying it: round close-ups (`zoom`) of the cited document's own photos in the free space beside a headline, sharp, with a white edge and no other frame, never over a word (25 Nov: faded ones «you can't barely see»). Only photos from a source the carousel cites, of the place they show (SIAPA's photos of the discharges into Las Pintas are those discharges, not the Miravalle plant); the footer credits each one from its `pagina` and `lugar`. Look at each one at slide size: foam in a small crop can read as snow, so crop where it sits on dark water.
 - Bold, not fence-sitting (24 Nov: «too much of a fence sitter… be more bold»): name who said what and when, and put their own words side by side so the contradiction is the headline («A Tlajomulco, que su planta ya no podía. A la CEDHJ, que operaba conforme a su diseño»). Bold doesn't loosen the evidence rules: the quote is word for word, a claim stays its speaker's, and no «mintieron» (`vetos.md`, 25 Nov): show the mismatch, not intent.
 
 ## Look and words (learned from @ecosia, 6 Nov)
 
+- When he asks for other wording, give 4–5 lines checked against the data, each with a note on what it claims and on any word that would overstate, and let him pick (25 Nov: he took the third of five).
+- The opening slide names its subject in words, not only with a logo: with the cover gone, «Una sola empresa…» became «Nestlé, una sola empresa…».
 - One idea per slide, one sentence of at most ~15 words; the punchline bold, any context smaller. Cut the kicker when the headline says it.
 - Let a sharp photo carry the point: put the number on the photo (a tag on the empty tinaco, the turbid glass, the pipa line), and compare with split slides of the same frame in two states (promised vs calendar, before vs now). Only photos with no close faces or names.
-- Keep the source credit on each slide short and quiet; put the full source list in the caption («📚 Fuentes: medio, fecha, enlace»).
+- Keep the source credit on each slide short and quiet; put the full source list in the caption («📚 Fuentes: medio, fecha, enlace»). `build.py` appends that list, with links, to `caption.txt`: don't write it in the JSON `caption`, and keep that caption near 1,100 characters so the whole stays under Instagram's 2,200.
 - Pair every alarm with agency: what helped, what came back, what one person can do that works (a report on the map, a letter to the diputación, the discount claimed).
 - End the caption with a question people can answer in the comments («¿Cuántos días lleva tu colonia?»).
 
 ## Build and review
 
 1. `python3 experiments/carrusel/build.py --check` until it passes. It checks shape, not truth.
-2. `python3 experiments/carrusel/build.py <id>` (all 21 take ~3 min; render only what changed).
-3. Open `out/<id>/hoja.png` and every slide at full size: overlapping labels, text running into the footer, numbers wrapping, faces in the photo.
-4. For a new carousel, one read-only reviewer (`auditor`; outside `~/agua-gdl`, an Explore agent with its rules pasted) checks every slide and the caption against the `cita`s. Re-open the source for each finding before fixing it; don't relay the reviewer's claim.
-5. Replace `~/Desktop/carruseles-agua-gdl/<id>/` with the new `out/<id>/`, send him the PNGs, and say what changed.
+2. `python3 experiments/carrusel/build.py <id>` (render only what changed; all of them take minutes).
+3. Open `out/<id>/hoja.png` and every slide at full size: overlapping labels, text running into the footer, numbers wrapping, faces in the photo. To move or drop slides, load the JSON and write it back with `json.dumps(c, ensure_ascii=False, indent=1) + "\n"`, which reproduces the files byte for byte (checked 25 Nov). Keep a figure with its unit on one line with a no-break space in the JSON (`"**2.4\u00a0veces**"`).
+4. For a new carousel, one read-only reviewer (`auditor`; outside `~/agua-gdl`, an Explore agent with its rules pasted) checks every slide and the caption against the `cita`s and against the primary captures or data (the `cita` is our own copy). Carousel 24's reviewer found the surface title only because it was pointed at the exports. Re-open the source for each finding before fixing it; don't relay the reviewer's claim.
+5. Replace `~/Desktop/carruseles-agua-gdl/<id>/` with the new `out/<id>/` (`rsync -a --delete`, so a dropped slide's PNG doesn't stay behind), send him the PNGs, and say what changed.
 6. Commit as soporte@aguagdl.com (check `git log -1 --format=%ae`) on the carousel branch; push only when he says.
 
 When he says a carousel went out, add it to `PUBLICADOS.md`. Never post, schedule or open Instagram. Before he posts a carousel with dated numbers (calendar, site counts, municipal pipa figures), offer to re-check them.
