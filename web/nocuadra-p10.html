@@ -20,6 +20,8 @@
 <link rel="manifest" href="/site.webmanifest">
 <link rel="stylesheet" href="/menu.css">
 <link rel="stylesheet" href="/nocuadra.css">
+<link rel="stylesheet" href="/nocuadra-lab.css">
+<link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
 <style>
 :root {
   --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
@@ -105,6 +107,8 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
 .tarjeta-h.tinta .cien span { background: color-mix(in srgb, var(--bg) 22%, var(--fg)) }
 .tarjeta-h.tinta .cien span.si { background: var(--s1) }
 .tarjeta-h .fila-c { display: flex; flex-wrap: wrap; gap: 20px 32px; align-items: center }
+.tarjeta-h .puntos-mapa { height: clamp(240px, 36vh, 360px); max-width: 760px; width: 100% }
+.tarjeta-h .keys { margin: 0; font-size: .8rem; gap: 4px 12px }
 .galeria { display: grid; grid-template-columns: repeat(4, minmax(0, 120px)); gap: 10px }
 .galeria .foto { padding: 4px; aspect-ratio: 1 }
 .galeria .foto img { height: 100%; object-fit: cover }
@@ -115,12 +119,11 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
 .progreso i { flex: 1; height: 4px; border-radius: 2px; background: color-mix(in srgb, var(--muted) 35%, transparent); overflow: hidden }
 .progreso i.hecho { background: var(--brand) }
 .flechas { position: absolute; z-index: 3; right: 14px; bottom: 14px; display: flex; flex-direction: column; gap: 8px }
-.flechas button { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--brand); background: var(--surface); color: var(--link); font-size: 1.2rem; cursor: pointer; box-shadow: 0 4px 12px -6px rgb(20 33 61 / .5) }
+.flechas button { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--brand); background: var(--surface); color: var(--link); font-size: 1.2rem; cursor: pointer }
 .flechas button:disabled { opacity: .35; cursor: default }
 .contador-h { position: absolute; z-index: 3; left: 16px; bottom: 16px; font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; background: var(--surface); padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line) }
-.desliza { font-size: .9rem; color: color-mix(in srgb, var(--bg) 75%, transparent); animation: flota 1.8s ease-in-out infinite }
-@keyframes flota { 50% { transform: translateY(6px) } }
-@media (prefers-reduced-motion: reduce) { .desliza { animation: none } .carrete { scroll-behavior: auto } }
+.desliza { font-size: .9rem; color: color-mix(in srgb, var(--bg) 75%, transparent) }
+@media (prefers-reduced-motion: reduce) { .carrete { scroll-behavior: auto } }
 @media (max-width: 760px) {
   .carrete { height: calc(100svh - 90px) }
   .tarjeta-h { padding: 44px 18px 64px; gap: 10px }
@@ -153,16 +156,58 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
 
   <main>
     <p class="kicker">No cuadra</p>
-    <h1>Doce pantallas para ver por qué no cuadra</h1>
+    <h1>Catorce pantallas para ver por qué no cuadra</h1>
     <p class="lede">Desliza, usa las flechas o el teclado. Cada pantalla es un dato con su fuente.</p>
 
     <div class="carrete-caja">
       <div class="progreso" id="progreso" aria-hidden="true"></div>
-      <div class="carrete" id="carrete" tabindex="0" aria-label="Historias: doce pantallas" role="region">
+      <div class="carrete" id="carrete" tabindex="0" aria-label="Historias: 14 pantallas" role="region">
         <section class="tarjeta-h tinta">
           <p class="mun">Agua GDL · No cuadra</p>
-          <h2>Anunciaron 45 pipas y 100 cisternas, y dijeron que al canal «no existen descargas». Esto dicen los papeles oficiales.</h2>
+          <h2>Tlajomulco dijo que al canal de Las Pintas «no existen descargas». Zapopan anunció 45 pipas y 100 cisternas. Esto dicen los papeles oficiales</h2>
           <p class="desliza">Desliza ↓</p>
+        </section>
+
+        <section class="tarjeta-h">
+          <p class="mun">Tlajomulco · 6 de marzo</p>
+          <blockquote>«por el Canal Las Pintas transitan aguas residuales provenientes de descargas de aguas sanitarias y/o residuales que se encuentran dentro del municipio de Tlajomulco de Zúñiga»</blockquote>
+          <p>Eso le escribió el SIAPA a Tlajomulco, y le señaló diez puntos de descarga.</p>
+          <p class="fuente">Oficio DG-135/2026, p. 1 (<a href="/datos/siapa-dg-135-2026.pdf">PDF</a>).</p>
+        </section>
+
+        <section class="tarjeta-h tinta">
+          <p class="mun">Tlajomulco · el agua que entra a la Planta 1</p>
+          <p class="gigante sobre"><span data-cuenta="3.62" data-dec="2">3.62</span> <small>mg/L</small></p>
+          <p>De nitrógeno amoniacal, en promedio, en enero de 2026, en nuestra lectura de la gráfica del SIAPA: 7.2 veces el límite de 0.5 que cita el propio SIAPA. Esa planta abastecía 655 colonias y fraccionamientos, según el SIAPA a la CEDHJ.</p>
+          <p class="fuente">Gráfico 1 del oficio DG-135/2026 (<a href="/datos/siapa-dg-135-2026.pdf#page=5">p. 5</a>, <a href="/datos/siapa-dg-135-2026-amoniacal.csv">CSV</a>); CEDHJ, <a href="https://cedhj.org.mx/assets_web/doc/recomendaciones/emitidas/2026/20260430150739/recomendacion_1777583259457.pdf#page=50" rel="noopener">Recomendación 10/2026, p. 50</a>.</p>
+        </section>
+
+        <section class="tarjeta-h">
+          <p class="mun">Tlajomulco · los puntos</p>
+          <h2>Siete de los diez puntos, en las fotografías del SIAPA</h2>
+          <div class="galeria" id="galeria"></div>
+          <p class="fuente">Anexo del oficio DG-135/2026, pp. 8 a 13 y 15; los puntos 3, 4 y 5 no traen fotografía. Toca una para verla completa.</p>
+        </section>
+
+        <section class="tarjeta-h">
+          <p class="mun">Tlajomulco · finales de marzo</p>
+          <h2>Tlajomulco dice que informó a la CEDHJ: «no existen descargas»</h2>
+          <figure class="documento">
+        <div class="hoja">
+          <div class="renglones">
+            <span class="renglon" style="width:99.92%"><img src="/img/documentos/tlaj-recorridos-1.png" width="1307" height="47" alt="Respecto a lo requerido, se manifiesta que el SIAPA informó al Municipio de Tlajomulco" loading="lazy"></span>
+            <span class="renglon" style="width:100%"><img src="/img/documentos/tlaj-recorridos-2.png" width="1308" height="39" alt="de Zúñiga, respecto a 10 (diez) presuntos puntos de descarga de aguas residuales" loading="lazy"></span>
+            <span class="renglon" style="width:99.92%"><img src="/img/documentos/tlaj-recorridos-3.png" width="1307" height="44" alt="hacia el sistema antiguo de abastecimiento de Chapala, en específico en el Canal Las" loading="lazy"></span>
+            <span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-recorridos-4.png" width="1308" height="44" alt="Pintas, por lo cual se realizaron tres recorridos en campo en conjunto con el SIAPA" loading="lazy"></span>
+            <span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-recorridos-5.png" width="1308" height="44" alt="para visitar estos 10 puntos, constatando que no existen descargas de aguas" loading="lazy"></span>
+            <span class="renglon marca" style="width:36.77%"><img src="/img/documentos/tlaj-recorridos-6.png" width="481" height="41" alt="residuales al canal &quot;Las pintas&quot;." loading="lazy"></span>
+          </div>
+        </div>
+        <figcaption>Oficio DAPIH/0331-01/2026 de Tlajomulco, marzo de 2026, p. 3 (<a href="/datos/tlajomulco-dapih-0331-01-2026.pdf#page=3">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure>
+          <p>No dice cuándo fueron los recorridos. En noviembre nos respondió que no contestó por escrito el oficio del SIAPA y que las listas y minutas, si las hubo, estarían en el SIAPA.</p>
+          <p class="fuente">Oficio DAPIH/0331-01/2026 (<a href="/datos/tlajomulco-dapih-0331-01-2026.pdf#page=3">p. 3</a>); oficio DTRC/1740/2026, 20 de noviembre.</p>
+          <p><a class="button" href="/tlajomulco">Todo Tlajomulco →</a></p>
         </section>
 
         <section class="tarjeta-h">
@@ -174,8 +219,8 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
 
         <section class="tarjeta-h tinta">
           <p class="mun">Zapopan · pipas</p>
-          <p class="gigante">34 <small>de 45</small></p>
-          <p>El día con más, en la gráfica de pipas por jornada de su propia Protección Civil. Ningún día llega a 45.</p>
+          <p class="gigante"><span data-cuenta="34">34</span> <small>de 45</small></p>
+          <p>El día con más, en la gráfica de pipas por jornada de su propia Protección Civil. Ningún día llega a 45. El mismo oficio dice que al 3 de noviembre había «36 pipas en servicio».</p>
           <p class="fuente">Oficio 011300/2026/0150 (<a href="/datos/pcyb-respuesta-ut-091-2026.pdf#page=4">p. 4</a>); nuestra lectura de sus etiquetas (<a href="/datos/zapopan-pipas-por-dia.csv">CSV</a>).</p>
         </section>
 
@@ -188,7 +233,7 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
 
         <section class="tarjeta-h tinta">
           <p class="mun">Zapopan · cisternas</p>
-          <div class="fila-c"><p class="gigante">49</p><div class="cien" id="cien" role="img" aria-label="Cien cuadros, uno por cisterna anunciada; 49 en azul, las de la lista"></div></div>
+          <div class="fila-c"><p class="gigante" data-cuenta="49">49</p><div class="cien" id="cien" role="img" aria-label="Cien cuadros, uno por cisterna anunciada; 49 en azul, las de la lista"></div></div>
           <p>Ahí termina el «listado de cisternas instaladas» de Cercanía Ciudadana: en la número 49, LOS CAJETES. Anunciaron 100. Las otras 51 no están en la lista; eso no prueba que no existan.</p>
           <p class="fuente">Oficio 11000000/CER.CIU/2026/0876 (<a href="/datos/zapopan-respuesta-140292426004978.pdf#page=9">desde la p. 9</a>). Las 49, en el <a href="/cisternas">mapa</a>.</p>
         </section>
@@ -210,6 +255,21 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
           <p class="fuente">Oficio 011300/2026/0148 (<a href="/datos/pcyb-respuesta-ut-089-2026.pdf#page=6">p. 6</a>).</p>
         </section>
 
+        <section class="tarjeta-h tinta">
+          <p class="mun">Zapopan · reportes por falta de agua</p>
+          <p class="gigante" data-cuenta="9828">9,828</p>
+          <p>Reportes de «Falta de agua en casa habitación» del 15 de octubre al 4 de noviembre, en la lista que entregó Cercanía Ciudadana de Zapopan. Todos tienen al SIAPA como dependencia; 8,857 aparecen «En proceso». Un reporte no es una casa.</p>
+          <p class="fuente">Oficio 11000000/CER.CIU/2026/0878 (<a href="/datos/zapopan-respuesta-140292426004981.pdf#page=5">p. 5</a>, <a href="/datos/zapopan-reportes.csv">CSV</a>).</p>
+        </section>
+
+        <section class="tarjeta-h">
+          <p class="mun">Zapopan · reportes por colonia</p>
+          <h2>Dónde se reportó</h2>
+          <div class="puntos-mapa" id="mapa-reportes" role="region" aria-label="Mapa de Zapopan con el número de reportes de falta de agua por colonia"></div>
+          <ul class="keys" id="clases-reportes" aria-label="Número de reportes"></ul>
+          <p class="fuente" id="aviso-reportes" aria-live="polite">El color es cuántos reportes nombran a cada colonia del mapa del SIAPA. Sin color no quiere decir que haya tenido agua.</p>
+        </section>
+
         <section class="tarjeta-h">
           <p class="mun">Zapopan · 17 de noviembre</p>
           <h2>El boletín dijo «contará con». Su respuesta lo llama una meta por «materializar»</h2>
@@ -229,58 +289,16 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
           <p><a class="button" href="/zapopan">Todo Zapopan →</a></p>
         </section>
 
-        <section class="tarjeta-h">
-          <p class="mun">Tlajomulco · 6 de marzo</p>
-          <blockquote>«por el Canal Las Pintas transitan aguas residuales provenientes de descargas de aguas sanitarias y/o residuales que se encuentran dentro del municipio de Tlajomulco de Zúñiga»</blockquote>
-          <p>Eso le escribió el SIAPA a Tlajomulco, y le señaló diez puntos de descarga.</p>
-          <p class="fuente">Oficio DG-135/2026, p. 1 (<a href="/datos/siapa-dg-135-2026.pdf">PDF</a>).</p>
-        </section>
-
-        <section class="tarjeta-h tinta">
-          <p class="mun">Tlajomulco · el agua que entra a la Planta 1</p>
-          <p class="gigante sobre">3.62 <small>mg/L</small></p>
-          <p>De nitrógeno amoniacal, en promedio, en enero de 2026, en nuestra lectura de la gráfica del SIAPA: 7.2 veces el límite de 0.5 que cita el propio SIAPA. Esa planta abastecía 655 colonias y fraccionamientos, según el SIAPA a la CEDHJ.</p>
-          <p class="fuente">Gráfico 1 del oficio DG-135/2026 (<a href="/datos/siapa-dg-135-2026.pdf#page=5">p. 5</a>, <a href="/datos/siapa-dg-135-2026-amoniacal.csv">CSV</a>); CEDHJ, <a href="https://cedhj.org.mx/assets_web/doc/recomendaciones/emitidas/2026/20260430150739/recomendacion_1777583259457.pdf#page=50" rel="noopener">Recomendación 10/2026, p. 50</a>.</p>
-        </section>
-
-        <section class="tarjeta-h">
-          <p class="mun">Tlajomulco · los puntos</p>
-          <h2>Siete de los diez puntos, en las fotografías del SIAPA</h2>
-          <div class="galeria" id="galeria"></div>
-          <p class="fuente">Anexo del oficio DG-135/2026, pp. 8 a 13 y 15; los puntos 3, 4 y 5 no traen fotografía. Toca una para verla completa.</p>
-        </section>
-
-        <section class="tarjeta-h">
-          <p class="mun">Tlajomulco · finales de marzo</p>
-          <h2>Tlajomulco le informó a la CEDHJ: «no existen descargas»</h2>
-          <figure class="documento">
-        <div class="hoja">
-          <div class="renglones">
-            <span class="renglon" style="width:99.92%"><img src="/img/documentos/tlaj-recorridos-1.png" width="1307" height="47" alt="Respecto a lo requerido, se manifiesta que el SIAPA informó al Municipio de Tlajomulco" loading="lazy"></span>
-            <span class="renglon" style="width:100%"><img src="/img/documentos/tlaj-recorridos-2.png" width="1308" height="39" alt="de Zúñiga, respecto a 10 (diez) presuntos puntos de descarga de aguas residuales" loading="lazy"></span>
-            <span class="renglon" style="width:99.92%"><img src="/img/documentos/tlaj-recorridos-3.png" width="1307" height="44" alt="hacia el sistema antiguo de abastecimiento de Chapala, en específico en el Canal Las" loading="lazy"></span>
-            <span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-recorridos-4.png" width="1308" height="44" alt="Pintas, por lo cual se realizaron tres recorridos en campo en conjunto con el SIAPA" loading="lazy"></span>
-            <span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-recorridos-5.png" width="1308" height="44" alt="para visitar estos 10 puntos, constatando que no existen descargas de aguas" loading="lazy"></span>
-            <span class="renglon marca" style="width:36.77%"><img src="/img/documentos/tlaj-recorridos-6.png" width="481" height="41" alt="residuales al canal &quot;Las pintas&quot;." loading="lazy"></span>
-          </div>
-        </div>
-        <figcaption>Oficio DAPIH/0331-01/2026 de Tlajomulco, marzo de 2026, p. 3 (<a href="/datos/tlajomulco-dapih-0331-01-2026.pdf#page=3">PDF</a>). Resaltado de Agua GDL.</figcaption>
-      </figure>
-          <p>No dice cuándo fueron los recorridos. En noviembre nos respondió que no contestó el oficio del SIAPA y que las actas, si las hubo, estarían en el SIAPA.</p>
-          <p class="fuente">Oficio DAPIH/0331-01/2026 (<a href="/datos/tlajomulco-dapih-0331-01-2026.pdf#page=3">p. 3</a>); oficio DTRC/1740/2026, 20 de noviembre.</p>
-          <p><a class="button" href="/tlajomulco">Todo Tlajomulco →</a></p>
-        </section>
-
         <section class="tarjeta-h tinta">
           <p class="mun">No cuadra</p>
-          <h2>Lo que dijeron no cuadra con los papeles. Léelos tú.</h2>
-          <div class="dif"><strong>Zapopan</strong>La gráfica de pipas por jornada nunca llega a 45. 51 de las 100 cisternas anunciadas no están en la lista entregada; eso no prueba que no existan. La tabla no registra ninguna atención a hospitales ni a centros de salud. Zapopan respondió después que las 45 pipas y las 100 cisternas eran una meta por «materializar»; el boletín dijo «contará con».</div>
+          <h2>Lo que dijeron no cuadra con los papeles. Léelos tú</h2>
           <div class="dif"><strong>Tlajomulco</strong>Tlajomulco no dice cuándo fueron los recorridos ni entregó actas. El propio SIAPA escribió que en esos sitios «se han observado descargas abundantes, en algunas de manera permanente y otras de forma intermitente»: un recorrido sin descargas no prueba que no las haya otros días.</div>
-          <p class="buttons"><a class="button" href="/zapopan">Todo Zapopan →</a><a class="button" href="/tlajomulco">Todo Tlajomulco →</a></p>
+          <div class="dif"><strong>Zapopan</strong>La gráfica de pipas por jornada nunca llega a 45. 51 de las 100 cisternas anunciadas no están en la lista entregada; eso no prueba que no existan. La tabla no registra ninguna atención a hospitales ni a centros de salud. Zapopan respondió después que las 45 pipas y las 100 cisternas eran una meta por «materializar»; el boletín dijo «contará con».</div>
+          <p class="buttons"><a class="button" href="/tlajomulco">Todo Tlajomulco →</a><a class="button" href="/zapopan">Todo Zapopan →</a></p>
         </section>
       </div>
       <div class="flechas"><button type="button" id="ant" aria-label="Pantalla anterior">↑</button><button type="button" id="sig" aria-label="Pantalla siguiente">↓</button></div>
-      <span class="contador-h" id="cuenta" aria-live="polite">1 / 12</span>
+      <span class="contador-h" id="cuenta" aria-live="polite">1 / 14</span>
     </div>
 
     <ul class="municipios">
@@ -307,6 +325,8 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     <p><a href="/">Inicio</a> · <a href="/reportes">¿Hay agua?</a> · <a href="/cisternas">Cisternas comunitarias</a> · <a href="/pipas">Cómo pedir pipa</a> · <a href="/transparencia">Transparencia</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
   </footer>
 </div>
+<script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script src="/mapa.js"></script>
 <script src="/nocuadra-lab.js"></script>
 <script>
 (() => {
@@ -316,13 +336,22 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   prog.innerHTML = cards.map(() => "<i></i>").join("");
   const barras = [...prog.children];
   NC.seriePipas(document.getElementById("serie-pipas"));
-  NC.waffle(document.getElementById("cien"), 49);
+  const cienEl = document.getElementById("cien"), cien = NC.cuadros(cienEl, 49);
+  // What plays when a card arrives: its big figure counts up, the squares fill, the map loads.
+  const llega = (card) => {
+    for (const el of card.querySelectorAll("[data-cuenta]")) NC.cuenta(el, +el.dataset.cuenta, +(el.dataset.dec || 0), 900, true);
+    if (card.contains(cienEl)) cien.anima();
+    const caja = card.querySelector("#mapa-reportes");
+    if (caja && !caja._hecho) { caja._hecho = true; NC.mapaReportes(caja, document.getElementById("clases-reportes"), document.getElementById("aviso-reportes")); }
+  };
   document.getElementById("galeria").innerHTML = NC.PUNTOS.map((p) => NC.foto(p)).join("");
-  let i = 0;
+  let i = 0, llegadas = false;
   const marca = () => {
     const y = car.scrollTop + car.clientHeight / 2;
+    const antes = i;
     i = Math.max(0, cards.findLastIndex((c) => c.offsetTop <= y));
     if (car.scrollTop + car.clientHeight >= car.scrollHeight - 2) i = cards.length - 1;
+    if (i !== antes || !llegadas) { llegadas = true; llega(cards[i]); }
     barras.forEach((b, j) => b.classList.toggle("hecho", j <= i));
     document.getElementById("cuenta").textContent = `${i + 1} / ${cards.length}`;
     document.getElementById("ant").disabled = i === 0;

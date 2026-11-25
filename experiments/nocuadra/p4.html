@@ -1,0 +1,110 @@
+<!-- titulo: Expediente | mapa -->
+<style>
+/* Propuesta 4: the case file. The document stays put (nocuadra-lab.css) and our margin notes scroll past it, one per
+   step; the highlighter sweeps across each cut as it shows. Each file closes with the difference. Tlajomulco first. */
+.expediente .tarjeta { position: relative; padding: 12px 16px 12px 24px; border: 0; border-left: 2px solid var(--brand); border-radius: 0; background: var(--bg); font: italic 400 1.15rem/1.4 var(--serif); color: var(--brand-deep) }
+.expediente .tarjeta .num { position: absolute; left: -15px; top: 8px; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--surface); border: 2px solid var(--brand); font: 600 .85rem/1 var(--font); color: var(--brand) }
+.expediente .tarjeta small { display: block; margin-top: 8px; font: .82rem var(--font); color: var(--muted) }
+.expediente .paso.capitulo .tarjeta { padding: 20px 0; border-left: 0; font: inherit; color: var(--fg) }
+.expediente .paso.capitulo h2 { margin: 0 0 8px; font-size: clamp(1.45rem, 3vw, 2rem); line-height: 1.2 }
+.expediente .paso.capitulo .note { margin: 0 }
+@media (prefers-color-scheme: dark) { .expediente .tarjeta { color: var(--link) } }
+.recorte .encab { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px dashed rgb(0 0 0 / .18); font-size: .8rem; color: #4f5b7a }
+.recorte .de a { color: #1d3f9e }
+.expediente .tarjeta.sello { padding: 20px 24px; background: var(--warn-bg); color: var(--warn); border: 3px double currentColor; border-radius: 4px; font: 1rem/1.5 var(--font) }
+.sello .tinta { display: inline-block; padding: 4px 12px; border: 2px solid currentColor; border-radius: 4px; font: 600 .9rem/1.2 var(--font) }
+.expediente .tarjeta .ir { margin: 16px 0 0 }
+/* Flat paper; the highlighter and rings arrive each time the cut shows. */
+@media (prefers-reduced-motion: reduce) {
+}
+@media (max-width: 860px) {
+  .expediente .tarjeta { font-size: 1.05rem }
+  .relato.vivo .capa .hoja { padding: 8px 12px; gap: 8px }
+  .relato.vivo .capa .documento figcaption { margin-top: 4px; font-size: .75rem }
+}
+</style>
+  <main>
+    <p class="kicker">No cuadra</p>
+    <h1>El expediente: lo que dijeron, contra lo que dicen los oficios</h1>
+    <p class="lede">Aquí mandan los papeles. Cada recorte es del documento tal como lo entregaron; las notas al margen y el resaltado son nuestros. Baja: cada nota trae su documento. Primero Tlajomulco, luego Zapopan.</p>
+
+    <div class="relato expediente" id="relato">
+      <div class="escena">
+        <div class="capa" data-c="t-transitan">{{doc:tlaj-transitan}}</div>
+        <div class="capa" data-c="t-limite">{{doc:tlaj-limite}}</div>
+        <div class="capa" data-c="t-grafica">{{doc:tlaj-grafica}}</div>
+        <div class="capa" data-c="t-puntos">{{doc:tlaj-puntos}}</div>
+        <div class="capa" data-c="t-recorridos">{{tlaj_rec_doc}}</div>
+        <div class="capa" data-c="t-sin-respuesta">{{doc:tlaj-sin-respuesta}}</div>
+        <div class="capa" data-c="z-boletin">
+          <div class="recorte"><div class="encab"><span>Boletín del Gobierno de Zapopan</span><span>19 de octubre de 2026</span></div>
+            <p class="q">«Zapopan contará con <mark>45 pipas y 100 cisternas comunitarias</mark> con capacidad de 10 mil litros cada una»</p>
+            <p class="de">Y daría «prioridad a escuelas y centros de salud municipales». <a href="https://www.zapopan.gob.mx/v3/noticias/zapopan-pone-en-marcha-operativo-de-suministro-de-agua-con-45-pipas-y-100-cisternas" rel="noopener">Leer el boletín</a></p></div>
+        </div>
+        <div class="capa" data-c="z-pipas">{{doc:zapopan-pipas}}</div>
+        <div class="capa" data-c="z-36">{{doc:zapopan-36-pipas}}</div>
+        <div class="capa" data-c="z-cisternas">{{doc:zapopan-cisternas}}</div>
+        <div class="capa" data-c="z-hospitales">{{doc:zapopan-hospitales}}</div>
+        <div class="capa" data-c="z-fase">{{doc:zapopan-primera-fase}}</div>
+        <div class="capa" data-c="reportes_doc">{{doc:zapopan-reportes}}</div>
+        <div class="capa mapa" data-c="reportes">
+          <div class="puntos-mapa" id="mapa-reportes" role="region" aria-label="Mapa de Zapopan con el número de reportes de falta de agua por colonia"></div>
+          <ul class="keys sobre" id="clases-reportes" aria-label="Número de reportes"></ul>
+          <p class="nota-mapa" id="aviso-reportes" aria-live="polite"></p>
+        </div>
+      </div>
+
+      <ol class="pasos">
+        <li class="paso capitulo" data-c="t-transitan"><div class="tarjeta">
+          <p class="mun">Tlajomulco</p>
+          <h2>El canal de Las Pintas: diez puntos de descarga y «no existen descargas»</h2>
+          <p class="note">El oficio DG-135/2026 del SIAPA a Tlajomulco y dos oficios de Tlajomulco, de marzo y de noviembre.</p>
+        </div></li>
+        <li class="paso" data-c="t-transitan"><div class="tarjeta"><span class="num">1</span>El SIAPA, 6 de marzo: aguas residuales de descargas dentro de Tlajomulco transitan por el canal.<small>Tlajomulco lo recibió el 11 de marzo.</small></div></li>
+        <li class="paso" data-c="t-limite"><div class="tarjeta"><span class="num">2</span>El límite que cita: 0.5 mg/l. Lo que escribe: «más de 3.50».</div></li>
+        <li class="paso" data-c="t-grafica"><div class="tarjeta"><span class="num">3</span>Su propia gráfica: en nuestra lectura, 3.62 mg/L en enero de 2026, 7.2 veces el límite.<small><a href="/datos/siapa-dg-135-2026-amoniacal.csv">CSV</a> de nuestra lectura.</small></div></li>
+        <li class="paso" data-c="t-puntos"><div class="tarjeta"><span class="num">4</span>Diez puntos. Descargas «de manera permanente» en algunos, «intermitente» en otros.</div></li>
+        <li class="paso" data-c="t-recorridos"><div class="tarjeta"><span class="num">5</span>Tlajomulco, finales de marzo: «no existen descargas». No dice cuándo fueron los recorridos.</div></li>
+        <li class="paso" data-c="t-sin-respuesta"><div class="tarjeta"><span class="num">6</span>Tlajomulco, 20 de noviembre: no respondió el oficio del SIAPA; las listas y minutas, si las hubo, estarían en el SIAPA.</div></li>
+        <li class="paso" data-c="t-sin-respuesta"><div class="tarjeta sello">
+          <p class="tinta">No cuadra</p>
+          <p><strong>La diferencia</strong> {{tlaj_diferencia_txt}}</p>
+          <p class="ir"><a class="button" href="/tlajomulco">El expediente completo de Tlajomulco: seis años de amoniaco, las fotografías y la CEDHJ →</a></p>
+        </div></li>
+
+        <li class="paso capitulo" data-c="z-boletin"><div class="tarjeta">
+          <p class="mun">Zapopan</p>
+          <h2>El operativo de pipas: 45 pipas y 100 cisternas anunciadas</h2>
+          <p class="note">El boletín, y los oficios que Zapopan y su Protección Civil entregaron por transparencia en noviembre de 2026.</p>
+        </div></li>
+        <li class="paso" data-c="z-boletin"><div class="tarjeta"><span class="num">1</span>Lo prometido.<small>Boletín del 19 de octubre de 2026.</small></div></li>
+        <li class="paso" data-c="z-pipas"><div class="tarjeta"><span class="num">2</span>La línea nunca llega a 45. El día con más, el 27 de octubre, tuvo 34.<small>Nuestra lectura de las etiquetas de la gráfica (<a href="/datos/zapopan-pipas-por-dia.csv">CSV</a>).</small></div></li>
+        <li class="paso" data-c="z-36"><div class="tarjeta"><span class="num">3</span>«36 pipas en servicio» al 3 de noviembre; la gráfica marca 31 ese día. La relación de pipas del mismo oficio suma también 36; 25 son del SIAPA.</div></li>
+        <li class="paso" data-c="z-cisternas"><div class="tarjeta"><span class="num">4</span>La lista termina en la número 49. Las otras 51 no están; eso no prueba que no existan.<small>Las 49, en el <a href="/cisternas">mapa de cisternas</a>.</small></div></li>
+        <li class="paso" data-c="z-hospitales"><div class="tarjeta"><span class="num">5</span>Prometió prioridad a escuelas y centros de salud. Hospitales: «Sin atenciones registradas».</div></li>
+        <li class="paso" data-c="z-fase"><div class="tarjeta"><span class="num">6</span>Después, en su respuesta: una meta por «materializar», en una «primera fase».</div></li>
+        <li class="paso" data-c="reportes_doc"><div class="tarjeta"><span class="num">7</span>Del 15 de octubre al 4 de noviembre, 9,828 reportes por falta de agua. Es la lista de reportes de «Falta de agua en casa habitación» que entregó la Coordinación General de Cercanía Ciudadana de Zapopan. Todos tienen al SIAPA como dependencia.<small>Oficio 11000000/CER.CIU/2026/0878 (<a href="/datos/zapopan-respuesta-140292426004981.pdf#page=5">p. 5 del PDF</a>, <a href="/datos/zapopan-reportes.csv">CSV</a>).</small></div></li>
+        <li class="paso" data-c="reportes"><div class="tarjeta"><span class="num">8</span>8,857 aparecen «En proceso» en la lista. El color es cuántos reportes nombran a cada colonia del mapa del SIAPA; ahí caen 5,986 de los 7,892 reportes que dicen colonia. Una colonia sin color no aparece con ese nombre en la lista: eso no quiere decir que haya tenido agua.<small>Un reporte no es una casa: una casa puede reportar varias veces. <a href="/zapopan#reportes">Todos los reportes, por colonia y por día</a>.</small></div></li>
+        <li class="paso" data-c="reportes"><div class="tarjeta sello">
+          <p class="tinta">No cuadra</p>
+          <p><strong>La diferencia</strong> {{zap_diferencia_txt}}</p>
+          <p class="ir"><a class="button" href="/zapopan">El expediente completo de Zapopan: las 75 colonias, los litros y los 9,828 reportes →</a></p>
+        </div></li>
+      </ol>
+    </div>
+
+    {{pendiente}}
+    {{como}}
+  </main>
+<script>
+(() => {
+  NC.relato(document.getElementById("relato"), {
+    capas: {
+      reportes: (capa, first) => {
+        if (first) capa._map = NC.mapaReportes(document.getElementById("mapa-reportes"), document.getElementById("clases-reportes"), document.getElementById("aviso-reportes"));
+        else if (capa._map) capa._map.invalidateSize();
+      },
+    },
+  });
+})();
+</script>

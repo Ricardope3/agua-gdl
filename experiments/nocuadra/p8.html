@@ -1,0 +1,174 @@
+<!-- titulo: Adivina | mapa -->
+<style>
+/* Propuesta 8: a quiz. The reader guesses before each document is shown; each answer opens the same three parts:
+   what was said, what the record shows, the gap. */
+.reto { margin: 28px 0 0; padding: 22px 0 0; border-top: 3px double var(--brand) }
+.reto .num { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--primary); color: var(--on-primary); font-weight: 600; margin-right: 8px }
+.reto .mun { font-size: .85rem; font-weight: 600; color: var(--brand-deep) }
+.reto h2 { margin: 10px 0 14px; font-size: clamp(1.35rem, 2.8vw, 1.85rem); max-width: 40ch; line-height: 1.25 }
+.apuesta { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px 20px; align-items: center; max-width: 640px; padding: 16px 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 4px }
+.apuesta input[type=range] { width: 100%; accent-color: var(--brand); height: 30px }
+.apuesta output { font: 400 2.6rem/1 var(--serif); font-variant-numeric: tabular-nums; min-width: 3.2ch; text-align: right }
+.apuesta .opciones { grid-column: 1 / -1; display: grid; gap: 8px }
+.apuesta .opciones label { display: flex; gap: 10px; align-items: center; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 4px; cursor: pointer }
+.apuesta .opciones label:has(input:checked) { border-color: var(--brand); background: var(--subtle) }
+.apuesta .button { grid-column: 1 / -1; justify-self: start }
+.apuesta .button:disabled { opacity: .5; cursor: default }
+.respuesta { margin: 18px 0 0; animation: entra .5s ease-out }
+@keyframes entra { from { opacity: 0; transform: translateY(10px) } }
+@media (prefers-reduced-motion: reduce) { .respuesta { animation: none } }
+.veredicto { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; margin: 0 0 12px }
+.veredicto .real { font: 400 clamp(3rem, 8vw, 5rem)/1 var(--serif); font-variant-numeric: tabular-nums; color: var(--fg) }
+.veredicto .real.sobre { color: var(--s2-text) }
+.veredicto .real.txt { font-size: clamp(1.6rem, 4vw, 2.4rem); font-style: italic }
+.veredicto .tuyo { font-size: 1rem; color: var(--muted) }
+.veredicto .tuyo b { color: var(--fg) }
+.respuesta .duo { margin-top: 14px }
+.respuesta .grafica, .respuesta .documento { margin: 10px 0 0 }
+.respuesta .cien { width: min(100%, 300px) }
+.respuesta .puntos-mapa { margin: 12px 0 0 }
+.resumen { margin: 34px 0 0; padding: 20px 22px; border: 3px double var(--brand); border-radius: 4px; background: var(--surface) }
+.resumen h2 { margin: 0 0 10px; font-size: 1.5rem }
+.resumen table { border-collapse: collapse; width: 100%; max-width: 760px; font-variant-numeric: tabular-nums }
+.resumen th, .resumen td { text-align: left; padding: 8px 12px 8px 0; border-bottom: 1px solid var(--line); vertical-align: top }
+.resumen th { font-size: .82rem; color: var(--muted); font-weight: 600 }
+</style>
+  <main>
+    <p class="kicker">No cuadra</p>
+    <h1>¿Qué dicen sus documentos? Adivina antes de verlos</h1>
+    <p class="lede">Seis preguntas. Te damos lo que se anunció o se afirmó; tú adivinas qué dicen los documentos oficiales. Luego te enseñamos el documento.</p>
+
+    <section class="reto" data-k="descargas">
+      <span class="num">1</span><span class="mun">Tlajomulco · el canal de Las Pintas</span>
+      <h2>El 6 de marzo, el SIAPA le señaló a Tlajomulco diez puntos de descarga de aguas residuales al canal de Las Pintas, con fotografías de siete. Tras tres recorridos con el SIAPA, ¿qué dice Tlajomulco que le informó a la CEDHJ?</h2>
+      <form class="apuesta"><div class="opciones">
+        <label><input type="radio" name="v" value="Que encontró las diez">Que encontró las diez y las va a cerrar</label>
+        <label><input type="radio" name="v" value="Que encontró algunas">Que encontró algunas</label>
+        <label><input type="radio" name="v" value="Que no existen">Que no existen descargas</label>
+      </div><button class="button" disabled>Ver el documento</button></form>
+      <div class="respuesta" hidden>
+        <div class="veredicto"><span class="real txt">«no existen descargas»</span><span class="tuyo"></span></div>
+        {{tlaj_rec_doc}}
+        <p>Y en noviembre nos respondió que no contestó el oficio del SIAPA, y que las listas y minutas de los recorridos, si las hubo, estarían en los archivos del SIAPA.</p>
+        {{tlaj_duo}}
+      </div>
+    </section>
+
+    <section class="reto" data-k="amoniaco">
+      <span class="num">2</span><span class="mun">Tlajomulco</span>
+      <h2>El SIAPA cita un límite de nitrógeno amoniacal de 0.5 mg/L. En su propia gráfica, ¿cuánto tuvo en promedio el agua que entró a la Planta 1 en enero de 2026?</h2>
+      <form class="apuesta"><input type="range" name="v" min="0" max="4" step="0.1" value="0.5" aria-label="Tu respuesta, en mg/L"><output>0.5</output><button class="button">Ver el documento</button></form>
+      <div class="respuesta" hidden>
+        <div class="veredicto"><span class="real sobre">3.62</span><span class="tuyo"></span></div>
+        <p>En nuestra lectura de su gráfica: 7.2 veces el límite. De 0.10 a 0.27 mg/L de 2020 a 2022, por encima del límite la mayoría de los meses desde julio de 2023. Esa planta abastecía 655 colonias y fraccionamientos, según el SIAPA a la CEDHJ.</p>
+        <figure class="grafica"><div class="serie" data-g="amoniaco"></div>{{amon_cap}}</figure>
+        <p class="ir"><a class="button" href="/tlajomulco">Todo Tlajomulco →</a></p>
+      </div>
+    </section>
+
+    <section class="reto" data-k="pipas">
+      <span class="num">3</span><span class="mun">Zapopan · el operativo de pipas</span>
+      <h2>El 19 de octubre, Zapopan anunció que «contará con 45 pipas». En la gráfica de su Protección Civil, ¿cuántas tuvo el día con más?</h2>
+      <form class="apuesta"><input type="range" name="v" min="0" max="45" value="45" aria-label="Tu respuesta, en pipas"><output>45</output><button class="button">Ver el documento</button></form>
+      <div class="respuesta" hidden>
+        <div class="veredicto"><span class="real">34</span><span class="tuyo"></span></div>
+        <p>Ningún día de la gráfica llega a 45. El día con más fue el 27 de octubre; el 19, el día del boletín, tuvo 11. El mismo oficio dice que al 3 de noviembre había «36 pipas en servicio».</p>
+        <figure class="grafica"><div class="serie" data-g="pipas"></div>{{pipas_cap}}</figure>
+      </div>
+    </section>
+
+    <section class="reto" data-k="cisternas">
+      <span class="num">4</span><span class="mun">Zapopan</span>
+      <h2>También anunció «100 cisternas comunitarias». ¿Hasta qué número llega el «listado de cisternas instaladas» que entregó su Coordinación de Cercanía Ciudadana?</h2>
+      <form class="apuesta"><input type="range" name="v" min="0" max="100" value="100" aria-label="Tu respuesta, en cisternas"><output>100</output><button class="button">Ver el documento</button></form>
+      <div class="respuesta" hidden>
+        <div class="veredicto"><span class="real">49</span><span class="tuyo"></span></div>
+        <p>La lista termina en la número 49, LOS CAJETES. 51 de las 100 anunciadas no están en ella; eso no prueba que no existan, pero no están en lo que entregaron. Y en los archivos de Cercanía Ciudadana «no se localizaron bitácoras, hojas de servicio, vales o registros de viaje de las pipas que llenaron las cisternas».</p>
+        <div class="cien" data-g="cien" role="img" aria-label="Cien cuadros, uno por cisterna anunciada; 49 en azul, las de la lista"></div>
+        {{doc:zapopan-cisternas}}
+      </div>
+    </section>
+
+    <section class="reto" data-k="hospitales">
+      <span class="num">5</span><span class="mun">Zapopan</span>
+      <h2>Prometió «prioridad a escuelas y centros de salud municipales». En la tabla de inmuebles atendidos, ¿qué dice la fila de hospitales?</h2>
+      <form class="apuesta"><div class="opciones">
+        <label><input type="radio" name="v" value="Varias atenciones">Varias atenciones, con fecha</label>
+        <label><input type="radio" name="v" value="Una o dos atenciones">Una o dos atenciones</label>
+        <label><input type="radio" name="v" value="Ninguna">Ninguna atención</label>
+      </div><button class="button" disabled>Ver el documento</button></form>
+      <div class="respuesta" hidden>
+        <div class="veredicto"><span class="real txt">«Sin atenciones registradas»</span><span class="tuyo"></span></div>
+        <p>La tabla no registra ninguna atención a hospitales ni a centros de salud. Las escuelas sí aparecen, desde el 20 de octubre.</p>
+        {{zap_hosp_doc}}
+        {{zap_duo}}
+      </div>
+    </section>
+
+    <section class="reto" data-k="reportes">
+      <span class="num">6</span><span class="mun">Zapopan</span>
+      <h2>Mientras tanto, ¿cuántos reportes por falta de agua tiene la lista del propio Zapopan, del 15 de octubre al 4 de noviembre?</h2>
+      <form class="apuesta"><input type="range" name="v" min="0" max="20000" step="100" value="1000" aria-label="Tu respuesta, en reportes"><output>1,000</output><button class="button">Ver el documento</button></form>
+      <div class="respuesta" hidden>
+        <div class="veredicto"><span class="real">9,828</span><span class="tuyo"></span></div>
+        <p>Es la lista de reportes de «Falta de agua en casa habitación» que entregó la Coordinación General de Cercanía Ciudadana de Zapopan. Todos tienen al SIAPA como dependencia; 8,857 aparecen «En proceso». Un reporte no es una casa: una casa puede reportar varias veces.</p>
+        {{doc:zapopan-reportes}}
+        <div class="puntos-mapa" data-g="reportes" role="region" aria-label="Mapa de Zapopan con el número de reportes de falta de agua por colonia"></div>
+        <ul class="keys" id="clases-reportes" aria-label="Número de reportes"></ul>
+        <p class="note" id="aviso-reportes" aria-live="polite">El color es cuántos reportes nombran a cada colonia del mapa del SIAPA; ahí caen 5,986 de los 7,892 reportes que dicen colonia. Una colonia sin color no aparece con ese nombre en la lista: eso no quiere decir que haya tenido agua.</p>
+        <p class="ir"><a class="button" href="/zapopan">Todo Zapopan →</a></p>
+      </div>
+    </section>
+
+    <div class="resumen" id="resumen" hidden>
+      <h2>Tus respuestas, junto a sus documentos</h2>
+      <table><thead><tr><th>Pregunta</th><th>Tú</th><th>El documento</th></tr></thead><tbody></tbody></table>
+      <p class="buttons" style="margin-top:14px"><a class="button" href="/zapopan">Todo Zapopan →</a><a class="button" href="/tlajomulco">Todo Tlajomulco →</a></p>
+    </div>
+
+    {{pendiente}}
+    {{como}}
+  </main>
+<script>
+(() => {
+  const TEMA = { descargas: "Descargas, según Tlajomulco", amoniaco: "Amoniaco, enero de 2026 (mg/L)", pipas: "Pipas, el día con más", cisternas: "Cisternas en la lista", hospitales: "Hospitales", reportes: "Reportes por falta de agua" };
+  const REAL = { descargas: "«no existen descargas»", amoniaco: "3.62", pipas: "34", cisternas: "49", hospitales: "«Sin atenciones registradas»", reportes: "9,828" };
+  const CUENTA = { pipas: [34, 0], cisternas: [49, 0], amoniaco: [3.62, 2], reportes: [9828, 0] };
+  const dichas = {};
+  const dibuja = {
+    pipas: (c) => NC.seriePipas(c), amoniaco: (c) => NC.serieAmoniaco(c),
+    cien: (c) => NC.cuadros(c, 49).anima(),
+    reportes: (c) => NC.mapaReportes(c, document.getElementById("clases-reportes"), document.getElementById("aviso-reportes")),
+  };
+  document.querySelectorAll(".reto").forEach((sec) => {
+    const k = sec.dataset.k, form = sec.querySelector("form"), out = form.querySelector("output"), r = form.querySelector("input[type=range]");
+    const btn = form.querySelector("button");
+    if (r) r.addEventListener("input", () => { out.textContent = (+r.value).toLocaleString("es-MX"); });
+    form.querySelectorAll("input[type=radio]").forEach((x) => x.addEventListener("change", () => { btn.disabled = false; }));
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const v = r ? +r.value : form.querySelector("input:checked")?.value;
+      if (v == null) return;
+      dichas[k] = String(v);
+      const resp = sec.querySelector(".respuesta");
+      const tuyo = resp.querySelector(".tuyo");
+      if (k === "pipas") tuyo.innerHTML = `Tú dijiste <b>${v}</b>${v > 34 ? `: ${v - 34} más que en su gráfica` : v === 34 ? ": exacto" : ""}.`;
+      else if (k === "cisternas") tuyo.innerHTML = `Tú dijiste <b>${v}</b>${v > 49 ? `: ${v - 49} más que su lista` : v === 49 ? ": exacto" : ""}.`;
+      else if (k === "reportes") tuyo.innerHTML = `Tú dijiste <b>${v.toLocaleString("es-MX")}</b>.`;
+      else if (k === "amoniaco") tuyo.innerHTML = `Tú dijiste <b>${v.toFixed(1)}</b>. El límite que cita es 0.5.`;
+      else tuyo.innerHTML = `Tú elegiste: <b>${NC.esc(v)}</b>.`;
+      resp.hidden = false;
+      form.querySelectorAll("input, button").forEach((x) => { x.disabled = true; });
+      resp.querySelectorAll("[data-g]").forEach((c) => { if (!c.firstChild) dibuja[c.dataset.g](c); });
+      // The documents' figure counts up from zero, like the squares fill.
+      if (CUENTA[k]) NC.cuenta(resp.querySelector(".real"), CUENTA[k][0], CUENTA[k][1], 900, true);
+      resp.querySelector(".veredicto").scrollIntoView({ behavior: NC.quieto() ? "auto" : "smooth", block: "center" });
+      if (Object.keys(dichas).length === Object.keys(TEMA).length) {
+        const res = document.getElementById("resumen");
+        res.querySelector("tbody").innerHTML = Object.keys(TEMA).map((t) => `<tr><td>${TEMA[t]}</td><td>${NC.esc(dichas[t])}</td><td>${REAL[t]}</td></tr>`).join("");
+        res.hidden = false;
+      }
+    });
+  });
+})();
+</script>

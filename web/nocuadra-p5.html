@@ -20,6 +20,8 @@
 <link rel="manifest" href="/site.webmanifest">
 <link rel="stylesheet" href="/menu.css">
 <link rel="stylesheet" href="/nocuadra.css">
+<link rel="stylesheet" href="/nocuadra-lab.css">
+<link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
 <style>
 :root {
   --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
@@ -78,76 +80,75 @@ main h1, main h2 { font-weight: 400; font-style: italic }
 footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-top: 34px }
 </style>
 <style>
-/* Propuesta 5: sliders. One slider takes Zapopan from the announcement to the documents; a divider wipes between what
-   the SIAPA and Tlajomulco say; a third slider walks six years of ammonia against the limit. */
-svg.defs { position: absolute; width: 0; height: 0 }
-.bloque { margin: 30px 0 0; padding: 24px 0 0; border-top: 3px double var(--brand) }
-.bloque > h2 { margin: 0 0 6px; font-size: clamp(1.45rem, 3vw, 2rem); max-width: 34ch; line-height: 1.2 }
-.bloque > .note { margin: 0 0 16px }
-.control { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; align-items: center; margin: 18px 0 8px; padding: 12px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; position: sticky; top: 8px; z-index: 600 }
-.control .extremo { font-size: .88rem; font-weight: 600; color: var(--muted); max-width: 13ch; line-height: 1.25 }
-.control .extremo:last-of-type { text-align: right }
-.control input[type=range] { width: 100%; accent-color: var(--brand); height: 28px }
-.control .play { grid-column: 1 / -1; justify-self: center }
-.estado { font: italic 400 1.2rem var(--serif); text-align: center; margin: 0 0 14px; min-height: 1.6em }
-.paneles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line) }
-.panel { padding: 18px 20px }
-.panel + .panel { border-left: 1px solid var(--line) }
-.panel h3 { margin: 0 0 10px; font-size: .95rem; font-weight: 600; color: var(--muted) }
-.panel .n { display: block; font: 400 clamp(2.6rem, 6vw, 4rem)/1 var(--serif); font-variant-numeric: tabular-nums; letter-spacing: -.02em }
-.panel .n small { font: .95rem var(--font); color: var(--muted); letter-spacing: 0 }
-.pipas { display: grid; grid-template-columns: repeat(9, 1fr); gap: 6px 4px; margin: 14px 0 0; max-width: 300px }
-.pipas svg { width: 100%; height: auto; color: var(--s1); transition: color .25s, opacity .25s }
-.pipas svg.fuera { color: var(--grid); opacity: .9 }
-.panel .cien { width: min(100%, 230px); margin: 14px 0 0; gap: 3px }
-.cien span { transition: background .25s }
-.dicho { position: relative; min-height: 7.5rem; margin: 14px 0 0 }
-.dicho p { position: absolute; inset: 0; margin: 0; font: italic 400 clamp(1.25rem, 2.4vw, 1.6rem)/1.25 var(--serif); transition: opacity .3s }
-.dicho .de { position: static; display: block; margin-top: 4px; font: .82rem var(--font); color: var(--muted) }
-.panel .fuente { margin: 12px 0 0; font-size: .82rem; color: var(--muted) }
-.diferencia-b { margin: 16px 0 0; padding: 12px 16px; background: var(--warn-bg); color: var(--warn); max-width: 80ch }
-.diferencia-b strong { display: block; font-size: .85rem }
-/* The wipe: two faces in one grid cell; the front face is clipped at the divider. */
-.cortina { position: relative; display: grid; margin: 16px 0 0; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; user-select: none; touch-action: pan-y }
-.cara { grid-area: 1 / 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: center; padding: 22px 26px; min-height: 420px }
+/* Propuesta 5: before and after, scrubbed by the scroll (nocuadra-lab.css). In Tlajomulco a divider wipes from what the
+   SIAPA wrote to what Tlajomulco said, and a glass walks six years of ammonia against the limit; in Zapopan the counts go
+   from the announcement to the documents. A step with data-de and data-a moves its control as it scrolls past. */
+.paso.largo { min-height: 140vh }
+.relato .rango { display: block; width: 100%; margin: 8px 0 0; accent-color: var(--brand) }
+/* The wipe: two faces in one grid cell; the Tlajomulco face is clipped at the divider. */
+.cortina { position: relative; display: grid; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; user-select: none }
+.cara { grid-area: 1 / 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 12rem); gap: 24px; align-items: center; padding: 24px 28px; min-height: 400px }
 .cara.siapa { background: var(--surface) }
-.cara.tlaj { background: var(--subtle); clip-path: inset(0 0 0 var(--x, 50%)) }
-.cara .lado { font-size: .85rem; font-weight: 600; color: var(--muted); margin: 0 0 8px }
-.cara blockquote { margin: 0; font: italic 400 clamp(1.2rem, 2.3vw, 1.6rem)/1.3 var(--serif) }
-.cara .de { margin: 10px 0 0; font-size: .85rem; color: var(--muted) }
-.cara .foto { max-width: 340px; justify-self: center }
-.cara .documento { margin: 0 }
-.cara .hoja { padding: 12px }
-.divisor { position: absolute; top: 0; bottom: 0; left: var(--x, 50%); width: 0; border-left: 3px solid var(--brand); pointer-events: none; z-index: 2 }
-.divisor::after { content: "⟷"; position: absolute; top: 50%; left: 0; transform: translate(-50%, -50%); display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--brand); color: #fff; font-size: 1.2rem }
-.cortina { cursor: ew-resize }
-.cortina a { cursor: pointer }
-.cortina-r { display: block; width: 100%; margin: 10px 0 0; accent-color: var(--brand) }
+.cara.tlaj { background: var(--subtle); clip-path: inset(0 0 0 var(--x, 100%)) }
+.cara .lado { margin: 0 0 8px; font-size: .85rem; font-weight: 600; color: var(--muted) }
+.cara blockquote { margin: 0; font: italic 400 clamp(1.2rem, 2.2vw, 1.5rem)/1.3 var(--serif) }
+.cara .de { margin: 8px 0 0; font-size: .85rem; color: var(--muted) }
+.cara .lado-n { display: grid; gap: 8px; justify-items: center; text-align: center }
+.cara .lado-n b { font: 400 clamp(4rem, 9vw, 6.5rem)/1 var(--serif); font-variant-numeric: tabular-nums }
+.cara .lado-n small { font-size: .85rem; color: var(--muted); max-width: 14ch }
+.cara .foto { width: 100%; max-width: 160px }
+.divisor { position: absolute; top: 0; bottom: 0; left: var(--x, 100%); z-index: 2; width: 0; border-left: 3px solid var(--brand); pointer-events: none }
+.divisor::after { content: ""; position: absolute; top: 50%; left: 0; transform: translate(-50%, -50%); width: 20px; height: 48px; border-radius: 4px; background-color: var(--brand); background-image: linear-gradient(#fff, #fff), linear-gradient(#fff, #fff); background-size: 2px 20px; background-position: 6px center, 12px center; background-repeat: no-repeat }
 /* The glass: one month's average against the limit. */
-.vaso-caja { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 28px; align-items: end; margin: 16px 0 0 }
-.vaso { position: relative; height: 300px; border: 3px solid var(--fg); border-top: 0; border-radius: 0 0 22px 22px; overflow: hidden; background: color-mix(in srgb, var(--subtle) 50%, transparent) }
+.vaso-caja { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 28px; align-items: end }
+.vaso { position: relative; height: 300px; border: 3px solid var(--fg); border-top: 0; border-radius: 0 0 20px 20px; overflow: hidden; background: color-mix(in srgb, var(--subtle) 50%, transparent) }
 .vaso .agua { position: absolute; left: 0; right: 0; bottom: 0; height: var(--h, 0%); background: var(--axis); transition: height .2s, background .2s }
 .vaso .agua.sobre { background: var(--s2) }
 .vaso .lim { position: absolute; left: -3px; right: -3px; bottom: 12.5%; border-top: 2px dashed var(--fg) }
-.vaso .lim span { position: absolute; right: 4px; bottom: 2px; font-size: .72rem; font-weight: 600; background: var(--surface); padding: 0 3px }
-.lectura .mes { font: italic 400 1.4rem var(--serif); margin: 0 }
-.lectura .v { font: 400 clamp(3rem, 8vw, 5rem)/1 var(--serif); font-variant-numeric: tabular-nums; margin: 4px 0 }
+.vaso .lim span { position: absolute; right: 4px; bottom: 2px; padding: 0 4px; background: var(--surface); font-size: .72rem; font-weight: 600 }
+.lectura .mes { margin: 0; font: italic 400 1.4rem var(--serif) }
+.lectura .v { margin: 4px 0; font: 400 clamp(3rem, 7vw, 4.5rem)/1 var(--serif); font-variant-numeric: tabular-nums }
 .lectura .v.sobre { color: var(--s2-text) }
 .lectura .v small { font: 1rem var(--font); color: var(--muted) }
-.lectura .x { margin: 0; font-size: 1.05rem }
-.lectura .tira { display: flex; gap: 1px; height: 26px; margin: 16px 0 0; align-items: end }
-.lectura .tira i { flex: 1; background: var(--axis); min-height: 1px }
+.lectura .x { margin: 0; font-size: 1rem }
+.lectura .tira { display: flex; gap: 1px; align-items: end; height: 28px; margin: 16px 0 0 }
+.lectura .tira i { flex: 1; min-height: 1px; background: var(--axis) }
 .lectura .tira i.sobre { background: var(--s2) }
 .lectura .tira i.on { outline: 2px solid var(--fg) }
-@media (prefers-reduced-motion: reduce) { .pipas svg, .cien span, .dicho p, .vaso .agua { transition: none } }
+/* Zapopan: two counts that move from the bulletin to the documents. */
+.estado { margin: 0 0 12px; font: italic 400 1.2rem var(--serif); min-height: 1.6em }
+.paneles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line) }
+.panel { padding: 16px 20px }
+.panel + .panel { border-left: 1px solid var(--line) }
+.panel h3 { margin: 0 0 8px; font-size: .95rem; font-weight: 600; color: var(--muted) }
+.panel .n { display: block; font: 400 clamp(2.4rem, 5vw, 3.6rem)/1 var(--serif); font-variant-numeric: tabular-nums }
+.panel .n small { font: .9rem var(--font); color: var(--muted) }
+.camiones { display: grid; grid-template-columns: repeat(9, 1fr); gap: 4px; max-width: 280px; margin: 12px 0 0 }
+.camiones svg { width: 100%; height: auto; color: var(--s1); transition: color .25s }
+.camiones svg.fuera { color: var(--grid) }
+.panel .cien { width: min(100%, 220px); margin: 12px 0 0; gap: 2px }
+.panel .fuente { margin: 12px 0 0; font-size: .82rem; color: var(--muted) }
+.dicho { position: relative; min-height: 8rem; margin: 16px 0 0 }
+.dicho p { position: absolute; inset: 0; margin: 0; font: italic 400 clamp(1.3rem, 2.6vw, 1.8rem)/1.25 var(--serif); transition: opacity .3s }
+.dicho .de { position: static; display: block; margin-top: 4px; font: .85rem var(--font); color: var(--muted) }
+.capa.hosp .documento { margin-top: 16px }
+@media (prefers-reduced-motion: reduce) { .camiones svg, .dicho p, .vaso .agua { transition: none } }
 @media (max-width: 860px) {
-  .paneles { grid-template-columns: 1fr }
-  .panel { padding: 16px 0 }
-  .panel + .panel { border-left: 0; border-top: 1px solid var(--line) }
-  .cara { grid-template-columns: 1fr; min-height: 0; padding: 16px; gap: 12px; align-content: start }
-  .cara .foto { max-width: 220px }
-  .vaso-caja { grid-template-columns: 110px minmax(0, 1fr); gap: 18px }
-  .vaso { height: 220px }
+  .cara { grid-template-columns: minmax(0, 1fr) 6rem; min-height: 0; padding: 16px; gap: 12px; align-content: center }
+  .cara .foto { display: none }
+  .cara .lado-n b { font-size: 3.2rem }
+  .vaso-caja { grid-template-columns: 96px minmax(0, 1fr); gap: 16px }
+  .vaso { height: 200px }
+  .panel { padding: 8px 12px 12px 0 }
+  .panel + .panel { padding-left: 12px }
+  .estado { display: none }
+  .panel h3 { font-size: .8rem }
+  .panel .n { font-size: 2rem }
+  .panel .n small { display: block; margin-top: 4px; font-size: .75rem }
+  .camiones { gap: 2px; max-width: none }
+  .panel .cien { width: min(100%, 144px) }
+  .panel .fuente { display: none }
+  .capa.hosp .documento { display: none }
 }
 </style>
 <script src="/theme.js"></script>
@@ -174,67 +175,36 @@ svg.defs { position: absolute; width: 0; height: 0 }
   </header>
 
   <main>
-    <svg class="defs" aria-hidden="true"><symbol id="pipa" viewBox="0 0 32 20"><rect x="1" y="3" width="19" height="11" rx="5" fill="currentColor"/><path d="M21 6h5l4 4v4h-9z" fill="currentColor"/><rect x="1" y="14" width="29" height="2" fill="currentColor"/><circle cx="7" cy="17" r="2.6" fill="currentColor"/><circle cx="25" cy="17" r="2.6" fill="currentColor"/></symbol></svg>
+    <svg class="defs" aria-hidden="true" style="position:absolute;width:0;height:0"><symbol id="pipa" viewBox="0 0 32 20"><rect x="1" y="3" width="19" height="11" rx="5" fill="currentColor"/><path d="M21 6h5l4 4v4h-9z" fill="currentColor"/><rect x="1" y="14" width="29" height="2" fill="currentColor"/><circle cx="7" cy="17" r="2.6" fill="currentColor"/><circle cx="25" cy="17" r="2.6" fill="currentColor"/></symbol></svg>
     <p class="kicker">No cuadra</p>
-    <h1>Del anuncio al documento: desliza y mira cuánto falta</h1>
-    <p class="lede">Mueve cada control de un extremo al otro. En Zapopan, a la izquierda está lo que anunció el municipio y a la derecha lo que dicen sus oficios. En Tlajomulco, a la izquierda está el oficio del SIAPA y a la derecha lo que afirmó Tlajomulco.</p>
+    <h1>Del anuncio al documento: baja y mira cuánto falta</h1>
+    <p class="lede">Al bajar, cada gráfica pasa de un lado al otro. En Tlajomulco, de lo que escribió el SIAPA a lo que afirmó Tlajomulco; en Zapopan, de lo que anunció el municipio a lo que dicen sus oficios. Primero Tlajomulco, luego Zapopan.</p>
 
-    <section class="bloque" aria-labelledby="zapopan">
-      <p class="kicker">Zapopan · el operativo de pipas</p>
-      <h2 id="zapopan">45 pipas y 100 cisternas, del boletín a los oficios</h2>
-      <div class="control">
-        <span class="extremo">Lo prometido, 19 de octubre</span>
-        <input type="range" id="zap-r" min="0" max="100" value="0" aria-label="Del anuncio a los documentos" aria-valuetext="Lo prometido">
-        <span class="extremo">Lo entregado, oficios de noviembre</span>
-        <button class="button alt play" type="button" id="zap-play">Ver el cambio</button>
-      </div>
-      <p class="estado" id="zap-estado" aria-live="polite">Lo prometido: el boletín del 19 de octubre</p>
-      <div class="paneles">
-        <div class="panel">
-          <h3>Pipas</h3>
-          <span class="n"><span id="n-pipas">45</span> <small id="t-pipas">anunciadas</small></span>
-          <div class="pipas" id="pipas" aria-hidden="true"></div>
-          <p class="fuente" id="f-pipas">«contará con 45 pipas»</p>
-        </div>
-        <div class="panel">
-          <h3>Cisternas comunitarias</h3>
-          <span class="n"><span id="n-cis">100</span> <small id="t-cis">anunciadas</small></span>
-          <div class="cien" id="cien" aria-hidden="true"></div>
-          <p class="fuente" id="f-cis">«100 cisternas comunitarias con capacidad de 10 mil litros cada una»</p>
-        </div>
-        <div class="panel">
-          <h3>Hospitales y centros de salud</h3>
-          <div class="dicho">
-            <p id="d-antes">«prioridad a escuelas y centros de salud municipales»<span class="de">Boletín del 19 de octubre</span></p>
-            <p id="d-despues" style="opacity:0">Hospitales: «Sin atenciones registradas»<span class="de">Tabla de inmuebles atendidos, oficio 011300/2026/0148</span></p>
+    <div class="relato" id="relato">
+      <div class="escena">
+        <div class="capa" data-c="cortina">
+          <div class="cortina" id="cortina" style="--x:100%">
+            <div class="cara siapa">
+              <div>
+                <p class="lado">Lo que dice el SIAPA</p>
+                <blockquote>«en estos sitios se han observado descargas abundantes, en algunas de manera permanente y otras de forma intermitente»</blockquote>
+                <p class="de">Anexo del oficio DG-135/2026, <a href="/datos/siapa-dg-135-2026.pdf#page=4">p. 4 del PDF</a>. La foto: descarga El Edén, <a href="/datos/siapa-dg-135-2026.pdf#page=11">p. 11</a>.</p>
+              </div>
+              <div class="lado-n"><b>10</b><small>puntos de descarga, según el SIAPA</small><a class="foto" href="/img/documentos/dg135-eden.webp" tabindex="-1"><span class="punto" aria-hidden="true">7</span><img src="/img/documentos/dg135-eden-mini.webp" width="543" height="770" alt="Dos fotografías: una capa de espuma blanca que cubre el canal al pie de una caída de agua, y un sillón atorado en el borde de una caída, con espuma abajo." decoding="async"></a></div>
+            </div>
+            <div class="cara tlaj">
+              <div>
+                <p class="lado">Lo que dice Tlajomulco</p>
+                <blockquote>«se realizaron tres recorridos en campo en conjunto con el SIAPA para visitar estos 10 puntos, constatando que no existen descargas de aguas residuales al canal "Las pintas"»</blockquote>
+                <p class="de">Oficio DAPIH/0331-01/2026, <a href="/datos/tlajomulco-dapih-0331-01-2026.pdf#page=3">p. 3</a>.</p>
+              </div>
+              <div class="lado-n"><b>0</b><small>descargas al canal, según Tlajomulco</small></div>
+            </div>
+            <span class="divisor" aria-hidden="true"></span>
           </div>
+          <input type="range" class="rango" id="cortina-r" min="0" max="100" value="100" aria-label="Mover la línea entre lo que dice el SIAPA y lo que dice Tlajomulco">
         </div>
-      </div>
-      <p class="note">El boletín: <a href="https://www.zapopan.gob.mx/v3/noticias/zapopan-pone-en-marcha-operativo-de-suministro-de-agua-con-45-pipas-y-100-cisternas" rel="noopener">Gobierno de Zapopan</a>. Las 34 pipas son el día con más de la gráfica del oficio 011300/2026/0150 (<a href="/datos/pcyb-respuesta-ut-091-2026.pdf#page=4">p. 4</a>, <a href="/datos/zapopan-pipas-por-dia.csv">CSV</a>), que dice también que al 3 de noviembre había «36 pipas en servicio». Las 49 cisternas, el «listado de cisternas instaladas» del oficio 11000000/CER.CIU/2026/0876 (<a href="/datos/zapopan-respuesta-140292426004978.pdf#page=9">desde la p. 9</a>).</p>
-      <div class="diferencia-b"><strong>La diferencia</strong>La gráfica de pipas por jornada nunca llega a 45. 51 de las 100 cisternas anunciadas no están en la lista entregada; eso no prueba que no existan. La tabla no registra ninguna atención a hospitales ni a centros de salud. Zapopan respondió después que las 45 pipas y las 100 cisternas eran una meta por «materializar»; el boletín dijo «contará con».</div>
-      <p class="ir"><a class="button" href="/zapopan">Todo Zapopan: pipas, litros, cisternas, hospitales, las 75 colonias y los 9,828 reportes →</a></p>
-    </section>
-
-    <section class="bloque" aria-labelledby="tlajomulco">
-      <p class="kicker">Tlajomulco · el canal de Las Pintas</p>
-      <h2 id="tlajomulco">Mismo canal, dos versiones: arrastra la línea</h2>
-      <p class="note">A la izquierda, el oficio DG-135/2026 del SIAPA (6 de marzo) con una de sus fotografías; a la derecha, lo que Tlajomulco le informó a la CEDHJ a finales de marzo.</p>
-      <div class="cortina" id="cortina" style="--x:50%">
-        <div class="cara siapa">
-          <div>
-            <p class="lado">Lo que dice el SIAPA</p>
-            <blockquote>«en estos sitios se han observado descargas abundantes, en algunas de manera permanente y otras de forma intermitente»</blockquote>
-            <p class="de">Anexo del oficio DG-135/2026, <a href="/datos/siapa-dg-135-2026.pdf#page=4">p. 4 del PDF</a>. La foto: descarga El Edén, <a href="/datos/siapa-dg-135-2026.pdf#page=11">p. 11</a>.</p>
-          </div>
-          <a class="foto" href="/img/documentos/dg135-eden.webp" tabindex="-1"><span class="punto" aria-hidden="true">7</span><img src="/img/documentos/dg135-eden-mini.webp" width="543" height="770" alt="Dos fotografías: una capa de espuma blanca que cubre el canal al pie de una caída de agua, y un sillón atorado en el borde de una caída, con espuma abajo." decoding="async"></a>
-        </div>
-        <div class="cara tlaj">
-          <div>
-            <p class="lado">Lo que dice Tlajomulco</p>
-            <blockquote>«se realizaron tres recorridos en campo en conjunto con el SIAPA para visitar estos 10 puntos, constatando que no existen descargas de aguas residuales al canal "Las pintas"»</blockquote>
-            <p class="de">Oficio DAPIH/0331-01/2026, <a href="/datos/tlajomulco-dapih-0331-01-2026.pdf#page=3">p. 3</a>.</p>
-          </div>
-          <figure class="documento">
+        <div class="capa" data-c="recorridos"><figure class="documento">
         <div class="hoja">
           <div class="renglones">
             <span class="renglon" style="width:99.92%"><img src="/img/documentos/tlaj-recorridos-1.png" width="1307" height="47" alt="Respecto a lo requerido, se manifiesta que el SIAPA informó al Municipio de Tlajomulco" loading="lazy"></span>
@@ -246,32 +216,141 @@ svg.defs { position: absolute; width: 0; height: 0 }
           </div>
         </div>
         <figcaption>Oficio DAPIH/0331-01/2026 de Tlajomulco, marzo de 2026, p. 3 (<a href="/datos/tlajomulco-dapih-0331-01-2026.pdf#page=3">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure></div>
+        <div class="capa" data-c="vaso">
+          <h3>Nitrógeno amoniacal, promedio mensual, agua que entra a la Planta 1</h3>
+          <div class="vaso-caja">
+            <div class="vaso" aria-hidden="true"><div class="agua" id="agua"></div><div class="lim"><span>0.5</span></div></div>
+            <div class="lectura" aria-live="polite">
+              <p class="mes" id="mes">enero de 2020</p>
+              <p class="v" id="v">0.11 <small>mg/L</small></p>
+              <p class="x" id="x">Por debajo del límite que cita el SIAPA, 0.5 mg/L</p>
+              <div class="tira" id="tira" aria-hidden="true"></div>
+            </div>
+          </div>
+          <input type="range" class="rango" id="mes-r" min="0" max="73" value="0" aria-label="Mes">
+        </div>
+        <div class="capa" data-c="zap">
+          <p class="estado" id="zap-estado" aria-live="polite">Lo prometido: el boletín del 19 de octubre</p>
+          <div class="paneles">
+            <div class="panel">
+              <h3>Pipas</h3>
+              <span class="n"><span id="n-pipas">45</span> <small id="t-pipas">anunciadas</small></span>
+              <div class="camiones" id="camiones" aria-hidden="true"></div>
+              <p class="fuente" id="f-pipas">«contará con 45 pipas»</p>
+            </div>
+            <div class="panel">
+              <h3>Cisternas comunitarias</h3>
+              <span class="n"><span id="n-cis">100</span> <small id="t-cis">anunciadas</small></span>
+              <div class="cien" id="cien" aria-hidden="true"></div>
+              <p class="fuente" id="f-cis">«100 cisternas comunitarias con capacidad de 10 mil litros cada una»</p>
+            </div>
+          </div>
+          <input type="range" class="rango" id="zap-r" min="0" max="100" value="0" aria-label="Del anuncio a los documentos" aria-valuetext="Lo prometido">
+        </div>
+        <div class="capa hosp" data-c="hosp">
+          <h3>Hospitales y centros de salud</h3>
+          <div class="dicho">
+            <p id="d-antes">«prioridad a escuelas y centros de salud municipales»<span class="de">Boletín del 19 de octubre</span></p>
+            <p id="d-despues" style="opacity:0">Hospitales: «Sin atenciones registradas»<span class="de">Tabla de inmuebles atendidos, oficio 011300/2026/0148</span></p>
+          </div>
+          <figure class="documento">
+        <div class="hoja">
+          <div class="renglones">
+            <span class="renglon marca" style="width:100%"><img src="/img/documentos/zapopan-hospitales-1.png" width="995" height="43" alt="Hospitales: Sin atenciones registradas" loading="lazy"></span>
+            <span class="renglon" style="width:100%"><img src="/img/documentos/zapopan-hospitales-2.png" width="995" height="38" alt="Espacios Públicos: Centro Comunitario N°3 - 09/11/2026" loading="lazy"></span>
+            <span class="renglon" style="width:100%"><img src="/img/documentos/zapopan-hospitales-3.png" width="995" height="35" alt="Escuelas: Centro Escolar Juan Mateo - 20/10/2026" loading="lazy"></span>
+          </div>
+        </div>
+        <figcaption>La tabla de inmuebles atendidos: oficio 011300/2026/0148, p. 6 de la respuesta UT-089/2026 (<a href="/datos/pcyb-respuesta-ut-089-2026.pdf#page=6">PDF</a>). Resaltado de Agua GDL.</figcaption>
       </figure>
         </div>
-        <span class="divisor" aria-hidden="true"></span>
-      </div>
-      <input type="range" class="cortina-r" id="cortina-r" min="0" max="100" value="50" aria-label="Mover la línea entre lo que dice el SIAPA y lo que dice Tlajomulco">
-      <div class="diferencia-b"><strong>La diferencia</strong>Tlajomulco no dice cuándo fueron los recorridos ni entregó actas. El propio SIAPA escribió que en esos sitios «se han observado descargas abundantes, en algunas de manera permanente y otras de forma intermitente»: un recorrido sin descargas no prueba que no las haya otros días.</div>
-
-      <h3>Seis años en el agua que entra a la Planta 1</h3>
-      <div class="control">
-        <span class="extremo">Enero de 2020</span>
-        <input type="range" id="mes-r" min="0" max="73" value="0" aria-label="Mes">
-        <span class="extremo">Febrero de 2026</span>
-        <button class="button alt play" type="button" id="mes-play">Recorrer los seis años</button>
-      </div>
-      <div class="vaso-caja">
-        <div class="vaso" aria-hidden="true"><div class="agua" id="agua"></div><div class="lim"><span>0.5</span></div></div>
-        <div class="lectura" aria-live="polite">
-          <p class="mes" id="mes">enero de 2020</p>
-          <p class="v" id="v">0.11 <small>mg/L</small></p>
-          <p class="x" id="x">Por debajo del límite que cita el SIAPA, 0.5 mg/L.</p>
-          <div class="tira" id="tira" aria-hidden="true"></div>
+        <div class="capa" data-c="reportes_doc"><figure class="documento">
+<div class="hoja">
+<div class="membrete"><img src="/img/documentos/zapopan-reportes-m1.png" width="325" height="215" style="width:20.36%" alt="" loading="lazy"><img src="/img/documentos/zapopan-reportes-m2.png" width="575" height="135" style="width:36.02%" alt="Oficio 11000000/CER.CIU/2026/0878" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon marca" style="width:61.39%"><img src="/img/documentos/zapopan-reportes-1.png" width="539" height="44" alt="se encontró un total de 9,828 reportes por" loading="lazy"></span>
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/zapopan-reportes-2.png" width="878" height="46" alt="falta de agua, con corte al 04 de noviembre de la presente anualidad," loading="lazy"></span>
+</div></div>
+        <figcaption>Oficio 11000000/CER.CIU/2026/0878, p. 5 de la respuesta a la solicitud 140292426004981 (<a href="/datos/zapopan-respuesta-140292426004981.pdf#page=5">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure></div>
+        <div class="capa mapa" data-c="reportes">
+          <div class="puntos-mapa" id="mapa-reportes" role="region" aria-label="Mapa de Zapopan con el número de reportes de falta de agua por colonia"></div>
+          <ul class="keys sobre" id="clases-reportes" aria-label="Número de reportes"></ul>
+          <p class="nota-mapa" id="aviso-reportes" aria-live="polite"></p>
         </div>
       </div>
-      <figcaption>Nitrógeno amoniacal, promedio mensual en el agua que entra a la Planta 1 Miravalle, de enero de 2020 a febrero de 2026, en mg/L. Fuente: Gráfico 1 del oficio DG-135/2026 del SIAPA (<a href="/datos/siapa-dg-135-2026.pdf#page=5">p. 5 del PDF</a>); lectura de Agua GDL, ±0.05 mg/L (<a href="/datos/siapa-dg-135-2026-amoniacal.csv">CSV</a>). La Figura 1 dice «corte enero 2020 a enero 2026», pero su línea llega a febrero.</figcaption>
-      <p class="ir"><a class="button" href="/tlajomulco">Todo Tlajomulco: seis años de amoniaco, el oficio del SIAPA, sus fotografías y lo que se le dijo a la CEDHJ →</a></p>
-    </section>
+
+      <ol class="pasos">
+        <li class="paso" data-c="cortina" data-de="100" data-a="100"><div class="tarjeta">
+          <p class="mun">Tlajomulco · el canal de Las Pintas</p>
+          <p class="grande">Mismo canal, dos versiones</p>
+          <p>El 6 de marzo, el SIAPA le escribió a Tlajomulco. Señaló diez puntos de descarga; siete traen fotografías y coordenadas en el anexo del oficio.</p>
+          <p class="fuente">Oficio DG-135/2026 (<a href="/datos/siapa-dg-135-2026.pdf">PDF</a>).</p>
+        </div></li>
+        <li class="paso largo" data-c="cortina" data-de="100" data-a="0"><div class="tarjeta">
+          <p class="grande">Baja y la línea pasa al otro lado</p>
+          <p>A la izquierda, el oficio DG-135/2026 del SIAPA (6 de marzo) con una de sus fotografías; a la derecha, lo que Tlajomulco dice haberle informado a la CEDHJ a finales de marzo. Con el teclado, mueve la línea con el control debajo.</p>
+        </div></li>
+        <li class="paso" data-c="recorridos" data-de="0" data-a="0"><div class="tarjeta">
+          <p class="grande">Tlajomulco: «no existen descargas»</p>
+          <p>A finales de marzo, en el oficio con el que atendió un requerimiento de la CEDHJ, Tlajomulco informó que en tres recorridos con el SIAPA constató que no existen descargas de aguas residuales al canal.</p>
+          <p class="fuente">Oficio DAPIH/0331-01/2026, p. 3 (<a href="/datos/tlajomulco-dapih-0331-01-2026.pdf#page=3">PDF</a>).</p>
+        </div></li>
+        <li class="paso largo" data-c="vaso" data-de="0" data-a="73"><div class="tarjeta">
+          <p class="grande">Seis años en el agua que entra a la Planta 1</p>
+          <p>Baja y el vaso recorre los meses de enero de 2020 a febrero de 2026. La línea punteada es el límite que cita el SIAPA, 0.5 mg/L.</p>
+        </div></li>
+        <li class="paso" data-c="vaso" data-de="72" data-a="72"><div class="tarjeta">
+          <p class="grande">3.62 mg/L en enero de 2026; el límite que cita es 0.5</p>
+          <p>En nuestra lectura de su gráfica, el nitrógeno amoniacal del agua que entra a la Planta 1 fue de 0.10 a 0.27 mg/L de 2020 a 2022, estuvo por encima del límite la mayoría de los meses desde julio de 2023 y llegó a 3.62 en enero de 2026: 7.2 veces el límite.</p>
+          <p class="fuente">Gráfico 1 del oficio DG-135/2026 (<a href="/datos/siapa-dg-135-2026.pdf#page=5">p. 5 del PDF</a>, <a href="/datos/siapa-dg-135-2026-amoniacal.csv">CSV</a>); el límite, de la NOM-127-SSA1-2021, en la p. 4.</p>
+        </div></li>
+        <li class="paso" data-c="recorridos"><div class="tarjeta">
+          <p class="dif"><strong>La diferencia</strong> Tlajomulco no dice cuándo fueron los recorridos ni entregó actas. El propio SIAPA escribió que en esos sitios «se han observado descargas abundantes, en algunas de manera permanente y otras de forma intermitente»: un recorrido sin descargas no prueba que no las haya otros días.</p>
+          <p class="ir"><a class="button" href="/tlajomulco">Todo Tlajomulco →</a></p>
+        </div></li>
+
+        <li class="paso capitulo" data-c="zap" data-de="0" data-a="0"><div class="tarjeta">
+          <p class="mun">Zapopan · el operativo de pipas</p>
+          <p class="grande">45 pipas y 100 cisternas, del boletín a los oficios</p>
+          <p>Lo prometido: el boletín del 19 de octubre, «Zapopan contará con 45 pipas y 100 cisternas comunitarias con capacidad de 10 mil litros cada una».</p>
+          <p class="fuente"><a href="https://www.zapopan.gob.mx/v3/noticias/zapopan-pone-en-marcha-operativo-de-suministro-de-agua-con-45-pipas-y-100-cisternas" rel="noopener">Boletín del Gobierno de Zapopan</a></p>
+        </div></li>
+        <li class="paso largo" data-c="zap" data-de="0" data-a="100"><div class="tarjeta">
+          <p class="grande">Baja: del boletín a los oficios</p>
+          <p>Mientras bajas, las cifras van del anuncio a lo que dicen los documentos; los números de en medio no son datos.</p>
+        </div></li>
+        <li class="paso" data-c="zap" data-de="100" data-a="100"><div class="tarjeta">
+          <p class="grande">Lo entregado: los oficios de noviembre</p>
+          <p>Las 34 pipas son el día con más de la gráfica del oficio 011300/2026/0150, que dice también que al 3 de noviembre había «36 pipas en servicio». Las 49 cisternas, el «listado de cisternas instaladas» del oficio 11000000/CER.CIU/2026/0876.</p>
+          <p class="fuente">Oficio 0150 (<a href="/datos/pcyb-respuesta-ut-091-2026.pdf#page=4">p. 4</a>, <a href="/datos/zapopan-pipas-por-dia.csv">CSV</a>); oficio 0876 (<a href="/datos/zapopan-respuesta-140292426004978.pdf#page=9">desde la p. 9</a>).</p>
+        </div></li>
+        <li class="paso" data-c="hosp" data-d="antes"><div class="tarjeta">
+          <p class="grande">«prioridad a escuelas y centros de salud municipales»</p>
+          <p>Lo anunció el mismo boletín del 19 de octubre.</p>
+        </div></li>
+        <li class="paso" data-c="hosp" data-d="despues"><div class="tarjeta">
+          <p class="grande">Hospitales: «Sin atenciones registradas»</p>
+          <p>Así dice la fila de hospitales en la tabla de inmuebles atendidos. La tabla no registra ninguna atención a hospitales ni a centros de salud.</p>
+          <p class="fuente">Oficio 011300/2026/0148 (<a href="/datos/pcyb-respuesta-ut-089-2026.pdf#page=6">p. 6 del PDF</a>).</p>
+        </div></li>
+        <li class="paso" data-c="reportes_doc"><div class="tarjeta">
+          <p class="grande">Del 15 de octubre al 4 de noviembre, 9,828 reportes por falta de agua</p>
+          <p>Es la lista de reportes de «Falta de agua en casa habitación» del 15 de octubre al 4 de noviembre que entregó la Coordinación General de Cercanía Ciudadana de Zapopan. Todos tienen al SIAPA como dependencia.</p>
+          <p class="fuente">Oficio 11000000/CER.CIU/2026/0878 (<a href="/datos/zapopan-respuesta-140292426004981.pdf#page=5">p. 5 del PDF</a>, <a href="/datos/zapopan-reportes.csv">CSV</a>).</p>
+        </div></li>
+        <li class="paso" data-c="reportes"><div class="tarjeta">
+          <p class="grande">8,857 aparecen «En proceso» en la lista</p>
+          <p>El color es cuántos reportes nombran a cada colonia del mapa del SIAPA; ahí caen 5,986 de los 7,892 reportes que dicen colonia. Pasa o toca una colonia. Una colonia sin color no aparece con ese nombre en la lista: eso no quiere decir que haya tenido agua.</p>
+          <p class="fuente">Un reporte no es una casa: una casa puede reportar varias veces. <a href="/zapopan#reportes">Todos los reportes, por colonia y por día</a>.</p>
+        </div></li>
+        <li class="paso" data-c="zap" data-de="100" data-a="100"><div class="tarjeta">
+          <p class="dif"><strong>La diferencia</strong> La gráfica de pipas por jornada nunca llega a 45. 51 de las 100 cisternas anunciadas no están en la lista entregada; eso no prueba que no existan. La tabla no registra ninguna atención a hospitales ni a centros de salud. Zapopan respondió después que las 45 pipas y las 100 cisternas eran una meta por «materializar»; el boletín dijo «contará con».</p>
+          <p class="ir"><a class="button" href="/zapopan">Todo Zapopan →</a></p>
+        </div></li>
+      </ol>
+    </div>
 
     <ul class="municipios">
       <li class="pendiente">
@@ -297,65 +376,17 @@ svg.defs { position: absolute; width: 0; height: 0 }
     <p><a href="/">Inicio</a> · <a href="/reportes">¿Hay agua?</a> · <a href="/cisternas">Cisternas comunitarias</a> · <a href="/pipas">Cómo pedir pipa</a> · <a href="/transparencia">Transparencia</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
   </footer>
 </div>
+<script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script src="/mapa.js"></script>
 <script src="/nocuadra-lab.js"></script>
 <script>
 (() => {
-  // Zapopan: one slider, three panels.
-  let tocado = false;
-  const pipas = document.getElementById("pipas");
-  pipas.innerHTML = Array.from({ length: 45 }, () => '<svg viewBox="0 0 32 20"><use href="#pipa"/></svg>').join("");
-  const camiones = [...pipas.children];
-  const cien = document.getElementById("cien");
-  NC.waffle(cien, 100);
-  const cuadros = [...cien.children];
-  const r = document.getElementById("zap-r");
   const $ = (id) => document.getElementById(id);
-  const pinta = () => {
-    const t = r.value / 100, fin = t >= 1;
-    const p = Math.round(45 - 11 * t), c = Math.round(100 - 51 * t);
-    camiones.forEach((s, i) => s.classList.toggle("fuera", i >= p));
-    cuadros.forEach((s, i) => s.classList.toggle("si", i < c));
-    $("n-pipas").textContent = p;
-    $("n-cis").textContent = c;
-    $("t-pipas").textContent = fin ? "el día con más" : t ? "(en transición, no es un dato)" : "anunciadas";
-    $("t-cis").textContent = fin ? "en la lista" : t ? "(en transición, no es un dato)" : "anunciadas";
-    $("f-pipas").textContent = fin ? "34 el 27 de octubre, en la gráfica de su Protección Civil; ningún día llega a 45" : "«contará con 45 pipas»";
-    $("f-cis").textContent = fin ? "La lista termina en la número 49, LOS CAJETES; 51 no están en ella, lo que no prueba que no existan" : "«100 cisternas comunitarias con capacidad de 10 mil litros cada una»";
-    $("d-antes").style.opacity = t < 0.5 ? 1 : 0;
-    $("d-despues").style.opacity = t < 0.5 ? 0 : 1;
-    const txt = t === 0 ? "Lo prometido: el boletín del 19 de octubre" : fin ? "Lo entregado: los oficios de noviembre" : "Del boletín a los oficios…";
-    $("zap-estado").textContent = txt;
-    r.setAttribute("aria-valuetext", t === 0 ? "Lo prometido" : fin ? "Lo entregado" : `${r.value} %`);
-  };
-  r.addEventListener("input", pinta);
-  pinta();
-  const anima = (input, hasta, ms, alFin) => {
-    if (NC.quieto()) { input.value = hasta; input.dispatchEvent(new Event("input")); return alFin && alFin(); }
-    const desde = +input.value, t0 = performance.now();
-    const paso = (t) => {
-      if (input === r && tocado) return;
-      const k = Math.min(1, (t - t0) / ms);
-      input.value = Math.round(desde + (hasta - desde) * k);
-      input.dispatchEvent(new Event("input"));
-      if (k < 1) requestAnimationFrame(paso); else if (alFin) alFin();
-    };
-    requestAnimationFrame(paso);
-  };
-  $("zap-play").addEventListener("click", () => { tocado = false; anima(r, +r.value >= 100 ? 0 : 100, 1800); });
-  for (const e of ["pointerdown", "keydown"]) r.addEventListener(e, () => { tocado = true; });
-  NC.alVer(r, () => { if (+r.value === 0) setTimeout(() => { if (!tocado) anima(r, 100, 2200); }, 500); }, 0.9);
 
-  // Tlajomulco: the divider.
+  // Tlajomulco: the divider. x is where the Tlajomulco face starts: 100 shows only the SIAPA, 0 only Tlajomulco.
   const cort = $("cortina"), cr = $("cortina-r");
   const pon = (v) => { cr.value = Math.round(Math.max(0, Math.min(100, v))); cort.style.setProperty("--x", cr.value + "%"); };
   cr.addEventListener("input", () => pon(+cr.value));
-  // Drag anywhere on the faces except a link, which stays clickable.
-  let arrastra = false;
-  const aX = (ev) => { const b = cort.getBoundingClientRect(); pon(((ev.clientX - b.left) / b.width) * 100); };
-  cort.addEventListener("pointerdown", (ev) => { if (ev.target.closest("a")) return; arrastra = true; cort.setPointerCapture(ev.pointerId); aX(ev); });
-  cort.addEventListener("pointermove", (ev) => { if (arrastra) aX(ev); });
-  cort.addEventListener("pointerup", () => { arrastra = false; });
-  cort.addEventListener("pointercancel", () => { arrastra = false; });
   // A keyboard user who tabs into a face sees all of it.
   cort.addEventListener("focusin", (ev) => pon(ev.target.closest(".tlaj") ? 0 : 100));
 
@@ -370,13 +401,61 @@ svg.defs { position: absolute; width: 0; height: 0 }
     $("mes").textContent = NC.mesLargo(i);
     $("v").innerHTML = `${v.toFixed(2)} <small>mg/L</small>`;
     $("v").classList.toggle("sobre", s);
-    $("x").textContent = s ? `${(v / NC.LIMITE).toFixed(1)} veces el límite que cita el SIAPA, 0.5 mg/L.` : v > NC.LIMITE ? "Apenas sobre el límite, dentro de nuestro margen de lectura de ±0.05." : "Por debajo del límite que cita el SIAPA, 0.5 mg/L.";
+    $("x").textContent = s ? `${(v / NC.LIMITE).toFixed(1)} veces el límite que cita el SIAPA, 0.5 mg/L` : v > NC.LIMITE ? "Apenas sobre el límite, dentro de nuestro margen de lectura de ±0.05" : "Por debajo del límite que cita el SIAPA, 0.5 mg/L";
     mr.setAttribute("aria-valuetext", `${NC.mesLargo(i)}: ${v.toFixed(2)} mg/L`);
     barras.forEach((b, j) => b.classList.toggle("on", j === i));
   };
   mr.addEventListener("input", mes);
   mes();
-  $("mes-play").addEventListener("click", () => { mr.value = 0; anima(mr, 73, 5000); });
+
+  // Zapopan: one control, two counts.
+  const cam = $("camiones");
+  cam.innerHTML = Array.from({ length: 45 }, () => '<svg viewBox="0 0 32 20"><use href="#pipa"/></svg>').join("");
+  const camiones = [...cam.children];
+  const cien = $("cien");
+  NC.waffle(cien, 100);
+  const cuadros = [...cien.children];
+  const r = $("zap-r");
+  const pinta = () => {
+    const t = r.value / 100, fin = t >= 1;
+    const p = Math.round(45 - 11 * t), c = Math.round(100 - 51 * t);
+    camiones.forEach((s, i) => s.classList.toggle("fuera", i >= p));
+    cuadros.forEach((s, i) => s.classList.toggle("si", i < c));
+    $("n-pipas").textContent = p;
+    $("n-cis").textContent = c;
+    $("t-pipas").textContent = fin ? "el día con más" : t ? "(en transición, no es un dato)" : "anunciadas";
+    $("t-cis").textContent = fin ? "en la lista" : t ? "(en transición, no es un dato)" : "anunciadas";
+    $("f-pipas").textContent = fin ? "34 el 27 de octubre, en la gráfica de su Protección Civil; ningún día llega a 45" : "«contará con 45 pipas»";
+    $("f-cis").textContent = fin ? "La lista termina en la número 49, LOS CAJETES; 51 no están en ella, lo que no prueba que no existan" : "«100 cisternas comunitarias con capacidad de 10 mil litros cada una»";
+    $("zap-estado").textContent = t === 0 ? "Lo prometido: el boletín del 19 de octubre" : fin ? "Lo entregado: los oficios de noviembre" : "Del boletín a los oficios…";
+    r.setAttribute("aria-valuetext", t === 0 ? "Lo prometido" : fin ? "Lo entregado" : `${r.value} %`);
+  };
+  r.addEventListener("input", pinta);
+  pinta();
+
+  // The scroll moves each layer's control: a step goes from data-de to data-a as it scrolls past the line.
+  const controles = {
+    cortina: (v) => pon(v),
+    recorridos: (v) => pon(v),
+    vaso: (v) => { mr.value = Math.round(v); mes(); },
+    zap: (v) => { r.value = Math.round(v); pinta(); },
+  };
+  const dicho = (d) => { $("d-antes").style.opacity = d === "despues" ? 0 : 1; $("d-despues").style.opacity = d === "despues" ? 1 : 0; };
+  NC.relato($("relato"), {
+    alPaso: (p) => { if (p.dataset.d) dicho(p.dataset.d); },
+    progreso: (p, t) => {
+      const f = controles[p.dataset.c];
+      if (!f || p.dataset.de == null) return;
+      const de = +p.dataset.de, a = +p.dataset.a;
+      f(NC.quieto() && de !== a ? (t < 0.5 ? de : a) : de + (a - de) * t);
+    },
+    capas: {
+      reportes: (capa, first) => {
+        if (first) capa._map = NC.mapaReportes($("mapa-reportes"), $("clases-reportes"), $("aviso-reportes"));
+        else if (capa._map) capa._map.invalidateSize();
+      },
+    },
+  });
 })();
 </script>
 </body>

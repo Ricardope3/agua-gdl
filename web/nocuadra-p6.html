@@ -20,6 +20,8 @@
 <link rel="manifest" href="/site.webmanifest">
 <link rel="stylesheet" href="/menu.css">
 <link rel="stylesheet" href="/nocuadra.css">
+<link rel="stylesheet" href="/nocuadra-lab.css">
+<link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
 <style>
 :root {
   --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
@@ -78,63 +80,50 @@ main h1, main h2 { font-weight: 400; font-style: italic }
 footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-top: 34px }
 </style>
 <style>
-/* Propuesta 6: one timeline for both municipios, December 2025 to November 2026. A strip on top places every date at
-   scale; announcements, documents and our requests are told apart; two moments carry a small chart inline. */
-.regla { position: relative; height: 66px; margin: 24px 0 6px; border-bottom: 2px solid var(--fg) }
-.regla .mes { position: absolute; bottom: -22px; transform: translateX(-50%); font-size: .75rem; color: var(--muted) }
-.regla .mes::before { content: ""; position: absolute; left: 50%; top: -6px; height: 6px; border-left: 1px solid var(--fg) }
-.regla button { position: absolute; bottom: 4px; transform: translateX(-50%); width: 14px; height: 14px; padding: 0; border-radius: 50%; border: 2px solid var(--surface); cursor: pointer; background: var(--s1) }
+/* Propuesta 6: the calendar as a scrolling story (nocuadra-lab.css). A strip of December 2025 to November 2026 stays on
+   top of the scene and marks the step being read; under it, the chart or document for that moment. Every step is an
+   entry of the /tlajomulco and /zapopan chronologies, Tlajomulco first. */
+.relato.vivo .escena .capa { top: 104px }
+.regla-caja { position: relative; height: 96px }
+.relato:not(.vivo) .regla-caja { display: none }
+.regla { position: absolute; left: 12px; right: 12px; top: 8px; height: 60px; border-bottom: 2px solid var(--fg) }
+.regla .mes { position: absolute; bottom: -24px; transform: translateX(-50%); font-size: .75rem; color: var(--muted) }
+.regla .mes::before { content: ""; position: absolute; left: 50%; top: -8px; height: 8px; border-left: 1px solid var(--fg) }
+.regla button { position: absolute; bottom: 4px; width: 14px; height: 14px; padding: 0; transform: translateX(-50%); border-radius: 50%; border: 2px solid var(--surface); background: var(--s1); cursor: pointer; opacity: .45; transition: opacity .3s }
 .regla button.tlaj { background: var(--s2) }
-.regla button.anuncio { border-radius: 2px; transform: translateX(-50%) rotate(45deg) }
-.regla button.pedido { background: var(--surface); border: 2px solid var(--fg) }
-.regla button::before { content: ""; position: absolute; inset: -5px }
+.regla button.e-anuncio { border-radius: 2px }
+.regla button.e-pedido { background: var(--surface); border: 2px solid var(--fg) }
 .regla button.aprox { border: 2px dashed var(--fg) }
-.regla-nota { margin: 30px 0 0; font-size: .8rem; color: var(--muted) }
-.regla button:hover, .regla button:focus-visible { outline: 3px solid var(--brand); outline-offset: 1px }
-.regla .hueco { position: absolute; bottom: 10px; font-size: .78rem; color: var(--muted); transform: translateX(-50%); white-space: nowrap; font-style: italic }
-.filtros { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; margin: 36px 0 0; padding: 10px 0; border-top: 3px double var(--brand); border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--bg); z-index: 5 }
-.filtros [role=group] { display: flex; gap: 6px }
-.filtros button[aria-pressed] { font: inherit; font-size: .9rem; padding: 5px 12px; border-radius: 999px; border: 1.5px solid var(--brand); background: var(--surface); color: var(--link); cursor: pointer }
-.filtros button[aria-pressed="true"] { background: var(--primary); color: var(--on-primary) }
-.filtros .keys { margin: 0 }
-.sw.rombo { transform: rotate(45deg); border-radius: 1px }
-.sw.hueca { background: var(--surface) !important; border: 2px solid var(--fg) }
-.linea-t { position: relative; margin: 10px 0 0; padding: 0; list-style: none; max-width: 860px }
-.linea-t::before { content: ""; position: absolute; left: 9.6rem; top: 0; bottom: 0; border-left: 2px solid var(--line) }
-.linea-t .sep { margin: 26px 0 6px; padding-left: 11rem; font: italic 400 1.5rem var(--serif); color: var(--brand-deep) }
-.linea-t .sep span { background: var(--bg); padding-right: 8px }
-.linea-t li:not(.sep) { position: relative; display: grid; grid-template-columns: 9rem 1fr; gap: 0 2rem; padding: 12px 0 }
-.linea-t li:not(.sep)::before { content: ""; position: absolute; left: calc(9.6rem - 6px); top: 18px; width: 12px; height: 12px; border-radius: 50%; background: var(--s1); border: 2px solid var(--bg) }
-.linea-t li.tlaj::before { background: var(--s2) }
-.linea-t li.anuncio::before { border-radius: 2px; transform: rotate(45deg) }
-.linea-t li.pedido::before { background: var(--bg); border: 2px solid var(--fg) }
-.linea-t time, .linea-t .dia { font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; padding-top: 2px }
-.linea-t p { margin: 0 }
-.linea-t .quien { display: block; font-size: .85rem; color: var(--muted) }
-.linea-t .etq { display: inline-block; margin: 0 0 4px; font-size: .75rem; font-weight: 600; padding: 1px 8px; border-radius: 999px; background: var(--subtle); color: var(--brand-deep) }
-.linea-t li.tlaj .etq { background: color-mix(in srgb, var(--s2) 18%, var(--surface)); color: var(--s2-text) }
-.linea-t li.anuncio > p { font: italic 400 1.15rem/1.4 var(--serif) }
-.linea-t li.anuncio { background: linear-gradient(90deg, transparent 10.5rem, var(--warn-bg) 10.5rem) }
-.linea-t li.anuncio > p, .linea-t li.anuncio > div { padding-right: 12px }
-.linea-t li.salta { animation: salta 1.4s }
-@media (prefers-reduced-motion: reduce) { .linea-t li.salta { animation: none; box-shadow: inset 4px 0 0 var(--brand) } }
-@keyframes salta { 0%, 60% { box-shadow: inset 4px 0 0 var(--brand) } 100% { box-shadow: none } }
-.mini { margin: 10px 0 0; max-width: 520px }
-.mini .serie svg text { font-size: 11px }
-.linea-t [hidden] { display: none }
-.cierre { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 30px 0 0 }
-.cierre > div { padding: 16px 18px; background: var(--warn-bg); color: var(--warn); border-top: 3px double currentColor }
-.cierre h2 { margin: 0 0 6px; font-size: 1.3rem; color: var(--fg) }
-.cierre p { margin: 0 0 12px }
-@media (max-width: 760px) {
-  .linea-t::before { left: 6px }
-  .linea-t .sep { padding-left: 24px }
-  .linea-t li:not(.sep) { grid-template-columns: 1fr; padding-left: 24px }
-  .linea-t li:not(.sep)::before { left: 0 }
-  .linea-t time, .linea-t .dia { text-align: left }
-  .linea-t li.anuncio { background: var(--warn-bg) }
+.regla button::before { content: ""; position: absolute; inset: -4px }
+.regla button.on { opacity: 1; outline: 3px solid var(--fg); outline-offset: 1px }
+.regla button:hover, .regla button:focus-visible { opacity: 1; outline: 3px solid var(--brand); outline-offset: 1px }
+.regla .cursor { position: absolute; top: -8px; bottom: 0; width: 0; border-left: 2px solid var(--fg); transition: left .4s }
+.regla .hueco { position: absolute; bottom: 12px; transform: translateX(-50%); font-size: .78rem; font-style: italic; color: var(--muted); white-space: nowrap }
+.capa .serie svg text { font-size: 11px }
+.capa .cuenta-cien { margin-top: 12px }
+/* A chronology entry as a step. */
+.paso .cuando { margin: 0 0 4px; font-weight: 600; font-variant-numeric: tabular-nums }
+.paso .etq { display: inline-block; margin: 0 0 8px; padding: 0 8px; border-radius: 4px; background: var(--subtle); color: var(--brand-deep); font-size: .75rem; font-weight: 600 }
+.paso.tlaj .etq { background: color-mix(in srgb, var(--s2) 18%, var(--surface)); color: var(--s2-text) }
+.paso.e-anuncio .tarjeta { background: var(--warn-bg) }
+.paso.e-anuncio .cuerpo { font: italic 400 1.15rem/1.4 var(--serif) }
+.paso .quien { display: block; margin-top: 8px; font: .85rem var(--font); color: var(--muted) }
+.regla-nota { margin: 16px 0 0; font-size: .8rem; color: var(--muted) }
+@media (max-width: 860px) {
+  .relato.vivo .escena .capa { top: 80px }
+  .regla-caja { height: 72px }
+  .regla { left: 8px; right: 8px; height: 40px }
   .regla .hueco { display: none }
-  .cierre { grid-template-columns: 1fr }
+  .regla button { width: 12px; height: 12px }
+  .relato.vivo .escena .capa:not(.mapa) { justify-content: flex-start }
+  .capa h3 { font-size: .85rem }
+  .capa .matriz { gap: 1px }
+  .capa .matriz .fila { font-size: .7rem; line-height: 1 }
+  .capa .cien.grande { width: min(100%, 240px) }
+  .capa .renglon-v { grid-template-columns: 7rem minmax(0, 1fr); gap: 8px; padding: 8px 0 }
+  .capa .renglon-v .q b { font-size: 1.4rem }
+  .capa .vasos { gap: 4px }
+  .capa .vasos .v { width: 22px; height: 36px; border-width: 2px }
 }
 </style>
 <script src="/theme.js"></script>
@@ -162,60 +151,118 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
 
   <main>
     <p class="kicker">No cuadra</p>
-    <h1>Un año de anuncios y documentos, en orden</h1>
-    <p class="lede">Lo que registran nuestras cronologías, en orden: lo que anunciaron (en amarillo), lo que dicen los documentos y lo que pedimos por transparencia. Zapopan en azul, Tlajomulco en naranja. Toca un punto de la regla para ir a esa fecha.</p>
+    <h1>De diciembre de 2025 a noviembre de 2026: anuncios y documentos, en orden</h1>
+    <p class="lede">Lo que registran nuestras cronologías, en orden: lo que anunciaron (en amarillo), lo que dicen los documentos y lo que pedimos por transparencia. Tlajomulco en naranja, Zapopan en azul. Baja despacio; la regla marca la fecha de cada paso, y un toque en un punto lleva a esa fecha.</p>
 
-    <div class="regla" id="regla" aria-label="Las fechas, a escala" role="group"></div>
-    <p class="regla-nota">Con borde punteado, las dos entradas de la cronología sin día exacto (diciembre de 2025 y finales de marzo): su lugar en la línea es aproximado.</p>
-
-    <div class="filtros">
-      <div role="group" aria-label="Municipio">
-        <button type="button" aria-pressed="true" data-f="todo">Los dos</button>
-        <button type="button" aria-pressed="false" data-f="zap">Zapopan</button>
-        <button type="button" aria-pressed="false" data-f="tlaj">Tlajomulco</button>
+    <div class="relato" id="relato">
+      <div class="escena">
+        <div class="regla-caja"><div class="regla" id="regla" aria-label="Las fechas, a escala" role="group"></div></div>
+        <div class="capa" data-c="tlaj">
+          <h3>Nitrógeno amoniacal, promedio mensual, agua que entra a la Planta 1</h3>
+          <div class="serie" id="serie-amoniaco"></div>
+        </div>
+        <div class="capa" data-c="vasos">
+          <h3>Cada vaso es el límite que cita el SIAPA, 0.5 mg/L</h3>
+          <div id="vasos"></div>
+        </div>
+        <div class="capa" data-c="recorridos"><figure class="documento">
+        <div class="hoja">
+          <div class="renglones">
+            <span class="renglon" style="width:99.92%"><img src="/img/documentos/tlaj-recorridos-1.png" width="1307" height="47" alt="Respecto a lo requerido, se manifiesta que el SIAPA informó al Municipio de Tlajomulco" loading="lazy"></span>
+            <span class="renglon" style="width:100%"><img src="/img/documentos/tlaj-recorridos-2.png" width="1308" height="39" alt="de Zúñiga, respecto a 10 (diez) presuntos puntos de descarga de aguas residuales" loading="lazy"></span>
+            <span class="renglon" style="width:99.92%"><img src="/img/documentos/tlaj-recorridos-3.png" width="1307" height="44" alt="hacia el sistema antiguo de abastecimiento de Chapala, en específico en el Canal Las" loading="lazy"></span>
+            <span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-recorridos-4.png" width="1308" height="44" alt="Pintas, por lo cual se realizaron tres recorridos en campo en conjunto con el SIAPA" loading="lazy"></span>
+            <span class="renglon marca" style="width:100%"><img src="/img/documentos/tlaj-recorridos-5.png" width="1308" height="44" alt="para visitar estos 10 puntos, constatando que no existen descargas de aguas" loading="lazy"></span>
+            <span class="renglon marca" style="width:36.77%"><img src="/img/documentos/tlaj-recorridos-6.png" width="481" height="41" alt="residuales al canal &quot;Las pintas&quot;." loading="lazy"></span>
+          </div>
+        </div>
+        <figcaption>Oficio DAPIH/0331-01/2026 de Tlajomulco, marzo de 2026, p. 3 (<a href="/datos/tlajomulco-dapih-0331-01-2026.pdf#page=3">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure></div>
+        <div class="capa" data-c="zap">
+          <h3>Pipas por jornada, según su Protección Civil</h3>
+          <div class="serie" id="serie-pipas"></div>
+        </div>
+        <div class="capa" data-c="matriz">
+          <h3>Un círculo por cada una de las 45 pipas anunciadas; en azul, las de la gráfica ese día</h3>
+          <div class="matriz" id="matriz" role="img" aria-label="Veinte renglones, uno por jornada del 15 de octubre al 3 de noviembre; en cada uno, 45 círculos y en azul las pipas de la gráfica: de 5 a 34, nunca 45."></div>
+        </div>
+        <div class="capa" data-c="hosp"><figure class="documento">
+        <div class="hoja">
+          <div class="renglones">
+            <span class="renglon marca" style="width:100%"><img src="/img/documentos/zapopan-hospitales-1.png" width="995" height="43" alt="Hospitales: Sin atenciones registradas" loading="lazy"></span>
+            <span class="renglon" style="width:100%"><img src="/img/documentos/zapopan-hospitales-2.png" width="995" height="38" alt="Espacios Públicos: Centro Comunitario N°3 - 09/11/2026" loading="lazy"></span>
+            <span class="renglon" style="width:100%"><img src="/img/documentos/zapopan-hospitales-3.png" width="995" height="35" alt="Escuelas: Centro Escolar Juan Mateo - 20/10/2026" loading="lazy"></span>
+          </div>
+        </div>
+        <figcaption>La tabla de inmuebles atendidos: oficio 011300/2026/0148, p. 6 de la respuesta UT-089/2026 (<a href="/datos/pcyb-respuesta-ut-089-2026.pdf#page=6">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure></div>
+        <div class="capa" data-c="reportes_doc"><figure class="documento">
+<div class="hoja">
+<div class="membrete"><img src="/img/documentos/zapopan-reportes-m1.png" width="325" height="215" style="width:20.36%" alt="" loading="lazy"><img src="/img/documentos/zapopan-reportes-m2.png" width="575" height="135" style="width:36.02%" alt="Oficio 11000000/CER.CIU/2026/0878" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon marca" style="width:61.39%"><img src="/img/documentos/zapopan-reportes-1.png" width="539" height="44" alt="se encontró un total de 9,828 reportes por" loading="lazy"></span>
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/zapopan-reportes-2.png" width="878" height="46" alt="falta de agua, con corte al 04 de noviembre de la presente anualidad," loading="lazy"></span>
+</div></div>
+        <figcaption>Oficio 11000000/CER.CIU/2026/0878, p. 5 de la respuesta a la solicitud 140292426004981 (<a href="/datos/zapopan-respuesta-140292426004981.pdf#page=5">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure></div>
+        <div class="capa mapa" data-c="reportes">
+          <div class="puntos-mapa" id="mapa-reportes" role="region" aria-label="Mapa de Zapopan con el número de reportes de falta de agua por colonia"></div>
+          <ul class="keys sobre" id="clases-reportes" aria-label="Número de reportes"></ul>
+          <p class="nota-mapa" id="aviso-reportes" aria-live="polite"></p>
+        </div>
+        <div class="capa" data-c="cien">
+          <div class="cien grande" id="cien" role="img" aria-label="Cien cuadros, uno por cisterna anunciada; 49 en azul, las de la lista"></div>
+          <p class="cuenta-cien"><b id="n-cien">49</b> de 100</p>
+        </div>
       </div>
-      <ul class="keys">
-        <li><span class="sw rombo" style="--sw:var(--fg)"></span>Anuncio</li>
-        <li><span class="sw" style="--sw:var(--fg)"></span>Documento</li>
-        <li><span class="sw hueca"></span>Nuestra solicitud</li>
-      </ul>
-    </div>
 
-    <ol class="linea-t" id="linea">
-<li class="tlaj documento" data-m="tlaj" data-tipo="documento"><span class="dia">Diciembre de 2025</span><p>Empieza, según el SIAPA, un deterioro del agua «mucho mayor al registrado durante el propio temporal de lluvias».<span class="quien">SIAPA, oficio DG-135/2026, anexo</span></p></li>
-<li class="tlaj documento" data-m="tlaj" data-tipo="documento"><time datetime="2026-01-27">27 de enero</time><p>Tlajomulco le reporta al SIAPA una línea sanitaria dañada que descarga al Arroyo Seco y que, dice, viene de Tlaquepaque.<span class="quien">Oficio DAPIH/0127-01/2026, notificado al SIAPA el 29 de enero</span></p></li>
-<li class="tlaj documento" data-m="tlaj" data-tipo="documento"><time datetime="2026-03-06">6 de marzo</time><p>El SIAPA le escribe a Tlajomulco: nitrógeno amoniacal de «más de 3.50 mg/l» y diez puntos de descarga. Tlajomulco lo recibe el 11 de marzo.<span class="quien">Oficio DG-135/2026</span></p></li>
-<li class="tlaj anuncio" data-m="tlaj" data-tipo="anuncio"><time datetime="2026-03-09">9 y 10 de marzo</time><p>El presidente municipal de Tlajomulco se reúne con funcionarios del SIAPA en la Secretaría General de Gobierno. Al día siguiente, el boletín del municipio dice que de los diez puntos «cinco actualmente no existen desde hace muchos años» y que cuatro «se ubican fuera del municipio».<span class="quien">Boletín del Gobierno de Tlajomulco, 10 de marzo</span></p></li>
-<li class="tlaj documento" data-m="tlaj" data-tipo="documento"><time datetime="2026-03-20">20 de marzo</time><p>Reunión en la SEMADET. El SIAPA dice que la convocó el titular de la PROEPA; la PROEPA dice que no fue la convocante.<span class="quien">CEDHJ, Recomendación 10/2026, p. 46; respuesta de la PROEPA del 23 de noviembre</span></p></li>
-<li class="tlaj documento" data-m="tlaj" data-tipo="documento"><span class="dia">Finales de marzo</span><p>Tlajomulco informa que en tres recorridos con el SIAPA constató que «no existen descargas» al canal.<span class="quien">Oficio DAPIH/0331-01/2026; el día no se lee en la copia</span></p></li>
-<li class="tlaj documento" data-m="tlaj" data-tipo="documento"><time datetime="2026-03-30">30 y 31 de marzo</time><p>La COPRISJAL y la SGIA le informan a la CEDHJ resultados «dentro de la norma» y agua que «cumplía con todas las condiciones de calidad».<span class="quien">CEDHJ, Recomendación 10/2026, pp. 41 y 43</span></p></li>
-<li class="tlaj documento" data-m="tlaj" data-tipo="documento"><time datetime="2026-04-07">7 de abril</time><p>El SIAPA le informa a la CEDHJ que la planta de Miravalle opera «conforme a su edad y diseño».<span class="quien">CEDHJ, Recomendación 10/2026, p. 50</span></p></li>
-<li class="tlaj documento" data-m="tlaj" data-tipo="documento"><time datetime="2026-04-30">30 de abril</time><p>La CEDHJ emite su Recomendación 10/2026. No menciona el amoniaco.</p></li>
-<li class="zap documento" data-m="zap" data-tipo="documento"><time datetime="2026-10-13">13 de octubre</time><p>Mesa de trabajo con dependencias municipales; según la Jefatura de Gabinete, sus acuerdos «se asentaron en la minuta correspondiente» y fueron la base del operativo.<span class="quien"><a href="/datos/zapopan-respuesta-140292426004980.pdf#page=4">Oficio 02050000/2026/7941, p. 4</a></span></p></li>
-<li class="zap documento" data-m="zap" data-tipo="documento"><time datetime="2026-10-15">15 de octubre</time><p>Primer día de la gráfica de Protección Civil: 5 pipas. Primer día de la lista de reportes y del primer ticket de combustible.<span class="quien">Oficio 011300/2026/0150; oficio 0878; oficio 011207/2026/0243</span></p></li>
-<li class="zap anuncio" data-m="zap" data-tipo="anuncio"><time datetime="2026-10-17">17 de octubre</time><p>«El operativo se implementó el pasado 17 de octubre por instrucción del Presidente Municipal de Zapopan», según el boletín del 27.<span class="quien">Boletín del 27 de octubre</span></p></li>
-<li class="zap anuncio" data-m="zap" data-tipo="anuncio"><time datetime="2026-10-19">19 de octubre</time><p>Boletín: «45 pipas y 100 cisternas comunitarias». La gráfica registra 11 pipas y 270,000 litros ese día.<span class="quien">Boletín del 19 de octubre; oficio 0150</span></p></li>
-<li class="zap documento" data-m="zap" data-tipo="documento"><time datetime="2026-10-20">20 de octubre</time><p>Primeras escuelas en la tabla de inmuebles atendidos.<span class="quien">Oficio 011300/2026/0148</span></p></li>
-<li class="zap documento" data-m="zap" data-tipo="documento"><time datetime="2026-10-24">24 de octubre</time><p>La gráfica pasa de la atención de reportes generalizados a la atención por polígonos.<span class="quien">Oficio 0150</span></p></li>
-<li class="zap documento" data-m="zap" data-tipo="documento"><time datetime="2026-10-25">25 de octubre</time><p>Primer día de la gráfica con 840,000 litros: 25 pipas.<span class="quien">Oficio 0150</span></p></li>
-<li class="zap anuncio" data-m="zap" data-tipo="anuncio"><time datetime="2026-10-27">27 de octubre</time><p>Boletín: «840 mil litros diarios» y «un estado de fuerza de 20 pipas». La gráfica registra 34 pipas, su máximo, y 710,000 litros.<span class="quien">Boletín del 27 de octubre; oficio 0150</span></p></li>
-<li class="zap documento" data-m="zap" data-tipo="documento"><time datetime="2026-11-03">3 de noviembre</time><p>«36 pipas en servicio», según el oficio 0150; su gráfica marca 31 y 1,010,000 litros. Esa noche presentamos las siete solicitudes a Zapopan.<span class="quien">Oficio 0150; folios 140292426004978 a 140292426004984</span></p></li>
-<li class="zap documento" data-m="zap" data-tipo="documento"><time datetime="2026-11-04">4 de noviembre</time><p>Corte de la lista de reportes: 9,828.<span class="quien">Oficio 0878</span></p></li>
-<li class="zap documento" data-m="zap" data-tipo="documento"><time datetime="2026-11-06">6 de noviembre</time><p>Fecha de los oficios de Cercanía Ciudadana con la lista de 49 cisternas (0876) y la de reportes (0878).</p></li>
-<li class="zap documento" data-m="zap" data-tipo="documento"><time datetime="2026-11-09">9 a 11 de noviembre</time><p>Fechas de cinco de las diez escuelas y del centro comunitario en la tabla de inmuebles atendidos.<span class="quien">Oficio 0148</span></p></li>
-<li class="tlaj pedido" data-m="tlaj" data-tipo="pedido"><time datetime="2026-11-10">10 de noviembre</time><p>Le pedimos a Tlajomulco el oficio del SIAPA, las actas de los recorridos y sus inspecciones y sanciones.<span class="quien">Solicitud 140290426001765</span></p></li>
-<li class="zap documento" data-m="zap" data-tipo="documento"><time datetime="2026-11-12">12 de noviembre</time><p>Fecha de los oficios 0148 (las 75, los inmuebles, el calendario) y 0150 (la gráfica, las 36 pipas) de Planificación de Protección Civil.</p></li>
-<li class="tlaj documento" data-m="tlaj" data-tipo="documento"><time datetime="2026-11-13">13 de noviembre</time><p>El SIAPA responde que su Dirección de Abastecimiento y Operación no tiene documentos con los análisis de la Planta 1 «con la desagregación y especificación pretendida». Ese día le pedimos las actas de los recorridos y la minuta del 20 de marzo.<span class="quien">Oficio UT/2475/2026, solicitud 140279226001178; solicitud 140279226001270</span></p></li>
-<li class="zap documento" data-m="zap" data-tipo="documento"><time datetime="2026-11-17">17 de noviembre</time><p>Zapopan y Protección Civil entregan las respuestas. Cercanía Ciudadana responde que sobre las 75 «no se localizó información» (oficio 0907).</p></li>
-<li class="tlaj documento" data-m="tlaj" data-tipo="documento"><time datetime="2026-11-23">23 de noviembre</time><p>Tlajomulco responde que no contestó el oficio del SIAPA, que las minutas estarían en archivos de otras autoridades y que no tiene información de inspecciones o sanciones. Ese día la PROEPA responde que no convocó la reunión del 20 de marzo.<span class="quien">Oficio DTRC/1740/2026, fechado el 20 de noviembre; solicitud 140276526000172</span></p></li>
-<li class="tlaj documento" data-m="tlaj" data-tipo="documento"><time datetime="2026-11-24">24 de noviembre</time><p>Tlajomulco entrega los anexos que faltaban en su respuesta, entre ellos el oficio del SIAPA con la gráfica.<span class="quien">Solicitud 140290426001765, anexos</span></p></li>
-    </ol>
-
-    <div class="cierre">
-      <div><h2>Zapopan: la diferencia</h2><p>La gráfica de pipas por jornada nunca llega a 45. 51 de las 100 cisternas anunciadas no están en la lista entregada; eso no prueba que no existan. La tabla no registra ninguna atención a hospitales ni a centros de salud. Zapopan respondió después que las 45 pipas y las 100 cisternas eran una meta por «materializar»; el boletín dijo «contará con».</p><a class="button" href="/zapopan">Todo Zapopan →</a></div>
-      <div><h2>Tlajomulco: la diferencia</h2><p>Tlajomulco no dice cuándo fueron los recorridos ni entregó actas. El propio SIAPA escribió que en esos sitios «se han observado descargas abundantes, en algunas de manera permanente y otras de forma intermitente»: un recorrido sin descargas no prueba que no las haya otros días.</p><a class="button" href="/tlajomulco">Todo Tlajomulco →</a></div>
+      <ol class="pasos" id="pasos">
+        <li class="paso capitulo" data-c="tlaj"><div class="tarjeta">
+          <p class="mun">Tlajomulco · el canal de Las Pintas</p>
+          <p class="grande">Mismo canal, dos versiones</p>
+        </div></li>
+<li><span class="dia">Diciembre de 2025</span><p>Empieza, según el SIAPA, un deterioro del agua «mucho mayor al registrado durante el propio temporal de lluvias».<span class="quien">SIAPA, oficio DG-135/2026, anexo</span></p></li>
+<li><time datetime="2026-01-27">27 de enero</time><p>Tlajomulco le reporta al SIAPA una línea sanitaria dañada que descarga al Arroyo Seco y que, dice, viene de Tlaquepaque.<span class="quien">Oficio DAPIH/0127-01/2026, notificado al SIAPA el 29 de enero</span></p></li>
+<li><time datetime="2026-03-06">6 de marzo</time><p>El SIAPA le escribe a Tlajomulco: nitrógeno amoniacal de «más de 3.50 mg/l» y diez puntos de descarga. Tlajomulco lo recibe el 11 de marzo.<span class="quien">Oficio DG-135/2026</span></p></li>
+<li><time datetime="2026-03-09">9 y 10 de marzo</time><p>El presidente municipal de Tlajomulco se reúne con funcionarios del SIAPA en la Secretaría General de Gobierno. Al día siguiente, el boletín del municipio dice que de los diez puntos «cinco actualmente no existen desde hace muchos años» y que cuatro «se ubican fuera del municipio».<span class="quien">Boletín del Gobierno de Tlajomulco, 10 de marzo</span></p></li>
+<li><time datetime="2026-03-20">20 de marzo</time><p>Reunión en la SEMADET. El SIAPA dice que la convocó el titular de la PROEPA; la PROEPA dice que no fue la convocante.<span class="quien">CEDHJ, Recomendación 10/2026, p. 46; respuesta de la PROEPA del 23 de noviembre</span></p></li>
+<li><span class="dia">Finales de marzo</span><p>Tlajomulco informa que en tres recorridos con el SIAPA constató que «no existen descargas» al canal.<span class="quien">Oficio DAPIH/0331-01/2026; el día no se lee en la copia</span></p></li>
+<li><time datetime="2026-03-30">30 y 31 de marzo</time><p>La COPRISJAL y la SGIA le informan a la CEDHJ resultados «dentro de la norma» y agua que «cumplía con todas las condiciones de calidad».<span class="quien">CEDHJ, Recomendación 10/2026, pp. 41 y 43</span></p></li>
+<li><time datetime="2026-04-07">7 de abril</time><p>El SIAPA le informa a la CEDHJ que la planta de Miravalle opera «conforme a su edad y diseño».<span class="quien">CEDHJ, Recomendación 10/2026, p. 50</span></p></li>
+<li><time datetime="2026-04-30">30 de abril</time><p>La CEDHJ emite su Recomendación 10/2026. No menciona el amoniaco.</p></li>
+<li><time datetime="2026-11-10">10 de noviembre</time><p>Le pedimos a Tlajomulco el oficio del SIAPA, las actas de los recorridos y sus inspecciones y sanciones.<span class="quien">Solicitud 140290426001765</span></p></li>
+<li><time datetime="2026-11-13">13 de noviembre</time><p>El SIAPA responde que su Dirección de Abastecimiento y Operación no tiene documentos con los análisis de la Planta 1 «con la desagregación y especificación pretendida». Ese día le pedimos las actas de los recorridos y la minuta del 20 de marzo.<span class="quien">Oficio UT/2475/2026, solicitud 140279226001178; solicitud 140279226001270</span></p></li>
+<li><time datetime="2026-11-23">23 de noviembre</time><p>Tlajomulco responde que no contestó el oficio del SIAPA, que las minutas estarían en archivos de otras autoridades y que no tiene información de inspecciones o sanciones. Ese día la PROEPA responde que no convocó la reunión del 20 de marzo.<span class="quien">Oficio DTRC/1740/2026, fechado el 20 de noviembre; solicitud 140276526000172</span></p></li>
+<li><time datetime="2026-11-24">24 de noviembre</time><p>Tlajomulco entrega los anexos que faltaban en su respuesta, entre ellos el oficio del SIAPA con la gráfica.<span class="quien">Solicitud 140290426001765, anexos</span></p></li>
+        <li class="paso" data-c="recorridos"><div class="tarjeta">
+          <p class="dif"><strong>La diferencia</strong> Tlajomulco no dice cuándo fueron los recorridos ni entregó actas. El propio SIAPA escribió que en esos sitios «se han observado descargas abundantes, en algunas de manera permanente y otras de forma intermitente»: un recorrido sin descargas no prueba que no las haya otros días.</p>
+          <p class="ir"><a class="button" href="/tlajomulco">Todo Tlajomulco →</a></p>
+        </div></li>
+        <li class="paso capitulo" data-c="zap"><div class="tarjeta">
+          <p class="mun">Zapopan · el operativo de pipas</p>
+          <p class="grande">45 pipas y 100 cisternas, del boletín a los oficios</p>
+        </div></li>
+<li><time datetime="2026-10-13">13 de octubre</time><p>Mesa de trabajo con dependencias municipales; según la Jefatura de Gabinete, sus acuerdos «se asentaron en la minuta correspondiente» y fueron la base del operativo.<span class="quien"><a href="/datos/zapopan-respuesta-140292426004980.pdf#page=4">Oficio 02050000/2026/7941, p. 4</a></span></p></li>
+<li><time datetime="2026-10-15">15 de octubre</time><p>Primer día de la gráfica de Protección Civil: 5 pipas. Primer día de la lista de reportes y del primer ticket de combustible.<span class="quien">Oficio 011300/2026/0150; oficio 0878; oficio 011207/2026/0243</span></p></li>
+<li><time datetime="2026-10-17">17 de octubre</time><p>«El operativo se implementó el pasado 17 de octubre por instrucción del Presidente Municipal de Zapopan», según el boletín del 27.<span class="quien">Boletín del 27 de octubre</span></p></li>
+<li><time datetime="2026-10-19">19 de octubre</time><p>Boletín: «45 pipas y 100 cisternas comunitarias». La gráfica registra 11 pipas y 270,000 litros ese día.<span class="quien">Boletín del 19 de octubre; oficio 0150</span></p></li>
+<li><time datetime="2026-10-20">20 de octubre</time><p>Primeras escuelas en la tabla de inmuebles atendidos.<span class="quien">Oficio 011300/2026/0148</span></p></li>
+<li><time datetime="2026-10-24">24 de octubre</time><p>La gráfica pasa de la atención de reportes generalizados a la atención por polígonos.<span class="quien">Oficio 0150</span></p></li>
+<li><time datetime="2026-10-25">25 de octubre</time><p>Primer día de la gráfica con 840,000 litros: 25 pipas.<span class="quien">Oficio 0150</span></p></li>
+<li><time datetime="2026-10-27">27 de octubre</time><p>Boletín: «840 mil litros diarios» y «un estado de fuerza de 20 pipas». La gráfica registra 34 pipas, su máximo, y 710,000 litros.<span class="quien">Boletín del 27 de octubre; oficio 0150</span></p></li>
+<li><time datetime="2026-11-03">3 de noviembre</time><p>«36 pipas en servicio», según el oficio 0150; su gráfica marca 31 y 1,010,000 litros. Esa noche presentamos las siete solicitudes a Zapopan.<span class="quien">Oficio 0150; folios 140292426004978 a 140292426004984</span></p></li>
+<li><time datetime="2026-11-04">4 de noviembre</time><p>Corte de la lista de reportes: 9,828.<span class="quien">Oficio 0878</span></p></li>
+<li><time datetime="2026-11-06">6 de noviembre</time><p>Fecha de los oficios de Cercanía Ciudadana con la lista de 49 cisternas (0876) y la de reportes (0878).</p></li>
+<li><time datetime="2026-11-09">9 a 11 de noviembre</time><p>Fechas de cinco de las diez escuelas y del centro comunitario en la tabla de inmuebles atendidos.<span class="quien">Oficio 0148</span></p></li>
+<li><time datetime="2026-11-12">12 de noviembre</time><p>Fecha de los oficios 0148 (las 75, los inmuebles, el calendario) y 0150 (la gráfica, las 36 pipas) de Planificación de Protección Civil.</p></li>
+<li><time datetime="2026-11-17">17 de noviembre</time><p>Zapopan y Protección Civil entregan las respuestas. Cercanía Ciudadana responde que sobre las 75 «no se localizó información» (oficio 0907).</p></li>
+        <li class="paso" data-c="zap"><div class="tarjeta">
+          <p class="dif"><strong>La diferencia</strong> La gráfica de pipas por jornada nunca llega a 45. 51 de las 100 cisternas anunciadas no están en la lista entregada; eso no prueba que no existan. La tabla no registra ninguna atención a hospitales ni a centros de salud. Zapopan respondió después que las 45 pipas y las 100 cisternas eran una meta por «materializar»; el boletín dijo «contará con».</p>
+          <p class="ir"><a class="button" href="/zapopan">Todo Zapopan →</a></p>
+        </div></li>
+      </ol>
     </div>
-    <p class="note">Cada renglón viene de las cronologías de <a href="/zapopan">/zapopan</a> y <a href="/tlajomulco">/tlajomulco</a>, con su fuente debajo; allí están los documentos completos.</p>
+    <p class="regla-nota">Con borde punteado en la regla, las dos entradas de la cronología sin día exacto (diciembre de 2025 y finales de marzo): su lugar es aproximado. Cada paso viene de las cronologías de <a href="/tlajomulco">/tlajomulco</a> y <a href="/zapopan">/zapopan</a>, con su fuente debajo; allí están los documentos completos.</p>
 
     <ul class="municipios">
       <li class="pendiente">
@@ -241,60 +288,65 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     <p><a href="/">Inicio</a> · <a href="/reportes">¿Hay agua?</a> · <a href="/cisternas">Cisternas comunitarias</a> · <a href="/pipas">Cómo pedir pipa</a> · <a href="/transparencia">Transparencia</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
   </footer>
 </div>
+<script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script src="/mapa.js"></script>
 <script src="/nocuadra-lab.js"></script>
 <script>
 (() => {
-  const ol = document.getElementById("linea");
-  const items = [...ol.children];
+  const $ = (id) => document.getElementById(id);
   const MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
-  // A date for each item: its <time>, or for the two without one, the first of the month its text names.
-  const fecha = (li) => {
-    const t = li.querySelector("time");
-    if (t) return t.getAttribute("datetime");
-    const d = li.querySelector(".dia, p")?.textContent || "";
-    if (/diciembre de 2025/i.test(d)) return "2025-12-01";
-    return null;
+  // What each entry is: the same marks as the chronologies' merged list in the generator.
+  const ANUNCIO = new Set(["zap:2026-10-17", "zap:2026-10-19", "zap:2026-10-27", "tlaj:2026-03-09"]);
+  const PEDIDO = new Set(["tlaj:2026-11-10"]);
+  // The layer each entry shows; the rest show their municipio's chart.
+  const CAPA = {
+    "tlaj:2026-03-06": "vasos", "tlaj:2026-03-28": "recorridos",
+    "zap:2026-10-19": "matriz", "zap:2026-10-27": "matriz", "zap:2026-10-20": "hosp", "zap:2026-11-09": "hosp",
+    "zap:2026-11-04": "reportes_doc", "zap:2026-11-06": "cien",
   };
-  let prev = "2025-12-01";
-  items.forEach((li, j) => {
-    li.id = "c" + j;
-    li.dataset.f = fecha(li) || prev.slice(0, 8) + "28";
-    if (!li.querySelector("time")) li.dataset.aprox = "1";
-    prev = li.dataset.f;
+  // The two reports steps from propuesta 3, after the 4 November entry.
+  const REPORTES = `<li class="paso" data-c="reportes"><div class="tarjeta">
+          <p class="grande">8,857 aparecen «En proceso» en la lista</p>
+          <p>El color es cuántos reportes nombran a cada colonia del mapa del SIAPA; ahí caen 5,986 de los 7,892 reportes que dicen colonia. Pasa o toca una colonia. Una colonia sin color no aparece con ese nombre en la lista: eso no quiere decir que haya tenido agua.</p>
+          <p class="fuente">Un reporte no es una casa: una casa puede reportar varias veces. <a href="/zapopan#reportes">Todos los reportes, por colonia y por día</a>.</p>
+        </div></li>`;
+
+  // Each chronology entry becomes a step: its date, a label, its text and its source.
+  const ol = $("pasos");
+  let m = "tlaj", prev = "2025-12-01";
+  const entradas = [];
+  for (const li of [...ol.children]) {
+    if (li.classList.contains("capitulo")) { m = li.dataset.c; continue; }
+    if (li.classList.contains("paso")) continue;
+    const t = li.querySelector("time"), dia = li.querySelector(".dia");
+    const f = t ? t.getAttribute("datetime") : /diciembre de 2025/i.test(dia?.textContent || "") ? "2025-12-01" : prev.slice(0, 8) + "28";
+    prev = f;
+    const tipo = ANUNCIO.has(`${m}:${f}`) ? "anuncio" : PEDIDO.has(`${m}:${f}`) ? "pedido" : "documento";
+    li.className = `paso ${m} e-${tipo}`;
+    li.dataset.m = m;
+    li.dataset.f = f;
+    li.dataset.tipo = tipo;
+    if (!t) li.dataset.aprox = "1";
+    li.dataset.c = CAPA[`${m}:${f}`] || m;
+    const p = li.querySelector("p"), quien = p.querySelector(".quien");
+    const tarjeta = document.createElement("div");
+    tarjeta.className = "tarjeta";
+    const cuando = document.createElement("p");
+    cuando.className = "cuando";
+    cuando.append((t || dia).cloneNode(true));
     const etq = document.createElement("span");
     etq.className = "etq";
-    etq.textContent = (li.dataset.m === "zap" ? "Zapopan" : "Tlajomulco") + " · " + { anuncio: "anuncio", documento: "documento", pedido: "nuestra solicitud" }[li.dataset.tipo];
-    const p = li.querySelector("p");
-    p.prepend(etq, document.createElement("br"));
-  });
-  // Month headings between items.
-  let mesPrev = "";
-  items.forEach((li) => {
-    const m = li.dataset.f.slice(0, 7);
-    if (m !== mesPrev) {
-      const s = document.createElement("li");
-      s.className = "sep";
-      s.dataset.mes = m;
-      s.innerHTML = `<span>${MESES[+m.slice(5) - 1]} de ${m.slice(0, 4)}</span>`;
-      li.before(s);
-      mesPrev = m;
-    }
-  });
-  // Two moments get a chart in place.
-  const pon = (fechaISO, m, fn, pie) => {
-    const li = items.find((x) => x.dataset.f === fechaISO && x.dataset.m === m);
-    if (!li) return;
-    const f = document.createElement("figure");
-    f.className = "mini grafica";
-    f.innerHTML = `<div class="serie"></div><figcaption>${pie}</figcaption>`;
-    li.querySelector("p").after(f);
-    fn(f.firstChild);
-  };
-  pon("2026-10-19", "zap", (c) => NC.seriePipas(c, { alto: () => 170 }), 'Pipas por jornada en la gráfica de su Protección Civil, 15 de octubre a 3 de noviembre; la línea, las 45 anunciadas. Oficio 011300/2026/0150 (<a href="/datos/pcyb-respuesta-ut-091-2026.pdf#page=4">p. 4</a>), nuestra lectura (<a href="/datos/zapopan-pipas-por-dia.csv">CSV</a>).');
-  pon("2026-03-06", "tlaj", (c) => NC.serieAmoniaco(c, { alto: () => 170 }), 'Nitrógeno amoniacal en el agua que entra a la Planta 1, enero de 2020 a febrero de 2026, en nuestra lectura del Gráfico 1 del oficio (<a href="/datos/siapa-dg-135-2026.pdf#page=5">p. 5</a>, <a href="/datos/siapa-dg-135-2026-amoniacal.csv">CSV</a>).');
+    etq.textContent = (m === "zap" ? "Zapopan" : "Tlajomulco") + " · " + { anuncio: "anuncio", documento: "documento", pedido: "nuestra solicitud" }[tipo];
+    p.classList.add("cuerpo");
+    if (quien) p.append(quien);
+    tarjeta.append(cuando, etq, p);
+    li.replaceChildren(tarjeta);
+    entradas.push(li);
+    if (m === "zap" && f === "2026-11-04") li.insertAdjacentHTML("afterend", REPORTES);
+  }
 
-  // The strip: every item at scale between 1 December 2025 and 30 November 2026.
-  const regla = document.getElementById("regla");
+  // The strip: every entry at scale between 1 December 2025 and 30 November 2026.
+  const regla = $("regla");
   const t0 = Date.UTC(2025, 11, 1), t1 = Date.UTC(2026, 10, 30);
   const pos = (iso) => ((Date.UTC(+iso.slice(0, 4), +iso.slice(5, 7) - 1, +iso.slice(8, 10)) - t0) / (t1 - t0)) * 100;
   for (let k = 0; k < 12; k++) {
@@ -309,37 +361,48 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   hueco.className = "hueco";
   hueco.style.left = (pos("2026-05-01") + pos("2026-10-01")) / 2 + "%";
   hueco.textContent = "mayo a septiembre: nada en estas cronologías";
-  regla.append(hueco);
-  const usados = {};
-  items.forEach((li) => {
+  const cursor = document.createElement("span");
+  cursor.className = "cursor";
+  cursor.hidden = true;
+  regla.append(hueco, cursor);
+  const usados = {}, boton = new Map();
+  for (const li of entradas) {
     const b = document.createElement("button");
     b.type = "button";
-    b.className = `${li.dataset.m} ${li.dataset.tipo}${li.dataset.aprox ? " aprox" : ""}`;
+    b.className = `${li.dataset.m} e-${li.dataset.tipo}${li.dataset.aprox ? " aprox" : ""}`;
     const n = (usados[li.dataset.f] = (usados[li.dataset.f] || 0) + 1);
     b.style.left = pos(li.dataset.f) + "%";
     b.style.bottom = 4 + (n - 1) * 16 + "px";
-    b.setAttribute("aria-label", li.querySelector("time, .dia, p").textContent.trim().slice(0, 60) + (li.dataset.aprox ? " (fecha aproximada)" : ""));
+    b.setAttribute("aria-label", li.querySelector(".cuando").textContent.trim() + ": " + li.querySelector(".cuerpo").firstChild.textContent.trim().slice(0, 60) + (li.dataset.aprox ? " (fecha aproximada)" : ""));
     b.title = b.getAttribute("aria-label");
-    b.addEventListener("click", () => {
-      li.scrollIntoView({ behavior: NC.quieto() ? "auto" : "smooth", block: "center" });
-      li.classList.remove("salta"); void li.offsetWidth; li.classList.add("salta");
-    });
+    b.addEventListener("click", () => li.scrollIntoView({ behavior: NC.quieto() ? "auto" : "smooth", block: "center" }));
     regla.append(b);
-  });
+    boton.set(li, b);
+  }
 
-  // Filters.
-  const bs = [...document.querySelectorAll(".filtros [data-f]")];
-  bs.forEach((b) => b.addEventListener("click", () => {
-    bs.forEach((x) => x.setAttribute("aria-pressed", x === b));
-    const f = b.dataset.f;
-    items.forEach((li) => { li.hidden = f !== "todo" && li.dataset.m !== f; });
-    regla.querySelectorAll("button").forEach((x) => { x.hidden = f !== "todo" && !x.classList.contains(f); });
-    ol.querySelectorAll(".sep").forEach((s) => {
-      let n = s.nextElementSibling, alguno = false;
-      while (n && !n.classList.contains("sep")) { if (!n.hidden) alguno = true; n = n.nextElementSibling; }
-      s.hidden = !alguno;
-    });
-  }));
+  NC.serieAmoniaco($("serie-amoniaco"), { alto: (a) => (a ? 200 : 240) });
+  NC.seriePipas($("serie-pipas"), { alto: (a) => (a ? 200 : 240) });
+  // On phones only the first month and the highest fit under the strip.
+  const vasos = NC.vasos($("vasos"), innerWidth <= 860 ? [0, 72] : [0, 54, 71, 72]);
+  const matriz = NC.matriz($("matriz"));
+  const cien = NC.cuadros($("cien"), 49, $("n-cien"));
+  NC.relato($("relato"), {
+    alPaso: (p) => {
+      for (const [li, b] of boton) b.classList.toggle("on", li === p);
+      // The cursor follows the step's date; steps without one (the chapters, the differences) leave it where it was.
+      const f = p.dataset.f || (p.dataset.c === "reportes" ? "2026-11-04" : null);
+      if (f) { cursor.hidden = false; cursor.style.left = pos(f) + "%"; }
+    },
+    capas: {
+      vasos: () => vasos.anima(),
+      matriz: () => { matriz.vacia(); requestAnimationFrame(() => requestAnimationFrame(matriz.anima)); },
+      cien: () => cien.anima(),
+      reportes: (capa, first) => {
+        if (first) capa._map = NC.mapaReportes($("mapa-reportes"), $("clases-reportes"), $("aviso-reportes"));
+        else if (capa._map) capa._map.invalidateSize();
+      },
+    },
+  });
 })();
 </script>
 </body>

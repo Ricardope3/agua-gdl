@@ -51,20 +51,27 @@
   NC.quieto = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
   NC.color = (v, f) => getComputedStyle(document.documentElement).getPropertyValue(v).trim() || f;
 
-  // Runs fn once when el is at least `umbral` on screen (at once without IntersectionObserver).
-  NC.alVer = (el, fn, umbral = 0.35) => {
+  // Runs fn once when el is at least `umbral` on screen (at once without IntersectionObserver). If the reader jumps past
+  // el first, runs pasado instead (when given), so a figure never sits empty above the screen.
+  NC.alVer = (el, fn, umbral = 0.35, pasado = null) => {
     if (!el) return;
     if (!("IntersectionObserver" in window)) return fn(el);
-    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { io.disconnect(); fn(el); } }), { threshold: umbral });
+    // An element taller than the screen can never be `umbral` visible: lower the bar to what fits.
+    umbral = Math.min(umbral, 0.99, 0.9 * innerHeight / Math.max(1, el.offsetHeight));
+    const io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (e.isIntersecting && e.intersectionRatio >= umbral) { io.disconnect(); fn(el); }
+      else if (pasado && !e.isIntersecting && e.boundingClientRect.bottom < 0) { io.disconnect(); pasado(el); }
+    }), { threshold: [0, umbral] });
     io.observe(el);
   };
 
-  // Counts el's text up to `fin` when it comes into view; with reduced motion it just shows the number.
-  NC.cuenta = (el, fin, dec = 0, ms = 1100) => {
+  // Counts el's text up to `fin` when it comes into view, or at once with ahora (for something just revealed on screen);
+  // with reduced motion it just shows the number.
+  NC.cuenta = (el, fin, dec = 0, ms = 1100, ahora = false) => {
     const fmt = (v) => v.toLocaleString("es-MX", { minimumFractionDigits: dec, maximumFractionDigits: dec });
     if (NC.quieto()) { el.textContent = fmt(fin); return; }
     el.textContent = fmt(0);
-    NC.alVer(el, () => {
+    const corre = () => {
       const t0 = performance.now();
       const paso = (t) => {
         const k = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - k, 3);
@@ -72,7 +79,14 @@
         if (k < 1) requestAnimationFrame(paso);
       };
       requestAnimationFrame(paso);
-    }, 0.6);
+    };
+    if (ahora || !("IntersectionObserver" in window)) return corre();
+    // A figure the reader jumped past (a link, a fast scroll) shows its number instead of waiting at zero.
+    const io = new IntersectionObserver(([e]) => {
+      if (e.intersectionRatio >= 0.6) { io.disconnect(); corre(); }
+      else if (e.boundingClientRect.bottom < 0) { io.disconnect(); el.textContent = fmt(fin); }
+    }, { threshold: [0, 0.6] });
+    io.observe(el);
   };
 
   // A grid of `total` squares, the first `n` marked .si.
@@ -231,6 +245,163 @@
     if (touch) m.bindPopup(html); else m.bindTooltip(html, { className: "map-label", direction: "top", offset: [0, -6] });
     document.addEventListener("tema", () => m.setStyle({ fillColor: NC.color("--s1", "#2a78d6") }));
     return m;
+  };
+  // The scrolling story (nocuadra-lab.css): a sticky .escena of .capa[data-c] layers beside ol.pasos of .paso[data-c].
+  // The step whose top crosses a line (the middle of the screen, lower on phones) shows its layer. o.capas[c](capa, first)
+  // runs each time a layer shows (first is true the first time, for maps and charts that need their box); o.progreso(paso,
+  // t) gets how far, 0 to 1, the active step has scrolled past the line, for pages that scrub.
+  NC.relato = (root, o = {}) => {
+    if (!root) return;
+    const capas = [...root.querySelectorAll(".capa")], pasos = [...root.querySelectorAll(".paso")];
+    if (!pasos.length) return;
+    root.classList.add("vivo");
+    const vistas = new Set();
+    let actual = null, activo = null;
+    const muestra = (paso) => {
+      if (paso !== activo) {
+        if (activo) activo.classList.remove("activo");
+        paso.classList.add("activo");
+        activo = paso;
+        if (o.alPaso) o.alPaso(paso);
+      }
+      const c = paso.dataset.c;
+      if (c === actual) return;
+      actual = c;
+      let capa = null;
+      for (const k of capas) { const on = k.dataset.c === c; k.classList.toggle("on", on); if (on) capa = k; }
+      if (o.capas && o.capas[c]) { const first = !vistas.has(c); vistas.add(c); try { o.capas[c](capa, first); } catch (e) { console.error(e); } }
+    };
+    const elige = () => {
+      // Nothing plays while the story is still below the screen, so its first layer's animation isn't spent unseen.
+      if (actual === null && root.getBoundingClientRect().top > innerHeight) return;
+      const linea = innerHeight * (innerWidth <= 860 ? 0.72 : 0.5);
+      let p = pasos[0];
+      // The card's top, not the step's: on phones a step is taller than the screen and its card sits in its middle.
+      for (const q of pasos) if ((q.querySelector(".tarjeta") || q).getBoundingClientRect().top < linea) p = q;
+      muestra(p);
+      if (o.progreso) {
+        const r = p.getBoundingClientRect();
+        o.progreso(p, Math.max(0, Math.min(1, (linea - r.top) / Math.max(1, r.height))));
+      }
+    };
+    let pend = false;
+    addEventListener("scroll", () => { if (!pend) { pend = true; requestAnimationFrame(() => { pend = false; elige(); }); } }, { passive: true });
+    addEventListener("resize", elige);
+    elige();
+    return { actual: () => actual };
+  };
+
+  // Zapopan's list of «Falta de agua» reports (oficio 11000000/CER.CIU/2026/0878, folio 140292426004981), as /zapopan
+  // draws it from /datos/zapopan-reportes.json.
+  let rep = null;
+  NC.reportes = () => (rep ||= fetch("/datos/zapopan-reportes.json")
+    .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .catch((e) => { rep = null; throw e; }));
+  const CORTES = [1, 5, 25, 100, 250];
+  const RAMPA = { light: ["#b7d3f6", "#6da7ec", "#2a78d6", "#1c5cab", "#0d366b"], dark: ["#184f95", "#256abf", "#3987e5", "#6da7ec", "#b7d3f6"] };
+  const oscuro = () => (window.aguaDark ? window.aguaDark() : false);
+  const clase = (n) => CORTES.reduce((c, x, i) => (n >= x ? i : c), 0);
+  const rampa = () => RAMPA[oscuro() ? "dark" : "light"];
+  const rango = (i) => (i === CORTES.length - 1 ? `${CORTES[i]} o más` : `${CORTES[i]} a ${CORTES[i + 1] - 1}`);
+  const fmt = (n) => n.toLocaleString("es-MX");
+  // The same choropleth as /zapopan's: Zapopan's colonias on the SIAPA's map, coloured by how many reports name them;
+  // a colonia no report names is only outlined. leyenda is a ul.keys to fill. Returns the map, or null without Leaflet.
+  NC.mapaReportes = (caja, leyenda, aviso) => {
+    const M = window.aguaMapa;
+    if (!M || !M.load) { if (caja) caja.hidden = true; return null; }
+    const map = NC.mapa(caja, { preferCanvas: true });
+    if (!map) return null;
+    map.setView([20.70, -103.42], 11);
+    if (leyenda) {
+      leyenda.innerHTML = CORTES.map((_, i) => `<li><span class="sw" data-clase="${i}"></span>${rango(i)}</li>`).join("") + `<li><span class="sw none"></span>Ningún reporte la nombra así</li>`;
+    }
+    const pinta = () => { if (leyenda) for (const s of leyenda.querySelectorAll("[data-clase]")) s.style.setProperty("--sw", rampa()[s.dataset.clase]); };
+    pinta();
+    // The error gets its own line: aviso holds the caveats («un reporte no es una casa»), which must stay.
+    const falla = () => { if (!aviso) return; const p = document.createElement("p"); p.className = "note"; p.setAttribute("role", "status"); p.textContent = "No pudimos cargar el mapa de reportes. Intenta de nuevo en unos minutos."; aviso.before(p); };
+    Promise.all([NC.reportes(), M.load()]).then(([d, { colonias }]) => {
+      const porClave = new Map(d.colonias.filter((c) => c.clave).map((c) => [c.clave, c]));
+      const de = (f) => porClave.get(M.fold(f.properties.n));
+      const estilo = (f) => {
+        const c = de(f);
+        if (!c) return { color: oscuro() ? "#6b7aa6" : "#8a94ad", weight: 0.6, opacity: 0.7, fill: false };
+        return { color: oscuro() ? "#0c1328" : "#ffffff", weight: 0.8, opacity: 0.9, fillColor: rampa()[clase(c.reportes)], fillOpacity: 0.82 };
+      };
+      const texto = (f) => {
+        const c = de(f);
+        const zs = [...M.zones(f.properties).main].sort((a, b) => a - b);
+        const lineas = c
+          ? [`${fmt(c.reportes)} ${c.reportes === 1 ? "reporte" : "reportes"} · ${fmt(c.en_proceso)} «En proceso»`, zs.length ? (zs.length > 1 ? "Zonas " : "Zona ") + zs.join(" y ") : "Sin zona en el mapa"]
+          : ["Ningún reporte la nombra así", "(no quiere decir que haya tenido agua)"];
+        if (c && c.poligonos > 1) lineas.push(`El mapa tiene ${c.poligonos} colonias con este nombre en Zapopan y la lista no dice cuál, así que se pintan todas.`);
+        return NC.esc(f.properties.n) + lineas.map((l) => `<span class="sub">${NC.esc(l)}</span>`).join("");
+      };
+      const touch = matchMedia("(hover: none)").matches;
+      const zap = colonias.filter((f) => (f.properties.m || "").includes("Zapopan"));
+      const capa = L.geoJSON(zap, {
+        style: estilo,
+        onEachFeature: (f, l) => (touch ? l.bindPopup(() => texto(f)) : l.bindTooltip(() => texto(f), { sticky: true, className: "map-label", direction: "top" })),
+      }).addTo(map);
+      const con = L.featureGroup(capa.getLayers().filter((l) => de(l.feature)));
+      map._ncLimites = con.getBounds();
+      map.fitBounds(map._ncLimites, { padding: [12, 12] });
+      document.addEventListener("tema", () => { capa.setStyle(estilo); pinta(); });
+    }).catch((e) => { console.error(e); falla(); });
+    return map;
+  };
+  // Pictograms that fill in, one unit at a time (propuesta 9). Each returns { anima, vacia }: anima() plays the fill
+  // (at once with reduced motion), vacia() empties it so a scrolling story can play it again. With { alVer: true } the
+  // fill plays once when the pictogram comes into view.
+  const llena = (items, n, cuenta, ms) => {
+    let t = null;
+    const vacia = () => { clearInterval(t); items.forEach((x) => x.classList.remove("si")); if (cuenta) cuenta.textContent = "0"; };
+    const lleno = () => { clearInterval(t); items.forEach((x, i) => x.classList.toggle("si", i < n)); if (cuenta) cuenta.textContent = String(n); };
+    const anima = () => {
+      if (NC.quieto()) return lleno();
+      vacia();
+      let i = 0;
+      t = setInterval(() => { if (i >= n) return clearInterval(t); items[i++].classList.add("si"); if (cuenta) cuenta.textContent = String(i); }, ms);
+    };
+    return { anima, vacia, lleno };
+  };
+  const auto = (el, ctl, o, umbral) => {
+    if (o.alVer) { if (NC.quieto()) (ctl.lleno || ctl.anima)(); else NC.alVer(el, ctl.anima, umbral, ctl.lleno || ctl.anima); }
+    return ctl;
+  };
+  // 100 drops, the first n blue: one per announced cisterna.
+  const GOTA = '<svg viewBox="0 0 20 26" aria-hidden="true"><path d="M10 1C10 1 2 11 2 17a8 8 0 0 0 16 0C18 11 10 1 10 1z" fill="currentColor"/></svg>';
+  NC.gotas = (el, n = 49, cuenta = null, o = {}) => {
+    el.innerHTML = GOTA.repeat(o.total || 100);
+    return auto(el, llena([...el.children], n, cuenta, o.ms || 28), o, 0.5);
+  };
+  // A grid of `total` squares that fills up to n (the waffle, animated).
+  NC.cuadros = (el, n = 49, cuenta = null, o = {}) => {
+    NC.waffle(el, 0, o.total || 100);
+    return auto(el, llena([...el.children], n, cuenta, o.ms || 20), o, 0.5);
+  };
+  // One row per jornada, 45 circles a row: the announced pipas, blue where the chart has one.
+  NC.matriz = (el, o = {}) => {
+    const max = Math.max(...NC.PIPAS), cols = NC.ANUNCIADAS;
+    el.innerHTML = NC.PIPAS.map((v, i) => `<div class="fila${v === max ? " max" : ""}" title="${NC.esc(NC.largo(i))}: ${v} pipas"><span>${NC.corto(i)}</span><span class="puntos">${Array.from({ length: cols }, (_, j) => `<i class="${j < v ? "si" : ""}" style="transition-delay:${NC.quieto() ? 0 : i * 40 + j * 4}ms"></i>`).join("")}</span><span class="n">${v}</span></div>`).join("")
+      + `<div class="fila eje" aria-hidden="true"><span></span><span><span>1</span><span>${cols} anunciadas</span></span><span></span></div>`;
+    const ctl = { anima: () => el.classList.add("ve"), vacia: () => el.classList.remove("ve") };
+    if (NC.quieto()) { ctl.anima(); return ctl; }
+    return auto(el, ctl, o, 0.15);
+  };
+  // Glasses of the limit's worth (0.5 mg/L) of ammonia for the months in `meses`, poured one after another.
+  NC.vasos = (el, meses = [0, 54, 71, 72], o = {}) => {
+    const fila = (i) => {
+      const v = NC.AMONIACO[i], k = v / NC.LIMITE, enteros = Math.floor(k), resto = k - enteros;
+      const vs = Array.from({ length: Math.ceil(k) || 1 }, (_, j) => `<span class="v"><i data-h="${j < enteros ? 100 : Math.round((j === enteros ? resto : k) * 100)}"></i></span>`).join("");
+      return `<div class="renglon-v"><div class="q">${NC.mesLargo(i)}<b class="${NC.sobre(v) ? "sobre" : ""}">${v.toFixed(2)} mg/L</b>${k >= 1 ? `${k.toFixed(1)} vasos` : `${k.toFixed(1)} de un vaso`}</div><div class="vasos ${NC.sobre(v) ? "" : "bajo"}">${vs}</div></div>`;
+    };
+    el.innerHTML = meses.map(fila).join("");
+    const is = [...el.querySelectorAll(".v i")];
+    let ts = [];
+    const vacia = () => { ts.forEach(clearTimeout); ts = []; is.forEach((x) => { x.style.height = "0"; }); };
+    // The reflow lets the emptied glasses render before they pour again.
+    const anima = () => { vacia(); void el.offsetWidth; is.forEach((x, j) => ts.push(setTimeout(() => { x.style.height = x.dataset.h + "%"; }, NC.quieto() ? 0 : 40 + j * 90))); };
+    return auto(el, { anima, vacia }, o, 0.3);
   };
   NC.foto = (p, mini = true) => `<a class="foto" href="/img/documentos/${p.foto}.webp"><span class="punto" aria-hidden="true">${p.n}</span><img src="/img/documentos/${p.foto}${mini ? "-mini" : ""}.webp" width="${p.w}" height="${p.h}" alt="${NC.esc(p.alt)}" decoding="async"></a>`;
   NC.pie = (p) => `Descarga ${NC.esc(p.nombre)}<span class="sub">${NC.esc(p.latT)} ${NC.esc(p.lonT)} · <a href="/datos/siapa-dg-135-2026.pdf#page=${p.pag}">p. ${p.pag}</a></span>`;

@@ -20,6 +20,8 @@
 <link rel="manifest" href="/site.webmanifest">
 <link rel="stylesheet" href="/menu.css">
 <link rel="stylesheet" href="/nocuadra.css">
+<link rel="stylesheet" href="/nocuadra-lab.css">
+<link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css">
 <style>
 :root {
   --bg: #f6fbfe; --surface: #ffffff; --subtle: #e0f2fe; --fg: #0c1e2c; --muted: #557083; --line: #d7e9f5;
@@ -78,39 +80,46 @@ main h1, main h2 { font-weight: 400; font-style: italic }
 footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-top: 34px }
 </style>
 <style>
-/* Propuesta 2: a scoreboard. Each row is one claim: what was said, what the record shows, the gap, with paired bars
-   that fill when the row comes into view. */
-.marcador { margin: 22px 0 0; border-top: 3px double var(--brand) }
-.marcador h2 { margin: 18px 0 2px; font-size: clamp(1.5rem, 3vw, 2rem) }
-.marcador .sub { margin: 0 0 12px; color: var(--muted); font-size: .95rem }
-.fila-h, .fila { display: grid; grid-template-columns: 11rem minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.1fr); gap: 0 20px; align-items: start }
-.fila-h { padding: 8px 0; border-bottom: 3px double var(--brand); font-size: .85rem; font-weight: 600; color: var(--muted) }
-.fila { padding: 18px 0; border-bottom: 1px solid var(--line) }
-.fila .tema { font: italic 400 1.25rem/1.2 var(--serif) }
-.fila .tema small { display: block; font: .82rem var(--font); color: var(--muted); margin-top: 4px }
-.valor .n { display: block; font: 400 clamp(2rem, 4vw, 2.9rem)/1 var(--serif); letter-spacing: -.02em; font-variant-numeric: tabular-nums }
-.valor .n.palabra { font-size: clamp(1.15rem, 2vw, 1.45rem); line-height: 1.2; font-style: italic }
+/* Propuesta 2: a scoreboard that stays put (nocuadra-lab.css) while the steps scroll. Each claim gets a board, what
+   was said against what the record shows, with bars that fill and figures that count up each time it shows; then its
+   document, chart or pictogram. Tlajomulco first, then Zapopan. */
+.tablero { padding: 16px 0 0; border-top: 3px double var(--brand) }
+.tablero .tema { margin: 0 0 16px; font: italic 400 clamp(1.4rem, 2.6vw, 1.9rem)/1.2 var(--serif) }
+.tablero .tema small { display: block; margin-top: 4px; font: .85rem var(--font); color: var(--muted) }
+.tablero .valores { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px }
+.valor .h { display: block; margin: 0 0 4px; font-size: .8rem; font-weight: 600; color: var(--muted) }
+.valor .n { display: block; font: 400 clamp(2.4rem, 5vw, 4rem)/1 var(--serif); font-variant-numeric: tabular-nums }
+.valor .n.palabra { font-size: clamp(1.1rem, 2vw, 1.5rem); line-height: 1.25; font-style: italic }
 .valor .n.sobre { color: var(--s2-text) }
-.valor .de { display: block; margin-top: 6px; font-size: .85rem; color: var(--muted) }
-.barra { height: 12px; margin: 10px 0 0; background: var(--grid); border-radius: 2px; overflow: hidden }
+.barra { height: 12px; margin: 12px 0 0; background: var(--grid); border-radius: 2px; overflow: hidden }
 .barra i { display: block; height: 100%; width: 0; background: var(--s1); transition: width 1.1s cubic-bezier(.2, .7, .2, 1) }
 .barra.prom i { background: var(--fg); opacity: .8 }
 .barra.sobre i { background: var(--s2) }
-.fila .dif { padding: 10px 12px; background: var(--warn-bg); color: var(--warn); font-size: .92rem; border-radius: 2px }
-.fila .dif b { display: block; font: 400 1.6rem/1.1 var(--serif); font-variant-numeric: tabular-nums }
-.fila details { grid-column: 2 / -1; margin-top: 12px; font-size: .92rem }
-.fila summary { cursor: pointer; color: var(--link); width: max-content }
-.fila details .documento { margin: 10px 0 0 }
-.fila details .grafica { margin: 10px 0 0 }
-.total { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; margin: 16px 0 0 }
-@media (prefers-reduced-motion: reduce) { .barra i { transition: none } }
+.tablero .dif { display: inline-block; margin: 20px 0 0; padding: 8px 12px; background: var(--warn-bg); color: var(--warn); font: 400 1.5rem/1.1 var(--serif); font-variant-numeric: tabular-nums; border-radius: 2px }
+.capa .matriz { margin: 0 }
+.capa .gotas { margin: 0 }
+.capa .cuenta-g { margin: 8px 0 0 }
+.capa .renglon-v { padding: 8px 0 }
+/* Documents: flat paper, and the highlighter sweeps across each time the layer shows. */
+.tarjeta .ir { margin: 12px 0 0 }
+@media (prefers-reduced-motion: reduce) {
+  .barra i { transition: none }
+}
 @media (max-width: 860px) {
-  .fila-h { display: none }
-  .fila { grid-template-columns: 1fr 1fr; gap: 12px 16px }
-  .fila .tema { grid-column: 1 / -1 }
-  .fila .dif { grid-column: 1 / -1 }
-  .fila details { grid-column: 1 / -1 }
-  .valor::before { content: attr(data-h); display: block; font-size: .78rem; font-weight: 600; color: var(--muted); margin-bottom: 4px }
+  .tablero { padding-top: 8px }
+  .tablero .tema { margin-bottom: 8px; font-size: 1.2rem }
+  .valor .n { font-size: 2.2rem }
+  .valor .n.palabra { font-size: 1rem }
+  .tablero .dif { margin-top: 12px; font-size: 1.15rem }
+  .capa .gotas { grid-template-columns: repeat(20, minmax(0, 1fr)); gap: 4px 2px }
+  .capa .cuenta-g { font-size: 1.2rem } .capa .cuenta-g b { font-size: 1.8rem }
+  .capa .renglon-v { grid-template-columns: 7rem minmax(0, 1fr); gap: 8px; align-items: center; padding: 4px 0 }
+  .capa .renglon-v .q { font-size: .8rem } .capa .renglon-v .q b { font-size: 1.2rem }
+  .capa .vasos { gap: 4px; margin: 0 }
+  .capa .vasos .v { width: 20px; height: 32px; border-width: 2px }
+  .capa .matriz { gap: 0 }
+  .capa .matriz .fila { font-size: .7rem; line-height: 1.2 }
+  .relato.vivo .capa .hoja { padding: 8px 12px; gap: 8px }
 }
 </style>
 <script src="/theme.js"></script>
@@ -139,107 +148,19 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
   <main>
     <p class="kicker">No cuadra</p>
     <h1>Prometido contra entregado: el marcador no cuadra</h1>
-    <p class="lede">Un renglón por afirmación. A la izquierda, lo que dijo el gobierno; al centro, lo que muestran los documentos que entregó por transparencia; a la derecha, la diferencia. Abre cada renglón para ver el documento.</p>
+    <p class="lede">Un marcador por afirmación: lo que dijo el gobierno, lo que muestran los documentos que entregó por transparencia y la diferencia. Baja: cada paso pone un marcador y su documento. Primero Tlajomulco, luego Zapopan.</p>
 
-    <section class="marcador" aria-labelledby="zapopan">
-      <h2 id="zapopan">Zapopan · el operativo de pipas</h2>
-      <p class="sub">Boletín del 19 de octubre contra los oficios del 6, 12 y 17 de noviembre.</p>
-      <div class="fila-h" aria-hidden="true"><span></span><span>Lo prometido</span><span>Lo entregado</span><span>La diferencia</span></div>
-
-      <div class="fila">
-        <div class="tema">Pipas<small>el día con más de la gráfica</small></div>
-        <div class="valor" data-h="Lo prometido"><span class="n" data-n="45">45</span><div class="barra prom"><i data-w="90"></i></div><span class="de">«contará con 45 pipas», <a href="https://www.zapopan.gob.mx/v3/noticias/zapopan-pone-en-marcha-operativo-de-suministro-de-agua-con-45-pipas-y-100-cisternas" rel="noopener">boletín</a></span></div>
-        <div class="valor" data-h="Lo entregado"><span class="n" data-n="34">34</span><div class="barra"><i data-w="68"></i></div><span class="de">el 27 de octubre, en la gráfica del oficio 011300/2026/0150; «36 pipas en servicio» al 3 de noviembre, según el mismo oficio</span></div>
-        <div class="dif"><b>11 menos</b>La gráfica de pipas por jornada nunca llega a 45.</div>
-        <details>
-          <summary>Ver los 20 días de la gráfica</summary>
-          <figure class="grafica"><div class="serie" id="serie-pipas"></div><figcaption>Del 15 de octubre al 3 de noviembre de 2026. Fuente: gráfica anexa al oficio 011300/2026/0150 de la Dirección de Planificación de Protección Civil y Bomberos de Zapopan (<a href="/datos/pcyb-respuesta-ut-091-2026.pdf#page=4">p. 4 del PDF</a>); los números son nuestra lectura de sus etiquetas (<a href="/datos/zapopan-pipas-por-dia.csv">CSV</a>).</figcaption></figure>
-        </details>
-      </div>
-
-      <div class="fila">
-        <div class="tema">Cisternas comunitarias<small>en la lista entregada</small></div>
-        <div class="valor" data-h="Lo prometido"><span class="n" data-n="100">100</span><div class="barra prom"><i data-w="100"></i></div><span class="de">«100 cisternas comunitarias con capacidad de 10 mil litros cada una»</span></div>
-        <div class="valor" data-h="Lo entregado"><span class="n" data-n="49">49</span><div class="barra"><i data-w="49"></i></div><span class="de">el «listado de cisternas instaladas» termina en la número 49, LOS CAJETES (oficio 11000000/CER.CIU/2026/0876)</span></div>
-        <div class="dif"><b>51 sin listar</b>No están en la lista entregada; eso no prueba que no existan.</div>
-        <details>
-          <summary>Ver el oficio y la lista</summary>
-          <figure class="documento">
-<div class="hoja">
-<div class="membrete"><img src="/img/documentos/zapopan-cisternas-m1.png" width="335" height="225" style="width:21.5%" alt="" loading="lazy"><img src="/img/documentos/zapopan-cisternas-m2.png" width="590" height="90" style="width:37.87%" alt="Oficio 11000000/CER.CIU/2026/0876" loading="lazy"></div>
-<div class="renglones">
-<span class="renglon marca" style="width:50.19%"><img src="/img/documentos/zapopan-cisternas-1.png" width="391" height="43" alt="listado de cisternas instaladas," loading="lazy"></span>
-<span class="salto" aria-hidden="true">[…]</span>
-<span class="renglon" style="width:43.65%"><img src="/img/documentos/zapopan-cisternas-2.png" width="425" height="142" alt="47 MIRAMAR, 48 CORDILLERAS" loading="lazy"></span>
-<span class="renglon marca" style="width:43.65%"><img src="/img/documentos/zapopan-cisternas-3.png" width="425" height="66" alt="49 LOS CAJETES" loading="lazy"></span>
-<span class="salto" aria-hidden="true">[…]</span>
-<span class="renglon marca" style="width:86.78%"><img src="/img/documentos/zapopan-cisternas-4.png" width="676" height="50" alt="en los archivos que obran en la Coordinación General," loading="lazy"></span>
-<span class="renglon marca" style="width:100%"><img src="/img/documentos/zapopan-cisternas-5.png" width="779" height="50" alt="no se localizaron bitácoras, hojas de servicio, vales o registros" loading="lazy"></span>
-<span class="renglon marca" style="width:75.99%"><img src="/img/documentos/zapopan-cisternas-6.png" width="592" height="48" alt="de viaje de las pipas que llenaron las cisternas" loading="lazy"></span>
-</div></div>
-        <figcaption>Oficio 11000000/CER.CIU/2026/0876, pp. 7, 11 y 8 de la respuesta a la solicitud 140292426004978 (<a href="/datos/zapopan-respuesta-140292426004978.pdf#page=7">PDF</a>). Resaltado de Agua GDL.</figcaption>
-      </figure>
-          <p class="note">Las 49, en el <a href="/cisternas">mapa de cisternas comunitarias</a>.</p>
-        </details>
-      </div>
-
-      <div class="fila">
-        <div class="tema">Hospitales<small>en la tabla de inmuebles atendidos</small></div>
-        <div class="valor" data-h="Lo prometido"><span class="n palabra">«prioridad a escuelas y centros de salud municipales»</span><span class="de">boletín del 19 de octubre</span></div>
-        <div class="valor" data-h="Lo entregado"><span class="n palabra">«Sin atenciones registradas»</span><span class="de">fila de hospitales, oficio 011300/2026/0148</span></div>
-        <div class="dif"><b>0 registradas</b>La tabla no registra ninguna atención a hospitales ni a centros de salud.</div>
-        <details>
-          <summary>Ver la tabla</summary>
-          <figure class="documento">
-<div class="hoja">
-<div class="membrete"><img src="/img/documentos/zapopan-hospitales-m1.png" width="295" height="298" style="width:14.82%" alt="" loading="lazy"><img src="/img/documentos/zapopan-hospitales-m2.png" width="320" height="95" style="width:16.08%" alt="Dirección de Planificación, oficio 011300/2026/0148" loading="lazy"></div>
-<div class="renglones">
-<span class="renglon marca" style="width:100%"><img src="/img/documentos/zapopan-hospitales-1.png" width="995" height="43" alt="Hospitales: Sin atenciones registradas" loading="lazy"></span>
-<span class="renglon" style="width:100%"><img src="/img/documentos/zapopan-hospitales-2.png" width="995" height="38" alt="Espacios Públicos: Centro Comunitario N°3 - 09/11/2026" loading="lazy"></span>
-<span class="renglon" style="width:100%"><img src="/img/documentos/zapopan-hospitales-3.png" width="995" height="35" alt="Escuelas: Centro Escolar Juan Mateo - 20/10/2026" loading="lazy"></span>
-</div></div>
-        <figcaption>Oficio 011300/2026/0148, p. 6 de la respuesta UT-089/2026 (<a href="/datos/pcyb-respuesta-ut-089-2026.pdf#page=6">PDF</a>). Resaltado de Agua GDL.</figcaption>
-      </figure>
-        </details>
-      </div>
-
-      <div class="fila">
-        <div class="tema">El anuncio<small>cómo lo describió después</small></div>
-        <div class="valor" data-h="Lo prometido"><span class="n palabra">«contará con»</span><span class="de">boletín del 19 de octubre</span></div>
-        <div class="valor" data-h="Lo entregado"><span class="n palabra">«para lograr materializar un sistema»</span><span class="de">oficio 02050000/2026/7939, 17 de noviembre</span></div>
-        <div class="dif"><b>Una meta</b>Zapopan respondió después que las 45 pipas y las 100 cisternas eran una meta por «materializar», en una «primera fase».</div>
-        <details>
-          <summary>Ver el oficio</summary>
-          <figure class="documento">
-<div class="hoja">
-<div class="membrete"><img src="/img/documentos/zapopan-primera-fase-m1.png" width="535" height="275" style="width:27.96%" alt="" loading="lazy"><img src="/img/documentos/zapopan-primera-fase-m2.png" width="790" height="158" style="width:41.29%" alt="Oficio 02050000/2026/7939" loading="lazy"></div>
-<div class="renglones">
-<span class="renglon marca" style="width:100%"><img src="/img/documentos/zapopan-primera-fase-1.png" width="861" height="43" alt="cuya logística se plantea que en una primera fase sea la siguiente:" loading="lazy"></span>
-<span class="salto" aria-hidden="true">[…]</span>
-<span class="renglon marca" style="width:74.91%"><img src="/img/documentos/zapopan-primera-fase-2.png" width="645" height="43" alt="Se llevarán a cabo las gestiones correspondientes" loading="lazy"></span>
-<span class="renglon marca" style="width:53.19%"><img src="/img/documentos/zapopan-primera-fase-3.png" width="458" height="43" alt="para lograr materializar un sistema" loading="lazy"></span>
-<span class="renglon marca" style="width:62.02%"><img src="/img/documentos/zapopan-primera-fase-4.png" width="534" height="41" alt="de 45 pipas y 100 cisternas comunitarias" loading="lazy"></span>
-</div></div>
-        <figcaption>Oficio 02050000/2026/7939, 17 de noviembre de 2026, p. 2 de la respuesta a la solicitud 140292426004978 (<a href="/datos/zapopan-respuesta-140292426004978.pdf#page=2">PDF</a>). Resaltado de Agua GDL.</figcaption>
-      </figure>
-        </details>
-      </div>
-      <p class="ir"><a class="button" href="/zapopan">Todo Zapopan: pipas, litros, cisternas, hospitales, las 75 colonias y los 9,828 reportes por falta de agua →</a></p>
-    </section>
-
-    <section class="marcador" aria-labelledby="tlajomulco">
-      <h2 id="tlajomulco">Tlajomulco · el canal de Las Pintas</h2>
-      <p class="sub">El oficio del SIAPA del 6 de marzo contra lo que Tlajomulco le informó a la CEDHJ a finales de marzo.</p>
-      <div class="fila-h" aria-hidden="true"><span></span><span>Lo que dice el SIAPA</span><span>Lo que dice Tlajomulco</span><span>La diferencia</span></div>
-
-      <div class="fila">
-        <div class="tema">Descargas al canal<small>puntos señalados</small></div>
-        <div class="valor" data-h="Lo que dice el SIAPA"><span class="n" data-n="10">10</span><div class="barra prom"><i data-w="100"></i></div><span class="de">puntos, con «olor y color característico del agua residual» (oficio DG-135/2026, <a href="/datos/siapa-dg-135-2026.pdf#page=4">p. 4</a>)</span></div>
-        <div class="valor" data-h="Lo que dice Tlajomulco"><span class="n" data-n="0">0</span><div class="barra"><i data-w="0"></i></div><span class="de">«constatando que no existen descargas» tras tres recorridos con el SIAPA (oficio DAPIH/0331-01/2026, <a href="/datos/tlajomulco-dapih-0331-01-2026.pdf#page=3">p. 3</a>)</span></div>
-        <div class="dif"><b>Sin actas</b>Tlajomulco no dice cuándo fueron los recorridos ni entregó actas. El SIAPA escribió que en esos sitios «se han observado descargas abundantes, en algunas de manera permanente y otras de forma intermitente».</div>
-        <details>
-          <summary>Ver los dos oficios</summary>
-          <figure class="documento">
+    <div class="relato" id="relato">
+      <div class="escena">
+        <div class="capa" data-c="t-descargas"><div class="tablero">
+          <p class="tema">Descargas al canal<small>puntos señalados</small></p>
+          <div class="valores">
+            <div class="valor"><b class="h">Lo que dice el SIAPA</b><span class="n" data-n="10">10</span><div class="barra prom"><i data-w="100"></i></div></div>
+            <div class="valor"><b class="h">Lo que dice Tlajomulco</b><span class="n" data-n="0">0</span><div class="barra"><i data-w="0"></i></div></div>
+          </div>
+          <p class="dif">Actas no entregadas</p>
+        </div></div>
+        <div class="capa" data-c="t-puntos"><figure class="documento">
 <div class="hoja">
 <div class="membrete"><img src="/img/documentos/tlaj-puntos-m1.png" width="425" height="135" style="width:18.06%" alt="" loading="lazy"><img src="/img/documentos/tlaj-puntos-m2.png" width="588" height="82" style="width:24.99%" alt="Oficio no. DG-135/2026. Guadalajara, Jalisco a 06 de marzo del 2026" loading="lazy"></div>
 <div class="renglones">
@@ -250,8 +171,8 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
 <span class="renglon" style="width:99.79%"><img src="/img/documentos/tlaj-puntos-5.png" width="1409" height="37" alt="permanente y otras de forma intermitente, que de cualquier manera afectan considerablemente," loading="lazy"></span>
 </div></div>
         <figcaption>Anexo del oficio DG-135/2026, p. 4 del PDF (<a href="/datos/siapa-dg-135-2026.pdf#page=4">PDF</a>). Resaltado de Agua GDL.</figcaption>
-      </figure>
-          <figure class="documento">
+      </figure></div>
+        <div class="capa" data-c="t-recorridos"><figure class="documento">
         <div class="hoja">
           <div class="renglones">
             <span class="renglon" style="width:99.92%"><img src="/img/documentos/tlaj-recorridos-1.png" width="1307" height="47" alt="Respecto a lo requerido, se manifiesta que el SIAPA informó al Municipio de Tlajomulco" loading="lazy"></span>
@@ -263,29 +184,25 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
           </div>
         </div>
         <figcaption>Oficio DAPIH/0331-01/2026 de Tlajomulco, marzo de 2026, p. 3 (<a href="/datos/tlajomulco-dapih-0331-01-2026.pdf#page=3">PDF</a>). Resaltado de Agua GDL.</figcaption>
-      </figure>
-        </details>
-      </div>
-
-      <div class="fila">
-        <div class="tema">Nitrógeno amoniacal<small>agua que entra a la Planta 1, enero de 2026</small></div>
-        <div class="valor" data-h="El límite que cita el SIAPA"><span class="n" data-n="0.5" data-dec="1">0.5</span><div class="barra prom"><i data-w="12.5"></i></div><span class="de">mg/L, NOM-127-SSA1-2021 (oficio DG-135/2026, <a href="/datos/siapa-dg-135-2026.pdf#page=4">p. 4</a>)</span></div>
-        <div class="valor" data-h="Lo que muestra su gráfica"><span class="n sobre" data-n="3.62" data-dec="2">3.62</span><div class="barra sobre"><i data-w="90.5"></i></div><span class="de">mg/L en promedio, en nuestra lectura de su Gráfico 1 (<a href="/datos/siapa-dg-135-2026.pdf#page=5">p. 5</a>, <a href="/datos/siapa-dg-135-2026-amoniacal.csv">CSV</a>)</span></div>
-        <div class="dif"><b>7.2 veces</b>el límite, en nuestra lectura. Esa planta abastecía 655 colonias y fraccionamientos, según el SIAPA a la CEDHJ.</div>
-        <details>
-          <summary>Ver seis años de amoniaco</summary>
-          <figure class="grafica"><div class="serie" id="serie-amoniaco"></div><figcaption>Nitrógeno amoniacal, promedio mensual en el agua que entra a la Planta 1 Miravalle, de enero de 2020 a febrero de 2026, en mg/L. Fuente: Gráfico 1 del oficio DG-135/2026 del SIAPA (<a href="/datos/siapa-dg-135-2026.pdf#page=5">p. 5 del PDF</a>); lectura de Agua GDL, ±0.05 mg/L (<a href="/datos/siapa-dg-135-2026-amoniacal.csv">CSV</a>). La Figura 1 dice «corte enero 2020 a enero 2026», pero su línea llega a febrero.</figcaption></figure>
-        </details>
-      </div>
-
-      <div class="fila">
-        <div class="tema">Su respuesta al SIAPA<small>pedida por transparencia</small></div>
-        <div class="valor" data-h="Lo que le mandó el SIAPA"><span class="n palabra">El oficio DG-135/2026, del 6 de marzo</span><span class="de">recibido por Tlajomulco el 11 de marzo</span></div>
-        <div class="valor" data-h="Lo que dice Tlajomulco"><span class="n palabra">«el municipio no emitió respuesta al referido oficio»</span><span class="de">oficio DTRC/1740/2026, 20 de noviembre</span></div>
-        <div class="dif"><b>Las actas, en otro archivo</b>Tlajomulco dice que las listas y minutas de los recorridos, si las hubo, obran en los archivos del SIAPA.</div>
-        <details>
-          <summary>Ver el oficio</summary>
-          <figure class="documento">
+      </figure></div>
+        <div class="capa" data-c="t-amoniaco"><div class="tablero">
+          <p class="tema">Nitrógeno amoniacal<small>agua que entra a la Planta 1, enero de 2026</small></p>
+          <div class="valores">
+            <div class="valor"><b class="h">El límite que cita el SIAPA</b><span class="n" data-n="0.5" data-dec="1">0.5</span><div class="barra prom"><i data-w="12.5"></i></div></div>
+            <div class="valor"><b class="h">Su gráfica, en nuestra lectura</b><span class="n sobre" data-n="3.62" data-dec="2">3.62</span><div class="barra sobre"><i data-w="90.5"></i></div></div>
+          </div>
+          <p class="dif">7.2 veces</p>
+        </div></div>
+        <div class="capa" data-c="t-vasos"><div id="vasos"></div></div>
+        <div class="capa" data-c="t-respuesta"><div class="tablero">
+          <p class="tema">Su respuesta al SIAPA<small>pedida por transparencia</small></p>
+          <div class="valores">
+            <div class="valor"><b class="h">Lo que le mandó el SIAPA</b><span class="n palabra">El oficio DG-135/2026, del 6 de marzo</span></div>
+            <div class="valor"><b class="h">Lo que dice Tlajomulco</b><span class="n palabra">«no emitió respuesta al referido oficio, sino que se procedió a realizar los tres recorridos […]»</span></div>
+          </div>
+          <p class="dif">Listas y minutas, si las hubo, en el SIAPA, según Tlajomulco</p>
+        </div></div>
+        <div class="capa" data-c="t-sin-respuesta"><figure class="documento">
 <div class="hoja">
 <div class="membrete"><img src="/img/documentos/tlaj-sin-respuesta-m1.png" width="335" height="112" style="width:17.93%" alt="" loading="lazy"><img src="/img/documentos/tlaj-sin-respuesta-m2.png" width="385" height="52" style="width:20.6%" alt="Oficio DTRC/1740/2026" loading="lazy"></div>
 <div class="renglones">
@@ -300,11 +217,178 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
 <span class="renglon marca" style="width:30.96%"><img src="/img/documentos/tlaj-sin-respuesta-8.png" width="405" height="55" alt="y Alcantarillado (SIAPA)." loading="lazy"></span>
 </div></div>
         <figcaption>Oficio DTRC/1740/2026, respuesta de Tlajomulco a la solicitud 140290426001765, 20 de noviembre de 2026, p. 4 (<a href="/datos/tlajomulco-respuesta-140290426001765.pdf#page=4">PDF</a>). Resaltado de Agua GDL.</figcaption>
-      </figure>
-        </details>
+      </figure></div>
+
+        <div class="capa" data-c="z-boletin">
+          <div class="recorte"><p class="q">«Zapopan contará con <mark>45 pipas</mark> y <mark>100 cisternas comunitarias</mark> con capacidad de 10 mil litros cada una»</p><p class="de">Boletín del Gobierno de Zapopan, 19 de octubre de 2026</p></div>
+        </div>
+        <div class="capa" data-c="z-pipas"><div class="tablero">
+          <p class="tema">Pipas<small>el día con más de la gráfica</small></p>
+          <div class="valores">
+            <div class="valor"><b class="h">Lo prometido</b><span class="n" data-n="45">45</span><div class="barra prom"><i data-w="90"></i></div></div>
+            <div class="valor"><b class="h">Lo entregado</b><span class="n" data-n="34">34</span><div class="barra"><i data-w="68"></i></div></div>
+          </div>
+          <p class="dif">11 menos</p>
+        </div></div>
+        <div class="capa" data-c="z-matriz"><div class="matriz" id="matriz" role="img" aria-label="Veinte renglones, uno por jornada del 15 de octubre al 3 de noviembre; en cada uno, 45 círculos y en azul las pipas de la gráfica: de 5 a 34, nunca 45."></div></div>
+        <div class="capa" data-c="z-cisternas"><div class="tablero">
+          <p class="tema">Cisternas comunitarias<small>en la lista entregada</small></p>
+          <div class="valores">
+            <div class="valor"><b class="h">Lo prometido</b><span class="n" data-n="100">100</span><div class="barra prom"><i data-w="100"></i></div></div>
+            <div class="valor"><b class="h">Lo entregado</b><span class="n" data-n="49">49</span><div class="barra"><i data-w="49"></i></div></div>
+          </div>
+          <p class="dif">51 sin listar</p>
+        </div></div>
+        <div class="capa" data-c="z-gotas">
+          <div class="gotas" id="gotas" role="img" aria-label="Cien gotas, una por cisterna anunciada; 49 en azul, las de la lista"></div>
+          <p class="cuenta-g"><b id="n-gotas">49</b> de 100</p>
+        </div>
+        <div class="capa" data-c="z-hospitales"><div class="tablero">
+          <p class="tema">Hospitales<small>en la tabla de inmuebles atendidos</small></p>
+          <div class="valores">
+            <div class="valor"><b class="h">Lo prometido</b><span class="n palabra">«prioridad a escuelas y centros de salud municipales»</span></div>
+            <div class="valor"><b class="h">Lo entregado</b><span class="n palabra">«Sin atenciones registradas»</span></div>
+          </div>
+          <p class="dif">0 registradas</p>
+        </div></div>
+        <div class="capa" data-c="z-hosp-doc"><figure class="documento">
+<div class="hoja">
+<div class="membrete"><img src="/img/documentos/zapopan-hospitales-m1.png" width="295" height="298" style="width:14.82%" alt="" loading="lazy"><img src="/img/documentos/zapopan-hospitales-m2.png" width="320" height="95" style="width:16.08%" alt="Dirección de Planificación, oficio 011300/2026/0148" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/zapopan-hospitales-1.png" width="995" height="43" alt="Hospitales: Sin atenciones registradas" loading="lazy"></span>
+<span class="renglon" style="width:100%"><img src="/img/documentos/zapopan-hospitales-2.png" width="995" height="38" alt="Espacios Públicos: Centro Comunitario N°3 - 09/11/2026" loading="lazy"></span>
+<span class="renglon" style="width:100%"><img src="/img/documentos/zapopan-hospitales-3.png" width="995" height="35" alt="Escuelas: Centro Escolar Juan Mateo - 20/10/2026" loading="lazy"></span>
+</div></div>
+        <figcaption>Oficio 011300/2026/0148, p. 6 de la respuesta UT-089/2026 (<a href="/datos/pcyb-respuesta-ut-089-2026.pdf#page=6">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure></div>
+        <div class="capa" data-c="z-anuncio"><div class="tablero">
+          <p class="tema">El anuncio<small>cómo lo describió después</small></p>
+          <div class="valores">
+            <div class="valor"><b class="h">Lo prometido</b><span class="n palabra">«contará con»</span></div>
+            <div class="valor"><b class="h">Lo entregado</b><span class="n palabra">«para lograr materializar un sistema»</span></div>
+          </div>
+          <p class="dif">Una meta</p>
+        </div></div>
+        <div class="capa" data-c="z-fase"><figure class="documento">
+<div class="hoja">
+<div class="membrete"><img src="/img/documentos/zapopan-primera-fase-m1.png" width="535" height="275" style="width:27.96%" alt="" loading="lazy"><img src="/img/documentos/zapopan-primera-fase-m2.png" width="790" height="158" style="width:41.29%" alt="Oficio 02050000/2026/7939" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/zapopan-primera-fase-1.png" width="861" height="43" alt="cuya logística se plantea que en una primera fase sea la siguiente:" loading="lazy"></span>
+<span class="salto" aria-hidden="true">[…]</span>
+<span class="renglon marca" style="width:74.91%"><img src="/img/documentos/zapopan-primera-fase-2.png" width="645" height="43" alt="Se llevarán a cabo las gestiones correspondientes" loading="lazy"></span>
+<span class="renglon marca" style="width:53.19%"><img src="/img/documentos/zapopan-primera-fase-3.png" width="458" height="43" alt="para lograr materializar un sistema" loading="lazy"></span>
+<span class="renglon marca" style="width:62.02%"><img src="/img/documentos/zapopan-primera-fase-4.png" width="534" height="41" alt="de 45 pipas y 100 cisternas comunitarias" loading="lazy"></span>
+</div></div>
+        <figcaption>Oficio 02050000/2026/7939, 17 de noviembre de 2026, p. 2 de la respuesta a la solicitud 140292426004978 (<a href="/datos/zapopan-respuesta-140292426004978.pdf#page=2">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure></div>
+        <div class="capa" data-c="reportes_doc"><figure class="documento">
+<div class="hoja">
+<div class="membrete"><img src="/img/documentos/zapopan-reportes-m1.png" width="325" height="215" style="width:20.36%" alt="" loading="lazy"><img src="/img/documentos/zapopan-reportes-m2.png" width="575" height="135" style="width:36.02%" alt="Oficio 11000000/CER.CIU/2026/0878" loading="lazy"></div>
+<div class="renglones">
+<span class="renglon marca" style="width:61.39%"><img src="/img/documentos/zapopan-reportes-1.png" width="539" height="44" alt="se encontró un total de 9,828 reportes por" loading="lazy"></span>
+<span class="renglon marca" style="width:100%"><img src="/img/documentos/zapopan-reportes-2.png" width="878" height="46" alt="falta de agua, con corte al 04 de noviembre de la presente anualidad," loading="lazy"></span>
+</div></div>
+        <figcaption>Oficio 11000000/CER.CIU/2026/0878, p. 5 de la respuesta a la solicitud 140292426004981 (<a href="/datos/zapopan-respuesta-140292426004981.pdf#page=5">PDF</a>). Resaltado de Agua GDL.</figcaption>
+      </figure></div>
+        <div class="capa mapa" data-c="reportes">
+          <div class="puntos-mapa" id="mapa-reportes" role="region" aria-label="Mapa de Zapopan con el número de reportes de falta de agua por colonia"></div>
+          <ul class="keys sobre" id="clases-reportes" aria-label="Número de reportes"></ul>
+          <p class="nota-mapa" id="aviso-reportes" aria-live="polite"></p>
+        </div>
       </div>
-      <p class="ir"><a class="button" href="/tlajomulco">Todo Tlajomulco: seis años de amoniaco, el oficio del SIAPA, sus fotografías y lo que se le dijo a la CEDHJ →</a></p>
-    </section>
+
+      <ol class="pasos">
+        <li class="paso capitulo" data-c="t-descargas"><div class="tarjeta">
+          <p class="mun">Tlajomulco · el canal de Las Pintas</p>
+          <p class="grande">El oficio del SIAPA del 6 de marzo contra lo que Tlajomulco dice haberle informado a la CEDHJ a finales de marzo</p>
+        </div></li>
+        <li class="paso" data-c="t-descargas"><div class="tarjeta">
+          <p class="grande">Diez puntos de descarga; para Tlajomulco, «no existen descargas»</p>
+          <p>El SIAPA: 10 puntos, con «olor y color característico del agua residual» (oficio DG-135/2026, <a href="/datos/siapa-dg-135-2026.pdf#page=4">p. 4</a>).</p>
+          <p>Tlajomulco: «constatando que no existen descargas» tras tres recorridos con el SIAPA (oficio DAPIH/0331-01/2026, <a href="/datos/tlajomulco-dapih-0331-01-2026.pdf#page=3">p. 3</a>).</p>
+        </div></li>
+        <li class="paso" data-c="t-puntos"><div class="tarjeta">
+          <p class="grande">Descargas «de manera permanente» en algunos, «intermitente» en otros</p>
+          <p>El SIAPA escribió que en esos sitios «se han observado descargas abundantes, en algunas de manera permanente y otras de forma intermitente».</p>
+          <p class="fuente">Anexo del oficio DG-135/2026 (<a href="/datos/siapa-dg-135-2026.pdf#page=4">p. 4</a>).</p>
+        </div></li>
+        <li class="paso" data-c="t-recorridos"><div class="tarjeta">
+          <p class="grande">Tlajomulco: «no existen descargas»</p>
+          <p>A finales de marzo, en el oficio con el que atendió un requerimiento de la CEDHJ, Tlajomulco informó que en tres recorridos con el SIAPA constató que no existen descargas de aguas residuales al canal. Tlajomulco no dice cuándo fueron los recorridos ni entregó actas.</p>
+          <p class="fuente">Oficio DAPIH/0331-01/2026, p. 3 (<a href="/datos/tlajomulco-dapih-0331-01-2026.pdf#page=3">PDF</a>).</p>
+        </div></li>
+        <li class="paso" data-c="t-amoniaco"><div class="tarjeta">
+          <p class="grande">3.62 mg/L en enero de 2026; el límite que cita es 0.5</p>
+          <p>7.2 veces el límite, en nuestra lectura. Esa planta abastecía 655 colonias y fraccionamientos, según el SIAPA a la CEDHJ.</p>
+          <p class="fuente">Límite: NOM-127-SSA1-2021 (oficio DG-135/2026, <a href="/datos/siapa-dg-135-2026.pdf#page=4">p. 4</a>). Promedio en nuestra lectura de su Gráfico 1 (<a href="/datos/siapa-dg-135-2026.pdf#page=5">p. 5</a>, <a href="/datos/siapa-dg-135-2026-amoniacal.csv">CSV</a>).</p>
+        </div></li>
+        <li class="paso" data-c="t-vasos"><div class="tarjeta">
+          <p class="grande">Cada vaso es el límite. En enero de 2026 entraron más de siete</p>
+          <p>Un vaso lleno equivale a 0.5 mg/L de nitrógeno amoniacal, el límite de la NOM-127-SSA1-2021 que cita el SIAPA. Promedio mensual del agua que entra a la Planta 1, en nuestra lectura de su gráfica.</p>
+        </div></li>
+        <li class="paso" data-c="t-respuesta"><div class="tarjeta">
+          <p class="grande">«el municipio no emitió respuesta al referido oficio, sino que se procedió a realizar los tres recorridos […], los cuales fueron coordinados por el SIAPA»</p>
+          <p>El oficio DG-135/2026 lo recibió Tlajomulco el 11 de marzo. Tlajomulco dice que las listas y minutas de los recorridos, si las hubo, obran en los archivos del SIAPA.</p>
+          <p class="fuente">Oficio DTRC/1740/2026, 20 de noviembre.</p>
+        </div></li>
+        <li class="paso" data-c="t-sin-respuesta"><div class="tarjeta">
+          <p class="dif"><strong>La diferencia</strong> Tlajomulco no dice cuándo fueron los recorridos ni entregó actas. El propio SIAPA escribió que en esos sitios «se han observado descargas abundantes, en algunas de manera permanente y otras de forma intermitente»: un recorrido sin descargas no prueba que no las haya otros días.</p>
+          <p class="ir"><a class="button" href="/tlajomulco">Todo Tlajomulco →</a></p>
+        </div></li>
+
+        <li class="paso capitulo" data-c="z-boletin"><div class="tarjeta">
+          <p class="mun">Zapopan · el operativo de pipas</p>
+          <p class="grande">Boletín del 19 de octubre contra los oficios del 6, 12 y 17 de noviembre</p>
+          <p class="fuente"><a href="https://www.zapopan.gob.mx/v3/noticias/zapopan-pone-en-marcha-operativo-de-suministro-de-agua-con-45-pipas-y-100-cisternas" rel="noopener">Boletín del Gobierno de Zapopan</a></p>
+        </div></li>
+        <li class="paso" data-c="z-pipas"><div class="tarjeta">
+          <p class="grande">Ningún día de la gráfica llega a 45</p>
+          <p>34 el 27 de octubre, en la gráfica del oficio 011300/2026/0150; «36 pipas en servicio» al 3 de noviembre, según el mismo oficio.</p>
+        </div></li>
+        <li class="paso" data-c="z-matriz"><div class="tarjeta">
+          <p class="grande">20 días, 45 lugares por día. Ningún día se llenó</p>
+          <p>Cada renglón es una jornada de la gráfica de su Protección Civil; cada círculo, una de las 45 pipas anunciadas. Azul: las que la gráfica registra ese día.</p>
+          <p class="fuente">Oficio 011300/2026/0150 (<a href="/datos/pcyb-respuesta-ut-091-2026.pdf#page=4">p. 4 del PDF</a>); los números son nuestra lectura de sus etiquetas (<a href="/datos/zapopan-pipas-por-dia.csv">CSV</a>).</p>
+        </div></li>
+        <li class="paso" data-c="z-cisternas"><div class="tarjeta">
+          <p class="grande">La lista de cisternas termina en la número 49</p>
+          <p>El «listado de cisternas instaladas» de Cercanía Ciudadana termina en la número 49, LOS CAJETES. 51 de las 100 anunciadas no están en la lista; eso no prueba que no existan.</p>
+          <p class="fuente">Oficio 11000000/CER.CIU/2026/0876 (<a href="/datos/zapopan-respuesta-140292426004978.pdf#page=9">la lista, desde la p. 9 del PDF</a>).</p>
+        </div></li>
+        <li class="paso" data-c="z-gotas"><div class="tarjeta">
+          <p class="grande">100 cisternas anunciadas. Su lista llega a 49</p>
+          <p class="fuente">Las 49, en el <a href="/cisternas">mapa de cisternas comunitarias</a>.</p>
+        </div></li>
+        <li class="paso" data-c="z-hospitales"><div class="tarjeta">
+          <p class="grande">Hospitales: «Sin atenciones registradas»</p>
+          <p>Así dice la fila de hospitales en la tabla de inmuebles atendidos. La tabla no registra ninguna atención a hospitales ni a centros de salud.</p>
+        </div></li>
+        <li class="paso" data-c="z-hosp-doc"><div class="tarjeta">
+          <p class="fuente">Oficio 011300/2026/0148 (<a href="/datos/pcyb-respuesta-ut-089-2026.pdf#page=6">p. 6 del PDF</a>).</p>
+        </div></li>
+        <li class="paso" data-c="z-anuncio"><div class="tarjeta">
+          <p class="grande">Después: una meta por «materializar», en una «primera fase»</p>
+          <p>Zapopan respondió después que las 45 pipas y las 100 cisternas eran una meta por «materializar», en una «primera fase».</p>
+        </div></li>
+        <li class="paso" data-c="z-fase"><div class="tarjeta">
+          <p class="fuente">Oficio 02050000/2026/7939, 17 de noviembre.</p>
+        </div></li>
+        <li class="paso" data-c="reportes_doc"><div class="tarjeta">
+          <p class="grande">Del 15 de octubre al 4 de noviembre, 9,828 reportes por falta de agua</p>
+          <p>Es la lista de reportes de «Falta de agua en casa habitación» del 15 de octubre al 4 de noviembre que entregó la Coordinación General de Cercanía Ciudadana de Zapopan. Todos tienen al SIAPA como dependencia.</p>
+          <p class="fuente">Oficio 11000000/CER.CIU/2026/0878 (<a href="/datos/zapopan-respuesta-140292426004981.pdf#page=5">p. 5 del PDF</a>, <a href="/datos/zapopan-reportes.csv">CSV</a>).</p>
+        </div></li>
+        <li class="paso" data-c="reportes"><div class="tarjeta">
+          <p class="grande">8,857 aparecen «En proceso» en la lista</p>
+          <p>El color es cuántos reportes nombran a cada colonia del mapa del SIAPA; ahí caen 5,986 de los 7,892 reportes que dicen colonia. Pasa o toca una colonia. Una colonia sin color no aparece con ese nombre en la lista: eso no quiere decir que haya tenido agua.</p>
+          <p class="fuente">Un reporte no es una casa: una casa puede reportar varias veces. <a href="/zapopan#reportes">Todos los reportes, por colonia y por día</a>.</p>
+        </div></li>
+        <li class="paso" data-c="reportes"><div class="tarjeta">
+          <p class="dif"><strong>La diferencia</strong> La gráfica de pipas por jornada nunca llega a 45. 51 de las 100 cisternas anunciadas no están en la lista entregada; eso no prueba que no existan. La tabla no registra ninguna atención a hospitales ni a centros de salud. Zapopan respondió después que las 45 pipas y las 100 cisternas eran una meta por «materializar»; el boletín dijo «contará con».</p>
+          <p class="ir"><a class="button" href="/zapopan">Todo Zapopan →</a></p>
+        </div></li>
+      </ol>
+    </div>
 
     <ul class="municipios">
       <li class="pendiente">
@@ -330,19 +414,43 @@ footer { border-top: 0; background: var(--tile) top/12px 12px repeat-x; padding-
     <p><a href="/">Inicio</a> · <a href="/reportes">¿Hay agua?</a> · <a href="/cisternas">Cisternas comunitarias</a> · <a href="/pipas">Cómo pedir pipa</a> · <a href="/transparencia">Transparencia</a> · <a href="/privacidad">Aviso de privacidad</a> · <a href="mailto:soporte@aguagdl.com">soporte@aguagdl.com</a></p>
   </footer>
 </div>
+<script src="/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script src="/mapa.js"></script>
 <script src="/nocuadra-lab.js"></script>
 <script>
-document.querySelectorAll(".fila").forEach((f) => NC.alVer(f, () => {
-  f.querySelectorAll(".barra i").forEach((i) => { i.style.width = i.dataset.w + "%"; });
-}, 0.4));
-document.querySelectorAll(".valor .n[data-n]").forEach((n) => NC.cuenta(n, +n.dataset.n, +(n.dataset.dec || 0)));
-// Charts inside <details> draw when first opened, so they get their width.
-const abre = (id, fn) => {
-  const caja = document.getElementById(id), d = caja.closest("details");
-  d.addEventListener("toggle", () => { if (d.open && !caja.firstChild) fn(caja); });
-};
-abre("serie-pipas", (c) => NC.seriePipas(c));
-abre("serie-amoniaco", (c) => NC.serieAmoniaco(c));
+(() => {
+  // A board's figures count up from 0 and its bars fill, each time it shows.
+  const cuenta = (n) => {
+    const fin = +n.dataset.n, dec = +(n.dataset.dec || 0);
+    const fmt = (v) => v.toLocaleString("es-MX", { minimumFractionDigits: dec, maximumFractionDigits: dec });
+    if (NC.quieto()) { n.textContent = fmt(fin); return; }
+    const t0 = performance.now();
+    const paso = (t) => { const k = Math.min(1, (t - t0) / 900), e = 1 - Math.pow(1 - k, 3); n.textContent = fmt(fin * e); if (k < 1) requestAnimationFrame(paso); };
+    requestAnimationFrame(paso);
+  };
+  const tablero = (capa) => {
+    capa.querySelectorAll(".barra i").forEach((i) => {
+      i.style.transition = "none"; i.style.width = "0"; void i.offsetWidth; i.style.transition = ""; i.style.width = i.dataset.w + "%";
+    });
+    capa.querySelectorAll(".n[data-n]").forEach(cuenta);
+  };
+  const matriz = NC.matriz(document.getElementById("matriz"));
+  const nG = document.getElementById("n-gotas");
+  const gotas = NC.gotas(document.getElementById("gotas"), 49, nG);
+  const vasos = NC.vasos(document.getElementById("vasos"), [0, 54, 71, 72]);
+  if (NC.quieto()) { gotas.anima(); vasos.anima(); }
+  const capas = {
+    "z-matriz": () => { matriz.vacia(); void document.getElementById("matriz").offsetWidth; matriz.anima(); },
+    "z-gotas": () => gotas.anima(),
+    "t-vasos": () => vasos.anima(),
+    reportes: (capa, first) => {
+      if (first) capa._map = NC.mapaReportes(document.getElementById("mapa-reportes"), document.getElementById("clases-reportes"), document.getElementById("aviso-reportes"));
+      else if (capa._map) capa._map.invalidateSize();
+    },
+  };
+  document.querySelectorAll(".capa").forEach((c) => { if (c.querySelector(".tablero")) capas[c.dataset.c] = tablero; });
+  NC.relato(document.getElementById("relato"), { capas });
+})();
 </script>
 </body>
 </html>
