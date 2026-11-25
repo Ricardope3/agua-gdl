@@ -2,7 +2,7 @@
  "id": "24-nestle-agua",
  "titulo": "Nestlé y el agua de Jalisco",
  "estilo": "talavera",
- "caption": "Lo que dicen los registros públicos sobre Nestlé y el agua en Jalisco, de lo más reciente a lo más antiguo.\n\n2026 · En Ocotlán, los 5 permisos de pozo de Nestlé, de uso industrial para su negocio, suman 2,330,753 m³ al año: 2.4 veces los 15 permisos de pozo del municipio para uso público urbano. Solo cuenta agua de pozo; la agricultura tiene más.\n\n2025 · Nestlé cedió temporalmente a la CONAGUA 250,000 m³ al año de un permiso de 3 pozos en Lagos de Moreno, hasta 2030.\n\n2016 · Expansión publicó que en la planta nueva de Ocotlán «100% del agua utilizada será reciclada». Ese año la CONAGUA registró un permiso de Nestlé para descargar agua a un río en Ocotlán. Otra nota habla de «100% waste water treatment»: el agua tratada sí se puede descargar.\n\n2014 · Según The Food Tech, que cita a Nestlé, la planta «Cero agua» de Lagos de Moreno «operará sin extraer el líquido del subsuelo». En el registro sigue un permiso de Nestlé de 599,600 m³ al año, de 3 pozos ahí.\n\nUn permiso es un límite, no lo que se saca. Cuánto se extrae de verdad lo mide la CONAGUA.\n\n¿Vives en Ocotlán o Lagos de Moreno? ¿Cómo te llega el agua?",
+ "caption": "Lo que dicen los registros públicos sobre Nestlé y el agua en Jalisco.\n\n2026 · En Ocotlán, los 5 permisos de pozo de Nestlé, de uso industrial para su negocio, suman 2,330,753 m³ al año: 2.4 veces los 15 permisos de pozo de Ocotlán para uso público urbano. Solo cuenta agua de pozo; la agricultura tiene más.\n\n2014 · Según The Food Tech, que cita a Nestlé, la planta «Cero agua» de Lagos de Moreno «operará sin extraer el líquido del subsuelo». En el registro sigue un permiso de Nestlé de 599,600 m³ al año, de 3 pozos ahí. En 2025 cedió temporalmente 250,000 m³ al año de ese permiso a la CONAGUA, hasta 2030.\n\n2016 · Expansión publicó que en la planta nueva de Ocotlán «100% del agua utilizada será reciclada». Ese año la CONAGUA registró un permiso de Nestlé para descargar agua a un río en Ocotlán. Otra nota habla de «100% waste water treatment»: el agua tratada sí se puede descargar.\n\nUn permiso es un límite, no lo que se saca. Cuánto se extrae de verdad lo mide la CONAGUA.\n\n¿Vives en Ocotlán o Lagos de Moreno? ¿Cómo te llega el agua?",
  "fuentes": {
   "repda_ocot": {
    "url": "https://app.conagua.gob.mx/consultarepda.aspx",
@@ -58,7 +58,7 @@
   {
    "tipo": "barras",
    "kicker": "2026 · Ocotlán · permisos de agua de pozo, m³ al año",
-   "titular": "Nestlé, una sola empresa: **2.4 veces** el agua de pozo que el municipio tiene para todos",
+   "titular": "Nestlé, una sola empresa: **2.4 veces** el agua de pozo que Ocotlán tiene para todos",
    "barras": [
     {
      "etiqueta": "[[nestle]] uso industrial, 5 permisos",
@@ -67,57 +67,16 @@
      "color": "alarm"
     },
     {
-     "etiqueta": "[[ocotlan]] Municipio, uso público, 15 permisos",
+     "etiqueta": "[[ocotlan]] Ocotlán, uso público, 15 permisos",
      "valor": 964091,
      "texto": "964,091"
     }
    ],
-   "texto": "Son límites que autoriza la [[conagua]], no lo que se extrae. El permiso de pozo más grande del municipio es de Nestlé. La agricultura tiene más: 103 permisos, 10,054,936 m³.",
+   "texto": "Son límites que autoriza la [[conagua]], no lo que se extrae. El permiso de pozo más grande de Ocotlán es de Nestlé. La agricultura tiene más: 103 permisos, 10,054,936 m³.",
    "fuentes": [
     "repda_ocot"
    ],
    "calculo": "Cálculo de Agua GDL (datos/nestle_repda.py) sobre la exportación del REPDA de Ocotlán, aguas subterráneas: Nestlé 5 títulos, los 5 de uso INDUSTRIAL, 874,753 + 570,000 + 410,000 + 260,000 + 216,000 = 2,330,753; PUBLICO URBANO 15 títulos = 964,091; AGRICOLA 103 títulos = 10,054,936; 2,330,753 ÷ 964,091 = 2.42 ≈ 2.4. Los 15 títulos de uso público urbano son del Municipio de Ocotlán. No cuenta el agua superficial. La exportación trae 154 filas; la página decía «Total de Registros: 151» (sin conciliar)."
-  },
-  {
-   "tipo": "texto",
-   "kicker": "2025 · Lagos de Moreno · [[nestle]]",
-   "cifra": "250,000 m³",
-   "titular": "al año: lo que Nestlé *cedió temporalmente* a la [[conagua]] de un permiso de 3 pozos",
-   "texto": "Hasta 2030, en el acuerdo nacional por el agua. Del permiso de 599,600 m³ quedan 349,600, según nuestra cuenta.",
-   "fuentes": [
-    "repda_lagos"
-   ],
-   "calculo": "15,423 + 150,000 + 84,577 = 250,000; 599,600 − 250,000 = 349,600."
-  },
-  {
-   "tipo": "versus",
-   "kicker": "2016 · Ocotlán",
-   "titular": "Lo que se publicó y lo que registró la [[conagua]]",
-   "izq": {
-    "kicker": "Expansión, 6 de octubre de 2016",
-    "cifra": "100%",
-    "texto": "«100% del agua utilizada será reciclada», según la nota"
-   },
-   "der": {
-    "kicker": "[[conagua]] junio de 2016",
-    "cifra": "912,500",
-    "texto": "m³ al año que Nestlé puede descargar a un río en Ocotlán (nuestra lectura del registro)"
-   },
-   "fuentes": [
-    "exp",
-    "repda_desc"
-   ],
-   "calculo": "712,500 + 200,000 = 912,500 m³ al año; 912,500 ÷ 365 = 2,500 m³ = 2.5 millones de litros al día."
-  },
-  {
-   "tipo": "texto",
-   "kicker": "Ojo",
-   "titular": "Otra nota de esa semana habla de *tratar* el 100% del agua residual",
-   "texto": "Dice «100% waste water treatment». El agua tratada sí se puede descargar a un río. No sabemos si «reciclada» fue palabra de Nestlé o del periódico.",
-   "fuentes": [
-    "fdb",
-    "exp"
-   ]
   },
   {
    "tipo": "versus",
@@ -138,7 +97,30 @@
     "siglo",
     "repda_lagos"
    ],
-   "calculo": "«sin extraer el líquido del subsuelo» = 0. Registro consultado en 2026."
+   "calculo": "«sin extraer el líquido del subsuelo» = 0. Registro consultado en 2026. Cedido: 15,423 + 150,000 + 84,577 = 250,000 m³ al año, hasta el 31 de diciembre de 2030.",
+   "texto": "En 2025 cedió 250,000 m³ al año de ese permiso a la [[conagua]], solo hasta 2030."
+  },
+  {
+   "tipo": "versus",
+   "kicker": "2016 · Ocotlán",
+   "titular": "Lo que se publicó y lo que registró la [[conagua]]",
+   "izq": {
+    "kicker": "Expansión, 6 de octubre de 2016",
+    "cifra": "100%",
+    "texto": "«100% del agua utilizada será reciclada», según la nota"
+   },
+   "der": {
+    "kicker": "[[conagua]] junio de 2016",
+    "cifra": "912,500",
+    "texto": "m³ al año que Nestlé puede descargar a un río en Ocotlán (nuestra lectura del registro)"
+   },
+   "fuentes": [
+    "exp",
+    "fdb",
+    "repda_desc"
+   ],
+   "calculo": "712,500 + 200,000 = 912,500 m³ al año; 912,500 ÷ 365 = 2,500 m³ = 2.5 millones de litros al día.",
+   "texto": "Otra nota dice «100% waste water treatment»: el agua tratada sí se puede descargar a un río."
   },
   {
    "tipo": "lista",
