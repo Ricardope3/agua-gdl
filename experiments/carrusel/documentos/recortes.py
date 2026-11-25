@@ -96,10 +96,16 @@ RECORTES = {
     "siapa-dg135-rebasa.png": ("siapa-dg135", 4, 106, 1553, 836, 42),      # «rebasa la capacidad operativa de la planta potabilizadora,»
     "siapa-dg135-disenada.png": ("siapa-dg135", 4, 944, 1551, 576, 42),    # «ya que no fue diseñada para tratar agua»
     "siapa-dg135-calidad.png": ("siapa-dg135", 4, 110, 1592, 556, 42),     # «con estas características de calidad.»
-    # CEDHJ, Recomendación 10/2026 (30 Apr 2026), a typeset PDF: its letterhead (p. 1), Tlajomulco's report (p. 52, ¶ 74),
-    # the heading of the points to the SIAPA (p. 183) and its seventh point (p. 185).
+    # CEDHJ, Recomendación 10/2026 (30 Apr 2026), a typeset PDF: its letterhead (p. 1), the SIAPA's report (pp. 45, 49–50,
+    # ¶ 73), Tlajomulco's report (p. 52, ¶ 74), the heading of the points to the SIAPA (p. 183) and its seventh point (p. 185).
     "cedhj-logo.png": ("cedhj-10-2026", 1, 1435, 35, 200, 328),
     "cedhj-titulo.png": ("cedhj-10-2026", 1, 790, 340, 652, 155),           # «Recomendación 10/2026», «Guadalajara, Jalisco, 30 de abril de 2026»
+    "cedhj-73-recibio.png": ("cedhj-10-2026", 45, 227, 957, 1210, 50),      # «73. El 7 de abril de 2026, se recibió correo electrónico con el oficio adjunto»
+    "cedhj-73-dj.png": ("cedhj-10-2026", 45, 227, 1010, 948, 49),           # «DJ/0108/2026, firmado por la Directora Jurídica del SIAPA,»
+    "cedhj-73-asi.png": ("cedhj-10-2026", 49, 228, 1728, 1210, 52),         # «Así también, informó que la Planta Potabilizadora Miravalle por su»
+    "cedhj-73-desfase.png": ("cedhj-10-2026", 49, 227, 1779, 658, 52),      # «antigüedad había quedado en desfase,»
+    "cedhj-73-operando.png": ("cedhj-10-2026", 49, 628, 1935, 812, 52),     # «No obstante, dicha planta se encontraba operando»
+    "cedhj-73-conforme.png": ("cedhj-10-2026", 50, 227, 343, 1216, 49),     # «conforme a su edad y diseño, pues fue construida en 1956 y ampliada en 1978.»
     "cedhj-74-anexo.png": ("cedhj-10-2026", 52, 359, 443, 713, 49),         # «al que anexó el oficio DAPIH/0331-01/2026,»
     "cedhj-74-senalo.png": ("cedhj-10-2026", 52, 225, 1216, 677, 49),       # «Señaló que el SIAPA informó al municipio»
     "cedhj-74-respecto.png": ("cedhj-10-2026", 52, 901, 1216, 539, 49),     # «respecto de 10 puntos de descarga»
