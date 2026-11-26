@@ -1,0 +1,298 @@
+{
+ "fuente": "SEMARNAT, RETC verificado 2004–2024 (zip descargado el 25 nov 2026), filas de Nestlé en Jalisco",
+ "filas_csv": 87,
+ "agua": [
+  {
+   "año": "2004",
+   "nra": "NMEEA1406311",
+   "municipio": "Ocotlán",
+   "grupo": "cianuro",
+   "kg": 28.0,
+   "dudosa": false,
+   "sustancias": {
+    "Cianuro inorgánico/orgánico": 28.0
+   }
+  },
+  {
+   "año": "2004",
+   "nra": "NMEEA1406311",
+   "municipio": "Ocotlán",
+   "grupo": "metales",
+   "kg": 88.0,
+   "dudosa": false,
+   "sustancias": {
+    "Arsénico": 1.0,
+    "Cadmio": 12.0,
+    "Cromo (compuestos)": 13.0,
+    "Mercurio (compuestos)": 2.0,
+    "Níquel (compuestos)": 28.0,
+    "Plomo (compuestos)": 32.0
+   }
+  },
+  {
+   "año": "2007",
+   "nra": "NMEML1406311",
+   "municipio": "Ocotlán",
+   "grupo": "cianuro",
+   "kg": 14.1,
+   "dudosa": false,
+   "sustancias": {
+    "Cianuro inorgánico/orgánico": 14.1
+   }
+  },
+  {
+   "año": "2007",
+   "nra": "NMEML1406311",
+   "municipio": "Ocotlán",
+   "grupo": "metales",
+   "kg": 11.75,
+   "dudosa": false,
+   "sustancias": {
+    "Mercurio (compuestos)": 0.94,
+    "Plomo (compuestos)": 10.81
+   }
+  },
+  {
+   "año": "2008",
+   "nra": "NME1S1405311",
+   "municipio": "Lagos de Moreno",
+   "grupo": "cianuro",
+   "kg": 226.2,
+   "dudosa": false,
+   "sustancias": {
+    "Cianuro inorgánico/orgánico": 226.2
+   }
+  },
+  {
+   "año": "2008",
+   "nra": "NME1S1405311",
+   "municipio": "Lagos de Moreno",
+   "grupo": "metales",
+   "kg": 410.55,
+   "dudosa": false,
+   "sustancias": {
+    "Arsénico": 2.262,
+    "Cadmio": 45.24,
+    "Cromo (compuestos)": 135.72,
+    "Mercurio (compuestos)": 1.131,
+    "Níquel (compuestos)": 67.86,
+    "Plomo (compuestos)": 158.34
+   }
+  },
+  {
+   "año": "2012",
+   "nra": "NME1S1405311",
+   "municipio": "Lagos de Moreno",
+   "grupo": "cianuro",
+   "kg": 0.0,
+   "dudosa": false,
+   "sustancias": {
+    "Cianuro inorgánico/orgánico": 0.0
+   }
+  },
+  {
+   "año": "2012",
+   "nra": "NME1S1405311",
+   "municipio": "Lagos de Moreno",
+   "grupo": "metales",
+   "kg": 0.06,
+   "dudosa": false,
+   "sustancias": {
+    "Arsénico": 0.0,
+    "Cadmio": 0.0,
+    "Cromo (compuestos)": 0.0,
+    "Mercurio": 0.0,
+    "Níquel (compuestos)": 0.0,
+    "Plomo (compuestos)": 0.059
+   }
+  },
+  {
+   "año": "2013",
+   "nra": "NMEML1406311",
+   "municipio": "Ocotlán",
+   "grupo": "cianuro",
+   "kg": 21.14,
+   "dudosa": false,
+   "sustancias": {
+    "Cianuro inorgánico/orgánico": 21.141
+   }
+  },
+  {
+   "año": "2013",
+   "nra": "NMEML1406311",
+   "municipio": "Ocotlán",
+   "grupo": "metales",
+   "kg": 17.05,
+   "dudosa": false,
+   "sustancias": {
+    "Arsénico": 1.364,
+    "Cadmio": 0.682,
+    "Cromo (compuestos)": 4.774,
+    "Níquel (compuestos)": 8.183,
+    "Plomo (compuestos)": 2.046
+   }
+  },
+  {
+   "año": "2014",
+   "nra": "NMEML1406311",
+   "municipio": "Ocotlán",
+   "grupo": "metales",
+   "kg": 18.55,
+   "dudosa": false,
+   "sustancias": {
+    "Arsénico (compuestos)": 1.279,
+    "Cromo (compuestos)": 2.558,
+    "Níquel (compuestos)": 12.791,
+    "Plomo (compuestos)": 1.919
+   }
+  },
+  {
+   "año": "2015",
+   "nra": "NMEML1406311",
+   "municipio": "Ocotlán",
+   "grupo": "metales",
+   "kg": 7.26,
+   "dudosa": false,
+   "sustancias": {
+    "Níquel (compuestos)": 7.259
+   }
+  },
+  {
+   "año": "2016",
+   "nra": "NMEML1406311",
+   "municipio": "Ocotlán",
+   "grupo": "metales",
+   "kg": 18.66,
+   "dudosa": false,
+   "sustancias": {
+    "Cromo (compuestos)": 8.38,
+    "Níquel (compuestos)": 10.279
+   }
+  },
+  {
+   "año": "2021",
+   "nra": "NME1406300025",
+   "municipio": "Ocotlán",
+   "grupo": "cianuro",
+   "kg": 13961.53,
+   "dudosa": true,
+   "sustancias": {
+    "Cianuro inorgánico/orgánico": 13961.533
+   }
+  },
+  {
+   "año": "2021",
+   "nra": "NME1406300025",
+   "municipio": "Ocotlán",
+   "grupo": "metales",
+   "kg": 5.1,
+   "dudosa": false,
+   "sustancias": {
+    "Arsénico (compuestos)": 2.792,
+    "Níquel (compuestos)": 2.312
+   }
+  },
+  {
+   "año": "2021",
+   "nra": "NMEML1406311",
+   "municipio": "Ocotlán",
+   "grupo": "metales",
+   "kg": 2.97,
+   "dudosa": false,
+   "sustancias": {
+    "Níquel (compuestos)": 2.97
+   }
+  },
+  {
+   "año": "2022",
+   "nra": "NME1406300025",
+   "municipio": "Ocotlán",
+   "grupo": "metales",
+   "kg": 174.53,
+   "dudosa": true,
+   "sustancias": {
+    "Arsénico (Compuestos solubles)": 1.694,
+    "Cadmio (Compuestos solubles)": 15.886,
+    "Cromo (Compuestos solubles)": 31.857,
+    "Níquel (Compuestos solubles)": 61.468,
+    "Plomo (Compuestos solubles)": 63.629
+   }
+  },
+  {
+   "año": "2022",
+   "nra": "NMEML1406311",
+   "municipio": "Ocotlán",
+   "grupo": "metales",
+   "kg": 4391.1,
+   "dudosa": true,
+   "sustancias": {
+    "Arsénico (Compuestos solubles)": 1.093,
+    "Cadmio (Compuestos solubles)": 12.057,
+    "Cromo (Compuestos solubles)": 24.178,
+    "Níquel (Compuestos solubles)": 4305.485,
+    "Plomo (Compuestos solubles)": 48.292
+   }
+  },
+  {
+   "año": "2023",
+   "nra": "NME1405300016",
+   "municipio": "Lagos de Moreno",
+   "grupo": "metales",
+   "kg": 222.53,
+   "dudosa": false,
+   "sustancias": {
+    "Cadmio (Compuestos solubles)": 222.531
+   }
+  },
+  {
+   "año": "2023",
+   "nra": "NME1406300025",
+   "municipio": "Ocotlán",
+   "grupo": "metales",
+   "kg": 28.21,
+   "dudosa": true,
+   "sustancias": {
+    "Cadmio (Compuestos solubles)": 15.886,
+    "Níquel (Compuestos solubles)": 12.321
+   }
+  },
+  {
+   "año": "2023",
+   "nra": "NMEML1406311",
+   "municipio": "Ocotlán",
+   "grupo": "metales",
+   "kg": 49.51,
+   "dudosa": false,
+   "sustancias": {
+    "Cromo (Compuestos solubles)": 45.296,
+    "Níquel (Compuestos solubles)": 4.216
+   }
+  },
+  {
+   "año": "2024",
+   "nra": "NME1405300016",
+   "municipio": "Lagos de Moreno",
+   "grupo": "metales",
+   "kg": 0.87,
+   "dudosa": false,
+   "sustancias": {
+    "Níquel (Compuestos solubles)": 0.873
+   }
+  },
+  {
+   "año": "2024",
+   "nra": "NMEML1406311",
+   "municipio": "Ocotlán",
+   "grupo": "metales",
+   "kg": 1.11,
+   "dudosa": false,
+   "sustancias": {
+    "Níquel (Compuestos solubles)": 1.113
+   }
+  }
+ ],
+ "suma_sin_dudosas_kg": {
+  "metales": 853.98,
+  "cianuro": 289.44
+ }
+}
