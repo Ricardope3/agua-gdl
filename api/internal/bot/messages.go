@@ -390,7 +390,7 @@ Vecinos nos contaron que el agua se va desde antes del corte y tarda más en vol
 func msgTelegramReminder(days []time.Time, zone int) string {
 	return fmt.Sprintf(`💧 La *Zona %d* tiene corte *mañana %s*%s, según el calendario del SIAPA.
 
-El Gobierno de Jalisco prometió el 14 de octubre racionamientos «por máximo un día» y «sin cortes totales»; el 1 de noviembre, operadores del propio SIAPA admitieron que «el esquema actual no alcanza para cumplir con 1 día sin agua». Vecinos nos cuentan que el agua se va desde antes y tarda más en volver.
+El Gobierno de Jalisco presentó el programa el 15 de octubre; la página de rotación que habilitó prometió racionamientos «por máximo un día» y que «no serán cortes totales». El 1 de noviembre, Conciencia Pública citó la explicación de operadores del SIAPA: «el esquema actual no alcanza para cumplir con 1 día sin agua y 3 con agua». Vecinos nos cuentan que el agua se va desde antes y tarda más en volver.
 
 🪣 Si todavía tienes agua, llena tu tinaco, cubetas y garrafones, y tápalos bien.
 
