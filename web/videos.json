@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-24",
+ "actualizado": "2026-11-26",
  "videos": [
   {
    "url": "https://www.facebook.com/reel/1600459298762122/",
@@ -4106,6 +4106,58 @@
    ],
    "lugar": "parques de la Victoria",
    "cita": "Ayúdenos a resolver el problema de falta de agua en parques de la Victoria tenemos más de 11 años aquí y no aviamos tenido problemas por la falta de agua y este año emos estado batallando mucho con la falta de agua",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.imagentv.com/noticias/vecinos-de-oblatos-exigen-siapa-respetar-calendario-de-suministro-de-agua",
+   "red": "web",
+   "quien": "Imagen TV Guadalajara",
+   "fecha": "2026-11-11",
+   "colonias": [
+    "OBLATOS|Guadalajara|44700"
+   ],
+   "lugar": "Oblatos, Guadalajara",
+   "cita": "Habitantes de Oblatos, en Guadalajara, protestaron porque llevan más de 15 días sin agua. Exigen al SIAPA respetar el calendario de tandeos y garantizar el suministro en sus colonias.",
+   "dias": 15,
+   "video": null
+  },
+  {
+   "url": "https://www.imagentv.com/estados/guadalajara/vecinos-barrio-de-analco-denuncian-desabasto-y-baja-presion-de-agua",
+   "red": "web",
+   "quien": "Imagen TV Guadalajara",
+   "fecha": "2026-10-30",
+   "colonias": [
+    "ANALCO|Guadalajara|44450"
+   ],
+   "lugar": "Barrio de Analco (calle Antonio Bravo entre 20 de Noviembre y 28 de Enero), Guadalajara",
+   "cita": "Colonos concentrados sobre la calle Antonio Bravo, en el tramo comprendido entre 20 de Noviembre y 28 de Enero, señalaron que la escasez afecta a diversas fincas de la zona, donde las tomas domiciliarias se encuentran completamente secas o únicamente reciben un flujo mínimo.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.imagentv.com/noticias/falta-de-agua-vecinos-de-guadalajara-recurren-ojo-de-agua-parque-rio-de-janeiro",
+   "red": "web",
+   "quien": "Imagen TV Guadalajara",
+   "fecha": "2026-10-29",
+   "colonias": [
+    "SAN MARCOS|Guadalajara|44330"
+   ],
+   "lugar": "colonia San Marcos, Guadalajara (ojo de agua del parque Río de Janeiro)",
+   "cita": "Ante la falta de agua en sus hogares, vecinos de la colonia San Marcos, en Guadalajara, acuden al ojo de agua del parque Río de Janeiro para llenar garrafones, recipientes y cubetas.",
+   "dias": null,
+   "video": null
+  },
+  {
+   "url": "https://www.imagentv.com/estados/guadalajara/manantiales-urbanos-mitigan-desabasto-de-agua-potable",
+   "red": "web",
+   "quien": "Imagen TV Guadalajara",
+   "fecha": "2026-10-27",
+   "colonias": [
+    "FRANCISCO VILLA|Guadalajara|44970"
+   ],
+   "lugar": "Col. Francisco Villa (nacimiento en Roberto Núñez y Jesús Reyes Heroles), Guadalajara",
+   "cita": "Habitantes de la Col. Francisco Villa, en el municipio de Guadalajara, recurren a ojos de agua naturales para abastecerse ante la falta recurrente de suministro a través de la red potable de la ciudad.",
    "dias": null,
    "video": null
   }
