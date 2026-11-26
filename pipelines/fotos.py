@@ -194,7 +194,7 @@ def tile(t):
 def filtros(ts):
     cols = {}
     for t in ts:
-        for c in t["cols"]:
+        for c in dict.fromkeys(t["cols"]):  # a colonia repeated in one item (another CP) counts once
             cols[c] = cols.get(c, 0) + 1
     opts = "".join(f'<option value="{E(c)}">{E(c)} ({n})</option>' for c, n in sorted(cols.items(), key=lambda kv: (-kv[1], kv[0])))
     n = {k: sum(1 for t in ts if t["tema"] == k) for k in TEMA}
