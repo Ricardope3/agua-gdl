@@ -1,8 +1,8 @@
 {
  "id": "24-nestle-agua",
  "titulo": "Nestlé y el agua de Jalisco",
- "estilo": "talavera",
- "caption": "Lo que dicen los registros públicos sobre Nestlé y el agua en Jalisco.\n\n2026 · En Ocotlán, los 5 permisos de pozo de Nestlé, de uso industrial para su negocio, suman 2,330,753 m³ al año: 2.4 veces los 15 permisos de pozo de Ocotlán para uso público urbano. Solo cuenta agua de pozo; la agricultura tiene más.\n\n2014 · Según The Food Tech, que cita a Nestlé, la planta «Cero agua» de Lagos de Moreno «operará sin extraer el líquido del subsuelo». En el registro sigue un permiso de Nestlé de 599,600 m³ al año, de 3 pozos ahí. En 2025 cedió temporalmente 250,000 m³ al año de ese permiso a la CONAGUA, hasta 2030.\n\n2016 · Expansión publicó que en la planta nueva de Ocotlán «100% del agua utilizada será reciclada». Ese año la CONAGUA registró un permiso de Nestlé para descargar agua a un río en Ocotlán. Otra nota habla de «100% waste water treatment»: el agua tratada sí se puede descargar.\n\nUn permiso es un límite, no lo que se saca. Cuánto se extrae de verdad lo mide la CONAGUA.\n\n¿Vives en Ocotlán o Lagos de Moreno? ¿Cómo te llega el agua?",
+ "estilo": "ficha",
+ "caption": "Nestlé y el agua de Jalisco, según sus propios reportes y los registros de la CONAGUA.\n\nLagos de Moreno · En 2014 Nestlé abrió su planta «cero agua». Según The Food Tech, operaría «sin extraer el líquido del subsuelo». En su reporte al CDP de 2020, Nestlé dice que en 2019 la planta sacó 11,000 m³ de pozo; el resto, 296,000 m³, salió de la leche. En 2026 la CONAGUA aún le registra un permiso para 3 pozos ahí: 599,600 m³ al año.\n\nOcotlán · Los 5 permisos de pozo de Nestlé, de uso industrial, suman 2,330,753 m³ al año: 2.4 veces los 15 permisos de pozo del Municipio de Ocotlán para uso público urbano. Solo cuenta agua de pozo; la agricultura tiene más.\n\nOcotlán · En 2016 Expansión publicó que en la planta nueva «100% del agua utilizada será reciclada». En su reporte al CDP, Nestlé dice que en 2019 su planta de Zula sacó 415,000 m³ de pozo y descargó 341,000 m³ a ríos o lagos. La CONAGUA le permite descargar hasta 912,500 m³ al año a un río en Ocotlán.\n\nUn permiso es un límite: no dice cuánta agua se saca de verdad.\n\nTodo el detalle, con sus fuentes: aguagdl.com/contamina-nestle\n\n¿Vives en Ocotlán o Lagos de Moreno? ¿Cómo te llega el agua?",
  "fuentes": {
   "repda_ocot": {
    "url": "https://app.conagua.gob.mx/consultarepda.aspx",
@@ -23,7 +23,7 @@
    "medio": "CONAGUA, REPDA, título 08JAL101116/12FMDA16 y su anotación marginal",
    "fecha": "2026-11-16",
    "revisado": "2026-11-25",
-   "cita": "Título de concesión/asignación: 08JAL101116/12FMDA16 Titular: NESTLE MEXICO, S.A. DE C.V. Fecha de registro: 27 de Febrero del 1995 Uso que ampara el título: INDUSTRIAL Volumen de aguas nacionales (m3/año): 599,600.00 … Anexos subterráneos: 3 … 1 | 21°23'10.0000\" | 101°55'00.0000\" | JALISCO | LAGOS DE MORENO … 199,600.00 2 | 21°23'39.0000\" | 101°55'12.0000\" | JALISCO | LAGOS DE MORENO … 200,000.00 3 | 21°23'05.0000\" | 101°55'00.0000\" | JALISCO | LAGOS DE MORENO … 200,000.00 … 24/04/2025 | B00.5.03.00.02.-03567 | … EN EL AMBITO DEL MARCO DEL ACUERDO NACIONAL POR EL DERECHO HUMANO AL AGUA Y LA SUSTENTABILIDAD, PUBLICADO EN EL DIARIO OFICIAL DE LA FEDERACION EL DIA 19 DE DICIEMBRE DE 2024, SE REALIZA LA INSCRIPCION DE LA ANOTACION PREVENTIVA AL TITULO CON NUMERO UNICO JAL101116 EMITIDO A FAVOR DE NESTLE MEXICO, S.A. DE C.V.; … CESION TEMPORAL DE DERECHOS DE AGUAS NACIONALES SOBRE UN VOLUMEN DE 15,423.00 METROS CUBICOS ANUALES CORRESPONDIENTE AL ANEXO 2.1, EL VOLUMEN DE 150,000.00 METROS CUBICOS ANUALES CORRESPONDIENTES AL ANEXO 2.2 Y EL VOLUMEN DE 84,577.00 CORRESPONDIENTES AL ANEXO 2.3, PARA USO INDUSTRIAL, DENTRO DEL ACUIFERO LAGOS DE MORENO, POR UN PLAZO DE 6 A╤OS, CONCLUYENDO EL DIA 31 DE DICIEMBRE DE 2030 … SUSCRITO EL DIA 1 DE ENERO DE 2025"
+   "cita": "NESTLE MEXICO, S.A. DE C.V. 08JAL101116/12FMDA16 INDUSTRIAL ORGANISMO DE CUENCA LERMA SANTIAGO PACIFICO 27/02/1995 599,600.00 0 0.00 3 599,600.00 … 1 | 21°23'10.0000\" | 101°55'00.0000\" | JALISCO | LAGOS DE MORENO … 199,600.00 2 | 21°23'39.0000\" | 101°55'12.0000\" | JALISCO | LAGOS DE MORENO … 200,000.00 3 | 21°23'05.0000\" | 101°55'00.0000\" | JALISCO | LAGOS DE MORENO … 200,000.00 … 24/04/2025 | B00.5.03.00.02.-03567 | … EN EL AMBITO DEL MARCO DEL ACUERDO NACIONAL POR EL DERECHO HUMANO AL AGUA Y LA SUSTENTABILIDAD, PUBLICADO EN EL DIARIO OFICIAL DE LA FEDERACION EL DIA 19 DE DICIEMBRE DE 2024, SE REALIZA LA INSCRIPCION DE LA ANOTACION PREVENTIVA AL TITULO CON NUMERO UNICO JAL101116 EMITIDO A FAVOR DE NESTLE MEXICO, S.A. DE C.V.; … CESION TEMPORAL DE DERECHOS DE AGUAS NACIONALES SOBRE UN VOLUMEN DE 15,423.00 METROS CUBICOS ANUALES CORRESPONDIENTE AL ANEXO 2.1, EL VOLUMEN DE 150,000.00 METROS CUBICOS ANUALES CORRESPONDIENTES AL ANEXO 2.2 Y EL VOLUMEN DE 84,577.00 CORRESPONDIENTES AL ANEXO 2.3, PARA USO INDUSTRIAL, DENTRO DEL ACUIFERO LAGOS DE MORENO, POR UN PLAZO DE 6 A╤OS, CONCLUYENDO EL DIA 31 DE DICIEMBRE DE 2030 … SUSCRITO EL DIA 1 DE ENERO DE 2025"
   },
   "exp": {
    "url": "https://expansion.mx/empresas/2016/10/06/nestle-invierte-245-millones-de-dolares-en-una-planta-en-ocotlan-jalisco",
@@ -32,19 +32,12 @@
    "revisado": "2026-11-25",
    "cita": "la multinacional Nestlé inauguró este jueves una planta en Ocotlán, Jalisco, para fabricar fórmulas lácteas de consumo infantil … Otra de las novedades de la planta es su componente tecnológico, ya que 80% de su consumo de electricidad provendrá de fuentes eólicas y solares, además de que 100% del agua utilizada será reciclada, informó Heiko Schipper, director general de Nestlé Nutrition a nivel global."
   },
-  "fdb": {
-   "url": "https://www.fdbusiness.com/nestle-nutrition-boosts-infant-formula-production-in-mexico/",
-   "medio": "Food & Drink Business",
-   "fecha": "2016-10-10",
-   "revisado": "2026-11-25",
-   "cita": "The plant in Ocotlán will create 250 direct and 1,250 indirect jobs, as part of Nestlé’s commitment to invest over SFr1 billion in Mexico. Production is driven by the latest environmental technology including 100% waste water treatment and renewable energy from wind generation and solar power."
-  },
   "foodtech": {
    "url": "https://thefoodtech.com/packaging-y-procesamiento/inauguran-primera-fabrica-de-alimentos-cero-agua/",
-   "medio": "The Food Tech (fuente que cita: www.nestle.com.mx)",
+   "medio": "The Food Tech (fuente que cita: www.nestle.com.mx; última actualización)",
    "fecha": "2020-12-30",
    "revisado": "2026-11-25",
-   "cita": "Nestlé abrió la fábrica \"cero agua\" que operará sin extraer el líquido del subsuelo y sólo consumirá el obtenido de la producción de leche en polvo. … reducirá a cero el consumo de agua de su planta de Lagos de Moreno, Jalisco, donde la nueva tecnología fue instalada. Esto significa dejar de utilizar 1.6 millones de litros diarios extraídos del sistema de aguas del municipio. Cero agua operará sin extraer el líquido del subsuelo y sólo consumirá el agua obtenida del proceso de producción de la leche en polvo Nido, que se manufactura en la fábrica de Lagos de Moreno. … Fuente: www.nestle.com.mx"
+   "cita": "Nestlé abrió la fábrica \"cero agua\" que operará sin extraer el líquido del subsuelo y sólo consumirá el obtenido de la producción de leche en polvo. … reducirá a cero el consumo de agua de su planta de Lagos de Moreno, Jalisco, donde la nueva tecnología fue instalada. Esto significa dejar de utilizar 1.6 millones de litros diarios extraídos del sistema de aguas del municipio. “Cero agua” operará sin extraer el líquido del subsuelo y sólo consumirá el agua obtenida del proceso de producción de la leche en polvo Nido, que se manufactura en la fábrica de Lagos de Moreno. … Fuente: www.nestle.com.mx"
   },
   "siglo": {
    "url": "https://www.elsiglodetorreon.com.mx/noticia/2014/abren-planta-con-cero-agua.html",
@@ -52,99 +45,137 @@
    "fecha": "2014-10-23",
    "revisado": "2026-11-25",
    "cita": "Como parte de su estrategia de mejorar su eficacia hídrica, Nestlé inauguró su primera planta \"cero agua\" en el mundo, la cual requirió una inversión de más 200 millones de pesos. El CEO de la compañía, Paul Bulcke, aseguró que con esta fábrica, ubicada en Lagos de Moreno, Jalisco, lograrán reducir hasta 15 por ciento el consumo del líquido en sus operaciones en el país. Con esta inversión, la planta productora de leche en polvo y media crema dejará de consumir 1.6 millones de litros de agua al día"
+  },
+  "cdp": {
+   "url": "https://www.nestle.com/sites/default/files/2021-03/cdp-nestle-answers-water-security-2020.pdf",
+   "medio": "Nestlé, respuestas al CDP, Water Security 2020",
+   "fecha": "2026-11-25",
+   "consultada": true,
+   "revisado": "2026-11-25",
+   "cita": "Nestlé - Water Security 2020 … Reporting year January 1 2019 December 31 2019 … (p. 19) This Mexican factory is located in an area with increasing water-stress. Through the successful implementation of ZerEau Water Technology, it was able to achieve absolute zero water withdrawal from local resources, using only the water supplied through milk water extraction. … (pp. 26–27) Facility name (optional) MX PL Zula Country/Area & River basin Mexico Santiago Latitude 20.429959 Longitude -102.76658 … Total water withdrawals at this facility (megaliters/year) 415 … Withdrawals from groundwater - renewable 415 … Total water discharges at this facility (megaliters/year) 341 … Discharges to fresh surface water 341 … (p. 27) Facility name (optional) MX PL Lagos de Moreno-Lacteos … Total water withdrawals at this facility (megaliters/year) 307 … Withdrawals from groundwater - renewable 11 … Withdrawals from produced/entrained water 296 … Please note however, that only 11 mega liters, out of 307, are taken from local water resources. 296 mega liters are \"Milk Water\" - water extracted from fresh milk received at the factory and used for industrial processes."
   }
  },
  "slides": [
   {
-   "tipo": "barras",
-   "kicker": "2026 · Ocotlán · permisos de agua de pozo, m³ al año",
-   "titular": "Nestlé, una sola empresa: **2.4 veces** el agua de pozo que Ocotlán tiene para todos",
-   "barras": [
+   "tipo": "linea",
+   "kicker": "Lagos de Moreno, Jalisco",
+   "titular": "La planta «Cero agua» de Nestlé",
+   "hitos": [
     {
-     "etiqueta": "[[nestle]] uso industrial, 5 permisos",
-     "valor": 2330753,
-     "texto": "2,330,753",
+     "fecha": "2014",
+     "texto": "Abre la planta «cero agua». Según The Food Tech, operaría «sin extraer el líquido del subsuelo»."
+    },
+    {
+     "fecha": "2019",
+     "texto": "Su propio reporte: sacó **11,000 m³** de pozo. El resto, 296,000 m³, salió de la leche.",
      "color": "alarm"
     },
     {
-     "etiqueta": "[[ocotlan]] Ocotlán, uso público, 15 permisos",
-     "valor": 964091,
-     "texto": "964,091"
+     "fecha": "2026",
+     "texto": "La [[conagua]] aún le registra un permiso para 3 pozos: **599,600 m³** al año.",
+     "color": "alarm"
     }
    ],
-   "texto": "Son límites que autoriza la [[conagua]], no lo que se extrae. El permiso de pozo más grande de Ocotlán es de Nestlé. La agricultura tiene más: 103 permisos, 10,054,936 m³.",
+   "texto": "Su permiso es unas 54 veces lo que reportó sacar de pozo en 2019.",
+   "fuentes": [
+    "siglo",
+    "foodtech",
+    "cdp",
+    "repda_lagos"
+   ],
+   "calculo": "CDP: 11 y 296 megalitros = 11,000 y 296,000 m³ (1 megalitro = 1,000 m³), año 2019. 599,600 ÷ 11,000 = 54.5 ≈ 54. El permiso es de 1995, así que estaba vigente en 2019."
+  },
+  {
+   "tipo": "barras",
+   "kicker": "Ocotlán, Jalisco",
+   "titular": "Nestlé tiene permiso para **2.4 veces** el agua de pozo del Municipio de Ocotlán",
+   "banda": "Permisos de agua de pozo en Ocotlán, en m³ al año",
+   "barras": [
+    {
+     "nombre": "Nestlé en Ocotlán",
+     "uso": "Uso industrial",
+     "cuantos": "5",
+     "unidad": "permisos",
+     "marca": "nestle",
+     "valor": 2330753,
+     "texto": "2,330,753 m³",
+     "color": "alarm"
+    },
+    {
+     "nombre": "Municipio de Ocotlán",
+     "uso": "Uso público urbano",
+     "cuantos": "15",
+     "unidad": "permisos",
+     "marca": "ocotlan",
+     "valor": 964091,
+     "texto": "964,091 m³"
+    },
+    {
+     "nombre": "Ocotlán",
+     "uso": "Uso agrícola",
+     "cuantos": "103",
+     "unidad": "permisos",
+     "icono": "planta",
+     "valor": 10054936,
+     "texto": "10,054,936 m³",
+     "color": "verde"
+    }
+   ],
    "fuentes": [
     "repda_ocot"
    ],
-   "calculo": "Cálculo de Agua GDL (datos/nestle_repda.py) sobre la exportación del REPDA de Ocotlán, aguas subterráneas: Nestlé 5 títulos, los 5 de uso INDUSTRIAL, 874,753 + 570,000 + 410,000 + 260,000 + 216,000 = 2,330,753; PUBLICO URBANO 15 títulos = 964,091; AGRICOLA 103 títulos = 10,054,936; 2,330,753 ÷ 964,091 = 2.42 ≈ 2.4. Los 15 títulos de uso público urbano son del Municipio de Ocotlán. No cuenta el agua superficial. La exportación trae 154 filas; la página decía «Total de Registros: 151» (sin conciliar)."
+   "calculo": "Cálculo de Agua GDL (datos/nestle_repda.py) sobre la exportación del REPDA de Ocotlán, aguas subterráneas: Nestlé 5 títulos, los 5 de uso INDUSTRIAL, 874,753 + 570,000 + 410,000 + 260,000 + 216,000 = 2,330,753; PUBLICO URBANO 15 títulos = 964,091; AGRICOLA 103 títulos = 10,054,936; 2,330,753 ÷ 964,091 = 2.42 ≈ 2.4. Los 15 títulos de uso público urbano son del Municipio de Ocotlán. No cuenta el agua superficial. La exportación trae 154 filas; la página decía «Total de Registros: 151» (sin conciliar).",
+   "aviso": "Son los límites que autoriza la [[conagua]], no el agua que de verdad se extrae."
   },
   {
    "tipo": "versus",
-   "kicker": "2014 · Lagos de Moreno, planta «Cero agua»",
-   "titular": "Lo que dijo Nestlé y lo que sigue en el registro",
-   "izq": {
-    "kicker": "[[nestle]] según The Food Tech",
-    "cifra": "0",
-    "texto": "«operará sin extraer el líquido del subsuelo»"
-   },
-   "der": {
-    "kicker": "[[conagua]] 2026",
-    "cifra": "599,600",
-    "texto": "m³ al año: el permiso de Nestlé para 3 pozos en Lagos de Moreno, como aparece hoy en el registro"
-   },
-   "fuentes": [
-    "foodtech",
-    "siglo",
-    "repda_lagos"
-   ],
-   "calculo": "«sin extraer el líquido del subsuelo» = 0. Registro consultado en 2026. Cedido: 15,423 + 150,000 + 84,577 = 250,000 m³ al año, hasta el 31 de diciembre de 2030.",
-   "texto": "En 2025 cedió 250,000 m³ al año de ese permiso a la [[conagua]], solo hasta 2030."
-  },
-  {
-   "tipo": "versus",
-   "kicker": "2016 · Ocotlán",
-   "titular": "Lo que se publicó y lo que registró la [[conagua]]",
+   "kicker": "Ocotlán, Jalisco",
+   "titular": "¿Qué pasa con el agua que usa Nestlé en Ocotlán?",
    "izq": {
     "kicker": "Expansión, 6 de octubre de 2016",
     "cifra": "100%",
     "texto": "«100% del agua utilizada será reciclada», según la nota"
    },
    "der": {
-    "kicker": "[[conagua]] junio de 2016",
-    "cifra": "912,500",
-    "texto": "m³ al año que Nestlé puede descargar a un río en Ocotlán (nuestra lectura del registro)"
+    "kicker": "[[nestle]] Su propio reporte, año 2019",
+    "cifra": "341,000",
+    "unidad": "m³",
+    "texto": "descargados a ríos o lagos, de 415,000 m³ que sacó de pozo"
    },
    "fuentes": [
     "exp",
-    "fdb",
+    "cdp",
     "repda_desc"
    ],
-   "calculo": "712,500 + 200,000 = 912,500 m³ al año; 912,500 ÷ 365 = 2,500 m³ = 2.5 millones de litros al día.",
-   "texto": "Otra nota dice «100% waste water treatment»: el agua tratada sí se puede descargar a un río."
+   "calculo": "CDP: 415 y 341 megalitros = 415,000 y 341,000 m³, año 2019. REPDA: 712,500 + 200,000 = 912,500 m³ al año.",
+   "destacado": "La [[conagua]] le permite descargar hasta 912,500 m³ al año a un río en Ocotlán.",
+   "marca": "•"
   },
   {
    "tipo": "lista",
-   "kicker": "Lo que falta saber",
-   "titular": "Lo que los registros *no* dicen",
+   "kicker": "Ocotlán y Lagos de Moreno",
+   "titular": "Lo que falta saber",
    "marca": "num",
    "items": [
-    "Cuánta agua saca Nestlé de verdad: la [[conagua]] lo mide",
-    "Qué planta usa los 3 pozos de Lagos de Moreno: ahí hay más de una",
-    "Si el agua cedida en 2025 se estaba usando"
+    "¿Cuánta agua de pozo saca Nestlé hoy en Ocotlán y Lagos de Moreno?",
+    "¿Por qué conserva un permiso de 599,600 m³ al año si en 2019 reportó sacar 11,000?",
+    "¿Qué tratamiento recibe el agua que descarga y con qué calidad sale?"
    ],
    "fuentes": [
-    "repda_lagos"
+    "repda_lagos",
+    "cdp"
    ],
-   "propio": "nuestras preguntas; un permiso no prueba que se extraiga ni que no"
+   "calculo": "CDP: 11 megalitros = 11,000 m³, año 2019.",
+   "propio": "nuestras preguntas sobre lo que muestran el registro y el reporte"
   },
   {
    "tipo": "cierre",
    "titular": "El agua de Jalisco es de todos",
    "acciones": [
     "Pide cuentas a tu diputación: aguagdl.com/exige",
-    "Pregunta lo que quieras saber: ¿cuánta agua saca cada empresa?"
+    "Todo el detalle, con sus fuentes:"
    ],
-   "url": "aguagdl.com/exige"
+   "url": "aguagdl.com/contamina-nestle"
   }
  ]
 }

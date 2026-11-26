@@ -137,7 +137,7 @@ def check(c, fotos_ok, temas):
             fail(f"{where}: no fuentes; a slide without a source says why in \"propio\" (our question, proposal, method or service)")
         pool_q = " ".join(c["fuentes"][k]["cita"] for k in s.get("fuentes", [])).replace("“", "").replace("”", "").replace('"', "")
         for q in re.findall(r"«([^»]+)»", " ".join(texts)):
-            for part in (p.strip(" .,") for p in re.split(r"\[…\]|…", q.replace("*", ""))):
+            for part in (p.strip(" .,") for p in re.split(r"\[…\]|…", q.replace("*", "").replace("“", "").replace("”", ""))):
                 if part and part not in pool_q:
                     fail(f"{where}: «{part}» is not word for word (capitals and accents included) in the cited citas")
         if documentos(s) and s["tipo"] not in ("portada", "texto"):
@@ -196,6 +196,7 @@ ICONS = {
     "pipa": '<path d="M6 36h52a14 14 0 0 1 14 14v24H6z"/><path d="M74 46h10l10 14v14H74z"/><circle cx="24" cy="80" r="9"/><circle cx="78" cy="80" r="9"/>',
     "cubeta": '<path d="M16 26h68l-8 66H24z"/><path d="M12 18h76v10H12z"/>',
     "peso": '<circle cx="50" cy="50" r="42"/>',
+    "planta": '<path d="M47 92V52h6v40z"/><path d="M50 56C50 30 30 18 8 20c0 24 18 36 42 36z"/><path d="M50 50c0-22 18-34 42-32 0 22-18 34-42 32z"/>',
 }
 
 
@@ -252,6 +253,33 @@ def documento(d):
             + '<div class="doc">' + (f'<div class="membrete">{head}</div>' if head else "") + f'<div class="recorte">{lines}</div></div></div>')
 
 
+def cabeza(s):
+    """Kicker, headline and an optional «banda»: a pale strip naming what the slide compares."""
+    return (f'<div class="kicker">{md(s.get("kicker", ""))}</div><div class="titular">{md(s["titular"])}</div>'
+            + (f'<div class="banda">{md(s["banda"])}</div>' if s.get("banda") else ""))
+
+
+def cola(s):
+    """Under the data: a «texto» line, a starred «destacado» («marca» swaps the star) and an «aviso» (the limit, in an info box)."""
+    return ((f'<div class="texto small">{md(s["texto"])}</div>' if s.get("texto") else "")
+            + (f'<div class="destacado"><span class="estrella">{s.get("marca", "★")}</span><div>{md(s["destacado"])}</div></div>' if s.get("destacado") else "")
+            + (f'<div class="aviso"><span class="info">i</span><div>{md(s["aviso"])}</div></div>' if s.get("aviso") else ""))
+
+
+def fila(b, mx):
+    """One bar. With a «nombre» it is a card: logo or icon, name and use, count, figure, then the bar (carousel 24)."""
+    w = f'{max(2, 100 * b["valor"] / mx):.1f}%'
+    col = b.get("color", "")
+    bar = f'<div class="track"><div class="fill {col}" style="width:{w}"></div></div>'
+    if not b.get("nombre"):
+        return f'<div class="barra"><div class="bl"><span>{md(b["etiqueta"])}</span><b class="{col}">{md(b["texto"])}</b></div>{bar}</div>'
+    ic = md(f'[[{b["marca"]}]]') if b.get("marca") else icon(b.get("icono", "gota"), "fic")
+    cuenta = f' · <b>{md(b["cuantos"])}</b> {md(b.get("unidad", ""))}' if b.get("cuantos") else ""
+    return (f'<div class="fila {col or "base"}"><div class="fi">{ic}</div><div class="fb"><div class="fr">'
+            f'<div class="fn"><b>{md(b["nombre"])}</b><span>{md(b.get("uso", ""))}{cuenta}</span></div>'
+            f'<div class="fv">{md(b["texto"])}</div></div>{bar}</div></div>')
+
+
 def render_body(s):
     t = s["tipo"]
     if t in ("portada", "texto"):
@@ -279,12 +307,9 @@ def render_body(s):
                 + (f'<div class="texto small">{md(s["texto"])}</div>' if s.get("texto") else "") + "</div>")
     if t == "barras":
         mx = max(b["valor"] for b in s["barras"])
-        rows = "".join(
-            f'<div class="barra"><div class="bl"><span>{md(b["etiqueta"])}</span><b class="{b.get("color", "")}">{md(b["texto"])}</b></div>'
-            f'<div class="track"><div class="fill {b.get("color", "")}" style="width:{max(2, 100 * b["valor"] / mx):.1f}%"></div></div></div>'
-            for b in s["barras"])
-        return (f'<div class="stack"><div class="kicker">{md(s.get("kicker", ""))}</div><div class="titular">{md(s["titular"])}</div>'
-                f'<div class="barras{" compact" if len(s["barras"]) > 4 else ""}{" tiny" if len(s["barras"]) > 6 else ""}">{rows}</div>' + (f'<div class="texto small">{md(s["texto"])}</div>' if s.get("texto") else "") + "</div>")
+        rows = "".join(fila(b, mx) for b in s["barras"])
+        return (f'<div class="stack">{cabeza(s)}'
+                f'<div class="barras{" compact" if len(s["barras"]) > 4 else ""}{" tiny" if len(s["barras"]) > 6 else ""}">{rows}</div>{cola(s)}</div>')
     if t == "iconos":
         n, total = s["n"], s["total"]
         cols = s.get("columnas", 10 if total > 12 else total)
@@ -304,18 +329,17 @@ def render_body(s):
                 + (f'<div class="texto small">{md(s["texto"])}</div>' if s.get("texto") else "") + "</div>")
     if t == "versus":
         a, b = s["izq"], s["der"]
-        col = lambda x, cls: (f'<div class="vs {cls}"><div class="vk">{md(x["kicker"])}</div><div class="vc">{md(x["cifra"])}</div>'
+        col = lambda x, cls: (f'<div class="vs {cls}"><div class="vk">{md(x["kicker"])}</div><div class="vc">{md(x["cifra"])}'
+                              + (f'<small>{md(x["unidad"])}</small>' if x.get("unidad") else "") + f'</div>'
                               f'<div class="vt">{md(x["texto"])}</div></div>')
-        return (f'<div class="stack"><div class="kicker">{md(s.get("kicker", ""))}</div><div class="titular">{md(s["titular"])}</div>'
-                f'<div class="versus">{col(a, "a")}<div class="vsx">vs</div>{col(b, "b")}</div>'
-                + (f'<div class="texto small">{md(s["texto"])}</div>' if s.get("texto") else "") + "</div>")
+        return (f'<div class="stack">{cabeza(s)}'
+                f'<div class="versus">{col(a, "a")}<div class="vsx">vs</div>{col(b, "b")}</div>{cola(s)}</div>')
     if t == "lista":
         mark = s.get("marca", "num")
         items = "".join(
             f'<li><span class="m {mark}">{i if mark == "num" else ""}</span><div>{md(it)}</div></li>'
             for i, it in enumerate(s["items"], 1))
-        return (f'<div class="stack"><div class="kicker">{md(s.get("kicker", ""))}</div><div class="titular">{md(s["titular"])}</div>'
-                f'<ul class="lista">{items}</ul>' + (f'<div class="texto small">{md(s["texto"])}</div>' if s.get("texto") else "") + "</div>")
+        return f'<div class="stack">{cabeza(s)}<ul class="lista">{items}</ul>{cola(s)}</div>'
     if t == "linea":
         items = "".join(
             f'<div class="hito {h.get("color", "")}"><div class="hf">{md(h["fecha"])}</div><div class="ht">{md(h["texto"])}</div></div>'

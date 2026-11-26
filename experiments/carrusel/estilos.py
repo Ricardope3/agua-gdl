@@ -2,6 +2,7 @@
 
 talavera    the site's Talavera look (web/contamina.html): cream paper, cobalt, Iowan italic; no tile bands or frame (he found them busy, 25 Nov 2026)
 expediente  an investigator's folder: manila background, taped and clipped oficios, typed notes, red marker
+ficha       Talavera made for phones (carousel 24): italic headline, double-rule boxes, bars as bordered cards, a band, a star line and an info box
 cartel      a street poster: the site's yellow (--mark) and cobalt, Futura condensed, pasted-up documents, halftone
 """
 
@@ -143,6 +144,92 @@ body{{color:{TINTA};font-family:Futura,"Avenir Next",sans-serif}}
 .t-cierre .top .n{{background:{AMARILLO};color:{TINTA}}}
 """,
 }
+
+# «ficha»: Talavera made for reading on a phone (25 Nov 2026, from an image he sent): upright bold headline, a pale band
+# naming the comparison, each bar a bordered card (logo, name and use, count, figure, bar), a starred line and an info box.
+ROJO, VERDE = "#b3231a", "#2f6b34"
+CSS["ficha"] = CSS["talavera"] + f"""
+.frame{{padding:60px 64px 56px}}
+.top{{font-size:34px;padding-bottom:18px;border-bottom:2px solid rgba(29,63,158,.35)}}
+.main{{align-items:flex-start;padding-top:18px}}
+.stack{{gap:20px}}
+.kicker{{font-size:36px;color:{TINTA}}}
+.kicker:before{{content:"→";background:none;width:auto;height:auto;margin:0 14px 0 0;color:{TINTA};font-style:normal}}
+.titular{{font-style:normal;font-weight:700;font-size:66px;line-height:1.06;letter-spacing:-.01em;text-wrap:balance}}
+.titular .alarm{{font-weight:800}}
+.banda{{background:#e6eaf6;border-radius:14px;padding:12px 22px;font-size:31px;line-height:1.25;text-align:center;color:{TINTA};font-weight:600}}
+.barras{{gap:16px;margin-top:0}}
+.fila{{display:flex;align-items:stretch;gap:22px;border:3px solid;border-radius:20px;padding:16px 22px}}
+.fila.alarm{{border-color:{ROJO};background:#fbefec}}.fila.base{{border-color:{COBALTO};background:#eef2fb}}.fila.verde{{border-color:{VERDE};background:#eef5ec}}
+.fi{{flex:none;width:80px;display:flex;align-items:center;justify-content:center;border-right:4px solid;padding-right:18px}}
+.fila.alarm .fi{{border-color:{ROJO}}}.fila.base .fi{{border-color:{COBALTO}}}.fila.verde .fi{{border-color:{VERDE}}}
+.fi .marca{{height:auto;width:76px;max-height:84px;margin:0}}
+.fi .ic{{width:68px;height:68px;fill:{VERDE}}}
+.fb{{flex:1;min-width:0;display:flex;flex-direction:column;gap:12px}}
+.fr{{display:flex;align-items:center;gap:18px}}
+.fn{{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.12}}
+.fn b{{font-size:36px;font-weight:700;white-space:nowrap}}.fn span{{font-size:29px;white-space:nowrap}}.fn span b{{font-size:29px;font-weight:800}}
+.fq{{flex:none;display:flex;flex-direction:column;align-items:center;line-height:1.05;padding:0 16px;border-left:2px solid rgba(20,33,61,.3);border-right:2px solid rgba(20,33,61,.3)}}
+.fq b{{font-size:38px;font-weight:800}}.fq span{{font-size:24px}}
+.fv{{flex:none;font-weight:900;font-size:48px;letter-spacing:-.02em;white-space:nowrap}}
+.fila.alarm .fv{{color:{ROJO}}}.fila.base .fv{{color:{COBALTO}}}.fila.verde .fv{{color:{VERDE}}}
+.fila .track{{height:24px;background:rgba(20,33,61,.1);border-radius:15px}}
+.fila .fill{{border-radius:15px}}.fila.base .fill{{background:{COBALTO}}}.fila.verde .fill{{background:{VERDE}}}.fila.alarm .fill{{background:{ROJO}}}
+.destacado{{display:flex;gap:20px;align-items:flex-start;border-top:2px solid rgba(29,63,158,.35);padding-top:16px;font-style:italic;font-weight:700;font-size:36px;line-height:1.2}}
+.estrella{{flex:none;font-style:normal;font-size:40px;line-height:1.1;color:{TINTA}}}
+.aviso{{display:flex;gap:20px;align-items:center;background:#e6eaf6;border-radius:16px;padding:16px 22px;font-size:29px;line-height:1.28}}
+.info{{flex:none;width:50px;height:50px;border:4px solid {TINTA};border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-style:italic;font-size:30px}}
+.texto,.texto.small{{font-size:36px;line-height:1.32}}
+.versus{{flex-direction:column;gap:12px}}
+.vs{{border:3px solid;border-radius:20px;padding:20px 26px;gap:8px}}
+.vs.a{{border-color:{COBALTO};background:#eef2fb}}.vs.b{{border-color:{ROJO};background:#fbefec}}
+.vk{{font-size:32px;color:{TINTA};font-style:normal;font-weight:600}}.vk .marca{{height:2em}}
+.vc{{font-size:88px;line-height:1}}.vc small{{font-size:40px;font-weight:700;letter-spacing:0;margin-left:14px}}
+.vs.a .vc{{color:{COBALTO}}}.vs.b .vc{{color:{ROJO}}}
+.vt{{font-size:34px;line-height:1.3}}
+.vsx{{font-size:34px;margin:-4px 0}}
+.lista{{gap:18px}}
+.lista li{{border:3px solid {COBALTO};background:#eef2fb;border-radius:20px;padding:24px 26px;font-size:38px;line-height:1.25;font-weight:600}}
+.m{{width:62px;height:62px;font-size:34px}}
+.foot{{font-size:20px;border-top:2px solid rgba(29,63,158,.35);padding-top:16px}}
+.foot .site{{font-size:30px;font-weight:700}}
+.cierre .titular{{font-size:84px}}
+.acts{{font-size:40px;gap:22px}}
+.t-cierre .main,.t-lista .main{{align-items:center}}
+"""
+
+# 25 Nov 2026: he asked for carousel 24 «more like Talavera» after a dense mockup: the site's italic Iowan headline,
+# white boxes in the double cobalt rule (red only on the bad figure), a timeline, quiet notes. Only carousel 24 uses «ficha».
+CSS["ficha"] += f"""
+.kicker:before{{content:"";background:{TILE} center/26px 26px;width:26px;height:26px;margin:0 14px -2px 0}}
+.kicker{{color:#4f5b7a}}
+.kicker:empty{{display:none}}
+.titular{{font-style:italic;font-weight:400;font-size:78px;line-height:1.05}}
+.titular .alarm{{font-weight:700}}
+.banda{{background:none;border-radius:0;padding:0;text-align:left;font-style:italic;font-weight:400;color:#4f5b7a}}
+.fila,.vs,.lista li{{background:#fff;border:5px double {COBALTO};border-radius:3px}}
+.fila.alarm,.vs.b{{background:#fff;border-color:{ROJO}}}
+.fila.base,.vs.a{{background:#fff;border-color:{COBALTO}}}
+.fila.verde{{background:#fff;border-color:#9fb0d8}}.fila.verde .fi{{border-color:#9fb0d8}}.fila.verde .fv{{color:#4f5b7a}}
+.fila.verde .fill{{background:#9fb0d8}}.fi .ic{{fill:#4f5b7a}}
+.vc,.fv{{font-family:"Iowan Old Style";font-weight:900}}
+.vk{{font-style:italic;font-weight:400;color:#4f5b7a}}
+.lista li{{font-weight:400}}
+.destacado{{border-top:0;padding-top:0;font-weight:400;font-size:36px}}
+.estrella{{color:{COBALTO}}}
+.aviso{{background:none;border-top:2px solid rgba(29,63,158,.35);border-radius:0;padding:16px 0 0;font-style:italic;color:#4f5b7a}}
+.info{{border-color:#4f5b7a;color:#4f5b7a}}
+.linea{{border-left:3px solid {COBALTO};margin:8px 0 0 12px;gap:6px}}
+.hito{{padding:0 0 26px 46px}}
+.hito:before{{left:-15px;top:14px;width:26px;height:26px;border-radius:0;background:{TILE} center/26px 26px}}
+.hito.alarm{{background:none}}
+.hito.alarm:before{{background:{ROJO};width:20px;height:20px;left:-12px;top:18px}}
+.hf{{font-family:"Iowan Old Style";font-style:italic;font-weight:700;font-size:46px;color:{COBALTO}}}
+.hito.alarm .hf{{color:{ROJO}}}
+.ht{{font-size:36px;line-height:1.3;font-weight:400;color:{TINTA}}}
+.ht .alarm{{background:none;color:{ROJO};font-weight:800}}
+.t-linea .texto{{font-style:italic;font-size:38px;border-top:2px solid rgba(29,63,158,.35);padding-top:18px}}
+"""
 
 
 def nombres():
