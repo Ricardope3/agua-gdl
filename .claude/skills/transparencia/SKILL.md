@@ -61,14 +61,15 @@ When you make a new kind of mistake, see «Keeping this page short» below.
 
 1. **Don't research or file twice.** `refs.py find`, «Already investigated», section D and the unfiled drafts; an appeal may beat a new request. §8.1.
 2. **Read the addressee's record.** Run `python3 score_answers.py --body "<addressee>"`. For each move it has used, name in the round's README the row of DRAFTING-GUIDE «Close their exits» or «Routes a well-advised official would use next» that the draft meets, and the clause that meets it. DRAFTING-GUIDE «Read the addressee's record».
-3. **Read every source yourself**, scans on the page image. §8.2.
-4. **Ledger as you draft.** A sentence with no source to put in its row comes out of the text. §8.3.
-5. **Name the type and its content** in every item. §8.4.
-6. **Write the text** into its home file and measure it with `measure_cards.py`, never with a counter of your own. §8.5.
-7. **Your own two reads first** (the text against every appeal that shares a document or a garante, and against the law and our memos), so the lens briefs carry what you found; **then three single-lens reviews in parallel** (facts, law, dodge), read-only `verificador` agents at high effort on frozen copies, their reports saved with `save_lens_report.py`. §8.6.
-8. **Answer Final test 8–13 yourself**, and for an appeal the case-theory questions; practice points are in DRAFTING-GUIDE «Before day 15». §8.7, §8.10.
-9. **Put it into the system**: register, plan, section D, checks, the sender page and its artifact, the evidence zip (PDF only, 20 MB); before a filing sitting, the list of cards for Ricardo; before any text reaches him, the read a Jalisco transparency lawyer would give it. §7.14, §8.8, §8.8a–d.
-10. **Record the round** in its README as it goes, and each slip of yours in `lessons-learned.md`. §8.9.
+3. **Depth pass: deeper, not bigger.** Before any text, answer the four questions in the README: what a top professional would do that nobody asked for, the rawest material, the methods and tools, and what other than us would show the result is right (a full answer described in advance, then scored against it). Rewrite the brief to ask for exactly that. The pass never adds items or folios by itself. DRAFTING-GUIDE «Depth pass».
+4. **Read every source yourself**, scans on the page image. §8.2.
+5. **Ledger as you draft.** A sentence with no source to put in its row comes out of the text. §8.3.
+6. **Name the type and its content** in every item. §8.4.
+7. **Write the text** into its home file and measure it with `measure_cards.py`, never with a counter of your own. §8.5.
+8. **Your own two reads first** (the text against every appeal that shares a document or a garante, and against the law and our memos), so the lens briefs carry what you found; **then three single-lens reviews in parallel** (facts, law, dodge), read-only `verificador` agents at high effort on frozen copies, their reports saved with `save_lens_report.py`. §8.6.
+9. **Answer Final test 8–13 yourself**, and for an appeal the case-theory questions; practice points are in DRAFTING-GUIDE «Before day 15». §8.7, §8.10.
+10. **Put it into the system**: register, plan, section D, checks, the sender page and its artifact, the evidence zip (PDF only, 20 MB); before a filing sitting, the list of cards for Ricardo; before any text reaches him, the read a Jalisco transparency lawyer would give it. §7.14, §8.8, §8.8a–d.
+11. **Record the round** in its README as it goes, and each slip of yours in `lessons-learned.md`. §8.9.
 
 ## Answers
 
