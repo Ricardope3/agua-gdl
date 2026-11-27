@@ -7,7 +7,9 @@
 
 A card is written between `<!-- documento:ID -->` and `<!-- /documento:ID -->` in its page; the figure and caption
 around it are edited by hand. Boxes are pixels at 200 dpi on the page image (`boxes.swift` in experiments/carrusel
-gives text boxes; pad about 8 px). A cut leaves out signatures, initials, handwritten words and people's names, and stamps where
+gives text boxes; pad about 8 px). Alt text and quotes give the words as printed: check each «i», «u» and «o» that
+could carry an accent at 1200 dpi against a plain one in the same line, since at 200-400 dpi a slanted acute passes
+for a dot («expondría», «Fiscalía», 27 Nov 2026). A cut leaves out signatures, initials, handwritten words and people's names, and stamps where
 the text allows; a stamp or stroke that crosses a quoted line stays, in colour, and the caption says so. A sentence
 that wraps is cut line by line, in order. A card's lines share one scale, so its widest cut fills the card and the
 type is the same size on every line; the letterhead shows at `membrete` times that scale. A ring marks a point of a cut
@@ -55,13 +57,15 @@ RESEARCH = {
     # private data. Only these cuts appear.
     "siapa-1178": "research/transparency/extracted/140279226001178/respuesta exp. 1098-2026.pdf",
     "proepa-172": "research/transparency/extracted/140276526000172/140276526000172/4 Una combinación de las anteriores/Resp PNT 172-26.pdf",
+    # Never published whole either: p. 1 names the requester below the letterhead (cut above it).
+    "siapa-1270": "research/transparency/extracted/140279226001270/140279226001270/2 Negativa por ser reservada/exp. 1183-2026.pdf",
 }
 
 SKIP = "…"
 # Letterheads shared by several cards: the issuer's logo and the oficio's number.
 DG135 = "siapa-dg135"
 T0127, T0331, T1740 = "tlaj-0127", "tlaj-0331", "tlaj-1740"
-S1178, P172 = "siapa-1178", "proepa-172"
+S1178, P172, S1270 = "siapa-1178", "proepa-172", "siapa-1270"
 
 
 def cut(pdf, page, x, y, w, h, texto="", marca=True, color=False, escala=1.0, anillos=()):
@@ -309,6 +313,34 @@ CARDS.update({
         cut(P172, 5, 367, 1631, 1277, 47, "informa que esta autoridad no cuenta con minutas o listas de asistencia, ni"),
         cut(P172, 5, 366, 1677, 1279, 46, "documentos relacionados con lo que refiere en este punto, toda vez que,"),
         cut(P172, 5, 366, 1724, 628, 42, "esta autoridad no fue la convocante."),
+    ]),
+    # SIAPA, oficio UT/2628/2026, answer to 140279226001270, 26 Nov 2026: the reserve (p. 3), the harm it alleges
+    # (pp. 5-6) and the Comité (p. 6).
+    "tlaj-reserva": dict(page="tlajomulco", membrete=0.6, cuts=[
+        logo(S1270, 1, 650, 50, 430, 100),
+        logo(S1270, 1, 1139, 193, 341, 46, "Oficio UT/2628/2026"),
+    ], lines=[
+        cut(S1270, 3, 228, 594, 1248, 40, "Derivado de la búsqueda y análisis realizado dentro del citado expediente, se advierte", marca=False),
+        cut(S1270, 3, 228, 634, 1248, 40, "que la documentación especifica solicitada encuadra en el supuesto de reserva", marca=False),
+        cut(S1270, 3, 228, 674, 1248, 42, "establecido en el articulo 17, numeral 1, fracción I, incisos d), f) y g), 18, 19 y 63-Bis de la"),
+        cut(S1270, 3, 228, 716, 1248, 38, "Ley de Transparencia y Acceso a la Información Publica del Estado de Jalisco y sus", marca=False),
+        cut(S1270, 3, 228, 754, 1248, 41, "Municipios. Lo anterior, toda vez que la misma se encuentra vinculada con hechos"),
+        cut(S1270, 3, 228, 795, 1248, 38, "materia de una carpeta de investigación, radicada en la Fiscalía General de la"),
+        cut(S1270, 3, 228, 833, 870, 37, "Republica, cuyas determinaciones no han causado estado."),
+    ]),
+    "tlaj-riesgo": dict(page="tlajomulco", membrete=0.6, cuts=[
+        logo(S1270, 1, 650, 50, 430, 100),
+        logo(S1270, 1, 1139, 193, 341, 46, "Oficio UT/2628/2026"),
+    ], lines=[
+        cut(S1270, 5, 318, 1800, 1146, 51, "Riesgo real: La divulgación de los oficios, anexos y documentación relativa al", marca=False),
+        cut(S1270, 5, 318, 1851, 1146, 40, "mismo, expondría de forma pública y anticipada los mapeos"),
+        cut(S1270, 5, 318, 1891, 1146, 40, "georreferenciados, coordenadas, infraestructura identificada y puntos"),
+        cut(S1270, 5, 318, 1931, 1146, 45, "exactos de fuentes de descarga irregulares o contaminantes en el Arroyo Seco"),
+        cut(S1270, 6, 314, 180, 1146, 52, "y el Canal de Las Pintas, así como los razonamientos y acciones institucionales"),
+        cut(S1270, 6, 314, 232, 400, 36, "en torno a dichos hechos.", marca=False),
+        SKIP,
+        cut(S1270, 6, 224, 807, 1240, 56, "Por lo que el Comité de Transparencia, aprobó RESERVAR la información solicitada, en"),
+        cut(S1270, 6, 224, 863, 480, 34, "la décima sesión extraordinaria."),
     ]),
 })
 
