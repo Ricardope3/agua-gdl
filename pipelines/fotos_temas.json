@@ -602,7 +602,11 @@
   "fuentes/de1e507552f6.jpg",
   "fuentes/e80d73bd6d27.jpg",
   "fuentes/e8b1592f5254.jpg",
-  "fuentes/fa34bec1b8eb.jpg"
+  "fuentes/fa34bec1b8eb.jpg",
+  "fuentes/160ea459f61b.jpg",
+  "fuentes/5c5a7dfe3bf3.jpg",
+  "fuentes/6bcf541dae77.jpg",
+  "fuentes/9f03bd252058.jpg"
  ],
  "muro": {
   "grandes": [
@@ -625,7 +629,7 @@
   "nota": "La pared de la portada: estas fotos van en grande (2×2) en este orden; las demás de carteles llenan los huecos. En escritorio la última queda abajo a la derecha, una columna antes del borde. izquierda: una foto grande en el borde izquierdo (arriba), aunque no esté en /fotos; debe estar revisada (temas o fuera). Iván Becerra García en su video con Somos el Medio, 13 oct (lo pidió Ricardo, 5 nov). izquierda_recorte: x, y, ancho, alto del cuadro real del video vertical dentro de la miniatura de YouTube (sin las franjas borrosas); va en una casilla alta (1×2)."
  },
  "nota": "Fotos revisadas a mano para /fotos. temas: las que entran (protesta, sin-agua, calidad). fuera: revisadas y excluidas (tarjetas de solo texto, avisos y fotos oficiales, mapas, entrevistas, nombres de personas, duplicados: se queda la foto más clara de cada escena). carteles: fotos donde se lee el cartel o la manta de una protesta; se muestran más grandes. Una vista que no está en ninguna de las dos listas queda fuera hasta revisarla. extra: publicaciones revisadas que no están en publicaciones.json ni en /noticias (su foto o cuadro guardado en img/fotos/).",
- "revisado": "2026-11-26",
+ "revisado": "2026-11-27",
  "temas": {
   "fuentes/001e7819f876.jpg": "sin-agua",
   "fuentes/008fb99889ac.jpg": "protesta",
@@ -866,6 +870,10 @@
   "img/videos/youtube-HI7IvAGzMjw.webp": "protesta",
   "img/videos/youtube-JgLc7pyUj0M.webp": "protesta",
   "img/videos/youtube-UB-TR9GkYOQ.webp": "protesta",
-  "img/videos/youtube-upEOMWRrHuQ.webp": "protesta"
+  "img/videos/youtube-upEOMWRrHuQ.webp": "protesta",
+  "fuentes/2517bd704022.jpg": "protesta",
+  "fuentes/f8accbdbe5d3.jpg": "calidad",
+  "fuentes/616abd1154fa.jpg": "calidad",
+  "fuentes/e9ac480176be.jpg": "sin-agua"
  }
 }
